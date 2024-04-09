@@ -1,5 +1,7 @@
 import { css } from '@styled-stytem/css'
 
+import Button from '@/components/Button'
+
 function App() {
   return (
     <div
@@ -11,18 +13,9 @@ function App() {
         alignItems: 'center'
       })}
     >
-      <div
-        className={css({
-          fontSize: '2xl',
-          fontWeight: 'bold',
-          color: 'yellow.200',
-          bg: 'black',
-          padding: '4',
-          borderRadius: 8
-        })}
-      >
+      <Button variant="primary" onClick={() => alert('Hello 🐼!')}>
         Hello 🐼!
-      </div>
+      </Button>
     </div>
   )
 }
