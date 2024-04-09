@@ -8,7 +8,7 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'prettier'
   ],
-  ignorePatterns: ['dist', '.eslintrc.cjs'],
+  ignorePatterns: ['dist', '.eslintrc.cjs', 'styled-system'],
   parser: '@typescript-eslint/parser',
   plugins: ['import', '@typescript-eslint', 'jsx-a11y', 'react-refresh'],
   rules: {
@@ -83,5 +83,5 @@ module.exports = {
     'no-console': 'warn',
     '@typescript-eslint/no-empty-function': 'off',
     '@typescript-eslint/ban-ts-comment': 'off'
-  },
+  }
 }
