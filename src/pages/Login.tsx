@@ -1,7 +1,7 @@
 import { css } from '@styled-stytem/css'
 import Button from '@/components/Button'
 
-const Login: React.FC = () => {
+const Login = () => {
   return (
     <>
       <div
