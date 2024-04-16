@@ -1,23 +1,9 @@
-import { css } from '@styled-stytem/css'
-
-import Button from '@/components/Button'
+import { useRoutes } from 'react-router-dom'
+import routes from './router'
 
 function App() {
-  return (
-    <div
-      className={css({
-        display: 'flex',
-        width: '100%',
-        height: '100vh',
-        justifyContent: 'center',
-        alignItems: 'center'
-      })}
-    >
-      <Button variant="primary" onClick={() => alert('Hello 🐼!')}>
-        Hello 🐼!
-      </Button>
-    </div>
-  )
+  const router = useRoutes(routes)
+  return router
 }
 
 export default App
