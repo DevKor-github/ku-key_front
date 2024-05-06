@@ -27,12 +27,12 @@ const Header = () => {
       className={css({
         display: 'flex',
         flexDir: 'row',
-        height: '120px',
+        h: '120px',
         borderBottom: '1.5px solid {colors.lightGray.2}',
-        background: 'white',
+        bg: 'white',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: '0 80px',
+        p: '0 80px',
       })}
     >
       <div
@@ -42,7 +42,7 @@ const Header = () => {
           fontSize: '32px',
           fontWeight: '700',
           lineHeight: 'normal',
-          width: '120px',
+          w: '120px',
         })}
       >
         <Link to="/">KU-Key</Link>
@@ -73,14 +73,14 @@ const Header = () => {
         className={css({
           display: 'flex',
           flexDir: 'row-reverse',
-          width: '120px',
+          w: '120px',
         })}
       >
         {/* todo: 통일된 버튼 컴포넌트로 마이그레이션 */}
         <button
           className={css({
-            width: '30px',
-            height: '30px',
+            w: '30px',
+            h: '30px',
             fontSize: '20px',
             cursor: 'pointer',
           })}
