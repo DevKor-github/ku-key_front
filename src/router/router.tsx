@@ -1,5 +1,6 @@
 import { RouteObject } from 'react-router-dom'
 
+import MainLayout from '@/components/MainLayout'
 import LandingPage from '@/pages/LandingPage'
 import Login from '@/pages/Login'
 import MyPage from '@/pages/MyPage'
@@ -9,6 +10,7 @@ import ProtectedRoutes from '@/router/ProtectedRoutes'
 const routes: RouteObject[] = [
   {
     path: '/',
+    element: <MainLayout />,
     children: [
       {
         path: '',
