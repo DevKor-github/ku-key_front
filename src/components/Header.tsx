@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 
 const NaviItem = cva({
   base: {
-    color: 'var(--Dark-grey_2, #ACACAC)',
+    color: 'darkGray.2',
     textAlign: 'center',
     fontSize: '20px',
     fontWeight: '500',
@@ -13,7 +13,7 @@ const NaviItem = cva({
     selected: {
       // todo: 선택된 항목 하이라이팅 css 수정
       true: {
-        color: 'var(--RED_2, #E70000)',
+        color: 'red.2',
       },
     },
   },
@@ -28,8 +28,8 @@ const Header = () => {
         display: 'flex',
         flexDir: 'row',
         height: '120px',
-        borderBottom: '1.5px solid var(--Light-grey_2, #F4F4F4)',
-        background: 'var(--White, #FFF);',
+        borderBottom: '1.5px solid {colors.lightGray.2}',
+        background: 'white',
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: '0 80px',
@@ -37,7 +37,7 @@ const Header = () => {
     >
       <div
         className={css({
-          color: '#E70000',
+          color: 'red.2',
           textAlign: 'center',
           fontSize: '32px',
           fontWeight: '700',
