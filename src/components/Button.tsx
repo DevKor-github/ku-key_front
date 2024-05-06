@@ -14,18 +14,18 @@ const buttonRecipe = cva({
         bg: 'yellow.500',
         color: 'white',
         _active: { opacity: 0.9 },
-        _hover: { background: 'yellow.400', transition: 'background 0.25s' }
+        _hover: { background: 'yellow.400', transition: 'background 0.25s' },
       },
       secondary: {
         bg: '#1a1a1a',
         color: 'white',
-        _hover: { borderColor: 'yellow.500', transition: 'border-color 0.25s' }
-      }
-    }
+        _hover: { borderColor: 'yellow.500', transition: 'border-color 0.25s' },
+      },
+    },
   },
   defaultVariants: {
-    variant: 'primary'
-  }
+    variant: 'primary',
+  },
 })
 
 const Button = ({ variant, css: cssProps, ...props }: ButtonProps) => {

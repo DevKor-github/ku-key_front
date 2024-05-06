@@ -1,9 +1,10 @@
 import { RouteObject } from 'react-router-dom'
-import MyPage from '@/pages/MyPage'
-import Login from '@/pages/Login'
+
 import LandingPage from '@/pages/LandingPage'
-import ProtectedRoutes from './ProtectedRoutes'
+import Login from '@/pages/Login'
+import MyPage from '@/pages/MyPage'
 import TimeTablePage from '@/pages/TimeTablePage'
+import ProtectedRoutes from '@/router/ProtectedRoutes'
 
 const routes: RouteObject[] = [
   {
