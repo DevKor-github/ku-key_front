@@ -12,7 +12,7 @@ export default defineConfig({
 
   // Useful for theme customization
   theme: {
-    tokens: {
+    semanticTokens: {
       colors: {
         white: { value: '#FFFFFF' },
         black: {
