@@ -15,7 +15,6 @@ const MainLayout = () => {
       <div
         className={css({
           // 임시 값
-          height: '300px',
         })}
       >
         <Outlet />

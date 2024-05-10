@@ -6,9 +6,9 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:jsx-a11y/recommended',
     'plugin:react-hooks/recommended',
-    'prettier'
+    'prettier',
   ],
-  ignorePatterns: ['dist', '.eslintrc.cjs', 'styled-system'],
+  ignorePatterns: ['dist', '.eslintrc.cjs', 'styled-system', 'panda.config.ts'],
   parser: '@typescript-eslint/parser',
   plugins: ['import', '@typescript-eslint', 'jsx-a11y', 'react-refresh'],
   rules: {
@@ -21,10 +21,10 @@ module.exports = {
           {
             name: 'react',
             importNames: ['default'],
-            message: "import React from 'react' makes bundle size larger."
-          }
-        ]
-      }
+            message: "import React from 'react' makes bundle size larger.",
+          },
+        ],
+      },
     ],
     'sort-imports': [
       'error',
@@ -32,8 +32,8 @@ module.exports = {
         ignoreCase: true,
         ignoreDeclarationSort: true,
         ignoreMemberSort: false,
-        allowSeparatedGroups: true
-      }
+        allowSeparatedGroups: true,
+      },
     ],
     'import/order': [
       'error',
@@ -43,45 +43,45 @@ module.exports = {
           {
             pattern: 'next',
             group: 'builtin',
-            position: 'before'
+            position: 'before',
           },
           {
             pattern: 'react',
-            group: 'builtin'
+            group: 'builtin',
           },
           {
             pattern: '@tanstack/**',
             group: 'builtin',
-            position: 'before'
+            position: 'before',
           },
           {
             pattern: '@/libs/**',
-            group: 'unknown'
+            group: 'unknown',
           },
           {
             pattern: '@/core/**',
-            group: 'unknown'
+            group: 'unknown',
           },
           {
             pattern: '@/store/**',
-            group: 'unknown'
+            group: 'unknown',
           },
           {
             pattern: '**/*.css.ts',
             group: 'unknown',
-            position: 'after'
-          }
+            position: 'after',
+          },
         ],
         'newlines-between': 'always',
         alphabetize: {
           order: 'asc',
-          caseInsensitive: true
-        }
-      }
+          caseInsensitive: true,
+        },
+      },
     ],
     'no-else-return': 'error',
     'no-console': 'warn',
     '@typescript-eslint/no-empty-function': 'off',
-    '@typescript-eslint/ban-ts-comment': 'off'
-  }
+    '@typescript-eslint/ban-ts-comment': 'off',
+  },
 }
