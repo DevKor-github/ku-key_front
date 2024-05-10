@@ -4,10 +4,9 @@ import { Link, useLocation } from 'react-router-dom'
 const NaviItem = cva({
   base: {
     color: 'darkGray.2',
-    textAlign: 'center',
-    fontSize: '20px',
+    fontSize: 18,
     fontWeight: '500',
-    lineHeight: 'normal',
+    wordWrap: 'break-word',
   },
   variants: {
     selected: {
@@ -27,7 +26,7 @@ const Header = () => {
       className={css({
         display: 'flex',
         flexDir: 'row',
-        h: '120px',
+        h: '80px',
         borderBottom: '1.5px solid {colors.lightGray.2}',
         bg: 'white',
         justifyContent: 'space-between',
@@ -38,11 +37,9 @@ const Header = () => {
       <div
         className={css({
           color: 'red.2',
-          textAlign: 'center',
-          fontSize: '32px',
+          fontSize: 24,
           fontWeight: '700',
-          lineHeight: 'normal',
-          w: '120px',
+          wordWrap: 'break-word',
         })}
       >
         <Link to="/">KU-Key</Link>

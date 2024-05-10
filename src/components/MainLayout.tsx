@@ -1,4 +1,3 @@
-import { css } from '@styled-stytem/css'
 import { Helmet } from 'react-helmet-async'
 import { Outlet } from 'react-router-dom'
 
@@ -12,12 +11,7 @@ const MainLayout = () => {
         <title>KU-Key</title>
       </Helmet>
       <Header />
-      <div
-        className={css({
-          // 임시 값
-          height: '300px',
-        })}
-      >
+      <div>
         <Outlet />
       </div>
       <Footer />
