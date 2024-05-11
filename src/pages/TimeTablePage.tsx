@@ -1,6 +1,5 @@
 import { css, cva } from '@styled-stytem/css'
-
-import TimeTable from '@/components/timetable/TimeTable'
+import { Link, Outlet, useLocation } from 'react-router-dom'
 
 const ToolbarBtn = cva({
   base: {
@@ -38,14 +37,10 @@ const ToolbarBtn = cva({
 })
 
 const TimeTablePage = () => {
-  const freindsList = ['하승준', '이지원', '이시흔', '정연승', '차승민', '김성현', '김현아', '박정우']
+  const curPath = useLocation().pathname
+
   return (
-    <div
-      className={css({
-        display: 'flex',
-        flexDir: 'column',
-      })}
-    >
+    <>
       <div
         className={css({
           h: '77px',
@@ -63,105 +58,16 @@ const TimeTablePage = () => {
             gap: '20px',
           })}
         >
-          <button className={css(ToolbarBtn.raw({ selected: false }))}>My schedule</button>
-          <button className={css(ToolbarBtn.raw({ selected: true }))}>Friends</button>
+          <Link to={'/timetable'} className={css(ToolbarBtn.raw({ selected: curPath === '/timetable' }))}>
+            My schedule
+          </Link>
+          <Link to={'/timetable/friend'} className={css(ToolbarBtn.raw({ selected: curPath === '/timetable/friend' }))}>
+            Friends
+          </Link>
         </div>
       </div>
-      <div
-        className={css({
-          display: 'flex',
-          flexDir: 'column',
-          padding: '0 80px',
-        })}
-      >
-        <div
-          className={css({
-            display: 'flex',
-            flexDir: 'row',
-            justifyContent: 'space-between',
-            margin: '25px 0',
-          })}
-        >
-          <div
-            className={css({
-              color: 'black.2',
-              fontSize: 32,
-              fontWeight: '800',
-              wordWrap: 'break-word',
-            })}
-          >
-            Friend List
-          </div>
-          <div
-            className={css({
-              display: 'flex',
-              flexDir: 'row',
-              gap: '6px',
-            })}
-          >
-            <div className={css(ToolbarBtn.raw({ back: 'white' }))}>Link</div>
-            <div className={css(ToolbarBtn.raw({ back: 'white' }))}>⤵️</div>
-          </div>
-        </div>
-        <div
-          className={css({
-            display: 'flex',
-            flexDir: 'row',
-            gap: '20px',
-            pb: '343px',
-          })}
-        >
-          <div
-            className={css({
-              width: '155px',
-              display: 'flex',
-              flexDir: 'column',
-              gap: '14px',
-            })}
-          >
-            <button
-              className={css({
-                h: '48px',
-                background: 'lightGray.2',
-                borderRadius: 10,
-                border: '1px {colors.darkGray.1} solid',
-                textAlign: 'center',
-                color: 'darkGray.1',
-                fontSize: 15,
-                fontWeight: '500',
-                wordWrap: 'break-word',
-              })}
-            >
-              + Plus friend
-            </button>
-            <div
-              className={css({
-                display: 'flex',
-                flexDir: 'column',
-                gap: '1px',
-                background: 'lightGray.2',
-                borderRadius: 10,
-                border: '1px {colors.darkGray.1} solid',
-              })}
-            >
-              {freindsList.map(friend => {
-                return (
-                  <button
-                    key={friend}
-                    className={css({
-                      h: '45px',
-                    })}
-                  >
-                    {friend}
-                  </button>
-                )
-              })}
-            </div>
-          </div>
-          <TimeTable semester={'Spring'} year={'2024'} />
-        </div>
-      </div>
-    </div>
+      <Outlet />
+    </>
   )
 }
 
