@@ -1,8 +1,10 @@
 import { css, cva } from '@styled-stytem/css'
 
 import openArrow from '@/assets/openArrow.svg'
+// import LectureGrid from '@/components/timetable/LectureGrid'
+import LectureGrid from '@/components/timetable/LectureGrid'
 
-const TimeCell = cva({
+export const TimeCell = cva({
   base: {
     display: 'flex',
     justifyContent: 'center',
@@ -14,6 +16,7 @@ const TimeCell = cva({
     h: '108px',
     borderRight: '1px solid {colors.darkGray.2}',
     borderBottom: '1px solid {colors.darkGray.2}',
+    position: 'relative',
   },
   variants: {
     header: {
@@ -35,6 +38,11 @@ const TimeCell = cva({
         borderBottomRightRadius: 10,
       },
     },
+    lectureGrid: {
+      true: {
+        display: 'block',
+      },
+    },
   },
 })
 
@@ -52,11 +60,7 @@ interface TimeTableProps {
 const TimeTable = (props: TimeTableProps) => {
   const { semester, year } = props
   return (
-    <div
-      className={css({
-        w: '100%',
-      })}
-    >
+    <div className={css({ w: '100%' })}>
       <div
         className={css({
           h: '65px',
@@ -75,13 +79,7 @@ const TimeTable = (props: TimeTableProps) => {
         })}
       >
         {`${year} ${semester} semester`}
-        <img
-          src={openArrow}
-          className={css({
-            cursor: 'pointer',
-          })}
-          alt=""
-        />
+        <img src={openArrow} className={css({ cursor: 'pointer' })} alt="" />
       </div>
       <div
         className={css({
@@ -91,66 +89,26 @@ const TimeTable = (props: TimeTableProps) => {
           borderBottomLeftRadius: 10,
         })}
       >
-        <div
-          className={css({
-            display: 'flex',
-            flexDir: 'column',
-          })}
-        >
+        <div className={css({ display: 'flex', flexDir: 'column' })}>
           {time.map((val, ind) => {
             return (
-              <div
-                className={css(
-                  TimeCell.raw({ sidebar: true, header: ind === 0, end: ind === 8 ? 'leftEnd' : undefined }),
-                )}
-              >
+              <div className={TimeCell({ sidebar: true, header: ind === 0, end: ind === 8 ? 'leftEnd' : undefined })}>
                 {val}
               </div>
             )
           })}
         </div>
-        <div
-          className={css({
-            display: 'flex',
-            flexDir: 'column',
-            flex: 1,
-          })}
-        >
-          <div
-            className={css({
-              display: 'flex',
-              flexDir: 'row',
-            })}
-          >
+        <div className={css({ display: 'flex', flexDir: 'column', flex: 1 })}>
+          <div className={css({ display: 'flex', flexDir: 'row' })}>
             {week.map((days, ind) => {
               return (
-                <div
-                  key={ind}
-                  className={css(
-                    { flex: 1 },
-                    TimeCell.raw({
-                      header: true,
-                    }),
-                  )}
-                >
+                <div key={ind} className={css({ flex: 1 }, TimeCell.raw({ header: true }))}>
                   {days}
                 </div>
               )
             })}
           </div>
-
-          <div
-            className={css({
-              display: 'grid',
-              gridTemplateColumns: 'repeat(5, 1fr)',
-            })}
-          >
-            {Array(40)
-              .fill(0)
-              .map((_, ind) => {
-                return <div key={ind} className={css(TimeCell.raw({ end: ind === 39 ? 'rightEnd' : undefined }))}></div>
-              })}
-          </div>
+          <LectureGrid />
         </div>
       </div>
     </div>
