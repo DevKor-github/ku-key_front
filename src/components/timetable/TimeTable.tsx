@@ -92,7 +92,10 @@ const TimeTable = (props: TimeTableProps) => {
         <div className={css({ display: 'flex', flexDir: 'column' })}>
           {time.map((val, ind) => {
             return (
-              <div className={TimeCell({ sidebar: true, header: ind === 0, end: ind === 8 ? 'leftEnd' : undefined })}>
+              <div
+                key={ind}
+                className={TimeCell({ sidebar: true, header: ind === 0, end: ind === 8 ? 'leftEnd' : undefined })}
+              >
                 {val}
               </div>
             )

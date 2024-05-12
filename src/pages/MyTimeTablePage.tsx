@@ -9,7 +9,7 @@ const MyTimeTablePage = () => {
       <div className={css({ display: 'flex', flexDir: 'column', padding: '0 80px' })}>
         <div className={css({ display: 'flex', flexDir: 'row', justifyContent: 'space-between', margin: '25px 0' })}>
           <div className={css({ color: 'black.2', fontSize: 32, fontWeight: '800', wordWrap: 'break-word' })}>
-            Schedule
+            My schedule
           </div>
           <div className={css({ display: 'flex', flexDir: 'row', gap: '6px' })}>
             <div className={css(ToolbarBtn.raw({ back: 'white' }))}>Link</div>
