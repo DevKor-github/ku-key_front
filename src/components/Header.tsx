@@ -21,6 +21,7 @@ const NaviItem = cva({
 const Header = () => {
   const location = useLocation()
   const curPath = location.pathname
+  const curPathRoot = curPath.split('/')[1]
   return (
     <div
       className={css({
@@ -50,19 +51,19 @@ const Header = () => {
           gap: '50px',
         })}
       >
-        <Link className={css(NaviItem.raw({ selected: curPath === '/' }))} to="/">
+        <Link className={css(NaviItem.raw({ selected: curPathRoot === '' }))} to="/">
           My page
         </Link>
-        <Link className={css(NaviItem.raw({ selected: curPath === '/announcement' }))} to="/announcement">
+        <Link className={css(NaviItem.raw({ selected: curPathRoot === 'announcement' }))} to="/announcement">
           Announcement
         </Link>
-        <Link className={css(NaviItem.raw({ selected: curPath === '/timetable' }))} to="/timetable">
+        <Link className={css(NaviItem.raw({ selected: curPathRoot === 'timetable' }))} to="/timetable">
           Timetable
         </Link>
-        <Link className={css(NaviItem.raw({ selected: curPath === '/community' }))} to="/community">
+        <Link className={css(NaviItem.raw({ selected: curPathRoot === 'community' }))} to="/community">
           Community
         </Link>
-        <Link className={css(NaviItem.raw({ selected: curPath === '/matching' }))} to="/matching">
+        <Link className={css(NaviItem.raw({ selected: curPathRoot === 'matching' }))} to="/matching">
           1:1 Matching
         </Link>
       </div>
