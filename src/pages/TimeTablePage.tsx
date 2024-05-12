@@ -1,7 +1,7 @@
 import { css, cva } from '@styled-stytem/css'
 import { Link, Outlet, useLocation } from 'react-router-dom'
 
-const ToolbarBtn = cva({
+export const ToolbarBtn = cva({
   base: {
     h: '49px',
     p: '14px 28px',
@@ -41,23 +41,8 @@ const TimeTablePage = () => {
 
   return (
     <>
-      <div
-        className={css({
-          h: '77px',
-          bgColor: 'red.2',
-          p: '0 100px',
-          display: 'flex',
-          flexDir: 'row',
-        })}
-      >
-        <div
-          className={css({
-            display: 'flex',
-            flexDir: 'row',
-            alignItems: 'center',
-            gap: '20px',
-          })}
-        >
+      <div className={css({ h: '77px', bgColor: 'red.2', p: '0 100px', display: 'flex', flexDir: 'row' })}>
+        <div className={css({ display: 'flex', flexDir: 'row', alignItems: 'center', gap: '20px' })}>
           <Link to={'/timetable'} className={css(ToolbarBtn.raw({ selected: curPath === '/timetable' }))}>
             My schedule
           </Link>
