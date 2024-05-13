@@ -1,6 +1,6 @@
 import { css } from '@styled-stytem/css'
 
-import FriendsList from '@/components/timetable/FreindsList'
+import FriendsList from '@/components/timetable/FriendsList'
 import TimeTable from '@/components/timetable/TimeTable'
 import { ToolbarBtn } from '@/pages/TimeTablePage'
 
