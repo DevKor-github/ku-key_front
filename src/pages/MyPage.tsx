@@ -33,11 +33,11 @@ const MyPage = () => {
         >
           <Mask />
           <UserInfo />
-          <img
+          {/* <img
             src={BackgroundImage}
             alt="mypage background"
             className={css({ display: 'flex', flex: 1, flexGrow: 0, alignSelf: 'flex-end' })}
-          />
+          /> */}
         </div>
         <DueDateCard />
       </div>
