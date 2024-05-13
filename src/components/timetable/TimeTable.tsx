@@ -1,9 +1,8 @@
 import { css, cva } from '@styled-stytem/css'
 
-import openArrow from '@/assets/openArrow.svg'
-// import LectureGrid from '@/components/timetable/LectureGrid'
 import LectureGrid from '@/components/timetable/LectureGrid'
 
+// 브랜치 머지 이후 recipe화 필요
 export const TimeCell = cva({
   base: {
     display: 'flex',
@@ -26,7 +25,7 @@ export const TimeCell = cva({
     },
     sidebar: {
       true: {
-        background: 'lightGray.2',
+        bgColor: 'lightGray.2',
         w: '82px',
       },
     },
@@ -47,10 +46,10 @@ export const TimeCell = cva({
 })
 
 const time = ['']
+const week = ['MON', 'TUS', 'WEN', 'THR', 'FRI']
 for (let i = 9; i <= 16; i++) {
   time.push(`${i}:00`)
 }
-const week = ['MON', 'TUS', 'WEN', 'THR', 'FRI']
 
 interface TimeTableProps {
   semester: string
@@ -64,7 +63,7 @@ const TimeTable = (props: TimeTableProps) => {
       <div
         className={css({
           h: '65px',
-          background: 'lightGray.2',
+          bgColor: 'lightGray.2',
           borderTopLeftRadius: 10,
           borderTopRightRadius: 10,
           border: '1px {colors.darkGray.2} solid',
@@ -79,7 +78,6 @@ const TimeTable = (props: TimeTableProps) => {
         })}
       >
         {`${year} ${semester} semester`}
-        <img src={openArrow} className={css({ cursor: 'pointer' })} alt="" />
       </div>
       <div
         className={css({

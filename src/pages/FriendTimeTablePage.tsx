@@ -1,15 +1,14 @@
 import { css } from '@styled-stytem/css'
 
+import FriendsList from '@/components/timetable/FreindsList'
 import TimeTable from '@/components/timetable/TimeTable'
 import { ToolbarBtn } from '@/pages/TimeTablePage'
-
-const freindsList = ['하승준', '이지원', '이시흔', '정연승', '차승민', '김성현', '김현아', '박정우']
 
 const FriendTimeTablePage = () => {
   return (
     <div className={css({ display: 'flex', flexDir: 'column' })}>
-      <div className={css({ display: 'flex', flexDir: 'column', padding: '0 80px' })}>
-        <div className={css({ display: 'flex', flexDir: 'row', justifyContent: 'space-between', margin: '25px 0' })}>
+      <div className={css({ display: 'flex', flexDir: 'column', px: '80px' })}>
+        <div className={css({ display: 'flex', flexDir: 'row', justifyContent: 'space-between', my: '25px' })}>
           <div className={css({ color: 'black.2', fontSize: 32, fontWeight: '800', wordWrap: 'break-word' })}>
             Friend List
           </div>
@@ -19,41 +18,7 @@ const FriendTimeTablePage = () => {
           </div>
         </div>
         <div className={css({ display: 'flex', flexDir: 'row', gap: '20px', pb: '343px' })}>
-          <div className={css({ width: 40, display: 'flex', flexDir: 'column', gap: '14px' })}>
-            <button
-              className={css({
-                h: '48px',
-                background: 'lightGray.2',
-                borderRadius: 10,
-                border: '1px {colors.darkGray.1} solid',
-                textAlign: 'center',
-                color: 'darkGray.1',
-                fontSize: 15,
-                fontWeight: '500',
-                wordWrap: 'break-word',
-              })}
-            >
-              + Plus friend
-            </button>
-            <div
-              className={css({
-                display: 'flex',
-                flexDir: 'column',
-                gap: '1px',
-                background: 'lightGray.2',
-                borderRadius: 10,
-                border: '1px {colors.darkGray.1} solid',
-              })}
-            >
-              {freindsList.map(friend => {
-                return (
-                  <button key={friend} className={css({ h: '45px', cursor: 'pointer' })}>
-                    {friend}
-                  </button>
-                )
-              })}
-            </div>
-          </div>
+          <FriendsList />
           <TimeTable semester={'Spring'} year={'2024'} />
         </div>
       </div>

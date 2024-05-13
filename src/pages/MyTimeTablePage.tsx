@@ -6,8 +6,8 @@ import { ToolbarBtn } from '@/pages/TimeTablePage'
 const MyTimeTablePage = () => {
   return (
     <div className={css({ display: 'flex', flexDir: 'column' })}>
-      <div className={css({ display: 'flex', flexDir: 'column', padding: '0 80px' })}>
-        <div className={css({ display: 'flex', flexDir: 'row', justifyContent: 'space-between', margin: '25px 0' })}>
+      <div className={css({ display: 'flex', flexDir: 'column', px: '80px' })}>
+        <div className={css({ display: 'flex', flexDir: 'row', justifyContent: 'space-between', my: '25px' })}>
           <div className={css({ color: 'black.2', fontSize: 32, fontWeight: '800', wordWrap: 'break-word' })}>
             My schedule
           </div>
