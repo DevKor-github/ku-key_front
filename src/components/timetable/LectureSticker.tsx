@@ -19,8 +19,7 @@ interface LectureStickerProps {
   room: string
 }
 
-const LectureSticker = (props: LectureStickerProps) => {
-  const { name, runningTime, professor, room } = props
+const LectureSticker = ({ name, runningTime, professor, room }: LectureStickerProps) => {
   return (
     <div
       className={css({

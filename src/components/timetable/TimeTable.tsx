@@ -56,8 +56,7 @@ interface TimeTableProps {
   year: string
 }
 
-const TimeTable = (props: TimeTableProps) => {
-  const { semester, year } = props
+const TimeTable = ({ semester, year }: TimeTableProps) => {
   return (
     <div className={css({ w: '100%' })}>
       <div
