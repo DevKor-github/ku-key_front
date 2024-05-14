@@ -27,18 +27,19 @@ const Header = () => {
       className={css({
         display: 'flex',
         flexDir: 'row',
-        h: '80px',
+        h: 20,
         borderBottom: '1.5px solid {colors.lightGray.2}',
         bg: 'white',
         justifyContent: 'space-between',
         alignItems: 'center',
-        p: '0 80px',
+        px: { base: 20, mdDown: 5 },
       })}
     >
       <div
         className={css({
           color: 'red.2',
-          fontSize: 24,
+          // textAlign: 'center',
+          fontSize: { base: 32, mdDown: 20 },
           fontWeight: '700',
           wordWrap: 'break-word',
         })}
@@ -47,7 +48,7 @@ const Header = () => {
       </div>
       <div
         className={css({
-          display: 'flex',
+          display: { base: 'flex', mdDown: 'none' },
           gap: '50px',
         })}
       >

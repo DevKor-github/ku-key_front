@@ -29,16 +29,17 @@ const Footer = () => {
   return (
     <div
       className={css({
-        h: '290px',
+        w: 'full',
         borderTop: '1.211px solid {colors.lightGray.2}',
         bg: 'white',
-        display: 'flex',
+        display: { base: 'flex', mdDown: 'none' },
         flexDir: 'row',
-        p: '0 152px',
+        py: 50,
+        px: 40,
         alignItems: 'center',
       })}
     >
-      <div className={css({ flex: 1, display: 'flex', flexDir: 'column', gap: '16px' })}>
+      <div className={css({ flex: 1.5, display: 'flex', flexDir: 'column', gap: '16px' })}>
         <div
           className={css({
             color: 'black.1',
@@ -83,9 +84,8 @@ const Footer = () => {
       </div>
       <div
         className={css({
-          flex: 1,
+          flex: 0.5,
           display: 'flex',
-          flexDir: 'column',
           flexWrap: 'wrap',
           gap: '20.3px',
           h: '100px',
