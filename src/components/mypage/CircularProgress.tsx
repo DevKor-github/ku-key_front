@@ -53,8 +53,4 @@ const CircularProgress = ({ progress }: CircularProgressProps) => {
   )
 }
 
-CircularProgress.defaultProps = {
-  progress: 40, // 0 ~ 100 사이의 값
-}
-
 export default CircularProgress

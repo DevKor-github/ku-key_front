@@ -22,7 +22,7 @@ const DueDateCard = () => {
         h: { base: 210, mdDown: 20 },
       })}
     >
-      <CircularProgress />
+      <CircularProgress progress={50} />
       <GenericDueDate type="start" due={120} date="2024. 02. 07" />
       <GenericDueDate type="end" due={98} date="2024. 07. 29" />
     </div>
