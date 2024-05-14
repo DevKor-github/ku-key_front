@@ -1,6 +1,5 @@
 import { css } from '@styled-stytem/css'
 
-import BackgroundImage from '@/assets/MypageBgImg.svg'
 import DueDateCard from '@/components/mypage/DueDateCard'
 import Mask from '@/components/mypage/Mask'
 import MemoryCarousel from '@/components/mypage/MemoryCarousel'
