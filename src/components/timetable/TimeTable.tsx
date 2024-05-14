@@ -2,7 +2,7 @@ import { css, cva } from '@styled-stytem/css'
 
 import LectureGrid from '@/components/timetable/LectureGrid'
 
-// 브랜치 머지 이후 recipe화 필요
+// todo : 브랜치 머지 이후 recipe화 필요
 export const TimeCell = cva({
   base: {
     display: 'flex',
@@ -12,7 +12,7 @@ export const TimeCell = cva({
     fontSize: 18,
     fontWeight: '500',
     wordWrap: 'break-word',
-    h: '108px',
+    h: 28,
     borderRight: '1px solid {colors.darkGray.2}',
     borderBottom: '1px solid {colors.darkGray.2}',
     position: 'relative',
@@ -20,13 +20,13 @@ export const TimeCell = cva({
   variants: {
     header: {
       true: {
-        h: '40px',
+        h: 10,
       },
     },
     sidebar: {
       true: {
         bgColor: 'lightGray.2',
-        w: '82px',
+        w: 20,
       },
     },
     end: {
@@ -61,19 +61,18 @@ const TimeTable = ({ semester, year }: TimeTableProps) => {
     <div className={css({ w: '100%' })}>
       <div
         className={css({
-          h: '65px',
+          h: 16,
           bgColor: 'lightGray.2',
           borderTopLeftRadius: 10,
           borderTopRightRadius: 10,
           border: '1px {colors.darkGray.2} solid',
           display: 'flex',
-          pl: '14px',
+          pl: 3.5,
           alignItems: 'center',
           color: 'darkGray.1',
           fontSize: 20,
           fontWeight: '700',
           wordWrap: 'break-word',
-          gap: '5px',
         })}
       >
         {`${year} ${semester} semester`}

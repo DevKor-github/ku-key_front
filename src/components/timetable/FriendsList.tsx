@@ -1,14 +1,15 @@
 import { css } from '@styled-stytem/css'
 
 // dummy data
+// todo : 실물 데이터를 받아오는 로직
 const friendsList = ['하승준', '이지원', '이시흔', '정연승', '차승민', '김성현', '김현아', '박정우']
 
 const FriendsList = () => {
   return (
-    <div className={css({ w: '160px', display: 'flex', flexDir: 'column', gap: '14px' })}>
+    <div className={css({ w: 40, display: 'flex', flexDir: 'column', gap: 3.5 })}>
       <button
         className={css({
-          h: '48px',
+          h: 12,
           bgColor: 'lightGray.2',
           borderRadius: 10,
           border: '1px {colors.darkGray.1} solid',
@@ -26,7 +27,7 @@ const FriendsList = () => {
         className={css({
           display: 'flex',
           flexDir: 'column',
-          gap: '1px',
+          gap: 0.5,
           bgColor: 'lightGray.2',
           borderRadius: 10,
           border: '1px {colors.darkGray.1} solid',
@@ -34,7 +35,7 @@ const FriendsList = () => {
       >
         {friendsList.map(friend => {
           return (
-            <button key={friend} className={css({ h: '45px', cursor: 'pointer' })}>
+            <button key={friend} className={css({ h: 11, cursor: 'pointer' })}>
               {friend}
             </button>
           )

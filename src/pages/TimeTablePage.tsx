@@ -1,12 +1,13 @@
 import { css, cva } from '@styled-stytem/css'
 import { Link, Outlet, useLocation } from 'react-router-dom'
 
-// Recipe화 필요
+// todo: Recipe화 필요
 export const ToolbarBtn = cva({
   base: {
-    h: '49px',
-    p: '14px 28px',
-    borderRadius: '10px',
+    h: 12,
+    px: 7,
+    py: 3.5,
+    borderRadius: 10,
     border: '1px white solid',
     justifyContent: 'center',
     cursor: 'pointer',
@@ -41,8 +42,8 @@ const TimeTablePage = () => {
 
   return (
     <>
-      <div className={css({ h: '77px', bgColor: 'red.2', px: '100px', display: 'flex', flexDir: 'row' })}>
-        <div className={css({ display: 'flex', flexDir: 'row', alignItems: 'center', gap: '20px' })}>
+      <div className={css({ h: 20, bgColor: 'red.2', px: '6.25rem', display: 'flex', flexDir: 'row' })}>
+        <div className={css({ display: 'flex', flexDir: 'row', alignItems: 'center', gap: 5 })}>
           <Link to={'/timetable'} className={css(ToolbarBtn.raw({ selected: curPath === '/timetable' }))}>
             My schedule
           </Link>

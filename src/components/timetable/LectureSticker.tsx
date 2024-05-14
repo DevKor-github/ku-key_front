@@ -9,7 +9,7 @@ const LectureDetail = css({
   display: 'flex',
   flexDir: 'row',
   alignItems: 'center',
-  gap: '3px',
+  gap: 1,
 })
 
 interface LectureStickerProps {
@@ -24,10 +24,10 @@ const LectureSticker = ({ name, runningTime, professor, room }: LectureStickerPr
     <div
       className={css({
         bgColor: '#FFF8F8',
-        position: 'absolute',
+        position: 'absolute', // todo: flex로 Refactoring?
         w: 'calc(100% - 32px)',
-        m: '6px 16px',
-        p: '12px 10px',
+        m: '0.375rem 1rem',
+        p: '0.75rem 0.625rem',
         borderRadius: 10,
         zIndex: 10,
         border: '1px #FFC6C6 solid',
