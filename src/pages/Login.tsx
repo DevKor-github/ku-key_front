@@ -16,9 +16,6 @@ const Login = () => {
         })}
       >
         <div>로그인 페이지입니다</div>
-        <Button variant="primary" onClick={() => alert('Hello 🐼!')}>
-          Hello 🐼!
-        </Button>
       </div>
     </>
   )
