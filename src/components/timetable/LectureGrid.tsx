@@ -6,6 +6,7 @@ import { CourseType, DayType } from '@/types/timetable'
 
 const dayMap: { [key in DayType]: number } = { 월: 1, 화: 2, 수: 3, 목: 4, 금: 5 }
 
+// todo : util 디렉토리로 이동
 const dataPreprocess = (data: CourseType[]) => {
   const lecGrid: Array<CourseType>[] = Array(40)
   for (let i = 0; i < 40; i++) {
@@ -22,7 +23,7 @@ const dataPreprocess = (data: CourseType[]) => {
 }
 
 const LectureGrid = () => {
-  // 시간표에 있는 강의를 받아오는 로직
+  // todo: 시간표에 있는 강의를 받아오는 로직
 
   // Dummy Data
   const data: CourseType[] = [
