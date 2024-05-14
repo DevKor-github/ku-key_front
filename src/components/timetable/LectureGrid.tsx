@@ -2,25 +2,8 @@ import { css } from '@styled-stytem/css'
 
 import LectureSticker from '@/components/timetable/LectureSticker'
 import { TimeCell } from '@/components/timetable/TimeTable'
-import { CourseType, DayType } from '@/types/timetable'
-
-const dayMap: { [key in DayType]: number } = { 월: 1, 화: 2, 수: 3, 목: 4, 금: 5 }
-
-// todo : util 디렉토리로 이동
-const dataPreprocess = (data: CourseType[]) => {
-  const lecGrid: Array<CourseType>[] = Array(40)
-  for (let i = 0; i < 40; i++) {
-    lecGrid[i] = []
-  }
-
-  // 강의 데이터 Cell에 임베딩
-  data.map(lecture => {
-    const ind = 5 * (Math.ceil((lecture.startTime + 1) / 60) - 1) + dayMap[lecture.day]
-    lecGrid[ind - 1].push(lecture)
-  })
-
-  return lecGrid
-}
+import { CourseType } from '@/types/timetable'
+import { dataPreprocess } from '@/util/lectureUtil'
 
 const LectureGrid = () => {
   // todo: 시간표에 있는 강의를 받아오는 로직
