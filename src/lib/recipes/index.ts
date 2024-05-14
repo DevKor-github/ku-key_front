@@ -1,3 +1,3 @@
 import { chipRecipe } from '@/lib/recipes/chip'
-
-export { chipRecipe }
+import { labelRecipe } from '@/lib/recipes/label'
+export { chipRecipe, labelRecipe }
