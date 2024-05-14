@@ -9,7 +9,7 @@ export const inputRecipe = defineRecipe({
     w: 'full',
     rounded: 'md',
     border: '1px solid gray.200',
-    bg: 'gray.50',
+    bgColor: 'gray.50',
     px: 3,
     py: 2,
     fontSize: 'sm',

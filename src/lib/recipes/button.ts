@@ -16,9 +16,9 @@ export const buttonRecipe = defineRecipe({
   variants: {
     variant: {
       default: {
-        bg: '#09090b',
+        bgColor: '#09090b',
         color: 'gray.50',
-        _hover: { transition: 'background 0.25s', bg: '#09090b/90' },
+        _hover: { transition: 'background 0.25s', bgColor: '#09090b/90' },
       },
       // outline: {
       //   bg: 'background',

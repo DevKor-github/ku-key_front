@@ -10,8 +10,8 @@ const RegisterPage = () => {
         className={css({
           display: 'flex',
           flexDir: 'column',
-          width: '100%',
-          height: '100vh',
+          w: 'full',
+          h: '100vh',
           justifyContent: 'center',
           alignItems: 'center',
         })}

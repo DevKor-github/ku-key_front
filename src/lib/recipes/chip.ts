@@ -17,15 +17,15 @@ export const chipRecipe = defineRecipe({
   variants: {
     variant: {
       default: {
-        bg: 'white',
+        bgColor: 'white',
         color: 'red.2',
       },
       red3: {
-        bg: 'red.3',
+        bgColor: 'red.3',
         color: 'white',
       },
       red4: {
-        bg: 'red.4',
+        bgColor: 'red.4',
         color: 'red.2',
       },
     },
