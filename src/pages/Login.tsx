@@ -1,6 +1,6 @@
 import { css } from '@styled-stytem/css'
 
-import Button from '@/components/Button'
+import Button from '@/components/ui/button'
 
 const Login = () => {
   return (

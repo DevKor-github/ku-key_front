@@ -1,5 +1,6 @@
 import { defineConfig } from '@pandacss/dev'
 
+import { chipRecipe } from './src/lib/recipes/index'
 export default defineConfig({
   // Whether to use css reset
   preflight: true,
@@ -13,9 +14,13 @@ export default defineConfig({
   // Useful for theme customization
   theme: {
     extend: {
+      recipes: {
+        chip: chipRecipe,
+      },
       tokens: {
         colors: {
           white: { value: '#FFFFFF' },
+          bg: { value: '#F9F9F9' },
           black: {
             1: { value: '#000000' },
             2: { value: '#383838' },
@@ -38,6 +43,7 @@ export default defineConfig({
       },
     },
   },
+  jsxFramework: 'react',
 
   // The output directory for your css system
   outdir: 'styled-system',
