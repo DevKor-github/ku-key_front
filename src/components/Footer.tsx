@@ -68,7 +68,7 @@ const Footer = () => {
           })}
         >
           {supportApps.map(app => {
-            return <img className={supportAppIcon} src={app.src} alt={app.name} />
+            return <img key={app.name} className={supportAppIcon} src={app.src} alt={app.name} />
           })}
         </div>
         <div className={css({ w: '534px', h: '1px', bg: 'black.1' })} />
