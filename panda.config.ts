@@ -1,6 +1,6 @@
 import { defineConfig } from '@pandacss/dev'
 
-import { chipRecipe } from './src/lib/recipes/index'
+import { buttonRecipe, chipRecipe, inputRecipe, labelRecipe } from './src/lib/recipes/index'
 export default defineConfig({
   // Whether to use css reset
   preflight: true,
@@ -16,6 +16,9 @@ export default defineConfig({
     extend: {
       recipes: {
         chip: chipRecipe,
+        label: labelRecipe,
+        button: buttonRecipe,
+        input: inputRecipe,
       },
       tokens: {
         colors: {
