@@ -9,7 +9,7 @@ const Mask = () => {
         top: 20,
         left: 0,
         w: '100%',
-        h: { base: 500, mdDown: 250 },
+        h: { base: '500px', mdDown: '250px' },
         opacity: 0.2,
         bg: 'linear-gradient(0deg, #000 38.03%, rgba(0, 0, 0, 0.20) 88.56%)',
         zIndex: 1,

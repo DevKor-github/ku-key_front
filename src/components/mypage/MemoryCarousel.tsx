@@ -7,7 +7,7 @@ const MemoryCarousel = () => {
         display: 'flex',
         flexDir: 'column',
         w: 'full',
-        h: 642,
+        h: '642px',
         alignItems: 'center',
         color: 'black',
         bg: 'white',

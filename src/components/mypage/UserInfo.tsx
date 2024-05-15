@@ -17,7 +17,7 @@ const UserInfo = () => {
       <div
         className={css({
           display: 'flex',
-          gap: { base: 13, mdDown: 1 },
+          gap: { base: 3, mdDown: 1 },
           fontWeight: 'bold',
           fontSize: { base: 34, mdDown: 20 },
           alignItems: 'flex-end',
@@ -43,7 +43,7 @@ const UserInfo = () => {
           gap: 2.5,
         })}
       >
-        <img src={Cookie} alt="cookie" className={css({ w: { base: 37, mdDown: 21 } })} />
+        <img src={Cookie} alt="cookie" className={css({ w: { base: 9, mdDown: 5 } })} />
         <p>180p</p>
       </div>
       <div className={css({ display: 'flex', gap: 2, mt: 5 })}>

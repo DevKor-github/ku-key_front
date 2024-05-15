@@ -34,7 +34,7 @@ const Footer = () => {
         bg: 'white',
         display: { base: 'flex', mdDown: 'none' },
         flexDir: 'row',
-        py: 50,
+        py: 13,
         px: 40,
         alignItems: 'center',
       })}
@@ -44,7 +44,7 @@ const Footer = () => {
           className={css({
             color: 'black.1',
             // todo: 폰트 사이즈 규격화 필요
-            fontSize: '26px',
+            fontSize: 26,
             fontWeight: '800',
           })}
         >
@@ -64,7 +64,7 @@ const Footer = () => {
           className={css({
             display: 'flex',
             flexDir: 'row',
-            gap: '20px',
+            gap: 5,
           })}
         >
           {supportApps.map(app => {
@@ -88,7 +88,7 @@ const Footer = () => {
           display: 'flex',
           flexWrap: 'wrap',
           gap: '20.3px',
-          h: '100px',
+          h: 25,
         })}
       >
         <Link to="/" className={tabs}>

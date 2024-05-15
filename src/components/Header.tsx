@@ -49,7 +49,7 @@ const Header = () => {
       <div
         className={css({
           display: { base: 'flex', mdDown: 'none' },
-          gap: '50px',
+          gap: 12,
         })}
       >
         <Link className={css(NaviItem.raw({ selected: curPathRoot === '' }))} to="/">
@@ -72,15 +72,14 @@ const Header = () => {
         className={css({
           display: 'flex',
           flexDir: 'row-reverse',
-          w: '120px',
+          w: 30,
         })}
       >
         {/* todo: 통일된 버튼 컴포넌트로 마이그레이션 */}
         <button
           className={css({
-            w: '30px',
-            h: '30px',
-            fontSize: '20px',
+            w: 30,
+            fontSize: 20,
             cursor: 'pointer',
           })}
         >
