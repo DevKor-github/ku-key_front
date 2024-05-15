@@ -7,7 +7,7 @@ export const ToolbarBtn = cva({
     h: 12,
     px: 7,
     py: 3.5,
-    borderRadius: 10,
+    rounded: 10,
     border: '1px white solid',
     justifyContent: 'center',
     cursor: 'pointer',
@@ -23,7 +23,7 @@ export const ToolbarBtn = cva({
     back: {
       white: {
         bg: 'lightGray.2',
-        borderRadius: 10,
+        rounded: 10,
         border: '1px {colors.darkGray.1} solid',
         color: 'darkGray.1',
       },
@@ -42,7 +42,7 @@ const TimeTablePage = () => {
 
   return (
     <>
-      <div className={css({ h: 20, bgColor: 'red.2', px: '6.25rem', display: 'flex', flexDir: 'row' })}>
+      <div className={css({ h: 20, bgColor: 'red.2', px: 25, display: 'flex', flexDir: 'row' })}>
         <div className={css({ display: 'flex', flexDir: 'row', alignItems: 'center', gap: 5 })}>
           <Link to={'/timetable'} className={css(ToolbarBtn.raw({ selected: curPath === '/timetable' }))}>
             My schedule

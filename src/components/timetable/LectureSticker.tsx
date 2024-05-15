@@ -28,7 +28,7 @@ const LectureSticker = ({ name, runningTime, professor, room }: LectureStickerPr
         w: 'calc(100% - 32px)',
         m: '0.375rem 1rem',
         p: '0.75rem 0.625rem',
-        borderRadius: 10,
+        rounded: 10,
         zIndex: 10,
         border: '1px #FFC6C6 solid',
         display: 'flex',

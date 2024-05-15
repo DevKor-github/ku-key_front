@@ -11,7 +11,7 @@ const FriendsList = () => {
         className={css({
           h: 12,
           bgColor: 'lightGray.2',
-          borderRadius: 10,
+          rounded: 10,
           border: '1px {colors.darkGray.1} solid',
           textAlign: 'center',
           color: 'darkGray.1',
@@ -29,7 +29,7 @@ const FriendsList = () => {
           flexDir: 'column',
           gap: 0.5,
           bgColor: 'lightGray.2',
-          borderRadius: 10,
+          rounded: 10,
           border: '1px {colors.darkGray.1} solid',
         })}
       >

@@ -31,10 +31,10 @@ export const TimeCell = cva({
     },
     end: {
       leftEnd: {
-        borderBottomLeftRadius: 10,
+        roundedBottomLeft: 10,
       },
       rightEnd: {
-        borderBottomRightRadius: 10,
+        roundedBottomRight: 10,
       },
     },
     lectureGrid: {
@@ -63,8 +63,7 @@ const TimeTable = ({ semester, year }: TimeTableProps) => {
         className={css({
           h: 16,
           bgColor: 'lightGray.2',
-          borderTopLeftRadius: 10,
-          borderTopRightRadius: 10,
+          roundedTop: 10,
           border: '1px {colors.darkGray.2} solid',
           display: 'flex',
           pl: 3.5,
