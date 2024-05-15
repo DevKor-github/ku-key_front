@@ -1,6 +1,8 @@
 import { defineConfig } from '@pandacss/dev'
 
 import { buttonRecipe, chipRecipe, inputRecipe, labelRecipe } from './src/lib/recipes/index'
+import { tokenToRem } from './src/util/tokenToRem'
+
 export default defineConfig({
   // Whether to use css reset
   preflight: true,
@@ -43,6 +45,8 @@ export default defineConfig({
             4: { value: '#FFC2AF' },
           },
         },
+        spacing: tokenToRem,
+        sizes: tokenToRem,
       },
     },
   },
