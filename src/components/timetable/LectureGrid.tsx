@@ -3,7 +3,7 @@ import { css } from '@styled-stytem/css'
 import { TimeCell } from '@/components/timetable'
 import LectureSticker from '@/components/timetable/LectureSticker'
 import { CourseType } from '@/types/timetable'
-import { dataPreprocess } from '@/util/lectureUtil'
+import { lectureDataPreprocess } from '@/util/timetableUtil'
 
 const LectureGrid = () => {
   // todo: 시간표에 있는 강의를 받아오는 로직
@@ -48,7 +48,7 @@ const LectureGrid = () => {
     },
   ]
 
-  const lecGrid = dataPreprocess(data)
+  const lecGrid = lectureDataPreprocess(data)
 
   return (
     <div className={css({ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)' })}>

@@ -2,7 +2,7 @@ import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import { css } from '@styled-stytem/css'
 import { ChevronDown } from 'lucide-react'
 
-import { Semester } from '@/pages/Timetable/MyTimetablePage'
+import { Semester } from '@/types/timetable'
 
 interface TimetableDropdownProps {
   semesterList: Semester[]
@@ -41,6 +41,7 @@ const TimetableDropdown = ({ semesterList, curSemester, setCurSemester }: Timeta
             border: '1px {colors.lightGray.1} solid',
             bgColor: 'bg',
             rounded: 10,
+            zIndex: 20,
           })}
         >
           {semesterList.map((semester, ind) => {

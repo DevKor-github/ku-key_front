@@ -63,7 +63,9 @@ const TimetablePage = () => {
           </Link>
         </div>
       </div>
-      <Outlet />
+      <div className={css({ display: 'flex', flexDir: 'column', px: 38 })}>
+        <Outlet />
+      </div>
     </>
   )
 }
