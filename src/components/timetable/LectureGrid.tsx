@@ -1,7 +1,7 @@
 import { css } from '@styled-stytem/css'
 
+import { TimeCell } from '@/components/timetable'
 import LectureSticker from '@/components/timetable/LectureSticker'
-import { TimeCell } from '@/components/timetable/TimeTable'
 import { CourseType } from '@/types/timetable'
 import { dataPreprocess } from '@/util/lectureUtil'
 

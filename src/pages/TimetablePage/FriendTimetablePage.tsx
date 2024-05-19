@@ -1,10 +1,10 @@
 import { css } from '@styled-stytem/css'
 
+import Timetable from '@/components/timetable'
 import FriendsList from '@/components/timetable/FriendsList'
-import TimeTable from '@/components/timetable/TimeTable'
-import { ToolbarBtn } from '@/pages/TimeTablePage'
+import { ToolbarBtn } from '@/pages/TimetablePage'
 
-const FriendTimeTablePage = () => {
+const FriendTimetablePage = () => {
   return (
     <div className={css({ display: 'flex', flexDir: 'column' })}>
       <div className={css({ display: 'flex', flexDir: 'column', px: 20 })}>
@@ -19,11 +19,11 @@ const FriendTimeTablePage = () => {
         </div>
         <div className={css({ display: 'flex', flexDir: 'row', gap: 5, pb: 80 })}>
           <FriendsList />
-          <TimeTable semester={'Spring'} year={'2024'} />
+          <Timetable semester={'Spring'} year={'2024'} />
         </div>
       </div>
     </div>
   )
 }
 
-export default FriendTimeTablePage
+export default FriendTimetablePage

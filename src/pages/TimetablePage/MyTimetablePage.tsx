@@ -1,9 +1,9 @@
 import { css } from '@styled-stytem/css'
 import { useState } from 'react'
 
-import TimeTable from '@/components/timetable/TimeTable'
+import TimeTable from '@/components/timetable'
 import TimetableDropdown from '@/components/timetable/TimetableDropdown'
-import { ToolbarBtn } from '@/pages/TimeTablePage'
+import { ToolbarBtn } from '@/pages/timetable/TimetablePage'
 
 // todo: 자료형 개선
 export interface Semester {
@@ -16,7 +16,7 @@ const dummySemesterList: Semester[] = [
   { year: '2024', semester: 'Spring' },
 ]
 
-const MyTimeTablePage = () => {
+const MyTimetablePage = () => {
   const [curSemester, setCurSemester] = useState(0)
   return (
     <div className={css({ display: 'flex', flexDir: 'column', px: 20 })}>
@@ -41,4 +41,4 @@ const MyTimeTablePage = () => {
   )
 }
 
-export default MyTimeTablePage
+export default MyTimetablePage

@@ -2,13 +2,13 @@ import { RouteObject } from 'react-router-dom'
 
 import MainLayout from '@/components/MainLayout'
 import ProtectedRoutes from '@/lib/router/ProtectedRoutes'
-import FriendTimeTablePage from '@/pages/FriendTimeTablePage'
 import LandingPage from '@/pages/LandingPage'
 import Login from '@/pages/LoginPage'
 import MyPage from '@/pages/MyPage'
-import MyTimeTablePage from '@/pages/MyTimeTablePage'
 import RegisterPage from '@/pages/RegisterPage'
-import TimeTablePage from '@/pages/TimeTablePage'
+import TimetablePage from '@/pages/TimetablePage'
+import FriendTimetablePage from '@/pages/TimetablePage/FriendTimetablePage'
+import MyTimetablePage from '@/pages/TimetablePage/MyTimetablePage'
 
 const routes: RouteObject[] = [
   {
@@ -22,10 +22,10 @@ const routes: RouteObject[] = [
           { path: 'mypage', element: <MyPage /> },
           {
             path: 'timetable',
-            element: <TimeTablePage />,
+            element: <TimetablePage />,
             children: [
-              { path: '', element: <MyTimeTablePage /> },
-              { path: 'friend', element: <FriendTimeTablePage /> },
+              { path: '', element: <MyTimetablePage /> },
+              { path: 'friend', element: <FriendTimetablePage /> },
             ],
           },
         ],

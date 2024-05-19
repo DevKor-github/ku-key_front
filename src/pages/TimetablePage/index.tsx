@@ -18,6 +18,7 @@ export const ToolbarBtn = cva({
     wordWrap: 'break-word',
     display: 'inline-flex',
     alignItems: 'center',
+    zIndex: 2,
   },
   variants: {
     back: {
@@ -37,12 +38,22 @@ export const ToolbarBtn = cva({
   },
 })
 
-const TimeTablePage = () => {
+const TimetablePage = () => {
   const curPath = useLocation().pathname
 
   return (
     <>
-      <div className={css({ h: 20, bgColor: 'red.2', px: 25, display: 'flex', flexDir: 'row' })}>
+      <div
+        className={css({
+          position: 'absolute',
+          h: 20,
+          w: '100%',
+          bg: 'linear-gradient(0deg, black 35%, rgba(0, 0, 0, 0.20) 88%)',
+          opacity: 0.2,
+          zIndex: 1,
+        })}
+      />
+      <div className={css({ h: 20, bgColor: 'red.2', px: 38, display: 'flex', flexDir: 'row', zIndex: 0 })}>
         <div className={css({ display: 'flex', flexDir: 'row', alignItems: 'center', gap: 5 })}>
           <Link to={'/timetable'} className={css(ToolbarBtn.raw({ selected: curPath === '/timetable' }))}>
             My schedule
@@ -57,4 +68,4 @@ const TimeTablePage = () => {
   )
 }
 
-export default TimeTablePage
+export default TimetablePage

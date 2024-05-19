@@ -56,7 +56,7 @@ interface TimeTableProps {
   year: string
 }
 
-const TimeTable = ({ semester, year }: TimeTableProps) => {
+const Timetable = ({ semester, year }: TimeTableProps) => {
   return (
     <div className={css({ w: '100%' })}>
       <div
@@ -113,4 +113,4 @@ const TimeTable = ({ semester, year }: TimeTableProps) => {
   )
 }
 
-export default TimeTable
+export default Timetable

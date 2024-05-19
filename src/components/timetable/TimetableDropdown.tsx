@@ -2,7 +2,7 @@ import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import { css } from '@styled-stytem/css'
 import { ChevronDown } from 'lucide-react'
 
-import { Semester } from '@/pages/MyTimeTablePage'
+import { Semester } from '@/pages/Timetable/MyTimetablePage'
 
 interface TimetableDropdownProps {
   semesterList: Semester[]
