@@ -3,6 +3,7 @@ import AuthProvider from 'react-auth-kit'
 import createStore from 'react-auth-kit/createStore'
 import { useRoutes } from 'react-router-dom'
 
+import { refresh } from '@/api/hooks/refresh'
 import routes from '@/router/router'
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -15,6 +16,7 @@ const queryClient = new QueryClient({
 const store = createStore({
   authName: '_auth',
   authType: 'localstorage',
+  refresh: refresh,
 })
 
 function App() {
