@@ -4,6 +4,7 @@ export type DayType = '월' | '화' | '수' | '목' | '금'
 // todo: 자료형 개선
 export interface TimetableInfo {
   timetableID: string
+  name: string
   year: string
   semester: string
   isPin: boolean

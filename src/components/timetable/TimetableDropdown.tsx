@@ -16,7 +16,7 @@ const TimetableDropdown = ({ semesterList, curSemester, setCurSemester }: Timeta
       <DropdownMenu.Trigger asChild>
         <button
           className={css({
-            w: 65,
+            w: 68,
             rounded: 10,
             border: '1px {colors.lightGray.2} solid',
             display: 'flex',

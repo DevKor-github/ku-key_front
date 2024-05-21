@@ -21,6 +21,7 @@ export const ToolbarBtn = cva({
     zIndex: 2,
   },
   variants: {
+    icon: { true: { p: 0, w: 14 } },
     back: {
       white: {
         bg: 'lightGray.2',
@@ -63,7 +64,7 @@ const TimetablePage = () => {
           </Link>
         </div>
       </div>
-      <div className={css({ display: 'flex', flexDir: 'column', px: 38 })}>
+      <div className={css({ display: 'flex', flexDir: 'column', px: 64 })}>
         <Outlet />
       </div>
     </>
