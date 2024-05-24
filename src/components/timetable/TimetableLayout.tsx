@@ -12,9 +12,9 @@ export const TimeCell = cva({
     fontSize: 18,
     fontWeight: '500',
     wordWrap: 'break-word',
-    h: 28,
-    borderRight: '1px solid {colors.darkGray.2}',
-    borderBottom: '1px solid {colors.darkGray.2}',
+    h: 27,
+    borderRight: '1px solid {colors.lightGray.1}',
+    borderBottom: '1px solid {colors.lightGray.1}',
     position: 'relative',
   },
   variants: {
@@ -25,8 +25,8 @@ export const TimeCell = cva({
     },
     sidebar: {
       true: {
-        bgColor: 'lightGray.2',
-        w: 17,
+        bgColor: 'bg',
+        w: '4.125rem',
       },
     },
     end: {
@@ -57,7 +57,7 @@ const TimetableLayout = () => {
       className={css({
         display: 'flex',
         flexDir: 'row',
-        borderLeft: '1px solid {colors.darkGray.2}',
+        borderLeft: '1px solid {colors.lightGray.1}',
         borderBottomLeftRadius: 10,
       })}
     >

@@ -1,15 +1,14 @@
 import { css } from '@styled-stytem/css'
-import { MapPin, UserRound } from 'lucide-react'
+import { CircleUser, MapPin } from 'lucide-react'
 
 const LectureDetail = css({
-  color: 'darkGray.2',
   fontSize: 14,
-  fontWeight: '400',
+  fontWeight: 400,
   wordWrap: 'break-word',
   display: 'flex',
   flexDir: 'row',
   alignItems: 'center',
-  gap: 1,
+  gap: 0.5,
 })
 
 interface LectureStickerProps {
@@ -23,14 +22,13 @@ const LectureSticker = ({ name, runningTime, professor, room }: LectureStickerPr
   return (
     <div
       className={css({
-        bgColor: '#FFF8F8',
+        bgColor: 'rgba(243.45, 120.87, 120.87, 0.50)',
+        color: 'white',
         position: 'absolute', // todo: flex로 Refactoring?
-        w: 'calc(100% - 32px)',
-        m: '0.375rem 1rem',
+        w: 'calc(100% + 1px)',
         p: '0.75rem 0.625rem',
         rounded: 10,
         zIndex: 10,
-        border: '1px #FFC6C6 solid',
         display: 'flex',
         flexDir: 'column',
         justifyContent: 'space-between',
@@ -39,16 +37,14 @@ const LectureSticker = ({ name, runningTime, professor, room }: LectureStickerPr
         height: `calc(${runningTime * 1.66}% - 6px)`,
       }}
     >
-      <div className={css({ color: 'darkGray.2', fontSize: 18, fontWeight: '500', wordWrap: 'break-word' })}>
-        {name}
-      </div>
+      <div className={css({ fontSize: 18, fontWeight: '500', wordWrap: 'break-word' })}>{name}</div>
       <div className={css({ display: 'flex', flexDir: 'column', alignItems: 'flex-end' })}>
         <div className={LectureDetail}>
-          <UserRound size={14} />
+          <CircleUser size={12} />
           {professor}
         </div>
         <div className={LectureDetail}>
-          <MapPin size={14} />
+          <MapPin size={12} />
           {room}
         </div>
       </div>

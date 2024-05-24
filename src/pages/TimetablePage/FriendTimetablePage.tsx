@@ -16,9 +16,9 @@ const FriendTimetablePage = () => {
           <div className={css(ToolbarBtn.raw({ back: 'white' }))}>⤵️</div>
         </div>
       </div>
-      <div className={css({ display: 'flex', flexDir: 'row', gap: 5, pb: 80 })}>
+      <div className={css({ display: 'flex', flexDir: 'row', gap: 5 })}>
         <FriendsList />
-        <Timetable semester={'Spring'} year={'2024'} />
+        <Timetable semester={'Spring'} year={'2024'} timetableID={'dummy'} />
       </div>
     </>
   )

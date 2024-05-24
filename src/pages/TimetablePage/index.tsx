@@ -4,7 +4,7 @@ import { Link, Outlet, useLocation } from 'react-router-dom'
 // todo: Recipe화 필요
 export const ToolbarBtn = cva({
   base: {
-    h: 12,
+    h: '3.0625rem',
     px: 7,
     py: 3.5,
     rounded: 10,
@@ -14,7 +14,7 @@ export const ToolbarBtn = cva({
     textAlign: 'center',
     color: 'white',
     fontSize: 18,
-    fontWeight: '500',
+    fontWeight: 500,
     wordWrap: 'break-word',
     display: 'inline-flex',
     alignItems: 'center',
@@ -24,10 +24,10 @@ export const ToolbarBtn = cva({
     icon: { true: { p: 0, w: 14 } },
     back: {
       white: {
-        bg: 'lightGray.2',
+        bg: 'white',
         rounded: 10,
-        border: '1px {colors.darkGray.1} solid',
-        color: 'darkGray.1',
+        border: '1px {colors.lightGray.1} solid',
+        color: 'darkGray.2',
       },
     },
     selected: {
@@ -54,17 +54,17 @@ const TimetablePage = () => {
           zIndex: 1,
         })}
       />
-      <div className={css({ h: 20, bgColor: 'red.2', px: 38, display: 'flex', flexDir: 'row', zIndex: 0 })}>
+      <div className={css({ h: 20, bgColor: 'red.2', px: '149px', display: 'flex', flexDir: 'row', zIndex: 0 })}>
         <div className={css({ display: 'flex', flexDir: 'row', alignItems: 'center', gap: 5 })}>
           <Link to={'/timetable'} className={css(ToolbarBtn.raw({ selected: curPath === '/timetable' }))}>
             My schedule
           </Link>
           <Link to={'/timetable/friend'} className={css(ToolbarBtn.raw({ selected: curPath === '/timetable/friend' }))}>
-            Friends
+            Friend list
           </Link>
         </div>
       </div>
-      <div className={css({ display: 'flex', flexDir: 'column', px: 64 })}>
+      <div className={css({ display: 'flex', flexDir: 'column', px: 64, mb: 40 })}>
         <Outlet />
       </div>
     </>

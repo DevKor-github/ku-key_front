@@ -17,8 +17,9 @@ const TimetableDropdown = ({ semesterList, curSemester, setCurSemester }: Timeta
         <button
           className={css({
             w: 68,
+            h: '3.06rem',
             rounded: 10,
-            border: '1px {colors.lightGray.2} solid',
+            border: '1px {colors.lightGray.1} solid',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
