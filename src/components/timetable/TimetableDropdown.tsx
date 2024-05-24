@@ -17,7 +17,7 @@ const TimetableDropdown = ({ semesterList, curSemester, setCurSemester }: Timeta
         <button
           className={css({
             w: 68,
-            h: '3.06rem',
+            h: '49px',
             rounded: 10,
             border: '1px {colors.lightGray.1} solid',
             display: 'flex',
@@ -26,6 +26,8 @@ const TimetableDropdown = ({ semesterList, curSemester, setCurSemester }: Timeta
             gap: 2.5,
             outline: 0,
             cursor: 'pointer',
+            zIndex: 30,
+            bgColor: 'white',
           })}
         >
           <div className={css({ color: 'darkGray.2', fontSize: 20, fontWeight: 700, wordWrap: 'break-word' })}>
@@ -36,13 +38,15 @@ const TimetableDropdown = ({ semesterList, curSemester, setCurSemester }: Timeta
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
         <DropdownMenu.Content
-          sideOffset={6}
+          sideOffset={-49}
           className={css({
-            w: 65,
-            border: '1px {colors.lightGray.1} solid',
-            bgColor: 'bg',
+            w: 68,
+            bgColor: 'white',
             rounded: 10,
             zIndex: 20,
+            pb: 2.5,
+            pt: '49px',
+            boxShadow: '0px 0px 4px rgba(0, 0, 0, 0.25)',
           })}
         >
           {semesterList.map((semester, ind) => {
@@ -51,12 +55,13 @@ const TimetableDropdown = ({ semesterList, curSemester, setCurSemester }: Timeta
                 key={ind}
                 className={css({
                   display: 'flex',
+                  mt: 2.5,
+                  h: 13,
                   justifyContent: 'center',
                   alignItems: 'center',
-                  py: 3.5,
-                  color: 'darkGray.1',
+                  color: 'lightGray.1',
                   fontSize: 18,
-                  fontWeight: 500,
+                  fontWeight: 700,
                   wordWrap: 'break-word',
                   rounded: 10,
                   border: ind == curSemester ? '1px {colors.darkGray.2} solid' : 'none',
