@@ -3,6 +3,7 @@ import { Check, Download, Plus } from 'lucide-react'
 import { useState } from 'react'
 
 import TimeTable from '@/components/timetable'
+import SelectTimetableBtn from '@/components/timetable/SelectTimetableBtn'
 import TimetableDropdown from '@/components/timetable/TimetableDropdown'
 import { ToolbarBtn } from '@/pages/TimetablePage'
 import { TimetableInfo } from '@/types/timetable'
@@ -18,26 +19,34 @@ const dummyTimetableList: TimetableInfo[] = [
   { timetableID: '2365718237', name: 'timetable1', year: '2024', semester: 'Fall', isPin: true },
 ]
 
-const SelectTimetableBtn = cva({
+const MainPinBtn = cva({
   base: {
+    fontSize: 18,
+    fontWeight: 500,
+    rounded: 30,
+    bgColor: 'bg',
     px: 2.5,
     h: 9,
     display: 'flex',
+    flexDir: 'row',
+    gap: 1,
     alignItems: 'center',
-    cursor: 'pointer',
-    bgColor: 'bg',
-    rounded: 10,
+    border: 'solid 1px {colors.lightGray.1}',
     color: 'lightGray.1',
-    fontSize: 18,
-    fontWeight: 500,
-    wordWrap: 'break-word',
-    border: '1px solid {colors.lightGray.1}',
+    cursor: 'pointer',
   },
   variants: {
-    selected: {
+    main: {
       true: {
-        borderColor: 'darkGray.2',
-        color: 'darkGray.2',
+        color: 'red.1',
+        borderColor: 'red.1',
+        bgColor: 'bg.red',
+      },
+      false: {
+        _hover: {
+          borderColor: 'darkGray.2',
+          color: 'darkGray.2',
+        },
       },
     },
   },
@@ -69,7 +78,16 @@ const MyTimetablePage = () => {
           </div>
         </div>
       </div>
-      <div className={css({ display: 'flex', flexDir: 'row', justifyContent: 'space-between', mb: 5, h: 11 })}>
+      <div
+        className={css({
+          display: 'flex',
+          flexDir: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          mb: 5,
+          h: 11,
+        })}
+      >
         <div className={css({ display: 'flex', flexDir: 'row', gap: 5, alignItems: 'center' })}>
           <button
             onClick={handleCreateTimetableBtn}
@@ -85,6 +103,9 @@ const MyTimetablePage = () => {
               color: 'white',
               overflow: 'hidden',
               position: 'relative',
+              _hover: {
+                boxShadow: '0px 0px 4px rgba(231, 0, 0, 0.70)',
+              },
             })}
           >
             <div
@@ -102,36 +123,18 @@ const MyTimetablePage = () => {
           <div className={css({ display: 'flex', flexDir: 'row', gap: 2.5 })}>
             {semesterList[curSemester].timetables.map((timetable, ind) => {
               return (
-                <button
+                <SelectTimetableBtn
                   key={ind}
-                  className={SelectTimetableBtn({ selected: ind === curIndex })}
-                  onClick={() => {
-                    setCurIndex(ind)
-                  }}
-                >
-                  {timetable.name}
-                </button>
+                  timetableInfo={timetable}
+                  curInd={curIndex}
+                  timetableInd={ind}
+                  setCurIndex={setCurIndex}
+                />
               )
             })}
           </div>
         </div>
-        <button
-          className={css({
-            fontSize: 18,
-            fontWeight: 500,
-            rounded: 30,
-            bgColor: 'bg',
-            px: 2.5,
-            py: 2,
-            display: 'flex',
-            flexDir: 'row',
-            gap: 1,
-            alignItems: 'center',
-            border: 'solid 1px {colors.lightGray.1}',
-            color: 'lightGray.1',
-            cursor: 'pointer',
-          })}
-        >
+        <button className={MainPinBtn({ main: semesterList[curSemester].timetables[curIndex].isPin })}>
           <Check size={22} />
           Main
         </button>
