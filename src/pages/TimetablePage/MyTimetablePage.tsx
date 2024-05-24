@@ -1,5 +1,5 @@
 import { css, cva } from '@styled-stytem/css'
-import { Download, Plus } from 'lucide-react'
+import { Check, Download, Plus } from 'lucide-react'
 import { useState } from 'react'
 
 import TimeTable from '@/components/timetable'
@@ -69,8 +69,8 @@ const MyTimetablePage = () => {
           </div>
         </div>
       </div>
-      <div className={css({ display: 'flex', flexDir: 'row', justifyContent: 'space-between', mb: 5 })}>
-        <div className={css({ display: 'flex', flexDir: 'row', gap: 5, h: 11, alignItems: 'center' })}>
+      <div className={css({ display: 'flex', flexDir: 'row', justifyContent: 'space-between', mb: 5, h: 11 })}>
+        <div className={css({ display: 'flex', flexDir: 'row', gap: 5, alignItems: 'center' })}>
           <button
             onClick={handleCreateTimetableBtn}
             className={css({
@@ -115,7 +115,26 @@ const MyTimetablePage = () => {
             })}
           </div>
         </div>
-        <div>메인Btn</div>
+        <button
+          className={css({
+            fontSize: 18,
+            fontWeight: 500,
+            rounded: 30,
+            bgColor: 'bg',
+            px: 2.5,
+            py: 2,
+            display: 'flex',
+            flexDir: 'row',
+            gap: 1,
+            alignItems: 'center',
+            border: 'solid 1px {colors.lightGray.1}',
+            color: 'lightGray.1',
+            cursor: 'pointer',
+          })}
+        >
+          <Check size={22} />
+          Main
+        </button>
       </div>
       <TimeTable
         semester={semesterList[curSemester].semester}
