@@ -1,6 +1,6 @@
 import { defineConfig } from '@pandacss/dev'
 
-import { buttonRecipe, chipRecipe, inputRecipe, labelRecipe } from './src/lib/recipes/index'
+import { buttonRecipe, chipRecipe, inputRecipe, labelRecipe, modalCardRecipe } from './src/lib/recipes/index'
 import { tokenToRem } from './src/util/tokenToRem'
 
 export default defineConfig({
@@ -21,6 +21,7 @@ export default defineConfig({
         label: labelRecipe,
         button: buttonRecipe,
         input: inputRecipe,
+        modalCard: modalCardRecipe,
       },
       tokens: {
         colors: {
@@ -43,6 +44,9 @@ export default defineConfig({
             2: { value: '#E70000' },
             3: { value: '#F37979' },
             4: { value: '#FFC2AF' },
+          },
+          bg_red: {
+            value: '#FFF4F4',
           },
         },
         spacing: tokenToRem,
