@@ -1,5 +1,5 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
-import { css } from '@styled-stytem/css'
+import { css, cva } from '@styled-stytem/css'
 import { ChevronDown } from 'lucide-react'
 
 import { Semester } from '@/types/timetable'
@@ -9,6 +9,36 @@ interface TimetableDropdownProps {
   curSemester: number
   setCurSemester: React.Dispatch<React.SetStateAction<number>>
 }
+
+const DropdownItemsStyle = cva({
+  base: {
+    display: 'flex',
+    mt: 2.5,
+    mx: 2.5,
+    h: 13,
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: 'lightGray.1',
+    fontSize: 18,
+    fontWeight: 700,
+    wordWrap: 'break-word',
+    rounded: 10,
+    outline: 0,
+    cursor: 'pointer',
+    _hover: {
+      bgColor: 'bg',
+    },
+  },
+  variants: {
+    active: {
+      true: {
+        bgColor: 'lightGray.1',
+        color: 'white',
+        pointerEvents: 'none',
+      },
+    },
+  },
+})
 
 const TimetableDropdown = ({ semesterList, curSemester, setCurSemester }: TimetableDropdownProps) => {
   return (
@@ -53,21 +83,7 @@ const TimetableDropdown = ({ semesterList, curSemester, setCurSemester }: Timeta
             return (
               <DropdownMenu.Item
                 key={ind}
-                className={css({
-                  display: 'flex',
-                  mt: 2.5,
-                  h: 13,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  color: 'lightGray.1',
-                  fontSize: 18,
-                  fontWeight: 700,
-                  wordWrap: 'break-word',
-                  rounded: 10,
-                  border: ind == curSemester ? '1px {colors.darkGray.2} solid' : 'none',
-                  outline: 0,
-                  cursor: 'pointer',
-                })}
+                className={DropdownItemsStyle({ active: ind == curSemester })}
                 onClick={() => {
                   setCurSemester(ind)
                 }}
