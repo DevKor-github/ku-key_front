@@ -1,7 +1,7 @@
 import { TimetableInfo } from '@/api/types/timetable'
 import { CourseType, DayType, Semester } from '@/types/timetable'
 
-export const dayMap: { [key in DayType]: number } = { Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6, Sun: 7 }
+export const dayMap: { [key in DayType]: number } = { Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 }
 
 const semesterMap = ['', 'Spring', 'Summer', 'Fall', 'Winter']
 
@@ -47,15 +47,16 @@ const getStartCell = (startTime: string) => {
   return Number(startTime.slice(0, 2)) - 9
 }
 
-export const lectureDataPreprocess = (data: CourseType[]) => {
-  const lecGrid: Array<CourseType>[] = Array(40)
-  for (let i = 0; i < 40; i++) {
+export const lectureDataPreprocess = (data: CourseType[], weekCnt: number, timeCnt: number) => {
+  const cellCnt = timeCnt * weekCnt
+  const lecGrid: Array<CourseType>[] = Array(cellCnt)
+  for (let i = 0; i < cellCnt; i++) {
     lecGrid[i] = []
   }
 
   // 강의 데이터 Cell에 임베딩
   data.map(lecture => {
-    const ind = 5 * getStartCell(lecture.startTime) + dayMap[lecture.day]
+    const ind = weekCnt * getStartCell(lecture.startTime) + dayMap[lecture.day]
     lecGrid[ind - 1].push(lecture)
   })
 

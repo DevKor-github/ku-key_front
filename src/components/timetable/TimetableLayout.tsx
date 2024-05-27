@@ -74,7 +74,11 @@ const TimetableLayout = ({ tableID }: TimetableLayoutProps) => {
           return (
             <div
               key={ind}
-              className={TimeCell({ sidebar: true, header: ind === 0, end: ind === 8 ? 'leftEnd' : undefined })}
+              className={TimeCell({
+                sidebar: true,
+                header: ind === 0,
+                end: ind === time.length - 1 ? 'leftEnd' : undefined,
+              })}
             >
               {val}
             </div>
@@ -91,7 +95,7 @@ const TimetableLayout = ({ tableID }: TimetableLayoutProps) => {
             )
           })}
         </div>
-        <LectureGrid timetableData={data} />
+        <LectureGrid timetableData={data} weekCnt={week.length} timeCnt={time.length - 1} />
       </div>
     </div>
   )

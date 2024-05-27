@@ -7,13 +7,15 @@ import { getDuration, lectureDataPreprocess } from '@/util/timetableUtil'
 
 interface LectureGridProps {
   timetableData: GetTimeTableByTimeTableIdResponse
+  weekCnt: number
+  timeCnt: number
 }
 
-const LectureGrid = ({ timetableData }: LectureGridProps) => {
-  const lecGrid = lectureDataPreprocess(timetableData)
+const LectureGrid = ({ timetableData, weekCnt, timeCnt }: LectureGridProps) => {
+  const lecGrid = lectureDataPreprocess(timetableData, weekCnt, timeCnt)
 
   return (
-    <div className={css({ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)' })}>
+    <div className={css({ display: 'grid' })} style={{ gridTemplateColumns: `repeat(${weekCnt}, 1fr)` }}>
       {lecGrid.map((lectures, gridInd) => {
         return (
           <div key={gridInd} className={TimeCell({ lectureGrid: true, end: gridInd === 39 ? 'rightEnd' : undefined })}>

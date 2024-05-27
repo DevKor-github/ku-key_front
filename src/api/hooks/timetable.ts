@@ -49,9 +49,38 @@ const dummyTimetableData: { [key: string]: GetTimeTableByTimeTableIdResponse } =
       classroom: '정보관B101',
     },
   ],
-  '5837422123': [],
+  '5837422123': [
+    {
+      professorName: '차승민',
+      courseName: 'Frontend 심화반',
+      courseCode: 'FREN101',
+      day: 'Fri',
+      startTime: '16:00:00',
+      endTime: '18:20:00',
+      classroom: '정보관B101',
+    },
+  ],
   '1347897282': [],
-  '4852836482': [],
+  '4852836482': [
+    {
+      professorName: '차승민',
+      courseName: 'Frontend 심화반',
+      courseCode: 'FREN101',
+      day: 'Sat',
+      startTime: '16:00:00',
+      endTime: '18:20:00',
+      classroom: '정보관B101',
+    },
+    {
+      professorName: '차승민',
+      courseName: 'Frontend 심화반',
+      courseCode: 'FREN101',
+      day: 'Mon',
+      startTime: '16:00:00',
+      endTime: '18:20:00',
+      classroom: '정보관B101',
+    },
+  ],
   '2365718237': [],
 }
 
