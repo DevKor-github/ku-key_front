@@ -8,6 +8,7 @@ interface TimetableDropdownProps {
   semesterList: Semester[]
   curSemester: number
   setCurSemester: React.Dispatch<React.SetStateAction<number>>
+  setCurIndex: React.Dispatch<React.SetStateAction<number>>
 }
 
 const DropdownItemsStyle = cva({
@@ -40,9 +41,10 @@ const DropdownItemsStyle = cva({
   },
 })
 
-const TimetableDropdown = ({ semesterList, curSemester, setCurSemester }: TimetableDropdownProps) => {
+const TimetableDropdown = ({ semesterList, curSemester, setCurSemester, setCurIndex }: TimetableDropdownProps) => {
   return (
     <DropdownMenu.Root>
+      {/* todo :: open시에 다시 닫는 ^ 기능 만들기 */}
       <DropdownMenu.Trigger asChild>
         <button
           className={css({
@@ -86,6 +88,7 @@ const TimetableDropdown = ({ semesterList, curSemester, setCurSemester }: Timeta
                 className={DropdownItemsStyle({ active: ind == curSemester })}
                 onClick={() => {
                   setCurSemester(ind)
+                  setCurIndex(0)
                 }}
               >{`${semester.year} ${semester.semester} semester`}</DropdownMenu.Item>
             )
