@@ -16,6 +16,8 @@ export interface Semester {
   timetables: TimetableInfo[]
 }
 
+export type GetTimeTableByTimeTableIdResponse = CourseType[]
+
 export interface CourseType {
   professorName: string
   courseName: string

@@ -4,9 +4,11 @@ export const dayMap: { [key in DayType]: number } = { 월: 1, 화: 2, 수: 3, �
 
 const semesterMap = ['', 'Spring', 'Summer', 'Fall', 'Winter']
 
-export const timetablePreprocess = (data: TimetableInfo[]) => {
+export const timetablePreprocess = (data: TimetableInfo[] | undefined) => {
   // 시간표 리스트를 받으면
   // 각 학기의 배열로 되어 있는 리스트로 변환
+
+  if (data === undefined) data = []
 
   // todo: hard coding 되어 있는 학기 리스트 자동화 매핑
   const supportedYear = ['2023', '2024']

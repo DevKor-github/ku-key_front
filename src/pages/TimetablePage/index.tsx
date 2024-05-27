@@ -1,4 +1,5 @@
 import { css, cva } from '@styled-stytem/css'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Link, Outlet, useLocation } from 'react-router-dom'
 
 // todo: Recipe화 필요
@@ -41,6 +42,7 @@ export const ToolbarBtn = cva({
 
 const TimetablePage = () => {
   const curPath = useLocation().pathname
+  const queryClient = new QueryClient()
 
   return (
     <>
@@ -65,7 +67,9 @@ const TimetablePage = () => {
         </div>
       </div>
       <div className={css({ display: 'flex', flexDir: 'column', px: 64, mb: 40 })}>
-        <Outlet />
+        <QueryClientProvider client={queryClient}>
+          <Outlet />
+        </QueryClientProvider>
       </div>
     </>
   )

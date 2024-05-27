@@ -2,22 +2,14 @@ import { css, cva } from '@styled-stytem/css'
 import { Check, Download, Plus } from 'lucide-react'
 import { useState } from 'react'
 
+import { useGetTimetableList } from '@/api/hooks/timetable'
 import TimeTable from '@/components/timetable'
 import SelectTimetableBtn from '@/components/timetable/SelectTimetableBtn'
 import TimetableDropdown from '@/components/timetable/TimetableDropdown'
 import { ToolbarBtn } from '@/pages/TimetablePage'
-import { TimetableInfo } from '@/types/timetable'
 import { timetablePreprocess } from '@/util/timetableUtil'
 
 // todo: 해당 학기에 존재하는 timeTable이 하나도 없을 시에, createTimetable 요청 로직
-
-const dummyTimetableList: TimetableInfo[] = [
-  { timetableID: '2132412832', name: 'timetable1', year: '2023', semester: 'Spring', isPin: true },
-  { timetableID: '5837422123', name: 'timetable1', year: '2023', semester: 'Fall', isPin: true },
-  { timetableID: '1347897282', name: 'timetable1', year: '2024', semester: 'Spring', isPin: true },
-  { timetableID: '4852836482', name: 'timetable2', year: '2024', semester: 'Spring', isPin: false },
-  { timetableID: '2365718237', name: 'timetable1', year: '2024', semester: 'Fall', isPin: true },
-]
 
 const MainPinBtn = cva({
   base: {
@@ -60,16 +52,26 @@ const handleCreateTimetableBtn = () => {
 const MyTimetablePage = () => {
   const [curSemester, setCurSemester] = useState(0)
   const [curIndex, setCurIndex] = useState(0)
-  const semesterList = timetablePreprocess(dummyTimetableList)
+  const { data: timetableList, isPending } = useGetTimetableList()
+  const semesterList = timetablePreprocess(timetableList)
 
-  return (
+  const curTimetable = semesterList[curSemester].timetables[curIndex]
+
+  return isPending ? (
+    <div>로딩 중</div>
+  ) : (
     <>
       <div className={css({ display: 'flex', flexDir: 'row', justifyContent: 'space-between', my: 11 })}>
         <div className={css({ display: 'flex', flexDir: 'row', gap: 5 })}>
           <div className={css({ color: 'black.2', fontSize: 32, fontWeight: '800', wordWrap: 'break-word' })}>
             My schedule
           </div>
-          <TimetableDropdown semesterList={semesterList} curSemester={curSemester} setCurSemester={setCurSemester} />
+          <TimetableDropdown
+            semesterList={semesterList}
+            curSemester={curSemester}
+            setCurSemester={setCurSemester}
+            setCurIndex={setCurIndex}
+          />
         </div>
         <div className={css({ display: 'flex', flexDir: 'row', gap: 2.5 })}>
           <div className={css(ToolbarBtn.raw({ back: 'white' }))}>Link</div>
@@ -134,16 +136,12 @@ const MyTimetablePage = () => {
             })}
           </div>
         </div>
-        <button className={MainPinBtn({ main: semesterList[curSemester].timetables[curIndex].isPin })}>
+        <button className={MainPinBtn({ main: curTimetable.isPin })}>
           <Check size={22} />
           Main
         </button>
       </div>
-      <TimeTable
-        semester={semesterList[curSemester].semester}
-        year={semesterList[curSemester].year}
-        timetableID={semesterList[curSemester].timetables[curIndex].timetableID}
-      />
+      <TimeTable timetable={curTimetable} />
     </>
   )
 }
