@@ -18,7 +18,10 @@ const LectureGrid = ({ timetableData, weekCnt, timeCnt }: LectureGridProps) => {
     <div className={css({ display: 'grid' })} style={{ gridTemplateColumns: `repeat(${weekCnt}, 1fr)` }}>
       {lecGrid.map((lectures, gridInd) => {
         return (
-          <div key={gridInd} className={TimeCell({ lectureGrid: true, end: gridInd === 39 ? 'rightEnd' : undefined })}>
+          <div
+            key={gridInd}
+            className={TimeCell({ lectureGrid: true, end: gridInd === weekCnt * timeCnt - 1 ? 'rightEnd' : undefined })}
+          >
             {lectures.map((lecture, lecInd) => {
               return (
                 <LectureSticker

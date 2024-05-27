@@ -24,7 +24,7 @@ const LectureSticker = ({ name, runningTime, professor, room }: LectureStickerPr
       className={css({
         bgColor: 'rgba(243.45, 120.87, 120.87, 0.50)',
         color: 'white',
-        position: 'absolute', // todo: flex로 Refactoring?
+        position: 'absolute',
         w: 'calc(100% + 1px)',
         p: '0.75rem 0.625rem',
         rounded: 10,
@@ -34,7 +34,7 @@ const LectureSticker = ({ name, runningTime, professor, room }: LectureStickerPr
         justifyContent: 'space-between',
       })}
       style={{
-        height: `calc(${runningTime * 1.66}% - 6px)`,
+        height: `calc(${(runningTime / 60) * 100}% + ${runningTime / 60}px)`,
       }}
     >
       <div className={css({ fontSize: 18, fontWeight: '500', wordWrap: 'break-word' })}>{name}</div>
