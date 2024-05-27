@@ -1,7 +1,6 @@
 import { css } from '@styled-stytem/css'
 import { useEffect, useState } from 'react'
 
-import { useGetTimetable } from '@/api/hooks/timetable'
 import { TimetableInfo } from '@/api/types/timetable'
 import TimetableLayout from '@/components/timetable/TimetableLayout'
 
@@ -11,16 +10,11 @@ interface TimeTableProps {
 
 const Timetable = ({ timetable }: TimeTableProps) => {
   const { tableID, tableName, year, semester } = timetable
-  const { data: curTable, isPending } = useGetTimetable(tableID)
   const [timetableTitle, setTimetableTitle] = useState('')
 
   useEffect(() => {
     setTimetableTitle(tableName)
   }, [tableName])
-
-  if (isPending || curTable === undefined) {
-    return <div>로딩중</div>
-  }
 
   return (
     <div className={css({ w: '100%' })}>
@@ -52,7 +46,7 @@ const Timetable = ({ timetable }: TimeTableProps) => {
         </div>
         <div>Color</div>
       </div>
-      <TimetableLayout />
+      <TimetableLayout tableID={tableID} />
     </div>
   )
 }

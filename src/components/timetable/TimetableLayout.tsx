@@ -1,6 +1,8 @@
 import { css, cva } from '@styled-stytem/css'
 
+import { useGetTimetable } from '@/api/hooks/timetable'
 import LectureGrid from '@/components/timetable/LectureGrid'
+import { getWeeknTimeList } from '@/util/timetableUtil'
 
 // todo : 브랜치 머지 이후 recipe화 필요
 export const TimeCell = cva({
@@ -45,13 +47,19 @@ export const TimeCell = cva({
   },
 })
 
-const time = ['']
-const week = ['MON', 'TUS', 'WEN', 'THR', 'FRI']
-for (let i = 9; i <= 16; i++) {
-  time.push(`${i}:00`)
+interface TimetableLayoutProps {
+  tableID: number
 }
 
-const TimetableLayout = () => {
+const TimetableLayout = ({ tableID }: TimetableLayoutProps) => {
+  const { data, isPending } = useGetTimetable(tableID)
+
+  if (isPending || data === undefined) {
+    return <div>로딩중</div>
+  }
+
+  const { time, week } = getWeeknTimeList(data)
+
   return (
     <div
       className={css({
@@ -83,7 +91,7 @@ const TimetableLayout = () => {
             )
           })}
         </div>
-        <LectureGrid />
+        <LectureGrid timetableData={data} />
       </div>
     </div>
   )
