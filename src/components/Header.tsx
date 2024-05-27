@@ -1,14 +1,15 @@
 import { css } from '@styled-stytem/css'
-import { Globe } from 'lucide-react'
 import { Link, useLocation } from 'react-router-dom'
 
+import LanguageButton from '@/components/header/LanguageButton'
 import { NavLinkButton } from '@/components/header/NavLinkButton'
-import { headerRouteConfig } from '@/lib/header/header-route'
+import { headerRouteConfig } from '@/lib/router/header-route'
 
 const Header = () => {
   const location = useLocation()
   const curPath = location.pathname
   const curPathRoot = curPath.split('/')[1]
+
   return (
     <div
       className={css({
@@ -48,21 +49,7 @@ const Header = () => {
           />
         ))}
       </div>
-      <button
-        className={css({
-          w: '30px',
-          h: '30px',
-          rounded: 'full',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          cursor: 'pointer',
-          _hover: { bgColor: 'lightGray.1' },
-          transition: 'background-color 0.15s ease-in-out',
-        })}
-      >
-        <Globe className={css({ color: 'black.2', w: '22px', h: '22px' })} />
-      </button>
+      <LanguageButton />
     </div>
   )
 }

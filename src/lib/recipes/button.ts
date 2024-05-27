@@ -8,28 +8,36 @@ export const buttonRecipe = defineRecipe({
     justifyContent: 'center',
     alignItems: 'center',
     gap: 2.5,
+    h: '54px',
     cursor: 'pointer',
-    rounded: 'md',
-    fontSize: 'sm',
+    rounded: '66px',
+    fontSize: 18,
     fontWeight: 500,
+    px: '30px',
   },
   variants: {
     variant: {
       default: {
-        bgColor: '#09090b',
-        color: 'gray.50',
-        _hover: { transition: 'background 0.25s', bgColor: '#09090b/90' },
+        bgColor: 'lightGray.2',
+        color: 'black.2',
+        borderWidth: 1,
+        borderColor: 'lightGray.2',
+        _hover: { transition: 'border-color 0.25s ease-in-out', borderColor: 'black.2' },
       },
-      // outline: {
-      //   bg: 'background',
-      //   border: 'input',
-      //   color: 'primary',
-      //   _hover: { transition: 'background 0.25s', bg: 'accent', color: 'accent.foreground' },
-      // },
-      // ghost: {
-      //   color: 'primary',
-      //   _hover: { bg: 'accent', color: 'accent.foreground' },
-      // },
+      red_1: {
+        color: 'red.1',
+        borderWidth: 1,
+        borderColor: 'transparent',
+        _hover: { transition: 'border-color 0.25s ease-in-out', borderColor: 'red.1' },
+        _selected: { bgColor: 'red.1', transition: 'background-color 0.25s ease-in-out', color: 'white' },
+      },
+      red_3: {
+        bgColor: 'red.3',
+        color: 'white',
+        borderWidth: 1,
+        borderColor: 'red.3',
+        _hover: { transition: 'background-color 0.25s ease-in-out', bgColor: 'transparent', color: 'red.3' },
+      },
     },
     size: {
       default: { h: 10, px: 4, py: 2 },
@@ -40,6 +48,6 @@ export const buttonRecipe = defineRecipe({
   },
   defaultVariants: {
     variant: 'default',
-    size: 'default',
+    // size: 'default',
   },
 })
