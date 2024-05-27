@@ -19,6 +19,7 @@ export const RegisterFormSchema = z.object({
       confirm: z.string(),
     })
     .refine(data => data.password === data.confirm, { message: 'passwords do not match', path: ['confirm'] }),
+  studentId: z.string().min(1),
 })
 
 export const UserNameSchema = RegisterFormSchema.pick({ username: true })

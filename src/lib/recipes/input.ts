@@ -16,7 +16,7 @@ export const inputRecipe = defineRecipe({
     color: 'black.1',
     ringOffset: 0.5,
     ringColor: 'gray.400',
-    _file: { border: 0, bg: 'transparent', fontSize: 'sm', font: 'medium' },
+    _file: { border: 0, bg: 'transparent', fontSize: 'sm', fontWeight: 'medium' },
     _placeholder: { color: 'gray.500' },
   },
 })

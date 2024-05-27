@@ -1,12 +1,14 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { css } from '@styled-stytem/css'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z, ZodError } from 'zod'
 
 import {
   useCheckEmailDuplication,
+  useCheckStudentIdDuplication,
   useCheckUsernameDuplication,
+  useRegister,
   useSendEmail,
   useVerifyEmail,
 } from '@/api/hooks/register'
@@ -21,23 +23,37 @@ import { checkPasswordConfirm, checkPasswordRegex, checkUsernameRegex } from '@/
 const RegisterPage = () => {
   const [code, setCode] = useState('')
   const [emailSent, setEmailSent] = useState(false)
+  const file = useRef<HTMLInputElement>(null)
   const [valid, setValid] = useState<ValidState>({ email: 'unknown', username: 'unknown', studentId: 'unknown' })
   const { mutate: mutateCheckEmailDuplication } = useCheckEmailDuplication()
   const { mutate: mutateSendEmail } = useSendEmail()
   const { mutate: muatateVerifyEmail } = useVerifyEmail()
   const { mutate: mutateCheckUsernameDuplication } = useCheckUsernameDuplication()
+  const { mutate: mutateCheckStudentIdDuplication } = useCheckStudentIdDuplication()
+  const { mutate: mutateRegister } = useRegister()
   const form = useForm<z.infer<typeof RegisterFormSchema>>({
     resolver: zodResolver(RegisterFormSchema),
     defaultValues: {
       email: '',
       password: { password: '', confirm: '' },
       username: '',
+      studentId: '',
     },
   })
 
   const onSubmit = (values: z.infer<typeof RegisterFormSchema>) => {
-    if (valid.email !== 'valid' || valid.username !== 'valid') return
-    console.log(values)
+    if (!file.current?.files?.length) return
+    if (valid.email !== 'valid' || valid.username !== 'valid' || valid.studentId !== 'valid') return
+    mutateRegister(
+      {
+        screenShot: file.current.files[0],
+        email: values.email,
+        username: values.username,
+        password: values.password.password,
+        studentNumber: values.studentId,
+      },
+      { onSuccess: () => alert('회원가입이 완료되었습니다.') },
+    )
   }
 
   const handleEmailDuplicationCheck = () => {
@@ -59,11 +75,18 @@ const RegisterPage = () => {
       },
     )
   }
-  const handleUsernameVerification = () => {
+  const handleUsernameDuplicationCheck = () => {
     if (checkUsernameRegex(form) instanceof ZodError) return
     mutateCheckUsernameDuplication(form.getValues().username, {
       onSuccess: () => setValid(v => ({ ...v, username: 'valid' })),
       onError: () => setValid(v => ({ ...v, username: 'invalid' })),
+    })
+  }
+
+  const handleStudentIdDuplicationCheck = () => {
+    mutateCheckStudentIdDuplication(form.getValues().studentId, {
+      onSuccess: () => setValid(v => ({ ...v, studentId: 'valid' })),
+      onError: () => form.setError('studentId', { message: 'This is a duplicate student number ID' }),
     })
   }
 
@@ -124,7 +147,7 @@ const RegisterPage = () => {
                       className={css({ alignSelf: 'stretch' })}
                       onBlur={() => checkUsernameRegex(form)}
                     />
-                    <Button type="button" onClick={() => handleUsernameVerification()}>
+                    <Button type="button" onClick={() => handleUsernameDuplicationCheck()}>
                       Send
                     </Button>
                   </div>
@@ -175,6 +198,31 @@ const RegisterPage = () => {
               </FormItem>
             )}
           />
+          <FormField
+            control={form.control}
+            name="studentId"
+            render={({ field }) => (
+              <FormItem className={css({ display: 'flex', flexDir: 'column', alignSelf: 'stretch' })}>
+                <FormLabel className={css({ fontWeight: 700 })}>Student ID</FormLabel>
+                <FormControl>
+                  <div className={css({ display: 'flex', gap: 2, alignItems: 'center' })}>
+                    <Input placeholder="Student ID" {...field} className={css({ alignSelf: 'stretch' })} />
+                    <Button type="button" onClick={() => handleStudentIdDuplicationCheck()}>
+                      Verify
+                    </Button>
+                  </div>
+                </FormControl>
+                <FormMessage />
+                {valid.studentId === 'valid' && <p className={css({ color: 'green.500' })}>available student ID</p>}
+              </FormItem>
+            )}
+          />
+          <div>
+            <Label htmlFor="Sreenshot of acceptance email">
+              Please attach a screenshot of your acceptance email from Korea University
+            </Label>
+            <Input type="file" ref={file} />
+          </div>
           <Button type="submit">Submit</Button>
         </form>
       </Form>

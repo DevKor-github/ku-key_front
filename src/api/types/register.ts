@@ -6,3 +6,11 @@ export interface VerifyEmailReqProps {
 export interface CheckEmailDuplicationResProps {
   possible: boolean
 }
+
+export interface RegisterReqProps {
+  screenShot: File
+  email: string
+  username: string
+  password: string
+  studentNumber: string
+}
