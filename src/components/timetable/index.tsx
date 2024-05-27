@@ -2,21 +2,21 @@ import { css } from '@styled-stytem/css'
 import { useEffect, useState } from 'react'
 
 import { useGetTimetable } from '@/api/hooks/timetable'
+import { TimetableInfo } from '@/api/types/timetable'
 import TimetableLayout from '@/components/timetable/TimetableLayout'
-import { TimetableInfo } from '@/types/timetable'
 
 interface TimeTableProps {
   timetable: TimetableInfo
 }
 
 const Timetable = ({ timetable }: TimeTableProps) => {
-  const { timetableID, name, year, semester } = timetable
-  const { data: curTable, isPending } = useGetTimetable(timetableID)
+  const { tableID, tableName, year, semester } = timetable
+  const { data: curTable, isPending } = useGetTimetable(tableID)
   const [timetableTitle, setTimetableTitle] = useState('')
 
   useEffect(() => {
-    setTimetableTitle(name)
-  }, [name])
+    setTimetableTitle(tableName)
+  }, [tableName])
 
   if (isPending || curTable === undefined) {
     return <div>로딩중</div>

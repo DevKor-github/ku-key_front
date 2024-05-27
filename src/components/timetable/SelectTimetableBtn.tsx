@@ -2,7 +2,7 @@ import { css, cva } from '@styled-stytem/css'
 import { CircleX } from 'lucide-react'
 import { useState } from 'react'
 
-import { TimetableInfo } from '@/types/timetable'
+import { TimetableInfo } from '@/api/types/timetable'
 
 const SelectTimetableBtnStyle = cva({
   base: {
@@ -50,7 +50,7 @@ const SelectTimetableBtn = ({
       onMouseLeave={() => setIsHover(false)}
     >
       <button onClick={() => setCurIndex(ind)} className={css({ cursor: 'pointer' })}>
-        {timetable.name}
+        {timetable.tableName}
       </button>
       {isHover && (
         <button
