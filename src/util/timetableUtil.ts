@@ -17,6 +17,7 @@ export const getDuration = (timeA: string, timeB: string) => {
 export const timetablePreprocess = (data: TimetableInfo[] | undefined) => {
   // 시간표 리스트를 받으면
   // 각 학기의 배열로 되어 있는 리스트로 변환
+  // todo: 전반적인 리펙토링
 
   if (data === undefined) data = []
 
@@ -59,4 +60,29 @@ export const lectureDataPreprocess = (data: CourseType[]) => {
   })
 
   return lecGrid
+}
+
+export const getWeeknTimeList = (data: CourseType[]) => {
+  let lastTime = 16
+  let haveSat = false
+
+  data.map(lec => {
+    lastTime = Math.max(lastTime, Number(lec.endTime.slice(0, 2)))
+    if (lec.day === 'Sat') {
+      haveSat = true
+    }
+  })
+
+  const time = ['']
+  const week = ['MON', 'TUS', 'WEN', 'THR', 'FRI']
+
+  if (haveSat) {
+    week.push('SAT')
+  }
+
+  for (let i = 9; i <= lastTime; i++) {
+    time.push(`${i}:00`)
+  }
+
+  return { time, week }
 }
