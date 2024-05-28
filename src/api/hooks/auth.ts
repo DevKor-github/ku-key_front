@@ -32,7 +32,7 @@ const logOut = async () => {
   return response.data
 }
 
-export const useLogout = () => {
+export const useLogOut = () => {
   const signOut = useSignOut()
   return useMutation({ mutationFn: logOut, onSuccess: signOut })
 }

@@ -19,7 +19,7 @@ const routes: RouteObject[] = [
         path: '',
         element: <ProtectedRoutes />,
         children: [
-          { path: '', element: <MyPage /> },
+          { path: 'mypage', element: <MyPage /> },
           {
             path: 'timetable',
             element: <TimeTablePage />,

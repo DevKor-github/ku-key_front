@@ -1,14 +1,22 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { css } from '@styled-stytem/css'
+import { useEffect } from 'react'
+import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 
+import { useLogIn, useLogOut } from '@/api/hooks/auth'
 import Button from '@/components/ui/button'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { LoginSchema } from '@/lib/zod/login-schema'
 
 const Login = () => {
+  const { mutate: mutateLogin } = useLogIn()
+  const { mutate: mutateLogout } = useLogOut()
+  const isAuth = useIsAuthenticated()
+  const navigate = useNavigate()
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -17,8 +25,12 @@ const Login = () => {
     },
   })
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
-    console.log(values)
+    mutateLogin(values)
   }
+
+  useEffect(() => {
+    if (isAuth) navigate('/mypage')
+  }, [isAuth, navigate])
   return (
     <div
       className={css({
@@ -69,6 +81,9 @@ const Login = () => {
           />
           <Button type="submit" className={css({ alignSelf: 'center' })}>
             Login
+          </Button>
+          <Button type="button" className={css({ alignSelf: 'center' })} onClick={() => mutateLogout()}>
+            Logout
           </Button>
         </form>
       </Form>

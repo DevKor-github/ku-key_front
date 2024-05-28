@@ -66,8 +66,8 @@ export const useCheckStudentIdDuplication = () => {
 
 const register = async (data: RegisterReqProps) => {
   const formData = new FormData()
-  formData.append('screenShot', data.screenShot)
-  formData.append('email', data.email)
+  formData.append('screenshot', data.screenShot)
+  formData.append('email', data.email + '@gmail.com')
   formData.append('username', data.username)
   formData.append('password', data.password)
   formData.append('studentNumber', data.studentNumber)

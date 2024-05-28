@@ -5,6 +5,7 @@ import Mask from '@/components/mypage/Mask'
 import MemoryCarousel from '@/components/mypage/MemoryCarousel'
 import MypageWrapper from '@/components/mypage/MypageWrapper'
 import UserInfo from '@/components/mypage/UserInfo'
+
 const MyPage = () => {
   return (
     <MypageWrapper>
