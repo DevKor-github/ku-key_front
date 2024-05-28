@@ -2,6 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { css } from '@styled-stytem/css'
 import { useCallback, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 
 import { useRegister } from '@/api/hooks/register'
@@ -21,6 +22,7 @@ const RegisterPage = () => {
   const [valid, setValid] = useState<ValidState>({ email: 'unknown', username: 'unknown', studentId: 'unknown' })
 
   const { mutate: mutateRegister } = useRegister()
+  const navigate = useNavigate()
   const form = useForm<z.infer<typeof RegisterFormSchema>>({
     resolver: zodResolver(RegisterFormSchema),
     defaultValues: {
@@ -42,7 +44,12 @@ const RegisterPage = () => {
         password: values.password.password,
         studentNumber: values.studentId,
       },
-      { onSuccess: () => alert('회원가입이 완료되었습니다.') },
+      {
+        onSuccess: () => {
+          alert('회원가입이 완료되었습니다.')
+          navigate('/login')
+        },
+      },
     )
   }
 
