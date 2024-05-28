@@ -1,9 +1,9 @@
 import { TimetableInfo } from '@/api/types/timetable'
 import { CourseType, DayType, Semester } from '@/types/timetable'
 
-export const dayMap: { [key in DayType]: number } = { Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 }
+const dayMap: { [key in DayType]: number } = { Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 }
 
-const semesterMap = ['', 'Spring', 'Summer', 'Fall', 'Winter']
+export const semesterMap = ['', 'Spring', 'Summer', 'Fall', 'Winter']
 
 export const getDuration = (timeA: string, timeB: string) => {
   // HH:MM:SS 형태의 문자열 두개 받아, 차이를 분으로 반환
