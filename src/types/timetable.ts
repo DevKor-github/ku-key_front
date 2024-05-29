@@ -2,10 +2,11 @@ import { TimetableInfo } from '@/api/types/timetable'
 
 export type DayType = 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri' | 'Sat'
 
-// todo: 자료형 개선
+export type SemesterType = 'Spring' | 'Summer' | 'Fall' | 'Winter'
+
 export interface Semester {
   year: string
-  semester: string
+  semester: SemesterType
   timetables: TimetableInfo[]
 }
 

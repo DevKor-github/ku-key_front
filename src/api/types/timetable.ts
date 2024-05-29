@@ -1,17 +1,21 @@
-import { CourseType } from '@/types/timetable'
-
-// GetTimeTableByTimeTableIdResponse
-export type GetTimeTableByTimeTableIdResponse = CourseType[]
+import { CourseType, SemesterType } from '@/types/timetable'
 
 export interface TimetableInfo {
   tableID: number
-  semester: string
+  semester: SemesterType
   year: string
   isPin: boolean
   tableName: string
 }
 
+// GetTimeTableByTimeTableIdResponse
+export type GetTimeTableByTimeTableIdResponse = CourseType[]
+
 // GetTimeTableByUserIdResponse
-export interface GetTimeTableByUserIdResponse extends Omit<TimetableInfo, 'semester'> {
-  semester: number
+export type GetTimeTableByUserIdResponse = TimetableInfo[]
+
+export interface CreateTimeTableRequest {
+  tableName: string
+  semester: SemesterType
+  year: string
 }

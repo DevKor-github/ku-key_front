@@ -1,9 +1,9 @@
 import { TimetableInfo } from '@/api/types/timetable'
-import { CourseType, DayType, Semester } from '@/types/timetable'
+import { CourseType, DayType, Semester, SemesterType } from '@/types/timetable'
 
-const dayMap: { [key in DayType]: number } = { Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 }
+const dayToNumber: { [key in DayType]: number } = { Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 }
 
-export const semesterMap = ['', 'Spring', 'Summer', 'Fall', 'Winter']
+export const numberToSemester: SemesterType[] = ['Spring', 'Summer', 'Fall', 'Winter']
 
 export const getDuration = (timeA: string, timeB: string) => {
   // HH:MM:SS 형태의 문자열 두개 받아, 차이를 분으로 반환
@@ -26,8 +26,8 @@ export const timetablePreprocess = (data: TimetableInfo[] | undefined) => {
   const ret: Semester[] = []
 
   supportedYear.map(year => {
-    for (let i = 1; i <= 4; i++) {
-      ret.push({ year, semester: semesterMap[i], timetables: [] })
+    for (let i = 0; i < 4; i++) {
+      ret.push({ year, semester: numberToSemester[i], timetables: [] })
     }
   })
 
@@ -56,7 +56,7 @@ export const lectureDataPreprocess = (data: CourseType[], weekCnt: number, timeC
 
   // 강의 데이터 Cell에 임베딩
   data.map(lecture => {
-    const ind = weekCnt * getStartCell(lecture.startTime) + dayMap[lecture.day]
+    const ind = weekCnt * getStartCell(lecture.startTime) + dayToNumber[lecture.day]
     lecGrid[ind - 1].push(lecture)
   })
 

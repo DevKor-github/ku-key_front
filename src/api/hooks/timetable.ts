@@ -1,18 +1,18 @@
 import { useQuery } from '@tanstack/react-query'
+// import axios from 'axios'
 
 import { GetTimeTableByTimeTableIdResponse, GetTimeTableByUserIdResponse, TimetableInfo } from '@/api/types/timetable'
-import { semesterMap } from '@/util/timetableUtil'
 
-const dummyTimetableList: GetTimeTableByUserIdResponse[] = [
-  { tableID: 2132412832, tableName: '꾸잉', year: '2023', semester: 1, isPin: true },
-  { tableID: 5837422123, tableName: '뽀잉', year: '2023', semester: 3, isPin: true },
-  { tableID: 1347897282, tableName: '또잉', year: '2024', semester: 1, isPin: true },
-  { tableID: 4852836482, tableName: '끼잉', year: '2024', semester: 1, isPin: false },
-  { tableID: 2365718237, tableName: '싸잉', year: '2024', semester: 3, isPin: true },
+const dummyTimetableList: GetTimeTableByUserIdResponse = [
+  { tableID: 2132412832, tableName: '꾸잉', year: '2023', semester: 'Spring', isPin: true },
+  { tableID: 5837422123, tableName: '뽀잉', year: '2023', semester: 'Fall', isPin: true },
+  { tableID: 1347897282, tableName: '또잉', year: '2024', semester: 'Spring', isPin: true },
+  { tableID: 4852836482, tableName: '끼잉', year: '2024', semester: 'Spring', isPin: false },
+  { tableID: 2365718237, tableName: '싸잉', year: '2024', semester: 'Fall', isPin: true },
 ]
 
 const dummyTimetableData: { [key: string]: GetTimeTableByTimeTableIdResponse } = {
-  '2132412832': [
+  2132412832: [
     {
       professorName: '박정우',
       courseName: '개구리의 먹이사슬',
@@ -50,7 +50,7 @@ const dummyTimetableData: { [key: string]: GetTimeTableByTimeTableIdResponse } =
       classroom: '정보관B101',
     },
   ],
-  '5837422123': [
+  5837422123: [
     {
       professorName: '차승민',
       courseName: 'Frontend 심화반',
@@ -70,8 +70,8 @@ const dummyTimetableData: { [key: string]: GetTimeTableByTimeTableIdResponse } =
       classroom: '안암역',
     },
   ],
-  '1347897282': [],
-  '4852836482': [
+  1347897282: [],
+  4852836482: [
     {
       professorName: '차승민',
       courseName: 'Frontend 심화반',
@@ -91,12 +91,12 @@ const dummyTimetableData: { [key: string]: GetTimeTableByTimeTableIdResponse } =
       classroom: '정보관B101',
     },
   ],
-  '2365718237': [],
+  2365718237: [],
 }
 
 const getTimetableList = async (): Promise<TimetableInfo[]> => {
   return dummyTimetableList.map(timetable => {
-    return { ...timetable, semester: semesterMap[timetable.semester] }
+    return { ...timetable, semester: timetable.semester }
   })
 }
 
