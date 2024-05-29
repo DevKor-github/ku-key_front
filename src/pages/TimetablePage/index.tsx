@@ -1,48 +1,64 @@
 import { css, cva } from '@styled-stytem/css'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Link, Outlet, useLocation } from 'react-router-dom'
 
-// todo: Recipe화 필요
-export const ToolbarBtn = cva({
+const TimetableBtn = cva({
   base: {
-    h: '3.0625rem',
+    h: 12,
     px: 7,
-    py: 3.5,
     rounded: 10,
-    border: '1px white solid',
+    display: 'inline-flex',
     justifyContent: 'center',
+    alignItems: 'center',
+    border: '1px white solid',
     cursor: 'pointer',
-    textAlign: 'center',
     color: 'white',
     fontSize: 18,
     fontWeight: 500,
-    wordWrap: 'break-word',
-    display: 'inline-flex',
-    alignItems: 'center',
     zIndex: 2,
+    transition: 'background 0.256s',
   },
   variants: {
-    icon: { true: { p: 0, w: 14 } },
-    back: {
-      white: {
-        bg: 'white',
-        rounded: 10,
-        border: '1px {colors.lightGray.1} solid',
-        color: 'darkGray.2',
-      },
-    },
     selected: {
       true: {
         bgColor: 'white',
         color: 'red.2',
       },
+      false: {
+        _hover: {
+          bgColor: '#FFFFFF33',
+        },
+      },
     },
+  },
+})
+
+export const ShareBtn = cva({
+  base: {
+    h: 12,
+    px: 7,
+    rounded: 10,
+    display: 'inline-flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    border: '1px {colors.lightGray.1} solid',
+    cursor: 'pointer',
+    color: 'darkGray.2',
+    fontSize: 18,
+    fontWeight: 500,
+    zIndex: 2,
+    bgColor: 'white',
+    transition: 'border 0.256s',
+    _hover: {
+      borderColor: 'darkGray.2',
+    },
+  },
+  variants: {
+    icon: { true: { w: 14, px: 0 } },
   },
 })
 
 const TimetablePage = () => {
   const curPath = useLocation().pathname
-  const queryClient = new QueryClient()
 
   return (
     <>
@@ -58,18 +74,19 @@ const TimetablePage = () => {
       />
       <div className={css({ h: 20, bgColor: 'red.2', px: '149px', display: 'flex', flexDir: 'row', zIndex: 0 })}>
         <div className={css({ display: 'flex', flexDir: 'row', alignItems: 'center', gap: 5 })}>
-          <Link to={'/timetable'} className={css(ToolbarBtn.raw({ selected: curPath === '/timetable' }))}>
+          <Link to={'/timetable'} className={css(TimetableBtn.raw({ selected: curPath === '/timetable' }))}>
             My schedule
           </Link>
-          <Link to={'/timetable/friend'} className={css(ToolbarBtn.raw({ selected: curPath === '/timetable/friend' }))}>
+          <Link
+            to={'/timetable/friend'}
+            className={css(TimetableBtn.raw({ selected: curPath === '/timetable/friend' }))}
+          >
             Friend list
           </Link>
         </div>
       </div>
       <div className={css({ display: 'flex', flexDir: 'column', px: 64, mb: 40 })}>
-        <QueryClientProvider client={queryClient}>
-          <Outlet />
-        </QueryClientProvider>
+        <Outlet />
       </div>
     </>
   )

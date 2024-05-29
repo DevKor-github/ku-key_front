@@ -26,6 +26,7 @@ const DropdownItemsStyle = cva({
     rounded: 10,
     outline: 0,
     cursor: 'pointer',
+    transition: 'background 0.256s',
     _hover: {
       bgColor: 'bg',
     },
@@ -60,6 +61,10 @@ const TimetableDropdown = ({ semesterList, curSemester, setCurSemester, setCurIn
             cursor: 'pointer',
             zIndex: 30,
             bgColor: 'white',
+            transition: 'border 0.256s',
+            _hover: {
+              borderColor: 'darkGray.2',
+            },
           })}
         >
           <div className={css({ color: 'darkGray.2', fontSize: 20, fontWeight: 700, wordWrap: 'break-word' })}>

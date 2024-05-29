@@ -6,7 +6,7 @@ import { useGetTimetableList } from '@/api/hooks/timetable'
 import TimeTable from '@/components/timetable'
 import SelectTimetableBtn from '@/components/timetable/SelectTimetableBtn'
 import TimetableDropdown from '@/components/timetable/TimetableDropdown'
-import { ToolbarBtn } from '@/pages/TimetablePage'
+import { ShareBtn } from '@/pages/TimetablePage'
 import { timetablePreprocess } from '@/util/timetableUtil'
 
 // todo: 해당 학기에 존재하는 timeTable이 하나도 없을 시에, createTimetable 요청 로직
@@ -26,6 +26,7 @@ const MainPinBtn = cva({
     border: 'solid 1px {colors.lightGray.1}',
     color: 'lightGray.1',
     cursor: 'pointer',
+    transition: 'border 0.256s, color 0.256s',
   },
   variants: {
     main: {
@@ -55,11 +56,18 @@ const MyTimetablePage = () => {
   const { data: timetableList, isPending } = useGetTimetableList()
   const semesterList = timetablePreprocess(timetableList)
 
+  if (!isPending && semesterList[curSemester].timetables.length === 0) {
+    // 현 학기에 timetable이 없을 때
+    // timetable 추가 요청
+  }
+
   const curTimetable = semesterList[curSemester].timetables[curIndex]
 
-  return isPending ? (
-    <div>로딩 중</div>
-  ) : (
+  if (isPending || curTimetable === undefined) {
+    return <div>로딩 중</div>
+  }
+
+  return (
     <>
       <div className={css({ display: 'flex', flexDir: 'row', justifyContent: 'space-between', my: 11 })}>
         <div className={css({ display: 'flex', flexDir: 'row', gap: 5 })}>
@@ -74,8 +82,8 @@ const MyTimetablePage = () => {
           />
         </div>
         <div className={css({ display: 'flex', flexDir: 'row', gap: 2.5 })}>
-          <div className={css(ToolbarBtn.raw({ back: 'white' }))}>Link</div>
-          <div className={css(ToolbarBtn.raw({ back: 'white', icon: true }))}>
+          <div className={css(ShareBtn.raw())}>Link</div>
+          <div className={css(ShareBtn.raw({ icon: true }))}>
             <Download />
           </div>
         </div>
@@ -105,6 +113,7 @@ const MyTimetablePage = () => {
               color: 'white',
               overflow: 'hidden',
               position: 'relative',
+              transition: 'box-shadow 0.256s',
               _hover: {
                 boxShadow: '0px 0px 4px rgba(231, 0, 0, 0.70)',
               },
