@@ -15,11 +15,16 @@ import { Form } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { RegisterFormSchema } from '@/lib/zod/register-schema'
-import { ValidState } from '@/types/register'
+import { RegistrationState } from '@/types/register'
 
 const RegisterPage = () => {
   const file = useRef<HTMLInputElement>(null)
-  const [valid, setValid] = useState<ValidState>({ email: 'unknown', username: 'unknown', studentId: 'unknown' })
+  const [valid, setValid] = useState<RegistrationState>({
+    email: 'unknown',
+    username: 'unknown',
+    studentId: 'unknown',
+    screenShot: 'unknown',
+  })
 
   const { mutate: mutateRegister } = useRegister()
   const navigate = useNavigate()
@@ -33,9 +38,24 @@ const RegisterPage = () => {
     },
   })
 
+  const checkFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files?.length) return
+    const currentFile = e.target.files[0]
+    const fileType = currentFile.type
+    if (!fileType.includes('image')) setValid(v => ({ ...v, screenShot: 'invalid' }))
+    else setValid(v => ({ ...v, screenShot: 'valid' }))
+  }
+
   const onSubmit = (values: z.infer<typeof RegisterFormSchema>) => {
     if (!file.current?.files?.length) return
-    if (valid.email !== 'valid' || valid.username !== 'valid' || valid.studentId !== 'valid') return
+
+    if (
+      valid.email !== 'valid' ||
+      valid.username !== 'valid' ||
+      valid.studentId !== 'valid' ||
+      valid.screenShot !== 'valid'
+    )
+      return
     mutateRegister(
       {
         screenShot: file.current.files[0],
@@ -53,7 +73,7 @@ const RegisterPage = () => {
     )
   }
 
-  const handleValidation = useCallback((target: string, value: string) => {
+  const handleValidation = useCallback((target: keyof RegistrationState, value: string) => {
     setValid(v => ({ ...v, [target]: value }))
   }, [])
 
@@ -78,7 +98,10 @@ const RegisterPage = () => {
             <Label htmlFor="Sreenshot of acceptance email">
               Please attach a screenshot of your acceptance email from Korea University
             </Label>
-            <Input type="file" ref={file} />
+            <Input type="file" ref={file} accept="image/*" onChange={checkFile} />
+            {valid.screenShot === 'invalid' && (
+              <p className={css({ color: 'red.500' })}>Only image files are accepted</p>
+            )}
           </div>
           <Button type="submit">Submit</Button>
         </form>
