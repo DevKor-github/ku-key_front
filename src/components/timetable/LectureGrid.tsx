@@ -3,6 +3,7 @@ import { css } from '@styled-stytem/css'
 import { GetTimeTableByTimeTableIdResponse } from '@/api/types/timetable'
 import LectureSticker from '@/components/timetable/LectureSticker'
 import { TimeCell } from '@/components/timetable/TimetableLayout'
+import { RANDOM_RED } from '@/lib/constants/timetableColors'
 import { getDuration, lectureDataPreprocess } from '@/util/timetableUtil'
 
 interface LectureGridProps {
@@ -13,7 +14,7 @@ interface LectureGridProps {
 
 const LectureGrid = ({ timetableData, weekCnt, timeCnt }: LectureGridProps) => {
   const lecGrid = lectureDataPreprocess(timetableData, weekCnt, timeCnt)
-
+  let lecCnt = 0
   return (
     <div className={css({ display: 'grid' })} style={{ gridTemplateColumns: `repeat(${weekCnt}, 1fr)` }}>
       {lecGrid.map((lectures, gridInd) => {
@@ -30,6 +31,7 @@ const LectureGrid = ({ timetableData, weekCnt, timeCnt }: LectureGridProps) => {
                   runningTime={getDuration(lecture.endTime, lecture.startTime)}
                   professor={lecture.professorName}
                   room={lecture.classroom}
+                  bgColor={RANDOM_RED[lecCnt++ % RANDOM_RED.length]}
                 />
               )
             })}

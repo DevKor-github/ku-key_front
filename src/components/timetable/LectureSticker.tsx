@@ -16,13 +16,13 @@ interface LectureStickerProps {
   runningTime: number // min
   professor: string
   room: string
+  bgColor: string
 }
 
-const LectureSticker = ({ name, runningTime, professor, room }: LectureStickerProps) => {
+const LectureSticker = ({ name, runningTime, professor, room, bgColor }: LectureStickerProps) => {
   return (
     <div
       className={css({
-        bgColor: 'rgba(243.45, 120.87, 120.87, 0.50)',
         color: 'white',
         position: 'absolute',
         w: 'calc(100% + 1px)',
@@ -35,6 +35,7 @@ const LectureSticker = ({ name, runningTime, professor, room }: LectureStickerPr
       })}
       style={{
         height: `calc(${(runningTime / 60) * 100}% + ${runningTime / 60}px)`,
+        backgroundColor: bgColor,
       }}
     >
       <div className={css({ fontSize: 18, fontWeight: '500', wordWrap: 'break-word' })}>{name}</div>
