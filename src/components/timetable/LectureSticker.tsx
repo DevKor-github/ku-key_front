@@ -13,7 +13,7 @@ const LectureDetail = css({
 
 interface LectureStickerProps {
   name: string
-  runningTime: number //시간을 분 단위로 받기
+  runningTime: number // min
   professor: string
   room: string
 }

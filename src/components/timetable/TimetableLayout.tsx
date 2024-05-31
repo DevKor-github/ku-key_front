@@ -4,7 +4,6 @@ import { useGetTimetable } from '@/api/hooks/timetable'
 import LectureGrid from '@/components/timetable/LectureGrid'
 import { getWeeknTimeList } from '@/util/timetableUtil'
 
-// todo : 브랜치 머지 이후 recipe화 필요
 export const TimeCell = cva({
   base: {
     display: 'flex',
