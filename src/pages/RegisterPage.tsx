@@ -15,7 +15,7 @@ import { Form } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { RegisterFormSchema } from '@/lib/zod/register-schema'
-import { RegistrationState } from '@/types/register'
+import { RegistrationState, ValidState } from '@/types/register'
 
 const RegisterPage = () => {
   const file = useRef<HTMLInputElement>(null)
@@ -73,7 +73,7 @@ const RegisterPage = () => {
     )
   }
 
-  const handleValidation = useCallback((target: keyof RegistrationState, value: string) => {
+  const handleValidation = useCallback((target: keyof RegistrationState, value: ValidState) => {
     setValid(v => ({ ...v, [target]: value }))
   }, [])
 

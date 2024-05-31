@@ -11,7 +11,7 @@ export const RegisterFormSchema = z.object({
     .object({
       password: z
         .string()
-        .min(8, { message: 'password must be at least 8 characters long.' })
+        .min(10, { message: 'password must be at least 10 characters long.' })
         .max(20, { message: 'password must be at most 20 characters long.' })
         .regex(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]+$/, {
           message: 'password must include alphabet, numbers, and special sysmbols (e.g., !@#$%^&*).',
