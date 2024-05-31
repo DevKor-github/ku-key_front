@@ -52,7 +52,7 @@ const Header = () => {
           gap: 12,
         })}
       >
-        <Link className={css(NaviItem.raw({ selected: curPathRoot === '' }))} to="/">
+        <Link className={css(NaviItem.raw({ selected: curPathRoot === '' }))} to="/mypage">
           My page
         </Link>
         <Link className={css(NaviItem.raw({ selected: curPathRoot === 'announcement' }))} to="/announcement">
