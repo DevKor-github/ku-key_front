@@ -4,7 +4,7 @@ export interface TimetableInfo {
   tableId: number
   semester: SemesterType
   year: string
-  isPin: boolean
+  mainTimeTable: boolean
   tableName: string
 }
 

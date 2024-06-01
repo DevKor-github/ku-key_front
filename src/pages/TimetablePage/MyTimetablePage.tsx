@@ -9,8 +9,6 @@ import TimetableDropdown from '@/components/timetable/TimetableDropdown'
 import { ShareBtn } from '@/pages/TimetablePage'
 import { timetablePreprocess } from '@/util/timetableUtil'
 
-// todo: 해당 학기에 존재하는 timeTable이 하나도 없을 시에, createTimetable 요청 로직
-
 const MainPinBtn = cva({
   base: {
     fontSize: 18,
@@ -77,6 +75,7 @@ const MyTimetablePage = () => {
   }
 
   const curTimetable = semesterList[curSemester].timetables[curIndex]
+  console.log(curTimetable.mainTimeTable)
 
   return (
     <>
@@ -157,7 +156,7 @@ const MyTimetablePage = () => {
             })}
           </div>
         </div>
-        <button className={MainPinBtn({ main: curTimetable.isPin })}>
+        <button className={MainPinBtn({ main: curTimetable.mainTimeTable ? true : false })}>
           <Check size={22} />
           Main
         </button>
