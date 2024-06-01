@@ -9,7 +9,7 @@ interface TimeTableProps {
 }
 
 const Timetable = ({ timetable }: TimeTableProps) => {
-  const { tableID, tableName, year, semester } = timetable
+  const { tableId, tableName, year, semester } = timetable
   const [timetableTitle, setTimetableTitle] = useState('')
 
   useEffect(() => {
@@ -80,7 +80,7 @@ const Timetable = ({ timetable }: TimeTableProps) => {
           </div>
         </div>
       </div>
-      <TimetableLayout tableID={tableID} />
+      <TimetableLayout tableId={tableId} />
     </div>
   )
 }

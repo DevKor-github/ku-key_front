@@ -1,119 +1,93 @@
-import { useQuery } from '@tanstack/react-query'
-// import axios from 'axios'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import axios from 'axios'
+import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader'
 
-import { GetTimeTableByTimeTableIdResponse, GetTimeTableByUserIdResponse, TimetableInfo } from '@/api/types/timetable'
+import { CreateTimeTableRequest, TimetableInfo } from '@/api/types/timetable'
+import { SemesterType } from '@/types/timetable'
 
-const dummyTimetableList: GetTimeTableByUserIdResponse = [
-  { tableID: 2132412832, tableName: '꾸잉', year: '2023', semester: 'Spring', isPin: true },
-  { tableID: 5837422123, tableName: '뽀잉', year: '2023', semester: 'Fall', isPin: true },
-  { tableID: 1347897282, tableName: '또잉', year: '2024', semester: 'Spring', isPin: true },
-  { tableID: 4852836482, tableName: '끼잉', year: '2024', semester: 'Spring', isPin: false },
-  { tableID: 2365718237, tableName: '싸잉', year: '2024', semester: 'Fall', isPin: true },
-]
-
-const dummyTimetableData: { [key: string]: GetTimeTableByTimeTableIdResponse } = {
-  2132412832: [
-    {
-      professorName: '박정우',
-      courseName: '개구리의 먹이사슬',
-      courseCode: 'FROG101',
-      day: 'Mon',
-      startTime: '10:00:00',
-      endTime: '11:30:00',
-      classroom: '대모산',
-    },
-    {
-      professorName: '하승준',
-      courseName: '일반까치학및연습I',
-      courseCode: 'MGPI101',
-      day: 'Wed',
-      startTime: '11:00:00',
-      endTime: '12:30:00',
-      classroom: '안암역',
-    },
-    {
-      professorName: '이지원',
-      courseName: '디지털기획을위한데이터처리와분석',
-      courseCode: 'DGDB101',
-      day: 'Tue',
-      startTime: '09:00:00',
-      endTime: '13:10:00',
-      classroom: '카페안암동',
-    },
-    {
-      professorName: '차승민',
-      courseName: 'Frontend 심화반',
-      courseCode: 'FREN101',
-      day: 'Fri',
-      startTime: '14:00:00',
-      endTime: '15:20:00',
-      classroom: '정보관B101',
-    },
-  ],
-  5837422123: [
-    {
-      professorName: '차승민',
-      courseName: 'Frontend 심화반',
-      courseCode: 'FREN101',
-      day: 'Fri',
-      startTime: '16:00:00',
-      endTime: '18:20:00',
-      classroom: '정보관B101',
-    },
-    {
-      professorName: '하승준',
-      courseName: '일반까치학및연습I',
-      courseCode: 'MGPI101',
-      day: 'Wed',
-      startTime: '11:00:00',
-      endTime: '13:00:00',
-      classroom: '안암역',
-    },
-  ],
-  1347897282: [],
-  4852836482: [
-    {
-      professorName: '차승민',
-      courseName: 'Frontend 심화반',
-      courseCode: 'FREN101',
-      day: 'Sat',
-      startTime: '16:00:00',
-      endTime: '18:20:00',
-      classroom: '정보관B101',
-    },
-    {
-      professorName: '차승민',
-      courseName: 'Frontend 심화반',
-      courseCode: 'FREN101',
-      day: 'Mon',
-      startTime: '16:00:00',
-      endTime: '18:59:00',
-      classroom: '정보관B101',
-    },
-  ],
-  2365718237: [],
-}
-
-const getTimetableList = async (): Promise<TimetableInfo[]> => {
-  return dummyTimetableList.map(timetable => {
-    return { ...timetable, semester: timetable.semester }
+const getTimetableList = async (authHeader: string): Promise<TimetableInfo[]> => {
+  console.log(authHeader)
+  const response = await axios.get(`http://${import.meta.env.VITE_API_SERVER}/timetable/user`, {
+    headers: { Authorization: authHeader },
   })
+  return response.data
 }
 
 export const useGetTimetableList = () => {
-  return useQuery({ queryKey: ['timetableList'], queryFn: getTimetableList })
-}
-
-const getTimetable = async (timetableID: number) => {
-  const ret = dummyTimetableData[timetableID]
-  return ret
-}
-
-export const useGetTimetable = (timetableID: number) => {
+  let authHeader = useAuthHeader()
   return useQuery({
-    queryKey: ['timetable', timetableID],
+    queryKey: ['timetableList'],
     queryFn: () => {
-      return getTimetable(timetableID)
+      if (authHeader === null) authHeader = ''
+      return getTimetableList(authHeader)
+    },
+  })
+}
+
+const getTimetable = async ({ authHeader, tableId }: { authHeader: string; tableId: number }) => {
+  const response = await axios.get(`http://${import.meta.env.VITE_API_SERVER}/timetable/${tableId}`, {
+    headers: { Authorization: authHeader },
+  })
+  return response.data
+}
+
+export const useGetTimetable = ({ tableId }: { tableId: number }) => {
+  let authHeader = useAuthHeader()
+  return useQuery({
+    queryKey: ['timetable', tableId],
+    queryFn: () => {
+      if (authHeader === null) {
+        authHeader = ''
+      }
+      return getTimetable({ authHeader, tableId })
+    },
+  })
+}
+
+const postTimetabe = async ({ authHeader, tableName, semester, year }: CreateTimeTableRequest) => {
+  const response = await axios.post(
+    `http://${import.meta.env.VITE_API_SERVER}/timetable`,
+    { tableName, semester, year },
+    { headers: { Authorization: authHeader } },
+  )
+  return response.data
+}
+
+export const usePostTimetable = () => {
+  let authHeader = useAuthHeader()
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({ tableName, semester, year }: { tableName: string; semester: SemesterType; year: string }) => {
+      if (authHeader === null) {
+        authHeader = ''
+      }
+      return postTimetabe({ authHeader, tableName, semester, year })
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['timetableList'] })
+    },
+  })
+}
+
+const deleteTimetable = async ({ authHeader, tableId }: { authHeader: string; tableId: number }) => {
+  const response = await axios.delete(`http://${import.meta.env.VITE_API_SERVER}/timetable/${tableId}`, {
+    headers: { Authorization: authHeader },
+  })
+  return response
+}
+
+export const useDeleteTimetable = ({ tableId }: { tableId: number }) => {
+  let authHeader = useAuthHeader()
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: () => {
+      if (authHeader === null) {
+        authHeader = ''
+      }
+      return deleteTimetable({ authHeader, tableId })
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['timetableList'] })
     },
   })
 }

@@ -1,7 +1,7 @@
 import { CourseType, SemesterType } from '@/types/timetable'
 
 export interface TimetableInfo {
-  tableID: number
+  tableId: number
   semester: SemesterType
   year: string
   isPin: boolean
@@ -15,6 +15,7 @@ export type GetTimeTableByTimeTableIdResponse = CourseType[]
 export type GetTimeTableByUserIdResponse = TimetableInfo[]
 
 export interface CreateTimeTableRequest {
+  authHeader: string
   tableName: string
   semester: SemesterType
   year: string

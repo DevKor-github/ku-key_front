@@ -2,6 +2,7 @@ import { css, cva } from '@styled-stytem/css'
 import { CircleX } from 'lucide-react'
 import { useState } from 'react'
 
+import { useDeleteTimetable } from '@/api/hooks/timetable'
 import { TimetableInfo } from '@/api/types/timetable'
 
 const SelectTimetableBtnStyle = cva({
@@ -43,6 +44,7 @@ const SelectTimetableBtn = ({
   setCurIndex,
 }: SelectTimetableBtnProps) => {
   const [isHover, setIsHover] = useState(false)
+  const { mutate: deleteTimetable } = useDeleteTimetable({ tableId: timetable.tableId })
   return (
     <div
       className={SelectTimetableBtnStyle({ selected: ind === curInd })}
@@ -56,7 +58,7 @@ const SelectTimetableBtn = ({
         <button
           onClick={e => {
             e.preventDefault()
-            alert('시간표 삭제!')
+            deleteTimetable()
           }}
           className={css({ cursor: 'pointer' })}
         >

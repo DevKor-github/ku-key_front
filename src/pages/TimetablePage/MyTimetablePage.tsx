@@ -2,7 +2,7 @@ import { css, cva } from '@styled-stytem/css'
 import { Check, Download, Plus } from 'lucide-react'
 import { useState } from 'react'
 
-import { useGetTimetableList } from '@/api/hooks/timetable'
+import { useGetTimetableList, usePostTimetable } from '@/api/hooks/timetable'
 import TimeTable from '@/components/timetable'
 import SelectTimetableBtn from '@/components/timetable/SelectTimetableBtn'
 import TimetableDropdown from '@/components/timetable/TimetableDropdown'
@@ -55,17 +55,22 @@ const MyTimetablePage = () => {
   const [curIndex, setCurIndex] = useState(0)
   const { data: timetableList, isPending } = useGetTimetableList()
   const semesterList = timetablePreprocess(timetableList)
+  const { mutate: createTimetable, isPending: isCreateTimetablePending } = usePostTimetable()
 
-  if (!isPending && semesterList[curSemester].timetables.length === 0) {
-    // 현 학기에 timetable이 없을 때
-    // timetable 추가 요청
+  if (isPending) {
+    return <div>로딩 중</div>
+  }
+
+  if (!isCreateTimetablePending && semesterList[curSemester].timetables.length === 0) {
+    createTimetable({
+      tableName: '우왁',
+      semester: semesterList[curSemester].semester,
+      year: semesterList[curSemester].year,
+    })
+    return <div>로딩 중. 시간표 없음</div>
   }
 
   const curTimetable = semesterList[curSemester].timetables[curIndex]
-
-  if (isPending || curTimetable === undefined) {
-    return <div>로딩 중</div>
-  }
 
   return (
     <>
