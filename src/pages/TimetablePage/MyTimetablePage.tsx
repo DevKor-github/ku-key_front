@@ -45,11 +45,6 @@ const MainPinBtn = cva({
   },
 })
 
-const handleCreateTimetableBtn = () => {
-  // todo : 시간표 추가 로직
-  alert('시간표 추가!')
-}
-
 const MyTimetablePage = () => {
   const [curSemester, setCurSemester] = useState(0)
   const [curIndex, setCurIndex] = useState(0)
@@ -57,13 +52,24 @@ const MyTimetablePage = () => {
   const semesterList = timetablePreprocess(timetableList)
   const { mutate: createTimetable, isPending: isCreateTimetablePending } = usePostTimetable()
 
+  const handleCreateTimetableBtn = () => {
+    createTimetable({
+      tableName: '새 시간표',
+      semester: semesterList[curSemester].semester,
+      year: semesterList[curSemester].year,
+    })
+  }
+
   if (isPending) {
     return <div>로딩 중</div>
   }
 
-  if (!isCreateTimetablePending && semesterList[curSemester].timetables.length === 0) {
+  const curSemesterTimetableLen = semesterList[curSemester].timetables.length
+
+  if (!isCreateTimetablePending && curSemesterTimetableLen === 0) {
+    // 이거 왜 isCreateTimetablePending 옵션 빼면 52번이나 실행되는거지
     createTimetable({
-      tableName: '우왁',
+      tableName: '임의로만든',
       semester: semesterList[curSemester].semester,
       year: semesterList[curSemester].year,
     })
@@ -145,6 +151,7 @@ const MyTimetablePage = () => {
                   curInd={curIndex}
                   timetableInd={ind}
                   setCurIndex={setCurIndex}
+                  totalLen={curSemesterTimetableLen}
                 />
               )
             })}

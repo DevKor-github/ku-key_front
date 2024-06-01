@@ -6,7 +6,6 @@ import { CreateTimeTableRequest, TimetableInfo } from '@/api/types/timetable'
 import { SemesterType } from '@/types/timetable'
 
 const getTimetableList = async (authHeader: string): Promise<TimetableInfo[]> => {
-  console.log(authHeader)
   const response = await axios.get(`http://${import.meta.env.VITE_API_SERVER}/timetable/user`, {
     headers: { Authorization: authHeader },
   })
@@ -76,11 +75,11 @@ const deleteTimetable = async ({ authHeader, tableId }: { authHeader: string; ta
   return response
 }
 
-export const useDeleteTimetable = ({ tableId }: { tableId: number }) => {
+export const useDeleteTimetable = () => {
   let authHeader = useAuthHeader()
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: () => {
+    mutationFn: ({ tableId }: { tableId: number }) => {
       if (authHeader === null) {
         authHeader = ''
       }

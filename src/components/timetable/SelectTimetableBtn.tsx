@@ -34,6 +34,7 @@ interface SelectTimetableBtnProps {
   timetableInfo: TimetableInfo
   timetableInd: number
   curInd: number
+  totalLen: number
   setCurIndex: React.Dispatch<React.SetStateAction<number>>
 }
 
@@ -41,14 +42,17 @@ const SelectTimetableBtn = ({
   timetableInd: ind,
   timetableInfo: timetable,
   curInd,
+  totalLen,
   setCurIndex,
 }: SelectTimetableBtnProps) => {
   const [isHover, setIsHover] = useState(false)
-  const { mutate: deleteTimetable } = useDeleteTimetable({ tableId: timetable.tableId })
+  const { mutate: deleteTimetable } = useDeleteTimetable()
   return (
     <div
       className={SelectTimetableBtnStyle({ selected: ind === curInd })}
-      onMouseEnter={() => setIsHover(true)}
+      onMouseEnter={() => {
+        if (totalLen !== 1) setIsHover(true)
+      }}
       onMouseLeave={() => setIsHover(false)}
     >
       <button onClick={() => setCurIndex(ind)} className={css({ cursor: 'pointer' })}>
@@ -58,7 +62,10 @@ const SelectTimetableBtn = ({
         <button
           onClick={e => {
             e.preventDefault()
-            deleteTimetable()
+            if (ind === curInd) {
+              if (ind !== 0) setCurIndex(prev => prev - 1)
+            }
+            deleteTimetable({ tableId: timetable.tableId })
           }}
           className={css({ cursor: 'pointer' })}
         >
