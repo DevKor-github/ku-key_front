@@ -1,6 +1,7 @@
 import { css } from '@styled-stytem/css'
 import { useEffect, useState } from 'react'
 
+import { useUpdateTableName } from '@/api/hooks/timetable'
 import { TimetableInfo } from '@/api/types/timetable'
 import TimetableLayout from '@/components/timetable/TimetableLayout'
 
@@ -11,13 +12,14 @@ interface TimeTableProps {
 const Timetable = ({ timetable }: TimeTableProps) => {
   const { tableId, tableName, year, semester } = timetable
   const [timetableTitle, setTimetableTitle] = useState('')
+  const { mutate: updateTableName } = useUpdateTableName()
 
   useEffect(() => {
     setTimetableTitle(tableName)
   }, [tableName])
 
   const changeTimetableTitle = (title: string) => {
-    alert(`${title}(으)로 이름 변경!`)
+    updateTableName({ timeTableId: tableId, tableName: title })
   }
 
   return (

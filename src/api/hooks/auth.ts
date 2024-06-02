@@ -9,6 +9,7 @@ const logIn = async ({ email, password }: LoginRequest) => {
   const response = await axios.post<LoginResponse>(`http://${import.meta.env.VITE_API_SERVER}/auth/login`, {
     email,
     password,
+    keepingLogin: true,
   })
   return response.data
 }

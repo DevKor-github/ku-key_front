@@ -20,3 +20,9 @@ export interface CreateTimeTableRequest {
   semester: SemesterType
   year: string
 }
+
+export interface UpdateTimeTableNameRequest {
+  authHeader: string
+  tableName: string
+  timeTableId: number
+}

@@ -75,7 +75,6 @@ const MyTimetablePage = () => {
   }
 
   const curTimetable = semesterList[curSemester].timetables[curIndex]
-  console.log(curTimetable.mainTimeTable)
 
   return (
     <>
