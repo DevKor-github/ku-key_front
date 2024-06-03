@@ -2,7 +2,12 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import axios from 'axios'
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader'
 
-import { CreateTimeTableRequest, TimetableInfo, UpdateTimeTableNameRequest } from '@/api/types/timetable'
+import {
+  CreateTimeTableRequest,
+  TimetableInfo,
+  UpdateMainTimeTableRequest,
+  UpdateTimeTableNameRequest,
+} from '@/api/types/timetable'
 import { SemesterType } from '@/types/timetable'
 
 const getTimetableList = async (authHeader: string): Promise<TimetableInfo[]> => {
@@ -109,6 +114,31 @@ export const useUpdateTableName = () => {
     mutationFn: ({ timeTableId, tableName }: { timeTableId: number; tableName: string }) => {
       if (authHeader === null) authHeader = ''
       return updateTableName({ authHeader, timeTableId, tableName })
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['timetableList'] })
+    },
+  })
+}
+
+const updateMainTable = async ({ authHeader, semester, year, timeTableId }: UpdateMainTimeTableRequest) => {
+  const response = await axios.patch(
+    `http://${import.meta.env.VITE_API_SERVER}/timetable/${timeTableId}`,
+    { semester, year },
+    {
+      headers: { Authorization: authHeader },
+    },
+  )
+  return response
+}
+
+export const useUpdateMainTable = () => {
+  let authHeader = useAuthHeader()
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({ semester, year, timeTableId }: { semester: SemesterType; year: string; timeTableId: number }) => {
+      if (authHeader === null) authHeader = ''
+      return updateMainTable({ authHeader, semester, year, timeTableId })
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['timetableList'] })

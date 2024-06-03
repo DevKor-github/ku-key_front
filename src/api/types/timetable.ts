@@ -26,3 +26,10 @@ export interface UpdateTimeTableNameRequest {
   tableName: string
   timeTableId: number
 }
+
+export interface UpdateMainTimeTableRequest {
+  authHeader: string
+  semester: SemesterType
+  year: string
+  timeTableId: number
+}

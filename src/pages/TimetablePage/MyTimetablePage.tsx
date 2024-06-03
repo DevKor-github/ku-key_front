@@ -2,7 +2,7 @@ import { css, cva } from '@styled-stytem/css'
 import { Check, Download, Plus } from 'lucide-react'
 import { useState } from 'react'
 
-import { useGetTimetableList, usePostTimetable } from '@/api/hooks/timetable'
+import { useGetTimetableList, usePostTimetable, useUpdateMainTable } from '@/api/hooks/timetable'
 import TimeTable from '@/components/timetable'
 import SelectTimetableBtn from '@/components/timetable/SelectTimetableBtn'
 import TimetableDropdown from '@/components/timetable/TimetableDropdown'
@@ -49,6 +49,7 @@ const MyTimetablePage = () => {
   const { data: timetableList, isPending } = useGetTimetableList()
   const semesterList = timetablePreprocess(timetableList)
   const { mutate: createTimetable, isPending: isCreateTimetablePending } = usePostTimetable()
+  const { mutate: updateMainTable } = useUpdateMainTable()
 
   const handleCreateTimetableBtn = () => {
     createTimetable({
@@ -155,7 +156,18 @@ const MyTimetablePage = () => {
             })}
           </div>
         </div>
-        <button className={MainPinBtn({ main: curTimetable.mainTimeTable ? true : false })}>
+        <button
+          className={MainPinBtn({ main: curTimetable.mainTimeTable })}
+          onClick={() => {
+            if (!curTimetable.mainTimeTable) {
+              updateMainTable({
+                semester: curTimetable.semester,
+                year: curTimetable.year,
+                timeTableId: curTimetable.tableId,
+              })
+            }
+          }}
+        >
           <Check size={22} />
           Main
         </button>
