@@ -160,6 +160,7 @@ const MyTimetablePage = () => {
           className={MainPinBtn({ main: curTimetable.mainTimeTable })}
           onClick={() => {
             if (!curTimetable.mainTimeTable) {
+              setCurIndex(0)
               updateMainTable({
                 semester: curTimetable.semester,
                 year: curTimetable.year,
