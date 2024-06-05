@@ -1,34 +1,55 @@
 import { css } from '@styled-stytem/css'
 import { Download } from 'lucide-react'
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { useGetTimetableList, usePostTimetable } from '@/api/hooks/timetable'
 import TimeTable from '@/components/timetable'
 import StatusBar from '@/components/timetable/MyTimetable/StatusBar'
 import TimetableDropdown from '@/components/timetable/TimetableDropdown'
 import { ShareBtn } from '@/pages/TimetablePage'
+import { Semester } from '@/types/timetable'
 import { timetablePreprocess } from '@/util/timetableUtil'
+
+interface TimetableStatusLayoutProps {
+  semesterList: Semester[]
+  curSemester: number
+  curIndex: number
+  setCurIndex: React.Dispatch<React.SetStateAction<number>>
+}
+const MyTimetableOutlet = ({ semesterList, curSemester, curIndex, setCurIndex }: TimetableStatusLayoutProps) => {
+  const { mutate: createTimetable } = usePostTimetable()
+
+  const handleCreateTimetable = useCallback(() => {
+    if (semesterList[curSemester].timetables.length === 0) {
+      createTimetable({
+        tableName: '새 시간표',
+        semester: semesterList[curSemester].semester,
+        year: semesterList[curSemester].year,
+      })
+    }
+  }, [createTimetable, curSemester, semesterList])
+
+  useEffect(() => {
+    handleCreateTimetable()
+  }, [handleCreateTimetable])
+
+  return (
+    <>
+      <StatusBar curSemester={semesterList[curSemester]} curIndex={curIndex} setCurIndex={setCurIndex} />
+      <TimeTable timetable={semesterList[curSemester].timetables[curIndex]} />
+    </>
+  )
+}
 
 const MyTimetablePage = () => {
   const { data: timetableList, isPending } = useGetTimetableList()
-  const { mutate: createTimetable, isPending: isCreateTimetablePending } = usePostTimetable()
 
   const [curSemester, setCurSemester] = useState(0)
   const [curIndex, setCurIndex] = useState(0)
 
-  if (isPending) {
-    return <div>로딩 중</div>
-  }
-
   const semesterList = timetablePreprocess(timetableList)
 
-  if (!isCreateTimetablePending && semesterList[curSemester].timetables.length === 0) {
-    // 이거 왜 isCreateTimetablePending 옵션 빼면 52번이나 실행되는거지
-    createTimetable({
-      tableName: '새 시간표',
-      semester: semesterList[curSemester].semester,
-      year: semesterList[curSemester].year,
-    })
+  if (isPending) {
     return <div>로딩 중</div>
   }
 
@@ -53,8 +74,12 @@ const MyTimetablePage = () => {
           </div>
         </div>
       </div>
-      <StatusBar curSemester={semesterList[curSemester]} curIndex={curIndex} setCurIndex={setCurIndex} />
-      <TimeTable timetable={semesterList[curSemester].timetables[curIndex]} />
+      <MyTimetableOutlet
+        semesterList={semesterList}
+        curSemester={curSemester}
+        curIndex={curIndex}
+        setCurIndex={setCurIndex}
+      />
     </>
   )
 }
