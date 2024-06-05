@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { css } from '@styled-stytem/css'
+import { Plus } from 'lucide-react'
 import { useCallback, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
@@ -14,13 +15,6 @@ import Button from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationNext,
-  PaginationPrevious,
-} from '@/components/ui/pagination'
 import { RegisterFormSchema } from '@/lib/zod/register-schema'
 import { RegistrationState, ValidState } from '@/types/register'
 import {
@@ -83,8 +77,7 @@ const RegisterPage = () => {
       },
       {
         onSuccess: () => {
-          alert('회원가입이 완료되었습니다.')
-          navigate('/login')
+          setPage(3)
         },
       },
     )
@@ -124,39 +117,67 @@ const RegisterPage = () => {
               <EmailForm form={form} valid={valid} handleValidation={handleValidation} />
               <UsernameForm form={form} valid={valid} handleValidation={handleValidation} />
               <PasswordForm {...form} />
+              <Button type="button" onClick={handleNextPage}>
+                Next
+              </Button>
             </>
           )}
           {page === 2 && (
             <>
               <StudentIdForm form={form} valid={valid} handleValidation={handleValidation} />
-              <div>
+              <div className={css({ display: 'flex', flexDir: 'column', gap: 4 })}>
                 <Label htmlFor="Sreenshot of acceptance email">
                   Please attach a screenshot of your acceptance email from Korea University
                 </Label>
-                <Input type="file" ref={file} accept="image/*" onChange={checkFile} />
+                <div
+                  className={css({
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    borderWidth: 2,
+                    borderColor: 'gray.400',
+                    rounded: 8,
+                    borderStyle: 'dashed',
+                  })}
+                >
+                  <Button type="button" onClick={() => file.current?.click()} variant="ghost">
+                    Attach
+                    <Plus className={css({ w: 4, h: 4 })} />
+                  </Button>
+                </div>
+                <Input
+                  type="file"
+                  ref={file}
+                  accept="image/*"
+                  onChange={checkFile}
+                  className={css({ display: 'none' })}
+                />
                 {valid.screenShot === 'invalid' && (
                   <p className={css({ color: 'red.500' })}>Only image files are accepted</p>
                 )}
               </div>
-              <Button type="submit">Submit</Button>
+              <Button type="submit" disabled={page !== 2}>
+                Submit
+              </Button>
+            </>
+          )}
+          {page === 3 && (
+            <>
+              <div className={css({ w: 400, textAlign: 'center' })}>
+                <p>Thanks for submitting your information.</p>
+                <p>Once we have verified you are a KU exchange student,</p>
+                <p>we will send you an email right away.</p>
+                <p className={css({ mt: 4 })}>After authentication is complete,</p>
+                <p>you'll be able to use the service seamlessly.</p>
+                <p className={css({ mt: 4 })}>This process takes 1-2 business days on average.</p>
+              </div>
+              <Button type="button" onClick={() => navigate('/login')}>
+                Confirm
+              </Button>
             </>
           )}
         </form>
       </Form>
-      <div className={css({ display: 'flex', flexDir: 'row', gap: 1, mt: 2 })}>
-        <Pagination>
-          <PaginationContent>
-            {page === 2 && (
-              <PaginationItem>
-                <PaginationPrevious onClick={() => setPage(p => (p === 1 ? p : p - 1))} />
-              </PaginationItem>
-            )}
-            <PaginationItem>
-              <PaginationNext onClick={handleNextPage} />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
-      </div>
     </div>
   )
 }
