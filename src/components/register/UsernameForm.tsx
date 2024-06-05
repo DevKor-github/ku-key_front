@@ -7,16 +7,22 @@ import Button from '@/components/ui/button'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { RegisterFormProps } from '@/types/register'
-import { checkUsernameRegex } from '@/util/register-form'
+import { checkRegex } from '@/util/register-form'
 
 const UsernameForm = memo(({ form, handleValidation, valid }: RegisterFormProps<'username'>) => {
   const { mutate: mutateCheckUsernameDuplication } = useCheckUsernameDuplication()
 
   const handleUsernameDuplicationCheck = () => {
-    if (checkUsernameRegex(form) instanceof ZodError) return
+    if (checkRegex(form, 'username') instanceof ZodError) {
+      handleValidation('username', 'invalid')
+      return
+    }
     mutateCheckUsernameDuplication(form.getValues().username, {
       onSuccess: () => handleValidation('username', 'valid'),
-      onError: () => handleValidation('username', 'invalid'),
+      onError: () => {
+        handleValidation('username', 'invalid')
+        form.setError('username', { message: 'This ID is a duplicate ID', type: 'validate' })
+      },
     })
   }
   return (
@@ -32,15 +38,18 @@ const UsernameForm = memo(({ form, handleValidation, valid }: RegisterFormProps<
                 placeholder="Username"
                 {...field}
                 className={css({ alignSelf: 'stretch' })}
-                onBlur={() => checkUsernameRegex(form)}
+                disabled={valid.username === 'valid'}
               />
-              <Button type="button" onClick={() => handleUsernameDuplicationCheck()}>
+              <Button
+                type="button"
+                onClick={() => handleUsernameDuplicationCheck()}
+                className={css({ display: valid.username === 'valid' ? 'none' : 'flex' })}
+              >
                 Send
               </Button>
             </div>
           </FormControl>
-          {valid.username === 'valid' && <p className={css({ color: 'green.500' })}>available username</p>}
-          {valid.username === 'invalid' && <p className={css({ color: 'red.500' })}>username is currently in use</p>}
+          {valid.username === 'valid' && <p className={css({ color: 'green.500' })}>You can use this ID</p>}
           <FormMessage />
         </FormItem>
       )}

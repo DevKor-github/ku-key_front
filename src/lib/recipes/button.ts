@@ -20,16 +20,17 @@ export const buttonRecipe = defineRecipe({
         color: 'gray.50',
         _hover: { transition: 'background 0.25s', bgColor: '#09090b/90' },
       },
-      // outline: {
-      //   bg: 'background',
-      //   border: 'input',
-      //   color: 'primary',
-      //   _hover: { transition: 'background 0.25s', bg: 'accent', color: 'accent.foreground' },
-      // },
-      // ghost: {
-      //   color: 'primary',
-      //   _hover: { bg: 'accent', color: 'accent.foreground' },
-      // },
+      outline: {
+        bgColor: 'gray.50',
+        borderWidth: '1px',
+        borderColor: 'gray.200',
+        color: '#09090b',
+        _hover: { transition: 'background 0.25s', bg: 'gray.100', color: 'gray.900' },
+      },
+      ghost: {
+        color: '#09090b',
+        _hover: { bg: 'gray.100', color: 'gray.900' },
+      },
     },
     size: {
       default: { h: 10, px: 4, py: 2 },

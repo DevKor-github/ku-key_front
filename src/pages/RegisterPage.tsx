@@ -14,10 +14,25 @@ import Button from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationNext,
+  PaginationPrevious,
+} from '@/components/ui/pagination'
 import { RegisterFormSchema } from '@/lib/zod/register-schema'
 import { RegistrationState, ValidState } from '@/types/register'
+import {
+  checkEmailCodeRegex,
+  checkEmailRegex,
+  checkPasswordConfirm,
+  checkPasswordRegex,
+  checkUsernameRegex,
+} from '@/util/register-form'
 
 const RegisterPage = () => {
+  const [page, setPage] = useState(1)
   const file = useRef<HTMLInputElement>(null)
   const [valid, setValid] = useState<RegistrationState>({
     email: 'unknown',
@@ -32,10 +47,12 @@ const RegisterPage = () => {
     resolver: zodResolver(RegisterFormSchema),
     defaultValues: {
       email: '',
+      emailCode: '',
       password: { password: '', confirm: '' },
       username: '',
       studentId: '',
     },
+    mode: 'onTouched',
   })
 
   const checkFile = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,35 +94,69 @@ const RegisterPage = () => {
     setValid(v => ({ ...v, [target]: value }))
   }, [])
 
+  const handleNextPage = () => {
+    const email = checkEmailRegex(form)
+    const emailCode = checkEmailCodeRegex(form)
+    const userName = checkUsernameRegex(form)
+    const password = checkPasswordRegex(form)
+    const passwordConfirm = checkPasswordConfirm(form)
+    if (email || emailCode || userName || password || passwordConfirm) return
+    if (valid.email !== 'valid' || valid.username !== 'valid') return
+    setPage(p => (p === 2 ? p : p + 1))
+  }
   return (
     <div
       className={css({
         display: 'flex',
         flexDir: 'column',
         w: 'full',
-        h: '100vh',
+        h: 'full',
         justifyContent: 'center',
         alignItems: 'center',
+        py: '100px',
+        gap: 5,
       })}
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className={css({ display: 'flex', flexDir: 'column', gap: 6 })}>
-          <EmailForm form={form} valid={valid} handleValidation={handleValidation} />
-          <UsernameForm form={form} valid={valid} handleValidation={handleValidation} />
-          <PasswordForm {...form} />
-          <StudentIdForm form={form} valid={valid} handleValidation={handleValidation} />
-          <div>
-            <Label htmlFor="Sreenshot of acceptance email">
-              Please attach a screenshot of your acceptance email from Korea University
-            </Label>
-            <Input type="file" ref={file} accept="image/*" onChange={checkFile} />
-            {valid.screenShot === 'invalid' && (
-              <p className={css({ color: 'red.500' })}>Only image files are accepted</p>
-            )}
-          </div>
-          <Button type="submit">Submit</Button>
+          {page === 1 && (
+            <>
+              <EmailForm form={form} valid={valid} handleValidation={handleValidation} />
+              <UsernameForm form={form} valid={valid} handleValidation={handleValidation} />
+              <PasswordForm {...form} />
+            </>
+          )}
+          {page === 2 && (
+            <>
+              <StudentIdForm form={form} valid={valid} handleValidation={handleValidation} />
+              <div>
+                <Label htmlFor="Sreenshot of acceptance email">
+                  Please attach a screenshot of your acceptance email from Korea University
+                </Label>
+                <Input type="file" ref={file} accept="image/*" onChange={checkFile} />
+                {valid.screenShot === 'invalid' && (
+                  <p className={css({ color: 'red.500' })}>Only image files are accepted</p>
+                )}
+              </div>
+              <Button type="submit">Submit</Button>
+            </>
+          )}
         </form>
       </Form>
+      <div className={css({ display: 'flex', flexDir: 'row', gap: 1, mt: 2 })}>
+        <Pagination>
+          <PaginationContent>
+            {page === 2 && (
+              <PaginationItem>
+                <PaginationPrevious onClick={() => setPage(p => (p === 1 ? p : p - 1))} />
+              </PaginationItem>
+            )}
+            <PaginationItem>
+              <PaginationNext onClick={handleNextPage} />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      </div>
     </div>
   )
 }

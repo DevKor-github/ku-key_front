@@ -1,15 +1,15 @@
-import { Label } from '@radix-ui/react-label'
 import { css } from '@styled-stytem/css'
 import { memo, useState } from 'react'
+import { ZodError } from 'zod'
 
 import { useCheckEmailDuplication, useSendEmail, useVerifyEmail } from '@/api/hooks/register'
 import Button from '@/components/ui/button'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { RegisterFormProps } from '@/types/register'
+import { checkRegex } from '@/util/register-form'
 
 const EmailForm = memo(({ form, handleValidation, valid }: RegisterFormProps<'email'>) => {
-  const [code, setCode] = useState('')
   const [emailSent, setEmailSent] = useState(false)
 
   const { mutate: mutateCheckEmailDuplication } = useCheckEmailDuplication()
@@ -28,20 +28,17 @@ const EmailForm = memo(({ form, handleValidation, valid }: RegisterFormProps<'em
         mutateSendEmail(form.getValues().email)
         setEmailSent(true)
       },
-      onError: () => form.setError('email', { message: 'This email is already in use' }),
+      onError: () => form.setError('email', { message: 'This email is already in use', type: 'validate' }),
     })
   }
 
   const handleEamilVerification = () => {
-    if (code === '') {
-      handleValidation('email', 'invalid')
-      return
-    }
+    if (checkRegex(form, 'emailCode') instanceof ZodError) return
     muatateVerifyEmail(
-      { email: form.getValues().email, verifyToken: parseInt(code) },
+      { email: form.getValues().email, verifyToken: parseInt(form.getValues().emailCode) },
       {
         onSuccess: () => handleValidation('email', 'valid'),
-        onError: () => handleValidation('email', 'invalid'),
+        onError: () => form.setError('emailCode', { message: 'Invalid code', type: 'validate' }),
       },
     )
   }
@@ -56,9 +53,18 @@ const EmailForm = memo(({ form, handleValidation, valid }: RegisterFormProps<'em
             <FormLabel className={css({ fontWeight: 700 })}>Email</FormLabel>
             <FormControl>
               <div className={css({ display: 'flex', gap: 2, alignItems: 'center' })}>
-                <Input placeholder="Email" {...field} className={css({ alignSelf: 'stretch' })} />
+                <Input
+                  placeholder="Email"
+                  {...field}
+                  className={css({ alignSelf: 'stretch' })}
+                  disabled={valid.email === 'valid'}
+                />
                 <p className={css({ color: 'gray.400' })}>@gmail.com</p>
-                <Button type="button" onClick={handleEmailDuplicationCheck}>
+                <Button
+                  type="button"
+                  onClick={handleEmailDuplicationCheck}
+                  className={css({ display: valid.email === 'valid' ? 'none' : 'flex' })}
+                >
                   Send
                 </Button>
               </div>
@@ -68,17 +74,25 @@ const EmailForm = memo(({ form, handleValidation, valid }: RegisterFormProps<'em
           </FormItem>
         )}
       />
-      <div>
-        <Label htmlFor="email verification code">Code</Label>
-        <div className={css({ display: 'flex', flexDir: 'row', gap: 2, alignItems: 'center' })}>
-          <Input type="password" value={code} onChange={e => setCode(e.target.value)} />
-          <Button type="button" onClick={handleEamilVerification} disabled={code === ''}>
-            Verify
-          </Button>
-        </div>
-        {valid.email === 'valid' && <p className={css({ color: 'green.500' })}>이메일 인증이 완료되었습니다.</p>}
-        {valid.email === 'invalid' && <p className={css({ color: 'red.500' })}>This field is required.</p>}
-      </div>
+      <FormField
+        control={form.control}
+        name="emailCode"
+        render={({ field }) => (
+          <FormItem className={css({ display: 'flex', flexDir: 'column', alignSelf: 'stretch' })}>
+            <FormLabel className={css({ fontWeight: 700 })}>Code</FormLabel>
+            <FormControl>
+              <div className={css({ display: 'flex', gap: 2, alignItems: 'center' })}>
+                <Input type="password" {...field} className={css({ alignSelf: 'stretch' })} />
+                <Button type="button" onClick={handleEamilVerification}>
+                  Verify
+                </Button>
+              </div>
+            </FormControl>
+            <FormMessage />
+            {valid.email === 'valid' && <p className={css({ color: 'green.500' })}>Your Email has been validated</p>}
+          </FormItem>
+        )}
+      />
     </>
   )
 })
