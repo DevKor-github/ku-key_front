@@ -8,6 +8,11 @@ export interface TimetableInfo {
   tableName: string
 }
 
+export interface GetTimeTableByTimeTableIdRequest {
+  authHeader: string | null
+  tableId: number
+}
+
 // GetTimeTableByTimeTableIdResponse
 export type GetTimeTableByTimeTableIdResponse = CourseType[]
 
@@ -15,21 +20,26 @@ export type GetTimeTableByTimeTableIdResponse = CourseType[]
 export type GetTimeTableByUserIdResponse = TimetableInfo[]
 
 export interface CreateTimeTableRequest {
-  authHeader: string
+  authHeader: string | null
   tableName: string
   semester: SemesterType
   year: string
 }
 
 export interface UpdateTimeTableNameRequest {
-  authHeader: string
+  authHeader: string | null
   tableName: string
   timeTableId: number
 }
 
 export interface UpdateMainTimeTableRequest {
-  authHeader: string
+  authHeader: string | null
   semester: SemesterType
   year: string
   timeTableId: number
+}
+
+export interface DeleteTimeTableRequest {
+  authHeader: string | null
+  tableId: number
 }

@@ -10,29 +10,27 @@ import { ShareBtn } from '@/pages/TimetablePage'
 import { timetablePreprocess } from '@/util/timetableUtil'
 
 const MyTimetablePage = () => {
+  const { data: timetableList, isPending } = useGetTimetableList()
+  const { mutate: createTimetable, isPending: isCreateTimetablePending } = usePostTimetable()
+
   const [curSemester, setCurSemester] = useState(0)
   const [curIndex, setCurIndex] = useState(0)
-  const { data: timetableList, isPending } = useGetTimetableList()
-  const semesterList = timetablePreprocess(timetableList)
-  const { mutate: createTimetable, isPending: isCreateTimetablePending } = usePostTimetable()
 
   if (isPending) {
     return <div>로딩 중</div>
   }
 
-  const curSemesterTimetableLen = semesterList[curSemester].timetables.length
+  const semesterList = timetablePreprocess(timetableList)
 
-  if (!isCreateTimetablePending && curSemesterTimetableLen === 0) {
+  if (!isCreateTimetablePending && semesterList[curSemester].timetables.length === 0) {
     // 이거 왜 isCreateTimetablePending 옵션 빼면 52번이나 실행되는거지
     createTimetable({
-      tableName: '임의로만든',
+      tableName: '새 시간표',
       semester: semesterList[curSemester].semester,
       year: semesterList[curSemester].year,
     })
-    return <div>로딩 중. 시간표 없음</div>
+    return <div>로딩 중</div>
   }
-
-  const curTimetable = semesterList[curSemester].timetables[curIndex]
 
   return (
     <>
@@ -56,7 +54,7 @@ const MyTimetablePage = () => {
         </div>
       </div>
       <StatusBar curSemester={semesterList[curSemester]} curIndex={curIndex} setCurIndex={setCurIndex} />
-      <TimeTable timetable={curTimetable} />
+      <TimeTable timetable={semesterList[curSemester].timetables[curIndex]} />
     </>
   )
 }
