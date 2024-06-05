@@ -6,7 +6,7 @@ const friendsList = ['하승준', '이지원', '이시흔', '정연승', '차승
 
 const FriendsList = () => {
   return (
-    <div className={css({ w: 40, display: 'flex', flexDir: 'column', gap: 3.5 })}>
+    <div className={css({ w: 47, display: 'flex', flexDir: 'column', gap: 3.5 })}>
       <button
         className={css({
           h: 12,

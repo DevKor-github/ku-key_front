@@ -1,9 +1,7 @@
 import { css } from '@styled-stytem/css'
 
 // import Timetable from '@/components/timetable'
-import FriendsList from '@/components/timetable/FriendsList'
-
-// todo: 친구 시간표는 조금 더 고민해보자..
+import FriendsList from '@/components/timetable/FriendTimetable/FriendsList'
 
 const FriendTimetablePage = () => {
   return (
