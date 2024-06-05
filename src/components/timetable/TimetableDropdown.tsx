@@ -44,7 +44,7 @@ const DropdownItemsStyle = cva({
 
 const TimetableDropdown = ({ semesterList, curSemester, setCurSemester, setCurIndex }: TimetableDropdownProps) => {
   return (
-    <DropdownMenu.Root>
+    <DropdownMenu.Root modal={false}>
       {/* todo :: open시에 다시 닫는 ^ 기능 만들기 */}
       <DropdownMenu.Trigger asChild>
         <button

@@ -62,8 +62,8 @@ const SelectTimetableBtn = ({
         <button
           onClick={e => {
             e.preventDefault()
-            if (ind === curInd) {
-              if (ind !== 0) setCurIndex(prev => prev - 1)
+            if (ind <= curInd) {
+              if (curInd !== 0) setCurIndex(prev => prev - 1)
             }
             deleteTimetable({ tableId: timetable.tableId })
           }}
