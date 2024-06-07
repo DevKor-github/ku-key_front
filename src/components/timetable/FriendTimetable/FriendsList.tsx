@@ -1,10 +1,12 @@
 import { css } from '@styled-stytem/css'
 
-// dummy data
-// todo : 실물 데이터를 받아오는 로직
-const friendsList = ['하승준', '이지원', '이시흔', '정연승', '차승민', '김성현', '김현아', '박정우']
+import { GetFriendListResponse } from '@/api/types/friends'
 
-const FriendsList = () => {
+interface FriendsListProps {
+  data: GetFriendListResponse | undefined
+}
+
+const FriendsList = ({ data }: FriendsListProps) => {
   return (
     <div className={css({ w: 47, display: 'flex', flexDir: 'column', gap: 3.5 })}>
       <button
@@ -33,13 +35,17 @@ const FriendsList = () => {
           border: '1px {colors.darkGray.1} solid',
         })}
       >
-        {friendsList.map(friend => {
-          return (
-            <button key={friend} className={css({ h: 11, cursor: 'pointer' })}>
-              {friend}
-            </button>
-          )
-        })}
+        {data && data.length > 0 ? (
+          data.map(friend => {
+            return (
+              <button key={friend.userId} className={css({ h: 11, cursor: 'pointer' })}>
+                {friend.name}
+              </button>
+            )
+          })
+        ) : (
+          <div className={css({ h: 11 })}>친구가 없어요 ㅠ</div>
+        )}
       </div>
     </div>
   )
