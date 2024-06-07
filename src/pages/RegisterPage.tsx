@@ -140,7 +140,12 @@ const RegisterPage = () => {
                     borderStyle: 'dashed',
                   })}
                 >
-                  <Button type="button" onClick={() => file.current?.click()} variant="ghost">
+                  <Button
+                    type="button"
+                    onClick={() => file.current?.click()}
+                    variant="ghost"
+                    className={css({ w: 'full' })}
+                  >
                     Attach
                     <Plus className={css({ w: 4, h: 4 })} />
                   </Button>

@@ -21,6 +21,7 @@ const store = createStore({
 
 function App() {
   const router = useRoutes(routes)
+
   return (
     <AuthProvider store={store}>
       <QueryClientProvider client={queryClient}>{router}</QueryClientProvider>

@@ -1,20 +1,17 @@
-import axios from 'axios'
 import createRefresh from 'react-auth-kit/createRefresh'
 
 import { LoginResponse } from '@/api/types/auth'
+import { customAxios } from '@/util/custom-axios'
 
 const getNewToken = async (refreshToken: string) => {
-  const response = await axios.post<Pick<LoginResponse['token'], 'accessToken'>>(
-    `http://${import.meta.env.VITE_API_SERVER}/auth/refresh`,
-    {
-      headers: { Authorization: `Bearer ${refreshToken}` },
-    },
-  )
+  const response = await customAxios.post<Pick<LoginResponse['token'], 'accessToken'>>(`/auth/refresh`, null, {
+    headers: { Authorization: `Bearer ${refreshToken}` },
+  })
   return response.data.accessToken
 }
 
 export const refresh = createRefresh({
-  interval: 60 * 30, // The time in sec to refresh the Access token,
+  interval: 5,
   refreshApiCallback: async param => {
     try {
       const accessToken = await getNewToken(param.refreshToken!)
@@ -22,7 +19,8 @@ export const refresh = createRefresh({
       return {
         isSuccess: true,
         newAuthToken: accessToken,
-        newRefreshTokenExpiresIn: 60 * 60 * 24 * 14, // The time in sec to refresh the Refresh token
+        newAuthTokenExpireIn: 5,
+        newRefreshTokenExpireIn: 60 * 24 * 14,
       }
     } catch (error) {
       console.error(error)
