@@ -22,7 +22,7 @@ const MyTimetableOutlet = ({ semesterList, curSemester, curIndex, setCurIndex }:
   const handleCreateTimetable = useCallback(() => {
     if (semesterList[curSemester].timetables.length === 0) {
       createTimetable({
-        tableName: '새 시간표',
+        tableName: 'timetable 1',
         semester: semesterList[curSemester].semester,
         year: semesterList[curSemester].year,
       })

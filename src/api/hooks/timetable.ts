@@ -6,11 +6,12 @@ import {
   CreateTimeTableRequest,
   DeleteTimeTableRequest,
   GetTimeTableByTimeTableIdRequest,
+  GetTimeTableByUserIdResponse,
   UpdateMainTimeTableRequest,
   UpdateTimeTableNameRequest,
 } from '@/api/types/timetable'
 
-const getTimetableList = async (authHeader: string | null) => {
+const getTimetableList = async (authHeader: string | null): Promise<GetTimeTableByUserIdResponse> => {
   const response = await axios.get(`http://${import.meta.env.VITE_API_SERVER}/timetable/user`, {
     headers: { Authorization: authHeader },
   })

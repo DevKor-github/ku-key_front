@@ -54,7 +54,7 @@ const StatusBar = ({ curSemester, curIndex, setCurIndex }: StatusBarProps) => {
 
   const handleCreateTimetableBtn = () => {
     createTimetable({
-      tableName: '새 시간표',
+      tableName: `timetable ${curSemesterTimetableLen + 1}`,
       semester: curSemester.semester,
       year: curSemester.year,
     })
