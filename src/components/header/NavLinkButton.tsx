@@ -25,7 +25,11 @@ export const NavLinkButton = ({ isSelected, targetRoute, navName }: NavLinkProps
       </Link>
       <div
         aria-selected={isSelected}
-        className={css({ w: 'full', h: 1.5, _selected: { bgColor: 'red.2', rounded: 15 } })}
+        className={css({
+          w: 'full',
+          h: 1.5,
+          _selected: { bgColor: 'red.2', rounded: 15, transition: 'background-color 0.15s ease-in' },
+        })}
       />
     </button>
   )

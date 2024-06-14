@@ -38,7 +38,7 @@ const LanguageButton = () => {
           alignItems: 'center',
           cursor: 'pointer',
           _hover: { bgColor: 'lightGray.1' },
-          transition: 'background-color 0.15s ease-in-out',
+          transition: 'background-color 0.15s ease-in',
           _pressed: { bgColor: 'lightGray.1' },
         })}
         onClick={() => setOpenModal(!openModal)}

@@ -9,7 +9,7 @@ const MypageWrapper = ({ children }: { children: ReactNode }) => {
         flexDir: 'column',
         alignItems: 'center',
         w: 'full',
-        bg: 'bg',
+        bg: 'bg.gray',
         gap: 8,
       })}
     >

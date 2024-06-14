@@ -26,7 +26,12 @@ export default defineConfig({
       tokens: {
         colors: {
           white: { value: '#FFFFFF' },
-          bg: { value: '#F9F9F9' },
+          bg: {
+            gray: { value: '#F9F9F9' },
+            red: {
+              value: '#FFF4F4',
+            },
+          },
           black: {
             1: { value: '#000000' },
             2: { value: '#383838' },
@@ -44,9 +49,6 @@ export default defineConfig({
             2: { value: '#E70000' },
             3: { value: '#F37979' },
             4: { value: '#FFC2AF' },
-          },
-          bg_red: {
-            value: '#FFF4F4',
           },
         },
         spacing: tokenToRem,

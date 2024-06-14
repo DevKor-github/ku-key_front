@@ -8,7 +8,7 @@ export const modalCardRecipe = defineRecipe({
     flexDirection: 'column',
     px: 10,
     py: '30px',
-    rounded: '20px',
+    rounded: 20,
     gap: 5,
   },
   variants: {
@@ -17,7 +17,7 @@ export const modalCardRecipe = defineRecipe({
         alignItems: 'flex-start',
         borderColor: 'red.3',
         borderWidth: 1,
-        bgColor: 'bg_red',
+        bgColor: 'bg.red',
       },
       alert: {
         bgColor: 'white',
