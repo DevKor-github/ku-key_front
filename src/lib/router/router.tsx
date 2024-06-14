@@ -1,6 +1,7 @@
 import { RouteObject } from 'react-router-dom'
 
 import MainLayout from '@/components/MainLayout'
+import ProtectedRoutes from '@/lib/router/ProtectedRoutes'
 import FriendTimeTablePage from '@/pages/FriendTimeTablePage'
 import LandingPage from '@/pages/LandingPage'
 import Login from '@/pages/LoginPage'
@@ -8,7 +9,6 @@ import MyPage from '@/pages/MyPage'
 import MyTimeTablePage from '@/pages/MyTimeTablePage'
 import RegisterPage from '@/pages/RegisterPage'
 import TimeTablePage from '@/pages/TimeTablePage'
-import ProtectedRoutes from '@/router/ProtectedRoutes'
 
 const routes: RouteObject[] = [
   {
