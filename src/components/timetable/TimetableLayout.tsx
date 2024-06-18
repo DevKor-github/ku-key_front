@@ -47,11 +47,11 @@ export const TimeCell = cva({
 })
 
 interface TimetableLayoutProps {
-  tableId: number
+  timeTableId: number
 }
 
-const TimetableLayout = ({ tableId }: TimetableLayoutProps) => {
-  const { data, isPending } = useGetTimetable({ tableId })
+const TimetableLayout = ({ timeTableId }: TimetableLayoutProps) => {
+  const { data, isPending } = useGetTimetable({ timeTableId })
 
   if (isPending || data === undefined) {
     return <div>로딩중</div>

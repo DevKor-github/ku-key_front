@@ -1,8 +1,8 @@
 import { css } from '@styled-stytem/css'
 import { Download } from 'lucide-react'
-import { useCallback, useEffect, useState } from 'react'
+import { useState } from 'react'
 
-import { useGetTimetableList, usePostTimetable } from '@/api/hooks/timetable'
+import { useGetTimetableList } from '@/api/hooks/timetable'
 import TimeTable from '@/components/timetable'
 import StatusBar from '@/components/timetable/MyTimetable/StatusBar'
 import TimetableDropdown from '@/components/timetable/TimetableDropdown'
@@ -17,26 +17,14 @@ interface TimetableStatusLayoutProps {
   setCurIndex: React.Dispatch<React.SetStateAction<number>>
 }
 const MyTimetableOutlet = ({ semesterList, curSemester, curIndex, setCurIndex }: TimetableStatusLayoutProps) => {
-  const { mutate: createTimetable } = usePostTimetable()
-
-  const handleCreateTimetable = useCallback(() => {
-    if (semesterList[curSemester].timetables.length === 0) {
-      createTimetable({
-        tableName: 'timetable 1',
-        semester: semesterList[curSemester].semester,
-        year: semesterList[curSemester].year,
-      })
-    }
-  }, [createTimetable, curSemester, semesterList])
-
-  useEffect(() => {
-    handleCreateTimetable()
-  }, [handleCreateTimetable])
-
   return (
     <>
       <StatusBar curSemester={semesterList[curSemester]} curIndex={curIndex} setCurIndex={setCurIndex} />
-      <TimeTable timetable={semesterList[curSemester].timetables[curIndex]} />
+      {semesterList[curSemester].timetables.length === 0 ? (
+        <div>빈 학기</div>
+      ) : (
+        <TimeTable timetable={semesterList[curSemester].timetables[curIndex]} />
+      )}
     </>
   )
 }

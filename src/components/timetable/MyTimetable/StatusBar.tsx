@@ -50,6 +50,7 @@ const StatusBar = ({ curSemester, curIndex, setCurIndex }: StatusBarProps) => {
   const { mutate: updateMainTable } = useUpdateMainTable()
 
   const curSemesterTimetableLen = curSemester.timetables.length
+  const hasTable = curSemesterTimetableLen !== 0
   const curTimetable = curSemester.timetables[curIndex]
 
   const handleCreateTimetableBtn = () => {
@@ -119,22 +120,24 @@ const StatusBar = ({ curSemester, curIndex, setCurIndex }: StatusBarProps) => {
           })}
         </div>
       </div>
-      <button
-        className={MainPinBtn({ main: curTimetable.mainTimeTable })}
-        onClick={() => {
-          if (!curTimetable.mainTimeTable) {
-            setCurIndex(0)
-            updateMainTable({
-              semester: curTimetable.semester,
-              year: curTimetable.year,
-              timeTableId: curTimetable.tableId,
-            })
-          }
-        }}
-      >
-        <Check size={22} />
-        Main
-      </button>
+      {hasTable && (
+        <button
+          className={MainPinBtn({ main: curTimetable.mainTimeTable })}
+          onClick={() => {
+            if (!curTimetable.mainTimeTable) {
+              setCurIndex(0)
+              updateMainTable({
+                semester: curTimetable.semester,
+                year: curTimetable.year,
+                timeTableId: curTimetable.timeTableId,
+              })
+            }
+          }}
+        >
+          <Check size={22} />
+          Main
+        </button>
+      )}
     </div>
   )
 }

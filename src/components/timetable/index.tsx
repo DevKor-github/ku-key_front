@@ -10,7 +10,7 @@ interface TimeTableProps {
 }
 
 const Timetable = ({ timetable }: TimeTableProps) => {
-  const { tableId, tableName, year, semester } = timetable
+  const { timeTableId, tableName, year, semester } = timetable
   const [timetableTitle, setTimetableTitle] = useState('')
   const { mutate: updateTableName } = useUpdateTableName()
 
@@ -19,7 +19,7 @@ const Timetable = ({ timetable }: TimeTableProps) => {
   }, [tableName])
 
   const changeTimetableTitle = (title: string) => {
-    updateTableName({ timeTableId: tableId, tableName: title })
+    updateTableName({ timeTableId, tableName: title })
   }
 
   return (
@@ -82,7 +82,7 @@ const Timetable = ({ timetable }: TimeTableProps) => {
           </div>
         </div>
       </div>
-      <TimetableLayout tableId={tableId} />
+      <TimetableLayout timeTableId={timeTableId} />
     </div>
   )
 }

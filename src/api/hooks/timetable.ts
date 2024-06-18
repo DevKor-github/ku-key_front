@@ -26,8 +26,8 @@ export const useGetTimetableList = () => {
   })
 }
 
-const getTimetable = async ({ authHeader, tableId }: GetTimeTableByTimeTableIdRequest) => {
-  const response = await axios.get(`http://${import.meta.env.VITE_API_SERVER}/timetable/${tableId}`, {
+const getTimetable = async ({ authHeader, timeTableId }: GetTimeTableByTimeTableIdRequest) => {
+  const response = await axios.get(`http://${import.meta.env.VITE_API_SERVER}/timetable/${timeTableId}`, {
     headers: { Authorization: authHeader },
   })
   return response.data
@@ -36,7 +36,7 @@ const getTimetable = async ({ authHeader, tableId }: GetTimeTableByTimeTableIdRe
 export const useGetTimetable = (props: Omit<GetTimeTableByTimeTableIdRequest, 'authHeader'>) => {
   const authHeader = useAuthHeader()
   return useQuery({
-    queryKey: ['timetable', props.tableId],
+    queryKey: ['timetable', props.timeTableId],
     queryFn: () => getTimetable({ authHeader, ...props }),
   })
 }
@@ -61,8 +61,8 @@ export const usePostTimetable = () => {
   })
 }
 
-const deleteTimetable = async ({ authHeader, tableId }: DeleteTimeTableRequest) => {
-  const response = await axios.delete(`http://${import.meta.env.VITE_API_SERVER}/timetable/${tableId}`, {
+const deleteTimetable = async ({ authHeader, timeTableId }: DeleteTimeTableRequest) => {
+  const response = await axios.delete(`http://${import.meta.env.VITE_API_SERVER}/timetable/${timeTableId}`, {
     headers: { Authorization: authHeader },
   })
   return response

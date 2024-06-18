@@ -65,7 +65,7 @@ const SelectTimetableBtn = ({
             if (ind <= curInd) {
               if (curInd !== 0) setCurIndex(prev => prev - 1)
             }
-            deleteTimetable({ tableId: timetable.tableId })
+            deleteTimetable({ timeTableId: timetable.timeTableId })
           }}
           className={css({ cursor: 'pointer' })}
         >
