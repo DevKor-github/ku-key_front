@@ -1,7 +1,7 @@
 import { TimetableInfo } from '@/api/types/timetable'
 import { CourseType, DayType, Semester, SemesterType } from '@/types/timetable'
 
-const dayToNumber: { [key in DayType]: number } = { Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 }
+const dayToNumber: { [key in DayType]: number } = { Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6, Sun: 7 }
 
 export const numberToSemester: SemesterType[] = ['Spring', 'Summer', 'Fall', 'Winter']
 
@@ -70,20 +70,22 @@ export const lectureDataPreprocess = (data: CourseType[], weekCnt: number, timeC
 
 export const getWeeknTimeList = (data: CourseType[]) => {
   let lastTime = 16
-  let haveSat = false
+  let lastDay = 5
 
   data.map(lec => {
     lastTime = Math.max(lastTime, Number(lec.endTime.slice(0, 2)))
-    if (lec.day === 'Sat') {
-      haveSat = true
+    if (dayToNumber[lec.day] > lastDay) {
+      lastDay = dayToNumber[lec.day]
     }
   })
 
-  const time = ['']
-  const week = ['MON', 'TUS', 'WEN', 'THR', 'FRI']
+  const weekCandidate = ['MON', 'TUS', 'WEN', 'THR', 'FRI', 'SAT', 'SUN']
 
-  if (haveSat) {
-    week.push('SAT')
+  const time = ['']
+  const week = []
+
+  for (let i = 0; i < lastDay; i++) {
+    week.push(weekCandidate[i])
   }
 
   for (let i = 9; i <= lastTime; i++) {

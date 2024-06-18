@@ -1,6 +1,6 @@
 import { TimetableInfo } from '@/api/types/timetable'
 
-export type DayType = 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri' | 'Sat'
+export type DayType = 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri' | 'Sat' | 'Sun'
 
 export type SemesterType = 'Spring' | 'Summer' | 'Fall' | 'Winter'
 
