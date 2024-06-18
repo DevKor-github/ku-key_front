@@ -1,7 +1,7 @@
 import { CourseType, SemesterType } from '@/types/timetable'
 
 export interface TimetableInfo {
-  tableId: number
+  timeTableId: number
   semester: SemesterType
   year: string
   mainTimeTable: boolean
@@ -10,7 +10,7 @@ export interface TimetableInfo {
 
 export interface GetTimeTableByTimeTableIdRequest {
   authHeader: string | null
-  tableId: number
+  timeTableId: number
 }
 
 // GetTimeTableByTimeTableIdResponse
@@ -41,5 +41,5 @@ export interface UpdateMainTimeTableRequest {
 
 export interface DeleteTimeTableRequest {
   authHeader: string | null
-  tableId: number
+  timeTableId: number
 }

@@ -14,8 +14,8 @@ export interface CourseType {
   professorName: string
   courseName: string
   courseCode: string
-  day: DayType
   startTime: string
   endTime: string
   classroom: string
+  day: DayType
 }
