@@ -11,7 +11,7 @@ const SelectTimetableBtnStyle = cva({
     h: 9,
     display: 'flex',
     alignItems: 'center',
-    bgColor: 'bg',
+    bgColor: 'bg.gray',
     rounded: 10,
     color: 'lightGray.1',
     fontSize: 18,

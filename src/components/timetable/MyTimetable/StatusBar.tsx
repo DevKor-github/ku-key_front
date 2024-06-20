@@ -10,7 +10,7 @@ const MainPinBtn = cva({
     fontSize: 18,
     fontWeight: 500,
     rounded: 30,
-    bgColor: 'bg',
+    bgColor: 'bg.gray',
     px: 2.5,
     h: 9,
     display: 'flex',

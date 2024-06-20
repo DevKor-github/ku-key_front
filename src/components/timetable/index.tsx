@@ -36,7 +36,7 @@ const Timetable = ({ timetable }: TimeTableProps) => {
           w: '100%',
           justifyContent: 'space-between',
           h: 16,
-          bgColor: 'bg',
+          bgColor: 'bg.gray',
           roundedTop: 10,
           border: '1px {colors.lightGray.1} solid',
           px: 8,

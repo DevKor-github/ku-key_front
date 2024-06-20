@@ -5,7 +5,7 @@ import { GetFriendListResponse } from '@/api/types/friends'
 const PlusFriend = cva({
   base: {
     w: '100%',
-    bgColor: 'bg',
+    bgColor: 'bg.gray',
     py: 3.5,
     rounded: 10,
     border: '1px {colors.lightGray.1} solid',

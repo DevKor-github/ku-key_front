@@ -28,7 +28,7 @@ const MyTimetableOutlet = ({ semesterList, curSemester, curIndex, setCurIndex }:
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            bgColor: 'bg',
+            bgColor: 'bg.gray',
             rounded: 10,
             border: '1px {colors.lightGray.1} solid',
             color: 'lightGray.1',

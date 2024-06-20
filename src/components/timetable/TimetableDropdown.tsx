@@ -28,7 +28,7 @@ const DropdownItemsStyle = cva({
     cursor: 'pointer',
     transition: 'background 0.256s',
     _hover: {
-      bgColor: 'bg',
+      bgColor: 'bg.gray',
     },
   },
   variants: {

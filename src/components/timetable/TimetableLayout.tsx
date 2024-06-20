@@ -26,7 +26,7 @@ export const TimeCell = cva({
     },
     sidebar: {
       true: {
-        bgColor: 'bg',
+        bgColor: 'bg.gray',
         w: '4.125rem',
       },
     },
