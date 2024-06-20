@@ -3,11 +3,10 @@ import { css } from '@styled-stytem/css'
 // import Timetable from '@/components/timetable'
 import { useGetFriendList } from '@/api/hooks/friends'
 import FriendsList from '@/components/timetable/FriendTimetable/FriendsList'
+import FriendsManage from '@/components/timetable/FriendTimetable/FriendsManage'
 
 const FriendTimetablePage = () => {
-  const { data, isPending } = useGetFriendList({ keyword: null })
-
-  console.log(isPending, data)
+  const { data } = useGetFriendList({ keyword: null })
   return (
     <>
       <div className={css({ display: 'flex', flexDir: 'row', justifyContent: 'space-between', my: 11 })}>
@@ -17,7 +16,7 @@ const FriendTimetablePage = () => {
       </div>
       <div className={css({ display: 'flex', flexDir: 'row', gap: 5 })}>
         <FriendsList data={data} />
-        {/* <Timetable semester={'Spring'} year={'2024'} timetableID={'dummy'} /> */}
+        <FriendsManage />
       </div>
     </>
   )
