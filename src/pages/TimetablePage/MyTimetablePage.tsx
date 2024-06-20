@@ -21,7 +21,24 @@ const MyTimetableOutlet = ({ semesterList, curSemester, curIndex, setCurIndex }:
     <>
       <StatusBar curSemester={semesterList[curSemester]} curIndex={curIndex} setCurIndex={setCurIndex} />
       {semesterList[curSemester].timetables.length === 0 ? (
-        <div>빈 학기</div>
+        <div
+          className={css({
+            w: '100%',
+            py: '300px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            bgColor: 'bg',
+            rounded: 10,
+            border: '1px {colors.lightGray.1} solid',
+            color: 'lightGray.1',
+            fontWeight: 600,
+            fontSize: 16,
+            textAlign: 'center',
+          })}
+        >
+          There is no set timetable <br /> Press the plus button to create a timetable!
+        </div>
       ) : (
         <TimeTable timetable={semesterList[curSemester].timetables[curIndex]} />
       )}

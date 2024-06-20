@@ -36,6 +36,11 @@ const MainPinBtn = cva({
         },
       },
     },
+    disabled: {
+      true: {
+        cursor: 'default',
+      },
+    },
   },
 })
 
@@ -120,7 +125,7 @@ const StatusBar = ({ curSemester, curIndex, setCurIndex }: StatusBarProps) => {
           })}
         </div>
       </div>
-      {hasTable && (
+      {hasTable ? (
         <button
           className={MainPinBtn({ main: curTimetable.mainTimeTable })}
           onClick={() => {
@@ -134,6 +139,11 @@ const StatusBar = ({ curSemester, curIndex, setCurIndex }: StatusBarProps) => {
             }
           }}
         >
+          <Check size={22} />
+          Main
+        </button>
+      ) : (
+        <button className={MainPinBtn({ disabled: true })}>
           <Check size={22} />
           Main
         </button>
