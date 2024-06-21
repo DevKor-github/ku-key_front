@@ -18,3 +18,10 @@ export interface GetSearchUserRequest {
   authHeader: string | null
   username: string
 }
+
+export interface GetSearchUserResponse {
+  language: string
+  major: string
+  name: string
+  username: string
+}

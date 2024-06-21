@@ -1,24 +1,17 @@
 import { css } from '@styled-stytem/css'
-import { useQuery } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
-import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader'
+import { useState } from 'react'
 
-import { getSearchUser } from '@/api/hooks/friends'
+import { useGetSearchUser } from '@/api/hooks/friends'
 import FriendRequest from '@/components/timetable/FriendTimetable/FriendRequest'
 import SearchResult from '@/components/timetable/FriendTimetable/SearchResult'
 import { Input } from '@/components/ui/input'
 
 const FriendsManage = () => {
+  const [inputKeyword, setInputKeyword] = useState('')
   const [searchKeyword, setSearchKeyword] = useState('')
-  const authHeader = useAuthHeader()
-  const { data: searchResultData, refetch: search } = useQuery({
-    queryKey: ['searchResult', searchKeyword],
-    queryFn: () => getSearchUser({ authHeader, username: searchKeyword }),
-    enabled: false,
-  })
-  useEffect(() => {
-    console.log(searchResultData)
-  }, [searchResultData])
+
+  const { data: searchResultData } = useGetSearchUser({ username: searchKeyword })
+
   return (
     <div
       className={css({
@@ -44,8 +37,8 @@ const FriendsManage = () => {
         })}
         onSubmit={e => {
           e.preventDefault()
-          search()
-          setSearchKeyword('')
+          setSearchKeyword(inputKeyword)
+          setInputKeyword('')
         }}
       >
         <div
@@ -62,14 +55,14 @@ const FriendsManage = () => {
         </div>
         <Input
           onChange={e => {
-            setSearchKeyword(e.target.value)
+            setInputKeyword(e.target.value)
           }}
           className={css({ bgColor: 'transparent', border: 'none', outline: 'none', h: 5, fontSize: 18 })}
-          value={searchKeyword}
+          value={inputKeyword}
         />
       </form>
       <FriendRequest />
-      <SearchResult />
+      <SearchResult data={searchResultData} />
     </div>
   )
 }
