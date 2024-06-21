@@ -1,12 +1,24 @@
 import { css } from '@styled-stytem/css'
-import { useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { useEffect, useState } from 'react'
+import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader'
 
+import { getSearchUser } from '@/api/hooks/friends'
 import FriendRequest from '@/components/timetable/FriendTimetable/FriendRequest'
 import SearchResult from '@/components/timetable/FriendTimetable/SearchResult'
 import { Input } from '@/components/ui/input'
 
 const FriendsManage = () => {
   const [searchKeyword, setSearchKeyword] = useState('')
+  const authHeader = useAuthHeader()
+  const { data: searchResultData, refetch: search } = useQuery({
+    queryKey: ['searchResult', searchKeyword],
+    queryFn: () => getSearchUser({ authHeader, username: searchKeyword }),
+    enabled: false,
+  })
+  useEffect(() => {
+    console.log(searchResultData)
+  }, [searchResultData])
   return (
     <div
       className={css({
@@ -32,7 +44,7 @@ const FriendsManage = () => {
         })}
         onSubmit={e => {
           e.preventDefault()
-          // todo: 친구 검색 키워드 날리기
+          search()
           setSearchKeyword('')
         }}
       >

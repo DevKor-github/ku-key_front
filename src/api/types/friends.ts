@@ -13,3 +13,8 @@ interface FriendInterface {
 }
 
 export type GetFriendListResponse = FriendInterface[]
+
+export interface GetSearchUserRequest {
+  authHeader: string | null
+  username: string
+}
