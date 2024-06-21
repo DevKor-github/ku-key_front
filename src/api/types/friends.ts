@@ -25,3 +25,8 @@ export interface GetSearchUserResponse {
   name: string
   username: string
 }
+
+export interface AddFriendRequest {
+  authHeader: string | null
+  toUsername: string
+}

@@ -2,6 +2,7 @@ import { css } from '@styled-stytem/css'
 import { Dot } from 'lucide-react'
 import { memo } from 'react'
 
+import { useAddFriend } from '@/api/hooks/friends'
 import { GetSearchUserResponse } from '@/api/types/friends'
 
 interface SearchResultProps {
@@ -9,9 +10,9 @@ interface SearchResultProps {
 }
 
 const SearchResult = memo(({ data }: SearchResultProps) => {
-  const handleAddFriend = () => {}
+  const { mutate: addFriend } = useAddFriend()
   return (
-    <div>
+    <div className={css({ display: 'flex', flexDir: 'column', gap: 5 })}>
       <h2 className={css({ fontWeight: 700, fontSize: 20, color: 'darkGray.1' })}>Search results</h2>
       {data && (
         <div className={css({ display: 'flex', justifyContent: 'space-between', alignItems: 'center' })}>
@@ -52,7 +53,9 @@ const SearchResult = memo(({ data }: SearchResultProps) => {
               rounded: 'full',
               cursor: 'pointer',
             })}
-            onClick={handleAddFriend}
+            onClick={() => {
+              addFriend({ toUsername: data.username })
+            }}
           >
             Add friend
           </button>

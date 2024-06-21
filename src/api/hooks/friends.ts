@@ -1,8 +1,9 @@
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader'
 
 import {
+  AddFriendRequest,
   GetFriendListRequest,
   GetFriendListResponse,
   GetSearchUserRequest,
@@ -25,7 +26,7 @@ export const useGetFriendList = (props: Omit<GetFriendListRequest, 'authHeader'>
   })
 }
 
-export const getSearchUser = async ({ authHeader, username }: GetSearchUserRequest) => {
+const getSearchUser = async ({ authHeader, username }: GetSearchUserRequest) => {
   const response = await axios.get<GetSearchUserResponse>(
     `http://${import.meta.env.VITE_API_SERVER}/friendship/search-user`,
     {
@@ -43,5 +44,24 @@ export const useGetSearchUser = ({ username }: Omit<GetSearchUserRequest, 'authH
     queryFn: () => getSearchUser({ authHeader, username: username }),
     enabled: !!username,
     retry: false,
+  })
+}
+
+const addFriend = async ({ authHeader, toUsername }: AddFriendRequest) => {
+  const response = await axios.post(
+    `http://${import.meta.env.VITE_API_SERVER}/friendship`,
+    { toUsername },
+    { headers: { Authorization: authHeader } },
+  )
+  return response.data
+}
+
+export const useAddFriend = () => {
+  const authHeader = useAuthHeader()
+  return useMutation({
+    mutationFn: (props: Omit<AddFriendRequest, 'authHeader'>) => addFriend({ authHeader, ...props }),
+    onSuccess: () => {
+      console.log('친구 요청 보내기 성공')
+    },
   })
 }
