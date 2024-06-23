@@ -58,7 +58,7 @@ const FriendsList = () => {
           data.map(friend => {
             return (
               <button key={friend.userId} className={FriendBlock()}>
-                {friend.name}
+                {friend.username}
               </button>
             )
           })
