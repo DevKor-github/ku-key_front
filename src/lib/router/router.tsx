@@ -28,6 +28,10 @@ const routes: RouteObject[] = [
     path: '/',
     element: <MainLayout />,
     children: [
+      {
+        path: '/',
+        element: <LandingPage />,
+      },
         path: '/',
         element: <LandingPage />,
       },
