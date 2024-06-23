@@ -30,3 +30,22 @@ export interface AddFriendRequest {
   authHeader: string | null
   toUsername: string
 }
+
+export interface FriendRequest {
+  friendshipId: number
+  userId: number
+  name: string
+  username: string
+  major: string
+  language: string
+}
+export interface GetRequestListRequest {
+  authHeader: string | null
+}
+
+export type GetRequestListResponse = FriendRequest[]
+
+export interface ReceiveFriendshipRequest {
+  authHeader: string | null
+  friendshipId: number
+}

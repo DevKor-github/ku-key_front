@@ -1,6 +1,6 @@
 import { css, cva } from '@styled-stytem/css'
 
-import { GetFriendListResponse } from '@/api/types/friends'
+import { useGetFriendList } from '@/api/hooks/friends'
 
 const PlusFriend = cva({
   base: {
@@ -36,11 +36,9 @@ const FriendBlock = cva({
   },
 })
 
-interface FriendsListProps {
-  data: GetFriendListResponse | undefined
-}
+const FriendsList = () => {
+  const { data } = useGetFriendList({ keyword: null })
 
-const FriendsList = ({ data }: FriendsListProps) => {
   return (
     <div className={css({ w: 47, display: 'flex', flexDir: 'column', gap: 3.5, alignItems: 'center' })}>
       <button className={PlusFriend()}>Add friends</button>
