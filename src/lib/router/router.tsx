@@ -12,6 +12,7 @@ import BoardPage from '@/pages/CommunityPage/BoardPage'
 import HotBoardPage from '@/pages/CommunityPage/HotBoardPage'
 import PostViewPage from '@/pages/CommunityPage/PostViewPage'
 import WritePostPage from '@/pages/CommunityPage/WritePostPage'
+import HomePage from '@/pages/HomePage'
 import LandingPage from '@/pages/LandingPage'
 import Login from '@/pages/LoginPage'
 import MyPage from '@/pages/MyPage'
@@ -27,6 +28,9 @@ const routes: RouteObject[] = [
     path: '/',
     element: <MainLayout />,
     children: [
+        path: '/',
+        element: <LandingPage />,
+      },
       {
         path: '',
         element: <ProtectedRoutes />,
