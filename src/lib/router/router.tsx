@@ -3,6 +3,7 @@ import { RouteObject } from 'react-router-dom'
 import MainLayout from '@/components/MainLayout'
 import ProtectedRoutes from '@/lib/router/ProtectedRoutes'
 import FriendTimeTablePage from '@/pages/FriendTimeTablePage'
+import HomePage from '@/pages/HomePage'
 import LandingPage from '@/pages/LandingPage'
 import Login from '@/pages/LoginPage'
 import MyPage from '@/pages/MyPage'
@@ -15,6 +16,10 @@ const routes: RouteObject[] = [
     path: '/',
     element: <MainLayout />,
     children: [
+      {
+        path: '/',
+        element: <LandingPage />,
+      },
       {
         path: '',
         element: <ProtectedRoutes />,
@@ -30,7 +35,7 @@ const routes: RouteObject[] = [
           },
         ],
       },
-      { path: 'home', element: <LandingPage /> },
+      { path: 'home', element: <HomePage /> },
       { path: 'login', element: <Login /> },
       { path: 'register', element: <RegisterPage /> },
     ],
