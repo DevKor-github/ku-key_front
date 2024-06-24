@@ -1,7 +1,7 @@
 import { css, cva } from '@styled-stytem/css'
 import { CircleX, Dot } from 'lucide-react'
 
-import { useAddFriend, useDeleteFriendshipRequest, useReceiveFriendship } from '@/api/hooks/friends'
+import { useAddFriendship, useDeleteFriendshipRequest, useReceiveFriendship } from '@/api/hooks/friends'
 
 const buttonStyle = cva({
   base: {
@@ -35,7 +35,7 @@ interface FriendCardProp {
 }
 
 const FriendCard = ({ data }: FriendCardProp) => {
-  const { mutate: addFriend } = useAddFriend()
+  const { mutate: addFriend } = useAddFriendship()
   const { mutate: receiveFriendship } = useReceiveFriendship()
   const { mutate: deleteFriendship } = useDeleteFriendshipRequest()
   const isRequest = data.friendshipId !== undefined

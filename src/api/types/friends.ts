@@ -26,7 +26,7 @@ export interface GetSearchUserResponse {
   username: string
 }
 
-export interface AddFriendRequest {
+export interface PostFriendshipRequest {
   authHeader: string | null
   toUsername: string
 }
@@ -45,7 +45,7 @@ export interface GetRequestListRequest {
 
 export type GetRequestListResponse = FriendRequest[]
 
-export interface ReceiveFriendshipRequest {
+export interface PatchFriendshipRequestRequest {
   authHeader: string | null
   friendshipId: number
 }
