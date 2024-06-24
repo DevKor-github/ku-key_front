@@ -2,7 +2,7 @@ import { css } from '@styled-stytem/css'
 import { Download } from 'lucide-react'
 import { useState } from 'react'
 
-import { useGetTimetableList } from '@/api/hooks/timetable'
+import { useGetUserTimetableList } from '@/api/hooks/timetable'
 import TimeTable from '@/components/timetable'
 import StatusBar from '@/components/timetable/MyTimetable/StatusBar'
 import TimetableDropdown from '@/components/timetable/TimetableDropdown'
@@ -47,7 +47,7 @@ const MyTimetableOutlet = ({ semesterList, curSemester, curIndex, setCurIndex }:
 }
 
 const MyTimetablePage = () => {
-  const { data: timetableList, isPending } = useGetTimetableList()
+  const { data: timetableList, isPending } = useGetUserTimetableList()
 
   const [curSemester, setCurSemester] = useState(0)
   const [curIndex, setCurIndex] = useState(0)
