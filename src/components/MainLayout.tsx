@@ -8,7 +8,7 @@ const MainLayout = () => {
   return (
     <div>
       <Helmet>
-        <title>KU-Key</title>
+        <title>KU-key</title>
       </Helmet>
       <Header />
       <div>

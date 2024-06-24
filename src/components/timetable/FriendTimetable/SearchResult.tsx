@@ -16,7 +16,7 @@ const SearchResult = memo(({ data }: SearchResultProps) => {
         flexDir: 'column',
         gap: 5,
         borderTop: 'solid 1px {colors.lightGray.1}',
-        pt: 5,
+        py: 5,
       })}
     >
       <h2 className={css({ fontWeight: 700, fontSize: 20, color: 'darkGray.1' })}>Search results</h2>
