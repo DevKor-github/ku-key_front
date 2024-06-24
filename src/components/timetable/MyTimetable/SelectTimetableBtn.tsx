@@ -3,7 +3,7 @@ import { CircleX } from 'lucide-react'
 import { useState } from 'react'
 
 import { useDeleteTimetable } from '@/api/hooks/timetable'
-import { TimetableInfo } from '@/api/types/timetable'
+import { TimetableInfo } from '@/types/timetable'
 
 const SelectTimetableBtnStyle = cva({
   base: {

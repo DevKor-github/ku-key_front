@@ -3,9 +3,9 @@ import { Check, Plus } from 'lucide-react'
 
 import { usePostTimetable, useUpdateMainTable } from '@/api/hooks/timetable'
 import SelectTimetableBtn from '@/components/timetable/MyTimetable/SelectTimetableBtn'
-import { Semester } from '@/types/timetable'
+import { Semester, TimetableInfo } from '@/types/timetable'
 
-const MainPinBtn = cva({
+const MainPinBtnStyle = cva({
   base: {
     fontSize: 18,
     fontWeight: 500,
@@ -44,6 +44,36 @@ const MainPinBtn = cva({
   },
 })
 
+interface MainPinBtnProps {
+  hasTable: boolean
+  curTimetable: TimetableInfo
+  setCurIndex: React.Dispatch<React.SetStateAction<number>>
+}
+
+const MainPinBtn = ({ hasTable, curTimetable, setCurIndex }: MainPinBtnProps) => {
+  const { mutate: updateMainTable } = useUpdateMainTable()
+  return (
+    <button
+      className={MainPinBtnStyle({ main: hasTable ? curTimetable.mainTimeTable : undefined, disabled: !hasTable })}
+      onClick={() => {
+        if (hasTable) {
+          if (!curTimetable.mainTimeTable) {
+            setCurIndex(0)
+            updateMainTable({
+              semester: curTimetable.semester,
+              year: curTimetable.year,
+              timeTableId: curTimetable.timeTableId,
+            })
+          }
+        }
+      }}
+    >
+      <Check size={22} />
+      Main
+    </button>
+  )
+}
+
 interface StatusBarProps {
   curSemester: Semester
   curIndex: number
@@ -52,11 +82,8 @@ interface StatusBarProps {
 
 const StatusBar = ({ curSemester, curIndex, setCurIndex }: StatusBarProps) => {
   const { mutate: createTimetable } = usePostTimetable()
-  const { mutate: updateMainTable } = useUpdateMainTable()
 
   const curSemesterTimetableLen = curSemester.timetables.length
-  const hasTable = curSemesterTimetableLen !== 0
-  const curTimetable = curSemester.timetables[curIndex]
 
   const handleCreateTimetableBtn = () => {
     createTimetable({
@@ -125,29 +152,11 @@ const StatusBar = ({ curSemester, curIndex, setCurIndex }: StatusBarProps) => {
           })}
         </div>
       </div>
-      {hasTable ? (
-        <button
-          className={MainPinBtn({ main: curTimetable.mainTimeTable })}
-          onClick={() => {
-            if (!curTimetable.mainTimeTable) {
-              setCurIndex(0)
-              updateMainTable({
-                semester: curTimetable.semester,
-                year: curTimetable.year,
-                timeTableId: curTimetable.timeTableId,
-              })
-            }
-          }}
-        >
-          <Check size={22} />
-          Main
-        </button>
-      ) : (
-        <button className={MainPinBtn({ disabled: true })}>
-          <Check size={22} />
-          Main
-        </button>
-      )}
+      <MainPinBtn
+        hasTable={curSemesterTimetableLen !== 0}
+        curTimetable={curSemester.timetables[curIndex]}
+        setCurIndex={setCurIndex}
+      />
     </div>
   )
 }

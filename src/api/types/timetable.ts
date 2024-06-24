@@ -1,22 +1,12 @@
-import { CourseType, SemesterType } from '@/types/timetable'
-
-export interface TimetableInfo {
-  timeTableId: number
-  semester: SemesterType
-  year: string
-  mainTimeTable: boolean
-  tableName: string
-}
+import { CourseType, SemesterType, TimetableInfo } from '@/types/timetable'
 
 export interface GetTimeTableByTimeTableIdRequest {
   authHeader: string | null
   timeTableId: number
 }
 
-// GetTimeTableByTimeTableIdResponse
 export type GetTimeTableByTimeTableIdResponse = CourseType[]
 
-// GetTimeTableByUserIdResponse
 export type GetTimeTableByUserIdResponse = TimetableInfo[]
 
 export interface CreateTimeTableRequest {

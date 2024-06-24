@@ -1,8 +1,8 @@
 import { css, cva } from '@styled-stytem/css'
 import { Ellipsis, Plus } from 'lucide-react'
 
-import { TimetableInfo } from '@/api/types/timetable'
 import TimetableLayout from '@/components/timetable/TimetableLayout'
+import { TimetableInfo } from '@/types/timetable'
 
 const optBtn = cva({
   base: {
@@ -23,19 +23,16 @@ interface TimeTableProps {
   timetable: TimetableInfo
 }
 
-const Timetable = ({ timetable }: TimeTableProps) => {
-
-  const { timeTableId, tableName, year, semester } = timetable
-
+const Timetable = ({ timetable: { timeTableId, tableName, year, semester } }: TimeTableProps) => {
   return (
     <div className={css({ w: '100%' })}>
       <div
         className={css({
+          w: '100%',
+          h: 16,
           display: 'flex',
           flexDir: 'row',
-          w: '100%',
           justifyContent: 'space-between',
-          h: 16,
           bgColor: 'bg.gray',
           roundedTop: 10,
           border: '1px {colors.lightGray.1} solid',

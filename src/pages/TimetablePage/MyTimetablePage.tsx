@@ -5,46 +5,10 @@ import { useState } from 'react'
 import { useGetUserTimetableList } from '@/api/hooks/timetable'
 import TimeTable from '@/components/timetable'
 import StatusBar from '@/components/timetable/MyTimetable/StatusBar'
+import NullTable from '@/components/timetable/NullTable'
+import ShareBtn from '@/components/timetable/ShareBtn'
 import TimetableDropdown from '@/components/timetable/TimetableDropdown'
-import { ShareBtn } from '@/pages/TimetablePage'
-import { Semester } from '@/types/timetable'
 import { timetablePreprocess } from '@/util/timetableUtil'
-
-interface TimetableStatusLayoutProps {
-  semesterList: Semester[]
-  curSemester: number
-  curIndex: number
-  setCurIndex: React.Dispatch<React.SetStateAction<number>>
-}
-const MyTimetableOutlet = ({ semesterList, curSemester, curIndex, setCurIndex }: TimetableStatusLayoutProps) => {
-  return (
-    <>
-      <StatusBar curSemester={semesterList[curSemester]} curIndex={curIndex} setCurIndex={setCurIndex} />
-      {semesterList[curSemester].timetables.length === 0 ? (
-        <div
-          className={css({
-            w: '100%',
-            py: '300px',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            bgColor: 'bg.gray',
-            rounded: 10,
-            border: '1px {colors.lightGray.1} solid',
-            color: 'lightGray.1',
-            fontWeight: 600,
-            fontSize: 16,
-            textAlign: 'center',
-          })}
-        >
-          There is no set timetable <br /> Press the plus button to create a timetable!
-        </div>
-      ) : (
-        <TimeTable timetable={semesterList[curSemester].timetables[curIndex]} />
-      )}
-    </>
-  )
-}
 
 const MyTimetablePage = () => {
   const { data: timetableList, isPending } = useGetUserTimetableList()
@@ -55,6 +19,7 @@ const MyTimetablePage = () => {
   const semesterList = timetablePreprocess(timetableList)
 
   if (isPending) {
+    // todo: 스켈레톤 ui 컴포넌트화
     return <div>로딩 중</div>
   }
 
@@ -73,18 +38,18 @@ const MyTimetablePage = () => {
           />
         </div>
         <div className={css({ display: 'flex', flexDir: 'row', gap: 2.5 })}>
-          <div className={css(ShareBtn.raw())}>Link</div>
-          <div className={css(ShareBtn.raw({ icon: true }))}>
+          <ShareBtn>Link</ShareBtn>
+          <ShareBtn icon={true}>
             <Download />
-          </div>
+          </ShareBtn>
         </div>
       </div>
-      <MyTimetableOutlet
-        semesterList={semesterList}
-        curSemester={curSemester}
-        curIndex={curIndex}
-        setCurIndex={setCurIndex}
-      />
+      <StatusBar curSemester={semesterList[curSemester]} curIndex={curIndex} setCurIndex={setCurIndex} />
+      {semesterList[curSemester].timetables.length === 0 ? (
+        <NullTable />
+      ) : (
+        <TimeTable timetable={semesterList[curSemester].timetables[curIndex]} />
+      )}
     </>
   )
 }

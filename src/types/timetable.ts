@@ -1,8 +1,14 @@
-import { TimetableInfo } from '@/api/types/timetable'
-
 export type DayType = 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri' | 'Sat' | 'Sun'
 
 export type SemesterType = 'Spring' | 'Summer' | 'Fall' | 'Winter'
+
+export interface TimetableInfo {
+  timeTableId: number
+  semester: SemesterType
+  year: string
+  mainTimeTable: boolean
+  tableName: string
+}
 
 export interface Semester {
   year: string

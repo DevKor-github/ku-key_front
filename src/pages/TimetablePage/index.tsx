@@ -32,31 +32,6 @@ const TimetableBtn = cva({
   },
 })
 
-export const ShareBtn = cva({
-  base: {
-    h: 12,
-    px: 7,
-    rounded: 10,
-    display: 'inline-flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    border: '1px {colors.lightGray.1} solid',
-    cursor: 'pointer',
-    color: 'darkGray.2',
-    fontSize: 18,
-    fontWeight: 500,
-    zIndex: 2,
-    bgColor: 'white',
-    transition: 'border 0.256s',
-    _hover: {
-      borderColor: 'darkGray.2',
-    },
-  },
-  variants: {
-    icon: { true: { w: 14, px: 0 } },
-  },
-})
-
 const TimetablePage = () => {
   const curPath = useLocation().pathname
 

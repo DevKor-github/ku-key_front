@@ -1,15 +1,8 @@
+import { FriendInterface, FriendRequestInterface } from '@/types/friends'
+
 export interface GetFriendListRequest {
   authHeader: string | null
   keyword: string | null
-}
-
-interface FriendInterface {
-  friendshipId: number
-  userId: number
-  name: string
-  username: string
-  major: string
-  language: string
 }
 
 export type GetFriendListResponse = FriendInterface[]
@@ -31,19 +24,11 @@ export interface PostFriendshipRequest {
   toUsername: string
 }
 
-export interface FriendRequest {
-  friendshipId: number
-  userId: number
-  name: string
-  username: string
-  major: string
-  language: string
-}
 export interface GetRequestListRequest {
   authHeader: string | null
 }
 
-export type GetRequestListResponse = FriendRequest[]
+export type GetRequestListResponse = FriendRequestInterface[]
 
 export interface PatchFriendshipRequestRequest {
   authHeader: string | null
