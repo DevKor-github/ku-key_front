@@ -54,6 +54,7 @@ const TimetableLayout = ({ timeTableId }: TimetableLayoutProps) => {
   const { data, isPending } = useGetTimetable({ timeTableId })
 
   if (isPending || data === undefined) {
+    // todo: 스켈레톤 UI화
     return <div>로딩중</div>
   }
 

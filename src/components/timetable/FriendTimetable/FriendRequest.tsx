@@ -7,6 +7,7 @@ const FriendRequest = () => {
   const { data: requestData } = useGetReceivedList()
 
   if (requestData === undefined) {
+    // todo: 친구 요청이 없을 때의 대응
     return <div></div>
   }
   return (

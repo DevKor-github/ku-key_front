@@ -4,7 +4,6 @@ const ColorSelector = () => {
   return (
     <div className={css({ display: 'flex', flexDir: 'row', gap: 1.5, alignItems: 'center' })}>
       <div className={css({ color: 'lightGray.1', fontSize: 18, fontWeight: 500 })}>Color</div>
-      {/* todo: 드롭다운....구현해야지 */}
       <div
         className={css({
           h: '1.375rem',
