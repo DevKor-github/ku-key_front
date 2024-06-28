@@ -1,8 +1,5 @@
 import { css, cva } from '@styled-stytem/css'
-import { CircleX } from 'lucide-react'
-import { useState } from 'react'
 
-import { useDeleteTimetable } from '@/api/hooks/timetable'
 import { TimetableInfo } from '@/types/timetable'
 
 const SelectTimetableBtnStyle = cva({
@@ -34,7 +31,6 @@ interface SelectTimetableBtnProps {
   timetableInfo: TimetableInfo
   timetableInd: number
   curInd: number
-  totalLen: number
   setCurIndex: React.Dispatch<React.SetStateAction<number>>
 }
 
@@ -42,36 +38,13 @@ const SelectTimetableBtn = ({
   timetableInd: ind,
   timetableInfo: timetable,
   curInd,
-  totalLen,
   setCurIndex,
 }: SelectTimetableBtnProps) => {
-  const [isHover, setIsHover] = useState(false)
-  const { mutate: deleteTimetable } = useDeleteTimetable()
   return (
-    <div
-      className={SelectTimetableBtnStyle({ selected: ind === curInd })}
-      onMouseEnter={() => {
-        if (totalLen !== 1) setIsHover(true)
-      }}
-      onMouseLeave={() => setIsHover(false)}
-    >
+    <div className={SelectTimetableBtnStyle({ selected: ind === curInd })}>
       <button onClick={() => setCurIndex(ind)} className={css({ cursor: 'pointer' })}>
         {timetable.tableName}
       </button>
-      {isHover && (
-        <button
-          onClick={e => {
-            e.preventDefault()
-            if (ind <= curInd) {
-              if (curInd !== 0) setCurIndex(prev => prev - 1)
-            }
-            deleteTimetable({ timeTableId: timetable.timeTableId })
-          }}
-          className={css({ cursor: 'pointer' })}
-        >
-          <CircleX size={16} />
-        </button>
-      )}
     </div>
   )
 }

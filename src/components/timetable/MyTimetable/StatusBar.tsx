@@ -146,7 +146,6 @@ const StatusBar = ({ curSemester, curIndex, setCurIndex }: StatusBarProps) => {
                 curInd={curIndex}
                 timetableInd={ind}
                 setCurIndex={setCurIndex}
-                totalLen={curSemesterTimetableLen}
               />
             )
           })}
