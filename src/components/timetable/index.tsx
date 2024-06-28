@@ -1,12 +1,11 @@
-import { css, cva, cx } from '@styled-stytem/css'
-import { shadow } from '@styled-stytem/recipes'
-import { CaseSensitive, Ellipsis, Palette, Plus, Trash2 } from 'lucide-react'
-import { forwardRef, useEffect, useRef, useState } from 'react'
+import { css, cva } from '@styled-stytem/css'
+import { Ellipsis, Plus } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
+import OptionModal from '@/components/timetable/MyTimetable/OptionModal'
 import TimetableModal from '@/components/timetable/MyTimetable/TimetableModal'
 import TimetableLayout from '@/components/timetable/TimetableLayout'
-import ModalCard from '@/components/ui/modal'
 import { TimetableInfo } from '@/types/timetable'
 
 const optBtn = cva({
@@ -25,90 +24,15 @@ const optBtn = cva({
   },
 })
 
-const optBlock = css({
-  w: '100%',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  h: 12,
-  cursor: 'pointer',
-})
-const optBlockInfo = css({
-  display: 'flex',
-  alignItems: 'center',
-  gap: 2.5,
-  color: 'lightGray.1',
-  fontSize: 18,
-  fontWeight: 700,
-})
-
-interface OptionModalProps {
-  setGlobalModalState: React.Dispatch<React.SetStateAction<'color' | 'name' | 'delete' | null>>
-  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>
-}
-const OptionModal = forwardRef<HTMLDivElement, OptionModalProps>(({ setGlobalModalState, setIsModalOpen }, ref) => {
-  return (
-    <div className={css({ position: 'absolute', top: 17, right: 0, zIndex: 50 })}>
-      <ModalCard
-        ref={ref}
-        className={cx(
-          css({
-            bgColor: 'white',
-            border: 'none',
-            w: 60,
-            p: 2.5,
-            display: 'flex',
-            flexDir: 'column',
-            gap: 2.5,
-          }),
-          shadow(),
-        )}
-      >
-        <button
-          className={optBlock}
-          onClick={() => {
-            setIsModalOpen(false)
-            setGlobalModalState('name')
-          }}
-        >
-          <div className={optBlockInfo}>
-            <CaseSensitive />
-            Name
-          </div>
-        </button>
-        <button
-          className={optBlock}
-          onClick={() => {
-            setIsModalOpen(false)
-            setGlobalModalState('color')
-          }}
-        >
-          <div className={optBlockInfo}>
-            <Palette />
-            Color
-          </div>
-        </button>
-        <button
-          className={optBlock}
-          onClick={() => {
-            setIsModalOpen(false)
-            setGlobalModalState('delete')
-          }}
-        >
-          <div className={optBlockInfo}>
-            <Trash2 />
-            Delete
-          </div>
-        </button>
-      </ModalCard>
-    </div>
-  )
-})
 interface TimeTableProps {
   timetable: TimetableInfo
+  deleteTimetableHandler: (timeTableId: number) => void
 }
 
-const Timetable = ({ timetable: { timeTableId, tableName, year, semester } }: TimeTableProps) => {
+const Timetable = ({
+  timetable: { timeTableId, tableName, year, semester },
+  deleteTimetableHandler,
+}: TimeTableProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [globalModalState, setGlobalModalState] = useState<null | 'name' | 'color' | 'delete'>(null)
   const modalRef = useRef<HTMLDivElement>(null)
@@ -116,14 +40,12 @@ const Timetable = ({ timetable: { timeTableId, tableName, year, semester } }: Ti
   useEffect(() => {
     const closeModal = (e: MouseEvent) => {
       if (isModalOpen && modalRef.current && !modalRef.current.contains(e.target as Node)) {
-        // 이벤트가 발생한 노드가 모달 컴포넌트 내부에 존재하지 않는다면 close
         setIsModalOpen(false)
       }
     }
 
-    // 이벤트 리스너를 document 전체에 붙여줌
+    // document 전역에 closeModal event를 달아주어, modal을 제외한 영역을 클릭 시 모달이 닫히도록
     document.addEventListener('mousedown', closeModal)
-
     return () => {
       document.removeEventListener('mousedown', closeModal)
     }
@@ -185,9 +107,19 @@ const Timetable = ({ timetable: { timeTableId, tableName, year, semester } }: Ti
               alignItems: 'center',
             })}
             role="presentation"
-            onClick={() => setGlobalModalState(null)}
+            onClick={event => {
+              // 모달 안쪽을 눌렀을 때도 모달 state가 null 되는 것을 방지
+              if (event.target === event.currentTarget) {
+                setGlobalModalState(null)
+              }
+            }}
           >
-            <TimetableModal modalType={globalModalState} />
+            <TimetableModal
+              timeTableId={timeTableId}
+              modalType={globalModalState}
+              setGlobalModalState={setGlobalModalState}
+              deleteTimetableHandler={deleteTimetableHandler}
+            />
           </div>,
           document.body,
         )}
