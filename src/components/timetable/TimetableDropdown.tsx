@@ -1,5 +1,6 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
-import { css, cva } from '@styled-stytem/css'
+import { css, cva, cx } from '@styled-stytem/css'
+import { shadow } from '@styled-stytem/recipes'
 import { ChevronDown } from 'lucide-react'
 
 import { Semester } from '@/types/timetable'
@@ -76,15 +77,17 @@ const TimetableDropdown = ({ semesterList, curSemester, setCurSemester, setCurIn
       <DropdownMenu.Portal>
         <DropdownMenu.Content
           sideOffset={-49}
-          className={css({
-            w: 68,
-            bgColor: 'white',
-            rounded: 10,
-            zIndex: 20,
-            pb: 2.5,
-            pt: '49px',
-            boxShadow: '0px 0px 4px rgba(0, 0, 0, 0.25)',
-          })}
+          className={cx(
+            css({
+              w: 68,
+              bgColor: 'white',
+              rounded: 10,
+              zIndex: 20,
+              pb: 2.5,
+              pt: '49px',
+            }),
+            shadow(),
+          )}
         >
           {semesterList.map((semester, ind) => {
             return (

@@ -1,4 +1,5 @@
-import { css } from '@styled-stytem/css'
+import { css, cx } from '@styled-stytem/css'
+import { shadow } from '@styled-stytem/recipes'
 import { useState } from 'react'
 
 import { useGetSearchUser } from '@/api/hooks/friends'
@@ -14,15 +15,17 @@ const FriendsManage = () => {
 
   return (
     <div
-      className={css({
-        w: '100%',
-        rounded: 10,
-        p: 5,
-        boxShadow: '0px 0px 4px rgba(0, 0, 0, 0.25)',
-        display: 'flex',
-        flexDir: 'column',
-        gap: 10,
-      })}
+      className={cx(
+        css({
+          w: '100%',
+          rounded: 10,
+          p: 5,
+          display: 'flex',
+          flexDir: 'column',
+          gap: 10,
+        }),
+        shadow(),
+      )}
     >
       <form
         onSubmit={e => {
