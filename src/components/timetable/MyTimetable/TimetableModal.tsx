@@ -1,7 +1,10 @@
 import { css, cva, cx } from '@styled-stytem/css'
 import { shadow } from '@styled-stytem/recipes'
-import { CircleAlert } from 'lucide-react'
+import { CaseSensitive, CircleAlert } from 'lucide-react'
+import { useState } from 'react'
 
+import { useUpdateTableName } from '@/api/hooks/timetable'
+import { Input } from '@/components/ui/input'
 import ModalCard from '@/components/ui/modal'
 
 const modalBtn = cva({
@@ -27,8 +30,48 @@ const modalBtn = cva({
   },
 })
 
-const NameChangeModal = () => {
-  return <></>
+const NameChangeModal = ({
+  setGlobalModalState,
+  timeTableId,
+}: {
+  setGlobalModalState: React.Dispatch<React.SetStateAction<'color' | 'name' | 'delete' | null>>
+  timeTableId: number
+}) => {
+  const [nameInput, setNameInput] = useState('')
+  const { mutate: changeTableName } = useUpdateTableName()
+  return (
+    <>
+      <div className={css({ display: 'flex', flexDir: 'column', alignItems: 'center', gap: 2.5 })}>
+        <CaseSensitive size={58} className={css({ color: 'lightGray.1' })} />
+        <div className={css({ fontWeight: 700, fontSize: 24 })}>Name</div>
+      </div>
+      <form
+        onSubmit={e => {
+          e.preventDefault()
+          setGlobalModalState(null)
+          changeTableName({ tableName: nameInput, timeTableId })
+        }}
+      >
+        <Input
+          autoFocus
+          value={nameInput}
+          placeholder="Timetable Name"
+          className={css({
+            w: 71,
+            h: 13,
+            borderColor: 'lightGray.1',
+            outline: 'none',
+            bgColor: 'bg.gray',
+            fontSize: 18,
+            _placeholder: {
+              color: 'lightGray.1',
+            },
+          })}
+          onChange={e => setNameInput(e.target.value)}
+        />
+      </form>
+    </>
+  )
 }
 
 const ColorChangeModal = () => {
@@ -101,7 +144,7 @@ const TimetableModal = ({
         shadow(),
       )}
     >
-      {modalType === 'name' && <NameChangeModal />}
+      {modalType === 'name' && <NameChangeModal setGlobalModalState={setGlobalModalState} timeTableId={timeTableId} />}
       {modalType === 'color' && <ColorChangeModal />}
       {modalType === 'delete' && (
         <DeleteModal
