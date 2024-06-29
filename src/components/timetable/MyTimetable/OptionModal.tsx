@@ -12,6 +12,11 @@ const optBlock = css({
   alignItems: 'center',
   h: 12,
   cursor: 'pointer',
+  rounded: 10,
+  transition: 'background 0.256s',
+  _hover: {
+    bgColor: 'bg.gray',
+  },
 })
 
 const optBlockInfo = css({
