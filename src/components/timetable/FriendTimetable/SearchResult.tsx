@@ -6,9 +6,10 @@ import FriendCard from '@/components/timetable/FriendTimetable/FriendCard'
 
 interface SearchResultProps {
   data: GetSearchUserResponse | undefined
+  error: Error | null
 }
 
-const SearchResult = memo(({ data }: SearchResultProps) => {
+const SearchResult = memo(({ data, error }: SearchResultProps) => {
   return (
     <div
       className={css({
@@ -20,6 +21,20 @@ const SearchResult = memo(({ data }: SearchResultProps) => {
       })}
     >
       <h2 className={css({ fontWeight: 700, fontSize: 20, color: 'darkGray.1' })}>Search results</h2>
+      {error && (
+        <div
+          className={css({
+            fontWeight: 600,
+            fontSize: 16,
+            color: 'lightGray.1',
+            display: 'flex',
+            justifyContent: 'center',
+            pt: 5,
+          })}
+        >
+          No search results
+        </div>
+      )}
       {data && <FriendCard data={data} />}
     </div>
   )

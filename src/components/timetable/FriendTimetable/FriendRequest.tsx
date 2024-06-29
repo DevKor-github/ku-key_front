@@ -6,10 +6,6 @@ import FriendCard from '@/components/timetable/FriendTimetable/FriendCard'
 const FriendRequest = () => {
   const { data: requestData } = useGetReceivedList()
 
-  if (requestData === undefined) {
-    // todo: 친구 요청이 없을 때의 대응
-    return <div></div>
-  }
   return (
     <div className={css({ display: 'flex', flexDir: 'column', gap: 5 })}>
       <div className={css({ display: 'flex', gap: 3, alignItems: 'center' })}>
@@ -19,9 +15,23 @@ const FriendRequest = () => {
         </div>
       </div>
       <div className={css({ display: 'flex', flexDir: 'column', gap: 5 })}>
-        {requestData.map(request => (
-          <FriendCard key={request.friendshipId} data={request} />
-        ))}
+        {requestData && requestData?.length !== 0 ? (
+          requestData.map(request => <FriendCard key={request.friendshipId} data={request} />)
+        ) : (
+          <div
+            className={css({
+              fontWeight: 600,
+              fontSize: 16,
+              color: 'lightGray.1',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              pt: 5,
+            })}
+          >
+            No friend requests yet
+          </div>
+        )}
       </div>
     </div>
   )

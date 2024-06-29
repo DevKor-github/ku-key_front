@@ -11,7 +11,7 @@ const FriendsManage = () => {
   const [inputKeyword, setInputKeyword] = useState('')
   const [searchKeyword, setSearchKeyword] = useState('')
 
-  const { data: searchResultData } = useGetSearchUser({ username: searchKeyword })
+  const { data: searchResultData, error } = useGetSearchUser({ username: searchKeyword })
 
   return (
     <div
@@ -55,7 +55,7 @@ const FriendsManage = () => {
         />
       </form>
       <FriendRequest />
-      <SearchResult data={searchResultData} />
+      <SearchResult data={searchResultData} error={error} />
     </div>
   )
 }
