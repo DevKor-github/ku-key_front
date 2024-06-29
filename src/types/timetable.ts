@@ -2,6 +2,8 @@ export type DayType = 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri' | 'Sat' | 'Sun'
 
 export type SemesterType = 'Spring' | 'Summer' | 'Fall' | 'Winter'
 
+export type ColorType = 'Red' | 'Blue' | 'Green' | 'Purple' | 'Orange' | 'Gray'
+
 export interface TimetableInfo {
   timeTableId: number
   semester: SemesterType

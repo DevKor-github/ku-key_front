@@ -1,27 +1,47 @@
 import { css, cx } from '@styled-stytem/css'
 import { shadow } from '@styled-stytem/recipes'
 
-const ColorSelector = () => {
+import { COLOR_INFO } from '@/lib/constants/timetableColors'
+import { ColorType } from '@/types/timetable'
+
+interface ColorSelectorProps {
+  colorTheme: ColorType
+}
+
+const ColorSelector = ({ colorTheme }: ColorSelectorProps) => {
   return (
-    <div className={css({ display: 'flex', flexDir: 'row', gap: 1.5, alignItems: 'center' })}>
-      <div className={css({ color: 'lightGray.1', fontSize: 18, fontWeight: 500 })}>Color</div>
+    <button
+      onClick={() => {
+        console.log(`${colorTheme}으로 깔라 체인지!`)
+      }}
+      className={css({
+        display: 'flex',
+        flexDir: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        w: 23,
+        cursor: 'pointer',
+      })}
+    >
+      <div className={css({ color: 'lightGray.1', fontSize: 18, fontWeight: 500 })}>{colorTheme}</div>
       <div
         className={cx(
           css({
             h: '1.375rem',
             w: '1.375rem',
-            bgColor: 'red.3',
             rounded: '50%',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            cursor: 'pointer',
             _hover: {
               boxShadow: '0px 0px 4px rgba(0, 0, 0, 0.5)',
             },
           }),
           shadow(),
         )}
+        style={{
+          backgroundColor: COLOR_INFO[colorTheme].symbol,
+        }}
       >
         <div
           className={cx(
@@ -35,7 +55,7 @@ const ColorSelector = () => {
           )}
         />
       </div>
-    </div>
+    </button>
   )
 }
 

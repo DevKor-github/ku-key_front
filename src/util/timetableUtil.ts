@@ -1,8 +1,10 @@
-import { CourseType, DayType, Semester, SemesterType, TimetableInfo } from '@/types/timetable'
+import { ColorType, CourseType, DayType, Semester, SemesterType, TimetableInfo } from '@/types/timetable'
 
 const dayToNumber: { [key in DayType]: number } = { Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6, Sun: 7 }
 
 export const numberToSemester: SemesterType[] = ['Spring', 'Summer', 'Fall', 'Winter']
+
+export const ColorTypeArr: ColorType[] = ['Red', 'Blue', 'Green', 'Purple', 'Orange', 'Gray']
 
 /**
  * HH:MM:SS 형태의 문자열을 두개 받아, 차이를 분으로 반환

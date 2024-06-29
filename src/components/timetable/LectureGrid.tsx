@@ -3,7 +3,7 @@ import { css } from '@styled-stytem/css'
 import { GetTimeTableByTimeTableIdResponse } from '@/api/types/timetable'
 import LectureSticker from '@/components/timetable/LectureSticker'
 import { TimeCell } from '@/components/timetable/TimetableLayout'
-import { RANDOM_RED } from '@/lib/constants/timetableColors'
+import { COLOR_INFO } from '@/lib/constants/timetableColors'
 import { getDuration, lectureDataPreprocess } from '@/util/timetableUtil'
 
 interface LectureGridProps {
@@ -31,7 +31,7 @@ const LectureGrid = ({ timetableData, weekCnt, timeCnt }: LectureGridProps) => {
                   runningTime={getDuration(lecture.endTime, lecture.startTime)}
                   professor={lecture.professorName}
                   room={lecture.classroom}
-                  bgColor={RANDOM_RED[lecCnt++ % RANDOM_RED.length]}
+                  bgColor={COLOR_INFO['Red']['rand'][lecCnt++ % COLOR_INFO['Red']['rand'].length]}
                 />
               )
             })}

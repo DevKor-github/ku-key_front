@@ -119,6 +119,7 @@ const Timetable = ({
               modalType={globalModalState}
               setGlobalModalState={setGlobalModalState}
               deleteTimetableHandler={deleteTimetableHandler}
+              tableName={tableName}
             />
           </div>,
           document.body,
