@@ -7,6 +7,7 @@ import Login from '@/pages/LoginPage'
 import MyPage from '@/pages/MyPage'
 import RegisterPage from '@/pages/RegisterPage'
 import TimetablePage from '@/pages/TimetablePage'
+import FriendPage from '@/pages/TimetablePage/FriendPage'
 import FriendTimetablePage from '@/pages/TimetablePage/FriendTimetablePage'
 import MyTimetablePage from '@/pages/TimetablePage/MyTimetablePage'
 
@@ -25,7 +26,11 @@ const routes: RouteObject[] = [
             element: <TimetablePage />,
             children: [
               { path: '', element: <MyTimetablePage /> },
-              { path: 'friend', element: <FriendTimetablePage /> },
+              {
+                path: 'friend',
+                element: <FriendPage />,
+              },
+              { path: 'friend/:userHandler', element: <FriendTimetablePage /> },
             ],
           },
         ],

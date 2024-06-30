@@ -1,4 +1,5 @@
 import { css } from '@styled-stytem/css'
+import { Link } from 'react-router-dom'
 
 import { useGetFriendList } from '@/api/hooks/friends'
 
@@ -12,6 +13,9 @@ const PlusFriend = css({
   fontSize: 18,
   fontWeight: 500,
   cursor: 'pointer',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
   transition: 'border 0.256s, color 0.256s',
   _hover: {
     borderColor: 'darkGray.2',
@@ -37,7 +41,9 @@ const FriendsList = () => {
 
   return (
     <div className={css({ w: 47, display: 'flex', flexDir: 'column', gap: 3.5, alignItems: 'center' })}>
-      <button className={PlusFriend}>Add friends</button>
+      <Link className={PlusFriend} to={'/timetable/friend'}>
+        Add friends
+      </Link>
       <div
         className={css({
           display: 'flex',
@@ -53,13 +59,13 @@ const FriendsList = () => {
         {data && data.length > 0 ? (
           data.map(friend => {
             return (
-              <button key={friend.userId} className={FriendBlock}>
+              <Link key={friend.userId} className={FriendBlock} to={`/timetable/friend/${friend.username}`}>
                 {friend.username}
-              </button>
+              </Link>
             )
           })
         ) : (
-          <div className={FriendBlock}>I'M ASSA</div>
+          <div className={FriendBlock}>Add friends through search!</div>
         )}
       </div>
     </div>
