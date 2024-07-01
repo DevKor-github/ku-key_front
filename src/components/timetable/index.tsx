@@ -3,6 +3,7 @@ import { Ellipsis, Plus } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
+import LectureModal from '@/components/timetable/MyTimetable/LectureModal'
 import OptionModal from '@/components/timetable/MyTimetable/OptionModal'
 import TimetableModal from '@/components/timetable/MyTimetable/TimetableModal'
 import TimetableLayout from '@/components/timetable/TimetableLayout'
@@ -35,6 +36,7 @@ const Timetable = ({
 }: TimeTableProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [globalModalState, setGlobalModalState] = useState<null | 'name' | 'color' | 'delete'>(null)
+  const [isLectureModalOpen, setIsLectureModalOpen] = useState(false)
   const modalRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -82,7 +84,7 @@ const Timetable = ({
           </div>
         </div>
         <div className={css({ display: 'flex', flexDir: 'row', gap: 4, alignItems: 'center', color: 'darkGray.1' })}>
-          <button className={optBtn()}>
+          <button className={optBtn()} onClick={() => setIsLectureModalOpen(true)}>
             <Plus size={20} />
           </button>
           <button className={optBtn()} onClick={() => setIsModalOpen(true)}>
@@ -121,6 +123,32 @@ const Timetable = ({
               deleteTimetableHandler={deleteTimetableHandler}
               tableName={tableName}
             />
+          </div>,
+          document.body,
+        )}
+      {isLectureModalOpen &&
+        createPortal(
+          <div
+            className={css({
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              w: '100vw',
+              h: '100vh',
+              zIndex: 100,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'flex-end',
+            })}
+            role="presentation"
+            onClick={event => {
+              // 모달 안쪽을 눌렀을 때도 모달 state가 null 되는 것을 방지
+              if (event.target === event.currentTarget) {
+                setIsLectureModalOpen(false)
+              }
+            }}
+          >
+            <LectureModal />
           </div>,
           document.body,
         )}
