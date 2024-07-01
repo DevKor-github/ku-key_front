@@ -34,6 +34,7 @@ const TimetableBtn = cva({
 
 const TimetablePage = () => {
   const curPath = useLocation().pathname
+  const curPathRoot = curPath.split('/')[2]
 
   return (
     <>
@@ -49,13 +50,10 @@ const TimetablePage = () => {
       />
       <div className={css({ h: 20, bgColor: 'red.2', px: '149px', display: 'flex', flexDir: 'row', zIndex: 0 })}>
         <div className={css({ display: 'flex', flexDir: 'row', alignItems: 'center', gap: 5 })}>
-          <Link to={'/timetable'} className={css(TimetableBtn.raw({ selected: curPath === '/timetable' }))}>
+          <Link to={'/timetable'} className={css(TimetableBtn.raw({ selected: curPathRoot === undefined }))}>
             My schedule
           </Link>
-          <Link
-            to={'/timetable/friend'}
-            className={css(TimetableBtn.raw({ selected: curPath === '/timetable/friend' }))}
-          >
+          <Link to={'/timetable/friend'} className={css(TimetableBtn.raw({ selected: curPathRoot === 'friend' }))}>
             Friend list
           </Link>
         </div>
