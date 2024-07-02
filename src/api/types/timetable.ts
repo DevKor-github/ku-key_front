@@ -1,11 +1,15 @@
-import { CourseType, SemesterType, TimetableInfo } from '@/types/timetable'
+import { ColorType, CourseType, ScheduleType, SemesterType, TimetableInfo } from '@/types/timetable'
 
 export interface GetTimeTableByTimeTableIdRequest {
   authHeader: string | null
   timeTableId: number
 }
 
-export type GetTimeTableByTimeTableIdResponse = CourseType[]
+export interface GetTimeTableByTimeTableIdResponse {
+  courses: CourseType[]
+  schedules: ScheduleType[]
+  color: ColorType
+}
 
 export type GetTimeTableByUserIdResponse = TimetableInfo[]
 

@@ -1,4 +1,13 @@
-import { ColorType, CourseType, DayType, Semester, SemesterType, TimetableInfo } from '@/types/timetable'
+import {
+  ColorType,
+  CourseType,
+  DayType,
+  GridType,
+  ScheduleType,
+  Semester,
+  SemesterType,
+  TimetableInfo,
+} from '@/types/timetable'
 
 const dayToNumber: { [key in DayType]: number } = { Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6, Sun: 7 }
 
@@ -61,37 +70,70 @@ const getStartCell = (startTime: string) => {
 }
 
 /**
- * CourseType Data와 요일, 시간 정보를 받아
+ * CourseType, ScheduleType Data와 요일, 시간 정보를 받아
  * 강의데이터가 임베딩되어 있는 Grid Cell 배열을 반환
  */
-export const lectureDataPreprocess = (data: CourseType[], weekCnt: number, timeCnt: number) => {
+export const lectureDataPreprocess = (
+  courseData: CourseType[],
+  scheduleData: ScheduleType[],
+  weekCnt: number,
+  timeCnt: number,
+) => {
   const cellCnt = timeCnt * weekCnt
-  const lecGrid: Array<CourseType>[] = Array(cellCnt)
+  const lecGrid: Array<GridType>[] = Array(cellCnt)
   for (let i = 0; i < cellCnt; i++) {
     lecGrid[i] = []
   }
 
   // 강의 데이터 Cell에 임베딩
-  data.map(lecture => {
+  courseData.map(lecture => {
     const ind = weekCnt * getStartCell(lecture.startTime) + dayToNumber[lecture.day]
-    lecGrid[ind - 1].push(lecture)
+    lecGrid[ind - 1].push({
+      schedType: 'Course',
+      scheduleId: lecture.courseId,
+      title: lecture.courseName,
+      location: lecture.classroom,
+      day: lecture.day,
+      startTime: lecture.startTime,
+      endTime: lecture.endTime,
+      courseCode: lecture.courseCode,
+      professorName: lecture.professorName,
+    })
+  })
+  scheduleData.map(sched => {
+    const ind = weekCnt * getStartCell(sched.scheduleStartTime) + dayToNumber[sched.scheduleDay]
+    lecGrid[ind - 1].push({
+      schedType: 'Schedule',
+      scheduleId: sched.scheduleId,
+      title: sched.scheduleTitle,
+      location: sched.location,
+      day: sched.scheduleDay,
+      startTime: sched.scheduleStartTime,
+      endTime: sched.scheduleEndTime,
+    })
   })
 
   return lecGrid
 }
 
 /**
- * CourseType Data를 받아
+ * CourseType, ScheduleType Data를 받아
  * 강의가 분포되어 있는 요일과 시간 정보를 반환
  */
-export const getWeeknTimeList = (data: CourseType[]) => {
+export const getWeeknTimeList = (courseData: CourseType[], scheduleData: ScheduleType[]) => {
   let lastTime = 16
   let lastDay = 5
 
-  data.map(lec => {
+  courseData.map(lec => {
     lastTime = Math.max(lastTime, Number(lec.endTime.slice(0, 2)))
     if (dayToNumber[lec.day] > lastDay) {
       lastDay = dayToNumber[lec.day]
+    }
+  })
+  scheduleData.map(sched => {
+    lastTime = Math.max(lastTime, Number(sched.scheduleEndTime.slice(0, 2)))
+    if (dayToNumber[sched.scheduleDay] > lastDay) {
+      lastDay = dayToNumber[sched.scheduleDay]
     }
   })
 

@@ -13,7 +13,7 @@ interface LectureGridProps {
 }
 
 const LectureGrid = ({ timetableData, weekCnt, timeCnt }: LectureGridProps) => {
-  const lecGrid = lectureDataPreprocess(timetableData, weekCnt, timeCnt)
+  const lecGrid = lectureDataPreprocess(timetableData.courses, timetableData.schedules, weekCnt, timeCnt)
   let lecCnt = 0
   return (
     <div className={css({ display: 'grid' })} style={{ gridTemplateColumns: `repeat(${weekCnt}, 1fr)` }}>
@@ -27,10 +27,10 @@ const LectureGrid = ({ timetableData, weekCnt, timeCnt }: LectureGridProps) => {
               return (
                 <LectureSticker
                   key={lecInd}
-                  name={lecture.courseName}
+                  name={lecture.title}
                   runningTime={getDuration(lecture.endTime, lecture.startTime)}
-                  professor={lecture.professorName}
-                  room={lecture.classroom}
+                  room={lecture.location}
+                  professor={lecture.professorName ? lecture.professorName : null}
                   bgColor={COLOR_INFO['Red']['rand'][lecCnt++ % COLOR_INFO['Red']['rand'].length]}
                 />
               )

@@ -14,7 +14,7 @@ const LectureDetail = css({
 interface LectureStickerProps {
   name: string
   runningTime: number // 분 단위
-  professor: string
+  professor: string | null
   room: string
   bgColor: string
 }
@@ -40,10 +40,12 @@ const LectureSticker = ({ name, runningTime, professor, room, bgColor }: Lecture
     >
       <div className={css({ fontSize: 18, fontWeight: '500', wordWrap: 'break-word' })}>{name}</div>
       <div className={css({ display: 'flex', flexDir: 'column', alignItems: 'flex-end' })}>
-        <div className={LectureDetail}>
-          <CircleUser size={12} />
-          {professor}
-        </div>
+        {professor && (
+          <div className={LectureDetail}>
+            <CircleUser size={12} />
+            {professor}
+          </div>
+        )}
         <div className={LectureDetail}>
           <MapPin size={12} />
           {room}

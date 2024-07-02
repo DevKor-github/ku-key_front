@@ -6,6 +6,7 @@ import {
   CreateTimeTableRequest,
   DeleteTimeTableRequest,
   GetTimeTableByTimeTableIdRequest,
+  GetTimeTableByTimeTableIdResponse,
   GetTimeTableByUserIdResponse,
   UpdateMainTimeTableRequest,
   UpdateTimeTableNameRequest,
@@ -17,7 +18,10 @@ const getTimetableByUser = async (authHeader: string | null): Promise<GetTimeTab
   })
   return response.data
 }
-const getTimetableByID = async ({ authHeader, timeTableId }: GetTimeTableByTimeTableIdRequest) => {
+const getTimetableByID = async ({
+  authHeader,
+  timeTableId,
+}: GetTimeTableByTimeTableIdRequest): Promise<GetTimeTableByTimeTableIdResponse> => {
   const response = await axios.get(`http://${import.meta.env.VITE_API_SERVER}/timetable/${timeTableId}`, {
     headers: { Authorization: authHeader },
   })

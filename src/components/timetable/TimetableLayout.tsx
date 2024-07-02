@@ -58,7 +58,7 @@ const TimetableLayout = ({ timeTableId }: TimetableLayoutProps) => {
     return <div>로딩중</div>
   }
 
-  const { time, week } = getWeeknTimeList(data)
+  const { time, week } = getWeeknTimeList(data.courses, data.schedules)
 
   return (
     <div

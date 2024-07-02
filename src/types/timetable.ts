@@ -19,6 +19,7 @@ export interface Semester {
 }
 
 export interface CourseType {
+  courseId: number
   professorName: string
   courseName: string
   courseCode: string
@@ -26,4 +27,25 @@ export interface CourseType {
   endTime: string
   classroom: string
   day: DayType
+}
+
+export interface ScheduleType {
+  scheduleId: number
+  scheduleTitle: string
+  scheduleStartTime: string
+  scheduleEndTime: string
+  location: string
+  scheduleDay: DayType
+}
+
+export interface GridType {
+  schedType: 'Course' | 'Schedule'
+  scheduleId: number
+  title: string
+  startTime: string
+  endTime: string
+  location: string
+  day: DayType
+  professorName?: string
+  courseCode?: string
 }
