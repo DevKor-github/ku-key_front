@@ -9,6 +9,7 @@ import {
   GetTimeTableByTimeTableIdResponse,
   GetTimeTableByUserIdResponse,
   UpdateMainTimeTableRequest,
+  UpdateTableColorRequest,
   UpdateTimeTableNameRequest,
 } from '@/api/types/timetable'
 
@@ -58,6 +59,14 @@ const patchMainTable = async ({ authHeader, semester, year, timeTableId }: Updat
     {
       headers: { Authorization: authHeader },
     },
+  )
+  return response
+}
+const patchColor = async ({ authHeader, tableColor, timeTableId }: UpdateTableColorRequest) => {
+  const response = await axios.patch(
+    `http://${import.meta.env.VITE_API_SERVER}/timetable/color/${timeTableId}`,
+    { tableColor },
+    { headers: { Authorization: authHeader } },
   )
   return response
 }
@@ -138,6 +147,22 @@ export const useUpdateMainTable = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['timetableList'] })
+    },
+  })
+}
+
+/**
+ * 시간표의 색상을 변경합니다.
+ */
+export const useUpdateTableColor = () => {
+  const authHeader = useAuthHeader()
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (props: Omit<UpdateTableColorRequest, 'authHeader'>) => {
+      return patchColor({ authHeader, ...props })
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['timetable'] })
     },
   })
 }

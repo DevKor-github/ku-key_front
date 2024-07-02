@@ -37,3 +37,9 @@ export interface DeleteTimeTableRequest {
   authHeader: string | null
   timeTableId: number
 }
+
+export interface UpdateTableColorRequest {
+  authHeader: string | null
+  timeTableId: number
+  tableColor: ColorType
+}

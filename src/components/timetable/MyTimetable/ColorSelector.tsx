@@ -1,18 +1,23 @@
 import { css, cx } from '@styled-stytem/css'
 import { shadow } from '@styled-stytem/recipes'
 
+import { useUpdateTableColor } from '@/api/hooks/timetable'
 import { COLOR_INFO } from '@/lib/constants/timetableColors'
 import { ColorType } from '@/types/timetable'
 
 interface ColorSelectorProps {
   colorTheme: ColorType
+  timeTableId: number
+  setGlobalModalState: React.Dispatch<React.SetStateAction<'color' | 'name' | 'delete' | null>>
 }
 
-const ColorSelector = ({ colorTheme }: ColorSelectorProps) => {
+const ColorSelector = ({ colorTheme, setGlobalModalState, timeTableId }: ColorSelectorProps) => {
+  const { mutate } = useUpdateTableColor()
   return (
     <button
       onClick={() => {
-        console.log(`${colorTheme}으로 깔라 체인지!`)
+        setGlobalModalState(null)
+        mutate({ tableColor: colorTheme, timeTableId })
       }}
       className={css({
         display: 'flex',

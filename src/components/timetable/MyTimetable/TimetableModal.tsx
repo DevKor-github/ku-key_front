@@ -79,7 +79,13 @@ const NameChangeModal = ({
   )
 }
 
-const ColorChangeModal = () => {
+const ColorChangeModal = ({
+  setGlobalModalState,
+  timeTableId,
+}: {
+  setGlobalModalState: React.Dispatch<React.SetStateAction<'color' | 'name' | 'delete' | null>>
+  timeTableId: number
+}) => {
   return (
     <>
       <div className={css({ display: 'flex', flexDir: 'column', alignItems: 'center', gap: 2.5 })}>
@@ -88,7 +94,14 @@ const ColorChangeModal = () => {
       </div>
       <div className={css({ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', columnGap: 2.5, rowGap: 5 })}>
         {ColorTypeArr.map((color, ind) => {
-          return <ColorSelector key={ind} colorTheme={color} />
+          return (
+            <ColorSelector
+              key={ind}
+              colorTheme={color}
+              setGlobalModalState={setGlobalModalState}
+              timeTableId={timeTableId}
+            />
+          )
         })}
       </div>
     </>
@@ -166,7 +179,9 @@ const TimetableModal = ({
       {modalType === 'name' && (
         <NameChangeModal setGlobalModalState={setGlobalModalState} timeTableId={timeTableId} curTableName={tableName} />
       )}
-      {modalType === 'color' && <ColorChangeModal />}
+      {modalType === 'color' && (
+        <ColorChangeModal setGlobalModalState={setGlobalModalState} timeTableId={timeTableId} />
+      )}
       {modalType === 'delete' && (
         <DeleteModal
           setGlobalModalState={setGlobalModalState}
