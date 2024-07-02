@@ -59,6 +59,7 @@ const TimetableLayout = ({ timeTableId }: TimetableLayoutProps) => {
   }
 
   const { time, week } = getWeeknTimeList(data.courses, data.schedules)
+  const colorTheme = data.color
 
   return (
     <div
@@ -95,7 +96,7 @@ const TimetableLayout = ({ timeTableId }: TimetableLayoutProps) => {
             )
           })}
         </div>
-        <LectureGrid timetableData={data} weekCnt={week.length} timeCnt={time.length - 1} />
+        <LectureGrid timetableData={data} weekCnt={week.length} timeCnt={time.length - 1} colorTheme={colorTheme} />
       </div>
     </div>
   )
