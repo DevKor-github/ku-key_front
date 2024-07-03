@@ -23,9 +23,9 @@ const PlusFriend = css({
   },
 })
 
-const FriendBlock = css({
+const FriendBlock = css.raw({
   h: 11,
-  w: 42,
+  w: 30,
   cursor: 'pointer',
   color: 'lightGray.1',
   display: 'flex',
@@ -34,6 +34,11 @@ const FriendBlock = css({
   fontSize: 18,
   fontWeight: 500,
   rounded: 10,
+  '& span': {
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+  },
 })
 
 const FriendsList = () => {
@@ -59,13 +64,13 @@ const FriendsList = () => {
         {data && data.length > 0 ? (
           data.map(friend => {
             return (
-              <Link key={friend.userId} className={FriendBlock} to={`/timetable/friend/${friend.username}`}>
-                {friend.username}
+              <Link key={friend.userId} className={css(FriendBlock)} to={`/timetable/friend/${friend.username}`}>
+                <span>{friend.username}</span>
               </Link>
             )
           })
         ) : (
-          <div className={FriendBlock}>Add friends through search!</div>
+          <div className={css(FriendBlock, { cursor: 'default' })}>Hi there~!</div>
         )}
       </div>
     </div>

@@ -74,11 +74,21 @@ const Timetable = ({
           <OptionModal ref={modalRef} setGlobalModalState={setGlobalModalState} setIsModalOpen={setIsModalOpen} />
         )}
         <div className={css({ display: 'flex', flexDir: 'row', gap: 2.5, alignItems: 'center' })}>
-          <div className={css({ color: 'darkGray.1', fontSize: 20, fontWeight: 700, wordWrap: 'break-word' })}>
+          <div className={css({ color: 'darkGray.1', fontSize: 20, fontWeight: 700, whiteSpace: 'nowrap' })}>
             {`${year} ${semester} semester`}
           </div>
           <div
-            className={css({ border: 'none', color: 'lightGray.1', fontWeight: 500, fontSize: 18, outline: 'none' })}
+            className={css({
+              border: 'none',
+              color: 'lightGray.1',
+              fontWeight: 500,
+              fontSize: 18,
+              outline: 'none',
+              w: '70%',
+              overflow: 'hidden',
+              whiteSpace: 'nowrap',
+              textOverflow: 'ellipsis',
+            })}
           >
             {tableName}
           </div>

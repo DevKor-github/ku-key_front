@@ -42,7 +42,16 @@ const SelectTimetableBtn = ({
 }: SelectTimetableBtnProps) => {
   return (
     <div className={SelectTimetableBtnStyle({ selected: ind === curInd })}>
-      <button onClick={() => setCurIndex(ind)} className={css({ cursor: 'pointer' })}>
+      <button
+        onClick={() => setCurIndex(ind)}
+        className={css({
+          cursor: 'pointer',
+          maxW: 50,
+          overflow: 'hidden',
+          whiteSpace: 'nowrap',
+          textOverflow: 'ellipsis',
+        })}
+      >
         {timetable.tableName}
       </button>
     </div>

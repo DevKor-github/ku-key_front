@@ -4,11 +4,17 @@ import { CircleUser, MapPin } from 'lucide-react'
 const LectureDetail = css({
   fontSize: 14,
   fontWeight: 400,
-  wordWrap: 'break-word',
   display: 'flex',
   flexDir: 'row',
   alignItems: 'center',
   gap: 0.5,
+})
+
+const EllipsisText = css({
+  textOverflow: 'ellipsis',
+  overflow: 'hidden',
+  whiteSpace: 'nowrap',
+  maxW: 38,
 })
 
 interface LectureStickerProps {
@@ -38,18 +44,31 @@ const LectureSticker = ({ name, runningTime, professor, room, bgColor }: Lecture
         backgroundColor: bgColor,
       }}
     >
-      <div className={css({ fontSize: 18, fontWeight: '500', wordWrap: 'break-word' })}>{name}</div>
+      <div
+        className={css({
+          fontSize: 18,
+          fontWeight: '500',
+          wordWrap: 'break-word',
+          overflow: 'hidden',
+          lineClamp: 2,
+          textOverflow: 'ellipsis',
+        })}
+      >
+        {name}
+      </div>
       <div className={css({ display: 'flex', flexDir: 'column', alignItems: 'flex-end' })}>
         {professor && (
           <div className={LectureDetail}>
             <CircleUser size={12} />
-            {professor}
+            <span className={EllipsisText}>{professor}</span>
           </div>
         )}
-        <div className={LectureDetail}>
-          <MapPin size={12} />
-          {room}
-        </div>
+        {room && (
+          <div className={LectureDetail}>
+            <MapPin size={12} />
+            <span className={EllipsisText}>{room}</span>
+          </div>
+        )}
       </div>
     </div>
   )
