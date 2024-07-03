@@ -51,15 +51,9 @@ interface TimetableLayoutProps {
 }
 
 const TimetableLayout = ({ timeTableId }: TimetableLayoutProps) => {
-  const { data, isPending } = useGetTimetable({ timeTableId })
-
-  if (isPending || data === undefined) {
-    // todo: 스켈레톤 UI화
-    return <div>로딩중</div>
-  }
+  const { data } = useGetTimetable({ timeTableId })
 
   const { time, week } = getWeeknTimeList(data.courses, data.schedules)
-  const colorTheme = data.color
 
   return (
     <div
@@ -96,7 +90,7 @@ const TimetableLayout = ({ timeTableId }: TimetableLayoutProps) => {
             )
           })}
         </div>
-        <LectureGrid timetableData={data} weekCnt={week.length} timeCnt={time.length - 1} colorTheme={colorTheme} />
+        <LectureGrid timetableData={data} weekCnt={week.length} timeCnt={time.length - 1} />
       </div>
     </div>
   )

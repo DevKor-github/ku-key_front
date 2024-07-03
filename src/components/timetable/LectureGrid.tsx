@@ -4,19 +4,19 @@ import { GetTimeTableByTimeTableIdResponse } from '@/api/types/timetable'
 import LectureSticker from '@/components/timetable/LectureSticker'
 import { TimeCell } from '@/components/timetable/TimetableLayout'
 import { COLOR_INFO } from '@/lib/constants/timetableColors'
-import { ColorType } from '@/types/timetable'
 import { getDuration, lectureDataPreprocess } from '@/util/timetableUtil'
 
 interface LectureGridProps {
   timetableData: GetTimeTableByTimeTableIdResponse
   weekCnt: number
   timeCnt: number
-  colorTheme: ColorType
 }
 
-const LectureGrid = ({ timetableData, weekCnt, timeCnt, colorTheme }: LectureGridProps) => {
+const LectureGrid = ({ timetableData, weekCnt, timeCnt }: LectureGridProps) => {
   const lecGrid = lectureDataPreprocess(timetableData.courses, timetableData.schedules, weekCnt, timeCnt)
+  const colorTheme = timetableData.color
   let lecCnt = 0
+
   return (
     <div className={css({ display: 'grid' })} style={{ gridTemplateColumns: `repeat(${weekCnt}, 1fr)` }}>
       {lecGrid.map((lectures, gridInd) => {

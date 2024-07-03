@@ -90,6 +90,11 @@ export const useGetTimetable = (props: Omit<GetTimeTableByTimeTableIdRequest, 'a
   return useQuery({
     queryKey: ['timetable', props.timeTableId],
     queryFn: () => getTimetableByID({ authHeader, ...props }),
+    initialData: {
+      courses: [],
+      schedules: [],
+      color: 'Red',
+    },
   })
 }
 
