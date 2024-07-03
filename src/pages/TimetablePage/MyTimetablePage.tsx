@@ -11,7 +11,7 @@ import TimetableDropdown from '@/components/timetable/TimetableDropdown'
 import { timetablePreprocess } from '@/util/timetableUtil'
 
 const MyTimetablePage = () => {
-  const { data: timetableList, isPending } = useGetUserTimetableList()
+  const { data: timetableList } = useGetUserTimetableList()
   const { mutate: deleteTimetable } = useDeleteTimetable()
 
   const [curSemester, setCurSemester] = useState(0)
@@ -24,11 +24,6 @@ const MyTimetablePage = () => {
       setCurIndex(prev => prev - 1)
     }
     deleteTimetable({ timeTableId })
-  }
-
-  if (isPending) {
-    // todo: 스켈레톤 ui 컴포넌트화
-    return <div>로딩 중</div>
   }
 
   return (

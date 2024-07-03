@@ -79,6 +79,7 @@ export const useGetUserTimetableList = () => {
   return useQuery({
     queryKey: ['timetableList'],
     queryFn: () => getTimetableByUser(authHeader),
+    initialData: [],
   })
 }
 
