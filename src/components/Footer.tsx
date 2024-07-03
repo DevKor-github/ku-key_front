@@ -48,7 +48,7 @@ const Footer = () => {
             fontWeight: '800',
           })}
         >
-          KU-KEY
+          KU-key
         </div>
         <div
           className={css({
@@ -79,7 +79,7 @@ const Footer = () => {
             fontWeight: '500',
           })}
         >
-          Copyright ⓒ 2024 KU-KEY RUN. All Rights Reserved.
+          Copyright ⓒ 2024 KU-key RUN. All Rights Reserved.
         </div>
       </div>
       <div
