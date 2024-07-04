@@ -30,6 +30,7 @@ const HomeCarousel = () => {
         bgColor: 'bg.gray',
         w: 'full',
         maxW: 'auto',
+        mt: '50px',
       })}
     >
       <div ref={emblaRef} className={css({ overflow: 'hidden' })}>
@@ -58,40 +59,52 @@ const HomeCarousel = () => {
       <div
         className={css({
           display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
+          w: '608px',
           pos: 'absolute',
-          top: 200,
-          left: 630,
-          rounded: 'full',
-          w: 10,
-          h: 10,
-          zIndex: 50,
-          bgColor: 'white',
-          opacity: 0.7,
-          cursor: 'pointer',
+          h: 75,
+          rounded: 20,
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          minW: 0,
+          px: '61px',
         })}
       >
-        <ChevronLeft className={css({ w: 6, h: 6 })} />
-      </div>
-      <div
-        className={css({
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          pos: 'absolute',
-          top: 200,
-          right: 630,
-          rounded: 'full',
-          w: 10,
-          h: 10,
-          zIndex: 50,
-          bgColor: 'white',
-          opacity: 0.7,
-          cursor: 'pointer',
-        })}
-      >
-        <ChevronRight className={css({ w: 6, h: 6 })} />
+        <div
+          className={css({
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            top: 200,
+            left: 630,
+            rounded: 'full',
+            w: 10,
+            h: 10,
+            zIndex: 50,
+            bgColor: 'white',
+            opacity: 0.7,
+            cursor: 'pointer',
+          })}
+        >
+          <ChevronLeft className={css({ w: 6, h: 6 })} />
+        </div>
+        <div
+          className={css({
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            top: 200,
+            right: 630,
+            rounded: 'full',
+            w: 10,
+            h: 10,
+            zIndex: 50,
+            bgColor: 'white',
+            opacity: 0.7,
+            cursor: 'pointer',
+          })}
+        >
+          <ChevronRight className={css({ w: 6, h: 6 })} />
+        </div>
       </div>
     </div>
   )
