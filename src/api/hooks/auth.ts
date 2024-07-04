@@ -20,6 +20,7 @@ export const useLogIn = () => {
   return useMutation({
     mutationFn: logIn,
     onSuccess: data => {
+      console.log('logged:', new Date().toTimeString())
       signIn({
         auth: { token: data.token.accessToken, type: 'Bearer' },
         refresh: data.token.refreshToken,

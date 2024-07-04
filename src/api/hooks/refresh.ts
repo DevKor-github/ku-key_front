@@ -15,12 +15,13 @@ export const refresh = createRefresh({
   refreshApiCallback: async param => {
     try {
       const accessToken = await getNewToken(param.refreshToken!)
-      console.log('Refreshing')
+      console.log('Refreshing:', new Date().toTimeString())
+
       return {
         isSuccess: true,
         newAuthToken: accessToken,
         newAuthTokenExpireIn: 5,
-        newRefreshTokenExpireIn: 60 * 24 * 14,
+        newRefreshTokenExpireIn: 60 * 24 * 7,
       }
     } catch (error) {
       console.error(error)
