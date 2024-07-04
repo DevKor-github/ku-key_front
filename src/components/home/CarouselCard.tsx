@@ -18,6 +18,8 @@ const CarouselCard = ({ title, content, date, selected }: CarouselCardProps) => 
         marginLeft: 5,
         minW: 0,
         transition: 'background-color 0.3s ease-in-out',
+        paddingLeft: 35,
+        paddingRight: 115,
       })}
     >
       <div className={css({ display: 'inline-flex', flexDir: 'column', alignItems: 'flex-start', gap: 10 })}>
