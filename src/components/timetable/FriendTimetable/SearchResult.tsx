@@ -1,4 +1,5 @@
 import { css } from '@styled-stytem/css'
+import { AxiosError } from 'axios'
 import { memo } from 'react'
 
 import { GetSearchUserResponse } from '@/api/types/friends'
@@ -6,7 +7,7 @@ import FriendCard from '@/components/timetable/FriendTimetable/FriendCard'
 
 interface SearchResultProps {
   data: GetSearchUserResponse | undefined
-  error: Error | null
+  error: AxiosError | null
 }
 
 const SearchResult = memo(({ data, error }: SearchResultProps) => {
