@@ -4,18 +4,28 @@ import useEmblaCarousel, { UseEmblaCarouselType } from 'embla-carousel-react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 
+import PlayIcon from '@/assets/play.svg'
 import CarouselCard from '@/components/home/CarouselCard'
 
 const HomeCarousel = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: 'center' }, [Autoplay()])
 
   const [currentSlide, setCurrentSlide] = useState(0)
+
   const logSlidesInView = useCallback((emblaApi: UseEmblaCarouselType[1]) => {
     if (emblaApi) {
       const currentSlideIndex = emblaApi.internalEngine().index.get()
       setCurrentSlide(currentSlideIndex)
     }
   }, [])
+
+  const toggleAutoplay = useCallback(() => {
+    const autoplay = emblaApi?.plugins()?.autoplay
+    if (!autoplay) return
+
+    const playOrStop = autoplay.isPlaying() ? autoplay.stop : autoplay.play
+    playOrStop()
+  }, [emblaApi])
 
   useEffect(() => {
     if (emblaApi) emblaApi.on('select', logSlidesInView)
@@ -105,6 +115,51 @@ const HomeCarousel = () => {
         >
           <ChevronRight className={css({ w: 6, h: 6 })} />
         </div>
+      </div>
+      <div
+        className={css({
+          display: 'flex',
+          w: '608px',
+          pos: 'absolute',
+          h: 75,
+          rounded: 20,
+          flexDir: 'row',
+          alignItems: 'flex-end',
+          justifyContent: 'flex-end',
+          minW: 0,
+          pr: '89px',
+          pb: '22px',
+        })}
+      >
+        <button
+          className={css({
+            display: 'inline-flex',
+            pl: 3.5,
+            pr: 3,
+            py: 1,
+            alignItems: 'center',
+            gap: 2.5,
+            rounded: 48,
+            bgColor: 'rgba(0,0,0,0.20)',
+            cursor: 'pointer',
+          })}
+          onClick={toggleAutoplay}
+        >
+          <img src={PlayIcon} alt="play icon" />
+          <div
+            className={css({
+              display: 'flex',
+              pt: '1px',
+              gap: '3px',
+              color: 'white',
+              fontSize: '14px',
+              fontWeight: 700,
+            })}
+          >
+            <p>{currentSlide + 1}</p>
+            <p>/ {emblaApi?.internalEngine().slideIndexes.length}</p>
+          </div>
+        </button>
       </div>
     </div>
   )
