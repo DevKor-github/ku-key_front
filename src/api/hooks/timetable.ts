@@ -13,62 +13,14 @@ import {
   UpdateTimeTableNameRequest,
 } from '@/api/types/timetable'
 
-const getTimetableByUser = async (authHeader: string | null): Promise<GetTimeTableByUserIdResponse> => {
-  const response = await axios.get(`http://${import.meta.env.VITE_API_SERVER}/timetable/user`, {
-    headers: { Authorization: authHeader },
-  })
-  return response.data
-}
-const getTimetableByID = async ({
-  authHeader,
-  timeTableId,
-}: GetTimeTableByTimeTableIdRequest): Promise<GetTimeTableByTimeTableIdResponse> => {
-  const response = await axios.get(`http://${import.meta.env.VITE_API_SERVER}/timetable/${timeTableId}`, {
-    headers: { Authorization: authHeader },
-  })
-  return response.data
-}
-const postTimetable = async ({ authHeader, tableName, semester, year }: CreateTimeTableRequest) => {
-  const response = await axios.post(
-    `http://${import.meta.env.VITE_API_SERVER}/timetable`,
-    { tableName, semester, year },
-    { headers: { Authorization: authHeader } },
-  )
-  return response.data
-}
-const deleteTimetable = async ({ authHeader, timeTableId }: DeleteTimeTableRequest) => {
-  const response = await axios.delete(`http://${import.meta.env.VITE_API_SERVER}/timetable/${timeTableId}`, {
-    headers: { Authorization: authHeader },
-  })
-  return response
-}
-const patchTableName = async ({ authHeader, timeTableId, tableName }: UpdateTimeTableNameRequest) => {
-  const response = await axios.patch(
-    `http://${import.meta.env.VITE_API_SERVER}/timetable/name/${timeTableId}`,
-    { tableName },
+const getTimetableByUser = async (authHeader: string | null) => {
+  const response = await axios.get<GetTimeTableByUserIdResponse>(
+    `http://${import.meta.env.VITE_API_SERVER}/timetable/user`,
     {
       headers: { Authorization: authHeader },
     },
   )
-  return response
-}
-const patchMainTable = async ({ authHeader, semester, year, timeTableId }: UpdateMainTimeTableRequest) => {
-  const response = await axios.patch(
-    `http://${import.meta.env.VITE_API_SERVER}/timetable/${timeTableId}`,
-    { semester, year },
-    {
-      headers: { Authorization: authHeader },
-    },
-  )
-  return response
-}
-const patchColor = async ({ authHeader, tableColor, timeTableId }: UpdateTableColorRequest) => {
-  const response = await axios.patch(
-    `http://${import.meta.env.VITE_API_SERVER}/timetable/color/${timeTableId}`,
-    { tableColor },
-    { headers: { Authorization: authHeader } },
-  )
-  return response
+  return response.data
 }
 
 /**
@@ -83,20 +35,39 @@ export const useGetUserTimetableList = () => {
   })
 }
 
+const getTimetableByID = async ({ authHeader, timetableId }: GetTimeTableByTimeTableIdRequest) => {
+  const response = await axios.get<GetTimeTableByTimeTableIdResponse>(
+    `http://${import.meta.env.VITE_API_SERVER}/timetable/${timetableId}`,
+    {
+      headers: { Authorization: authHeader },
+    },
+  )
+  return response.data
+}
+
 /**
  * 시간표 ID로 해당 시간표와 관련된 강의 정보를 반환합니다.
  */
-export const useGetTimetable = (props: Omit<GetTimeTableByTimeTableIdRequest, 'authHeader'>) => {
+export const useGetTimetable = ({ timetableId }: Pick<GetTimeTableByTimeTableIdRequest, 'timetableId'>) => {
   const authHeader = useAuthHeader()
   return useQuery({
-    queryKey: ['timetable', props.timeTableId],
-    queryFn: () => getTimetableByID({ authHeader, ...props }),
+    queryKey: ['timetable', timetableId],
+    queryFn: () => getTimetableByID({ authHeader, timetableId }),
     initialData: {
       courses: [],
       schedules: [],
       color: 'Red',
     },
   })
+}
+
+const postTimetable = async ({ authHeader, tableName, semester, year }: CreateTimeTableRequest) => {
+  const response = await axios.post(
+    `http://${import.meta.env.VITE_API_SERVER}/timetable`,
+    { tableName, semester, year },
+    { headers: { Authorization: authHeader } },
+  )
+  return response.data
 }
 
 /**
@@ -113,6 +84,13 @@ export const usePostTimetable = () => {
   })
 }
 
+const deleteTimetable = async ({ authHeader, timetableId }: DeleteTimeTableRequest) => {
+  const response = await axios.delete(`http://${import.meta.env.VITE_API_SERVER}/timetable/${timetableId}`, {
+    headers: { Authorization: authHeader },
+  })
+  return response
+}
+
 /**
  * 특정 시간표를 삭제합니다. 삭제 시 해당 시간표에 등록된 모든 강의도 삭제됩니다.
  */
@@ -120,11 +98,23 @@ export const useDeleteTimetable = () => {
   const authHeader = useAuthHeader()
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: (props: Omit<DeleteTimeTableRequest, 'authHeader'>) => deleteTimetable({ authHeader, ...props }),
+    mutationFn: ({ timetableId }: Pick<DeleteTimeTableRequest, 'timetableId'>) =>
+      deleteTimetable({ authHeader, timetableId }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['timetableList'] })
     },
   })
+}
+
+const patchTableName = async ({ authHeader, timeTableId, tableName }: UpdateTimeTableNameRequest) => {
+  const response = await axios.patch(
+    `http://${import.meta.env.VITE_API_SERVER}/timetable/name/${timeTableId}`,
+    { tableName },
+    {
+      headers: { Authorization: authHeader },
+    },
+  )
+  return response
 }
 
 /**
@@ -141,6 +131,17 @@ export const useUpdateTableName = () => {
   })
 }
 
+const patchMainTable = async ({ authHeader, semester, year, timeTableId }: UpdateMainTimeTableRequest) => {
+  const response = await axios.patch(
+    `http://${import.meta.env.VITE_API_SERVER}/timetable/${timeTableId}`,
+    { semester, year },
+    {
+      headers: { Authorization: authHeader },
+    },
+  )
+  return response
+}
+
 /**
  * 특정 시간표를 대표 시간표로 변경합니다. 기존에 이미 대표시간표이면 변경되지 않습니다.
  */
@@ -155,6 +156,15 @@ export const useUpdateMainTable = () => {
       queryClient.invalidateQueries({ queryKey: ['timetableList'] })
     },
   })
+}
+
+const patchColor = async ({ authHeader, tableColor, timeTableId }: UpdateTableColorRequest) => {
+  const response = await axios.patch(
+    `http://${import.meta.env.VITE_API_SERVER}/timetable/color/${timeTableId}`,
+    { tableColor },
+    { headers: { Authorization: authHeader } },
+  )
+  return response
 }
 
 /**

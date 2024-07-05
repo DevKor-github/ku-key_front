@@ -2,7 +2,7 @@ import { ColorType, CourseType, ScheduleType, SemesterType, TimetableInfo } from
 
 export interface GetTimeTableByTimeTableIdRequest {
   authHeader: string | null
-  timeTableId: number
+  timetableId: number
 }
 
 export interface GetTimeTableByTimeTableIdResponse {
@@ -35,7 +35,7 @@ export interface UpdateMainTimeTableRequest {
 
 export interface DeleteTimeTableRequest {
   authHeader: string | null
-  timeTableId: number
+  timetableId: number
 }
 
 export interface UpdateTableColorRequest {

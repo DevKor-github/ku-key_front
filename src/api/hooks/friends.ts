@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader'
 
 import {
@@ -13,51 +13,10 @@ import {
   PostFriendshipRequest,
 } from '@/api/types/friends'
 
-const getFriendList = async ({ authHeader, keyword }: GetFriendListRequest): Promise<GetFriendListResponse> => {
-  const response = await axios.get(`http://${import.meta.env.VITE_API_SERVER}/friendship`, {
+const getFriendList = async ({ authHeader, keyword }: GetFriendListRequest) => {
+  const response = await axios.get<GetFriendListResponse>(`http://${import.meta.env.VITE_API_SERVER}/friendship`, {
     headers: { Authorization: authHeader },
     params: { keyword },
-  })
-  return response.data
-}
-const getSearchUser = async ({ authHeader, username }: GetSearchUserRequest) => {
-  const response = await axios.get<GetSearchUserResponse>(
-    `http://${import.meta.env.VITE_API_SERVER}/friendship/search-user`,
-    {
-      headers: { Authorization: authHeader },
-      params: { username },
-    },
-  )
-  return response.data
-}
-const postFriendship = async ({ authHeader, toUsername }: PostFriendshipRequest) => {
-  const response = await axios.post(
-    `http://${import.meta.env.VITE_API_SERVER}/friendship`,
-    { toUsername },
-    { headers: { Authorization: authHeader } },
-  )
-  return response.data
-}
-const getReceivedList = async ({ authHeader }: GetRequestListRequest) => {
-  const response = await axios.get<GetRequestListResponse>(
-    `http://${import.meta.env.VITE_API_SERVER}/friendship/received`,
-    {
-      headers: { Authorization: authHeader },
-    },
-  )
-  return response.data
-}
-const patchFriendshipRequest = async ({ authHeader, friendshipId }: PatchFriendshipRequestRequest) => {
-  const response = await axios.patch(
-    `http://${import.meta.env.VITE_API_SERVER}/friendship/received/${friendshipId}`,
-    {},
-    { headers: { Authorization: authHeader } },
-  )
-  return response.data
-}
-const deleteFriendshipRequest = async ({ authHeader, friendshipId }: PatchFriendshipRequestRequest) => {
-  const response = await axios.delete(`http://${import.meta.env.VITE_API_SERVER}/friendship/received/${friendshipId}`, {
-    headers: { Authorization: authHeader },
   })
   return response.data
 }
@@ -70,20 +29,38 @@ export const useGetFriendList = (props: Omit<GetFriendListRequest, 'authHeader'>
   return useQuery({
     queryKey: ['friendList'],
     queryFn: () => getFriendList({ authHeader, ...props }),
+    initialData: [],
   })
+}
+
+const getSearchUser = async ({ authHeader, username }: GetSearchUserRequest) => {
+  const response = await axios.get(`http://${import.meta.env.VITE_API_SERVER}/friendship/search-user`, {
+    headers: { Authorization: authHeader },
+    params: { username },
+  })
+  return response.data
 }
 
 /**
  * username(친구 추가용 id)를 query로 받아 해당하는 유저를 검색합니다.
  */
-export const useGetSearchUser = ({ username }: Omit<GetSearchUserRequest, 'authHeader'>) => {
+export const useGetSearchUser = ({ username }: Pick<GetSearchUserRequest, 'username'>) => {
   const authHeader = useAuthHeader()
-  return useQuery({
+  return useQuery<GetSearchUserResponse, AxiosError>({
     queryKey: ['searchResult', username],
-    queryFn: () => getSearchUser({ authHeader, username: username }),
+    queryFn: () => getSearchUser({ authHeader, username }),
     enabled: !!username,
     retry: false,
   })
+}
+
+const postFriendship = async ({ authHeader, toUsername }: PostFriendshipRequest) => {
+  const response = await axios.post(
+    `http://${import.meta.env.VITE_API_SERVER}/friendship`,
+    { toUsername },
+    { headers: { Authorization: authHeader } },
+  )
+  return response.data
 }
 
 /**
@@ -92,11 +69,22 @@ export const useGetSearchUser = ({ username }: Omit<GetSearchUserRequest, 'authH
 export const useAddFriendship = () => {
   const authHeader = useAuthHeader()
   return useMutation({
-    mutationFn: (props: Omit<PostFriendshipRequest, 'authHeader'>) => postFriendship({ authHeader, ...props }),
+    mutationFn: ({ toUsername }: Pick<PostFriendshipRequest, 'toUsername'>) =>
+      postFriendship({ authHeader, toUsername }),
     onSuccess: () => {
       console.log('친구 요청 보내기 성공')
     },
   })
+}
+
+const getReceivedList = async ({ authHeader }: GetRequestListRequest) => {
+  const response = await axios.get<GetRequestListResponse>(
+    `http://${import.meta.env.VITE_API_SERVER}/friendship/received`,
+    {
+      headers: { Authorization: authHeader },
+    },
+  )
+  return response.data
 }
 
 /**
@@ -107,7 +95,17 @@ export const useGetReceivedList = () => {
   return useQuery({
     queryKey: ['friendsRequest'],
     queryFn: () => getReceivedList({ authHeader }),
+    initialData: [],
   })
+}
+
+const patchFriendshipRequest = async ({ authHeader, friendshipId }: PatchFriendshipRequestRequest) => {
+  const response = await axios.patch(
+    `http://${import.meta.env.VITE_API_SERVER}/friendship/received/${friendshipId}`,
+    {},
+    { headers: { Authorization: authHeader } },
+  )
+  return response.data
 }
 
 /**
@@ -117,12 +115,19 @@ export const useReceiveFriendship = () => {
   const authHeader = useAuthHeader()
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: (props: Omit<PatchFriendshipRequestRequest, 'authHeader'>) =>
-      patchFriendshipRequest({ authHeader, ...props }),
+    mutationFn: ({ friendshipId }: Pick<PatchFriendshipRequestRequest, 'friendshipId'>) =>
+      patchFriendshipRequest({ authHeader, friendshipId }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['friendsRequest', 'friendList'] })
     },
   })
+}
+
+const deleteFriendshipRequest = async ({ authHeader, friendshipId }: PatchFriendshipRequestRequest) => {
+  const response = await axios.delete(`http://${import.meta.env.VITE_API_SERVER}/friendship/received/${friendshipId}`, {
+    headers: { Authorization: authHeader },
+  })
+  return response.data
 }
 
 /**
@@ -132,8 +137,8 @@ export const useDeleteFriendshipRequest = () => {
   const authHeader = useAuthHeader()
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: (props: Omit<PatchFriendshipRequestRequest, 'authHeader'>) =>
-      deleteFriendshipRequest({ authHeader, ...props }),
+    mutationFn: ({ friendshipId }: Pick<PatchFriendshipRequestRequest, 'friendshipId'>) =>
+      deleteFriendshipRequest({ authHeader, friendshipId }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['friendsRequest'] })
     },
