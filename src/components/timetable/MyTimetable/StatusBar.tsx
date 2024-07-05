@@ -56,15 +56,13 @@ const MainPinBtn = ({ hasTable, curTimetable, setCurIndexZero }: MainPinBtnProps
     <button
       className={MainPinBtnStyle({ main: hasTable ? curTimetable.mainTimeTable : undefined, disabled: !hasTable })}
       onClick={() => {
-        if (hasTable) {
-          if (!curTimetable.mainTimeTable) {
-            setCurIndexZero()
-            updateMainTable({
-              semester: curTimetable.semester,
-              year: curTimetable.year,
-              timeTableId: curTimetable.timeTableId,
-            })
-          }
+        if (hasTable && !curTimetable.mainTimeTable) {
+          setCurIndexZero()
+          updateMainTable({
+            semester: curTimetable.semester,
+            year: curTimetable.year,
+            timeTableId: curTimetable.timeTableId,
+          })
         }
       }}
     >
