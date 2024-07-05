@@ -1,4 +1,5 @@
 import { css, cva } from '@styled-stytem/css'
+import { memo } from 'react'
 
 import { useGetTimetable } from '@/api/hooks/timetable'
 import LectureGrid from '@/components/timetable/LectureGrid'
@@ -50,7 +51,7 @@ interface TimetableLayoutProps {
   timetableId: number
 }
 
-const TimetableLayout = ({ timetableId }: TimetableLayoutProps) => {
+const TimetableLayout = memo(({ timetableId }: TimetableLayoutProps) => {
   const { data } = useGetTimetable({ timetableId })
 
   const { time, week } = getWeeknTimeList(data.courses, data.schedules)
@@ -94,6 +95,6 @@ const TimetableLayout = ({ timetableId }: TimetableLayoutProps) => {
       </div>
     </div>
   )
-}
+})
 
 export default TimetableLayout
