@@ -61,7 +61,7 @@ const FriendsList = () => {
           py: 2.5,
         })}
       >
-        {data && data.length > 0 ? (
+        {data.length > 0 ? (
           data.map(friend => {
             return (
               <Link key={friend.userId} className={css(FriendBlock)} to={`/timetable/friend/${friend.username}`}>

@@ -15,9 +15,7 @@ const FriendRequest = () => {
         </div>
       </div>
       <div className={css({ display: 'flex', flexDir: 'column', gap: 5 })}>
-        {requestData && requestData?.length !== 0 ? (
-          requestData.map(request => <FriendCard key={request.friendshipId} data={request} />)
-        ) : (
+        {requestData.length === 0 ? (
           <div
             className={css({
               fontWeight: 600,
@@ -31,6 +29,8 @@ const FriendRequest = () => {
           >
             No friend requests yet
           </div>
+        ) : (
+          requestData.map(request => <FriendCard key={request.friendshipId} data={request} />)
         )}
       </div>
     </div>
