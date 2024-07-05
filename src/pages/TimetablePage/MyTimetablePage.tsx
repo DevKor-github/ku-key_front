@@ -19,11 +19,11 @@ const MyTimetablePage = () => {
 
   const semesterList = timetablePreprocess(timetableList)
 
-  const deleteTimetableHandler = (timeTableId: number) => {
+  const deleteTimetableHandler = (timetableId: number) => {
     if (curIndex !== 0) {
       setCurIndex(prev => prev - 1)
     }
-    deleteTimetable({ timeTableId })
+    deleteTimetable({ timetableId })
   }
 
   return (

@@ -47,11 +47,11 @@ export const TimeCell = cva({
 })
 
 interface TimetableLayoutProps {
-  timeTableId: number
+  timetableId: number
 }
 
-const TimetableLayout = ({ timeTableId }: TimetableLayoutProps) => {
-  const { data } = useGetTimetable({ timeTableId })
+const TimetableLayout = ({ timetableId }: TimetableLayoutProps) => {
+  const { data } = useGetTimetable({ timetableId })
 
   const { time, week } = getWeeknTimeList(data.courses, data.schedules)
 

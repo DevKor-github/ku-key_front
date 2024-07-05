@@ -15,7 +15,7 @@ const buttonStyle = cva({
     cursor: 'pointer',
   },
   variants: {
-    isRequest: {
+    isRecievedRequest: {
       true: {
         bgColor: 'red.2',
       },
@@ -38,12 +38,13 @@ const FriendCard = ({ data }: FriendCardProp) => {
   const { mutate: addFriend } = useAddFriendship()
   const { mutate: receiveFriendship } = useReceiveFriendship()
   const { mutate: deleteFriendship } = useDeleteFriendshipRequest()
-  const isRequest = data.friendshipId !== undefined
+  const isRecievedRequest = data.friendshipId !== undefined
+
   return (
     <div
       className={css({ display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'relative' })}
     >
-      {isRequest && (
+      {isRecievedRequest && (
         <button
           className={css({
             cursor: 'pointer',
@@ -81,24 +82,26 @@ const FriendCard = ({ data }: FriendCardProp) => {
           >
             <div>Korea UNIV</div>
             <Dot />
+            {/* todo: major이 필수값이 된 이후, 아래 코드 변경 */}
             <div>{data.major ? data.major : 'Major'}</div>
           </div>
           <div className={css({ fontWeight: 400, fontSize: 12, color: 'darkGray.2' })}>
+            {/* todo: language가 필수값이 된 이후, 아래 코드 변경 */}
             Language | {data.language ? data.language : 'Language'}
           </div>
         </div>
       </div>
       <button
-        className={buttonStyle({ isRequest })}
+        className={buttonStyle({ isRecievedRequest })}
         onClick={() => {
-          if (isRequest) {
+          if (isRecievedRequest) {
             receiveFriendship({ friendshipId: data.friendshipId! })
           } else {
             addFriend({ toUsername: data.username })
           }
         }}
       >
-        {isRequest ? 'Friend accept' : 'Add friend'}
+        {isRecievedRequest ? 'Friend accept' : 'Add friend'}
       </button>
     </div>
   )
