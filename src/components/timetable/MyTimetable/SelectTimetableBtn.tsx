@@ -30,20 +30,20 @@ const SelectTimetableBtnStyle = cva({
 interface SelectTimetableBtnProps {
   timetableInfo: TimetableInfo
   timetableInd: number
-  curInd: number
+  curIndex: number
   setCurIndex: React.Dispatch<React.SetStateAction<number>>
 }
 
 const SelectTimetableBtn = ({
-  timetableInd: ind,
+  timetableInd: index,
   timetableInfo: timetable,
-  curInd,
+  curIndex,
   setCurIndex,
 }: SelectTimetableBtnProps) => {
   return (
-    <div className={SelectTimetableBtnStyle({ selected: ind === curInd })}>
+    <div className={SelectTimetableBtnStyle({ selected: index === curIndex })}>
       <button
-        onClick={() => setCurIndex(ind)}
+        onClick={() => setCurIndex(index)}
         className={css({
           cursor: 'pointer',
           maxW: 50,

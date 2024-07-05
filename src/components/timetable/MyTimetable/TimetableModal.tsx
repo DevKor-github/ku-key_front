@@ -88,8 +88,8 @@ const ColorChangeModal = ({ closeModal, timetableId }: { closeModal: () => void;
         <div className={css({ fontWeight: 700, fontSize: 24, color: 'black.2' })}>Color</div>
       </div>
       <div className={css({ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', columnGap: 2.5, rowGap: 5 })}>
-        {ColorTypeArr.map((color, ind) => {
-          return <ColorSelector key={ind} colorTheme={color} closeModal={closeModal} timeTableId={timetableId} />
+        {ColorTypeArr.map((color, index) => {
+          return <ColorSelector key={index} colorTheme={color} closeModal={closeModal} timeTableId={timetableId} />
         })}
       </div>
     </>

@@ -87,8 +87,8 @@ export const lectureDataPreprocess = (
 
   // 강의 데이터 Cell에 임베딩
   courseData.map(lecture => {
-    const ind = weekCnt * getStartCell(lecture.startTime) + dayToNumber[lecture.day]
-    lecGrid[ind - 1].push({
+    const index = weekCnt * getStartCell(lecture.startTime) + dayToNumber[lecture.day]
+    lecGrid[index - 1].push({
       schedType: 'Course',
       scheduleId: lecture.courseId,
       title: lecture.courseName,
@@ -101,8 +101,8 @@ export const lectureDataPreprocess = (
     })
   })
   scheduleData.map(sched => {
-    const ind = weekCnt * getStartCell(sched.scheduleStartTime) + dayToNumber[sched.scheduleDay]
-    lecGrid[ind - 1].push({
+    const index = weekCnt * getStartCell(sched.scheduleStartTime) + dayToNumber[sched.scheduleDay]
+    lecGrid[index - 1].push({
       schedType: 'Schedule',
       scheduleId: sched.scheduleId,
       title: sched.scheduleTitle,

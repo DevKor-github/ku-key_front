@@ -138,13 +138,13 @@ const StatusBar = ({ curSemester, curIndex, setCurIndex }: StatusBarProps) => {
           <Plus className={css({ zIndex: 2 })} />
         </button>
         <div className={css({ display: 'flex', flexDir: 'row', gap: 2.5 })}>
-          {curSemester.timetables.map((timetable, ind) => {
+          {curSemester.timetables.map((timetable, index) => {
             return (
               <SelectTimetableBtn
-                key={ind}
+                key={index}
                 timetableInfo={timetable}
-                curInd={curIndex}
-                timetableInd={ind}
+                curIndex={curIndex}
+                timetableInd={index}
                 setCurIndex={setCurIndex}
               />
             )

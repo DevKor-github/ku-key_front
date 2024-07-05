@@ -89,13 +89,13 @@ const TimetableDropdown = ({ semesterList, curSemester, setCurSemester, setCurIn
             shadow(),
           )}
         >
-          {semesterList.map((semester, ind) => {
+          {semesterList.map((semester, index) => {
             return (
               <DropdownMenu.Item
-                key={ind}
-                className={DropdownItemsStyle({ active: ind == curSemester })}
+                key={index}
+                className={DropdownItemsStyle({ active: index == curSemester })}
                 onClick={() => {
-                  setCurSemester(ind)
+                  setCurSemester(index)
                   setCurIndex(0)
                 }}
               >{`${semester.year} ${semester.semester} semester`}</DropdownMenu.Item>

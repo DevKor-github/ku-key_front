@@ -65,14 +65,14 @@ const TimetableLayout = ({ timetableId }: TimetableLayoutProps) => {
       })}
     >
       <div className={css({ display: 'flex', flexDir: 'column' })}>
-        {time.map((val, ind) => {
+        {time.map((val, index) => {
           return (
             <div
-              key={ind}
+              key={index}
               className={TimeCell({
                 sidebar: true,
-                header: ind === 0,
-                end: ind === time.length - 1 ? 'leftEnd' : undefined,
+                header: index === 0,
+                end: index === time.length - 1 ? 'leftEnd' : undefined,
               })}
             >
               {val}
@@ -82,9 +82,9 @@ const TimetableLayout = ({ timetableId }: TimetableLayoutProps) => {
       </div>
       <div className={css({ display: 'flex', flexDir: 'column', flex: 1 })}>
         <div className={css({ display: 'flex', flexDir: 'row' })}>
-          {week.map((days, ind) => {
+          {week.map((days, index) => {
             return (
-              <div key={ind} className={css({ flex: 1 }, TimeCell.raw({ header: true }))}>
+              <div key={index} className={css({ flex: 1 }, TimeCell.raw({ header: true }))}>
                 {days}
               </div>
             )
