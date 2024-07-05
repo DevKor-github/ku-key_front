@@ -30,7 +30,7 @@ const Header = () => {
           fontWeight: 700,
         })}
       >
-        <Link to="/">KU-Key</Link>
+        <Link to="/">KU-key</Link>
       </div>
       <div
         className={css({

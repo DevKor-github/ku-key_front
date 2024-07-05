@@ -1,56 +1,74 @@
 import { css } from '@styled-stytem/css'
-import { MapPin, UserRound } from 'lucide-react'
+import { CircleUser, MapPin } from 'lucide-react'
 
 const LectureDetail = css({
-  color: 'darkGray.2',
   fontSize: 14,
-  fontWeight: '400',
-  wordWrap: 'break-word',
+  fontWeight: 400,
   display: 'flex',
   flexDir: 'row',
   alignItems: 'center',
-  gap: 1,
+  gap: 0.5,
+})
+
+const EllipsisText = css({
+  textOverflow: 'ellipsis',
+  overflow: 'hidden',
+  whiteSpace: 'nowrap',
+  maxW: 38,
 })
 
 interface LectureStickerProps {
   name: string
-  runningTime: number //시간을 분 단위로 받기
-  professor: string
+  runningTime: number // 분 단위
+  professor: string | null
   room: string
+  bgColor: string
 }
 
-const LectureSticker = ({ name, runningTime, professor, room }: LectureStickerProps) => {
+const LectureSticker = ({ name, runningTime, professor, room, bgColor }: LectureStickerProps) => {
   return (
     <div
       className={css({
-        bgColor: '#FFF8F8',
-        position: 'absolute', // todo: flex로 Refactoring?
-        w: 'calc(100% - 32px)',
-        m: '0.375rem 1rem',
+        color: 'white',
+        position: 'absolute',
+        w: 'calc(100% + 1px)',
         p: '0.75rem 0.625rem',
         rounded: 10,
         zIndex: 10,
-        border: '1px #FFC6C6 solid',
         display: 'flex',
         flexDir: 'column',
         justifyContent: 'space-between',
       })}
       style={{
-        height: `calc(${runningTime * 1.66}% - 6px)`,
+        height: `calc(${(runningTime / 60) * 100}% + ${runningTime / 60}px)`,
+        backgroundColor: bgColor,
       }}
     >
-      <div className={css({ color: 'darkGray.2', fontSize: 18, fontWeight: '500', wordWrap: 'break-word' })}>
+      <div
+        className={css({
+          fontSize: 18,
+          fontWeight: '500',
+          wordWrap: 'break-word',
+          overflow: 'hidden',
+          lineClamp: 2,
+          textOverflow: 'ellipsis',
+        })}
+      >
         {name}
       </div>
       <div className={css({ display: 'flex', flexDir: 'column', alignItems: 'flex-end' })}>
-        <div className={LectureDetail}>
-          <UserRound size={14} />
-          {professor}
-        </div>
-        <div className={LectureDetail}>
-          <MapPin size={14} />
-          {room}
-        </div>
+        {professor && (
+          <div className={LectureDetail}>
+            <CircleUser size={12} />
+            <span className={EllipsisText}>{professor}</span>
+          </div>
+        )}
+        {room && (
+          <div className={LectureDetail}>
+            <MapPin size={12} />
+            <span className={EllipsisText}>{room}</span>
+          </div>
+        )}
       </div>
     </div>
   )

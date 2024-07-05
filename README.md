@@ -1,5 +1,5 @@
 # 🍪 KU-KEY-REACT
-고려대학교로 온 교환학생을 위한 서비스, KU-KEY의 웹페이지 레포지토리입니다
+고려대학교로 온 교환학생을 위한 서비스, KU-key의 웹페이지 레포지토리입니다
 
 ## React + TypeScript + Vite
 

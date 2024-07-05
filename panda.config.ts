@@ -1,7 +1,14 @@
 import { defineConfig } from '@pandacss/dev'
 
-import { buttonRecipe, chipRecipe, inputRecipe, labelRecipe, modalCardRecipe } from './src/lib/recipes/index'
-import { tokenToRem } from './src/util/tokenToRem'
+import {
+  buttonRecipe,
+  chipRecipe,
+  inputRecipe,
+  labelRecipe,
+  modalCardRecipe,
+  shadowRecipe,
+} from './src/lib/recipes/index'
+import { tokenToRem } from './src/lib/constants/tokenToRem'
 
 export default defineConfig({
   // Whether to use css reset
@@ -22,6 +29,7 @@ export default defineConfig({
         button: buttonRecipe,
         input: inputRecipe,
         modalCard: modalCardRecipe,
+        shadow: shadowRecipe,
       },
       tokens: {
         colors: {
