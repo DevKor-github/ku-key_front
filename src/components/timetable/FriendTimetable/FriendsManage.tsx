@@ -50,7 +50,11 @@ const FriendsManage = () => {
             fontSize: 18,
             border: '1px solid {colors.darkGray.2}',
             color: 'black.2',
+            _placeholder: {
+              color: 'lightGray.1',
+            },
           })}
+          placeholder="Friend ID"
           value={inputKeyword}
         />
       </form>
