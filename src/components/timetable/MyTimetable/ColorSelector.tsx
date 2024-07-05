@@ -8,15 +8,15 @@ import { ColorType } from '@/types/timetable'
 interface ColorSelectorProps {
   colorTheme: ColorType
   timeTableId: number
-  setGlobalModalState: React.Dispatch<React.SetStateAction<'color' | 'name' | 'delete' | null>>
+  closeModal: () => void
 }
 
-const ColorSelector = ({ colorTheme, setGlobalModalState, timeTableId }: ColorSelectorProps) => {
+const ColorSelector = ({ colorTheme, closeModal, timeTableId }: ColorSelectorProps) => {
   const { mutate } = useUpdateTableColor()
   return (
     <button
       onClick={() => {
-        setGlobalModalState(null)
+        closeModal()
         mutate({ tableColor: colorTheme, timeTableId })
       }}
       className={css({

@@ -4,6 +4,8 @@ export type SemesterType = 'Spring' | 'Summer' | 'Fall' | 'Winter'
 
 export type ColorType = 'Red' | 'Blue' | 'Green' | 'Purple' | 'Orange' | 'Gray'
 
+export type GlobalModalStateType = 'color' | 'name' | 'delete' | null
+
 export interface TimetableInfo {
   timeTableId: number
   semester: SemesterType

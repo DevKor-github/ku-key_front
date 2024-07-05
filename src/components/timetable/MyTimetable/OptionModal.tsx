@@ -4,6 +4,7 @@ import { CaseSensitive, Palette, Trash2 } from 'lucide-react'
 import { forwardRef } from 'react'
 
 import ModalCard from '@/components/ui/modal'
+import { GlobalModalStateType } from '@/types/timetable'
 
 const optBlock = css({
   w: '100%',
@@ -29,11 +30,11 @@ const optBlockInfo = css({
 })
 
 interface OptionModalProps {
-  setGlobalModalState: React.Dispatch<React.SetStateAction<'color' | 'name' | 'delete' | null>>
+  openTableModal: (value: GlobalModalStateType) => void
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const OptionModal = forwardRef<HTMLDivElement, OptionModalProps>(({ setGlobalModalState, setIsModalOpen }, ref) => {
+const OptionModal = forwardRef<HTMLDivElement, OptionModalProps>(({ openTableModal, setIsModalOpen }, ref) => {
   return (
     <div className={css({ position: 'absolute', top: 17, right: 0, zIndex: 50 })}>
       <ModalCard
@@ -55,7 +56,7 @@ const OptionModal = forwardRef<HTMLDivElement, OptionModalProps>(({ setGlobalMod
           className={optBlock}
           onClick={() => {
             setIsModalOpen(false)
-            setGlobalModalState('name')
+            openTableModal('name')
           }}
         >
           <div className={optBlockInfo}>
@@ -67,7 +68,7 @@ const OptionModal = forwardRef<HTMLDivElement, OptionModalProps>(({ setGlobalMod
           className={optBlock}
           onClick={() => {
             setIsModalOpen(false)
-            setGlobalModalState('color')
+            openTableModal('color')
           }}
         >
           <div className={optBlockInfo}>
@@ -79,7 +80,7 @@ const OptionModal = forwardRef<HTMLDivElement, OptionModalProps>(({ setGlobalMod
           className={optBlock}
           onClick={() => {
             setIsModalOpen(false)
-            setGlobalModalState('delete')
+            openTableModal('delete')
           }}
         >
           <div className={optBlockInfo}>

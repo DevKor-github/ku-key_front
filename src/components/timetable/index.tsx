@@ -1,13 +1,13 @@
 import { css, cva } from '@styled-stytem/css'
 import { Ellipsis, Plus } from 'lucide-react'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 import LectureModal from '@/components/timetable/MyTimetable/LectureModal'
 import OptionModal from '@/components/timetable/MyTimetable/OptionModal'
 import TimetableModal from '@/components/timetable/MyTimetable/TimetableModal'
 import TimetableLayout from '@/components/timetable/TimetableLayout'
-import { TimetableInfo } from '@/types/timetable'
+import { GlobalModalStateType, TimetableInfo } from '@/types/timetable'
 
 const optBtn = cva({
   base: {
@@ -35,9 +35,22 @@ const Timetable = ({
   deleteTimetableHandler,
 }: TimeTableProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [globalModalState, setGlobalModalState] = useState<null | 'name' | 'color' | 'delete'>(null)
+  const [globalModalState, setGlobalModalState] = useState<GlobalModalStateType>(null)
   const [isLectureModalOpen, setIsLectureModalOpen] = useState(false)
   const modalRef = useRef<HTMLDivElement>(null)
+
+  const openTableModal = useCallback(
+    (value: GlobalModalStateType) => {
+      if (value !== null) {
+        setGlobalModalState(value)
+      }
+    },
+    [setGlobalModalState],
+  )
+
+  const closeTableModal = useCallback(() => {
+    setGlobalModalState(null)
+  }, [setGlobalModalState])
 
   useEffect(() => {
     const closeModal = (e: MouseEvent) => {
@@ -70,9 +83,7 @@ const Timetable = ({
           position: 'relative',
         })}
       >
-        {isModalOpen && (
-          <OptionModal ref={modalRef} setGlobalModalState={setGlobalModalState} setIsModalOpen={setIsModalOpen} />
-        )}
+        {isModalOpen && <OptionModal ref={modalRef} openTableModal={openTableModal} setIsModalOpen={setIsModalOpen} />}
         <div className={css({ display: 'flex', flexDir: 'row', gap: 2.5, alignItems: 'center' })}>
           <div className={css({ color: 'darkGray.1', fontSize: 20, fontWeight: 700, whiteSpace: 'nowrap' })}>
             {`${year} ${semester} semester`}
@@ -102,7 +113,7 @@ const Timetable = ({
           </button>
         </div>
       </div>
-      <TimetableLayout timeTableId={timeTableId} />
+      <TimetableLayout timetableId={timeTableId} />
       {globalModalState &&
         createPortal(
           <div
@@ -122,14 +133,14 @@ const Timetable = ({
             onClick={event => {
               // 모달 안쪽을 눌렀을 때도 모달 state가 null 되는 것을 방지
               if (event.target === event.currentTarget) {
-                setGlobalModalState(null)
+                closeTableModal()
               }
             }}
           >
             <TimetableModal
-              timeTableId={timeTableId}
+              timetableId={timeTableId}
               modalType={globalModalState}
-              setGlobalModalState={setGlobalModalState}
+              closeModal={closeTableModal}
               deleteTimetableHandler={deleteTimetableHandler}
               tableName={tableName}
             />

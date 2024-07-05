@@ -7,6 +7,7 @@ import { useUpdateTableName } from '@/api/hooks/timetable'
 import ColorSelector from '@/components/timetable/MyTimetable/ColorSelector'
 import { Input } from '@/components/ui/input'
 import ModalCard from '@/components/ui/modal'
+import { GlobalModalStateType } from '@/types/timetable'
 import { ColorTypeArr } from '@/util/timetableUtil'
 
 const modalBtn = cva({
@@ -33,11 +34,11 @@ const modalBtn = cva({
 })
 
 const NameChangeModal = ({
-  setGlobalModalState,
+  closeModal,
   timeTableId,
   curTableName,
 }: {
-  setGlobalModalState: React.Dispatch<React.SetStateAction<'color' | 'name' | 'delete' | null>>
+  closeModal: () => void
   timeTableId: number
   curTableName: string
 }) => {
@@ -52,7 +53,7 @@ const NameChangeModal = ({
       <form
         onSubmit={e => {
           e.preventDefault()
-          setGlobalModalState(null)
+          closeModal()
           changeTableName({ tableName: nameInput, timeTableId })
         }}
       >
@@ -79,13 +80,7 @@ const NameChangeModal = ({
   )
 }
 
-const ColorChangeModal = ({
-  setGlobalModalState,
-  timeTableId,
-}: {
-  setGlobalModalState: React.Dispatch<React.SetStateAction<'color' | 'name' | 'delete' | null>>
-  timeTableId: number
-}) => {
+const ColorChangeModal = ({ closeModal, timetableId }: { closeModal: () => void; timetableId: number }) => {
   return (
     <>
       <div className={css({ display: 'flex', flexDir: 'column', alignItems: 'center', gap: 2.5 })}>
@@ -94,14 +89,7 @@ const ColorChangeModal = ({
       </div>
       <div className={css({ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', columnGap: 2.5, rowGap: 5 })}>
         {ColorTypeArr.map((color, ind) => {
-          return (
-            <ColorSelector
-              key={ind}
-              colorTheme={color}
-              setGlobalModalState={setGlobalModalState}
-              timeTableId={timeTableId}
-            />
-          )
+          return <ColorSelector key={ind} colorTheme={color} closeModal={closeModal} timeTableId={timetableId} />
         })}
       </div>
     </>
@@ -109,13 +97,13 @@ const ColorChangeModal = ({
 }
 
 const DeleteModal = ({
-  setGlobalModalState,
+  closeModal,
   deleteTimetableHandler,
-  timeTableId,
+  timetableId,
 }: {
-  setGlobalModalState: React.Dispatch<React.SetStateAction<'color' | 'name' | 'delete' | null>>
+  closeModal: () => void
   deleteTimetableHandler: (timeTableId: number) => void
-  timeTableId: number
+  timetableId: number
 }) => {
   return (
     <>
@@ -127,14 +115,14 @@ const DeleteModal = ({
         Once a timetable has been deleted, it cannot be restored.
       </div>
       <div className={css({ display: 'flex', gap: 5 })}>
-        <button className={modalBtn({ warning: false })} onClick={() => setGlobalModalState(null)}>
+        <button className={modalBtn({ warning: false })} onClick={closeModal}>
           No, Keep it
         </button>
         <button
           className={modalBtn({ warning: true })}
           onClick={() => {
-            setGlobalModalState(null)
-            deleteTimetableHandler(timeTableId)
+            closeModal()
+            deleteTimetableHandler(timetableId)
           }}
         >
           Yes, Delete!
@@ -145,18 +133,18 @@ const DeleteModal = ({
 }
 
 interface TimetableModalProps {
-  modalType: 'name' | 'color' | 'delete'
-  setGlobalModalState: React.Dispatch<React.SetStateAction<'color' | 'name' | 'delete' | null>>
+  modalType: Omit<GlobalModalStateType, 'null'>
+  closeModal: () => void
   deleteTimetableHandler: (timeTableId: number) => void
-  timeTableId: number
+  timetableId: number
   tableName: string
 }
 
 const TimetableModal = ({
   modalType,
-  setGlobalModalState,
+  closeModal,
   deleteTimetableHandler,
-  timeTableId,
+  timetableId,
   tableName,
 }: TimetableModalProps) => {
   return (
@@ -177,16 +165,14 @@ const TimetableModal = ({
       )}
     >
       {modalType === 'name' && (
-        <NameChangeModal setGlobalModalState={setGlobalModalState} timeTableId={timeTableId} curTableName={tableName} />
+        <NameChangeModal closeModal={closeModal} timeTableId={timetableId} curTableName={tableName} />
       )}
-      {modalType === 'color' && (
-        <ColorChangeModal setGlobalModalState={setGlobalModalState} timeTableId={timeTableId} />
-      )}
+      {modalType === 'color' && <ColorChangeModal closeModal={closeModal} timetableId={timetableId} />}
       {modalType === 'delete' && (
         <DeleteModal
-          setGlobalModalState={setGlobalModalState}
+          closeModal={closeModal}
           deleteTimetableHandler={deleteTimetableHandler}
-          timeTableId={timeTableId}
+          timetableId={timetableId}
         />
       )}
     </ModalCard>
