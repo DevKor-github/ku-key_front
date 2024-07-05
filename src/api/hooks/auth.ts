@@ -6,7 +6,7 @@ import useSignOut from 'react-auth-kit/hooks/useSignOut'
 import { LoginRequest, LoginResponse } from '@/api/types/auth'
 
 const logIn = async ({ email, password }: LoginRequest) => {
-  const response = await axios.post<LoginResponse>(`http://${import.meta.env.VITE_API_SERVER}/auth/login`, {
+  const response = await axios.post<LoginResponse>(`${import.meta.env.VITE_API_SERVER}/auth/login`, {
     email,
     password,
     keepingLogin: true,
@@ -29,7 +29,7 @@ export const useLogIn = () => {
 }
 
 const logOut = async () => {
-  const response = await axios.post<null>(`http://${import.meta.env.VITE_API_SERVER}/auth/logout`)
+  const response = await axios.post<null>(`${import.meta.env.VITE_API_SERVER}/auth/logout`)
   return response.data
 }
 

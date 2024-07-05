@@ -15,7 +15,7 @@ import {
 
 const getTimetableByUser = async (authHeader: string | null) => {
   const response = await axios.get<GetTimeTableByUserIdResponse>(
-    `http://${import.meta.env.VITE_API_SERVER}/timetable/user`,
+    `${import.meta.env.VITE_API_SERVER}/timetable/user`,
     {
       headers: { Authorization: authHeader },
     },
@@ -37,7 +37,7 @@ export const useGetUserTimetableList = () => {
 
 const getTimetableByID = async ({ authHeader, timetableId }: GetTimeTableByTimeTableIdRequest) => {
   const response = await axios.get<GetTimeTableByTimeTableIdResponse>(
-    `http://${import.meta.env.VITE_API_SERVER}/timetable/${timetableId}`,
+    `${import.meta.env.VITE_API_SERVER}/timetable/${timetableId}`,
     {
       headers: { Authorization: authHeader },
     },
@@ -63,7 +63,7 @@ export const useGetTimetable = ({ timetableId }: Pick<GetTimeTableByTimeTableIdR
 
 const postTimetable = async ({ authHeader, tableName, semester, year }: CreateTimeTableRequest) => {
   const response = await axios.post(
-    `http://${import.meta.env.VITE_API_SERVER}/timetable`,
+    `${import.meta.env.VITE_API_SERVER}/timetable`,
     { tableName, semester, year },
     { headers: { Authorization: authHeader } },
   )
@@ -85,7 +85,7 @@ export const usePostTimetable = () => {
 }
 
 const deleteTimetable = async ({ authHeader, timetableId }: DeleteTimeTableRequest) => {
-  const response = await axios.delete(`http://${import.meta.env.VITE_API_SERVER}/timetable/${timetableId}`, {
+  const response = await axios.delete(`${import.meta.env.VITE_API_SERVER}/timetable/${timetableId}`, {
     headers: { Authorization: authHeader },
   })
   return response
@@ -108,7 +108,7 @@ export const useDeleteTimetable = () => {
 
 const patchTableName = async ({ authHeader, timeTableId, tableName }: UpdateTimeTableNameRequest) => {
   const response = await axios.patch(
-    `http://${import.meta.env.VITE_API_SERVER}/timetable/name/${timeTableId}`,
+    `${import.meta.env.VITE_API_SERVER}/timetable/name/${timeTableId}`,
     { tableName },
     {
       headers: { Authorization: authHeader },
@@ -133,7 +133,7 @@ export const useUpdateTableName = () => {
 
 const patchMainTable = async ({ authHeader, semester, year, timeTableId }: UpdateMainTimeTableRequest) => {
   const response = await axios.patch(
-    `http://${import.meta.env.VITE_API_SERVER}/timetable/${timeTableId}`,
+    `${import.meta.env.VITE_API_SERVER}/timetable/${timeTableId}`,
     { semester, year },
     {
       headers: { Authorization: authHeader },
@@ -160,7 +160,7 @@ export const useUpdateMainTable = () => {
 
 const patchColor = async ({ authHeader, tableColor, timeTableId }: UpdateTableColorRequest) => {
   const response = await axios.patch(
-    `http://${import.meta.env.VITE_API_SERVER}/timetable/color/${timeTableId}`,
+    `${import.meta.env.VITE_API_SERVER}/timetable/color/${timeTableId}`,
     { tableColor },
     { headers: { Authorization: authHeader } },
   )

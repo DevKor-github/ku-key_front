@@ -5,7 +5,8 @@ import { LoginResponse } from '@/api/types/auth'
 
 const getNewToken = async (refreshToken: string) => {
   const response = await axios.post<Pick<LoginResponse['token'], 'accessToken'>>(
-    `http://${import.meta.env.VITE_API_SERVER}/auth/refresh`,
+    `${import.meta.env.VITE_API_SERVER}/auth/refresh`,
+    {},
     {
       headers: { Authorization: `Bearer ${refreshToken}` },
     },
@@ -14,7 +15,7 @@ const getNewToken = async (refreshToken: string) => {
 }
 
 export const refresh = createRefresh({
-  interval: 60 * 30, // The time in sec to refresh the Access token,
+  interval: 4, // The time in min to refresh the Access token,
   refreshApiCallback: async param => {
     try {
       const accessToken = await getNewToken(param.refreshToken!)
@@ -22,7 +23,7 @@ export const refresh = createRefresh({
       return {
         isSuccess: true,
         newAuthToken: accessToken,
-        newRefreshTokenExpiresIn: 60 * 60 * 24 * 14, // The time in sec to refresh the Refresh token
+        newRefreshTokenExpiresIn: 60 * 24 * 14, // The time in min to refresh the Refresh token
       }
     } catch (error) {
       console.error(error)
