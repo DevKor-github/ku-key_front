@@ -8,8 +8,8 @@ import { Semester } from '@/types/timetable'
 interface TimetableDropdownProps {
   semesterList: Semester[]
   curSemester: number
-  setCurSemester: React.Dispatch<React.SetStateAction<number>>
-  setCurIndex: React.Dispatch<React.SetStateAction<number>>
+  setCurSemester: (toIndex: number) => void
+  setCurIndexZero: () => void
 }
 
 const DropdownItemsStyle = cva({
@@ -43,7 +43,7 @@ const DropdownItemsStyle = cva({
   },
 })
 
-const TimetableDropdown = ({ semesterList, curSemester, setCurSemester, setCurIndex }: TimetableDropdownProps) => {
+const TimetableDropdown = ({ semesterList, curSemester, setCurSemester, setCurIndexZero }: TimetableDropdownProps) => {
   return (
     <DropdownMenu.Root modal={false}>
       {/* todo :: open시에 다시 닫는 ^ 기능 만들기 */}
@@ -96,7 +96,7 @@ const TimetableDropdown = ({ semesterList, curSemester, setCurSemester, setCurIn
                 className={DropdownItemsStyle({ active: index == curSemester })}
                 onClick={() => {
                   setCurSemester(index)
-                  setCurIndex(0)
+                  setCurIndexZero()
                 }}
               >{`${semester.year} ${semester.semester} semester`}</DropdownMenu.Item>
             )

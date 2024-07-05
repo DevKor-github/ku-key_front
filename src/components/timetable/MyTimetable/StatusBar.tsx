@@ -47,10 +47,10 @@ const MainPinBtnStyle = cva({
 interface MainPinBtnProps {
   hasTable: boolean
   curTimetable: TimetableInfo
-  setCurIndex: React.Dispatch<React.SetStateAction<number>>
+  setCurIndexZero: () => void
 }
 
-const MainPinBtn = ({ hasTable, curTimetable, setCurIndex }: MainPinBtnProps) => {
+const MainPinBtn = ({ hasTable, curTimetable, setCurIndexZero }: MainPinBtnProps) => {
   const { mutate: updateMainTable } = useUpdateMainTable()
   return (
     <button
@@ -58,7 +58,7 @@ const MainPinBtn = ({ hasTable, curTimetable, setCurIndex }: MainPinBtnProps) =>
       onClick={() => {
         if (hasTable) {
           if (!curTimetable.mainTimeTable) {
-            setCurIndex(0)
+            setCurIndexZero()
             updateMainTable({
               semester: curTimetable.semester,
               year: curTimetable.year,
@@ -77,7 +77,7 @@ const MainPinBtn = ({ hasTable, curTimetable, setCurIndex }: MainPinBtnProps) =>
 interface StatusBarProps {
   curSemester: Semester
   curIndex: number
-  setCurIndex: React.Dispatch<React.SetStateAction<number>>
+  setCurIndex: (toIndex: number) => void
 }
 
 const StatusBar = ({ curSemester, curIndex, setCurIndex }: StatusBarProps) => {
@@ -154,7 +154,7 @@ const StatusBar = ({ curSemester, curIndex, setCurIndex }: StatusBarProps) => {
       <MainPinBtn
         hasTable={curSemesterTimetableLen !== 0}
         curTimetable={curSemester.timetables[curIndex]}
-        setCurIndex={setCurIndex}
+        setCurIndexZero={() => setCurIndex(0)}
       />
     </div>
   )

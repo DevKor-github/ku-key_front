@@ -31,10 +31,10 @@ const optBlockInfo = css({
 
 interface OptionModalProps {
   openTableModal: (value: GlobalModalStateType) => void
-  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+  closeOptModal: () => void
 }
 
-const OptionModal = forwardRef<HTMLDivElement, OptionModalProps>(({ openTableModal, setIsModalOpen }, ref) => {
+const OptionModal = forwardRef<HTMLDivElement, OptionModalProps>(({ openTableModal, closeOptModal }, ref) => {
   return (
     <div className={css({ position: 'absolute', top: 17, right: 0, zIndex: 50 })}>
       <ModalCard
@@ -55,7 +55,7 @@ const OptionModal = forwardRef<HTMLDivElement, OptionModalProps>(({ openTableMod
         <button
           className={optBlock}
           onClick={() => {
-            setIsModalOpen(false)
+            closeOptModal()
             openTableModal('name')
           }}
         >
@@ -67,7 +67,7 @@ const OptionModal = forwardRef<HTMLDivElement, OptionModalProps>(({ openTableMod
         <button
           className={optBlock}
           onClick={() => {
-            setIsModalOpen(false)
+            closeOptModal()
             openTableModal('color')
           }}
         >
@@ -79,7 +79,7 @@ const OptionModal = forwardRef<HTMLDivElement, OptionModalProps>(({ openTableMod
         <button
           className={optBlock}
           onClick={() => {
-            setIsModalOpen(false)
+            closeOptModal()
             openTableModal('delete')
           }}
         >

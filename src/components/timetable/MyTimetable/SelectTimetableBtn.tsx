@@ -31,7 +31,7 @@ interface SelectTimetableBtnProps {
   timetableInfo: TimetableInfo
   timetableInd: number
   curIndex: number
-  setCurIndex: React.Dispatch<React.SetStateAction<number>>
+  setCurIndex: (toIndex: number) => void
 }
 
 const SelectTimetableBtn = ({

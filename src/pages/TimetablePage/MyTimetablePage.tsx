@@ -1,6 +1,6 @@
 import { css } from '@styled-stytem/css'
 import { Download } from 'lucide-react'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 import { useDeleteTimetable, useGetUserTimetableList } from '@/api/hooks/timetable'
 import TimeTable from '@/components/timetable'
@@ -19,6 +19,19 @@ const MyTimetablePage = () => {
 
   const semesterList = timetablePreprocess(timetableList)
 
+  const setSemesterIndex = useCallback(
+    (toIndex: number) => {
+      setCurSemester(toIndex)
+    },
+    [setCurSemester],
+  )
+  const setTableIndex = useCallback(
+    (toIndex: number) => {
+      setCurIndex(toIndex)
+    },
+    [setCurIndex],
+  )
+
   const deleteTimetableHandler = (timetableId: number) => {
     if (curIndex !== 0) {
       setCurIndex(prev => prev - 1)
@@ -36,8 +49,8 @@ const MyTimetablePage = () => {
           <TimetableDropdown
             semesterList={semesterList}
             curSemester={curSemester}
-            setCurSemester={setCurSemester}
-            setCurIndex={setCurIndex}
+            setCurSemester={setSemesterIndex}
+            setCurIndexZero={() => setTableIndex(0)}
           />
         </div>
         <div className={css({ display: 'flex', flexDir: 'row', gap: 2.5 })}>
@@ -47,7 +60,7 @@ const MyTimetablePage = () => {
           </ShareBtn>
         </div>
       </div>
-      <StatusBar curSemester={semesterList[curSemester]} curIndex={curIndex} setCurIndex={setCurIndex} />
+      <StatusBar curSemester={semesterList[curSemester]} curIndex={curIndex} setCurIndex={setTableIndex} />
       {semesterList[curSemester].timetables.length === 0 ? (
         <NullTable />
       ) : (
