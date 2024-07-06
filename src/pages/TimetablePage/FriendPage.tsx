@@ -1,7 +1,7 @@
 import { css } from '@styled-stytem/css'
 
-import FriendsList from '@/components/timetable/FriendTimetable/FriendsList'
-import FriendsManage from '@/components/timetable/FriendTimetable/FriendsManage'
+import FriendsList from '@/components/timetable/Friend/FriendsList'
+import FriendsManage from '@/components/timetable/Friend/FriendsManage'
 
 const FriendPage = () => {
   return (

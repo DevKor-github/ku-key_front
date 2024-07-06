@@ -3,7 +3,7 @@ import { AxiosError } from 'axios'
 import { memo } from 'react'
 
 import { GetSearchUserResponse } from '@/api/types/friends'
-import FriendCard from '@/components/timetable/FriendTimetable/FriendCard'
+import FriendCard from '@/components/timetable/Friend/FriendCard'
 
 interface SearchResultProps {
   data: GetSearchUserResponse | undefined

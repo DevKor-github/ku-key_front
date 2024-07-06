@@ -3,8 +3,8 @@ import { shadow } from '@styled-stytem/recipes'
 import { useState } from 'react'
 
 import { useGetSearchUser } from '@/api/hooks/friends'
-import FriendRequest from '@/components/timetable/FriendTimetable/FriendRequest'
-import SearchResult from '@/components/timetable/FriendTimetable/SearchResult'
+import FriendRequest from '@/components/timetable/Friend/FriendRequest'
+import SearchResult from '@/components/timetable/Friend/SearchResult'
 import { Input } from '@/components/ui/input'
 
 const FriendsManage = () => {

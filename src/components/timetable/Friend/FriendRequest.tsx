@@ -1,7 +1,7 @@
 import { css } from '@styled-stytem/css'
 
 import { useGetReceivedList } from '@/api/hooks/friends'
-import FriendCard from '@/components/timetable/FriendTimetable/FriendCard'
+import FriendCard from '@/components/timetable/Friend/FriendCard'
 
 const FriendRequest = () => {
   const { data: requestData } = useGetReceivedList()
