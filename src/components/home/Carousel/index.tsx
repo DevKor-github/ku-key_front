@@ -5,7 +5,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 
 import PlayIcon from '@/assets/play.svg'
-import CarouselCard from '@/components/home/CarouselCard'
+import CarouselCard from '@/components/home/Carousel/CarouselCard'
 import { usePrevNextButtons } from '@/util/carousel-button'
 
 const HomeCarousel = () => {
