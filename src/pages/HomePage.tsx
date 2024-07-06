@@ -1,9 +1,13 @@
-import HomeCarousel from '@/components/home/HomeCarousel'
+import { css } from '@styled-stytem/css'
+
+import Announcement from '@/components/home/Announcement'
+import HomeCarousel from '@/components/home/Carousel'
 
 const HomePage = () => {
   return (
-    <div>
+    <div className={css({ display: 'flex', flexDir: 'column' })}>
       <HomeCarousel />
+      <Announcement />
     </div>
   )
 }
