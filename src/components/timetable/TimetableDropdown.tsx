@@ -9,7 +9,7 @@ interface TimetableDropdownProps {
   semesterList: Semester[]
   curSemester: number
   setCurSemester: (toIndex: number) => void
-  setCurIndexZero: () => void
+  setCurIndexZero?: () => void
 }
 
 const DropdownItemsStyle = cva({
@@ -96,7 +96,7 @@ const TimetableDropdown = ({ semesterList, curSemester, setCurSemester, setCurIn
                 className={DropdownItemsStyle({ active: index == curSemester })}
                 onClick={() => {
                   setCurSemester(index)
-                  setCurIndexZero()
+                  setCurIndexZero && setCurIndexZero()
                 }}
               >{`${semester.year} ${semester.semester} semester`}</DropdownMenu.Item>
             )

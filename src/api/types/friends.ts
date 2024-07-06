@@ -34,3 +34,10 @@ export interface PatchFriendshipRequestRequest {
   authHeader: string | null
   friendshipId: number
 }
+
+export interface GetFriendTimtableRequest {
+  authHeader: string | null
+  friendId: string
+  year: string
+  semester: string
+}
