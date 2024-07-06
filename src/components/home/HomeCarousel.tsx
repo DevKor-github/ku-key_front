@@ -6,6 +6,7 @@ import { useCallback, useEffect, useState } from 'react'
 
 import PlayIcon from '@/assets/play.svg'
 import CarouselCard from '@/components/home/CarouselCard'
+import { usePrevNextButtons } from '@/util/carousel-button'
 
 const HomeCarousel = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: 'center' }, [Autoplay()])
@@ -19,13 +20,7 @@ const HomeCarousel = () => {
     }
   }, [])
 
-  const toggleAutoplay = useCallback(() => {
-    const autoplay = emblaApi?.plugins()?.autoplay
-    if (!autoplay) return
-
-    const playOrStop = autoplay.isPlaying() ? autoplay.stop : autoplay.play
-    playOrStop()
-  }, [emblaApi])
+  const { onPrevButtonClick, onNextButtonClick, onToggleAutoplay, onButtonAutoplayClick } = usePrevNextButtons(emblaApi)
 
   useEffect(() => {
     if (emblaApi) emblaApi.on('select', logSlidesInView)
@@ -40,7 +35,8 @@ const HomeCarousel = () => {
         bgColor: 'bg.gray',
         w: 'full',
         maxW: 'auto',
-        mt: '50px',
+        pt: '50px',
+        pb: 25,
       })}
     >
       <div ref={emblaRef} className={css({ overflow: 'hidden' })}>
@@ -79,7 +75,7 @@ const HomeCarousel = () => {
           px: '61px',
         })}
       >
-        <div
+        <button
           className={css({
             display: 'flex',
             alignItems: 'center',
@@ -94,10 +90,11 @@ const HomeCarousel = () => {
             opacity: 0.7,
             cursor: 'pointer',
           })}
+          onClick={() => onButtonAutoplayClick(onPrevButtonClick)}
         >
           <ChevronLeft className={css({ w: 6, h: 6 })} />
-        </div>
-        <div
+        </button>
+        <button
           className={css({
             display: 'flex',
             alignItems: 'center',
@@ -112,9 +109,10 @@ const HomeCarousel = () => {
             opacity: 0.7,
             cursor: 'pointer',
           })}
+          onClick={() => onButtonAutoplayClick(onNextButtonClick)}
         >
           <ChevronRight className={css({ w: 6, h: 6 })} />
-        </div>
+        </button>
       </div>
       <div
         className={css({
@@ -143,7 +141,7 @@ const HomeCarousel = () => {
             bgColor: 'rgba(0,0,0,0.20)',
             cursor: 'pointer',
           })}
-          onClick={toggleAutoplay}
+          onClick={onToggleAutoplay}
         >
           <img src={PlayIcon} alt="play icon" />
           <div
