@@ -5,7 +5,7 @@ import SchoolInstitutionSection from '@/components/home/Announcement/SchoolInsti
 
 const AnnouncementBoard = () => {
   return (
-    <div
+    <section
       className={css({
         display: 'flex',
         flexDir: 'row',
@@ -17,7 +17,7 @@ const AnnouncementBoard = () => {
     >
       <SchoolInstitutionSection />
       <CalendarSection />
-    </div>
+    </section>
   )
 }
 
