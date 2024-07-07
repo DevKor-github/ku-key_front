@@ -18,6 +18,7 @@ import {
   textStyles,
 } from './src/lib/recipes/index'
 import { tokenToRem } from './src/lib/constants/tokenToRem'
+  clubTagRecipe,
 
 export default defineConfig({
   // Whether to use css reset
