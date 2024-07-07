@@ -9,6 +9,7 @@ import {
   shadowRecipe,
 } from './src/lib/recipes/index'
 import { tokenToRem } from './src/lib/constants/tokenToRem'
+  clubTagRecipe,
 
 export default defineConfig({
   // Whether to use css reset
@@ -29,6 +30,7 @@ export default defineConfig({
         button: buttonRecipe,
         input: inputRecipe,
         modalCard: modalCardRecipe,
+        clubTag: clubTagRecipe,
         shadow: shadowRecipe,
       },
       tokens: {

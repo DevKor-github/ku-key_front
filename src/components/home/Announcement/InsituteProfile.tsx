@@ -12,6 +12,7 @@ const profile = cva({
     alignItems: 'center',
     animation: 'ease-out',
     transition: 'all 0.3s ease-out',
+    cursor: 'pointer',
   },
   variants: {
     variant: { defalut: { gap: 0.5, py: 0 }, onMouse: { gap: 0, py: 0.5 } },
