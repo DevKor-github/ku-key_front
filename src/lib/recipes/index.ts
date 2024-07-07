@@ -1,7 +1,7 @@
 import { buttonRecipe } from '@/lib/recipes/button'
 import { carouselButtonRecipe } from '@/lib/recipes/carousel-button'
 import { chipRecipe } from '@/lib/recipes/chip'
-import { globalLayoutRecipe } from '@/lib/recipes/globalLayout'
+import { clubTagRecipe } from '@/lib/recipes/club-tag'
 import { inputRecipe } from '@/lib/recipes/input'
 import { labelRecipe } from '@/lib/recipes/label'
 import { menubar } from '@/lib/recipes/menubar'
@@ -27,4 +27,5 @@ export {
   textStyles,
   postCardRecipe,
   menubar,
+clubTagRecipe
 }
