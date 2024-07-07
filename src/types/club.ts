@@ -2,6 +2,6 @@ export interface ClubProfileProps {
   img: string
   name: string
   description: string
-  clubTag: string
+  clubDivision: string
   rank: number
 }
