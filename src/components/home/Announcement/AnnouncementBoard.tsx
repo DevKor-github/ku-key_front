@@ -1,7 +1,7 @@
 import { css } from '@styled-stytem/css'
 
 import CalendarSection from '@/components/home/Announcement/CalendarSection'
-import SchoolInstitutionSection from '@/components/home/Announcement/SchoolInstitution'
+import SchoolInstitutionSection from '@/components/home/Announcement/SchoolInstitutionSection'
 
 const AnnouncementBoard = () => {
   return (
