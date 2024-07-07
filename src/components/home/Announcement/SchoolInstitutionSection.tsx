@@ -35,13 +35,13 @@ const SchoolInstitutionSection = () => {
       <h3 className={InsitutionTitle}>Broadcast</h3>
       <div className={ProfileContainer}>
         {BROADCASTS.map(broadcast => (
-          <InsituteProfile name={broadcast.name} img={broadcast.img} url={broadcast.url} />
+          <InsituteProfile key={broadcast.name} name={broadcast.name} img={broadcast.img} url={broadcast.url} />
         ))}
       </div>
       <h3 className={InsitutionTitle}>ETC</h3>
       <div className={cx(ProfileContainer, css({ maxH: 118 }))}>
         {ETC.map(etc => (
-          <InsituteProfile name={etc.name} img={etc.img} url={etc.url} />
+          <InsituteProfile key={etc.name} name={etc.name} img={etc.img} url={etc.url} />
         ))}
       </div>
     </section>
