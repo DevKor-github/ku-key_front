@@ -20,34 +20,28 @@ const FriendBlock = css.raw({
     whiteSpace: 'nowrap',
   },
 })
+export const FriendPageBtnStyle = css({
+  w: 47,
+  bgColor: 'bg.gray',
+  py: 3.5,
+  rounded: 10,
+  border: '1px {colors.lightGray.1} solid',
+  color: 'lightGray.1',
+  fontSize: 18,
+  fontWeight: 500,
+  cursor: 'pointer',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  transition: 'border 0.256s, color 0.256s',
+  _hover: {
+    borderColor: 'darkGray.2',
+    color: 'darkGray.2',
+  },
+})
 
 export const FriendPageBtn = () => {
-  return (
-    <Link
-      className={css({
-        w: 47,
-        bgColor: 'bg.gray',
-        py: 3.5,
-        rounded: 10,
-        border: '1px {colors.lightGray.1} solid',
-        color: 'lightGray.1',
-        fontSize: 18,
-        fontWeight: 500,
-        cursor: 'pointer',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        transition: 'border 0.256s, color 0.256s',
-        _hover: {
-          borderColor: 'darkGray.2',
-          color: 'darkGray.2',
-        },
-      })}
-      to={'/timetable/friend'}
-    >
-      Add friends
-    </Link>
-  )
+  return <button className={FriendPageBtnStyle}>Edit friend list</button>
 }
 
 const FriendsList = () => {

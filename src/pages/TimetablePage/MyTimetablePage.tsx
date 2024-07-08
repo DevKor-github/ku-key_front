@@ -54,7 +54,6 @@ const MyTimetablePage = () => {
           />
         </div>
         <div className={css({ display: 'flex', flexDir: 'row', gap: 2.5 })}>
-          <ShareBtn>Link</ShareBtn>
           <ShareBtn icon={true}>
             <Download />
           </ShareBtn>
