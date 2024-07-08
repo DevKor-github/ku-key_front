@@ -39,7 +39,7 @@ const FriendTimetablePage = () => {
         </div>
       </div>
       <div className={css({ display: 'flex', flexDir: 'column', gap: 5 })}>
-        <Link className={FriendPageBtnStyle} to="/timetable/friend">
+        <Link className={FriendPageBtnStyle()} to="/timetable/friend">
           All Friend
         </Link>
         <FriendTimetable
