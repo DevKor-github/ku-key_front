@@ -119,7 +119,9 @@ export const useReceiveFriendship = () => {
     mutationFn: ({ friendshipId }: Pick<PatchFriendshipRequestRequest, 'friendshipId'>) =>
       patchFriendshipRequest({ authHeader, friendshipId }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['friendsRequest', 'friendList'] })
+      queryClient.invalidateQueries({ queryKey: ['friendsRequest'] })
+      queryClient.invalidateQueries({ queryKey: ['friendList'] })
+      queryClient.invalidateQueries({ queryKey: ['searchResult'] })
     },
   })
 }
@@ -142,6 +144,30 @@ export const useDeleteFriendshipRequest = () => {
       deleteFriendshipRequest({ authHeader, friendshipId }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['friendsRequest'] })
+      queryClient.invalidateQueries({ queryKey: ['searchResult'] })
+    },
+  })
+}
+
+const deleteFriendship = async ({ authHeader, friendshipId }: PatchFriendshipRequestRequest) => {
+  const response = await axios.delete(`${import.meta.env.VITE_API_SERVER}/friendship/${friendshipId}`, {
+    headers: { Authorization: authHeader },
+  })
+  return response.data
+}
+
+/**
+ * 이미 친구로 등록된 유저에 대해, friendshipId를 받아 해당 friendship 레코드를 삭제합니다.
+ */
+export const useDeleteFriendship = () => {
+  const authHeader = useAuthHeader()
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({ friendshipId }: Pick<PatchFriendshipRequestRequest, 'friendshipId'>) =>
+      deleteFriendship({ authHeader, friendshipId }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['friendList'] })
+      queryClient.invalidateQueries({ queryKey: ['searchResult'] })
     },
   })
 }
