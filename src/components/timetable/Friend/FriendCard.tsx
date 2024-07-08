@@ -2,22 +2,35 @@ import { css, cva } from '@styled-stytem/css'
 import { CircleX, Dot } from 'lucide-react'
 
 import { useAddFriendship, useDeleteFriendshipRequest, useReceiveFriendship } from '@/api/hooks/friends'
+import { friendStatusType } from '@/types/friends'
 
 const buttonStyle = cva({
   base: {
-    bgColor: 'darkGray.1',
     fontWeight: 700,
     fontSize: 12,
     color: 'white',
     px: 2.5,
     py: 1,
     rounded: 'full',
-    cursor: 'pointer',
   },
   variants: {
-    isRecievedRequest: {
+    active: {
       true: {
+        cursor: 'pointer',
+      },
+      false: {
+        cursor: 'auto',
+      },
+    },
+    color: {
+      red1: {
         bgColor: 'red.2',
+      },
+      red2: {
+        bgColor: 'red.3',
+      },
+      gray: {
+        bgColor: 'darkGray.1',
       },
     },
   },
@@ -31,12 +44,70 @@ interface FriendCardProp {
     language: string
     friendshipId?: number
     userId?: number
+    status?: friendStatusType
   }
 }
 
-const FriendCard = ({ data }: FriendCardProp) => {
+const FriendCardBtn = ({ data }: FriendCardProp) => {
   const { mutate: addFriend } = useAddFriendship()
   const { mutate: receiveFriendship } = useReceiveFriendship()
+
+  let isActive = false
+  let color: 'gray' | 'red1' | 'red2' | undefined = 'gray'
+  let btnText = ''
+
+  switch (data.status) {
+    case undefined:
+      btnText = 'Friend accept'
+      color = 'red1'
+      isActive = true
+      break
+    case 'friend':
+      btnText = 'friend'
+      break
+    case 'me':
+      btnText = "It's me"
+      break
+    case 'pending':
+      btnText = 'pending'
+      break
+    case 'requested':
+      btnText = 'requested'
+      color = 'red2'
+      isActive = true
+      break
+    case 'unknown':
+      btnText = 'Add friend'
+      color = 'red2'
+      isActive = true
+      break
+  }
+
+  return (
+    <button
+      className={buttonStyle({ active: isActive, color })}
+      onClick={() => {
+        switch (data.status) {
+          case undefined:
+            // 받은 요청임
+            receiveFriendship({ friendshipId: data.friendshipId! })
+            break
+          case 'unknown':
+            addFriend({ toUsername: data.username })
+            break
+          case 'requested':
+            // todo: 요청 취소 로직
+            alert('요청 취소')
+            break
+        }
+      }}
+    >
+      {btnText}
+    </button>
+  )
+}
+
+const FriendCard = ({ data }: FriendCardProp) => {
   const { mutate: deleteFriendship } = useDeleteFriendshipRequest()
   const isRecievedRequest = data.friendshipId !== undefined
 
@@ -91,18 +162,7 @@ const FriendCard = ({ data }: FriendCardProp) => {
           </div>
         </div>
       </div>
-      <button
-        className={buttonStyle({ isRecievedRequest })}
-        onClick={() => {
-          if (isRecievedRequest) {
-            receiveFriendship({ friendshipId: data.friendshipId! })
-          } else {
-            addFriend({ toUsername: data.username })
-          }
-        }}
-      >
-        {isRecievedRequest ? 'Friend accept' : 'Add friend'}
-      </button>
+      <FriendCardBtn data={data} />
     </div>
   )
 }

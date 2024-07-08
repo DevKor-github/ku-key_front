@@ -70,11 +70,13 @@ const postFriendship = async ({ authHeader, toUsername }: PostFriendshipRequest)
  */
 export const useAddFriendship = () => {
   const authHeader = useAuthHeader()
+
+  const queryClient = useQueryClient()
   return useMutation({
     mutationFn: ({ toUsername }: Pick<PostFriendshipRequest, 'toUsername'>) =>
       postFriendship({ authHeader, toUsername }),
     onSuccess: () => {
-      console.log('친구 요청 보내기 성공')
+      queryClient.invalidateQueries({ queryKey: ['searchResult'] })
     },
   })
 }

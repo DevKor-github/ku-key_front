@@ -1,4 +1,4 @@
-import { FriendInterface, FriendRequestInterface } from '@/types/friends'
+import { FriendInterface, FriendRequestInterface, friendStatusType } from '@/types/friends'
 
 export interface GetFriendListRequest {
   authHeader: string | null
@@ -13,10 +13,11 @@ export interface GetSearchUserRequest {
 }
 
 export interface GetSearchUserResponse {
-  language: string
-  major: string
   name: string
   username: string
+  major: string
+  language: string
+  status: friendStatusType
 }
 
 export interface PostFriendshipRequest {
