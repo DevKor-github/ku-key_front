@@ -62,7 +62,8 @@ const TimetableLayout = memo(({ timetableId }: TimetableLayoutProps) => {
         display: 'flex',
         flexDir: 'row',
         borderLeft: '1px solid {colors.lightGray.1}',
-        borderBottomLeftRadius: 10,
+        roundedBottom: 10,
+        bgColor: 'white',
       })}
     >
       <div className={css({ display: 'flex', flexDir: 'column' })}>

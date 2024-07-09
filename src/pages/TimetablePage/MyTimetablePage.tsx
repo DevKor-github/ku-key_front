@@ -1,6 +1,7 @@
 import { css } from '@styled-stytem/css'
+import { toPng } from 'html-to-image'
 import { Download } from 'lucide-react'
-import { useCallback, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 
 import { useDeleteTimetable, useGetUserTimetableList } from '@/api/hooks/timetable'
 import TimeTable from '@/components/timetable'
@@ -14,6 +15,7 @@ const MyTimetablePage = () => {
   const { data: timetableList } = useGetUserTimetableList()
   const { mutate: deleteTimetable } = useDeleteTimetable()
 
+  const imgRef = useRef<HTMLDivElement>(null)
   const [curSemester, setCurSemester] = useState(0)
   const [curIndex, setCurIndex] = useState(0)
 
@@ -32,12 +34,30 @@ const MyTimetablePage = () => {
     [setCurIndex],
   )
 
-  const deleteTimetableHandler = (timetableId: number) => {
-    if (curIndex !== 0) {
-      setCurIndex(prev => prev - 1)
+  const deleteTimetableHandler = useCallback(
+    (timetableId: number) => {
+      if (curIndex !== 0) {
+        setCurIndex(prev => prev - 1)
+      }
+      deleteTimetable({ timetableId })
+    },
+    [setCurIndex, deleteTimetable, curIndex],
+  )
+
+  const convertHtmlToImage = useCallback(() => {
+    if (imgRef.current) {
+      toPng(imgRef.current, { cacheBust: false })
+        .then(dataUrl => {
+          const link = document.createElement('a')
+          link.download = 'my-timetable.png'
+          link.href = dataUrl
+          link.click()
+        })
+        .catch(() => {
+          // todo: 에러 핸들링
+        })
     }
-    deleteTimetable({ timetableId })
-  }
+  }, [])
 
   return (
     <>
@@ -54,7 +74,7 @@ const MyTimetablePage = () => {
           />
         </div>
         <div className={css({ display: 'flex', flexDir: 'row', gap: 2.5 })}>
-          <ShareBtn icon={true}>
+          <ShareBtn icon={true} shareHandler={convertHtmlToImage}>
             <Download />
           </ShareBtn>
         </div>
@@ -64,6 +84,7 @@ const MyTimetablePage = () => {
         <NullTable />
       ) : (
         <TimeTable
+          ref={imgRef}
           timetable={semesterList[curSemester].timetables[curIndex]}
           deleteTimetableHandler={deleteTimetableHandler}
         />

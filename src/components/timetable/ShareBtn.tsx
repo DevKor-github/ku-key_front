@@ -26,11 +26,16 @@ const BtnStyle = cva({
 })
 
 interface ShareBtnProps extends React.HTMLAttributes<HTMLDivElement> {
+  shareHandler: () => void
   icon?: boolean
 }
 
-const ShareBtn = ({ children, icon }: ShareBtnProps) => {
-  return <button className={BtnStyle({ icon })}>{children}</button>
+const ShareBtn = ({ children, shareHandler, icon }: ShareBtnProps) => {
+  return (
+    <button className={BtnStyle({ icon })} onClick={shareHandler}>
+      {children}
+    </button>
+  )
 }
 
 export default ShareBtn
