@@ -1,4 +1,5 @@
 import { css } from '@styled-stytem/css'
+import { forwardRef } from 'react'
 
 import { useGetFriendTimetable } from '@/api/hooks/friends'
 import LectureGrid from '@/components/timetable/LectureGrid'
@@ -11,7 +12,7 @@ interface TimeTableProps {
   semester: string
 }
 
-const FriendTimetable = ({ user, year, semester }: TimeTableProps) => {
+const FriendTimetable = forwardRef<HTMLDivElement, TimeTableProps>(({ user, year, semester }, ref) => {
   const { data } = useGetFriendTimetable({ friendId: user, year, semester })
   const { time, week } = getWeeknTimeList(data.courses, data.schedules)
 
@@ -19,7 +20,7 @@ const FriendTimetable = ({ user, year, semester }: TimeTableProps) => {
   // todo: 실제 시간표 이름으로 수정
 
   return (
-    <div className={css({ w: '100%' })}>
+    <div className={css({ w: '100%' })} ref={ref}>
       <div
         className={css({
           w: '100%',
@@ -61,7 +62,8 @@ const FriendTimetable = ({ user, year, semester }: TimeTableProps) => {
           display: 'flex',
           flexDir: 'row',
           borderLeft: '1px solid {colors.lightGray.1}',
-          borderBottomLeftRadius: 10,
+          roundedBottom: 10,
+          bgColor: 'white',
         })}
       >
         <div className={css({ display: 'flex', flexDir: 'column' })}>
@@ -95,6 +97,6 @@ const FriendTimetable = ({ user, year, semester }: TimeTableProps) => {
       </div>
     </div>
   )
-}
+})
 
 export default FriendTimetable

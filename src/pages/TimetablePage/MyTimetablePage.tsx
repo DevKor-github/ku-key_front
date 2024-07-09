@@ -1,5 +1,4 @@
 import { css } from '@styled-stytem/css'
-import { toPng } from 'html-to-image'
 import { Download } from 'lucide-react'
 import { useCallback, useRef, useState } from 'react'
 
@@ -9,7 +8,7 @@ import StatusBar from '@/components/timetable/MyTimetable/StatusBar'
 import NullTable from '@/components/timetable/NullTable'
 import ShareBtn from '@/components/timetable/ShareBtn'
 import TimetableDropdown from '@/components/timetable/TimetableDropdown'
-import { timetablePreprocess } from '@/util/timetableUtil'
+import { convertHtmlToImage, timetablePreprocess } from '@/util/timetableUtil'
 
 const MyTimetablePage = () => {
   const { data: timetableList } = useGetUserTimetableList()
@@ -44,21 +43,6 @@ const MyTimetablePage = () => {
     [setCurIndex, deleteTimetable, curIndex],
   )
 
-  const convertHtmlToImage = useCallback(() => {
-    if (imgRef.current) {
-      toPng(imgRef.current, { cacheBust: false })
-        .then(dataUrl => {
-          const link = document.createElement('a')
-          link.download = 'my-timetable.png'
-          link.href = dataUrl
-          link.click()
-        })
-        .catch(() => {
-          // todo: 에러 핸들링
-        })
-    }
-  }, [])
-
   return (
     <>
       <div className={css({ display: 'flex', flexDir: 'row', justifyContent: 'space-between', my: 11 })}>
@@ -74,7 +58,7 @@ const MyTimetablePage = () => {
           />
         </div>
         <div className={css({ display: 'flex', flexDir: 'row', gap: 2.5 })}>
-          <ShareBtn icon={true} shareHandler={convertHtmlToImage}>
+          <ShareBtn icon={true} shareHandler={() => convertHtmlToImage(imgRef.current)}>
             <Download />
           </ShareBtn>
         </div>

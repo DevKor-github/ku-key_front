@@ -1,18 +1,19 @@
 import { css } from '@styled-stytem/css'
 import { Download } from 'lucide-react'
-import { useCallback, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
 import { FriendPageBtnStyle } from '@/components/timetable/Friend/FriendsList'
 import FriendTimetable from '@/components/timetable/Friend/FriendTimetable'
 import ShareBtn from '@/components/timetable/ShareBtn'
 import TimetableDropdown from '@/components/timetable/TimetableDropdown'
-import { timetablePreprocess } from '@/util/timetableUtil'
+import { convertHtmlToImage, timetablePreprocess } from '@/util/timetableUtil'
 
 const FriendTimetablePage = () => {
   const params = useParams()
   const user = params.userHandler
 
+  const imgRef = useRef(null)
   const [curSemester, setCurSemester] = useState(0)
   const semesterList = timetablePreprocess([])
 
@@ -33,7 +34,7 @@ const FriendTimetablePage = () => {
           <TimetableDropdown semesterList={semesterList} curSemester={curSemester} setCurSemester={setSemesterIndex} />
         </div>
         <div className={css({ display: 'flex', flexDir: 'row', gap: 2.5 })}>
-          <ShareBtn icon={true}>
+          <ShareBtn icon={true} shareHandler={() => convertHtmlToImage(imgRef.current)}>
             <Download />
           </ShareBtn>
         </div>
@@ -46,6 +47,7 @@ const FriendTimetablePage = () => {
           user={user!}
           semester={semesterList[curSemester].semester}
           year={semesterList[curSemester].year}
+          ref={imgRef}
         />
       </div>
     </>

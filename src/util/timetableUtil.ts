@@ -1,3 +1,5 @@
+import { toPng } from 'html-to-image'
+
 import {
   ColorType,
   CourseType,
@@ -137,7 +139,7 @@ export const getWeeknTimeList = (courseData: CourseType[], scheduleData: Schedul
     }
   })
 
-  const weekCandidate = ['MON', 'TUS', 'WEN', 'THR', 'FRI', 'SAT', 'SUN']
+  const weekCandidate = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']
 
   const time = ['']
   const week = []
@@ -151,4 +153,19 @@ export const getWeeknTimeList = (courseData: CourseType[], scheduleData: Schedul
   }
 
   return { time, week }
+}
+
+export const convertHtmlToImage = (ref: HTMLDivElement | null) => {
+  if (ref) {
+    toPng(ref, { cacheBust: false })
+      .then(dataUrl => {
+        const link = document.createElement('a')
+        link.download = 'my-timetable.png'
+        link.href = dataUrl
+        link.click()
+      })
+      .catch(() => {
+        // todo: 에러 핸들링
+      })
+  }
 }
