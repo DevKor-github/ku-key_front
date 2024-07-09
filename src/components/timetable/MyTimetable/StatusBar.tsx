@@ -1,5 +1,6 @@
 import { css, cva } from '@styled-stytem/css'
 import { Check, Plus } from 'lucide-react'
+import { useCallback } from 'react'
 
 import { usePostTimetable, useUpdateMainTable } from '@/api/hooks/timetable'
 import SelectTimetableBtn from '@/components/timetable/MyTimetable/SelectTimetableBtn'
@@ -83,13 +84,13 @@ const StatusBar = ({ curSemester, curIndex, setCurIndex }: StatusBarProps) => {
 
   const curSemesterTimetableLen = curSemester.timetables.length
 
-  const handleCreateTimetableBtn = () => {
+  const handleCreateTimetableBtn = useCallback(() => {
     createTimetable({
       tableName: `timetable ${curSemesterTimetableLen + 1}`,
       semester: curSemester.semester,
       year: curSemester.year,
     })
-  }
+  }, [curSemester, createTimetable, curSemesterTimetableLen])
 
   return (
     <div
