@@ -58,7 +58,7 @@ const MyTimetablePage = () => {
           />
         </div>
         <div className={css({ display: 'flex', flexDir: 'row', gap: 2.5 })}>
-          <ShareBtn icon={true} shareHandler={() => convertHtmlToImage(imgRef.current)}>
+          <ShareBtn icon={true} shareHandler={() => convertHtmlToImage(imgRef.current, 'my_timetable')}>
             <Download />
           </ShareBtn>
         </div>

@@ -34,7 +34,7 @@ const FriendTimetablePage = () => {
           <TimetableDropdown semesterList={semesterList} curSemester={curSemester} setCurSemester={setSemesterIndex} />
         </div>
         <div className={css({ display: 'flex', flexDir: 'row', gap: 2.5 })}>
-          <ShareBtn icon={true} shareHandler={() => convertHtmlToImage(imgRef.current)}>
+          <ShareBtn icon={true} shareHandler={() => convertHtmlToImage(imgRef.current, `${user}_timetable`)}>
             <Download />
           </ShareBtn>
         </div>

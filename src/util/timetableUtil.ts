@@ -155,12 +155,12 @@ export const getWeeknTimeList = (courseData: CourseType[], scheduleData: Schedul
   return { time, week }
 }
 
-export const convertHtmlToImage = (ref: HTMLDivElement | null) => {
+export const convertHtmlToImage = (ref: HTMLDivElement | null, fileName: string) => {
   if (ref) {
     toPng(ref, { cacheBust: false })
       .then(dataUrl => {
         const link = document.createElement('a')
-        link.download = 'my-timetable.png'
+        link.download = `${fileName}.png`
         link.href = dataUrl
         link.click()
       })
