@@ -17,7 +17,7 @@ const ColorSelector = ({ colorTheme, closeModal, timetableId }: ColorSelectorPro
     <button
       onClick={() => {
         closeModal()
-        mutate({ tableColor: colorTheme, timetableId })
+        mutate({ timetableColor: colorTheme, timetableId })
       }}
       className={css({
         display: 'flex',

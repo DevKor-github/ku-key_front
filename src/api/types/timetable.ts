@@ -12,7 +12,7 @@ export interface GetTimetableByTimetableIdResponse {
 }
 
 export interface GetFriendTimetableResponse extends GetTimetableByTimetableIdResponse {
-  tableName: string
+  timetableName: string
 }
 
 export type GetTimetableByUserIdResponse = TimetableInfo[]

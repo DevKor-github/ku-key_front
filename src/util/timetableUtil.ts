@@ -167,5 +167,7 @@ export const convertHtmlToImage = (ref: HTMLDivElement | null, fileName: string)
       .catch(() => {
         // todo: 에러 핸들링
       })
+  } else {
+    // todo: null (시간표가 없는 경우 처리)
   }
 }

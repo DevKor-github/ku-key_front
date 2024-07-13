@@ -13,7 +13,7 @@ interface TimetableProps {
 }
 
 const FriendTimetable = forwardRef<HTMLDivElement, TimetableProps>(({ user, year, semester }, ref) => {
-  const { data } = useGetFriendTimetable({ friendId: user, year, semester })
+  const { data } = useGetFriendTimetable({ username: user, year, semester })
   const { time, week } = getWeeknTimeList(data.courses, data.schedules)
 
   // todo: 대표 시간표가 없을 때의 처리
@@ -53,7 +53,7 @@ const FriendTimetable = forwardRef<HTMLDivElement, TimetableProps>(({ user, year
               textOverflow: 'ellipsis',
             })}
           >
-            {'todo:tablename 수정'}
+            {data.timetableName}
           </div>
         </div>
       </div>
