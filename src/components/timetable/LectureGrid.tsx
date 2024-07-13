@@ -1,13 +1,13 @@
 import { css } from '@styled-stytem/css'
 
-import { GetTimeTableByTimeTableIdResponse } from '@/api/types/timetable'
+import { GetTimetableByTimetableIdResponse } from '@/api/types/timetable'
 import LectureSticker from '@/components/timetable/LectureSticker'
 import { TimeCell } from '@/components/timetable/TimetableLayout'
 import { COLOR_INFO } from '@/lib/constants/timetableColors'
 import { getDuration, lectureDataPreprocess } from '@/util/timetableUtil'
 
 interface LectureGridProps {
-  timetableData: GetTimeTableByTimeTableIdResponse
+  timetableData: GetTimetableByTimetableIdResponse
   weekCnt: number
   timeCnt: number
 }

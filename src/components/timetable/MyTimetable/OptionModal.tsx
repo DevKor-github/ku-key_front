@@ -30,11 +30,11 @@ const optBlockInfo = css({
 })
 
 interface OptionModalProps {
-  openTableModal: (value: GlobalModalStateType) => void
+  openTimetableModal: (value: GlobalModalStateType) => void
   closeOptModal: () => void
 }
 
-const OptionModal = forwardRef<HTMLDivElement, OptionModalProps>(({ openTableModal, closeOptModal }, ref) => {
+const OptionModal = forwardRef<HTMLDivElement, OptionModalProps>(({ openTimetableModal, closeOptModal }, ref) => {
   return (
     <div className={css({ position: 'absolute', top: 17, right: 0, zIndex: 50 })}>
       <ModalCard
@@ -56,7 +56,7 @@ const OptionModal = forwardRef<HTMLDivElement, OptionModalProps>(({ openTableMod
           className={optBlock}
           onClick={() => {
             closeOptModal()
-            openTableModal('name')
+            openTimetableModal('name')
           }}
         >
           <div className={optBlockInfo}>
@@ -68,7 +68,7 @@ const OptionModal = forwardRef<HTMLDivElement, OptionModalProps>(({ openTableMod
           className={optBlock}
           onClick={() => {
             closeOptModal()
-            openTableModal('color')
+            openTimetableModal('color')
           }}
         >
           <div className={optBlockInfo}>
@@ -80,7 +80,7 @@ const OptionModal = forwardRef<HTMLDivElement, OptionModalProps>(({ openTableMod
           className={optBlock}
           onClick={() => {
             closeOptModal()
-            openTableModal('delete')
+            openTimetableModal('delete')
           }}
         >
           <div className={optBlockInfo}>

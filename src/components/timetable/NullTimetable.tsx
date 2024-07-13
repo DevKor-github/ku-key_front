@@ -1,6 +1,6 @@
 import { css } from '@styled-stytem/css'
 
-const NullTable = () => {
+const NullTimetable = () => {
   return (
     <div
       className={css({
@@ -23,4 +23,4 @@ const NullTable = () => {
   )
 }
 
-export default NullTable
+export default NullTimetable

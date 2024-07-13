@@ -1,45 +1,45 @@
 import { ColorType, CourseType, ScheduleType, SemesterType, TimetableInfo } from '@/types/timetable'
 
-export interface GetTimeTableByTimeTableIdRequest {
+export interface GetTimetableByTimetableIdRequest {
   authHeader: string | null
   timetableId: number
 }
 
-export interface GetTimeTableByTimeTableIdResponse {
+export interface GetTimetableByTimetableIdResponse {
   courses: CourseType[]
   schedules: ScheduleType[]
   color: ColorType
 }
 
-export type GetTimeTableByUserIdResponse = TimetableInfo[]
+export type GetTimetableByUserIdResponse = TimetableInfo[]
 
-export interface CreateTimeTableRequest {
+export interface CreateTimetableRequest {
   authHeader: string | null
-  tableName: string
+  timetableName: string
   semester: SemesterType
   year: string
 }
 
-export interface UpdateTimeTableNameRequest {
+export interface UpdateTimetableNameRequest {
   authHeader: string | null
-  tableName: string
-  timeTableId: number
+  timetableName: string
+  timetableId: number
 }
 
-export interface UpdateMainTimeTableRequest {
+export interface UpdateMainTimetableRequest {
   authHeader: string | null
   semester: SemesterType
   year: string
-  timeTableId: number
+  timetableId: number
 }
 
-export interface DeleteTimeTableRequest {
+export interface DeleteTimetableRequest {
   authHeader: string | null
   timetableId: number
 }
 
-export interface UpdateTableColorRequest {
+export interface UpdateTimetableColorRequest {
   authHeader: string | null
-  timeTableId: number
+  timetableId: number
   tableColor: ColorType
 }

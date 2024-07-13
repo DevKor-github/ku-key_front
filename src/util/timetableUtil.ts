@@ -51,7 +51,7 @@ export const timetablePreprocess = (data: TimetableInfo[] | undefined) => {
     for (let i = 0; i < ret.length; i++) {
       const { year, semester, timetables } = ret[i]
       if (timetable.year === year && timetable.semester == semester) {
-        if (timetable.mainTimeTable) {
+        if (timetable.mainTimetable) {
           timetables.unshift(timetable)
         } else {
           timetables.push(timetable)

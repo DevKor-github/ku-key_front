@@ -1,23 +1,23 @@
 import { css, cx } from '@styled-stytem/css'
 import { shadow } from '@styled-stytem/recipes'
 
-import { useUpdateTableColor } from '@/api/hooks/timetable'
+import { useUpdateTimetableColor } from '@/api/hooks/timetable'
 import { COLOR_INFO } from '@/lib/constants/timetableColors'
 import { ColorType } from '@/types/timetable'
 
 interface ColorSelectorProps {
   colorTheme: ColorType
-  timeTableId: number
+  timetableId: number
   closeModal: () => void
 }
 
-const ColorSelector = ({ colorTheme, closeModal, timeTableId }: ColorSelectorProps) => {
-  const { mutate } = useUpdateTableColor()
+const ColorSelector = ({ colorTheme, closeModal, timetableId }: ColorSelectorProps) => {
+  const { mutate } = useUpdateTimetableColor()
   return (
     <button
       onClick={() => {
         closeModal()
-        mutate({ tableColor: colorTheme, timeTableId })
+        mutate({ tableColor: colorTheme, timetableId })
       }}
       className={css({
         display: 'flex',

@@ -3,9 +3,9 @@ import { Download } from 'lucide-react'
 import { useCallback, useRef, useState } from 'react'
 
 import { useDeleteTimetable, useGetUserTimetableList } from '@/api/hooks/timetable'
-import TimeTable from '@/components/timetable'
+import Timetable from '@/components/timetable'
 import StatusBar from '@/components/timetable/MyTimetable/StatusBar'
-import NullTable from '@/components/timetable/NullTable'
+import NullTimetable from '@/components/timetable/NullTimetable'
 import ShareBtn from '@/components/timetable/ShareBtn'
 import TimetableDropdown from '@/components/timetable/TimetableDropdown'
 import { convertHtmlToImage, timetablePreprocess } from '@/util/timetableUtil'
@@ -26,7 +26,7 @@ const MyTimetablePage = () => {
     },
     [setCurSemester],
   )
-  const setTableIndex = useCallback(
+  const setTimetableIndex = useCallback(
     (toIndex: number) => {
       setCurIndex(toIndex)
     },
@@ -54,7 +54,7 @@ const MyTimetablePage = () => {
             semesterList={semesterList}
             curSemester={curSemester}
             setCurSemester={setSemesterIndex}
-            setCurIndexZero={() => setTableIndex(0)}
+            setCurIndexZero={() => setTimetableIndex(0)}
           />
         </div>
         <div className={css({ display: 'flex', flexDir: 'row', gap: 2.5 })}>
@@ -63,11 +63,11 @@ const MyTimetablePage = () => {
           </ShareBtn>
         </div>
       </div>
-      <StatusBar curSemester={semesterList[curSemester]} curIndex={curIndex} setCurIndex={setTableIndex} />
+      <StatusBar curSemester={semesterList[curSemester]} curIndex={curIndex} setCurIndex={setTimetableIndex} />
       {semesterList[curSemester].timetables.length === 0 ? (
-        <NullTable />
+        <NullTimetable />
       ) : (
-        <TimeTable
+        <Timetable
           ref={imgRef}
           timetable={semesterList[curSemester].timetables[curIndex]}
           deleteTimetableHandler={deleteTimetableHandler}

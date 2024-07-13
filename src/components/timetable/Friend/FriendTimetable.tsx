@@ -6,13 +6,13 @@ import LectureGrid from '@/components/timetable/LectureGrid'
 import { TimeCell } from '@/components/timetable/TimetableLayout'
 import { getWeeknTimeList } from '@/util/timetableUtil'
 
-interface TimeTableProps {
+interface TimetableProps {
   user: string
   year: string
   semester: string
 }
 
-const FriendTimetable = forwardRef<HTMLDivElement, TimeTableProps>(({ user, year, semester }, ref) => {
+const FriendTimetable = forwardRef<HTMLDivElement, TimetableProps>(({ user, year, semester }, ref) => {
   const { data } = useGetFriendTimetable({ friendId: user, year, semester })
   const { time, week } = getWeeknTimeList(data.courses, data.schedules)
 

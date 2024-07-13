@@ -3,7 +3,7 @@ import { shadow } from '@styled-stytem/recipes'
 import { CaseSensitive, CircleAlert, Palette } from 'lucide-react'
 import { useState } from 'react'
 
-import { useUpdateTableName } from '@/api/hooks/timetable'
+import { useUpdateTimetableName } from '@/api/hooks/timetable'
 import ColorSelector from '@/components/timetable/MyTimetable/ColorSelector'
 import { Input } from '@/components/ui/input'
 import ModalCard from '@/components/ui/modal'
@@ -35,15 +35,15 @@ const modalBtn = cva({
 
 const NameChangeModal = ({
   closeModal,
-  timeTableId,
-  curTableName,
+  timetableId,
+  curTimetableName,
 }: {
   closeModal: () => void
-  timeTableId: number
-  curTableName: string
+  timetableId: number
+  curTimetableName: string
 }) => {
   const [nameInput, setNameInput] = useState('')
-  const { mutate: changeTableName } = useUpdateTableName()
+  const { mutate: changetableName } = useUpdateTimetableName()
   return (
     <>
       <div className={css({ display: 'flex', flexDir: 'column', alignItems: 'center', gap: 2.5 })}>
@@ -54,14 +54,14 @@ const NameChangeModal = ({
         onSubmit={e => {
           e.preventDefault()
           closeModal()
-          changeTableName({ tableName: nameInput, timeTableId })
+          changetableName({ timetableName: nameInput, timetableId })
         }}
       >
         <Input
           // eslint-disable-next-line
           autoFocus
           value={nameInput}
-          placeholder={curTableName}
+          placeholder={curTimetableName}
           className={css({
             w: 71,
             h: 13,
@@ -89,7 +89,7 @@ const ColorChangeModal = ({ closeModal, timetableId }: { closeModal: () => void;
       </div>
       <div className={css({ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', columnGap: 2.5, rowGap: 5 })}>
         {ColorTypeArr.map((color, index) => {
-          return <ColorSelector key={index} colorTheme={color} closeModal={closeModal} timeTableId={timetableId} />
+          return <ColorSelector key={index} colorTheme={color} closeModal={closeModal} timetableId={timetableId} />
         })}
       </div>
     </>
@@ -102,7 +102,7 @@ const DeleteModal = ({
   timetableId,
 }: {
   closeModal: () => void
-  deleteTimetableHandler: (timeTableId: number) => void
+  deleteTimetableHandler: (timetableId: number) => void
   timetableId: number
 }) => {
   return (
@@ -135,9 +135,9 @@ const DeleteModal = ({
 interface TimetableModalProps {
   modalType: Omit<GlobalModalStateType, 'null'>
   closeModal: () => void
-  deleteTimetableHandler: (timeTableId: number) => void
+  deleteTimetableHandler: (timetableId: number) => void
   timetableId: number
-  tableName: string
+  timetableName: string
 }
 
 const TimetableModal = ({
@@ -145,7 +145,7 @@ const TimetableModal = ({
   closeModal,
   deleteTimetableHandler,
   timetableId,
-  tableName,
+  timetableName,
 }: TimetableModalProps) => {
   return (
     <ModalCard
@@ -165,7 +165,7 @@ const TimetableModal = ({
       )}
     >
       {modalType === 'name' && (
-        <NameChangeModal closeModal={closeModal} timeTableId={timetableId} curTableName={tableName} />
+        <NameChangeModal closeModal={closeModal} timetableId={timetableId} curTimetableName={timetableName} />
       )}
       {modalType === 'color' && <ColorChangeModal closeModal={closeModal} timetableId={timetableId} />}
       {modalType === 'delete' && (

@@ -5,7 +5,7 @@ import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader'
 import {
   GetFriendListRequest,
   GetFriendListResponse,
-  GetFriendTimtableRequest,
+  GetFriendTimetableRequest,
   GetRequestListRequest,
   GetRequestListResponse,
   GetSearchUserRequest,
@@ -13,7 +13,7 @@ import {
   PatchFriendshipRequestRequest,
   PostFriendshipRequest,
 } from '@/api/types/friends'
-import { GetTimeTableByTimeTableIdResponse } from '@/api/types/timetable'
+import { GetTimetableByTimetableIdResponse } from '@/api/types/timetable'
 
 const getFriendList = async ({ authHeader, keyword }: GetFriendListRequest) => {
   const response = await axios.get<GetFriendListResponse>(`${import.meta.env.VITE_API_SERVER}/friendship`, {
@@ -172,8 +172,8 @@ export const useDeleteFriendship = () => {
   })
 }
 
-const getFriendTimetable = async ({ authHeader, friendId, semester, year }: GetFriendTimtableRequest) => {
-  const response = await axios.get<GetTimeTableByTimeTableIdResponse>(
+const getFriendTimetable = async ({ authHeader, friendId, semester, year }: GetFriendTimetableRequest) => {
+  const response = await axios.get<GetTimetableByTimetableIdResponse>(
     `${import.meta.env.VITE_API_SERVER}/friendship/friend-timetable`,
     {
       headers: { Authorization: authHeader },
@@ -186,7 +186,7 @@ const getFriendTimetable = async ({ authHeader, friendId, semester, year }: GetF
 /**
  * 친구 ID, 연도, 학기를 입력받아 해당 학기에 친구의 대표 시간표를 조회합니다.
  */
-export const useGetFriendTimetable = (props: Omit<GetFriendTimtableRequest, 'authHeader'>) => {
+export const useGetFriendTimetable = (props: Omit<GetFriendTimetableRequest, 'authHeader'>) => {
   const authHeader = useAuthHeader()
   return useQuery({
     queryKey: ['friendTimetable', props],

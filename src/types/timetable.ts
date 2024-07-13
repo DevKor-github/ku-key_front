@@ -7,11 +7,11 @@ export type ColorType = 'Red' | 'Blue' | 'Green' | 'Purple' | 'Orange' | 'Gray'
 export type GlobalModalStateType = 'color' | 'name' | 'delete' | null
 
 export interface TimetableInfo {
-  timeTableId: number
+  timetableId: number
   semester: SemesterType
   year: string
-  mainTimeTable: boolean
-  tableName: string
+  mainTimetable: boolean
+  timetableName: string
 }
 
 export interface Semester {

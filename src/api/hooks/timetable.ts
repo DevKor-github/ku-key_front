@@ -3,18 +3,18 @@ import axios from 'axios'
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader'
 
 import {
-  CreateTimeTableRequest,
-  DeleteTimeTableRequest,
-  GetTimeTableByTimeTableIdRequest,
-  GetTimeTableByTimeTableIdResponse,
-  GetTimeTableByUserIdResponse,
-  UpdateMainTimeTableRequest,
-  UpdateTableColorRequest,
-  UpdateTimeTableNameRequest,
+  CreateTimetableRequest,
+  DeleteTimetableRequest,
+  GetTimetableByTimetableIdRequest,
+  GetTimetableByTimetableIdResponse,
+  GetTimetableByUserIdResponse,
+  UpdateMainTimetableRequest,
+  UpdateTimetableColorRequest,
+  UpdateTimetableNameRequest,
 } from '@/api/types/timetable'
 
 const getTimetableByUser = async (authHeader: string | null) => {
-  const response = await axios.get<GetTimeTableByUserIdResponse>(
+  const response = await axios.get<GetTimetableByUserIdResponse>(
     `${import.meta.env.VITE_API_SERVER}/timetable/user`,
     {
       headers: { Authorization: authHeader },
@@ -35,8 +35,8 @@ export const useGetUserTimetableList = () => {
   })
 }
 
-const getTimetableByID = async ({ authHeader, timetableId }: GetTimeTableByTimeTableIdRequest) => {
-  const response = await axios.get<GetTimeTableByTimeTableIdResponse>(
+const getTimetableByID = async ({ authHeader, timetableId }: GetTimetableByTimetableIdRequest) => {
+  const response = await axios.get<GetTimetableByTimetableIdResponse>(
     `${import.meta.env.VITE_API_SERVER}/timetable/${timetableId}`,
     {
       headers: { Authorization: authHeader },
@@ -48,7 +48,7 @@ const getTimetableByID = async ({ authHeader, timetableId }: GetTimeTableByTimeT
 /**
  * 시간표 ID로 해당 시간표와 관련된 강의 정보를 반환합니다.
  */
-export const useGetTimetable = ({ timetableId }: Pick<GetTimeTableByTimeTableIdRequest, 'timetableId'>) => {
+export const useGetTimetable = ({ timetableId }: Pick<GetTimetableByTimetableIdRequest, 'timetableId'>) => {
   const authHeader = useAuthHeader()
   return useQuery({
     queryKey: ['timetable', timetableId],
@@ -61,10 +61,10 @@ export const useGetTimetable = ({ timetableId }: Pick<GetTimeTableByTimeTableIdR
   })
 }
 
-const postTimetable = async ({ authHeader, tableName, semester, year }: CreateTimeTableRequest) => {
+const postTimetable = async ({ authHeader, timetableName, semester, year }: CreateTimetableRequest) => {
   const response = await axios.post(
     `${import.meta.env.VITE_API_SERVER}/timetable`,
-    { tableName, semester, year },
+    { timetableName, semester, year },
     { headers: { Authorization: authHeader } },
   )
   return response.data
@@ -77,14 +77,14 @@ export const usePostTimetable = () => {
   const authHeader = useAuthHeader()
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: (props: Omit<CreateTimeTableRequest, 'authHeader'>) => postTimetable({ authHeader, ...props }),
+    mutationFn: (props: Omit<CreateTimetableRequest, 'authHeader'>) => postTimetable({ authHeader, ...props }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['timetableList'] })
     },
   })
 }
 
-const deleteTimetable = async ({ authHeader, timetableId }: DeleteTimeTableRequest) => {
+const deleteTimetable = async ({ authHeader, timetableId }: DeleteTimetableRequest) => {
   const response = await axios.delete(`${import.meta.env.VITE_API_SERVER}/timetable/${timetableId}`, {
     headers: { Authorization: authHeader },
   })
@@ -98,7 +98,7 @@ export const useDeleteTimetable = () => {
   const authHeader = useAuthHeader()
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: ({ timetableId }: Pick<DeleteTimeTableRequest, 'timetableId'>) =>
+    mutationFn: ({ timetableId }: Pick<DeleteTimetableRequest, 'timetableId'>) =>
       deleteTimetable({ authHeader, timetableId }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['timetableList'] })
@@ -106,10 +106,10 @@ export const useDeleteTimetable = () => {
   })
 }
 
-const patchTableName = async ({ authHeader, timeTableId, tableName }: UpdateTimeTableNameRequest) => {
+const patchTimetableName = async ({ authHeader, timetableId, timetableName }: UpdateTimetableNameRequest) => {
   const response = await axios.patch(
-    `${import.meta.env.VITE_API_SERVER}/timetable/name/${timeTableId}`,
-    { tableName },
+    `${import.meta.env.VITE_API_SERVER}/timetable/name/${timetableId}`,
+    { timetableName },
     {
       headers: { Authorization: authHeader },
     },
@@ -120,20 +120,20 @@ const patchTableName = async ({ authHeader, timeTableId, tableName }: UpdateTime
 /**
  * 특정 시간표의 이름을 변경합니다.
  */
-export const useUpdateTableName = () => {
+export const useUpdateTimetableName = () => {
   const authHeader = useAuthHeader()
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: (props: Omit<UpdateTimeTableNameRequest, 'authHeader'>) => patchTableName({ authHeader, ...props }),
+    mutationFn: (props: Omit<UpdateTimetableNameRequest, 'authHeader'>) => patchTimetableName({ authHeader, ...props }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['timetableList'] })
     },
   })
 }
 
-const patchMainTable = async ({ authHeader, semester, year, timeTableId }: UpdateMainTimeTableRequest) => {
+const patchMainTimetable = async ({ authHeader, semester, year, timetableId }: UpdateMainTimetableRequest) => {
   const response = await axios.patch(
-    `${import.meta.env.VITE_API_SERVER}/timetable/${timeTableId}`,
+    `${import.meta.env.VITE_API_SERVER}/timetable/${timetableId}`,
     { semester, year },
     {
       headers: { Authorization: authHeader },
@@ -145,12 +145,12 @@ const patchMainTable = async ({ authHeader, semester, year, timeTableId }: Updat
 /**
  * 특정 시간표를 대표 시간표로 변경합니다. 기존에 이미 대표시간표이면 변경되지 않습니다.
  */
-export const useUpdateMainTable = () => {
+export const useUpdateMainTimetable = () => {
   const authHeader = useAuthHeader()
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: (props: Omit<UpdateMainTimeTableRequest, 'authHeader'>) => {
-      return patchMainTable({ authHeader, ...props })
+    mutationFn: (props: Omit<UpdateMainTimetableRequest, 'authHeader'>) => {
+      return patchMainTimetable({ authHeader, ...props })
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['timetableList'] })
@@ -158,9 +158,9 @@ export const useUpdateMainTable = () => {
   })
 }
 
-const patchColor = async ({ authHeader, tableColor, timeTableId }: UpdateTableColorRequest) => {
+const patchColor = async ({ authHeader, tableColor, timetableId }: UpdateTimetableColorRequest) => {
   const response = await axios.patch(
-    `${import.meta.env.VITE_API_SERVER}/timetable/color/${timeTableId}`,
+    `${import.meta.env.VITE_API_SERVER}/timetable/color/${timetableId}`,
     { tableColor },
     { headers: { Authorization: authHeader } },
   )
@@ -170,11 +170,11 @@ const patchColor = async ({ authHeader, tableColor, timeTableId }: UpdateTableCo
 /**
  * 시간표의 색상을 변경합니다.
  */
-export const useUpdateTableColor = () => {
+export const useUpdateTimetableColor = () => {
   const authHeader = useAuthHeader()
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: (props: Omit<UpdateTableColorRequest, 'authHeader'>) => {
+    mutationFn: (props: Omit<UpdateTimetableColorRequest, 'authHeader'>) => {
       return patchColor({ authHeader, ...props })
     },
     onSuccess: () => {

@@ -2,7 +2,7 @@ import { css, cva } from '@styled-stytem/css'
 import { Check, Plus } from 'lucide-react'
 import { useCallback } from 'react'
 
-import { usePostTimetable, useUpdateMainTable } from '@/api/hooks/timetable'
+import { usePostTimetable, useUpdateMainTimetable } from '@/api/hooks/timetable'
 import SelectTimetableBtn from '@/components/timetable/MyTimetable/SelectTimetableBtn'
 import { Semester, TimetableInfo } from '@/types/timetable'
 
@@ -46,23 +46,26 @@ const MainPinBtnStyle = cva({
 })
 
 interface MainPinBtnProps {
-  hasTable: boolean
+  hasTimetable: boolean
   curTimetable: TimetableInfo
   setCurIndexZero: () => void
 }
 
-const MainPinBtn = ({ hasTable, curTimetable, setCurIndexZero }: MainPinBtnProps) => {
-  const { mutate: updateMainTable } = useUpdateMainTable()
+const MainPinBtn = ({ hasTimetable, curTimetable, setCurIndexZero }: MainPinBtnProps) => {
+  const { mutate: updateMainTimetable } = useUpdateMainTimetable()
   return (
     <button
-      className={MainPinBtnStyle({ main: hasTable ? curTimetable.mainTimeTable : undefined, disabled: !hasTable })}
+      className={MainPinBtnStyle({
+        main: hasTimetable ? curTimetable.mainTimetable : undefined,
+        disabled: !hasTimetable,
+      })}
       onClick={() => {
-        if (hasTable && !curTimetable.mainTimeTable) {
+        if (hasTimetable && !curTimetable.mainTimetable) {
           setCurIndexZero()
-          updateMainTable({
+          updateMainTimetable({
             semester: curTimetable.semester,
             year: curTimetable.year,
-            timeTableId: curTimetable.timeTableId,
+            timetableId: curTimetable.timetableId,
           })
         }
       }}
@@ -86,7 +89,7 @@ const StatusBar = ({ curSemester, curIndex, setCurIndex }: StatusBarProps) => {
 
   const handleCreateTimetableBtn = useCallback(() => {
     createTimetable({
-      tableName: `timetable ${curSemesterTimetableLen + 1}`,
+      timetableName: `timetable ${curSemesterTimetableLen + 1}`,
       semester: curSemester.semester,
       year: curSemester.year,
     })
@@ -151,7 +154,7 @@ const StatusBar = ({ curSemester, curIndex, setCurIndex }: StatusBarProps) => {
         </div>
       </div>
       <MainPinBtn
-        hasTable={curSemesterTimetableLen !== 0}
+        hasTimetable={curSemesterTimetableLen !== 0}
         curTimetable={curSemester.timetables[curIndex]}
         setCurIndexZero={() => setCurIndex(0)}
       />
