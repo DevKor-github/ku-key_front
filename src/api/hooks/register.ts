@@ -1,13 +1,11 @@
 import { useMutation } from '@tanstack/react-query'
-import axios from 'axios'
 
 import { CheckEmailDuplicationResProps, RegisterReqProps, VerifyEmailReqProps } from '@/api/types/register'
+import { apiInterface } from '@/util/axios/custom-axios'
 
 const checkEmailDuplication = async (email: string) => {
   const emailWithDomain = email + '@gmail.com'
-  const response = await axios.post<CheckEmailDuplicationResProps>(
-    `http://${import.meta.env.VITE_API_SERVER}/auth/email/${emailWithDomain}`,
-  )
+  const response = await apiInterface.post<CheckEmailDuplicationResProps>(`/auth/email/${emailWithDomain}`)
   return response.data
 }
 
@@ -17,12 +15,9 @@ export const useCheckEmailDuplication = () => {
 
 const sendEmail = async (email: string) => {
   const emailWithDomain = email + '@gmail.com'
-  const response = await axios.post<boolean>(
-    `http://${import.meta.env.VITE_API_SERVER}/auth/request-email-verification`,
-    {
-      email: emailWithDomain,
-    },
-  )
+  const response = await apiInterface.post<boolean>(`/auth/request-email-verification`, {
+    email: emailWithDomain,
+  })
   return response.data
 }
 
@@ -32,7 +27,7 @@ export const useSendEmail = () => {
 
 const verifyEmail = async ({ email, verifyToken }: VerifyEmailReqProps) => {
   const emailWithDomain = email + '@gmail.com'
-  const response = await axios.post<boolean>(`http://${import.meta.env.VITE_API_SERVER}/auth/verify-email`, {
+  const response = await apiInterface.post<boolean>(`/auth/verify-email`, {
     email: emailWithDomain,
     verifyToken,
   })
@@ -44,7 +39,7 @@ export const useVerifyEmail = () => {
 }
 
 const checkUsernameDuplicate = async (username: string) => {
-  const response = await axios.post<boolean>(`http://${import.meta.env.VITE_API_SERVER}/auth/username/${username}`)
+  const response = await apiInterface.post<boolean>(`/auth/username/${username}`)
   return response.data
 }
 
@@ -54,9 +49,7 @@ export const useCheckUsernameDuplication = () => {
 
 const checkStudentIdDuplicate = async (studentId: string) => {
   const studentNumber = parseInt(studentId)
-  const response = await axios.post<boolean>(
-    `http://${import.meta.env.VITE_API_SERVER}/auth/student-number/${studentNumber}`,
-  )
+  const response = await apiInterface.post<boolean>(`/auth/student-number/${studentNumber}`)
   return response.data
 }
 
@@ -71,7 +64,7 @@ const register = async (data: RegisterReqProps) => {
   formData.append('username', data.username)
   formData.append('password', data.password)
   formData.append('studentNumber', data.studentNumber)
-  const response = await axios.post(`http://${import.meta.env.VITE_API_SERVER}/auth/sign-up`, formData)
+  const response = await apiInterface.post(`/auth/sign-up`, formData)
   return response.data
 }
 

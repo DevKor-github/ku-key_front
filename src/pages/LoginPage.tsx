@@ -1,7 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { css } from '@styled-stytem/css'
 import { useEffect, useState } from 'react'
-import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
@@ -13,12 +12,13 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { LoginSchema } from '@/lib/zod/login-schema'
+import { useAuth } from '@/util/auth/useAuth'
 
 const Login = () => {
   const [maintain, setMaintain] = useState(false)
   const { mutate: mutateLogin } = useLogIn()
   const { mutate: mutateLogout } = useLogOut()
-  const isAuth = useIsAuthenticated()
+  const isAuth = useAuth().isAuthenticated
 
   const navigate = useNavigate()
   const form = useForm<z.infer<typeof LoginSchema>>({
