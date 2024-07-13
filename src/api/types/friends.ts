@@ -38,7 +38,7 @@ export interface PatchFriendshipRequestRequest {
 
 export interface GetFriendTimetableRequest {
   authHeader: string | null
-  friendId: string
+  username: string
   year: string
   semester: string
 }

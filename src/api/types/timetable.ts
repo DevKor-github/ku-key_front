@@ -11,6 +11,10 @@ export interface GetTimetableByTimetableIdResponse {
   color: ColorType
 }
 
+export interface GetFriendTimetableResponse extends GetTimetableByTimetableIdResponse {
+  tableName: string
+}
+
 export type GetTimetableByUserIdResponse = TimetableInfo[]
 
 export interface CreateTimetableRequest {
@@ -41,5 +45,5 @@ export interface DeleteTimetableRequest {
 export interface UpdateTimetableColorRequest {
   authHeader: string | null
   timetableId: number
-  tableColor: ColorType
+  timetableColor: ColorType
 }

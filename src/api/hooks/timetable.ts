@@ -158,10 +158,10 @@ export const useUpdateMainTimetable = () => {
   })
 }
 
-const patchColor = async ({ authHeader, tableColor, timetableId }: UpdateTimetableColorRequest) => {
+const patchColor = async ({ authHeader, timetableColor, timetableId }: UpdateTimetableColorRequest) => {
   const response = await axios.patch(
     `${import.meta.env.VITE_API_SERVER}/timetable/color/${timetableId}`,
-    { tableColor },
+    { timetableColor },
     { headers: { Authorization: authHeader } },
   )
   return response
