@@ -8,9 +8,9 @@ import { useState } from 'react'
 import { Semester } from '@/types/timetable'
 
 interface TimetableDropdownProps {
-  semesterList: Semester[]
-  curSemester: number
-  setCurSemester: (toIndex: number) => void
+  dropdownList: Semester[]
+  curIndex: number
+  setCurIndex: (toIndex: number) => void
   setCurIndexZero?: () => void
 }
 
@@ -45,7 +45,7 @@ const DropdownItemsStyle = cva({
   },
 })
 
-const TimetableDropdown = ({ semesterList, curSemester, setCurSemester, setCurIndexZero }: TimetableDropdownProps) => {
+const TimetableDropdown = ({ dropdownList, curIndex, setCurIndex, setCurIndexZero }: TimetableDropdownProps) => {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -74,7 +74,7 @@ const TimetableDropdown = ({ semesterList, curSemester, setCurSemester, setCurIn
           <div
             className={css({ color: 'darkGray.2', fontSize: 20, fontWeight: 700, wordWrap: 'break-word', flexGrow: 1 })}
           >
-            {`${semesterList[curSemester].year} ${semesterList[curSemester].semester} semester`}
+            {`${dropdownList[curIndex].year} ${dropdownList[curIndex].semester} semester`}
           </div>
           <motion.div animate={isOpen ? 'open' : 'close'} variants={{ open: { rotate: 180 }, close: { rotate: 0 } }}>
             <ChevronDown className={css({ color: 'darkGray.2' })} />
@@ -82,7 +82,7 @@ const TimetableDropdown = ({ semesterList, curSemester, setCurSemester, setCurIn
         </button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
-        <DropdownMenu.Content sideOffset={-49}>
+        <DropdownMenu.Content sideOffset={-49} className={css({ zIndex: 20 })}>
           <motion.div
             animate={{
               height: 'fit-content',
@@ -97,20 +97,19 @@ const TimetableDropdown = ({ semesterList, curSemester, setCurSemester, setCurIn
                 w: 68,
                 bgColor: 'white',
                 rounded: 10,
-                zIndex: 20,
                 pb: 2.5,
                 pt: '49px',
               }),
               shadow(),
             )}
           >
-            {semesterList.map((semester, index) => {
+            {dropdownList.map((semester, index) => {
               return (
                 <DropdownMenu.Item
                   key={index}
-                  className={DropdownItemsStyle({ active: index == curSemester })}
+                  className={DropdownItemsStyle({ active: index == curIndex })}
                   onClick={() => {
-                    setCurSemester(index)
+                    setCurIndex(index)
                     setCurIndexZero && setCurIndexZero()
                   }}
                 >{`${semester.year} ${semester.semester} semester`}</DropdownMenu.Item>

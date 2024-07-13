@@ -51,9 +51,9 @@ const MyTimetablePage = () => {
             My schedule
           </div>
           <TimetableDropdown
-            semesterList={semesterList}
-            curSemester={curSemester}
-            setCurSemester={setSemesterIndex}
+            dropdownList={semesterList}
+            curIndex={curSemester}
+            setCurIndex={setSemesterIndex}
             setCurIndexZero={() => setTimetableIndex(0)}
           />
         </div>

@@ -31,7 +31,7 @@ const FriendTimetablePage = () => {
           <div className={css({ color: 'black.2', fontSize: 32, fontWeight: '800', wordWrap: 'break-word' })}>
             {user}
           </div>
-          <TimetableDropdown semesterList={semesterList} curSemester={curSemester} setCurSemester={setSemesterIndex} />
+          <TimetableDropdown dropdownList={semesterList} curIndex={curSemester} setCurIndex={setSemesterIndex} />
         </div>
         <div className={css({ display: 'flex', flexDir: 'row', gap: 2.5 })}>
           <ShareBtn icon={true} shareHandler={() => convertHtmlToImage(imgRef.current, `${user}_timetable`)}>
