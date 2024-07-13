@@ -1,5 +1,5 @@
 import { css, cva } from '@styled-stytem/css'
-import { Ellipsis, Plus } from 'lucide-react'
+import { Ellipsis } from 'lucide-react'
 import { forwardRef, useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
@@ -108,9 +108,6 @@ const Timetable = forwardRef<HTMLDivElement, TimetableProps>(
             </div>
           </div>
           <div className={css({ display: 'flex', flexDir: 'row', gap: 4, alignItems: 'center', color: 'darkGray.1' })}>
-            <button className={optBtn()}>
-              <Plus size={20} />
-            </button>
             <button className={optBtn()} onClick={() => setIsModalOpen(true)}>
               <Ellipsis size={20} />
             </button>
@@ -150,7 +147,7 @@ const Timetable = forwardRef<HTMLDivElement, TimetableProps>(
             </div>,
             document.body,
           )}
-        <LectureBottomSheet />
+        {createPortal(<LectureBottomSheet />, document.body)}
       </div>
     )
   },
