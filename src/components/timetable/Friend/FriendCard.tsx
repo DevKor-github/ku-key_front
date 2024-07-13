@@ -1,7 +1,12 @@
 import { css, cva } from '@styled-stytem/css'
 import { CircleX, Dot } from 'lucide-react'
 
-import { useAddFriendship, useDeleteFriendshipRequest, useReceiveFriendship } from '@/api/hooks/friends'
+import {
+  useAddFriendship,
+  useDeleteFriendshipRequest,
+  useDeleteSentRequest,
+  useReceiveFriendship,
+} from '@/api/hooks/friends'
 import { friendStatusType } from '@/types/friends'
 
 const buttonStyle = cva({
@@ -37,6 +42,7 @@ const buttonStyle = cva({
 })
 
 interface FriendCardProp {
+  type: 'requested' | 'recieved' | 'search'
   data: {
     name: string
     username: string
@@ -48,39 +54,45 @@ interface FriendCardProp {
   }
 }
 
-const FriendCardBtn = ({ data }: FriendCardProp) => {
+const FriendCardBtn = ({ type, data }: FriendCardProp) => {
   const { mutate: addFriend } = useAddFriendship()
   const { mutate: receiveFriendship } = useReceiveFriendship()
+  const { mutate: deleteSentRequest } = useDeleteSentRequest()
 
   let isActive = false
   let color: 'gray' | 'red1' | 'red2' | undefined = 'gray'
   let btnText = ''
 
-  switch (data.status) {
-    case undefined:
+  if (type === 'search') {
+    switch (data.status) {
+      case 'friend':
+        btnText = 'friend'
+        break
+      case 'me':
+        btnText = "It's me"
+        break
+      case 'pending':
+        btnText = 'pending'
+        break
+      case 'requested':
+        btnText = 'requested'
+        break
+      case 'unknown':
+        btnText = 'Add friend'
+        color = 'red2'
+        isActive = true
+        break
+    }
+  } else {
+    if (type === 'recieved') {
       btnText = 'Friend accept'
       color = 'red1'
       isActive = true
-      break
-    case 'friend':
-      btnText = 'friend'
-      break
-    case 'me':
-      btnText = "It's me"
-      break
-    case 'pending':
-      btnText = 'pending'
-      break
-    case 'requested':
-      btnText = 'requested'
+    } else {
+      btnText = 'Cancel request'
       color = 'red2'
       isActive = true
-      break
-    case 'unknown':
-      btnText = 'Add friend'
-      color = 'red2'
-      isActive = true
-      break
+    }
   }
 
   return (
@@ -89,15 +101,14 @@ const FriendCardBtn = ({ data }: FriendCardProp) => {
       onClick={() => {
         switch (data.status) {
           case undefined:
-            // 받은 요청임
-            receiveFriendship({ friendshipId: data.friendshipId! })
+            if (type === 'recieved') {
+              receiveFriendship({ friendshipId: data.friendshipId! })
+            } else {
+              deleteSentRequest({ friendshipId: data.friendshipId! })
+            }
             break
           case 'unknown':
             addFriend({ toUsername: data.username })
-            break
-          case 'requested':
-            // todo: 요청 취소 로직
-            alert('요청 취소')
             break
         }
       }}
@@ -107,15 +118,14 @@ const FriendCardBtn = ({ data }: FriendCardProp) => {
   )
 }
 
-const FriendCard = ({ data }: FriendCardProp) => {
+const FriendCard = ({ data, type }: FriendCardProp) => {
   const { mutate: deleteFriendship } = useDeleteFriendshipRequest()
-  const isRecievedRequest = data.friendshipId !== undefined
 
   return (
     <div
       className={css({ display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'relative' })}
     >
-      {isRecievedRequest && (
+      {type === 'recieved' && (
         <button
           className={css({
             cursor: 'pointer',
@@ -158,11 +168,11 @@ const FriendCard = ({ data }: FriendCardProp) => {
           </div>
           <div className={css({ fontWeight: 400, fontSize: 12, color: 'darkGray.2' })}>
             {/* todo: language가 필수값이 된 이후, 아래 코드 변경 */}
-            Language | {data.language ? data.language : 'Language'}
+            {data.language ? data.language : 'Origin Country'}
           </div>
         </div>
       </div>
-      <FriendCardBtn data={data} />
+      <FriendCardBtn type={type} data={data} />
     </div>
   )
 }

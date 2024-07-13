@@ -196,7 +196,7 @@ export const useGetFriendTimetable = (props: Omit<GetFriendTimetableRequest, 'au
       courses: [],
       schedules: [],
       color: 'Red',
-      tableName: '',
+      timetableName: '',
     },
   })
 }

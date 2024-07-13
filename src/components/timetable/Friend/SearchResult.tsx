@@ -36,7 +36,7 @@ const SearchResult = memo(({ data, error }: SearchResultProps) => {
           No search results
         </div>
       )}
-      {data && <FriendCard data={data} />}
+      {data && <FriendCard type="search" data={data} />}
     </div>
   )
 })

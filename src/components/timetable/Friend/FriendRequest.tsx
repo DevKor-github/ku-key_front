@@ -1,10 +1,11 @@
 import { css } from '@styled-stytem/css'
 
-import { useGetReceivedList } from '@/api/hooks/friends'
+import { useGetReceivedList, useGetRequestedList } from '@/api/hooks/friends'
 import FriendCard from '@/components/timetable/Friend/FriendCard'
 
 const FriendRequest = () => {
-  const { data: requestData } = useGetReceivedList()
+  const { data: recievedList } = useGetReceivedList()
+  const { data: requestedList } = useGetRequestedList()
 
   return (
     <div className={css({ display: 'flex', flexDir: 'column', gap: 5 })}>
@@ -15,7 +16,7 @@ const FriendRequest = () => {
         </div>
       </div>
       <div className={css({ display: 'flex', flexDir: 'column', gap: 5 })}>
-        {requestData.length === 0 ? (
+        {recievedList.length === 0 && requestedList.length === 0 ? (
           <div
             className={css({
               fontWeight: 600,
@@ -30,7 +31,14 @@ const FriendRequest = () => {
             No friend requests yet
           </div>
         ) : (
-          requestData.map(request => <FriendCard key={request.friendshipId} data={request} />)
+          <>
+            {recievedList.map(recieve => (
+              <FriendCard type="recieved" key={recieve.friendshipId} data={recieve} />
+            ))}
+            {requestedList.map(request => (
+              <FriendCard type="requested" key={request.friendshipId} data={request} />
+            ))}
+          </>
         )}
       </div>
     </div>
