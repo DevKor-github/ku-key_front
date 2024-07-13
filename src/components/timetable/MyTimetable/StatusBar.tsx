@@ -28,7 +28,7 @@ const MainPinBtnStyle = cva({
       true: {
         color: 'red.1',
         borderColor: 'red.1',
-        bgColor: 'bg.red',
+        bgColor: 'bg.red.1',
       },
       false: {
         _hover: {
