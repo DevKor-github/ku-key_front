@@ -56,7 +56,7 @@ const FriendListStyle = cva({
     isEditMode: {
       true: {
         borderColor: 'red.1',
-        bgColor: 'bg.red',
+        bgColor: 'bg.red.2',
       },
     },
   },
@@ -65,7 +65,7 @@ const FriendListStyle = cva({
 const FriendBlock = cva({
   base: {
     h: 11,
-    w: 30,
+    w: 42,
     cursor: 'pointer',
     color: 'lightGray.1',
     display: 'flex',
@@ -75,17 +75,23 @@ const FriendBlock = cva({
     fontSize: 18,
     fontWeight: 500,
     rounded: 10,
-    transition: 'color 0.256s',
+    transition: 'color 0.256s backround 0.256s',
     '& span': {
       textOverflow: 'ellipsis',
       overflow: 'hidden',
       whiteSpace: 'nowrap',
+    },
+    _hover: {
+      bgColor: 'bg.gray',
     },
   },
   variants: {
     isEditMode: {
       true: {
         color: 'red.1',
+        _hover: {
+          bgColor: 'bg.red.1',
+        },
       },
     },
   },
