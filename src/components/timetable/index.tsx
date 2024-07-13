@@ -3,7 +3,7 @@ import { Ellipsis, Plus } from 'lucide-react'
 import { forwardRef, useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
-import LectureModal from '@/components/timetable/MyTimetable/LectureModal'
+import LectureBottomSheet from '@/components/timetable/MyTimetable/LectureBottomSheet'
 import OptionModal from '@/components/timetable/MyTimetable/OptionModal'
 import TimetableModal from '@/components/timetable/MyTimetable/TimetableModal'
 import TimetableLayout from '@/components/timetable/TimetableLayout'
@@ -25,19 +25,18 @@ const optBtn = cva({
   },
 })
 
-interface TimeTableProps {
+interface TimetableProps {
   timetable: TimetableInfo
-  deleteTimetableHandler: (timeTableId: number) => void
+  deleteTimetableHandler: (timetableId: number) => void
 }
 
-const Timetable = forwardRef<HTMLDivElement, TimeTableProps>(
-  ({ timetable: { timeTableId, tableName, year, semester }, deleteTimetableHandler }, ref) => {
+const Timetable = forwardRef<HTMLDivElement, TimetableProps>(
+  ({ timetable: { timetableId, timetableName, year, semester }, deleteTimetableHandler }, ref) => {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [globalModalState, setGlobalModalState] = useState<GlobalModalStateType>(null)
-    const [isLectureModalOpen, setIsLectureModalOpen] = useState(false)
     const modalRef = useRef<HTMLDivElement>(null)
 
-    const openTableModal = useCallback(
+    const openTimetableModal = useCallback(
       (value: GlobalModalStateType) => {
         if (value !== null) {
           setGlobalModalState(value)
@@ -46,7 +45,7 @@ const Timetable = forwardRef<HTMLDivElement, TimeTableProps>(
       [setGlobalModalState],
     )
 
-    const closeTableModal = useCallback(() => {
+    const closeTimetableModal = useCallback(() => {
       setGlobalModalState(null)
     }, [setGlobalModalState])
 
@@ -86,7 +85,7 @@ const Timetable = forwardRef<HTMLDivElement, TimeTableProps>(
           })}
         >
           {isModalOpen && (
-            <OptionModal ref={modalRef} openTableModal={openTableModal} closeOptModal={closeOptionModal} />
+            <OptionModal ref={modalRef} openTimetableModal={openTimetableModal} closeOptModal={closeOptionModal} />
           )}
           <div className={css({ display: 'flex', flexDir: 'row', gap: 2.5, alignItems: 'center' })}>
             <div className={css({ color: 'darkGray.1', fontSize: 20, fontWeight: 700, whiteSpace: 'nowrap' })}>
@@ -105,11 +104,11 @@ const Timetable = forwardRef<HTMLDivElement, TimeTableProps>(
                 textOverflow: 'ellipsis',
               })}
             >
-              {tableName}
+              {timetableName}
             </div>
           </div>
           <div className={css({ display: 'flex', flexDir: 'row', gap: 4, alignItems: 'center', color: 'darkGray.1' })}>
-            <button className={optBtn()} onClick={() => setIsLectureModalOpen(true)}>
+            <button className={optBtn()}>
               <Plus size={20} />
             </button>
             <button className={optBtn()} onClick={() => setIsModalOpen(true)}>
@@ -117,7 +116,7 @@ const Timetable = forwardRef<HTMLDivElement, TimeTableProps>(
             </button>
           </div>
         </div>
-        <TimetableLayout timetableId={timeTableId} />
+        <TimetableLayout timetableId={timetableId} />
         {globalModalState &&
           createPortal(
             <div
@@ -137,46 +136,21 @@ const Timetable = forwardRef<HTMLDivElement, TimeTableProps>(
               onClick={event => {
                 // 모달 안쪽을 눌렀을 때도 모달 state가 null 되는 것을 방지
                 if (event.target === event.currentTarget) {
-                  closeTableModal()
+                  closeTimetableModal()
                 }
               }}
             >
               <TimetableModal
-                timetableId={timeTableId}
+                timetableId={timetableId}
                 modalType={globalModalState}
-                closeModal={closeTableModal}
+                closeModal={closeTimetableModal}
                 deleteTimetableHandler={deleteTimetableHandler}
-                tableName={tableName}
+                timetableName={timetableName}
               />
             </div>,
             document.body,
           )}
-        {isLectureModalOpen &&
-          createPortal(
-            <div
-              className={css({
-                position: 'fixed',
-                top: 0,
-                left: 0,
-                w: '100vw',
-                h: '100vh',
-                zIndex: 100,
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'flex-end',
-              })}
-              role="presentation"
-              onClick={event => {
-                // 모달 안쪽을 눌렀을 때도 모달 state가 null 되는 것을 방지
-                if (event.target === event.currentTarget) {
-                  setIsLectureModalOpen(false)
-                }
-              }}
-            >
-              <LectureModal />
-            </div>,
-            document.body,
-          )}
+        <LectureBottomSheet />
       </div>
     )
   },
