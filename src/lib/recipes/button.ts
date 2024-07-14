@@ -4,7 +4,7 @@ export const buttonRecipe = defineRecipe({
   className: 'button',
   description: 'Button component',
   base: {
-    display: 'inline-flex',
+    display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     gap: 2.5,
@@ -30,6 +30,22 @@ export const buttonRecipe = defineRecipe({
       ghost: {
         color: '#09090b',
         _hover: { bg: 'gray.100', color: 'gray.900' },
+      },
+      loginColored: {
+        w: '209px',
+        px: 7,
+        py: 3,
+        rounded: 30,
+        bgColor: 'red.2',
+        color: 'white',
+      },
+      loginOutline: {
+        w: '209px',
+        px: 7,
+        py: 3,
+        rounded: 30,
+        border: '1px solid {colors.red.2}',
+        color: 'red.2',
       },
     },
     size: {

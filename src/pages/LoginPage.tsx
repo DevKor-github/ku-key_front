@@ -17,7 +17,7 @@ import { useAuth } from '@/util/auth/useAuth'
 const Login = () => {
   const [maintain, setMaintain] = useState(false)
   const { mutate: mutateLogin } = useLogIn()
-  const { mutate: mutateLogout } = useLogOut()
+
   const isAuth = useAuth().isAuthenticated
 
   const navigate = useNavigate()
@@ -39,60 +39,112 @@ const Login = () => {
     <div
       className={css({
         display: 'flex',
+        position: 'relative',
         flexDir: 'column',
         w: 'full',
-        h: '100vh',
+        h: '75vh',
         justifyContent: 'center',
         alignItems: 'center',
+        bgColor: 'lightGray.2',
       })}
     >
+      <div className={css({ pos: 'absolute', w: 'full', h: '500px', bgColor: 'red.2', top: 0, zIndex: 1 })} />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className={css({ display: 'flex', flexDir: 'column', gap: 6 })}>
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem className={css({ display: 'flex', flexDir: 'column', alignSelf: 'stretch' })}>
-                <FormLabel className={css({ fontWeight: 700 })}>Email</FormLabel>
-                <FormControl>
-                  <div className={css({ display: 'flex', gap: 2, alignItems: 'center' })}>
-                    <Input placeholder="Email" {...field} className={css({ alignSelf: 'stretch' })} />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem className={css({ display: 'flex', flexDir: 'column', alignSelf: 'stretch' })}>
-                <FormLabel className={css({ fontWeight: 700 })}>Password</FormLabel>
-                <FormControl>
-                  <div className={css({ display: 'flex', gap: 2, alignItems: 'center' })}>
-                    <Input
-                      placeholder="password"
-                      type="password"
-                      {...field}
-                      className={css({ alignSelf: 'stretch' })}
-                    />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className={css({ display: 'flex', alignItems: 'center', spaceX: 2 })}>
-            <Checkbox id="login" checked={maintain} onCheckedChange={() => setMaintain(m => !m)} />
-            <Label htmlFor="login">Remember me</Label>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className={css({
+            display: 'flex',
+            flexDir: 'column',
+            border: '1px solid {colors.lightGray.2}',
+            pt: 20,
+            pb: '70px',
+            px: 105,
+            rounded: 30,
+            bgColor: 'white',
+            zIndex: 2,
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '70px',
+          })}
+        >
+          <div className={css({ display: 'flex', flexDir: 'column', justifyContent: 'center', alignItems: 'center' })}>
+            <h1 className={css({ fontSize: 40, fontWeight: 700 })}>Login</h1>
+            <p className={css({ fontSize: 20, fontWeight: 500, p: 2.5, color: 'darkGray.2' })}>Welcome to KU-key</p>
           </div>
-          <Button type="submit" className={css({ alignSelf: 'center' })}>
-            Login
-          </Button>
-          <Button type="button" className={css({ alignSelf: 'center' })} onClick={() => mutateLogout()}>
-            Logout
-          </Button>
+
+          <div
+            className={css({
+              display: 'flex',
+              flexDir: 'column',
+              gap: 6,
+              justifyContent: 'center',
+              alignItems: 'center',
+              alignSelf: 'stretch',
+            })}
+          >
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem
+                  className={css({
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    alignSelf: 'stretch',
+                  })}
+                >
+                  <FormLabel className={css({ fontSize: 24, fontWeight: 700 })}>Email</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Please enter your Email  address" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem
+                  className={css({
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    alignSelf: 'stretch',
+                  })}
+                >
+                  <FormLabel className={css({ fontSize: 24, fontWeight: 700 })}>Password</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Please enter your Password" type="password" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className={css({ display: 'flex', alignItems: 'center', spaceX: 2, alignSelf: 'flex-start' })}>
+              <Checkbox id="login" checked={maintain} onCheckedChange={() => setMaintain(m => !m)} />
+              <Label htmlFor="login">Remember me</Label>
+            </div>
+          </div>
+
+          <div className={css({ display: 'flex', gap: 5 })}>
+            <Button
+              type="button"
+              variant="loginOutline"
+              className={css({ alignSelf: 'center', fontSize: 20, fontWeight: 500 })}
+              onClick={() => navigate('/register')}
+            >
+              JOIN
+            </Button>
+            <Button
+              type="submit"
+              variant="loginColored"
+              className={css({ alignSelf: 'center', fontSize: 20, fontWeight: 500 })}
+            >
+              LOGIN
+            </Button>
+          </div>
         </form>
       </Form>
     </div>
