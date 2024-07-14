@@ -5,10 +5,8 @@ import { motion } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
 import { useState } from 'react'
 
-import { Semester } from '@/types/timetable'
-
 interface TimetableDropdownProps {
-  dropdownList: Semester[]
+  dropdownList: string[]
   curIndex: number
   setCurIndex: (toIndex: number) => void
   setCurIndexZero?: () => void
@@ -17,7 +15,7 @@ interface TimetableDropdownProps {
 const DropdownItemsStyle = cva({
   base: {
     display: 'flex',
-    mt: 2.5,
+    my: 2,
     mx: 2.5,
     h: 13,
     justifyContent: 'center',
@@ -63,7 +61,6 @@ const TimetableDropdown = ({ dropdownList, curIndex, setCurIndex, setCurIndexZer
             alignItems: 'center',
             outline: 0,
             cursor: 'pointer',
-            zIndex: 30,
             bgColor: 'white',
             transition: 'border 0.256s',
             _hover: {
@@ -74,7 +71,7 @@ const TimetableDropdown = ({ dropdownList, curIndex, setCurIndex, setCurIndexZer
           <div
             className={css({ color: 'darkGray.2', fontSize: 20, fontWeight: 700, wordWrap: 'break-word', flexGrow: 1 })}
           >
-            {`${dropdownList[curIndex].year} ${dropdownList[curIndex].semester} semester`}
+            {dropdownList[curIndex]}
           </div>
           <motion.div animate={isOpen ? 'open' : 'close'} variants={{ open: { rotate: 180 }, close: { rotate: 0 } }}>
             <ChevronDown className={css({ color: 'darkGray.2' })} />
@@ -82,7 +79,7 @@ const TimetableDropdown = ({ dropdownList, curIndex, setCurIndex, setCurIndexZer
         </button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
-        <DropdownMenu.Content sideOffset={-49} className={css({ zIndex: 20 })}>
+        <DropdownMenu.Content sideOffset={5} className={css({ zIndex: 105 })}>
           <motion.div
             animate={{
               height: 'fit-content',
@@ -97,13 +94,12 @@ const TimetableDropdown = ({ dropdownList, curIndex, setCurIndex, setCurIndexZer
                 w: 68,
                 bgColor: 'white',
                 rounded: 10,
-                pb: 2.5,
-                pt: '49px',
+                py: 0.5,
               }),
               shadow(),
             )}
           >
-            {dropdownList.map((semester, index) => {
+            {dropdownList.map((content, index) => {
               return (
                 <DropdownMenu.Item
                   key={index}
@@ -112,7 +108,9 @@ const TimetableDropdown = ({ dropdownList, curIndex, setCurIndex, setCurIndexZer
                     setCurIndex(index)
                     setCurIndexZero && setCurIndexZero()
                   }}
-                >{`${semester.year} ${semester.semester} semester`}</DropdownMenu.Item>
+                >
+                  {content}
+                </DropdownMenu.Item>
               )
             })}
           </motion.div>

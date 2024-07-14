@@ -8,7 +8,7 @@ import StatusBar from '@/components/timetable/MyTimetable/StatusBar'
 import NullTimetable from '@/components/timetable/NullTimetable'
 import ShareBtn from '@/components/timetable/ShareBtn'
 import TimetableDropdown from '@/components/timetable/TimetableDropdown'
-import { convertHtmlToImage, timetablePreprocess } from '@/util/timetableUtil'
+import { convertHtmlToImage, makeSemesterDropdownList, timetablePreprocess } from '@/util/timetableUtil'
 
 const MyTimetablePage = () => {
   const { data: timetableList } = useGetUserTimetableList()
@@ -51,7 +51,7 @@ const MyTimetablePage = () => {
             My schedule
           </div>
           <TimetableDropdown
-            dropdownList={semesterList}
+            dropdownList={makeSemesterDropdownList(semesterList)}
             curIndex={curSemester}
             setCurIndex={setSemesterIndex}
             setCurIndexZero={() => setTimetableIndex(0)}

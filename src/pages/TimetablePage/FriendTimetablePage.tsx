@@ -7,7 +7,7 @@ import { FriendPageBtnStyle } from '@/components/timetable/Friend/FriendsList'
 import FriendTimetable from '@/components/timetable/Friend/FriendTimetable'
 import ShareBtn from '@/components/timetable/ShareBtn'
 import TimetableDropdown from '@/components/timetable/TimetableDropdown'
-import { convertHtmlToImage, timetablePreprocess } from '@/util/timetableUtil'
+import { convertHtmlToImage, makeSemesterDropdownList, timetablePreprocess } from '@/util/timetableUtil'
 
 const FriendTimetablePage = () => {
   const params = useParams()
@@ -31,7 +31,11 @@ const FriendTimetablePage = () => {
           <div className={css({ color: 'black.2', fontSize: 32, fontWeight: '800', wordWrap: 'break-word' })}>
             {user}
           </div>
-          <TimetableDropdown dropdownList={semesterList} curIndex={curSemester} setCurIndex={setSemesterIndex} />
+          <TimetableDropdown
+            dropdownList={makeSemesterDropdownList(semesterList)}
+            curIndex={curSemester}
+            setCurIndex={setSemesterIndex}
+          />
         </div>
         <div className={css({ display: 'flex', flexDir: 'row', gap: 2.5 })}>
           <ShareBtn icon={true} shareHandler={() => convertHtmlToImage(imgRef.current, `${user}_timetable`)}>

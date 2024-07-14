@@ -155,6 +155,10 @@ export const getWeeknTimeList = (courseData: CourseType[], scheduleData: Schedul
   return { time, week }
 }
 
+/**
+ * HTMLDivElement와 filename을 인자로 받아
+ * 사진으로 저장함
+ */
 export const convertHtmlToImage = (ref: HTMLDivElement | null, fileName: string) => {
   if (ref) {
     toPng(ref, { cacheBust: false })
@@ -170,4 +174,8 @@ export const convertHtmlToImage = (ref: HTMLDivElement | null, fileName: string)
   } else {
     // todo: null (시간표가 없는 경우 처리)
   }
+}
+
+export const makeSemesterDropdownList = (semesterList: Semester[]) => {
+  return semesterList.map(semester => `${semester.year} ${semester.semester} semester`)
 }
