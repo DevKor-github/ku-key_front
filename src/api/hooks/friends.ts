@@ -16,7 +16,7 @@ import {
 import { GetFriendTimetableResponse } from '@/api/types/timetable'
 
 const getFriendList = async ({ authHeader, keyword }: GetFriendListRequest) => {
-  const response = await axios.get<GetFriendListResponse>(`${import.meta.env.VITE_API_SERVER}/friendship`, {
+  const response = await axios.get<GetFriendListResponse>(`${import.meta.env.VITE_API_URL}/friendship`, {
     headers: { Authorization: authHeader },
     params: { keyword },
   })
@@ -36,7 +36,7 @@ export const useGetFriendList = (props: Omit<GetFriendListRequest, 'authHeader'>
 }
 
 const getSearchUser = async ({ authHeader, username }: GetSearchUserRequest) => {
-  const response = await axios.get(`${import.meta.env.VITE_API_SERVER}/friendship/search-user`, {
+  const response = await axios.get(`${import.meta.env.VITE_API_URL}/friendship/search-user`, {
     headers: { Authorization: authHeader },
     params: { username },
   })
@@ -58,7 +58,7 @@ export const useGetSearchUser = ({ username }: Pick<GetSearchUserRequest, 'usern
 
 const postFriendship = async ({ authHeader, toUsername }: PostFriendshipRequest) => {
   const response = await axios.post(
-    `${import.meta.env.VITE_API_SERVER}/friendship`,
+    `${import.meta.env.VITE_API_URL}/friendship`,
     { toUsername },
     { headers: { Authorization: authHeader } },
   )
@@ -83,7 +83,7 @@ export const useAddFriendship = () => {
 }
 
 const getReceivedList = async ({ authHeader }: GetRequestListRequest) => {
-  const response = await axios.get<GetRequestListResponse>(`${import.meta.env.VITE_API_SERVER}/friendship/received`, {
+  const response = await axios.get<GetRequestListResponse>(`${import.meta.env.VITE_API_URL}/friendship/received`, {
     headers: { Authorization: authHeader },
   })
   return response.data
@@ -103,7 +103,7 @@ export const useGetReceivedList = () => {
 
 const patchFriendshipRequest = async ({ authHeader, friendshipId }: PatchFriendshipRequestRequest) => {
   const response = await axios.patch(
-    `${import.meta.env.VITE_API_SERVER}/friendship/received/${friendshipId}`,
+    `${import.meta.env.VITE_API_URL}/friendship/received/${friendshipId}`,
     {},
     { headers: { Authorization: authHeader } },
   )
@@ -128,7 +128,7 @@ export const useReceiveFriendship = () => {
 }
 
 const deleteFriendshipRequest = async ({ authHeader, friendshipId }: PatchFriendshipRequestRequest) => {
-  const response = await axios.delete(`${import.meta.env.VITE_API_SERVER}/friendship/received/${friendshipId}`, {
+  const response = await axios.delete(`${import.meta.env.VITE_API_URL}/friendship/received/${friendshipId}`, {
     headers: { Authorization: authHeader },
   })
   return response.data
@@ -151,7 +151,7 @@ export const useDeleteFriendshipRequest = () => {
 }
 
 const deleteFriendship = async ({ authHeader, friendshipId }: PatchFriendshipRequestRequest) => {
-  const response = await axios.delete(`${import.meta.env.VITE_API_SERVER}/friendship/${friendshipId}`, {
+  const response = await axios.delete(`${import.meta.env.VITE_API_URL}/friendship/${friendshipId}`, {
     headers: { Authorization: authHeader },
   })
   return response.data
@@ -175,7 +175,7 @@ export const useDeleteFriendship = () => {
 
 const getFriendTimetable = async ({ authHeader, username, semester, year }: GetFriendTimetableRequest) => {
   const response = await axios.get<GetFriendTimetableResponse>(
-    `${import.meta.env.VITE_API_SERVER}/friendship/friend-timetable`,
+    `${import.meta.env.VITE_API_URL}/friendship/friend-timetable`,
     {
       headers: { Authorization: authHeader },
       params: { username, semester, year },
@@ -202,7 +202,7 @@ export const useGetFriendTimetable = (props: Omit<GetFriendTimetableRequest, 'au
 }
 
 const deleteSentRequest = async ({ authHeader, friendshipId }: PatchFriendshipRequestRequest) => {
-  const response = await axios.delete(`${import.meta.env.VITE_API_SERVER}/friendship/sent/${friendshipId}`, {
+  const response = await axios.delete(`${import.meta.env.VITE_API_URL}/friendship/sent/${friendshipId}`, {
     headers: { Authorization: authHeader },
   })
   return response.data
@@ -225,7 +225,7 @@ export const useDeleteSentRequest = () => {
 }
 
 const getRequestedList = async ({ authHeader }: GetRequestListRequest) => {
-  const response = await axios.get<GetRequestListResponse>(`${import.meta.env.VITE_API_SERVER}/friendship/sent`, {
+  const response = await axios.get<GetRequestListResponse>(`${import.meta.env.VITE_API_URL}/friendship/sent`, {
     headers: { Authorization: authHeader },
   })
   return response.data
