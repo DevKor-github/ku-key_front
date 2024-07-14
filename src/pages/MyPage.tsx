@@ -1,5 +1,7 @@
 import { css } from '@styled-stytem/css'
+import { useEffect } from 'react'
 
+import { getTest } from '@/api/hooks/test'
 import DueDateCard from '@/components/mypage/DueDateCard'
 import Mask from '@/components/mypage/Mask'
 import MemoryCarousel from '@/components/mypage/MemoryCarousel'
@@ -7,6 +9,9 @@ import MypageWrapper from '@/components/mypage/MypageWrapper'
 import UserInfo from '@/components/mypage/UserInfo'
 
 const MyPage = () => {
+  useEffect(() => {
+    getTest()
+  }, [])
   return (
     <MypageWrapper>
       <div

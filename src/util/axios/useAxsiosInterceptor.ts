@@ -1,33 +1,30 @@
-import { useAtom } from 'jotai/react'
-import { RESET } from 'jotai/utils'
+import { AxiosError } from 'axios'
 import { useLayoutEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
 
-import { userCredentialAtom } from '@/lib/store/auth'
 import { UserCredential } from '@/types/user'
 import { apiInterface } from '@/util/axios/custom-axios'
-import { onRequest } from '@/util/axios/request-interceptor'
+import { onRequest } from '@/util/axios/onRequest'
+import { onResponse } from '@/util/axios/onResponse'
 
-export const useAxsiosInterceptor = () => {
-  const navigate = useNavigate()
-  const [userCredential, setUserCredential] = useAtom(userCredentialAtom)
+export const useAxsiosInterceptor = (
+  userCredential: UserCredential | null,
+  handleSet: (value: Omit<UserCredential, 'verified'>) => void,
+  handleError: (error: Error) => void,
+) => {
   useLayoutEffect(() => {
     if (!userCredential) return
-    console.log('useAxsiosInterceptor')
-    const handleSet = (value: Omit<UserCredential, 'verified'>) => {
-      setUserCredential({ verified: userCredential.verified, ...value })
-    }
 
-    const handleError = (error: Error) => {
-      if (error) {
-        setUserCredential(RESET)
-        navigate('/login')
-      }
-    }
     const requestInterceptor = apiInterface.interceptors.request.use(
-      config => onRequest(config, userCredential, handleSet),
-      handleError,
+      config => onRequest(config),
+      error => Promise.reject(error),
     )
-    return () => apiInterface.interceptors.request.eject(requestInterceptor)
-  }, [navigate, setUserCredential, userCredential])
+    const responseInterceptor = apiInterface.interceptors.response.use(
+      res => res,
+      (error: AxiosError) => onResponse(error, userCredential.refreshToken, handleSet, handleError),
+    )
+    return () => {
+      apiInterface.interceptors.request.eject(requestInterceptor)
+      apiInterface.interceptors.response.eject(responseInterceptor)
+    }
+  }, [handleSet, userCredential, handleError])
 }
