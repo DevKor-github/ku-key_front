@@ -46,7 +46,7 @@ const MyTimetablePage = () => {
   return (
     <>
       <div className={css({ display: 'flex', flexDir: 'row', justifyContent: 'space-between', my: 11 })}>
-        <div className={css({ display: 'flex', flexDir: 'row', gap: 5 })}>
+        <div className={css({ display: 'flex', flexDir: { base: 'row', mdDown: 'column' }, gap: 5 })}>
           <div className={css({ color: 'black.2', fontSize: 32, fontWeight: '800', wordWrap: 'break-word' })}>
             My schedule
           </div>
@@ -57,7 +57,7 @@ const MyTimetablePage = () => {
             setCurIndexZero={() => setTimetableIndex(0)}
           />
         </div>
-        <div className={css({ display: 'flex', flexDir: 'row', gap: 2.5 })}>
+        <div className={css({ display: { base: 'flex', mdDown: 'none' }, flexDir: 'row', gap: 2.5 })}>
           <ShareBtn icon={true} shareHandler={() => convertHtmlToImage(imgRef.current, 'my_timetable')}>
             <Download />
           </ShareBtn>

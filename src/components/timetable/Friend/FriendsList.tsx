@@ -7,7 +7,7 @@ import { useDeleteFriendship, useGetFriendList } from '@/api/hooks/friends'
 
 export const FriendPageBtnStyle = cva({
   base: {
-    w: 47,
+    w: { base: 47, mdDown: 'full' },
     bgColor: 'bg.gray',
     py: 3.5,
     rounded: 10,

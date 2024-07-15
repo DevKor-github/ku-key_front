@@ -11,13 +11,14 @@ export const TimeCell = cva({
     justifyContent: 'center',
     alignItems: 'center',
     color: 'darkGray.1',
-    fontSize: 18,
+    fontSize: { base: 18, mdDown: 12 },
     fontWeight: '500',
     wordWrap: 'break-word',
     h: 27,
     borderRight: '1px solid {colors.lightGray.1}',
     borderBottom: '1px solid {colors.lightGray.1}',
     position: 'relative',
+    overflow: 'hidden',
   },
   variants: {
     header: {
@@ -28,7 +29,7 @@ export const TimeCell = cva({
     sidebar: {
       true: {
         bgColor: 'bg.gray',
-        w: '4.125rem',
+        w: { base: '4.125rem', mdDown: 9 },
       },
     },
     end: {

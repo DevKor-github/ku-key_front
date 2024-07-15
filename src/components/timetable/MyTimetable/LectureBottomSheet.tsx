@@ -75,7 +75,7 @@ const LectureBottomSheet = () => {
         className={css({
           position: 'fixed',
           w: '100vw',
-          display: 'flex',
+          display: { base: 'flex', mdDown: 'none' },
           justifyContent: 'center',
           zIndex: 100,
         })}

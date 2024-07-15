@@ -11,7 +11,7 @@ const FriendPage = () => {
           Friend list
         </div>
       </div>
-      <div className={css({ display: 'flex', flexDir: 'row', gap: 5 })}>
+      <div className={css({ display: 'flex', flexDir: { base: 'row', mdDown: 'column' }, gap: 5 })}>
         <FriendsList />
         <FriendsManage />
       </div>
