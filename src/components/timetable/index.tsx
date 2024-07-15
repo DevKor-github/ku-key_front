@@ -107,7 +107,15 @@ const Timetable = forwardRef<HTMLDivElement, TimetableProps>(
               {timetableName}
             </div>
           </div>
-          <div className={css({ display: 'flex', flexDir: 'row', gap: 4, alignItems: 'center', color: 'darkGray.1' })}>
+          <div
+            className={css({
+              display: { base: 'flex', mdDown: 'none' },
+              flexDir: 'row',
+              gap: 4,
+              alignItems: 'center',
+              color: 'darkGray.1',
+            })}
+          >
             <button className={optBtn()} onClick={() => setIsModalOpen(true)}>
               <Ellipsis size={20} />
             </button>

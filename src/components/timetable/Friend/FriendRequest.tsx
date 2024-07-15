@@ -11,7 +11,7 @@ const FriendRequest = () => {
     <div className={css({ display: 'flex', flexDir: 'column', gap: 5 })}>
       <div className={css({ display: 'flex', gap: 3, alignItems: 'center' })}>
         <h2 className={css({ fontWeight: 700, fontSize: 20, color: 'darkGray.1' })}>Friend request</h2>
-        <div className={css({ fontWeight: 500, fontSize: 14, color: 'lightGray.1' })}>
+        <div className={css({ fontWeight: 500, fontSize: 14, color: 'lightGray.1', mdDown: { display: 'none' } })}>
           You can approve or ignore the request
         </div>
       </div>
