@@ -14,7 +14,7 @@ const FriendTimetablePage = () => {
   const user = params.userHandler
 
   const imgRef = useRef(null)
-  const [curSemester, setCurSemester] = useState(0)
+  const [curSemester, setCurSemester] = useState(2)
   const semesterList = timetablePreprocess([])
 
   const setSemesterIndex = useCallback(

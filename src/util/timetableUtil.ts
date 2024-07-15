@@ -29,23 +29,60 @@ export const getDuration = (timeA: string, timeB: string) => {
 }
 
 /**
+ * 현재 학기, 현재 학기 이전의 2학기, 현재 학기 이후의 3학기 지원
+ * 총 6개 학기의 Semester[] 반환
+ */
+const calcSemester = (): Semester[] => {
+
+  const KSTtoday = new Date()
+  const year = KSTtoday.getFullYear()
+  const month = KSTtoday.getMonth() + 1
+  const ret: Semester[] = []
+
+  if (1 < month && month <= 6) {
+    // 1학기
+    for (let i = 2; i < 4; i++) {
+      ret.push({ year: `${year - 1}`, semester: numberToSemester[i], timetables: [] })
+    }
+    for (let i = 0; i < 4; i++) {
+      ret.push({ year: `${year}`, semester: numberToSemester[i], timetables: [] })
+    }
+  } else if (6 < month && month <= 7) {
+    // 여름학기
+    ret.push({ year: `${year - 1}`, semester: 'Winter', timetables: [] })
+    for (let i = 0; i < 4; i++) {
+      ret.push({ year: `${year}`, semester: numberToSemester[i], timetables: [] })
+    }
+    ret.push({ year: `${year + 11}`, semester: 'Spring', timetables: [] })
+  } else if (7 < month && month <= 12) {
+    // 2학기
+    for (let i = 0; i < 4; i++) {
+      ret.push({ year: `${year}`, semester: numberToSemester[i], timetables: [] })
+    }
+    for (let i = 0; i < 2; i++) {
+      ret.push({ year: `${year + 1}`, semester: numberToSemester[i], timetables: [] })
+    }
+  } else {
+    // 겨울학기
+    for (let i = 1; i < 4; i++) {
+      ret.push({ year: `${year}`, semester: numberToSemester[i], timetables: [] })
+    }
+    for (let i = 0; i < 3; i++) {
+      ret.push({ year: `${year + 1}`, semester: numberToSemester[i], timetables: [] })
+    }
+  }
+  return ret
+}
+
+/**
  * 시간표 리스트를 받으면
  * 각 학기의 배열로 되어 있는 리스트로 변환
  */
 export const timetablePreprocess = (data: TimetableInfo[] | undefined) => {
-  // todo: 전반적인 리펙토링
 
   if (data === undefined) data = []
 
-  // todo: hard coding 되어 있는 학기 리스트 자동화 매핑
-  const supportedYear = ['2023', '2024']
-  const ret: Semester[] = []
-
-  supportedYear.map(year => {
-    for (let i = 0; i < 4; i++) {
-      ret.push({ year, semester: numberToSemester[i], timetables: [] })
-    }
-  })
+  const ret = calcSemester()
 
   data.map(timetable => {
     for (let i = 0; i < ret.length; i++) {

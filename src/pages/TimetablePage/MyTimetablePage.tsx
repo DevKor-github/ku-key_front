@@ -15,7 +15,7 @@ const MyTimetablePage = () => {
   const { mutate: deleteTimetable } = useDeleteTimetable()
 
   const imgRef = useRef<HTMLDivElement>(null)
-  const [curSemester, setCurSemester] = useState(0)
+  const [curSemester, setCurSemester] = useState(2)
   const [curIndex, setCurIndex] = useState(0)
 
   const semesterList = timetablePreprocess(timetableList)
