@@ -155,7 +155,7 @@ const Timetable = forwardRef<HTMLDivElement, TimetableProps>(
             </div>,
             document.body,
           )}
-        {createPortal(<LectureBottomSheet />, document.body)}
+        {createPortal(<LectureBottomSheet timetableId={timetableId} />, document.body)}
       </div>
     )
   },

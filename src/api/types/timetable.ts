@@ -47,3 +47,9 @@ export interface UpdateTimetableColorRequest {
   timetableId: number
   timetableColor: ColorType
 }
+
+export interface PostCourseRequest {
+  authHeader: string | null
+  timetableId: number
+  courseId: number
+}

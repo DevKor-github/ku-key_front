@@ -8,18 +8,16 @@ import {
   GetTimetableByTimetableIdRequest,
   GetTimetableByTimetableIdResponse,
   GetTimetableByUserIdResponse,
+  PostCourseRequest,
   UpdateMainTimetableRequest,
   UpdateTimetableColorRequest,
   UpdateTimetableNameRequest,
 } from '@/api/types/timetable'
 
 const getTimetableByUser = async (authHeader: string | null) => {
-  const response = await axios.get<GetTimetableByUserIdResponse>(
-    `${import.meta.env.VITE_API_URL}/timetable/user`,
-    {
-      headers: { Authorization: authHeader },
-    },
-  )
+  const response = await axios.get<GetTimetableByUserIdResponse>(`${import.meta.env.VITE_API_URL}/timetable/user`, {
+    headers: { Authorization: authHeader },
+  })
   return response.data
 }
 
@@ -176,6 +174,31 @@ export const useUpdateTimetableColor = () => {
   return useMutation({
     mutationFn: (props: Omit<UpdateTimetableColorRequest, 'authHeader'>) => {
       return patchColor({ authHeader, ...props })
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['timetable'] })
+    },
+  })
+}
+
+const postCourse = async ({ authHeader, timetableId, courseId }: PostCourseRequest) => {
+  console.log({ timetableId, courseId })
+  const response = await axios.post(`${import.meta.env.VITE_API_URL}/timetable/course`, null, {
+    headers: { Authorization: authHeader },
+    params: { timetableId, courseId },
+  })
+  return response
+}
+
+/**
+ * 시간표에 특정 강의를 추가합니다. 해당 시간에 이미 등록된 개인 스케쥴이나 강의가 있을 경우 추가되지 않습니다.
+ */
+export const usePostCourse = () => {
+  const authHeader = useAuthHeader()
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (props: Omit<PostCourseRequest, 'authHeader'>) => {
+      return postCourse({ authHeader, ...props })
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['timetable'] })

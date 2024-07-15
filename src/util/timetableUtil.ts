@@ -17,6 +17,12 @@ export const numberToSemester: SemesterType[] = ['Spring', 'Summer', 'Fall', 'Wi
 
 export const ColorTypeArr: ColorType[] = ['Red', 'Blue', 'Green', 'Purple', 'Orange', 'Gray']
 
+export const filterTypeMap = {
+  course: 'Course Name',
+  professor: 'Professor Name',
+  code: 'Course Code',
+}
+
 /**
  * HH:MM:SS 형태의 문자열을 두개 받아, 차이를 분으로 반환
  */
@@ -33,7 +39,6 @@ export const getDuration = (timeA: string, timeB: string) => {
  * 총 6개 학기의 Semester[] 반환
  */
 const calcSemester = (): Semester[] => {
-
   const KSTtoday = new Date()
   const year = KSTtoday.getFullYear()
   const month = KSTtoday.getMonth() + 1
@@ -79,7 +84,6 @@ const calcSemester = (): Semester[] => {
  * 각 학기의 배열로 되어 있는 리스트로 변환
  */
 export const timetablePreprocess = (data: TimetableInfo[] | undefined) => {
-
   if (data === undefined) data = []
 
   const ret = calcSemester()

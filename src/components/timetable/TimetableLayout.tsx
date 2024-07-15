@@ -18,7 +18,6 @@ export const TimeCell = cva({
     borderRight: '1px solid {colors.lightGray.1}',
     borderBottom: '1px solid {colors.lightGray.1}',
     position: 'relative',
-    overflow: 'hidden',
   },
   variants: {
     header: {

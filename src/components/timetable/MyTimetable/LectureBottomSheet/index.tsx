@@ -1,11 +1,10 @@
-import { css, cva, cx } from '@styled-stytem/css'
+import { css, cx } from '@styled-stytem/css'
 import { shadow } from '@styled-stytem/recipes'
 import { motion, Variants } from 'framer-motion'
 import { ChevronUp } from 'lucide-react'
 import { useState } from 'react'
-import { createPortal } from 'react-dom'
 
-import TimetableDropdown from '@/components/timetable/TimetableDropdown'
+import AddClass from '@/components/timetable/MyTimetable/LectureBottomSheet/AddClass'
 
 const HeaderBtnStyle = css({
   fontWeight: 500,
@@ -43,25 +42,12 @@ const closeBtnStyle = css({
   cursor: 'pointer',
 })
 
-const selectFilterBtnStyle = cva({
-  base: {
-    color: 'lightGray.1',
-    fontSize: 18,
-    fontWeight: 500,
-    border: '1px solid {colors.lightGray.1}',
-    px: 2.5,
-    py: 1.5,
-    rounded: 'full',
-    bgColor: 'bg.gray',
-    cursor: 'pointer',
-  },
-})
-
-const LectureBottomSheet = () => {
+interface LectureBottomSheetProps {
+  timetableId: number
+}
+const LectureBottomSheet = ({ timetableId }: LectureBottomSheetProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const [sheetState, setSheetState] = useState<'class' | 'schedule' | null>(null)
-  const categoryList = ['All Class', 'Major', 'General Studies', 'Academic Foundations']
-  const [curCategory, setCurCategory] = useState(0)
 
   return (
     <>
@@ -148,41 +134,9 @@ const LectureBottomSheet = () => {
             pb: 3.5,
           })}
         >
-          <div className={css({ display: 'flex', justifyContent: 'space-between' })}>
-            <div className={css({ display: 'flex', gap: 3.5 })}>
-              <TimetableDropdown dropdownList={categoryList} curIndex={curCategory} setCurIndex={setCurCategory} />
-              {/* {cat<div>{}</div>} */}
-            </div>
-            <div className={css({ display: 'flex', gap: 3.5, justifyContent: 'center' })}>
-              <div className={css({ display: 'flex', justifyContent: 'center', alignItems: 'center' })}>Filtering</div>
-              <div className={css({ display: 'flex', justifyContent: 'center', gap: 2.5, alignItems: 'center' })}>
-                <button className={selectFilterBtnStyle()}>Course Name</button>
-                <button className={selectFilterBtnStyle()}>Professor Name</button>
-                <button className={selectFilterBtnStyle()}>Course Code</button>
-              </div>
-            </div>
-          </div>
-          <div>{/* 검색창 */}</div>
-          <div></div>
+          {sheetState === 'schedule' ? <div>스케쥴 직접 추가</div> : <AddClass timetableId={timetableId} />}
         </div>
       </motion.div>
-      {curCategory !== 0 &&
-        createPortal(
-          <button
-            className={css({
-              position: 'fixed',
-              top: 0,
-              left: 0,
-              display: 'flex',
-              w: '100vw',
-              h: '100vh',
-              bgColor: '#00000066',
-              zIndex: 105,
-            })}
-            onClick={() => setCurCategory(0)}
-          ></button>,
-          document.body,
-        )}
     </>
   )
 }
