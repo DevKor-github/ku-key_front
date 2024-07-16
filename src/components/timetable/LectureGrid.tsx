@@ -4,7 +4,7 @@ import { GetTimetableByTimetableIdResponse } from '@/api/types/timetable'
 import LectureSticker from '@/components/timetable/LectureSticker'
 import { TimeCell } from '@/components/timetable/TimetableLayout'
 import { COLOR_INFO } from '@/lib/constants/timetableColors'
-import { getDuration, lectureDataPreprocess } from '@/util/timetableUtil'
+import { getDuration, getStartTime, lectureDataPreprocess } from '@/util/timetableUtil'
 
 interface LectureGridProps {
   timetableData: GetTimetableByTimetableIdResponse
@@ -30,6 +30,7 @@ const LectureGrid = ({ timetableData, weekCnt, timeCnt }: LectureGridProps) => {
                 <LectureSticker
                   key={lecInd}
                   name={lecture.title}
+                  startTime={getStartTime(lecture.startTime)}
                   runningTime={getDuration(lecture.endTime, lecture.startTime)}
                   room={lecture.location}
                   professor={lecture.professorName ? lecture.professorName : null}

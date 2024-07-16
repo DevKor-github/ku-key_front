@@ -182,7 +182,6 @@ export const useUpdateTimetableColor = () => {
 }
 
 const postCourse = async ({ authHeader, timetableId, courseId }: PostCourseRequest) => {
-  console.log({ timetableId, courseId })
   const response = await axios.post(`${import.meta.env.VITE_API_URL}/timetable/course`, null, {
     headers: { Authorization: authHeader },
     params: { timetableId, courseId },

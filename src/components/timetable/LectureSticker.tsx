@@ -23,9 +23,10 @@ interface LectureStickerProps {
   professor: string | null
   room: string
   bgColor: string
+  startTime: number
 }
 
-const LectureSticker = ({ name, runningTime, professor, room, bgColor }: LectureStickerProps) => {
+const LectureSticker = ({ name, runningTime, professor, room, bgColor, startTime }: LectureStickerProps) => {
   return (
     <div
       className={css({
@@ -40,7 +41,8 @@ const LectureSticker = ({ name, runningTime, professor, room, bgColor }: Lecture
         justifyContent: 'space-between',
       })}
       style={{
-        height: `calc(${(runningTime / 60) * 100}% + ${runningTime / 60}px)`,
+        top: `${(startTime / 60) * 100}%`,
+        height: `calc(${(runningTime / 60) * 100}% + ${runningTime / 60}px)`, // 시간표 사이 선 보간
         backgroundColor: bgColor,
       }}
     >

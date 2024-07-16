@@ -33,6 +33,13 @@ export const getDuration = (timeA: string, timeB: string) => {
   const diffMin = diffMSec / (60 * 1000)
   return diffMin
 }
+/**
+ * HH:MM:SS 형태의 문자열을 받아, 정시로부터 몇분 지났는지 반환
+ */
+export const getStartTime = (time: string) => {
+  const date = new Date(`2024/05/27 ${time}`)
+  return date.getMinutes()
+}
 
 /**
  * 현재 학기, 현재 학기 이전의 2학기, 현재 학기 이후의 3학기 지원
