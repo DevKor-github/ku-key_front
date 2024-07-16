@@ -2,19 +2,19 @@ import { css } from '@styled-stytem/css'
 import { CircleUser, MapPin } from 'lucide-react'
 
 const LectureDetail = css({
-  fontSize: 14,
+  fontSize: { base: 14, mdDown: 10 },
   fontWeight: 400,
   display: 'flex',
-  flexDir: 'row',
   alignItems: 'center',
+  justifyContent: 'flex-end',
   gap: 0.5,
+  width: '100%',
 })
 
 const EllipsisText = css({
   textOverflow: 'ellipsis',
   overflow: 'hidden',
   whiteSpace: 'nowrap',
-  maxW: 38,
 })
 
 interface LectureStickerProps {
@@ -34,11 +34,12 @@ const LectureSticker = ({ name, runningTime, professor, room, bgColor, startTime
         position: 'absolute',
         w: 'calc(100% + 1px)',
         p: '0.75rem 0.625rem',
-        rounded: 10,
+        rounded: { base: 10, mdDown: 5 },
         zIndex: 10,
         display: 'flex',
         flexDir: 'column',
         justifyContent: 'space-between',
+        overflow: 'hidden',
       })}
       style={{
         top: `${(startTime / 60) * 100}%`,
@@ -48,11 +49,11 @@ const LectureSticker = ({ name, runningTime, professor, room, bgColor, startTime
     >
       <div
         className={css({
-          fontSize: 18,
+          fontSize: { base: 18, mdDown: 12 },
           fontWeight: '500',
           wordWrap: 'break-word',
           overflow: 'hidden',
-          lineClamp: 2,
+          lineClamp: { base: 2, mdDown: 3 },
           textOverflow: 'ellipsis',
         })}
       >

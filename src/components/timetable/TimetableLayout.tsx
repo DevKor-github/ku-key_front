@@ -17,7 +17,7 @@ export const TimeCell = cva({
     fontSize: { base: 18, mdDown: 12 },
     fontWeight: '500',
     wordWrap: 'break-word',
-    h: 27,
+    h: { base: 27, mdDown: 18 },
     borderRight: '1px solid {colors.lightGray.1}',
     borderBottom: '1px solid {colors.lightGray.1}',
     position: 'relative',
