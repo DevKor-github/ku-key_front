@@ -7,7 +7,7 @@ import { useUpdateTimetableName } from '@/api/hooks/timetable'
 import ColorSelector from '@/components/timetable/MyTimetable/ColorSelector'
 import { Input } from '@/components/ui/input'
 import ModalCard from '@/components/ui/modal'
-import { GlobalModalStateType } from '@/types/timetable'
+import { ColorType, GlobalModalStateType } from '@/types/timetable'
 import { ColorTypeArr } from '@/util/timetableUtil'
 
 const modalBtn = cva({
@@ -80,16 +80,32 @@ const NameChangeModal = ({
   )
 }
 
-const ColorChangeModal = ({ closeModal, timetableId }: { closeModal: () => void; timetableId: number }) => {
+const ColorChangeModal = ({
+  closeModal,
+  timetableId,
+  curColor,
+}: {
+  closeModal: () => void
+  timetableId: number
+  curColor: ColorType
+}) => {
   return (
     <>
       <div className={css({ display: 'flex', flexDir: 'column', alignItems: 'center', gap: 2.5 })}>
         <Palette size={58} className={css({ color: 'lightGray.1' })} />
         <div className={css({ fontWeight: 700, fontSize: 24, color: 'black.2' })}>Color</div>
       </div>
-      <div className={css({ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', columnGap: 2.5, rowGap: 5 })}>
+      <div className={css({ display: 'flex', gap: 2.5 })}>
         {ColorTypeArr.map((color, index) => {
-          return <ColorSelector key={index} colorTheme={color} closeModal={closeModal} timetableId={timetableId} />
+          return (
+            <ColorSelector
+              key={index}
+              colorTheme={color}
+              closeModal={closeModal}
+              timetableId={timetableId}
+              isSelected={curColor === color}
+            />
+          )
         })}
       </div>
     </>
@@ -138,6 +154,7 @@ interface TimetableModalProps {
   deleteTimetableHandler: (timetableId: number) => void
   timetableId: number
   timetableName: string
+  curColor: ColorType
 }
 
 const TimetableModal = ({
@@ -146,6 +163,7 @@ const TimetableModal = ({
   deleteTimetableHandler,
   timetableId,
   timetableName,
+  curColor,
 }: TimetableModalProps) => {
   return (
     <ModalCard
@@ -167,7 +185,9 @@ const TimetableModal = ({
       {modalType === 'name' && (
         <NameChangeModal closeModal={closeModal} timetableId={timetableId} curTimetableName={timetableName} />
       )}
-      {modalType === 'color' && <ColorChangeModal closeModal={closeModal} timetableId={timetableId} />}
+      {modalType === 'color' && (
+        <ColorChangeModal closeModal={closeModal} timetableId={timetableId} curColor={curColor} />
+      )}
       {modalType === 'delete' && (
         <DeleteModal
           closeModal={closeModal}

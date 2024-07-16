@@ -1,17 +1,40 @@
-import { css, cx } from '@styled-stytem/css'
+import { css, cva, cx } from '@styled-stytem/css'
 import { shadow } from '@styled-stytem/recipes'
 
 import { useUpdateTimetableColor } from '@/api/hooks/timetable'
 import { COLOR_INFO } from '@/lib/constants/timetableColors'
 import { ColorType } from '@/types/timetable'
 
+const ColorSelectorStyle = cva({
+  base: {
+    h: '1.875rem',
+    w: '1.875rem',
+    rounded: '50%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    cursor: 'pointer',
+    _hover: {
+      boxShadow: '0px 0px 4px rgba(0, 0, 0, 0.5)',
+    },
+  },
+  variants: {
+    isSelected: {
+      true: {
+        boxShadow: '0px 0px 4px rgba(0, 0, 0, 0.5)',
+      },
+    },
+  },
+})
+
 interface ColorSelectorProps {
   colorTheme: ColorType
   timetableId: number
   closeModal: () => void
+  isSelected: boolean
 }
 
-const ColorSelector = ({ colorTheme, closeModal, timetableId }: ColorSelectorProps) => {
+const ColorSelector = ({ colorTheme, closeModal, timetableId, isSelected }: ColorSelectorProps) => {
   const { mutate } = useUpdateTimetableColor()
   return (
     <button
@@ -19,47 +42,24 @@ const ColorSelector = ({ colorTheme, closeModal, timetableId }: ColorSelectorPro
         closeModal()
         mutate({ timetableColor: colorTheme, timetableId })
       }}
-      className={css({
-        display: 'flex',
-        flexDir: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        w: 23,
-        cursor: 'pointer',
-      })}
+      className={ColorSelectorStyle({ isSelected })}
+      style={{
+        backgroundColor: COLOR_INFO[colorTheme].symbol,
+      }}
     >
-      <div className={css({ color: 'lightGray.1', fontSize: 18, fontWeight: 500 })}>{colorTheme}</div>
-      <div
-        className={cx(
-          css({
-            h: '1.375rem',
-            w: '1.375rem',
-            rounded: '50%',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            _hover: {
-              boxShadow: '0px 0px 4px rgba(0, 0, 0, 0.5)',
-            },
-          }),
-          shadow(),
-        )}
-        style={{
-          backgroundColor: COLOR_INFO[colorTheme].symbol,
-        }}
-      >
+      {isSelected && (
         <div
           className={cx(
             css({
-              h: 3,
-              w: 3,
+              h: 4,
+              w: 4,
               bgColor: 'white',
               rounded: '50%',
             }),
             shadow(),
           )}
         />
-      </div>
+      )}
     </button>
   )
 }

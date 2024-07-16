@@ -5,7 +5,6 @@ import { createPortal } from 'react-dom'
 
 import LectureBottomSheet from '@/components/timetable/MyTimetable/LectureBottomSheet'
 import OptionModal from '@/components/timetable/MyTimetable/OptionModal'
-import TimetableModal from '@/components/timetable/MyTimetable/TimetableModal'
 import TimetableLayout from '@/components/timetable/TimetableLayout'
 import { GlobalModalStateType, TimetableInfo } from '@/types/timetable'
 
@@ -121,40 +120,13 @@ const Timetable = forwardRef<HTMLDivElement, TimetableProps>(
             </button>
           </div>
         </div>
-        <TimetableLayout timetableId={timetableId} />
-        {globalModalState &&
-          createPortal(
-            <div
-              className={css({
-                position: 'fixed',
-                top: 0,
-                left: 0,
-                w: '100vw',
-                h: '100vh',
-                bgColor: 'rgba(0, 0, 0, 0.40)',
-                zIndex: 100,
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-              })}
-              role="presentation"
-              onClick={event => {
-                // 모달 안쪽을 눌렀을 때도 모달 state가 null 되는 것을 방지
-                if (event.target === event.currentTarget) {
-                  closeTimetableModal()
-                }
-              }}
-            >
-              <TimetableModal
-                timetableId={timetableId}
-                modalType={globalModalState}
-                closeModal={closeTimetableModal}
-                deleteTimetableHandler={deleteTimetableHandler}
-                timetableName={timetableName}
-              />
-            </div>,
-            document.body,
-          )}
+        <TimetableLayout
+          timetableId={timetableId}
+          globalModalState={globalModalState}
+          closeTimetableModal={closeTimetableModal}
+          deleteTimetableHandler={deleteTimetableHandler}
+          timetableName={timetableName}
+        />
         {createPortal(<LectureBottomSheet timetableId={timetableId} />, document.body)}
       </div>
     )

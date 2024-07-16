@@ -1,8 +1,11 @@
 import { css, cva } from '@styled-stytem/css'
 import { memo } from 'react'
+import { createPortal } from 'react-dom'
 
 import { useGetTimetable } from '@/api/hooks/timetable'
 import LectureGrid from '@/components/timetable/LectureGrid'
+import TimetableModal from '@/components/timetable/MyTimetable/TimetableModal'
+import { GlobalModalStateType } from '@/types/timetable'
 import { getWeeknTimeList } from '@/util/timetableUtil'
 
 export const TimeCell = cva({
@@ -49,53 +52,99 @@ export const TimeCell = cva({
 
 interface TimetableLayoutProps {
   timetableId: number
+  globalModalState: GlobalModalStateType
+  closeTimetableModal: () => void
+  deleteTimetableHandler: (timetableId: number) => void
+  timetableName: string
 }
 
-const TimetableLayout = memo(({ timetableId }: TimetableLayoutProps) => {
-  const { data } = useGetTimetable({ timetableId })
+const TimetableLayout = memo(
+  ({
+    timetableId,
+    globalModalState,
+    closeTimetableModal,
+    deleteTimetableHandler,
+    timetableName,
+  }: TimetableLayoutProps) => {
+    const { data } = useGetTimetable({ timetableId })
 
-  const { time, week } = getWeeknTimeList(data.courses, data.schedules)
+    const { time, week } = getWeeknTimeList(data.courses, data.schedules)
 
-  return (
-    <div
-      className={css({
-        display: 'flex',
-        flexDir: 'row',
-        borderLeft: '1px solid {colors.lightGray.1}',
-        roundedBottom: 10,
-        bgColor: 'white',
-      })}
-    >
-      <div className={css({ display: 'flex', flexDir: 'column' })}>
-        {time.map((val, index) => {
-          return (
-            <div
-              key={index}
-              className={TimeCell({
-                sidebar: true,
-                header: index === 0,
-                end: index === time.length - 1 ? 'leftEnd' : undefined,
-              })}
-            >
-              {val}
-            </div>
-          )
+    return (
+      <div
+        className={css({
+          display: 'flex',
+          flexDir: 'row',
+          borderLeft: '1px solid {colors.lightGray.1}',
+          roundedBottom: 10,
+          bgColor: 'white',
         })}
-      </div>
-      <div className={css({ display: 'flex', flexDir: 'column', flex: 1 })}>
-        <div className={css({ display: 'flex', flexDir: 'row' })}>
-          {week.map((days, index) => {
+      >
+        <div className={css({ display: 'flex', flexDir: 'column' })}>
+          {time.map((val, index) => {
             return (
-              <div key={index} className={css({ flex: 1 }, TimeCell.raw({ header: true }))}>
-                {days}
+              <div
+                key={index}
+                className={TimeCell({
+                  sidebar: true,
+                  header: index === 0,
+                  end: index === time.length - 1 ? 'leftEnd' : undefined,
+                })}
+              >
+                {val}
               </div>
             )
           })}
         </div>
-        <LectureGrid timetableData={data} weekCnt={week.length} timeCnt={time.length - 1} />
+        <div className={css({ display: 'flex', flexDir: 'column', flex: 1 })}>
+          <div className={css({ display: 'flex', flexDir: 'row' })}>
+            {week.map((days, index) => {
+              return (
+                <div key={index} className={css({ flex: 1 }, TimeCell.raw({ header: true }))}>
+                  {days}
+                </div>
+              )
+            })}
+          </div>
+          <LectureGrid timetableData={data} weekCnt={week.length} timeCnt={time.length - 1} />
+        </div>
+        {globalModalState &&
+          createPortal(
+            <div
+              className={css({
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                w: '100vw',
+                h: '100vh',
+                bgColor: 'rgba(0, 0, 0, 0.40)',
+                zIndex: 100,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              })}
+              role="presentation"
+              onClick={event => {
+                // 모달 안쪽을 눌렀을 때도 모달 state가 null 되는 것을 방지
+                if (event.target === event.currentTarget) {
+                  closeTimetableModal()
+                }
+              }}
+            >
+              <TimetableModal
+                timetableId={timetableId}
+                modalType={globalModalState}
+                closeModal={closeTimetableModal}
+                deleteTimetableHandler={deleteTimetableHandler}
+                timetableName={timetableName}
+                curColor={data.color}
+              />
+            </div>,
+            document.body,
+          )}
       </div>
-    </div>
-  )
-})
+    )
+  },
+)
 
 export default TimetableLayout
