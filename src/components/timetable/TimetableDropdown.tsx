@@ -6,7 +6,7 @@ import { ChevronDown } from 'lucide-react'
 import { useState } from 'react'
 
 interface TimetableDropdownProps {
-  dropdownList: string[]
+  dropdownList: readonly string[]
   curIndex: number
   setCurIndex: (toIndex: number) => void
   setCurIndexZero?: () => void

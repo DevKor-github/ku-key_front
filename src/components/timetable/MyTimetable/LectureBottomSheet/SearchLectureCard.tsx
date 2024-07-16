@@ -46,7 +46,10 @@ const SearchLectureCard = ({ data, addCourse }: SearchLectureCardProps) => {
           })}
         >
           <div className={css({ display: 'flex', gap: 2 })}>
-            <span>{data.category}</span>|<span>{data.credit} credits</span>
+            <span>
+              {data.category}, {data.college}
+            </span>
+            |<span>{data.credit} credits</span>
           </div>
           <div className={css({ display: 'flex', gap: 2 })}>
             {/* todo:: 강의평 api */}
