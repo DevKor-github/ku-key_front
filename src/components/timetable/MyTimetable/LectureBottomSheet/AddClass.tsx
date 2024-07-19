@@ -55,7 +55,13 @@ interface AddClassProps {
 }
 const AddClass = ({ timetableId }: AddClassProps) => {
   const categoryList = ['All Class', 'Major', 'General Studies', 'Academic Foundations'] as const
+  // // 오픈 되는 모델 카테고리
+  // const [curModalCategory, setCurModalCategory] = useState(0)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  // 실제 설정된 모델 카테고리
   const [curCategory, setCurCategory] = useState(0)
+  // 세부 카테고리
+  const [curClassification, setCurClassification] = useState<string | null>(null)
 
   const [curFilter, setCurFilter] = useState<'course' | 'professor' | 'code'>('code')
 
@@ -73,13 +79,47 @@ const AddClass = ({ timetableId }: AddClassProps) => {
     [postCourse, timetableId],
   )
 
+  const handleDropdown = useCallback(
+    (toIndex: number) => {
+      setCurClassification(null)
+      setCurCategory(toIndex)
+      if (toIndex !== 0) setIsModalOpen(true)
+    },
+    [setCurCategory, setCurClassification, setIsModalOpen],
+  )
+
   return (
     <>
       <div className={css({ display: 'flex', flexDir: 'column', h: '100%', gap: 2.5 })}>
         <div className={css({ display: 'flex', flexDir: 'column', gap: 2.5 })}>
           <div className={css({ display: 'flex', justifyContent: 'space-between' })}>
-            <div className={css({ display: 'flex', gap: 3.5 })}>
-              <TimetableDropdown dropdownList={categoryList} curIndex={curCategory} setCurIndex={setCurCategory} />
+            <div
+              className={css({
+                display: 'flex',
+                gap: 3.5,
+                alignItems: 'center',
+              })}
+            >
+              <TimetableDropdown dropdownList={categoryList} curIndex={curCategory} setCurIndex={handleDropdown} />
+              {curClassification && (
+                <div
+                  className={css({
+                    rounded: 'full',
+                    bgColor: 'darkGray.2',
+                    px: 2.5,
+                    py: 1,
+                    fontWeight: 700,
+                    color: 'white',
+                    fontSize: 12,
+                    textOverflow: 'ellipsis',
+                    overflow: 'hidden',
+                    whiteSpace: 'nowrap',
+                    maxW: 50,
+                  })}
+                >
+                  {curClassification}
+                </div>
+              )}
             </div>
             <div className={css({ display: 'flex', gap: 3.5, justifyContent: 'center' })}>
               <div
@@ -168,7 +208,7 @@ const AddClass = ({ timetableId }: AddClassProps) => {
           {searchByCodeData?.map((data, index) => <SearchLectureCard key={index} data={data} addCourse={addCourse} />)}
         </div>
       </div>
-      {curCategory !== 0 &&
+      {isModalOpen &&
         createPortal(
           <div // eslint-disable-line
             className={css({
@@ -183,7 +223,12 @@ const AddClass = ({ timetableId }: AddClassProps) => {
               justifyContent: 'center',
               alignItems: 'center',
             })}
-            onClick={() => setCurCategory(0)}
+            onClick={() => {
+              setIsModalOpen(false)
+              if (curCategory !== 0 && curClassification === null) {
+                setCurCategory(0)
+              }
+            }}
           >
             <div
               className={cx(
@@ -209,7 +254,15 @@ const AddClass = ({ timetableId }: AddClassProps) => {
                 {curCategory === 2
                   ? categoryObject[categoryList[2]].map(category => {
                       return (
-                        <button key={category} className={CollegeCategoryStyle} onClick={() => {}}>
+                        <button
+                          key={category}
+                          className={CollegeCategoryStyle}
+                          onClick={event => {
+                            event.stopPropagation()
+                            setIsModalOpen(false)
+                            setCurClassification(category)
+                          }}
+                        >
                           <span
                             className={css({
                               whiteSpace: 'nowrap',
@@ -222,8 +275,7 @@ const AddClass = ({ timetableId }: AddClassProps) => {
                         </button>
                       )
                     })
-                  : Object.entries(categoryObject[categoryList[curCategory]]).map(([college, department]) => {
-                      console.log(department)
+                  : Object.entries(categoryObject[categoryList[curCategory]]).map(([college]) => {
                       return (
                         <button key={college} className={CollegeCategoryStyle}>
                           <span
