@@ -7,6 +7,15 @@ interface SearchLectureCardProps {
   data: SearchedCourse
   addCourse: (courseId: number) => void
 }
+
+const CookiesRate = ({ rate }: { rate: number }) => {
+  const rateArr = []
+  for (let i = 0; i < 5; i++) {
+    rateArr.push(<span className={css({ rounded: 'full', w: 2, h: 2, bgColor: i < rate ? 'red.3' : 'lightGray.1' })} />)
+  }
+  return <span className={css({ display: 'flex', gap: 0.5, alignItems: 'center' })}>{rateArr}</span>
+}
+
 const SearchLectureCard = ({ data, addCourse }: SearchLectureCardProps) => {
   return (
     <div className={css({ display: 'flex', justifyContent: 'space-between', alignItems: 'center' })}>
@@ -50,14 +59,14 @@ const SearchLectureCard = ({ data, addCourse }: SearchLectureCardProps) => {
             </span>
             |<span>{data.credit} credits</span>
           </div>
-          <div className={css({ display: 'flex', gap: 2 })}>
-            {/* todo:: 강의평 api */}
-            <>별점</>
-            <a href={data.syllabus} target="_blank">
+          <a className={css({ display: 'flex', gap: 2 })} href={data.syllabus} target="_blank">
+            {/* todo:: 강의평 제대로 된 링크 */}
+            <CookiesRate rate={data.totalRate} />
+            <span>
               Review
-              <ChevronRight size={20} />
-            </a>
-          </div>
+              <ChevronRight size={14} />
+            </span>
+          </a>
         </div>
       </div>
       <button
