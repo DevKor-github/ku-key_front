@@ -5,4 +5,9 @@ export interface GetByCourseCodeRequest {
   courseCode: string
 }
 
-export type GetByCourseCodeResponse = SearchedCourse[]
+export type GetCourseResponse = SearchedCourse[]
+
+export interface GetByCourseNameInGeneralRequest {
+  authHeader: string | null
+  courseName: string
+}

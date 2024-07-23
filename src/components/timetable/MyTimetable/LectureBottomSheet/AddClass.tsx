@@ -1,14 +1,15 @@
 import { css, cva, cx } from '@styled-stytem/css'
 import { shadow } from '@styled-stytem/recipes'
+import { motion } from 'framer-motion'
 import { ChevronRight, Search } from 'lucide-react'
 import { useCallback, useState } from 'react'
 import { createPortal } from 'react-dom'
 
-import { useGetByCourseCode } from '@/api/hooks/course'
+import { useGetByCourseCode, useGetByCourseNameInGeneral } from '@/api/hooks/course'
 import { usePostCourse } from '@/api/hooks/timetable'
 import SearchLectureCard from '@/components/timetable/MyTimetable/LectureBottomSheet/SearchLectureCard'
 import TimetableDropdown from '@/components/timetable/TimetableDropdown'
-import { categoryObject } from '@/lib/constants/category'
+import { categoryObject, generalStudies } from '@/lib/constants/category'
 import { filterTypeMap } from '@/util/timetableUtil'
 
 const SelectFilterBtnStyle = cva({
@@ -55,10 +56,8 @@ interface AddClassProps {
 }
 const AddClass = ({ timetableId }: AddClassProps) => {
   const categoryList = ['All Class', 'Major', 'General Studies', 'Academic Foundations'] as const
-  // // 오픈 되는 모델 카테고리
-  // const [curModalCategory, setCurModalCategory] = useState(0)
   const [isModalOpen, setIsModalOpen] = useState(false)
-  // 실제 설정된 모델 카테고리
+  // 대략 카테고리(0:All, 1:Major, 2:General, 3:Academic)
   const [curCategory, setCurCategory] = useState(0)
   // 세부 카테고리
   const [curClassification, setCurClassification] = useState<string | null>(null)
@@ -68,8 +67,10 @@ const AddClass = ({ timetableId }: AddClassProps) => {
   const [inputKeyword, setInputKeyword] = useState('')
 
   const [codeKeyword, setCodeKeyword] = useState('')
+  const [generalCourseKeyword, setGeneralCourseKeyword] = useState('')
 
   const { data: searchByCodeData } = useGetByCourseCode({ courseCode: codeKeyword })
+  const { data: searchByCourseInKeywordData } = useGetByCourseNameInGeneral({ courseName: generalCourseKeyword })
   const { mutate: postCourse } = usePostCourse()
 
   const addCourse = useCallback(
@@ -87,6 +88,11 @@ const AddClass = ({ timetableId }: AddClassProps) => {
     },
     [setCurCategory, setCurClassification, setIsModalOpen],
   )
+
+  const resetKeywords = useCallback(() => {
+    setCodeKeyword('')
+    setGeneralCourseKeyword('')
+  }, [setCodeKeyword, setGeneralCourseKeyword])
 
   return (
     <>
@@ -160,7 +166,11 @@ const AddClass = ({ timetableId }: AddClassProps) => {
                 </button>
                 <button
                   className={SelectFilterBtnStyle({ state: curFilter === 'code' ? 'active' : undefined })}
-                  onClick={() => setCurFilter('code')}
+                  onClick={() => {
+                    setCurFilter('code')
+                    setCurCategory(0)
+                    setCurClassification(null)
+                  }}
                 >
                   {filterTypeMap['code']}
                 </button>
@@ -179,9 +189,32 @@ const AddClass = ({ timetableId }: AddClassProps) => {
             })}
             onSubmit={e => {
               e.preventDefault()
+              resetKeywords()
               switch (curFilter) {
                 case 'code':
                   setCodeKeyword(inputKeyword)
+                  break
+                case 'course':
+                  switch (curCategory) {
+                    case 1:
+                      // 전공-강의명
+                      break
+                    case 2:
+                      // 교양-강의명
+                      setGeneralCourseKeyword(inputKeyword)
+                      break
+                  }
+                  break
+                case 'professor':
+                  switch (curCategory) {
+                    case 1:
+                      // 전공-교수명
+                      break
+                    case 2:
+                      // 교양-교수명
+                      break
+                  }
+                  break
               }
               setInputKeyword('')
             }}
@@ -205,6 +238,9 @@ const AddClass = ({ timetableId }: AddClassProps) => {
           </form>
         </div>
         <div className={css({ overflow: 'scroll', display: 'flex', flexDir: 'column', gap: 5 })}>
+          {searchByCourseInKeywordData?.map((data, index) => (
+            <SearchLectureCard key={index} data={data} addCourse={addCourse} />
+          ))}
           {searchByCodeData?.map((data, index) => <SearchLectureCard key={index} data={data} addCourse={addCourse} />)}
         </div>
       </div>
@@ -252,7 +288,7 @@ const AddClass = ({ timetableId }: AddClassProps) => {
                 className={css({ h: 60, overflow: 'scroll', display: 'flex', flexDir: 'column', gap: 1, px: 7, w: 94 })}
               >
                 {curCategory === 2
-                  ? categoryObject[categoryList[2]].map(category => {
+                  ? generalStudies.map(category => {
                       return (
                         <button
                           key={category}
@@ -261,6 +297,7 @@ const AddClass = ({ timetableId }: AddClassProps) => {
                             event.stopPropagation()
                             setIsModalOpen(false)
                             setCurClassification(category)
+                            setCurFilter('course')
                           }}
                         >
                           <span
@@ -275,20 +312,27 @@ const AddClass = ({ timetableId }: AddClassProps) => {
                         </button>
                       )
                     })
-                  : Object.entries(categoryObject[categoryList[curCategory]]).map(([college]) => {
+                  : Object.entries(categoryObject).map(([college]) => {
                       return (
-                        <button key={college} className={CollegeCategoryStyle}>
-                          <span
-                            className={css({
-                              whiteSpace: 'nowrap',
-                              textOverflow: 'ellipsis',
-                              overflow: 'hidden',
-                            })}
-                          >
-                            {college}
-                          </span>
-                          <ChevronRight />
-                        </button>
+                        <>
+                          <button key={college} className={CollegeCategoryStyle}>
+                            <span
+                              className={css({
+                                whiteSpace: 'nowrap',
+                                textOverflow: 'ellipsis',
+                                overflow: 'hidden',
+                              })}
+                            >
+                              {college}
+                            </span>
+                            <motion.div>
+                              <ChevronRight />
+                            </motion.div>
+                          </button>
+                          {categoryObject[college].map(() => {
+                            return <div></div>
+                          })}
+                        </>
                       )
                     })}
               </div>
