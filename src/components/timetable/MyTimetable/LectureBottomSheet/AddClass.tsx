@@ -238,10 +238,12 @@ const AddClass = ({ timetableId }: AddClassProps) => {
           </form>
         </div>
         <div className={css({ overflow: 'scroll', display: 'flex', flexDir: 'column', gap: 5 })}>
-          {searchByCourseInKeywordData?.map((data, index) => (
+          {searchByCourseInKeywordData?.data.map((data, index) => (
             <SearchLectureCard key={index} data={data} addCourse={addCourse} />
           ))}
-          {searchByCodeData?.map((data, index) => <SearchLectureCard key={index} data={data} addCourse={addCourse} />)}
+          {searchByCodeData?.data.map((data, index) => (
+            <SearchLectureCard key={index} data={data} addCourse={addCourse} />
+          ))}
         </div>
       </div>
       {isModalOpen &&

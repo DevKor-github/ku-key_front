@@ -30,8 +30,7 @@ const SearchLectureCard = ({ data, addCourse }: SearchLectureCardProps) => {
         <div className={css({ display: 'flex', alignItems: 'center', fontSize: 14, color: 'darkGray.1' })}>
           <span>{data.professorName}</span>
           <Dot />
-          {/* todo: 실제 장소 api */}
-          <span>미디어관 701호</span>
+          <span>{data.details[0].classroom}</span>
           <Dot />
           <span>{data.courseCode}</span>
         </div>
