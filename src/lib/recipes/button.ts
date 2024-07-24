@@ -4,14 +4,10 @@ export const buttonRecipe = defineRecipe({
   className: 'button',
   description: 'Button component',
   base: {
-    display: 'flex',
+    display: 'inline-flex',
     justifyContent: 'center',
     alignItems: 'center',
-    gap: 2.5,
     cursor: 'pointer',
-    rounded: 'md',
-    fontSize: 'sm',
-    fontWeight: 500,
   },
   variants: {
     variant: {
@@ -47,16 +43,26 @@ export const buttonRecipe = defineRecipe({
         border: '1px solid {colors.red.2}',
         color: 'red.2',
       },
+      input: {
+        px: 4,
+        py: 2.5,
+        rounded: 10,
+        border: '1px solid {colors.lightGray.1}',
+        bgColor: 'white',
+        color: 'lightGray.1',
+        _hover: { bgColor: 'red.2', color: 'white', borderColor: 'red.2' },
+        transition: 'all 0.25s',
+      },
     },
-    size: {
-      default: { h: 10, px: 4, py: 2 },
-      sm: { h: 9, px: 3 },
-      lg: { h: 11, px: 8 },
-      icon: { h: 10, w: 10 },
-    },
+    // size: {
+    //   default: { h: 10, px: 4, py: 2 },
+    //   sm: { h: 9, px: 3 },
+    //   lg: { h: 11, px: 8 },
+    //   icon: { h: 10, w: 10 },
+    // },
   },
   defaultVariants: {
     variant: 'default',
-    size: 'default',
+    // size: 'default',
   },
 })

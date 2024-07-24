@@ -3,9 +3,9 @@ import { z } from 'zod'
 export const RegisterFormSchema = z.object({
   email: z
     .string()
-    .min(2, { message: 'should type in your gmail address.' })
+    .min(2, { message: 'This field is required' })
     .refine(value => value !== '', { message: 'This field is required.' })
-    .refine(value => !value.includes('@gmail.com'), { message: 'should type in excluding @gmail.com' }),
+    .refine(value => value.includes('@gmail.com'), { message: 'should type in gmail account' }),
   emailCode: z.string().refine(value => value !== '', { message: 'This field is required.' }),
   username: z
     .string()

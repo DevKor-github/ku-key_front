@@ -16,3 +16,5 @@ export interface RegisterFormProps<T extends keyof RegistrationState> {
   valid: Pick<RegistrationState, T>
   handleValidation: (target: keyof RegistrationState, value: ValidState) => void
 }
+
+export type ProgressState = 1 | 2 | 3

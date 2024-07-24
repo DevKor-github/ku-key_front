@@ -7,8 +7,10 @@ import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 
 import { useRegister } from '@/api/hooks/register'
+import RegisterBGImg from '@/assets/RegisterBGImg.jpg'
 import EmailForm from '@/components/register/EmailForm'
 import PasswordForm from '@/components/register/PasswordForm'
+import Progress from '@/components/register/Progress'
 import StudentIdForm from '@/components/register/StudentIdForm'
 import UsernameForm from '@/components/register/UsernameForm'
 import Button from '@/components/ui/button'
@@ -101,86 +103,109 @@ const RegisterPage = () => {
     <div
       className={css({
         display: 'flex',
+        pos: 'relative',
         flexDir: 'column',
         w: 'full',
-        h: 'full',
+        h: 'auto',
         justifyContent: 'center',
         alignItems: 'center',
-        py: '100px',
         gap: 5,
+        py: '142px',
+        bgColor: 'bg',
       })}
     >
+      <img src={RegisterBGImg} alt="register background img" className={css({ pos: 'absolute', top: 0, zIndex: 0 })} />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className={css({ display: 'flex', flexDir: 'column', gap: 6 })}>
-          {page === 1 && (
-            <>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className={css({
+            display: 'flex',
+            flexDir: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '50px',
+            bgColor: 'white',
+            py: 20,
+            zIndex: 1,
+            boxShadow: '0px 0px 4px 0px rgba(0, 0, 0, 0.25)',
+            rounded: 30,
+            px: 105,
+          })}
+        >
+          <div className={css({ display: 'flex', flexDir: 'column', justifyContent: 'center', alignItems: 'center' })}>
+            <h1 className={css({ fontSize: 40, fontWeight: 700 })}>Join</h1>
+            <h2 className={css({ fontSize: 20, fontWeight: 500, color: 'darkGray.2' })}>Welcome to KU-Key</h2>
+          </div>
+          <div className={css({ display: 'flex', flexDir: 'column', alignItems: 'center', gap: 23 })}>
+            <Progress stageState={1} />
+            {page === 1 && (
               <EmailForm form={form} valid={valid} handleValidation={handleValidation} />
-              <UsernameForm form={form} valid={valid} handleValidation={handleValidation} />
-              <PasswordForm {...form} />
-              <Button type="button" onClick={handleNextPage}>
-                Next
-              </Button>
-            </>
-          )}
-          {page === 2 && (
-            <>
-              <StudentIdForm form={form} valid={valid} handleValidation={handleValidation} />
-              <div className={css({ display: 'flex', flexDir: 'column', gap: 4 })}>
-                <Label htmlFor="Sreenshot of acceptance email">
-                  Please attach a screenshot of your acceptance email from Korea University
-                </Label>
-                <div
-                  className={css({
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    borderWidth: 2,
-                    borderColor: 'gray.400',
-                    rounded: 8,
-                    borderStyle: 'dashed',
-                  })}
-                >
-                  <Button
-                    type="button"
-                    onClick={() => file.current?.click()}
-                    variant="ghost"
-                    className={css({ w: 'full' })}
+              /* <UsernameForm form={form} valid={valid} handleValidation={handleValidation} />
+              <PasswordForm {...form} /> */
+              /* <Button type="button" onClick={handleNextPage}>
+                  Next
+                </Button> */
+            )}
+            {page === 2 && (
+              <>
+                <StudentIdForm form={form} valid={valid} handleValidation={handleValidation} />
+                <div className={css({ display: 'flex', flexDir: 'column', gap: 4 })}>
+                  <Label htmlFor="Sreenshot of acceptance email">
+                    Please attach a screenshot of your acceptance email from Korea University
+                  </Label>
+                  <div
+                    className={css({
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      borderWidth: 2,
+                      borderColor: 'gray.400',
+                      rounded: 8,
+                      borderStyle: 'dashed',
+                    })}
                   >
-                    Attach
-                    <Plus className={css({ w: 4, h: 4 })} />
-                  </Button>
+                    <Button
+                      type="button"
+                      onClick={() => file.current?.click()}
+                      variant="ghost"
+                      className={css({ w: 'full' })}
+                    >
+                      Attach
+                      <Plus className={css({ w: 4, h: 4 })} />
+                    </Button>
+                  </div>
+                  <Input
+                    type="file"
+                    ref={file}
+                    accept="image/*"
+                    onChange={checkFile}
+                    className={css({ display: 'none' })}
+                  />
+                  {valid.screenShot === 'invalid' && (
+                    <p className={css({ color: 'red.500' })}>Only image files are accepted</p>
+                  )}
                 </div>
-                <Input
-                  type="file"
-                  ref={file}
-                  accept="image/*"
-                  onChange={checkFile}
-                  className={css({ display: 'none' })}
-                />
-                {valid.screenShot === 'invalid' && (
-                  <p className={css({ color: 'red.500' })}>Only image files are accepted</p>
-                )}
-              </div>
-              <Button type="submit" disabled={page !== 2}>
-                Submit
-              </Button>
-            </>
-          )}
-          {page === 3 && (
-            <>
-              <div className={css({ w: 400, textAlign: 'center' })}>
-                <p>Thanks for submitting your information.</p>
-                <p>Once we have verified you are a KU exchange student,</p>
-                <p>we will send you an email right away.</p>
-                <p className={css({ mt: 4 })}>After authentication is complete,</p>
-                <p>you'll be able to use the service seamlessly.</p>
-                <p className={css({ mt: 4 })}>This process takes 1-2 business days on average.</p>
-              </div>
-              <Button type="button" onClick={() => navigate('/login')}>
-                Confirm
-              </Button>
-            </>
-          )}
+                <Button type="submit" disabled={page !== 2}>
+                  Submit
+                </Button>
+              </>
+            )}
+            {page === 3 && (
+              <>
+                <div className={css({ w: 400, textAlign: 'center' })}>
+                  <p>Thanks for submitting your information.</p>
+                  <p>Once we have verified you are a KU exchange student,</p>
+                  <p>we will send you an email right away.</p>
+                  <p className={css({ mt: 4 })}>After authentication is complete,</p>
+                  <p>you'll be able to use the service seamlessly.</p>
+                  <p className={css({ mt: 4 })}>This process takes 1-2 business days on average.</p>
+                </div>
+                <Button type="button" onClick={() => navigate('/login')}>
+                  Confirm
+                </Button>
+              </>
+            )}
+          </div>
         </form>
       </Form>
     </div>

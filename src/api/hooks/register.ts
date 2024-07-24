@@ -4,8 +4,7 @@ import { CheckEmailDuplicationResProps, RegisterReqProps, VerifyEmailReqProps } 
 import { apiInterface } from '@/util/axios/custom-axios'
 
 const checkEmailDuplication = async (email: string) => {
-  const emailWithDomain = email + '@gmail.com'
-  const response = await apiInterface.post<CheckEmailDuplicationResProps>(`/auth/email/${emailWithDomain}`)
+  const response = await apiInterface.post<CheckEmailDuplicationResProps>(`/auth/email/${email}`)
   return response.data
 }
 
