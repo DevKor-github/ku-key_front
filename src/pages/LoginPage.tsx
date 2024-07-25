@@ -132,12 +132,16 @@ const Login = () => {
             <Button
               type="button"
               variant="loginOutline"
-              className={css({ fontSize: 20, fontWeight: 500, lineHeight: 'normal' })}
+              className={css({ fontSize: 20, fontWeight: 500, lineHeight: 'none' })}
               onClick={() => navigate('/register')}
             >
               JOIN
             </Button>
-            <Button type="submit" variant="loginColored" className={css({ fontSize: 20, fontWeight: 500 })}>
+            <Button
+              type="submit"
+              variant="loginColored"
+              className={css({ fontSize: 20, fontWeight: 500, lineHeight: 'none' })}
+            >
               LOGIN
             </Button>
           </div>
