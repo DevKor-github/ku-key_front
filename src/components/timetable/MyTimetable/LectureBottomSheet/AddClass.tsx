@@ -5,12 +5,12 @@ import { ChevronRight, Search } from 'lucide-react'
 import { useCallback, useState } from 'react'
 import { createPortal } from 'react-dom'
 
-import { useGetByCourseCode, useGetByCourseNameInGeneral } from '@/api/hooks/course'
 import { usePostCourse } from '@/api/hooks/timetable'
 import SearchLectureCard from '@/components/timetable/MyTimetable/LectureBottomSheet/SearchLectureCard'
 import TimetableDropdown from '@/components/timetable/TimetableDropdown'
 import { categoryObject, generalStudies } from '@/lib/constants/category'
 import { filterTypeMap } from '@/util/timetableUtil'
+import { useCourseSearch, useCourseSearchProps } from '@/util/useCourseSearch'
 
 const SelectFilterBtnStyle = cva({
   base: {
@@ -56,21 +56,25 @@ interface AddClassProps {
 }
 const AddClass = ({ timetableId }: AddClassProps) => {
   const categoryList = ['All Class', 'Major', 'General Studies', 'Academic Foundations'] as const
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  // 대략 카테고리(0:All, 1:Major, 2:General, 3:Academic)
-  const [curCategory, setCurCategory] = useState(0)
-  // 세부 카테고리
-  const [curClassification, setCurClassification] = useState<string | null>(null)
 
+  // 검색 Filter
   const [curFilter, setCurFilter] = useState<'course' | 'professor' | 'code'>('code')
+  // 포괄 카테고리 (0:All, 1:Major, 2:General, 3:Academic)
+  const [curCategory, setCurCategory] = useState(0)
+  // 세부 카테고리 (포괄 카테고리가 1 / 2 / 3 일때만 존재, 그 이외에는 null)
+  const [curClassification, setCurClassification] = useState<string | null>(null)
+  // 세부 카테고리 지정 모달의 열림 여부
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
+  const [query, setQuery] = useState<useCourseSearchProps>({
+    category: categoryList[0],
+    filter: 'code',
+    queryKeyword: '',
+    classification: null,
+  })
   const [inputKeyword, setInputKeyword] = useState('')
 
-  const [codeKeyword, setCodeKeyword] = useState('')
-  const [generalCourseKeyword, setGeneralCourseKeyword] = useState('')
-
-  const { data: searchByCodeData } = useGetByCourseCode({ courseCode: codeKeyword })
-  const { data: searchByCourseInKeywordData } = useGetByCourseNameInGeneral({ courseName: generalCourseKeyword })
+  const searchData = useCourseSearch(query)
   const { mutate: postCourse } = usePostCourse()
 
   const addCourse = useCallback(
@@ -88,11 +92,6 @@ const AddClass = ({ timetableId }: AddClassProps) => {
     },
     [setCurCategory, setCurClassification, setIsModalOpen],
   )
-
-  const resetKeywords = useCallback(() => {
-    setCodeKeyword('')
-    setGeneralCourseKeyword('')
-  }, [setCodeKeyword, setGeneralCourseKeyword])
 
   return (
     <>
@@ -189,33 +188,12 @@ const AddClass = ({ timetableId }: AddClassProps) => {
             })}
             onSubmit={e => {
               e.preventDefault()
-              resetKeywords()
-              switch (curFilter) {
-                case 'code':
-                  setCodeKeyword(inputKeyword)
-                  break
-                case 'course':
-                  switch (curCategory) {
-                    case 1:
-                      // 전공-강의명
-                      break
-                    case 2:
-                      // 교양-강의명
-                      setGeneralCourseKeyword(inputKeyword)
-                      break
-                  }
-                  break
-                case 'professor':
-                  switch (curCategory) {
-                    case 1:
-                      // 전공-교수명
-                      break
-                    case 2:
-                      // 교양-교수명
-                      break
-                  }
-                  break
-              }
+              setQuery({
+                queryKeyword: inputKeyword,
+                filter: curFilter,
+                category: categoryList[curCategory],
+                classification: curClassification,
+              })
               setInputKeyword('')
             }}
           >
@@ -238,12 +216,7 @@ const AddClass = ({ timetableId }: AddClassProps) => {
           </form>
         </div>
         <div className={css({ overflow: 'scroll', display: 'flex', flexDir: 'column', gap: 5 })}>
-          {searchByCourseInKeywordData?.data.map((data, index) => (
-            <SearchLectureCard key={index} data={data} addCourse={addCourse} />
-          ))}
-          {searchByCodeData?.data.map((data, index) => (
-            <SearchLectureCard key={index} data={data} addCourse={addCourse} />
-          ))}
+          {searchData?.data.map((data, index) => <SearchLectureCard key={index} data={data} addCourse={addCourse} />)}
         </div>
       </div>
       {isModalOpen &&

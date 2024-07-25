@@ -23,6 +23,8 @@ export const filterTypeMap = {
   code: 'Course Code',
 }
 
+export const initCourseSearchData = { hasNextPage: false, nextCursorId: 0, data: [] }
+
 /**
  * HH:MM:SS 형태의 문자열을 두개 받아, 차이를 분으로 반환
  */
