@@ -42,7 +42,7 @@ const Login = () => {
         position: 'relative',
         flexDir: 'column',
         w: 'full',
-        h: '75vh',
+        h: 'calc(100vh - 359px)',
         justifyContent: 'center',
         alignItems: 'center',
         bgColor: 'lightGray.2',

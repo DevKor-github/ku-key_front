@@ -115,7 +115,7 @@ const RegisterPage = () => {
         pos: 'relative',
         flexDir: 'column',
         w: 'full',
-        h: 'auto',
+        h: 'calc(100vh - 359px)',
         justifyContent: 'center',
         alignItems: 'center',
         gap: 5,
