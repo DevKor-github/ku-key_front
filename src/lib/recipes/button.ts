@@ -42,6 +42,7 @@ export const buttonRecipe = defineRecipe({
         rounded: 30,
         border: '1px solid {colors.red.2}',
         color: 'red.2',
+        gap: 2.5,
       },
       input: {
         px: 4,
@@ -50,7 +51,7 @@ export const buttonRecipe = defineRecipe({
         border: '1px solid {colors.lightGray.1}',
         bgColor: 'white',
         color: 'lightGray.1',
-        _hover: { bgColor: 'red.2', color: 'white', borderColor: 'red.2' },
+        _checked: { bgColor: 'red.2', color: 'white', borderColor: 'red.2' },
         transition: 'all 0.25s',
       },
     },

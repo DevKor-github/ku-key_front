@@ -5,7 +5,6 @@ export const inputRecipe = defineRecipe({
   description: 'Input component',
   base: {
     display: 'flex',
-    w: 270,
     rounded: 10,
     border: '1px solid {colors.lightGray.1}',
     bgColor: 'white',
@@ -16,5 +15,15 @@ export const inputRecipe = defineRecipe({
     color: 'black',
     _file: { border: 0, bg: 'transparent', fontSize: 'sm', fontWeight: 'medium' },
     _placeholder: { color: 'lightGray.1' },
+  },
+  variants: {
+    variant: {
+      default: { w: 270 },
+      max: { w: 419 },
+      middle: { w: 344 },
+    },
+  },
+  defaultVariants: {
+    variant: 'default',
   },
 })

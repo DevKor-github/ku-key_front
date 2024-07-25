@@ -13,4 +13,8 @@ export interface RegisterReqProps {
   username: string
   password: string
   studentNumber: string
+  country: string
+  homeUniversity: string
+  major: string
+  name: string
 }

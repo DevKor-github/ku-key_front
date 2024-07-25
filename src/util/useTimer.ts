@@ -43,6 +43,10 @@ export const useTimer = (initialTime: number) => {
     }
   }, [isRunning, isPaused])
 
+  useEffect(() => {
+    if (isFinished) reset()
+  }, [isFinished, reset])
+
   return {
     time,
     isRunning,

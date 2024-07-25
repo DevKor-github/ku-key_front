@@ -5,8 +5,8 @@ import { forwardRef } from 'react'
 
 type InputProps = React.InputHTMLAttributes<HTMLInputElement> & RecipeVariantProps<typeof input>
 
-const Input = forwardRef<HTMLInputElement, InputProps>(({ className, type, ...props }, ref) => {
-  return <input type={type} className={cx(input(), className)} ref={ref} {...props} />
+const Input = forwardRef<HTMLInputElement, InputProps>(({ className, variant, type, ...props }, ref) => {
+  return <input type={type} className={cx(input({ variant }), className)} ref={ref} {...props} />
 })
 Input.displayName = 'Input'
 

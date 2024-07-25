@@ -13,9 +13,8 @@ export const useCheckEmailDuplication = () => {
 }
 
 const sendEmail = async (email: string) => {
-  const emailWithDomain = email + '@gmail.com'
   const response = await apiInterface.post<boolean>(`/auth/request-email-verification`, {
-    email: emailWithDomain,
+    email,
   })
   return response.data
 }
@@ -25,9 +24,8 @@ export const useSendEmail = () => {
 }
 
 const verifyEmail = async ({ email, verifyToken }: VerifyEmailReqProps) => {
-  const emailWithDomain = email + '@gmail.com'
   const response = await apiInterface.post<boolean>(`/auth/verify-email`, {
-    email: emailWithDomain,
+    email,
     verifyToken,
   })
   return response.data
@@ -59,10 +57,14 @@ export const useCheckStudentIdDuplication = () => {
 const register = async (data: RegisterReqProps) => {
   const formData = new FormData()
   formData.append('screenshot', data.screenShot)
-  formData.append('email', data.email + '@gmail.com')
+  formData.append('email', data.email)
   formData.append('username', data.username)
   formData.append('password', data.password)
   formData.append('studentNumber', data.studentNumber)
+  formData.append('country', data.country)
+  formData.append('homeUniversity', data.homeUniversity)
+  formData.append('major', data.major)
+  formData.append('name', data.name)
   const response = await apiInterface.post(`/auth/sign-up`, formData)
   return response.data
 }
