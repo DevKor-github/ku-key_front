@@ -11,7 +11,9 @@ interface SearchLectureCardProps {
 const CookiesRate = ({ rate }: { rate: number }) => {
   const rateArr = []
   for (let i = 0; i < 5; i++) {
-    rateArr.push(<span className={css({ rounded: 'full', w: 2, h: 2, bgColor: i < rate ? 'red.3' : 'lightGray.1' })} />)
+    rateArr.push(
+      <span key={i} className={css({ rounded: 'full', w: 2, h: 2, bgColor: i < rate ? 'red.3' : 'lightGray.1' })} />,
+    )
   }
   return <span className={css({ display: 'flex', gap: 0.5, alignItems: 'center' })}>{rateArr}</span>
 }

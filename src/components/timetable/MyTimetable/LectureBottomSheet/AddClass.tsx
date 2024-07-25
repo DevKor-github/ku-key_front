@@ -1,14 +1,15 @@
 import { css, cva, cx } from '@styled-stytem/css'
 import { shadow } from '@styled-stytem/recipes'
-import { motion } from 'framer-motion'
-import { ChevronRight, Search } from 'lucide-react'
+import { Search } from 'lucide-react'
 import { useCallback, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 import { usePostCourse } from '@/api/hooks/timetable'
+import MajorList from '@/components/timetable/MyTimetable/LectureBottomSheet/MajorList'
 import SearchLectureCard from '@/components/timetable/MyTimetable/LectureBottomSheet/SearchLectureCard'
 import TimetableDropdown from '@/components/timetable/TimetableDropdown'
-import { categoryObject, generalStudies } from '@/lib/constants/category'
+import { categoryObject } from '@/lib/constants/category'
+import { generateRandomString } from '@/util/generateRandomString'
 import { filterTypeMap } from '@/util/timetableUtil'
 import { useCourseSearch, useCourseSearchProps } from '@/util/useCourseSearch'
 
@@ -37,26 +38,13 @@ const SelectFilterBtnStyle = cva({
   },
 })
 
-const CollegeCategoryStyle = css({
-  display: 'flex',
-  justifyContent: 'space-between',
-  bgColor: 'bg.gray',
-  border: '1px solid {colors.lightGray.1}',
-  rounded: 10,
-  px: 2.5,
-  py: 2,
-  color: 'lightGray.1',
-  fontSize: 16,
-  fontWeight: 500,
-  cursor: 'pointer',
-})
-
 interface AddClassProps {
   timetableId: number
 }
 const AddClass = ({ timetableId }: AddClassProps) => {
   const categoryList = ['All Class', 'Major', 'General Studies', 'Academic Foundations'] as const
 
+  const [isSearchAvailable, setIsSearchAvailable] = useState(true)
   // 검색 Filter
   const [curFilter, setCurFilter] = useState<'course' | 'professor' | 'code'>('code')
   // 포괄 카테고리 (0:All, 1:Major, 2:General, 3:Academic)
@@ -88,9 +76,45 @@ const AddClass = ({ timetableId }: AddClassProps) => {
     (toIndex: number) => {
       setCurClassification(null)
       setCurCategory(toIndex)
-      if (toIndex !== 0) setIsModalOpen(true)
+      if (toIndex === 1 || toIndex === 3) {
+        setIsModalOpen(true)
+      } else {
+        setIsSearchAvailable(true)
+        if (toIndex === 0) {
+          setCurFilter('code')
+        } else if (toIndex === 2) {
+          setCurFilter('course')
+        }
+      }
     },
     [setCurCategory, setCurClassification, setIsModalOpen],
+  )
+
+  const handleMajorBtn = useCallback(
+    (classification: string) => {
+      setIsModalOpen(false)
+      setCurClassification(classification)
+      if (curCategory === 3) {
+        // Academic Foundation의 경우 검색이 존재하지 않음
+        setIsSearchAvailable(false)
+        setQuery({
+          queryKeyword: generateRandomString(10),
+          filter: 'course',
+          category: 'Academic Foundations',
+          classification,
+        })
+        console.log({
+          queryKeyword: generateRandomString(10),
+          filter: curFilter,
+          category: categoryList[curCategory],
+          classification: curClassification,
+        })
+      } else {
+        setIsSearchAvailable(true)
+        setCurFilter('course')
+      }
+    },
+    [curCategory],
   )
 
   return (
@@ -176,44 +200,46 @@ const AddClass = ({ timetableId }: AddClassProps) => {
               </div>
             </div>
           </div>
-          <form
-            className={css({
-              display: 'flex',
-              justifyContent: 'space-between',
-              bgColor: 'bg.gray',
-              rounded: 10,
-              border: '1px {colors.lightGray.1} solid',
-              px: 5,
-              py: 3,
-            })}
-            onSubmit={e => {
-              e.preventDefault()
-              setQuery({
-                queryKeyword: inputKeyword,
-                filter: curFilter,
-                category: categoryList[curCategory],
-                classification: curClassification,
-              })
-              setInputKeyword('')
-            }}
-          >
-            <input
+          {isSearchAvailable && (
+            <form
               className={css({
-                border: 'none',
-                outline: 'none',
-                color: 'black.2',
-                fontSize: 18,
-                fontWeight: 500,
-                flexGrow: 1,
+                display: 'flex',
+                justifyContent: 'space-between',
+                bgColor: 'bg.gray',
+                rounded: 10,
+                border: '1px {colors.lightGray.1} solid',
+                px: 5,
+                py: 3,
               })}
-              onChange={e => setInputKeyword(e.target.value)}
-              value={inputKeyword}
-              placeholder={filterTypeMap[curFilter]}
-            />
-            <button type="submit" className={css({ cursor: 'pointer' })}>
-              <Search />
-            </button>
-          </form>
+              onSubmit={e => {
+                e.preventDefault()
+                setQuery({
+                  queryKeyword: inputKeyword,
+                  filter: curFilter,
+                  category: categoryList[curCategory],
+                  classification: curClassification,
+                })
+                setInputKeyword('')
+              }}
+            >
+              <input
+                className={css({
+                  border: 'none',
+                  outline: 'none',
+                  color: 'black.2',
+                  fontSize: 18,
+                  fontWeight: 500,
+                  flexGrow: 1,
+                })}
+                onChange={e => setInputKeyword(e.target.value)}
+                value={inputKeyword}
+                placeholder={filterTypeMap[curFilter]}
+              />
+              <button type="submit" className={css({ cursor: 'pointer' })}>
+                <Search />
+              </button>
+            </form>
+          )}
         </div>
         <div className={css({ overflow: 'scroll', display: 'flex', flexDir: 'column', gap: 5 })}>
           {searchData?.data.map((data, index) => <SearchLectureCard key={index} data={data} addCourse={addCourse} />)}
@@ -259,58 +285,13 @@ const AddClass = ({ timetableId }: AddClassProps) => {
               <div className={css({ color: 'darkGray.2', fontWeight: 700, fontSize: 24 })}>
                 {categoryList[curCategory]}
               </div>
-              <div
+              <ul
                 className={css({ h: 60, overflow: 'scroll', display: 'flex', flexDir: 'column', gap: 1, px: 7, w: 94 })}
               >
-                {curCategory === 2
-                  ? generalStudies.map(category => {
-                      return (
-                        <button
-                          key={category}
-                          className={CollegeCategoryStyle}
-                          onClick={event => {
-                            event.stopPropagation()
-                            setIsModalOpen(false)
-                            setCurClassification(category)
-                            setCurFilter('course')
-                          }}
-                        >
-                          <span
-                            className={css({
-                              whiteSpace: 'nowrap',
-                              textOverflow: 'ellipsis',
-                              overflow: 'hidden',
-                            })}
-                          >
-                            {category}
-                          </span>
-                        </button>
-                      )
-                    })
-                  : Object.entries(categoryObject).map(([college]) => {
-                      return (
-                        <>
-                          <button key={college} className={CollegeCategoryStyle}>
-                            <span
-                              className={css({
-                                whiteSpace: 'nowrap',
-                                textOverflow: 'ellipsis',
-                                overflow: 'hidden',
-                              })}
-                            >
-                              {college}
-                            </span>
-                            <motion.div>
-                              <ChevronRight />
-                            </motion.div>
-                          </button>
-                          {categoryObject[college].map(() => {
-                            return <div></div>
-                          })}
-                        </>
-                      )
-                    })}
-              </div>
+                {Object.entries(categoryObject).map(([college, majors], ind) => (
+                  <MajorList key={ind} college={college} majors={majors} handleMajorBtn={handleMajorBtn} />
+                ))}
+              </ul>
             </div>
           </div>,
           document.body,
