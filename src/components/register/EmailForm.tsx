@@ -148,7 +148,7 @@ const EmailForm = memo(({ form, handleValidation, valid }: RegisterFormProps<'em
                         Your Email has been validated
                       </p>
                     )}
-                    {valid.email !== 'valid' && (
+                    {valid.email !== 'valid' && emailSent && (
                       <p>
                         {Math.floor(time / 60)}:{(time % 60).toString().padStart(2, '0')}
                       </p>
@@ -165,7 +165,8 @@ const EmailForm = memo(({ form, handleValidation, valid }: RegisterFormProps<'em
                   variant="input"
                   onClick={handleEamilVerification}
                   disabled={
-                    (form.getFieldState('emailCode').isTouched && form.getFieldState('emailCode').invalid) ||
+                    form.getValues('emailCode') === '' ||
+                    form.getFieldState('emailCode').invalid ||
                     valid.email === 'valid'
                   }
                 >
