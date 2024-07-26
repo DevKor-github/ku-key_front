@@ -1,18 +1,20 @@
 import { css } from '@styled-stytem/css'
 import { Search } from 'lucide-react'
-import { useState } from 'react'
+import { CSSProperties, useState } from 'react'
 
 interface SearchBoxProps {
   placeholder: string
   onSubmit: (queryKeyword: string) => void
+  cssProps?: CSSProperties
 }
-const SearchBox = ({ placeholder, onSubmit }: SearchBoxProps) => {
+const SearchBox = ({ placeholder, onSubmit, cssProps = {} }: SearchBoxProps) => {
   const [inputKeyword, setInputKeyword] = useState('')
 
   return (
     <form
       className={css({
         display: 'flex',
+        alignItems: 'center',
         justifyContent: 'space-between',
         bgColor: 'bg.gray',
         rounded: 10,
@@ -20,6 +22,7 @@ const SearchBox = ({ placeholder, onSubmit }: SearchBoxProps) => {
         px: 5,
         py: 3,
       })}
+      style={cssProps}
       onSubmit={e => {
         e.preventDefault()
         onSubmit(inputKeyword)
@@ -34,6 +37,9 @@ const SearchBox = ({ placeholder, onSubmit }: SearchBoxProps) => {
           fontSize: 18,
           fontWeight: 500,
           flexGrow: 1,
+          _placeholder: {
+            color: 'lightGray.1',
+          },
         })}
         onChange={e => setInputKeyword(e.target.value)}
         value={inputKeyword}

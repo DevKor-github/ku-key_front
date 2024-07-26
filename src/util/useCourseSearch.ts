@@ -48,7 +48,7 @@ export const useCourseSearch = ({ queryKeyword, category, classification, filter
         return getByProfInMajor({ authHeader, professorName: queryKeyword, major: classification! })
       }
     },
-    enabled: false,
+    enabled: !!queryKeyword,
     retry: false,
     initialData: { hasNextPage: false, nextCursorId: 0, data: [] },
   })
