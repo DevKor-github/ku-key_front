@@ -3,9 +3,9 @@ import { Ellipsis } from 'lucide-react'
 import { forwardRef, useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
-import LectureBottomSheet from '@/components/timetable/MyTimetable/LectureBottomSheet'
-import OptionModal from '@/components/timetable/MyTimetable/OptionModal'
-import TimetableLayout from '@/components/timetable/TimetableLayout'
+import TimetableLayout from '@/components/timetable/Grid/TimetableLayout'
+import LectureBottomSheet from '@/components/timetable/LectureBottomSheet'
+import OptionModal from '@/components/timetable/Modal/OptionModal'
 import { GlobalModalStateType, TimetableInfo } from '@/types/timetable'
 
 const optBtn = cva({
@@ -29,6 +29,10 @@ interface TimetableProps {
   deleteTimetableHandler: (timetableId: number) => void
 }
 
+/**
+ * timetableId를 받아, 시간표를 표시합니다
+ * 학기와 시간표 이름, 옵션 버튼이 포함됩니다
+ */
 const Timetable = forwardRef<HTMLDivElement, TimetableProps>(
   ({ timetable: { timetableId, timetableName, year, semester }, deleteTimetableHandler }, ref) => {
     const [isModalOpen, setIsModalOpen] = useState(false)

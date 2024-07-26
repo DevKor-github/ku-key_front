@@ -3,10 +3,10 @@ import { Download } from 'lucide-react'
 import { useCallback, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
+import ShareBtn from '@/components/timetable/Button/ShareBtn'
+import Dropdown from '@/components/timetable/Dropdown'
 import { FriendPageBtnStyle } from '@/components/timetable/Friend/FriendsList'
 import FriendTimetable from '@/components/timetable/Friend/FriendTimetable'
-import ShareBtn from '@/components/timetable/ShareBtn'
-import TimetableDropdown from '@/components/timetable/TimetableDropdown'
 import { convertHtmlToImage, makeSemesterDropdownList, timetablePreprocess } from '@/util/timetableUtil'
 
 const FriendTimetablePage = () => {
@@ -31,7 +31,7 @@ const FriendTimetablePage = () => {
           <div className={css({ color: 'black.2', fontSize: 32, fontWeight: '800', wordWrap: 'break-word' })}>
             {user}
           </div>
-          <TimetableDropdown
+          <Dropdown
             dropdownList={makeSemesterDropdownList(semesterList)}
             curIndex={curSemester}
             setCurIndex={setSemesterIndex}

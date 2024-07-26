@@ -198,6 +198,7 @@ export const useGetFriendTimetable = (props: Omit<GetFriendTimetableRequest, 'au
       color: 'Red',
       timetableName: '',
     },
+    retry: false,
   })
 }
 

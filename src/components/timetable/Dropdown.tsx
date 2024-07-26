@@ -36,14 +36,14 @@ const DropdownItemsStyle = cva({
   },
 })
 
-interface TimetableDropdownProps {
+interface DropdownProps {
   dropdownList: readonly string[]
   curIndex: number
   setCurIndex: (toIndex: number) => void
   canReselect?: boolean
 }
 
-const TimetableDropdown = ({ dropdownList, curIndex, setCurIndex, canReselect = false }: TimetableDropdownProps) => {
+const Dropdown = ({ dropdownList, curIndex, setCurIndex, canReselect = false }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -119,4 +119,4 @@ const TimetableDropdown = ({ dropdownList, curIndex, setCurIndex, canReselect = 
   )
 }
 
-export default TimetableDropdown
+export default Dropdown

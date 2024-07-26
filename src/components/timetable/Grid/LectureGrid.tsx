@@ -1,8 +1,8 @@
 import { css } from '@styled-stytem/css'
 
 import { GetTimetableByTimetableIdResponse } from '@/api/types/timetable'
-import LectureSticker from '@/components/timetable/LectureSticker'
-import { TimeCell } from '@/components/timetable/TimetableLayout'
+import LectureSticker from '@/components/timetable/Grid/LectureSticker'
+import { TimeCell } from '@/components/timetable/Grid/TimetableLayout'
 import { COLOR_INFO } from '@/lib/constants/timetableColors'
 import { getDuration, getStartTime, lectureDataPreprocess } from '@/util/timetableUtil'
 

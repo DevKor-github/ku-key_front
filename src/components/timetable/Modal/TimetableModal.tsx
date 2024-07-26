@@ -4,7 +4,7 @@ import { CaseSensitive, CircleAlert, Palette } from 'lucide-react'
 import { useState } from 'react'
 
 import { useUpdateTimetableName } from '@/api/hooks/timetable'
-import ColorSelector from '@/components/timetable/MyTimetable/ColorSelector'
+import ColorSelector from '@/components/timetable/Button/ColorSelector'
 import { Input } from '@/components/ui/input'
 import ModalCard from '@/components/ui/modal'
 import { ColorType, GlobalModalStateType } from '@/types/timetable'

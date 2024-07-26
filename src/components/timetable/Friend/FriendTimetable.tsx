@@ -2,8 +2,8 @@ import { css } from '@styled-stytem/css'
 import { forwardRef } from 'react'
 
 import { useGetFriendTimetable } from '@/api/hooks/friends'
-import LectureGrid from '@/components/timetable/LectureGrid'
-import { TimeCell } from '@/components/timetable/TimetableLayout'
+import LectureGrid from '@/components/timetable/Grid/LectureGrid'
+import { TimeCell } from '@/components/timetable/Grid/TimetableLayout'
 import { getWeeknTimeList } from '@/util/timetableUtil'
 
 interface TimetableProps {

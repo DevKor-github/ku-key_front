@@ -6,6 +6,8 @@ export type ColorType = 'Red' | 'Blue' | 'Green' | 'Purple' | 'Orange' | 'Gray'
 
 export type GlobalModalStateType = 'color' | 'name' | 'delete' | null
 
+export type FilterType = 'course' | 'professor' | 'code'
+
 export interface TimetableInfo {
   timetableId: number
   semester: SemesterType

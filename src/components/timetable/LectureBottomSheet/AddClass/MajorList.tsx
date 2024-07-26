@@ -30,11 +30,11 @@ interface MajorListProps {
   college: string
   majors: string[]
   handleMajorBtn: (classification: string) => void
-  curCategory: number
+  isAcademicFoundation: boolean
 }
-const MajorList = ({ college, majors, handleMajorBtn, curCategory }: MajorListProps) => {
+
+const MajorList = ({ college, majors, handleMajorBtn, isAcademicFoundation }: MajorListProps) => {
   const [isOpen, setIsOpen] = useState(false)
-  const isAcademicFoundation = curCategory === 3
 
   return (
     <>

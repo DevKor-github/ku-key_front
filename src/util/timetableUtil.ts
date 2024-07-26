@@ -1,6 +1,5 @@
 import { toPng } from 'html-to-image'
 
-import { GetCourseResponse } from '@/api/types/course'
 import {
   ColorType,
   CourseType,
@@ -23,8 +22,6 @@ export const filterTypeMap = {
   professor: 'Professor Name',
   code: 'Course Code',
 }
-
-export const initCourseSearchData: GetCourseResponse = { hasNextPage: false, nextCursorId: 0, data: [] }
 
 /**
  * HH:MM:SS 형태의 문자열을 두개 받아, 차이를 분으로 반환

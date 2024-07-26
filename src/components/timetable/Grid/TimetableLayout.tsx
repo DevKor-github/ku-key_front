@@ -3,8 +3,8 @@ import { memo } from 'react'
 import { createPortal } from 'react-dom'
 
 import { useGetTimetable } from '@/api/hooks/timetable'
-import LectureGrid from '@/components/timetable/LectureGrid'
-import TimetableModal from '@/components/timetable/MyTimetable/TimetableModal'
+import LectureGrid from '@/components/timetable/Grid/LectureGrid'
+import TimetableModal from '@/components/timetable/Modal/TimetableModal'
 import { GlobalModalStateType } from '@/types/timetable'
 import { getWeeknTimeList } from '@/util/timetableUtil'
 
@@ -58,6 +58,10 @@ interface TimetableLayoutProps {
   timetableName: string
 }
 
+/**
+ * 시간표 내 그리드 컴포넌트
+ * 시간표 제목 헤더를 제외한 실제 그리드를 구성합니다
+ */
 const TimetableLayout = memo(
   ({
     timetableId,

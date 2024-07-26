@@ -4,10 +4,10 @@ import { useCallback, useRef, useState } from 'react'
 
 import { useDeleteTimetable, useGetUserTimetableList } from '@/api/hooks/timetable'
 import Timetable from '@/components/timetable'
-import StatusBar from '@/components/timetable/MyTimetable/StatusBar'
+import ShareBtn from '@/components/timetable/Button/ShareBtn'
+import Dropdown from '@/components/timetable/Dropdown'
 import NullTimetable from '@/components/timetable/NullTimetable'
-import ShareBtn from '@/components/timetable/ShareBtn'
-import TimetableDropdown from '@/components/timetable/TimetableDropdown'
+import StatusBar from '@/components/timetable/StatusBar'
 import { convertHtmlToImage, makeSemesterDropdownList, timetablePreprocess } from '@/util/timetableUtil'
 
 const MyTimetablePage = () => {
@@ -33,7 +33,6 @@ const MyTimetablePage = () => {
     },
     [setCurIndex],
   )
-
   const deleteTimetableHandler = useCallback(
     (timetableId: number) => {
       if (curIndex !== 0) {
@@ -51,7 +50,7 @@ const MyTimetablePage = () => {
           <div className={css({ color: 'black.2', fontSize: 32, fontWeight: '800', wordWrap: 'break-word' })}>
             My schedule
           </div>
-          <TimetableDropdown
+          <Dropdown
             dropdownList={makeSemesterDropdownList(semesterList)}
             curIndex={curSemester}
             setCurIndex={setSemesterIndex}
