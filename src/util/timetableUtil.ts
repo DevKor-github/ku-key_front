@@ -65,7 +65,7 @@ const calcSemester = (): Semester[] => {
     for (let i = 0; i < 4; i++) {
       ret.push({ year: `${year}`, semester: numberToSemester[i], timetables: [] })
     }
-    ret.push({ year: `${year + 11}`, semester: 'Spring', timetables: [] })
+    ret.push({ year: `${year + 1}`, semester: 'Spring', timetables: [] })
   } else if (7 < month && month <= 12) {
     // 2학기
     for (let i = 0; i < 4; i++) {

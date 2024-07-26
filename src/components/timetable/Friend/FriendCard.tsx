@@ -17,6 +17,7 @@ const buttonStyle = cva({
     px: 2.5,
     py: 1,
     rounded: 'full',
+    transition: 'all 0.256s',
   },
   variants: {
     active: {
@@ -30,9 +31,15 @@ const buttonStyle = cva({
     color: {
       red1: {
         bgColor: 'red.2',
+        _hover: {
+          bgColor: 'red.3',
+        },
       },
       red2: {
         bgColor: 'red.3',
+        _hover: {
+          bgColor: 'red.4',
+        },
       },
       gray: {
         bgColor: 'darkGray.1',
@@ -135,6 +142,11 @@ const FriendCard = ({ data, type }: FriendCardProp) => {
             p: 1,
             display: 'flex',
             color: 'darkGray.1',
+            rounded: 'full',
+            transition: 'all 0.256s',
+            _hover: {
+              bgColor: 'lightGray.1',
+            },
           })}
           onClick={() => {
             deleteFriendship({ friendshipId: data.friendshipId! })

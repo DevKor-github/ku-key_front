@@ -64,7 +64,13 @@ const MyTimetablePage = () => {
       </div>
       <StatusBar curSemester={semesterList[curSemester]} curIndex={curIndex} setCurIndex={setTimetableIndex} />
       {semesterList[curSemester].timetables.length === 0 ? (
-        <NullTimetable />
+        <NullTimetable
+          children={
+            <>
+              There is no set timetable <br /> Press the plus button to create a timetable!
+            </>
+          }
+        />
       ) : (
         <Timetable
           ref={imgRef}

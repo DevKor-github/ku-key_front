@@ -4,6 +4,7 @@ import { forwardRef } from 'react'
 import { useGetFriendTimetable } from '@/api/hooks/friends'
 import LectureGrid from '@/components/timetable/Grid/LectureGrid'
 import { TimeCell } from '@/components/timetable/Grid/TimetableLayout'
+import NullTimetable from '@/components/timetable/NullTimetable'
 import { getWeeknTimeList } from '@/util/timetableUtil'
 
 interface TimetableProps {
@@ -13,13 +14,12 @@ interface TimetableProps {
 }
 
 const FriendTimetable = forwardRef<HTMLDivElement, TimetableProps>(({ user, year, semester }, ref) => {
-  const { data } = useGetFriendTimetable({ username: user, year, semester })
+  const { data, isFetching, isError, error } = useGetFriendTimetable({ username: user, year, semester })
   const { time, week } = getWeeknTimeList(data.courses, data.schedules)
 
-  // todo: 대표 시간표가 없을 때의 처리
-  // todo: 실제 시간표 이름으로 수정
-
-  return (
+  return isFetching || (isError && error.message === 'Request failed with status code 404') ? (
+    <NullTimetable children={<>There is no set timetable</>} />
+  ) : (
     <div className={css({ w: '100%' })} ref={ref}>
       <div
         className={css({

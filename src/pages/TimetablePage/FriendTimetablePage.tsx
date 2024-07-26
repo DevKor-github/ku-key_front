@@ -1,5 +1,5 @@
 import { css } from '@styled-stytem/css'
-import { Download } from 'lucide-react'
+import { ChevronLeft, Download } from 'lucide-react'
 import { useCallback, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
@@ -45,6 +45,7 @@ const FriendTimetablePage = () => {
       </div>
       <div className={css({ display: 'flex', flexDir: 'column', gap: 5 })}>
         <Link className={FriendPageBtnStyle()} to="/timetable/friend">
+          <ChevronLeft size={24} />
           All Friend
         </Link>
         <FriendTimetable
