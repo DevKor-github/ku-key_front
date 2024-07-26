@@ -5,13 +5,6 @@ import { motion } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
 import { useState } from 'react'
 
-interface TimetableDropdownProps {
-  dropdownList: readonly string[]
-  curIndex: number
-  setCurIndex: (toIndex: number) => void
-  setCurIndexZero?: () => void
-}
-
 const DropdownItemsStyle = cva({
   base: {
     display: 'flex',
@@ -43,7 +36,14 @@ const DropdownItemsStyle = cva({
   },
 })
 
-const TimetableDropdown = ({ dropdownList, curIndex, setCurIndex, setCurIndexZero }: TimetableDropdownProps) => {
+interface TimetableDropdownProps {
+  dropdownList: readonly string[]
+  curIndex: number
+  setCurIndex: (toIndex: number) => void
+  canReselect?: boolean
+}
+
+const TimetableDropdown = ({ dropdownList, curIndex, setCurIndex, canReselect = false }: TimetableDropdownProps) => {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -103,10 +103,9 @@ const TimetableDropdown = ({ dropdownList, curIndex, setCurIndex, setCurIndexZer
               return (
                 <DropdownMenu.Item
                   key={index}
-                  className={DropdownItemsStyle({ active: index == curIndex })}
+                  className={DropdownItemsStyle({ active: !canReselect && index == curIndex })}
                   onClick={() => {
                     setCurIndex(index)
-                    setCurIndexZero && setCurIndexZero()
                   }}
                 >
                   {content}

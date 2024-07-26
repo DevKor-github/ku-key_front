@@ -49,7 +49,7 @@ const AddClass = ({ timetableId }: AddClassProps) => {
   const [curFilter, setCurFilter] = useState<'course' | 'professor' | 'code'>('code')
   // 포괄 카테고리 (0:All, 1:Major, 2:General, 3:Academic)
   const [curCategory, setCurCategory] = useState(0)
-  // 세부 카테고리 (포괄 카테고리가 1 / 2 / 3 일때만 존재, 그 이외에는 null)
+  // 세부 카테고리 (포괄 카테고리가 1 / 3 일때만 존재, 그 이외에는 null)
   const [curClassification, setCurClassification] = useState<string | null>(null)
   // 세부 카테고리 지정 모달의 열림 여부
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -77,12 +77,15 @@ const AddClass = ({ timetableId }: AddClassProps) => {
       setCurClassification(null)
       setCurCategory(toIndex)
       if (toIndex === 1 || toIndex === 3) {
+        // Major or Academic Foundation
         setIsModalOpen(true)
       } else {
         setIsSearchAvailable(true)
         if (toIndex === 0) {
+          // All
           setCurFilter('code')
         } else if (toIndex === 2) {
+          // General
           setCurFilter('course')
         }
       }
@@ -123,7 +126,12 @@ const AddClass = ({ timetableId }: AddClassProps) => {
                 alignItems: 'center',
               })}
             >
-              <TimetableDropdown dropdownList={categoryList} curIndex={curCategory} setCurIndex={handleDropdown} />
+              <TimetableDropdown
+                dropdownList={categoryList}
+                curIndex={curCategory}
+                setCurIndex={handleDropdown}
+                canReselect={true}
+              />
               {curClassification && (
                 <div
                   className={css({
@@ -194,6 +202,7 @@ const AddClass = ({ timetableId }: AddClassProps) => {
               </div>
             </div>
           </div>
+          {/* todo: 검색창 비활성화 디자인 */}
           {isSearchAvailable && (
             <form
               className={css({

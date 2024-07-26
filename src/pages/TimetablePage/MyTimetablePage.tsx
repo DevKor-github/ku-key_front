@@ -23,8 +23,9 @@ const MyTimetablePage = () => {
   const setSemesterIndex = useCallback(
     (toIndex: number) => {
       setCurSemester(toIndex)
+      setCurIndex(0)
     },
-    [setCurSemester],
+    [setCurSemester, setCurIndex],
   )
   const setTimetableIndex = useCallback(
     (toIndex: number) => {
@@ -54,7 +55,6 @@ const MyTimetablePage = () => {
             dropdownList={makeSemesterDropdownList(semesterList)}
             curIndex={curSemester}
             setCurIndex={setSemesterIndex}
-            setCurIndexZero={() => setTimetableIndex(0)}
           />
         </div>
         <div className={css({ display: { base: 'flex', mdDown: 'none' }, flexDir: 'row', gap: 2.5 })}>
