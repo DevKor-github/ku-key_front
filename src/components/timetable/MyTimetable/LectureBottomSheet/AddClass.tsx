@@ -103,12 +103,6 @@ const AddClass = ({ timetableId }: AddClassProps) => {
           category: 'Academic Foundations',
           classification,
         })
-        console.log({
-          queryKeyword: generateRandomString(10),
-          filter: curFilter,
-          category: categoryList[curCategory],
-          classification: curClassification,
-        })
       } else {
         setIsSearchAvailable(true)
         setCurFilter('course')
@@ -289,7 +283,13 @@ const AddClass = ({ timetableId }: AddClassProps) => {
                 className={css({ h: 60, overflow: 'scroll', display: 'flex', flexDir: 'column', gap: 1, px: 7, w: 94 })}
               >
                 {Object.entries(categoryObject).map(([college, majors], ind) => (
-                  <MajorList key={ind} college={college} majors={majors} handleMajorBtn={handleMajorBtn} />
+                  <MajorList
+                    key={ind}
+                    college={college}
+                    majors={majors}
+                    handleMajorBtn={handleMajorBtn}
+                    curCategory={curCategory}
+                  />
                 ))}
               </ul>
             </div>

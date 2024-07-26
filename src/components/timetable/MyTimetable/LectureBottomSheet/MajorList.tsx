@@ -30,9 +30,11 @@ interface MajorListProps {
   college: string
   majors: string[]
   handleMajorBtn: (classification: string) => void
+  curCategory: number
 }
-const MajorList = ({ college, majors, handleMajorBtn }: MajorListProps) => {
+const MajorList = ({ college, majors, handleMajorBtn, curCategory }: MajorListProps) => {
   const [isOpen, setIsOpen] = useState(false)
+  const isAcademicFoundation = curCategory === 3
 
   return (
     <>
@@ -41,7 +43,12 @@ const MajorList = ({ college, majors, handleMajorBtn }: MajorListProps) => {
         className={CollegeCategoryStyle}
         onClick={event => {
           event.stopPropagation()
-          setIsOpen(prev => !prev)
+          if (isAcademicFoundation) {
+            // 학문의 기초라면 추가 depth 없음
+            handleMajorBtn(college)
+          } else {
+            setIsOpen(prev => !prev)
+          }
         }}
       >
         <span
@@ -53,9 +60,11 @@ const MajorList = ({ college, majors, handleMajorBtn }: MajorListProps) => {
         >
           {college}
         </span>
-        <motion.div animate={isOpen ? 'open' : 'closed'} variants={ChevronVar}>
-          <ChevronRight />
-        </motion.div>
+        {!isAcademicFoundation && (
+          <motion.div animate={isOpen ? 'open' : 'closed'} variants={ChevronVar}>
+            <ChevronRight />
+          </motion.div>
+        )}
       </button>
       {isOpen && (
         <>
@@ -72,7 +81,15 @@ const MajorList = ({ college, majors, handleMajorBtn }: MajorListProps) => {
                   handleMajorBtn(major)
                 }}
               >
-                {major}
+                <span
+                  className={css({
+                    whiteSpace: 'nowrap',
+                    textOverflow: 'ellipsis',
+                    overflow: 'hidden',
+                  })}
+                >
+                  {major}
+                </span>
               </motion.button>
             )
           })}
