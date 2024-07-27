@@ -4,8 +4,8 @@ import { RESET } from 'jotai/utils'
 import { useCallback } from 'react'
 import { useNavigate, useRoutes } from 'react-router-dom'
 
+import routes from '@/lib/router/router'
 import { userCredentialAtom } from '@/lib/store/auth'
-import routes from '@/router/router'
 import { UserCredential } from '@/types/user'
 import AuthProvider from '@/util/auth/AuthProvider'
 const queryClient = new QueryClient({
