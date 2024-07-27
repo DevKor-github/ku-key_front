@@ -162,14 +162,17 @@ const UserInfoForm = ({ form, handleFileChange, handleValidation, valid, fileNam
             <FormControl>
               <div className={css({ display: 'flex', alignItems: 'flex-start', gap: 2.5 })}>
                 <div className={css({ display: 'flex', flexDir: 'column', alignItems: 'flex-end' })}>
-                  <Input type="text" placeholder="student ID" {...field} />
+                  <Input type="text" placeholder="student ID" {...field} disabled={valid.studentId === 'valid'} />
                   <div className={css({ display: 'flex', px: 1.5, py: 1, gap: 1, alignItems: 'center' })}>
-                    {form.getFieldState('studentNumber').invalid && (
+                    {form.getFieldState('studentNumber').invalid ? (
                       <ShieldAlert size={16} className={css({ color: 'red.2' })} />
-                    )}
-                    {valid.studentId === 'valid' && <CheckCircle2 size={14} />}
-                    {valid.studentId === 'valid' && (
-                      <p className={css({ fontSize: 14, fontWeight: 400 })}>available student ID</p>
+                    ) : (
+                      valid.studentId === 'valid' && (
+                        <>
+                          <CheckCircle2 size={14} />
+                          <p className={css({ fontSize: 14, fontWeight: 400 })}>available student ID</p>
+                        </>
+                      )
                     )}
                     <FormMessage />
                   </div>

@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { css } from '@styled-stytem/css'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
@@ -16,6 +16,7 @@ import Button from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
 import { RegisterFormSchema } from '@/lib/zod/register-schema'
 import { ProgressState, RegisterationKey, RegistrationState, ValidState } from '@/types/register'
+import { useAuth } from '@/util/auth/useAuth'
 
 const RegisterPage = () => {
   const [page, setPage] = useState<ProgressState>(1)
@@ -26,9 +27,14 @@ const RegisterPage = () => {
     studentId: 'unknown',
     screenShot: 'unknown',
   })
+  const isAuth = useAuth().isAuthenticated
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (isAuth) navigate('/mypage')
+  }, [isAuth, navigate])
 
   const { mutate: mutateRegister } = useRegister()
-  const navigate = useNavigate()
   const emailForm = useForm<z.infer<typeof RegisterFormSchema.step1>>({
     resolver: zodResolver(RegisterFormSchema.step1),
     defaultValues: {

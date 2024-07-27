@@ -46,13 +46,19 @@ const CredentialForm = ({ form, valid, handleValidation }: CredentialFormProps) 
             <FormControl>
               <div className={css({ display: 'flex', alignItems: 'flex-start', gap: 2.5 })}>
                 <div className={css({ display: 'flex', flexDir: 'column', alignItems: 'flex-end' })}>
-                  <Input type="text" placeholder="Username" {...field} />
+                  <Input type="text" placeholder="Username" {...field} disabled={valid === 'valid'} />
                   <div className={css({ display: 'flex', px: 1.5, py: 1, gap: 1, alignItems: 'center' })}>
-                    {form.getFieldState('username').invalid && (
+                    {form.getFieldState('username').invalid ? (
                       <ShieldAlert size={16} className={css({ color: 'red.2' })} />
+                    ) : (
+                      valid === 'valid' && (
+                        <>
+                          <CheckCircle2 size={14} />
+                          <p className={css({ fontSize: 14, fontWeight: 400 })}>available username</p>
+                        </>
+                      )
                     )}
-                    {valid === 'valid' && <CheckCircle2 size={14} />}
-                    {valid === 'valid' && <p className={css({ fontSize: 14, fontWeight: 400 })}>available username</p>}
+
                     <FormMessage />
                   </div>
                 </div>
