@@ -14,7 +14,6 @@ export const buttonRecipe = defineRecipe({
     fontSize: 18,
     fontWeight: 500,
     px: '30px',
-    cursor: 'pointer',
   },
   variants: {
     variant: {
