@@ -35,7 +35,7 @@ const AddClass = ({ timetableId }: AddClassProps) => {
     classification: null,
   })
 
-  const { data: searchData, research } = useCourseSearch(query)
+  const { data: searchData } = useCourseSearch(query)
   const { mutate: postCourse } = usePostCourse()
 
   const addCourse = useCallback(
@@ -75,7 +75,7 @@ const AddClass = ({ timetableId }: AddClassProps) => {
         // todo: filter state 어떻게 할지
         setIsSearchAvailable(false)
         setQuery({
-          queryKeyword: '',
+          queryKeyword: '_blank',
           filter: 'course',
           category: 'Academic Foundations',
           classification,
@@ -109,9 +109,6 @@ const AddClass = ({ timetableId }: AddClassProps) => {
 
   const handleSearchBoxOnSubmit = useCallback(
     (queryKeyword: string) => {
-      if (queryKeyword === query.queryKeyword) {
-        research()
-      }
       setQuery({
         queryKeyword,
         filter: curFilter,
@@ -119,7 +116,7 @@ const AddClass = ({ timetableId }: AddClassProps) => {
         classification: curClassification,
       })
     },
-    [curFilter, curCategory, curClassification, research, query],
+    [curFilter, curCategory, curClassification],
   )
 
   const handleQuitModal = useCallback(() => {

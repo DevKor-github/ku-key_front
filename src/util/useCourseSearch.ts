@@ -17,11 +17,13 @@ export interface useCourseSearchProps {
   filter: 'course' | 'professor' | 'code'
 }
 
-export const useCourseSearch = ({ queryKeyword, category, classification, filter }: useCourseSearchProps) => {
+export const useCourseSearch = (props: useCourseSearchProps) => {
   const authHeader = useAuthHeader()
 
-  const { data, refetch: research } = useQuery({
-    queryKey: ['courseSearchResult', queryKeyword],
+  const { queryKeyword, category, classification, filter } = props
+
+  const { data } = useQuery({
+    queryKey: ['courseSearchResult', props],
     queryFn: () => {
       if (category === 'Academic Foundations') {
         // 검색 미진행, 바로 띄워주기
@@ -53,5 +55,5 @@ export const useCourseSearch = ({ queryKeyword, category, classification, filter
     initialData: { hasNextPage: false, nextCursorId: 0, data: [] },
   })
 
-  return { data, research }
+  return { data }
 }
