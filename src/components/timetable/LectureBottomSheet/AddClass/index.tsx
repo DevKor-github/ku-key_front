@@ -1,5 +1,5 @@
 import { css } from '@styled-stytem/css'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 import { usePostCourse } from '@/api/hooks/timetable'
@@ -18,8 +18,6 @@ interface AddClassProps {
   timetableId: number
 }
 const AddClass = ({ timetableId }: AddClassProps) => {
-  const isMounted = useRef(false)
-
   const [isSearchAvailable, setIsSearchAvailable] = useState(true)
   // 검색 Filter
   const [curFilter, setCurFilter] = useState<'course' | 'professor' | 'code'>('code')
@@ -37,16 +35,8 @@ const AddClass = ({ timetableId }: AddClassProps) => {
     classification: null,
   })
 
-  const { data: searchData, search } = useCourseSearch(query)
+  const { data: searchData, research } = useCourseSearch(query)
   const { mutate: postCourse } = usePostCourse()
-
-  useEffect(() => {
-    if (isMounted.current) {
-      search()
-    } else {
-      isMounted.current = true
-    }
-  }, [query, search])
 
   const addCourse = useCallback(
     (courseId: number) => {
@@ -119,6 +109,9 @@ const AddClass = ({ timetableId }: AddClassProps) => {
 
   const handleSearchBoxOnSubmit = useCallback(
     (queryKeyword: string) => {
+      if (queryKeyword === query.queryKeyword) {
+        research()
+      }
       setQuery({
         queryKeyword,
         filter: curFilter,
@@ -126,7 +119,7 @@ const AddClass = ({ timetableId }: AddClassProps) => {
         classification: curClassification,
       })
     },
-    [curFilter, curCategory, curClassification],
+    [curFilter, curCategory, curClassification, research, query],
   )
 
   const handleQuitModal = useCallback(() => {

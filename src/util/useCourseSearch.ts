@@ -20,7 +20,7 @@ export interface useCourseSearchProps {
 export const useCourseSearch = ({ queryKeyword, category, classification, filter }: useCourseSearchProps) => {
   const authHeader = useAuthHeader()
 
-  const { data, refetch: search } = useQuery({
+  const { data, refetch: research } = useQuery({
     queryKey: ['courseSearchResult', queryKeyword],
     queryFn: () => {
       if (category === 'Academic Foundations') {
@@ -53,5 +53,5 @@ export const useCourseSearch = ({ queryKeyword, category, classification, filter
     initialData: { hasNextPage: false, nextCursorId: 0, data: [] },
   })
 
-  return { data, search }
+  return { data, research }
 }
