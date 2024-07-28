@@ -224,13 +224,13 @@ const UserInfoForm = ({ form, handleFileChange, handleValidation, valid, fileNam
             <Camera size={18} />
             <p className={css({ fontSize: 16, fontWeight: 600 })}>screenshot of your acceptance email</p>
           </div>
-          {valid.screenShot === 'invalid' && (
+          {valid.screenshot === 'invalid' && (
             <div className={css({ display: 'flex', px: 1.5, py: 1, gap: 1, alignItems: 'center' })}>
               <ShieldAlert size={16} className={css({ color: 'red.2' })} />
               <p className={css({ color: 'red.2', fontSize: 14, fontWeight: 400 })}>Only images are accepted</p>
             </div>
           )}
-          {valid.screenShot === 'valid' && (
+          {valid.screenshot === 'valid' && (
             <div className={css({ display: 'flex', px: 1.5, py: 1, gap: 1, alignItems: 'center' })}>
               <CheckCircle2 size={14} />
               <p className={css({ fontSize: 14, fontWeight: 400 })}>

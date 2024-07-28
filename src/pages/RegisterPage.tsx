@@ -17,7 +17,6 @@ import { Form } from '@/components/ui/form'
 import { RegisterFormSchema } from '@/lib/zod/register-schema'
 import { ProgressState, RegisterationKey, RegistrationState, ValidState } from '@/types/register'
 import { useAuth } from '@/util/auth/useAuth'
-
 const RegisterPage = () => {
   const [page, setPage] = useState<ProgressState>(1)
   const [file, setFile] = useState<File | null>(null)
@@ -25,7 +24,7 @@ const RegisterPage = () => {
     email: 'unknown',
     username: 'unknown',
     studentId: 'unknown',
-    screenShot: 'unknown',
+    screenshot: 'unknown',
   })
   const isAuth = useAuth().isAuthenticated
   const navigate = useNavigate()
@@ -44,7 +43,7 @@ const RegisterPage = () => {
     mode: 'onTouched', //	Validation is initially triggered on the first blur event. After that, it is triggered on every change event.
   })
 
-  const userInfoFrom = useForm<z.infer<typeof RegisterFormSchema.step2>>({
+  const userInfoForm = useForm<z.infer<typeof RegisterFormSchema.step2>>({
     resolver: zodResolver(RegisterFormSchema.step2),
     defaultValues: {
       name: '',
@@ -72,10 +71,10 @@ const RegisterPage = () => {
     if (!e.target.files?.length) return
     const currentFile = e.target.files[0]
     const fileType = currentFile.type
-    if (!fileType.includes('image')) setValid(v => ({ ...v, screenShot: 'invalid' }))
+    if (!fileType.includes('image')) setValid(v => ({ ...v, screenshot: 'invalid' }))
     else {
       setFile(currentFile)
-      setValid(v => ({ ...v, screenShot: 'valid' }))
+      setValid(v => ({ ...v, screenshot: 'valid' }))
     }
   }
 
@@ -86,9 +85,9 @@ const RegisterPage = () => {
     }
     mutateRegister(
       {
-        screenShot: file,
+        screenshot: file,
         ...emailForm.getValues(),
-        ...userInfoFrom.getValues(),
+        ...userInfoForm.getValues(),
         username: credentialForm.getValues('username'),
         password: credentialForm.getValues('password').password,
       },
@@ -107,7 +106,11 @@ const RegisterPage = () => {
       emailForm.handleSubmit(() => setPage(2))()
     }
     if (page === 2) {
-      userInfoFrom.handleSubmit(() => setPage(3))()
+      if (!file) {
+        setValid(v => ({ ...v, screenshot: 'invalid' }))
+        return
+      }
+      userInfoForm.handleSubmit(() => setPage(3))()
     }
     if (page === 3) {
       credentialForm.handleSubmit(onSubmit)()
@@ -158,10 +161,10 @@ const RegisterPage = () => {
           </Form>
         )}
         {page === 2 && (
-          <Form {...userInfoFrom}>
+          <Form {...userInfoForm}>
             <form>
               <UserInfoForm
-                form={userInfoFrom}
+                form={userInfoForm}
                 handleFileChange={handleFileChange}
                 valid={valid}
                 handleValidation={handleValidation}

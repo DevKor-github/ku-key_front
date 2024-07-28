@@ -1,5 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { css } from '@styled-stytem/css'
+import { AxiosError } from 'axios'
+import { ShieldAlert } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
@@ -27,9 +29,26 @@ const Login = () => {
       email: '',
       password: '',
     },
+    mode: 'onTouched',
   })
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
-    mutateLogin({ ...values, keepingLogin: maintain })
+    mutateLogin(
+      { ...values, keepingLogin: maintain },
+      {
+        onSuccess: () => navigate('/mypage'),
+        onError: error => {
+          if (error instanceof AxiosError) {
+            const errorMessage = error.response?.data.message ?? 'An error occurred'
+            if (errorMessage === '이메일이 잘못되었습니다.') {
+              form.setError('email', { message: 'wrong email' })
+            }
+            if (errorMessage === '비밀번호가 일치하지 않습니다.') {
+              form.setError('password', { message: 'wrong password' })
+            }
+          }
+        },
+      },
+    )
   }
 
   useEffect(() => {
@@ -71,7 +90,6 @@ const Login = () => {
             <h1 className={css({ fontSize: 40, fontWeight: 700 })}>Login</h1>
             <p className={css({ fontSize: 20, fontWeight: 500, p: 2.5, color: 'darkGray.2' })}>Welcome to KU-key</p>
           </div>
-
           <div
             className={css({
               display: 'flex',
@@ -90,15 +108,22 @@ const Login = () => {
                   className={css({
                     display: 'flex',
                     justifyContent: 'space-between',
-                    alignItems: 'center',
+                    alignItems: 'baseline',
                     alignSelf: 'stretch',
                   })}
                 >
                   <FormLabel className={css({ fontSize: 24, fontWeight: 700 })}>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="Please enter your Email  address" {...field} />
+                    <div className={css({ display: 'flex', flexDir: 'column', alignItems: 'flex-end' })}>
+                      <Input placeholder="Please enter your Email  address" {...field} />
+                      <div className={css({ display: 'flex', px: 1.5, py: 1, gap: 1, alignItems: 'center' })}>
+                        {form.getFieldState('email').invalid && (
+                          <ShieldAlert size={16} className={css({ color: 'red.2' })} />
+                        )}
+                        <FormMessage />
+                      </div>
+                    </div>
                   </FormControl>
-                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -110,15 +135,22 @@ const Login = () => {
                   className={css({
                     display: 'flex',
                     justifyContent: 'space-between',
-                    alignItems: 'center',
+                    alignItems: 'baseline',
                     alignSelf: 'stretch',
                   })}
                 >
                   <FormLabel className={css({ fontSize: 24, fontWeight: 700 })}>Password</FormLabel>
                   <FormControl>
-                    <Input placeholder="Please enter your Password" type="password" {...field} />
+                    <div className={css({ display: 'flex', flexDir: 'column', alignItems: 'flex-end' })}>
+                      <Input placeholder="Please enter your Password" type="password" {...field} />
+                      <div className={css({ display: 'flex', px: 1.5, py: 1, gap: 1, alignItems: 'center' })}>
+                        {form.getFieldState('password').invalid && (
+                          <ShieldAlert size={16} className={css({ color: 'red.2' })} />
+                        )}
+                        <FormMessage />
+                      </div>
+                    </div>
                   </FormControl>
-                  <FormMessage />
                 </FormItem>
               )}
             />

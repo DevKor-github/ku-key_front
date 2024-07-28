@@ -1,6 +1,11 @@
 import { useMutation } from '@tanstack/react-query'
 
-import { CheckEmailDuplicationResProps, RegisterReqProps, VerifyEmailReqProps } from '@/api/types/register'
+import {
+  CheckEmailDuplicationResProps,
+  RegisterKeys,
+  RegisterReqProps,
+  VerifyEmailReqProps,
+} from '@/api/types/register'
 import { apiInterface } from '@/util/axios/custom-axios'
 
 const checkEmailDuplication = async (email: string) => {
@@ -56,15 +61,9 @@ export const useCheckStudentIdDuplication = () => {
 
 const register = async (data: RegisterReqProps) => {
   const formData = new FormData()
-  formData.append('screenshot', data.screenShot)
-  formData.append('email', data.email)
-  formData.append('username', data.username)
-  formData.append('password', data.password)
-  formData.append('studentNumber', data.studentNumber)
-  formData.append('country', data.country)
-  formData.append('homeUniversity', data.homeUniversity)
-  formData.append('major', data.major)
-  formData.append('name', data.name)
+  for (const key in data) {
+    formData.append(key, data[key as RegisterKeys])
+  }
   const response = await apiInterface.post(`/auth/sign-up`, formData)
   return response.data
 }
