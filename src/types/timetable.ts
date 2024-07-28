@@ -2,7 +2,7 @@ export type DayType = 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri' | 'Sat' | 'Sun'
 
 export type SemesterType = 'Spring' | 'Summer' | 'Fall' | 'Winter'
 
-export type ColorType = 'Red' | 'Blue' | 'Green' | 'Purple' | 'Orange' | 'Gray'
+export type ColorType = 'Red' | 'Blue' | 'Green' | 'Purple' | 'Gray'
 
 export type GlobalModalStateType = 'color' | 'name' | 'delete' | null
 
