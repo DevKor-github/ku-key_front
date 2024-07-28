@@ -1,20 +1,31 @@
-import { css } from '@styled-stytem/css'
+import { css, cva } from '@styled-stytem/css'
 import { motion, Variants } from 'framer-motion'
 import { ChevronRight } from 'lucide-react'
 import { useState } from 'react'
 
-const CollegeCategoryStyle = css({
-  display: 'flex',
-  justifyContent: 'space-between',
-  bgColor: 'bg.gray',
-  border: '1px solid {colors.lightGray.1}',
-  rounded: 10,
-  px: 2.5,
-  py: 2,
-  color: 'lightGray.1',
-  fontSize: 16,
-  fontWeight: 500,
-  cursor: 'pointer',
+const CollegeCategoryStyle = cva({
+  base: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    bgColor: 'bg.gray',
+    border: '1px solid {colors.lightGray.1}',
+    rounded: 10,
+    px: 2.5,
+    py: 2,
+    color: 'lightGray.1',
+    fontSize: 16,
+    fontWeight: 500,
+    cursor: 'pointer',
+    transition: 'background 0.256s, color 0.256s',
+  },
+  variants: {
+    isOpen: {
+      true: {
+        bgColor: 'lightGray.1',
+        color: 'bg.gray',
+      },
+    },
+  },
 })
 
 const ChevronVar: Variants = {
@@ -40,7 +51,7 @@ const MajorList = ({ college, majors, handleMajorBtn, isAcademicFoundation }: Ma
     <>
       <button
         key={college}
-        className={CollegeCategoryStyle}
+        className={CollegeCategoryStyle({ isOpen })}
         onClick={event => {
           event.stopPropagation()
           if (isAcademicFoundation) {
@@ -73,7 +84,7 @@ const MajorList = ({ college, majors, handleMajorBtn, isAcademicFoundation }: Ma
               // 모션 좀 손보기
               <motion.button
                 key={ind}
-                className={CollegeCategoryStyle}
+                className={CollegeCategoryStyle()}
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 onClick={event => {

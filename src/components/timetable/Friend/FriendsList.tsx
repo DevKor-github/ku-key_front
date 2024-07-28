@@ -19,7 +19,7 @@ export const FriendPageBtnStyle = cva({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    gap: 2.5,
+    gap: 2,
     transition: 'border 0.256s, color 0.256s, background 0.256s',
     _hover: {
       borderColor: 'darkGray.2',
@@ -36,6 +36,11 @@ export const FriendPageBtnStyle = cva({
           borderColor: 'red.1',
           color: 'bg.gray',
         },
+      },
+    },
+    prev: {
+      true: {
+        rounded: 'full',
       },
     },
   },

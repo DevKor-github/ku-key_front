@@ -24,6 +24,12 @@ const SelectFilterBtnStyle = cva({
         borderColor: 'red.1',
       },
       disabled: { cursor: 'auto' },
+      default: {
+        _hover: {
+          borderColor: 'darkGray.2',
+          color: 'darkGray.2',
+        },
+      },
     },
   },
 })
@@ -50,7 +56,7 @@ const FilterSelector = ({ curFilter, curCategory, handleFilterSelector }: Filter
       <div className={css({ display: 'flex', justifyContent: 'center', gap: 2.5, alignItems: 'center' })}>
         <button
           className={SelectFilterBtnStyle({
-            state: curFilter === 'course' ? 'active' : curCategory === 0 ? 'disabled' : undefined,
+            state: curFilter === 'course' ? 'active' : curCategory === 0 ? 'disabled' : 'default',
           })}
           onClick={() => handleFilterSelector('course')}
         >
@@ -58,14 +64,14 @@ const FilterSelector = ({ curFilter, curCategory, handleFilterSelector }: Filter
         </button>
         <button
           className={SelectFilterBtnStyle({
-            state: curFilter === 'professor' ? 'active' : curCategory === 0 ? 'disabled' : undefined,
+            state: curFilter === 'professor' ? 'active' : curCategory === 0 ? 'disabled' : 'default',
           })}
           onClick={() => handleFilterSelector('professor')}
         >
           {filterTypeMap['professor']}
         </button>
         <button
-          className={SelectFilterBtnStyle({ state: curFilter === 'code' ? 'active' : undefined })}
+          className={SelectFilterBtnStyle({ state: curFilter === 'code' ? 'active' : 'default' })}
           onClick={() => handleFilterSelector('code')}
         >
           {filterTypeMap['code']}

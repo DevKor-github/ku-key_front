@@ -1,37 +1,36 @@
-import { css, cx } from '@styled-stytem/css'
+import { css, cva, cx } from '@styled-stytem/css'
 import { shadow } from '@styled-stytem/recipes'
 import { motion } from 'framer-motion'
-import { Variants } from 'framer-motion'
 import { ChevronUp } from 'lucide-react'
 
-const HeaderBtnStyle = css({
-  fontWeight: 500,
-  fontSize: 18,
-  py: 3.5,
-  px: 7,
-  rounded: 'full',
-  cursor: 'pointer',
-  backgroundColor: 'rgba(256, 256, 256, 0)',
-  color: '#ACACAC',
-  boxShadow: '0px 0px 4px 0px rgba(0, 0, 0, 0)',
+const HeaderBtnStyle = cva({
+  base: {
+    fontWeight: 500,
+    fontSize: 18,
+    py: 3.5,
+    px: 7,
+    rounded: 'full',
+    cursor: 'pointer',
+    backgroundColor: 'rgba(256, 256, 256, 0)',
+    color: 'darkGray.2',
+    boxShadow: '0px 0px 4px 0px rgba(0, 0, 0, 0)',
+    transition: 'all 0.256s',
+    _hover: {
+      color: 'red.1',
+    },
+  },
+  variants: {
+    active: {
+      true: {
+        backgroundColor: 'bg.red.1',
+        color: 'red.1',
+        boxShadow: '0px 0px 4px 0px #A00C0C80',
+      },
+    },
+  },
 })
 
-const HeaderBtnVariants: Variants = {
-  active: {
-    backgroundColor: '#FFF4F4',
-    color: '#A00C0C',
-    boxShadow: '0px 0px 4px 0px #A00C0C80',
-  },
-  noneActive: {
-    backgroundColor: 'rgba(256, 256, 256, 0)',
-    color: '#ACACAC',
-    boxShadow: '0px 0px 4px 0px rgba(0, 0, 0, 0)',
-  },
-}
-
 const closeBtnStyle = css({
-  w: 9,
-  h: 9,
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
@@ -70,24 +69,16 @@ const Drawer = ({ isOpen, sheetState, handleDrawer }: DrawerProps) => {
         animate={{ rotate: isOpen ? 180 : 0 }}
         onClick={() => handleDrawer('chevron')}
       >
-        <ChevronUp size={18} />
+        <ChevronUp size={24} />
       </motion.button>
-      <motion.button
-        className={HeaderBtnStyle}
-        animate={sheetState === 'class' ? 'active' : 'noneActive'}
-        variants={HeaderBtnVariants}
-        onClick={() => handleDrawer('class')}
-      >
-        Add a class
-      </motion.button>
-      <motion.button
-        className={HeaderBtnStyle}
-        animate={sheetState === 'schedule' ? 'active' : 'noneActive'}
-        variants={HeaderBtnVariants}
-        onClick={() => handleDrawer('own')}
-      >
-        Add on my own
-      </motion.button>
+      <div className={css({ display: 'flex', gap: 2.5 })}>
+        <button className={HeaderBtnStyle({ active: sheetState === 'class' })} onClick={() => handleDrawer('class')}>
+          Add a class
+        </button>
+        <button className={HeaderBtnStyle({ active: sheetState === 'schedule' })} onClick={() => handleDrawer('own')}>
+          Add on my own
+        </button>
+      </div>
     </div>
   )
 }
