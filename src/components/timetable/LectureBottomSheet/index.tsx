@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { useCallback, useState } from 'react'
 
 import AddClass from '@/components/timetable/LectureBottomSheet/AddClass'
+import AddOnMyOwn from '@/components/timetable/LectureBottomSheet/AddOnMyOwn'
 import Drawer from '@/components/timetable/LectureBottomSheet/Drawer'
 
 interface LectureBottomSheetProps {
@@ -68,7 +69,11 @@ const LectureBottomSheet = ({ timetableId }: LectureBottomSheetProps) => {
             pb: 3.5,
           })}
         >
-          {sheetState === 'schedule' ? <div>스케쥴 직접 추가</div> : <AddClass timetableId={timetableId} />}
+          {sheetState === 'schedule' ? (
+            <AddOnMyOwn timetableId={timetableId} />
+          ) : (
+            <AddClass timetableId={timetableId} />
+          )}
         </div>
       </motion.div>
     </>
