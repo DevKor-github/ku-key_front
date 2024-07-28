@@ -28,7 +28,7 @@ const CredentialForm = ({ form, valid, handleValidation }: CredentialFormProps) 
     })
   }
   return (
-    <div className={css({ display: 'flex', flexDir: 'column', gap: '50px' })}>
+    <section className={css({ display: 'flex', flexDir: 'column', gap: '50px' })}>
       <FormField
         name="username"
         control={form.control}
@@ -155,7 +155,7 @@ const CredentialForm = ({ form, valid, handleValidation }: CredentialFormProps) 
           </FormItem>
         )}
       />
-    </div>
+    </section>
   )
 }
 

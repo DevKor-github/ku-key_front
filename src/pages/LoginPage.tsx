@@ -55,7 +55,7 @@ const Login = () => {
     if (isAuth) navigate('/mypage')
   }, [isAuth, navigate])
   return (
-    <div
+    <main
       className={css({
         display: 'flex',
         position: 'relative',
@@ -67,6 +67,7 @@ const Login = () => {
         bgColor: 'lightGray.2',
       })}
     >
+      <title>Login Page</title>
       <div className={css({ pos: 'absolute', w: 'full', h: '500px', bgColor: 'red.2', top: 0, zIndex: 1 })} />
       <Form {...form}>
         <form
@@ -179,7 +180,7 @@ const Login = () => {
           </div>
         </form>
       </Form>
-    </div>
+    </main>
   )
 }
 

@@ -83,18 +83,13 @@ const RegisterPage = () => {
     for (const key in valid) {
       if (valid[key as RegisterationKey] !== 'valid') return
     }
-    mutateRegister(
-      {
-        screenshot: file,
-        ...emailForm.getValues(),
-        ...userInfoForm.getValues(),
-        username: credentialForm.getValues('username'),
-        password: credentialForm.getValues('password').password,
-      },
-      {
-        onSuccess: () => navigate('/login'),
-      },
-    )
+    mutateRegister({
+      screenshot: file,
+      ...emailForm.getValues(),
+      ...userInfoForm.getValues(),
+      username: credentialForm.getValues('username'),
+      password: credentialForm.getValues('password').password,
+    })
   }
 
   const handleValidation = useCallback((target: keyof RegistrationState, value: ValidState) => {
@@ -106,7 +101,7 @@ const RegisterPage = () => {
       emailForm.handleSubmit(() => setPage(2))()
     }
     if (page === 2) {
-      if (!file) {
+      if (!file || valid.screenshot !== 'valid') {
         setValid(v => ({ ...v, screenshot: 'invalid' }))
         return
       }
@@ -118,13 +113,13 @@ const RegisterPage = () => {
   }
 
   return (
-    <div
+    <main
       className={css({
         display: 'flex',
         pos: 'relative',
         flexDir: 'column',
         w: 'full',
-        h: 'calc(100vh - 359px)',
+        h: 'full',
         justifyContent: 'center',
         alignItems: 'center',
         gap: 5,
@@ -133,7 +128,8 @@ const RegisterPage = () => {
       })}
     >
       <img src={RegisterBGImg} alt="register background img" className={css({ pos: 'absolute', top: 0, zIndex: 0 })} />
-      <div
+      <title>Register Page</title>
+      <section
         className={css({
           display: 'flex',
           flexDir: 'column',
@@ -197,8 +193,8 @@ const RegisterPage = () => {
             {page !== 3 && <ArrowRight className={css({ w: 4, h: 4 })} />}
           </Button>
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   )
 }
 
