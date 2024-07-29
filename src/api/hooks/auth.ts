@@ -1,15 +1,15 @@
 import { useMutation } from '@tanstack/react-query'
-import axios from 'axios'
-import useSignIn from 'react-auth-kit/hooks/useSignIn'
-import useSignOut from 'react-auth-kit/hooks/useSignOut'
 
 import { LoginRequest, LoginResponse } from '@/api/types/auth'
+import { useSignOut } from '@/util/auth/useSignOut'
+import { useSignIn } from '@/util/auth/useSingnIn'
+import { apiInterface } from '@/util/axios/custom-axios'
 
-const logIn = async ({ email, password }: LoginRequest) => {
-  const response = await axios.post<LoginResponse>(`${import.meta.env.VITE_API_SERVER}/auth/login`, {
+const logIn = async ({ email, password, keepingLogin }: LoginRequest) => {
+  const response = await apiInterface.post<LoginResponse>(`/auth/login`, {
     email,
     password,
-    keepingLogin: true,
+    keepingLogin,
   })
   return response.data
 }
@@ -19,17 +19,18 @@ export const useLogIn = () => {
   return useMutation({
     mutationFn: logIn,
     onSuccess: data => {
+      console.log('logged:', new Date().toTimeString())
       signIn({
-        auth: { token: data.token.accessToken, type: 'Bearer' },
-        refresh: data.token.refreshToken,
-        userState: data.verified,
+        accessToken: data.token.accessToken,
+        refreshToken: data.token.refreshToken,
+        verified: data.verified,
       })
     },
   })
 }
 
 const logOut = async () => {
-  const response = await axios.post<null>(`${import.meta.env.VITE_API_SERVER}/auth/logout`)
+  const response = await apiInterface.post<null>(`/auth/logout`)
   return response.data
 }
 

@@ -7,10 +7,16 @@ export interface CheckEmailDuplicationResProps {
   possible: boolean
 }
 
-export interface RegisterReqProps {
-  screenShot: File
-  email: string
-  username: string
-  password: string
-  studentNumber: string
+export type RegisterKeys =
+  | 'email'
+  | 'username'
+  | 'password'
+  | 'studentNumber'
+  | 'country'
+  | 'homeUniversity'
+  | 'major'
+  | 'name'
+  | 'screenshot'
+export type RegisterReqProps = {
+  [K in RegisterKeys]: K extends 'screenshot' ? File : string
 }

@@ -78,12 +78,9 @@ export const useAddFriendship = () => {
 }
 
 const getReceivedList = async ({ authHeader }: GetRequestListRequest) => {
-  const response = await axios.get<GetRequestListResponse>(
-    `${import.meta.env.VITE_API_SERVER}/friendship/received`,
-    {
-      headers: { Authorization: authHeader },
-    },
-  )
+  const response = await axios.get<GetRequestListResponse>(`${import.meta.env.VITE_API_SERVER}/friendship/received`, {
+    headers: { Authorization: authHeader },
+  })
   return response.data
 }
 

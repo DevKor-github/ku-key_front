@@ -64,7 +64,7 @@ const FormItem = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>
 
   return (
     <FormItemContext.Provider value={{ id }}>
-      <div ref={ref} className={cx(css({ spaceY: 2 }), className)} {...props} />
+      <div ref={ref} className={cx(css({ spaceY: 0 }), className)} {...props} />
     </FormItemContext.Provider>
   )
 })
@@ -76,7 +76,14 @@ const FormLabel = forwardRef<
 >(({ className, ...props }, ref) => {
   const { error, formItemId } = useFormField()
 
-  return <Label ref={ref} className={cx(error && css({ color: 'red.2' }), className)} htmlFor={formItemId} {...props} />
+  return (
+    <Label
+      ref={ref}
+      className={cx(error && css({ color: 'red.2' }), css({ fontSize: 20, fontWeight: 700 }), className)}
+      htmlFor={formItemId}
+      {...props}
+    />
+  )
 })
 FormLabel.displayName = 'FormLabel'
 
@@ -126,7 +133,7 @@ const FormMessage = forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLPa
       <p
         ref={ref}
         id={formMessageId}
-        className={cx(css({ fontSize: 'sm', fontWeight: 'medium', color: 'red.2' }), className)}
+        className={cx(css({ fontSize: 14, fontWeight: 400, color: 'red.2' }), className)}
         {...props}
       >
         {body}

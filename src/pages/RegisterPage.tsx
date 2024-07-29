@@ -1,113 +1,171 @@
-import { zodResolver } from '@hookform/resolvers/zod'
 import { css } from '@styled-stytem/css'
-import { useCallback, useRef, useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
-import { z } from 'zod'
+import { ArrowLeft, ArrowRight } from 'lucide-react'
+import { memo, useCallback, useState } from 'react'
 
 import { useRegister } from '@/api/hooks/register'
+import RegisterBGImg from '@/assets/RegisterBGImg.jpg'
+import CredentialForm from '@/components/register/CredentialForm'
 import EmailForm from '@/components/register/EmailForm'
-import PasswordForm from '@/components/register/PasswordForm'
-import StudentIdForm from '@/components/register/StudentIdForm'
-import UsernameForm from '@/components/register/UsernameForm'
+import Progress from '@/components/register/Progress'
+import UserInfoForm from '@/components/register/UserInfoForm'
 import Button from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+import AuthNavigate from '@/lib/router/AuthNavigate'
 import { RegisterFormSchema } from '@/lib/zod/register-schema'
-import { RegistrationState, ValidState } from '@/types/register'
+import { ProgressState, RegisterationKey, RegistrationState, ValidState } from '@/types/register'
+import { useRegisterForm } from '@/util/useRegisterForm'
 
-const RegisterPage = () => {
-  const file = useRef<HTMLInputElement>(null)
+const RegisterPage = memo(() => {
+  const [page, setPage] = useState<ProgressState>(1)
+  const [file, setFile] = useState<File | null>(null)
   const [valid, setValid] = useState<RegistrationState>({
     email: 'unknown',
     username: 'unknown',
     studentId: 'unknown',
-    screenShot: 'unknown',
+    screenshot: 'unknown',
   })
 
   const { mutate: mutateRegister } = useRegister()
-  const navigate = useNavigate()
-  const form = useForm<z.infer<typeof RegisterFormSchema>>({
-    resolver: zodResolver(RegisterFormSchema),
-    defaultValues: {
-      email: '',
-      password: { password: '', confirm: '' },
-      username: '',
-      studentId: '',
-    },
-  })
 
-  const checkFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const emailForm = useRegisterForm(RegisterFormSchema.step1)
+  const userInfoForm = useRegisterForm(RegisterFormSchema.step2)
+  const credentialForm = useRegisterForm(RegisterFormSchema.step3)
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files?.length) return
     const currentFile = e.target.files[0]
     const fileType = currentFile.type
-    if (!fileType.includes('image')) setValid(v => ({ ...v, screenShot: 'invalid' }))
-    else setValid(v => ({ ...v, screenShot: 'valid' }))
+    if (!fileType.includes('image')) setValid(v => ({ ...v, screenshot: 'invalid' }))
+    else {
+      setFile(currentFile)
+      setValid(v => ({ ...v, screenshot: 'valid' }))
+    }
   }
 
-  const onSubmit = (values: z.infer<typeof RegisterFormSchema>) => {
-    if (!file.current?.files?.length) return
-
-    if (
-      valid.email !== 'valid' ||
-      valid.username !== 'valid' ||
-      valid.studentId !== 'valid' ||
-      valid.screenShot !== 'valid'
-    )
-      return
-    mutateRegister(
-      {
-        screenShot: file.current.files[0],
-        email: values.email,
-        username: values.username,
-        password: values.password.password,
-        studentNumber: values.studentId,
-      },
-      {
-        onSuccess: () => {
-          alert('회원가입이 완료되었습니다.')
-          navigate('/login')
-        },
-      },
-    )
+  const onSubmit = () => {
+    if (!file) return
+    for (const key in valid) {
+      if (valid[key as RegisterationKey] !== 'valid') return
+    }
+    mutateRegister({
+      screenshot: file,
+      ...emailForm.getValues(),
+      ...userInfoForm.getValues(),
+      username: credentialForm.getValues('username'),
+      password: credentialForm.getValues('password').password,
+    })
   }
 
   const handleValidation = useCallback((target: keyof RegistrationState, value: ValidState) => {
     setValid(v => ({ ...v, [target]: value }))
   }, [])
 
+  const handleNextPage = () => {
+    if (page === 1) {
+      emailForm.handleSubmit(() => setPage(2))()
+    }
+    if (page === 2) {
+      if (!file || valid.screenshot !== 'valid') {
+        setValid(v => ({ ...v, screenshot: 'invalid' }))
+        return
+      }
+      userInfoForm.handleSubmit(() => setPage(3))()
+    }
+    if (page === 3) {
+      credentialForm.handleSubmit(onSubmit)()
+    }
+  }
+
   return (
-    <div
-      className={css({
-        display: 'flex',
-        flexDir: 'column',
-        w: 'full',
-        h: '100vh',
-        justifyContent: 'center',
-        alignItems: 'center',
-      })}
-    >
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className={css({ display: 'flex', flexDir: 'column', gap: 6 })}>
-          <EmailForm form={form} valid={valid} handleValidation={handleValidation} />
-          <UsernameForm form={form} valid={valid} handleValidation={handleValidation} />
-          <PasswordForm {...form} />
-          <StudentIdForm form={form} valid={valid} handleValidation={handleValidation} />
-          <div>
-            <Label htmlFor="Sreenshot of acceptance email">
-              Please attach a screenshot of your acceptance email from Korea University
-            </Label>
-            <Input type="file" ref={file} accept="image/*" onChange={checkFile} />
-            {valid.screenShot === 'invalid' && (
-              <p className={css({ color: 'red.500' })}>Only image files are accepted</p>
-            )}
+    <AuthNavigate>
+      <main
+        className={css({
+          display: 'flex',
+          pos: 'relative',
+          flexDir: 'column',
+          w: 'full',
+          h: 'full',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: 5,
+          py: '142px',
+          bgColor: 'bg',
+        })}
+      >
+        <img
+          src={RegisterBGImg}
+          alt="register background img"
+          className={css({ pos: 'absolute', top: 0, zIndex: 0 })}
+        />
+        <title>Register Page</title>
+        <section
+          className={css({
+            display: 'flex',
+            flexDir: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '50px',
+            bgColor: 'white',
+            py: 20,
+            zIndex: 1,
+            boxShadow: '0px 0px 4px 0px rgba(0, 0, 0, 0.25)',
+            rounded: 30,
+            px: 105,
+          })}
+        >
+          <div className={css({ display: 'flex', flexDir: 'column', justifyContent: 'center', alignItems: 'center' })}>
+            <h1 className={css({ fontSize: 40, fontWeight: 700 })}>Join</h1>
+            <h2 className={css({ fontSize: 20, fontWeight: 500, color: 'darkGray.2' })}>Welcome to KU-Key</h2>
           </div>
-          <Button type="submit">Submit</Button>
-        </form>
-      </Form>
-    </div>
+          <Progress stageState={page} />
+          {page === 1 && (
+            <Form {...emailForm}>
+              <form>
+                <EmailForm form={emailForm} valid={valid} handleValidation={handleValidation} />
+              </form>
+            </Form>
+          )}
+          {page === 2 && (
+            <Form {...userInfoForm}>
+              <form>
+                <UserInfoForm
+                  form={userInfoForm}
+                  handleFileChange={handleFileChange}
+                  valid={valid}
+                  handleValidation={handleValidation}
+                  fileName={file?.name ?? ''}
+                />
+              </form>
+            </Form>
+          )}
+          {page === 3 && (
+            <Form {...credentialForm}>
+              <form>
+                <CredentialForm form={credentialForm} valid={valid.username} handleValidation={handleValidation} />
+              </form>
+            </Form>
+          )}
+          <div className={css({ display: 'flex', gap: 5 })}>
+            <Button
+              type="submit"
+              variant="loginOutline"
+              onClick={() => setPage(p => (p - 1) as ProgressState)}
+              disabled={page === 1}
+            >
+              <ArrowLeft className={css({ w: 4, h: 4 })} />
+              <p className={css({ fontSize: 20, fontWeight: 500, lineHeight: 'none' })}>PREV</p>
+            </Button>
+            <Button type="submit" variant={page === 3 ? 'loginColored' : 'loginOutline'} onClick={handleNextPage}>
+              <p className={css({ fontSize: 20, fontWeight: 500, lineHeight: 'none' })}>
+                {page === 3 ? 'Submit' : 'NEXT'}
+              </p>
+              {page !== 3 && <ArrowRight className={css({ w: 4, h: 4 })} />}
+            </Button>
+          </div>
+        </section>
+      </main>
+    </AuthNavigate>
   )
-}
+})
 
 export default RegisterPage
