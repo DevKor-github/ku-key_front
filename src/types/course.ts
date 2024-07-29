@@ -2,7 +2,7 @@ import { DayType } from '@/types/timetable'
 
 export interface SearchedCourse {
   id: number
-  professorName: string
+  professorName?: string
   category: string
   college: string
   courseName: string
@@ -14,7 +14,7 @@ export interface SearchedCourse {
   semester: string
   syllabus: string
   totalRate: 0
-  details: courseDetail[]
+  details?: courseDetail[]
 }
 
 interface courseDetail {

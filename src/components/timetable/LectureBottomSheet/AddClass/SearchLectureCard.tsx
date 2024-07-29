@@ -41,7 +41,7 @@ const SearchLectureCard = ({ data, addCourse }: SearchLectureCardProps) => {
         <div className={css({ display: 'flex', alignItems: 'center', fontSize: 14, color: 'darkGray.1' })}>
           <span>{data.professorName}</span>
           <Dot />
-          <span>{data.details[0].classroom}</span>
+          <span>{data.details && data.details[0]?.classroom}</span>
           <Dot />
           <span>{data.courseCode}</span>
         </div>
