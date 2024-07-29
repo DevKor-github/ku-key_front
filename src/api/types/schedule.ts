@@ -1,5 +1,4 @@
 export interface PostScheduleRequest {
-  authHeader: string | null
   timetableId: number
   title: string
   day: string

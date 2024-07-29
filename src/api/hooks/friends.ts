@@ -1,12 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import axios, { AxiosError } from 'axios'
-import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader'
+import { AxiosError } from 'axios'
 
 import {
   GetFriendListRequest,
   GetFriendListResponse,
   GetFriendTimetableRequest,
-  GetRequestListRequest,
   GetRequestListResponse,
   GetSearchUserRequest,
   GetSearchUserResponse,
@@ -14,10 +12,10 @@ import {
   PostFriendshipRequest,
 } from '@/api/types/friends'
 import { GetFriendTimetableResponse } from '@/api/types/timetable'
+import { apiInterface } from '@/util/axios/custom-axios'
 
-const getFriendList = async ({ authHeader, keyword }: GetFriendListRequest) => {
-  const response = await axios.get<GetFriendListResponse>(`${import.meta.env.VITE_API_URL}/friendship`, {
-    headers: { Authorization: authHeader },
+const getFriendList = async ({ keyword }: GetFriendListRequest) => {
+  const response = await apiInterface.get<GetFriendListResponse>(`/friendship`, {
     params: { keyword },
   })
   return response.data
@@ -26,18 +24,16 @@ const getFriendList = async ({ authHeader, keyword }: GetFriendListRequest) => {
 /**
  * 전체 친구 목록을 조회하거나, keyword를 query로 받아 친구 목록을 필터링하여 조회합니다.
  */
-export const useGetFriendList = (props: Omit<GetFriendListRequest, 'authHeader'>) => {
-  const authHeader = useAuthHeader()
+export const useGetFriendList = (props: GetFriendListRequest) => {
   return useQuery({
     queryKey: ['friendList'],
-    queryFn: () => getFriendList({ authHeader, ...props }),
+    queryFn: () => getFriendList(props),
     initialData: [],
   })
 }
 
-const getSearchUser = async ({ authHeader, username }: GetSearchUserRequest) => {
-  const response = await axios.get(`${import.meta.env.VITE_API_URL}/friendship/search-user`, {
-    headers: { Authorization: authHeader },
+const getSearchUser = async ({ username }: GetSearchUserRequest) => {
+  const response = await apiInterface.get(`/friendship/search-user`, {
     params: { username },
   })
   return response.data
@@ -46,22 +42,17 @@ const getSearchUser = async ({ authHeader, username }: GetSearchUserRequest) => 
 /**
  * username(친구 추가용 id)를 query로 받아 해당하는 유저를 검색합니다.
  */
-export const useGetSearchUser = ({ username }: Pick<GetSearchUserRequest, 'username'>) => {
-  const authHeader = useAuthHeader()
+export const useGetSearchUser = ({ username }: GetSearchUserRequest) => {
   return useQuery<GetSearchUserResponse, AxiosError>({
     queryKey: ['searchResult', username],
-    queryFn: () => getSearchUser({ authHeader, username }),
+    queryFn: () => getSearchUser({ username }),
     enabled: !!username,
     retry: false,
   })
 }
 
-const postFriendship = async ({ authHeader, toUsername }: PostFriendshipRequest) => {
-  const response = await axios.post(
-    `${import.meta.env.VITE_API_URL}/friendship`,
-    { toUsername },
-    { headers: { Authorization: authHeader } },
-  )
+const postFriendship = async ({ toUsername }: PostFriendshipRequest) => {
+  const response = await apiInterface.post(`/friendship`, { toUsername })
   return response.data
 }
 
@@ -69,12 +60,9 @@ const postFriendship = async ({ authHeader, toUsername }: PostFriendshipRequest)
  * 검색된 유저에게 친구 요청을 보냅니다. friendship 레코드가 새로 생성됩니다.
  */
 export const useAddFriendship = () => {
-  const authHeader = useAuthHeader()
-
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: ({ toUsername }: Pick<PostFriendshipRequest, 'toUsername'>) =>
-      postFriendship({ authHeader, toUsername }),
+    mutationFn: postFriendship,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['searchResult'] })
       queryClient.invalidateQueries({ queryKey: ['requestedFriends'] })
@@ -82,10 +70,8 @@ export const useAddFriendship = () => {
   })
 }
 
-const getReceivedList = async ({ authHeader }: GetRequestListRequest) => {
-  const response = await axios.get<GetRequestListResponse>(`${import.meta.env.VITE_API_URL}/friendship/received`, {
-    headers: { Authorization: authHeader },
-  })
+const getReceivedList = async () => {
+  const response = await apiInterface.get<GetRequestListResponse>(`/friendship/received`)
   return response.data
 }
 
@@ -93,20 +79,15 @@ const getReceivedList = async ({ authHeader }: GetRequestListRequest) => {
  * 나에게 친구 요청을 보낸 유저 목록을 조회합니다.
  */
 export const useGetReceivedList = () => {
-  const authHeader = useAuthHeader()
   return useQuery({
     queryKey: ['receivedFriends'],
-    queryFn: () => getReceivedList({ authHeader }),
+    queryFn: getReceivedList,
     initialData: [],
   })
 }
 
-const patchFriendshipRequest = async ({ authHeader, friendshipId }: PatchFriendshipRequestRequest) => {
-  const response = await axios.patch(
-    `${import.meta.env.VITE_API_URL}/friendship/received/${friendshipId}`,
-    {},
-    { headers: { Authorization: authHeader } },
-  )
+const patchFriendshipRequest = async ({ friendshipId }: PatchFriendshipRequestRequest) => {
+  const response = await apiInterface.patch(`/friendship/received/${friendshipId}`)
   return response.data
 }
 
@@ -114,11 +95,9 @@ const patchFriendshipRequest = async ({ authHeader, friendshipId }: PatchFriends
  * friendshipId를 받아 해당 friendship 레코드의 areWeFriend column을 true로 업데이트합니다.
  */
 export const useReceiveFriendship = () => {
-  const authHeader = useAuthHeader()
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: ({ friendshipId }: Pick<PatchFriendshipRequestRequest, 'friendshipId'>) =>
-      patchFriendshipRequest({ authHeader, friendshipId }),
+    mutationFn: patchFriendshipRequest,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['receivedFriends'] })
       queryClient.invalidateQueries({ queryKey: ['friendList'] })
@@ -127,10 +106,8 @@ export const useReceiveFriendship = () => {
   })
 }
 
-const deleteFriendshipRequest = async ({ authHeader, friendshipId }: PatchFriendshipRequestRequest) => {
-  const response = await axios.delete(`${import.meta.env.VITE_API_URL}/friendship/received/${friendshipId}`, {
-    headers: { Authorization: authHeader },
-  })
+const deleteFriendshipRequest = async ({ friendshipId }: PatchFriendshipRequestRequest) => {
+  const response = await apiInterface.delete(`/friendship/received/${friendshipId}`)
   return response.data
 }
 
@@ -138,11 +115,9 @@ const deleteFriendshipRequest = async ({ authHeader, friendshipId }: PatchFriend
  * friendshipId를 받아 해당 friendship 레코드를 삭제합니다.
  */
 export const useDeleteFriendshipRequest = () => {
-  const authHeader = useAuthHeader()
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: ({ friendshipId }: Pick<PatchFriendshipRequestRequest, 'friendshipId'>) =>
-      deleteFriendshipRequest({ authHeader, friendshipId }),
+    mutationFn: deleteFriendshipRequest,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['receivedFriends'] })
       queryClient.invalidateQueries({ queryKey: ['searchResult'] })
@@ -150,10 +125,8 @@ export const useDeleteFriendshipRequest = () => {
   })
 }
 
-const deleteFriendship = async ({ authHeader, friendshipId }: PatchFriendshipRequestRequest) => {
-  const response = await axios.delete(`${import.meta.env.VITE_API_URL}/friendship/${friendshipId}`, {
-    headers: { Authorization: authHeader },
-  })
+const deleteFriendship = async ({ friendshipId }: PatchFriendshipRequestRequest) => {
+  const response = await apiInterface.delete(`/friendship/${friendshipId}`)
   return response.data
 }
 
@@ -161,11 +134,9 @@ const deleteFriendship = async ({ authHeader, friendshipId }: PatchFriendshipReq
  * 이미 친구로 등록된 유저에 대해, friendshipId를 받아 해당 friendship 레코드를 삭제합니다.
  */
 export const useDeleteFriendship = () => {
-  const authHeader = useAuthHeader()
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: ({ friendshipId }: Pick<PatchFriendshipRequestRequest, 'friendshipId'>) =>
-      deleteFriendship({ authHeader, friendshipId }),
+    mutationFn: deleteFriendship,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['friendList'] })
       queryClient.invalidateQueries({ queryKey: ['searchResult'] })
@@ -173,14 +144,10 @@ export const useDeleteFriendship = () => {
   })
 }
 
-const getFriendTimetable = async ({ authHeader, username, semester, year }: GetFriendTimetableRequest) => {
-  const response = await axios.get<GetFriendTimetableResponse>(
-    `${import.meta.env.VITE_API_URL}/friendship/friend-timetable`,
-    {
-      headers: { Authorization: authHeader },
-      params: { username, semester, year },
-    },
-  )
+const getFriendTimetable = async (props: GetFriendTimetableRequest) => {
+  const response = await apiInterface.get<GetFriendTimetableResponse>(`/friendship/friend-timetable`, {
+    params: props,
+  })
   return response.data
 }
 
@@ -188,10 +155,9 @@ const getFriendTimetable = async ({ authHeader, username, semester, year }: GetF
  * 친구 ID, 연도, 학기를 입력받아 해당 학기에 친구의 대표 시간표를 조회합니다.
  */
 export const useGetFriendTimetable = (props: Omit<GetFriendTimetableRequest, 'authHeader'>) => {
-  const authHeader = useAuthHeader()
   return useQuery({
     queryKey: ['friendTimetable', props],
-    queryFn: () => getFriendTimetable({ authHeader, ...props }),
+    queryFn: () => getFriendTimetable(props),
     initialData: {
       courses: [],
       schedules: [],
@@ -202,10 +168,8 @@ export const useGetFriendTimetable = (props: Omit<GetFriendTimetableRequest, 'au
   })
 }
 
-const deleteSentRequest = async ({ authHeader, friendshipId }: PatchFriendshipRequestRequest) => {
-  const response = await axios.delete(`${import.meta.env.VITE_API_URL}/friendship/sent/${friendshipId}`, {
-    headers: { Authorization: authHeader },
-  })
+const deleteSentRequest = async ({ friendshipId }: PatchFriendshipRequestRequest) => {
+  const response = await apiInterface.delete(`/friendship/sent/${friendshipId}`)
   return response.data
 }
 
@@ -213,11 +177,9 @@ const deleteSentRequest = async ({ authHeader, friendshipId }: PatchFriendshipRe
  * friendshipId를 받아 해당 friendship 레코드를 삭제합니다.
  */
 export const useDeleteSentRequest = () => {
-  const authHeader = useAuthHeader()
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: ({ friendshipId }: Pick<PatchFriendshipRequestRequest, 'friendshipId'>) =>
-      deleteSentRequest({ authHeader, friendshipId }),
+    mutationFn: deleteSentRequest,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['requestedFriends'] })
       queryClient.invalidateQueries({ queryKey: ['searchResult'] })
@@ -225,10 +187,8 @@ export const useDeleteSentRequest = () => {
   })
 }
 
-const getRequestedList = async ({ authHeader }: GetRequestListRequest) => {
-  const response = await axios.get<GetRequestListResponse>(`${import.meta.env.VITE_API_URL}/friendship/sent`, {
-    headers: { Authorization: authHeader },
-  })
+const getRequestedList = async () => {
+  const response = await apiInterface.get<GetRequestListResponse>(`/friendship/sent`)
   return response.data
 }
 
@@ -236,10 +196,9 @@ const getRequestedList = async ({ authHeader }: GetRequestListRequest) => {
  * 나에게 친구 요청을 보낸 유저 목록을 조회합니다.
  */
 export const useGetRequestedList = () => {
-  const authHeader = useAuthHeader()
   return useQuery({
     queryKey: ['requestedFriends'],
-    queryFn: () => getRequestedList({ authHeader }),
+    queryFn: getRequestedList,
     initialData: [],
   })
 }

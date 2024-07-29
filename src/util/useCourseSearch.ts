@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query'
-import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader'
 
 import {
   getByCourseCode,
@@ -18,8 +17,6 @@ export interface useCourseSearchProps {
 }
 
 export const useCourseSearch = (props: useCourseSearchProps) => {
-  const authHeader = useAuthHeader()
-
   const { queryKeyword, category, classification, filter } = props
 
   const { data } = useQuery({
@@ -27,27 +24,27 @@ export const useCourseSearch = (props: useCourseSearchProps) => {
     queryFn: () => {
       if (category === 'Academic Foundations') {
         // 검색 미진행, 바로 띄워주기
-        return getInAcademicFoundation({ authHeader, college: classification! })
+        return getInAcademicFoundation({ college: classification! })
       }
       if (filter === 'code') {
         // 학수번호로 검색, category는 무조건 All Class
-        return getByCourseCode({ authHeader, courseCode: queryKeyword })
+        return getByCourseCode({ courseCode: queryKeyword })
       } else if (filter === 'course') {
         // 강의명으로 검색
         if (category === 'General Studies') {
           // 교양 내 검색
-          return getByCourseNameInGeneral({ authHeader, courseName: queryKeyword })
+          return getByCourseNameInGeneral({ courseName: queryKeyword })
         }
         // 전공 내 검색
-        return getByCourseNameInMajor({ authHeader, courseName: queryKeyword, major: classification! })
+        return getByCourseNameInMajor({ courseName: queryKeyword, major: classification! })
       } else if (filter === 'professor') {
         // 교수명으로 검색
         if (category === 'General Studies') {
           // 교양 내 검색
-          return getByProfInGeneral({ authHeader, professorName: queryKeyword })
+          return getByProfInGeneral({ professorName: queryKeyword })
         }
         // 전공 내 검색
-        return getByProfInMajor({ authHeader, professorName: queryKeyword, major: classification! })
+        return getByProfInMajor({ professorName: queryKeyword, major: classification! })
       }
     },
     enabled: !!queryKeyword,
