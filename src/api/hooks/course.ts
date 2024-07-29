@@ -13,7 +13,7 @@ import { apiInterface } from '@/util/axios/custom-axios'
  * 학수번호를 입력하여 강의를 검색합니다.
  */
 export const getByCourseCode = async ({ courseCode }: GetByCourseCodeRequest) => {
-  const response = await apiInterface.get('/course/search-course-code', {
+  const response = await apiInterface.get<GetCourseResponse>('/course/search-course-code', {
     params: {
       courseCode,
     },
