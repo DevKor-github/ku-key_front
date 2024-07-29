@@ -3,14 +3,13 @@ import { defineConfig } from '@pandacss/dev'
 import {
   buttonRecipe,
   chipRecipe,
-  clubTagRecipe
+  clubTagRecipe,
   inputRecipe,
   labelRecipe,
   modalCardRecipe,
   shadowRecipe,
 } from './src/lib/recipes/index'
 import { tokenToRem } from './src/lib/constants/tokenToRem'
-
 
 export default defineConfig({
   // Whether to use css reset
