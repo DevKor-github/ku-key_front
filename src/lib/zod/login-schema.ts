@@ -6,5 +6,5 @@ export const LoginSchema = z.object({
     .email()
     .refine(value => value.includes('@gmail.com'), { message: 'should type in gmail account' }),
 
-  password: z.string(),
+  password: z.string().refine(value => value !== '', { message: 'This field is required.' }),
 })
