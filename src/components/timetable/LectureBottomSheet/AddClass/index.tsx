@@ -173,7 +173,15 @@ const AddClass = ({ timetableId }: AddClassProps) => {
           {/* todo: 검색창 비활성화 디자인 */}
           {isSearchAvailable && <SearchBox placeholder={filterTypeMap[curFilter]} onSubmit={handleSearchBoxOnSubmit} />}
         </div>
-        <div className={css({ overflow: 'scroll', display: 'flex', flexDir: 'column', gap: 5 })}>
+        <div
+          className={css({
+            overflow: 'scroll',
+            display: 'flex',
+            flexDir: 'column',
+            gap: 5,
+            overscrollBehavior: 'contain',
+          })}
+        >
           {searchData?.data.map((data, index) => <SearchLectureCard key={index} data={data} addCourse={addCourse} />)}
         </div>
       </div>
