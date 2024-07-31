@@ -7,7 +7,7 @@ import SectionTitle from '@/components/home/Announcement/SectionTitle'
 const CalendarSection = () => {
   return (
     <section className={css({ display: 'flex', w: 500, flexDir: 'column' })}>
-      <SectionTitle title="Calendar" />
+      <SectionTitle title="Calendar" description="Check your academic schedule" link="/calendar" />
       <div className={css({ display: 'flex', justifyContent: 'space-between' })}>
         <CalendarHeader />
         <CalendarContainer />

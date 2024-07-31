@@ -6,11 +6,11 @@ import Club from '@/components/home/Club'
 
 const HomePage = () => {
   return (
-    <div className={css({ display: 'flex', flexDir: 'column' })}>
+    <main className={css({ display: 'flex', flexDir: 'column' })}>
       <HomeCarousel />
       <Announcement />
       <Club />
-    </div>
+    </main>
   )
 }
 

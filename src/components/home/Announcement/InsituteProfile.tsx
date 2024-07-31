@@ -1,4 +1,5 @@
 import { css, cva } from '@styled-stytem/css'
+import { motion } from 'framer-motion'
 import { Link } from 'lucide-react'
 import { useState } from 'react'
 
@@ -13,9 +14,10 @@ const profile = cva({
     animation: 'ease-out',
     transition: 'all 0.3s ease-out',
     cursor: 'pointer',
+    gap: 0.5,
   },
   variants: {
-    variant: { defalut: { gap: 0.5, py: 0 }, onMouse: { gap: 0, py: 0.5 } },
+    variant: { defalut: {}, onMouse: {} },
   },
   defaultVariants: {
     variant: 'defalut',
@@ -37,8 +39,8 @@ const InsituteProfile = ({ img, name, url }: InsituteProfileProps) => {
           src={img}
           alt="insitute profile img"
           className={css({
-            w: 20,
-            h: 20,
+            w: '70px',
+            h: '70px',
             rounded: 8,
             filter: 'drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.25))',
           })}
@@ -51,8 +53,8 @@ const InsituteProfile = ({ img, name, url }: InsituteProfileProps) => {
             position: 'absolute',
             top: 0,
             left: 0,
-            w: 20,
-            h: 20,
+            w: '70px',
+            h: '70px',
             rounded: 8,
             bgColor: onMouse ? 'black' : 'none',
             opacity: 0.4,
@@ -60,26 +62,61 @@ const InsituteProfile = ({ img, name, url }: InsituteProfileProps) => {
             transition: 'all 0.3s ease-out',
           })}
         />
-
-        <Link
-          className={css({
-            position: 'absolute',
-            top: 7,
-            left: 7,
-            w: 7,
-            h: 7,
-          })}
-          style={{
-            display: 'flex',
-            color: onMouse ? 'white' : 'transparent',
-            animation: 'ease-out',
-            transition: 'color 0.3s ease-out',
-          }}
-        />
       </div>
-
-      <div className={css({ display: 'flex', w: 20, py: 1, px: 2.5, justifyContent: 'center', alignItems: 'center' })}>
-        <p className={css({ fontSize: 12, fontWeight: 700, color: 'darkGray.1' })}>{name}</p>
+      <div
+        className={css({
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          alignSelf: 'stretch',
+        })}
+      >
+        <motion.div
+          className={css({
+            display: 'flex',
+            w: '70px',
+            pt: 0.5,
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: 1,
+          })}
+        >
+          <motion.p
+            layout
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className={css({
+              fontSize: 12,
+              fontWeight: 700,
+              color: 'darkGray.1',
+              whiteSpace: 'pre-wrap',
+            })}
+            transition={{
+              opacity: { ease: 'easeInOut' },
+              layout: { duration: 0.3 },
+            }}
+          >
+            {name}
+          </motion.p>
+          {onMouse && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              style={{
+                display: 'flex',
+                color: '#2D2D2D',
+              }}
+              transition={{
+                ease: 'easeIn',
+                duration: 0.2,
+              }}
+            >
+              <Link size={10} />
+            </motion.div>
+          )}
+        </motion.div>
       </div>
     </button>
   )
