@@ -3,7 +3,7 @@ import { css, cva } from '@styled-stytem/css'
 import { FilterType } from '@/types/timetable'
 import { filterTypeMap } from '@/util/timetableUtil'
 
-const SelectFilterBtnStyle = cva({
+export const SelectFilterBtnStyle = cva({
   base: {
     color: 'lightGray.1',
     fontSize: 18,
@@ -15,6 +15,9 @@ const SelectFilterBtnStyle = cva({
     bgColor: 'bg.gray',
     cursor: 'pointer',
     transition: 'background 0.256s, color 0.256s, border 0.256s',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   variants: {
     state: {
@@ -29,6 +32,11 @@ const SelectFilterBtnStyle = cva({
           borderColor: 'darkGray.2',
           color: 'darkGray.2',
         },
+      },
+    },
+    isDayBtn: {
+      true: {
+        width: '57px',
       },
     },
   },

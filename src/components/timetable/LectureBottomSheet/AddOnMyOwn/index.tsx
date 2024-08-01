@@ -3,7 +3,10 @@ import { ReactNode } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { usePostSchedule } from '@/api/hooks/schedule'
-import { timePattern } from '@/types/timetable'
+import { SelectFilterBtnStyle } from '@/components/timetable/LectureBottomSheet/AddClass/FilterSelector'
+import TimeSelector from '@/components/timetable/LectureBottomSheet/AddOnMyOwn/TimeSelector'
+import { DayArray, DayType, timePattern } from '@/types/timetable'
+import { getDuration } from '@/util/timetableUtil'
 
 const FormLayoutStyle = css({ display: 'flex', flexDir: 'row', gap: 10 })
 
@@ -13,6 +16,7 @@ const FormBox = ({ formName, children }: { formName: string; children: ReactNode
       className={css({
         display: 'flex',
         flexDir: 'row',
+        alignItems: 'center',
         gap: 5,
       })}
     >
@@ -22,7 +26,25 @@ const FormBox = ({ formName, children }: { formName: string; children: ReactNode
   )
 }
 
-interface AddOnMyOwnForm {
+const InputBoxStyle = css({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  bgColor: 'bg.gray',
+  rounded: 10,
+  border: '1px {colors.darkGray.2} solid',
+  px: 5,
+  py: 3,
+  outline: 'none',
+  fontSize: 18,
+  fontWeight: 500,
+  color: 'black.2',
+  _placeholder: {
+    color: 'lightGray.1',
+  },
+})
+
+export interface AddOnMyOwnForm {
   title: string
   day: string
   startTime: string
@@ -41,13 +63,14 @@ const AddOnMyOwn = ({ timetableId }: AddOnMyOwnProps) => {
     register,
     formState: { errors },
     handleSubmit,
-    setError,
+    setValue,
+    watch,
   } = useForm<AddOnMyOwnForm>({
     defaultValues: {
       title: '',
       day: 'Mon',
-      startTime: '00:00:00',
-      endTime: '00:00:00',
+      startTime: '09:00:00',
+      endTime: '09:00:00',
     },
     mode: 'onSubmit',
   })
@@ -57,55 +80,87 @@ const AddOnMyOwn = ({ timetableId }: AddOnMyOwnProps) => {
   }
 
   return (
-    <div className={css({ height: '100%', display: 'flex', flexDir: 'column', justifyContent: 'space-between' })}>
-      <form
-        onSubmit={handleSubmit(onSubmit, error => {
-          console.log(error)
-          setError('root', { message: 'Invalid input!' })
-        })}
-      >
-        <div className={css({ display: 'flex', flexDir: 'column', gap: 10 })}>
-          {errors?.root?.message}
-          <div className={FormLayoutStyle}>
-            <FormBox formName="Title">
-              <input type="text" {...register('title', { required: 'The name of the schedule is required.' })}></input>
-            </FormBox>
-            <FormBox formName="Place">
-              <input type="text" {...register('location')}></input>
-            </FormBox>
-          </div>
-          <div className={FormLayoutStyle}>
-            <FormBox formName="Day">
-              <input
-                {...register('day', {
-                  validate: val => {
-                    return ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].includes(val)
-                  },
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className={css({ height: '100%', display: 'flex', flexDir: 'column', justifyContent: 'space-between', pb: 2.5 })}
+    >
+      <div className={css({ display: 'flex', flexDir: 'column', gap: 10 })}>
+        <div className={FormLayoutStyle}>
+          <FormBox formName="Title">
+            <input
+              className={InputBoxStyle}
+              type="text"
+              {...register('title', { required: 'The name of the schedule is required.' })}
+            ></input>
+          </FormBox>
+          <FormBox formName="Place">
+            <input className={InputBoxStyle} type="text" {...register('location')}></input>
+          </FormBox>
+        </div>
+        <div className={FormLayoutStyle}>
+          <FormBox formName="Day">
+            {DayArray.map(day => (
+              <button
+                key={day}
+                type="button"
+                className={SelectFilterBtnStyle({
+                  isDayBtn: true,
+                  state: watch('day') === day ? 'active' : 'default',
                 })}
-              ></input>
-            </FormBox>
-          </div>
-          <div className={FormLayoutStyle}>
-            <FormBox formName="Start Time">
-              <input type="text" {...register('startTime', { pattern: timePattern })}></input>
-            </FormBox>
-            <FormBox formName="End Time">
-              <input type="text" {...register('endTime', { pattern: timePattern })}></input>
-            </FormBox>
-          </div>
+                onClick={() => setValue('day', day)}
+              >
+                {day}
+              </button>
+            ))}
+            <input
+              type="hidden"
+              {...register('day', {
+                validate: val => {
+                  return DayArray.includes(val as DayType)
+                },
+              })}
+            />
+          </FormBox>
         </div>
-        <div className={css({ display: 'flex', justifyContent: 'flex-end' })}>
-          <button
-            type="submit"
-            className={css({
-              cursor: 'pointer',
+        <div className={FormLayoutStyle}>
+          <FormBox formName="Start Time">
+            <TimeSelector type={'startTime'} setValue={setValue} />
+          </FormBox>
+          <FormBox formName="End Time">
+            <TimeSelector type={'endTime'} setValue={setValue} />
+          </FormBox>
+          <input type="hidden" {...register('startTime', { pattern: timePattern })} />
+          <input
+            type="hidden"
+            {...register('endTime', {
+              pattern: timePattern,
+              validate: val => {
+                return getDuration(val, watch('startTime')) > 0 || 'The end time must be later than the start time.'
+              },
             })}
-          >
-            Complete
-          </button>
+          />
         </div>
-      </form>
-    </div>
+      </div>
+      <div className={css({ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 5 })}>
+        {errors?.title?.message ?? errors?.endTime?.message}
+        <button
+          type="submit"
+          className={css({
+            fontWeight: 700,
+            fontSize: 12,
+            color: 'white',
+            px: 2.5,
+            py: 1,
+            rounded: 'full',
+            transition: 'all 0.256s',
+            cursor: 'pointer',
+            bgColor: 'darkGray.1',
+          })}
+        >
+          Complete
+        </button>
+      </div>
+    </form>
   )
 }
 
