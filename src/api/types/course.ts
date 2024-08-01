@@ -7,7 +7,7 @@ export interface GetByCourseCodeRequest {
 
 export interface GetCourseResponse {
   hasNextPage: boolean
-  nextCursorId: number
+  nextCursorId: number | null
   data: SearchedCourse[]
 }
 
@@ -33,4 +33,5 @@ export interface GetByProfInGeneralRequest {
 }
 export interface GetInAcademicFoundationRequest {
   college: string
+  cursorId?: number
 }

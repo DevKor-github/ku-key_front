@@ -1,6 +1,6 @@
 import { css } from '@styled-stytem/css'
 import { AxiosError } from 'axios'
-import { useCallback, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 import { usePostCourse } from '@/api/hooks/timetable'
@@ -44,7 +44,7 @@ const AddClass = ({ timetableId }: AddClassProps) => {
 
   const [query, setQuery] = useState<useCourseSearchProps>(initialQuery)
 
-  const { data: searchData, error } = useCourseSearch(query)
+  const { data: searchData, error, fetchNextPage, hasNextPage, isFetchingNextPage } = useCourseSearch(query)
   const { mutate: postCourse } = usePostCourse()
 
   const addCourse = useCallback(
@@ -101,17 +101,18 @@ const AddClass = ({ timetableId }: AddClassProps) => {
 
   const handleFilterSelector = useCallback(
     (filter: FilterType) => {
-      setQuery(initialQuery)
       switch (filter) {
         case 'code':
           setCurFilter('code')
           setCurCategory(0)
           setCurClassification(null)
+          setQuery(initialQuery)
           break
         case 'course':
         case 'professor':
           if (curCategory !== 0) {
             setCurFilter(filter)
+            setQuery(initialQuery)
           }
           break
       }
@@ -189,7 +190,7 @@ const AddClass = ({ timetableId }: AddClassProps) => {
           <div className={SearchMessageStyle}>{error.response?.data.message}</div>
         ) : searchData === undefined ? (
           <div className={SearchMessageStyle}></div>
-        ) : searchData?.data.length ? (
+        ) : searchData.length ? (
           <div
             className={css({
               overflow: 'scroll',
@@ -199,7 +200,10 @@ const AddClass = ({ timetableId }: AddClassProps) => {
               overscrollBehavior: 'contain',
             })}
           >
-            {searchData?.data.map((data, index) => <SearchLectureCard key={index} data={data} addCourse={addCourse} />)}
+            {searchData.map((data, index) => (
+              <SearchLectureCard key={index} data={data} addCourse={addCourse} />
+            ))}
+            {hasNextPage && !isFetchingNextPage && <button onClick={() => fetchNextPage()}>다음</button>}
           </div>
         ) : (
           <div className={SearchMessageStyle}>There are no classes available for exchange students.</div>
