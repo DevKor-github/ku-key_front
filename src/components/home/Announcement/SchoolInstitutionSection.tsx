@@ -1,4 +1,4 @@
-import { css, cx } from '@styled-stytem/css'
+import { css } from '@styled-stytem/css'
 
 import InsituteProfile from '@/components/home/Announcement/InsituteProfile'
 import SectionTitle from '@/components/home/Announcement/SectionTitle'
@@ -19,7 +19,7 @@ const ProfileContainer = css({
 })
 const SchoolInstitutionSection = () => {
   return (
-    <section className={css({ display: 'flex', w: 480, flexDir: 'column', alignItems: 'flex-start' })}>
+    <section className={css({ display: 'flex', flexDir: 'column' })}>
       <SectionTitle title="Institution" description="Click the link to go to the official page" />
       <div className={css({ display: 'flex', flexDir: 'column', gap: 15 })}>
         <div className={ProfileContainer}>
