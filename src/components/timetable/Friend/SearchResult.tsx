@@ -7,7 +7,7 @@ import FriendCard from '@/components/timetable/Friend/FriendCard'
 
 interface SearchResultProps {
   data: GetSearchUserResponse | undefined
-  error: AxiosError | null
+  error: Error | null
 }
 
 const SearchResult = memo(({ data, error }: SearchResultProps) => {
@@ -22,7 +22,7 @@ const SearchResult = memo(({ data, error }: SearchResultProps) => {
       })}
     >
       <h2 className={css({ fontWeight: 700, fontSize: 20, color: 'darkGray.1' })}>Search results</h2>
-      {error && (
+      {error instanceof AxiosError && error.response?.data.message === '올바르지 않은 상대입니다.' && (
         <div
           className={css({
             fontWeight: 600,

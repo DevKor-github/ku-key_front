@@ -1,4 +1,5 @@
 import { css } from '@styled-stytem/css'
+import { AxiosError } from 'axios'
 import { useCallback, useState } from 'react'
 import { createPortal } from 'react-dom'
 
@@ -14,6 +15,19 @@ import { useCourseSearch, useCourseSearchProps } from '@/util/useCourseSearch'
 
 const categoryList = ['All Class', 'Major', 'General Studies', 'Academic Foundations'] as const
 
+const SearchMessageStyle = css({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+})
+
+const initialQuery: useCourseSearchProps = {
+  category: categoryList[0],
+  filter: 'code',
+  queryKeyword: '',
+  classification: null,
+}
+
 interface AddClassProps {
   timetableId: number
 }
@@ -28,14 +42,9 @@ const AddClass = ({ timetableId }: AddClassProps) => {
   // 세부 카테고리 지정 모달의 열림 여부
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const [query, setQuery] = useState<useCourseSearchProps>({
-    category: categoryList[0],
-    filter: 'code',
-    queryKeyword: '',
-    classification: null,
-  })
+  const [query, setQuery] = useState<useCourseSearchProps>(initialQuery)
 
-  const { data: searchData } = useCourseSearch(query)
+  const { data: searchData, error } = useCourseSearch(query)
   const { mutate: postCourse } = usePostCourse()
 
   const addCourse = useCallback(
@@ -54,6 +63,7 @@ const AddClass = ({ timetableId }: AddClassProps) => {
         setIsModalOpen(true)
       } else {
         setIsSearchAvailable(true)
+        setQuery(initialQuery)
         if (toIndex === 0) {
           // All
           setCurFilter('code')
@@ -81,6 +91,7 @@ const AddClass = ({ timetableId }: AddClassProps) => {
           classification,
         })
       } else {
+        setQuery(initialQuery)
         setIsSearchAvailable(true)
         setCurFilter('course')
       }
@@ -90,6 +101,7 @@ const AddClass = ({ timetableId }: AddClassProps) => {
 
   const handleFilterSelector = useCallback(
     (filter: FilterType) => {
+      setQuery(initialQuery)
       switch (filter) {
         case 'code':
           setCurFilter('code')
@@ -173,17 +185,25 @@ const AddClass = ({ timetableId }: AddClassProps) => {
           {/* todo: 검색창 비활성화 디자인 */}
           {isSearchAvailable && <SearchBox placeholder={filterTypeMap[curFilter]} onSubmit={handleSearchBoxOnSubmit} />}
         </div>
-        <div
-          className={css({
-            overflow: 'scroll',
-            display: 'flex',
-            flexDir: 'column',
-            gap: 5,
-            overscrollBehavior: 'contain',
-          })}
-        >
-          {searchData?.data.map((data, index) => <SearchLectureCard key={index} data={data} addCourse={addCourse} />)}
-        </div>
+        {error instanceof AxiosError ? (
+          <div className={SearchMessageStyle}>{error.response?.data.message}</div>
+        ) : searchData === undefined ? (
+          <div className={SearchMessageStyle}></div>
+        ) : searchData?.data.length ? (
+          <div
+            className={css({
+              overflow: 'scroll',
+              display: 'flex',
+              flexDir: 'column',
+              gap: 5,
+              overscrollBehavior: 'contain',
+            })}
+          >
+            {searchData?.data.map((data, index) => <SearchLectureCard key={index} data={data} addCourse={addCourse} />)}
+          </div>
+        ) : (
+          <div className={SearchMessageStyle}>There are no classes available for exchange students.</div>
+        )}
       </div>
       {isModalOpen &&
         createPortal(

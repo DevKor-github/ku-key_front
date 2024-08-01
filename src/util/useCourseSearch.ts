@@ -19,7 +19,7 @@ export interface useCourseSearchProps {
 export const useCourseSearch = (props: useCourseSearchProps) => {
   const { queryKeyword, category, classification, filter } = props
 
-  const { data } = useQuery({
+  return useQuery({
     queryKey: ['courseSearchResult', props],
     queryFn: () => {
       if (category === 'Academic Foundations') {
@@ -49,8 +49,5 @@ export const useCourseSearch = (props: useCourseSearchProps) => {
     },
     enabled: !!queryKeyword,
     retry: false,
-    initialData: { hasNextPage: false, nextCursorId: 0, data: [] },
   })
-
-  return { data }
 }
