@@ -51,5 +51,7 @@ export const useCourseSearch = (props: useCourseSearchProps) => {
     },
     initialPageParam: 0,
     select: data => (data.pages ?? []).flatMap(page => page.data),
+    enabled: !!queryKeyword,
+    retry: false,
   })
 }

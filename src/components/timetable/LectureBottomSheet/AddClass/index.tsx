@@ -1,6 +1,6 @@
 import { css } from '@styled-stytem/css'
 import { AxiosError } from 'axios'
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 import { usePostCourse } from '@/api/hooks/timetable'
@@ -12,6 +12,7 @@ import SearchBox from '@/components/timetable/SearchBox'
 import { FilterType } from '@/types/timetable'
 import { filterTypeMap } from '@/util/timetableUtil'
 import { useCourseSearch, useCourseSearchProps } from '@/util/useCourseSearch'
+import useIntersect from '@/util/useIntersect'
 
 const categoryList = ['All Class', 'Major', 'General Studies', 'Academic Foundations'] as const
 
@@ -44,8 +45,13 @@ const AddClass = ({ timetableId }: AddClassProps) => {
 
   const [query, setQuery] = useState<useCourseSearchProps>(initialQuery)
 
-  const { data: searchData, error, fetchNextPage, hasNextPage, isFetchingNextPage } = useCourseSearch(query)
+  const { data: searchData, error, fetchNextPage, hasNextPage, isFetching } = useCourseSearch(query)
   const { mutate: postCourse } = usePostCourse()
+
+  const fetchNextRef = useIntersect(async (entry, observer) => {
+    observer.unobserve(entry.target)
+    if (hasNextPage && !isFetching) fetchNextPage()
+  })
 
   const addCourse = useCallback(
     (courseId: number) => {
@@ -203,7 +209,7 @@ const AddClass = ({ timetableId }: AddClassProps) => {
             {searchData.map((data, index) => (
               <SearchLectureCard key={index} data={data} addCourse={addCourse} />
             ))}
-            {hasNextPage && !isFetchingNextPage && <button onClick={() => fetchNextPage()}>다음</button>}
+            <div ref={fetchNextRef} className={css({ height: 1 })} />
           </div>
         ) : (
           <div className={SearchMessageStyle}>There are no classes available for exchange students.</div>
