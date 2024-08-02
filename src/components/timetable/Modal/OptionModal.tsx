@@ -1,13 +1,11 @@
-import { css, cx } from '@styled-stytem/css'
+import { css, cva, cx } from '@styled-stytem/css'
 import { shadow } from '@styled-stytem/recipes'
-import { CaseSensitive, Palette, Trash2 } from 'lucide-react'
-import { forwardRef } from 'react'
+import { CSSProperties, forwardRef, ReactNode } from 'react'
 
 import ModalCard from '@/components/ui/modal'
-import { GlobalModalStateType } from '@/types/timetable'
 
 const optBlock = css({
-  w: '100%',
+  w: 56,
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
@@ -30,67 +28,66 @@ const optBlockInfo = css({
 })
 
 interface OptionModalProps {
-  openTimetableModal: (value: GlobalModalStateType) => void
-  closeOptModal: () => void
+  optionHandler: { node: ReactNode; onClick: () => void }[]
+  modalTitle?: string
+  customStyle?: CSSProperties
+  p10?: boolean
 }
 
-const OptionModal = forwardRef<HTMLDivElement, OptionModalProps>(({ openTimetableModal, closeOptModal }, ref) => {
-  return (
-    <div className={css({ position: 'absolute', top: 17, right: 0, zIndex: 50 })}>
-      <ModalCard
-        ref={ref}
-        className={cx(
-          css({
-            bgColor: 'white',
-            border: 'none',
-            w: 60,
-            p: 2.5,
-            display: 'flex',
-            flexDir: 'column',
-            gap: 2.5,
-          }),
-          shadow(),
-        )}
-      >
-        <button
-          className={optBlock}
-          onClick={() => {
-            closeOptModal()
-            openTimetableModal('name')
-          }}
+const OptionModal = forwardRef<HTMLDivElement, OptionModalProps>(
+  ({ optionHandler, customStyle = {}, modalTitle, p10 = false }, ref) => {
+    return (
+      <div style={customStyle}>
+        <ModalCard
+          ref={ref}
+          className={cx(
+            cva({
+              base: {
+                bgColor: 'white',
+                border: 'none',
+                display: 'flex',
+                flexDir: 'column',
+                alignItems: 'center',
+                gap: 2.5,
+                p: 2.5,
+              },
+              variants: {
+                p10: {
+                  true: {
+                    px: 10,
+                    py: 7,
+                  },
+                },
+              },
+            })({ p10 }),
+            shadow(),
+          )}
         >
-          <div className={optBlockInfo}>
-            <CaseSensitive />
-            Name
-          </div>
-        </button>
-        <button
-          className={optBlock}
-          onClick={() => {
-            closeOptModal()
-            openTimetableModal('color')
-          }}
-        >
-          <div className={optBlockInfo}>
-            <Palette />
-            Color
-          </div>
-        </button>
-        <button
-          className={optBlock}
-          onClick={() => {
-            closeOptModal()
-            openTimetableModal('delete')
-          }}
-        >
-          <div className={optBlockInfo}>
-            <Trash2 />
-            Delete
-          </div>
-        </button>
-      </ModalCard>
-    </div>
-  )
-})
+          {modalTitle && (
+            <div
+              className={css({
+                fontSize: 24,
+                fontWeight: 700,
+                color: 'black.2',
+                textOverflow: 'ellipsis',
+                overflow: 'hidden',
+                whiteSpace: 'nowrap',
+                textAlign: 'center',
+                w: 56,
+              })}
+            >
+              {modalTitle}
+            </div>
+          )}
+          {optionHandler.map(({ node, onClick }, index) => (
+            <button key={index} className={optBlock} onClick={onClick}>
+              <div className={optBlockInfo}>{node}</div>
+            </button>
+          ))}
+        </ModalCard>
+      </div>
+    )
+  },
+)
 
 export default OptionModal

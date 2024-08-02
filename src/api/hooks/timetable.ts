@@ -158,3 +158,39 @@ export const usePostCourse = () => {
     },
   })
 }
+
+const deleteCourse = async (params: PostCourseRequest) => {
+  const response = await apiInterface.delete('/timetable/course', { params })
+  return response
+}
+
+/**
+ * 해당 시간표에 등록한 특정 강의를 삭제합니다.
+ */
+export const useDeleteCourse = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: deleteCourse,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['timetable'] })
+    },
+  })
+}
+
+const deleteSchedule = async ({ scheduleId }: { scheduleId: number }) => {
+  const response = await apiInterface.delete(`/schedule/${scheduleId}`)
+  return response
+}
+
+/**
+ * 시간표에 등록된 개인 스케쥴을 삭제합니다.
+ */
+export const useDeleteSchedule = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: deleteSchedule,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['timetable'] })
+    },
+  })
+}

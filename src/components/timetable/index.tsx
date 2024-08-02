@@ -1,5 +1,5 @@
 import { css, cva } from '@styled-stytem/css'
-import { Ellipsis } from 'lucide-react'
+import { CaseSensitive, Ellipsis, Palette, Trash2 } from 'lucide-react'
 import { forwardRef, useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
@@ -39,6 +39,45 @@ const Timetable = forwardRef<HTMLDivElement, TimetableProps>(
     const [globalModalState, setGlobalModalState] = useState<GlobalModalStateType>(null)
     const modalRef = useRef<HTMLDivElement>(null)
 
+    const optionHandler = [
+      {
+        node: (
+          <>
+            <CaseSensitive />
+            Name
+          </>
+        ),
+        onClick: () => {
+          setIsModalOpen(false)
+          openTimetableModal('name')
+        },
+      },
+      {
+        node: (
+          <>
+            <Palette />
+            Color
+          </>
+        ),
+        onClick: () => {
+          setIsModalOpen(false)
+          openTimetableModal('color')
+        },
+      },
+      {
+        node: (
+          <>
+            <Trash2 />
+            Delete
+          </>
+        ),
+        onClick: () => {
+          setIsModalOpen(false)
+          openTimetableModal('delete')
+        },
+      },
+    ]
+
     const openTimetableModal = useCallback(
       (value: GlobalModalStateType) => {
         if (value !== null) {
@@ -51,10 +90,6 @@ const Timetable = forwardRef<HTMLDivElement, TimetableProps>(
     const closeTimetableModal = useCallback(() => {
       setGlobalModalState(null)
     }, [setGlobalModalState])
-
-    const closeOptionModal = useCallback(() => {
-      setIsModalOpen(false)
-    }, [setIsModalOpen])
 
     useEffect(() => {
       const closeModal = (e: MouseEvent) => {
@@ -88,7 +123,11 @@ const Timetable = forwardRef<HTMLDivElement, TimetableProps>(
           })}
         >
           {isModalOpen && (
-            <OptionModal ref={modalRef} openTimetableModal={openTimetableModal} closeOptModal={closeOptionModal} />
+            <OptionModal
+              ref={modalRef}
+              optionHandler={optionHandler}
+              customStyle={{ position: 'absolute', top: '68px', right: 0, zIndex: 50 }}
+            />
           )}
           <div className={css({ display: 'flex', flexDir: 'row', gap: 2.5, alignItems: 'center' })}>
             <div className={css({ color: 'darkGray.1', fontSize: 20, fontWeight: 700, whiteSpace: 'nowrap' })}>

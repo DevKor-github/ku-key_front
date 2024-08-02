@@ -148,6 +148,7 @@ export const lectureDataPreprocess = (
       endTime: lecture.endTime,
       courseCode: lecture.courseCode,
       professorName: lecture.professorName,
+      syllabus: lecture.syllabus,
     })
   })
   scheduleData.map(sched => {

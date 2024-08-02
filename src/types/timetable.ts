@@ -31,6 +31,7 @@ export interface CourseType {
   professorName: string
   courseName: string
   courseCode: string
+  syllabus: string
   startTime: string
   endTime: string
   classroom: string
@@ -56,4 +57,5 @@ export interface GridType {
   day: DayType
   professorName?: string
   courseCode?: string
+  syllabus?: string
 }

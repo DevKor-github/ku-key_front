@@ -110,7 +110,13 @@ const TimetableLayout = memo(
               )
             })}
           </div>
-          <LectureGrid timetableData={data} weekCnt={week.length} timeCnt={time.length - 1} />
+          <LectureGrid
+            timetableId={timetableId}
+            timetableData={data}
+            weekCnt={week.length}
+            timeCnt={time.length - 1}
+            isMine={true}
+          />
         </div>
         {globalModalState &&
           createPortal(
