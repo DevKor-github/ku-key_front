@@ -7,25 +7,22 @@ import { ETC } from '@/lib/school-institute/etc'
 
 const ProfileContainer = css({
   display: 'flex',
-  flexWrap: 'wrap',
-  w: 377,
   h: 'auto',
   px: 1.5,
-  py: 1.5,
-  alignItems: 'center',
-  alignContent: 'center',
-  columnGap: 10,
-  rowGap: 3.5,
+  alignItems: 'baseline',
+  columnGap: '30px',
 })
 const SchoolInstitutionSection = () => {
   return (
     <section className={css({ display: 'flex', flexDir: 'column' })}>
       <SectionTitle title="Institution" description="Click the link to go to the official page" />
-      <div className={css({ display: 'flex', flexDir: 'column', gap: 15 })}>
-        <div className={ProfileContainer}>
-          {BROADCASTS.map(broadcast => (
-            <InsituteProfile key={broadcast.name} name={broadcast.name} img={broadcast.img} url={broadcast.url} />
-          ))}
+      <div className={css({ display: 'flex', flexDir: 'column', gap: 2.5, w: 'full' })}>
+        <div className={css({ display: 'flex', w: 'full', bg: 'white', py: 5 })}>
+          <div className={ProfileContainer}>
+            {BROADCASTS.map(broadcast => (
+              <InsituteProfile key={broadcast.name} name={broadcast.name} img={broadcast.img} url={broadcast.url} />
+            ))}
+          </div>
         </div>
         <div className={ProfileContainer}>
           {ETC.map(etc => (

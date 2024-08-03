@@ -8,10 +8,10 @@ const Announcement = () => {
     <section
       className={css({
         display: 'flex',
-        flexDir: 'row',
+        flexDir: 'column',
         bgColor: 'bg.gray',
         justifyContent: 'center',
-        // py: '39px',
+        alignItems: 'center',
         // justifyContent: 'space-between',
         // px: 'calc((100vw - 1027px)/2)',
         flexWrap: 'wrap',

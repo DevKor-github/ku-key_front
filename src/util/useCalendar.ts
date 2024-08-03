@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react'
 
 import { DayProps } from '@/types/calendar'
 
+const DAY_NUMBER = 7
+const WEEK_NUMBER = 5
 export const useCalendar = () => {
   const [today, setToday] = useState(new Date()) //오늘 날짜
   const [date, setDate] = useState(today) //선택한 날짜
@@ -39,7 +41,7 @@ export const useCalendar = () => {
       selected: false,
     }))
     const nextMonth: DayProps[] = Array.from(
-      { length: 5 * 7 - (currentMonthStartDay + currentMonthLastDate) },
+      { length: DAY_NUMBER * WEEK_NUMBER - (currentMonthStartDay + currentMonthLastDate) },
       (_, i) => ({
         status: 'NEXT_MONTH',
         date: new Date(today.getFullYear(), today.getMonth() + 1, nextMonthStartDate + i),

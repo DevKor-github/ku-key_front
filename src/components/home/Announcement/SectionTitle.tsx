@@ -19,6 +19,7 @@ const SectionTitle = ({ title, description, link }: SectionTitleProps) => {
         py: 5,
         alignSelf: 'stretch',
         gap: 1.5,
+        maxW: 977,
       })}
     >
       <h1
