@@ -3,7 +3,8 @@ import { CircleUser, MapPin, MessageSquare, Pencil, SquareGanttChart, Trash2 } f
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
 
-import { useDeleteCourse, useDeleteSchedule } from '@/api/hooks/timetable'
+import { useDeleteSchedule } from '@/api/hooks/schedule'
+import { useDeleteCourse } from '@/api/hooks/timetable'
 import OptionModal from '@/components/timetable/Modal/OptionModal'
 import { GridType } from '@/types/timetable'
 import { getDuration, getStartTime } from '@/util/timetableUtil'
@@ -37,6 +38,7 @@ const LectureSticker = ({ timetableId, data, bgColor, isMine }: LectureStickerPr
   const runningTime = getDuration(end, start)
 
   const [isModalOpened, setIsModalOpen] = useState(false)
+
   const { mutate: deleteCourse } = useDeleteCourse()
   const { mutate: deleteSchedule } = useDeleteSchedule()
 
@@ -57,6 +59,7 @@ const LectureSticker = ({ timetableId, data, bgColor, isMine }: LectureStickerPr
       node: (
         <>
           <MessageSquare />
+          {/* TODO: 리뷰로 리다이렉션 */}
           Review
         </>
       ),

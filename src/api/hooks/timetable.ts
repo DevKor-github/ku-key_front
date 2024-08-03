@@ -176,21 +176,3 @@ export const useDeleteCourse = () => {
     },
   })
 }
-
-const deleteSchedule = async ({ scheduleId }: { scheduleId: number }) => {
-  const response = await apiInterface.delete(`/schedule/${scheduleId}`)
-  return response
-}
-
-/**
- * 시간표에 등록된 개인 스케쥴을 삭제합니다.
- */
-export const useDeleteSchedule = () => {
-  const queryClient = useQueryClient()
-  return useMutation({
-    mutationFn: deleteSchedule,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['timetable'] })
-    },
-  })
-}

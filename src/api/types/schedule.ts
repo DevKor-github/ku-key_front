@@ -6,3 +6,11 @@ export interface PostScheduleRequest {
   endTime: string
   location?: string
 }
+
+export interface DeleteScheduleRequest {
+  scheduleId: number
+}
+
+export interface PatchScheduleRequest extends PostScheduleRequest {
+  scheduleId: number
+}

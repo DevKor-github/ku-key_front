@@ -1,4 +1,5 @@
-import { css } from '@styled-stytem/css'
+import { css, cx } from '@styled-stytem/css'
+import { AxiosError } from 'axios'
 import { ReactNode } from 'react'
 import { useForm } from 'react-hook-form'
 
@@ -65,6 +66,7 @@ const AddOnMyOwn = ({ timetableId }: AddOnMyOwnProps) => {
     handleSubmit,
     setValue,
     watch,
+    reset,
   } = useForm<AddOnMyOwnForm>({
     defaultValues: {
       title: '',
@@ -76,7 +78,15 @@ const AddOnMyOwn = ({ timetableId }: AddOnMyOwnProps) => {
   })
 
   const onSubmit = (data: AddOnMyOwnForm) => {
-    postSchedule({ timetableId, ...data })
+    reset()
+    postSchedule(
+      { timetableId, ...data },
+      {
+        onError: error => {
+          if (error instanceof AxiosError) alert(error.response?.data.message)
+        },
+      },
+    )
   }
 
   return (
@@ -88,13 +98,13 @@ const AddOnMyOwn = ({ timetableId }: AddOnMyOwnProps) => {
         <div className={FormLayoutStyle}>
           <FormBox formName="Title">
             <input
-              className={InputBoxStyle}
+              className={cx(InputBoxStyle, css({ h: '50px' }))}
               type="text"
               {...register('title', { required: 'The name of the schedule is required.' })}
             ></input>
           </FormBox>
           <FormBox formName="Place">
-            <input className={InputBoxStyle} type="text" {...register('location')}></input>
+            <input className={cx(InputBoxStyle, css({ h: '50px' }))} type="text" {...register('location')}></input>
           </FormBox>
         </div>
         <div className={FormLayoutStyle}>

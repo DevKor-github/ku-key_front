@@ -55,7 +55,14 @@ const AddClass = ({ timetableId }: AddClassProps) => {
 
   const addCourse = useCallback(
     (courseId: number) => {
-      postCourse({ courseId, timetableId })
+      postCourse(
+        { courseId, timetableId },
+        {
+          onError: error => {
+            if (error instanceof AxiosError) alert(error.response?.data.message)
+          },
+        },
+      )
     },
     [postCourse, timetableId],
   )
