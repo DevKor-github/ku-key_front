@@ -1,4 +1,4 @@
-import { isEqual } from 'date-fns'
+// import { isEqual } from 'date-fns'
 import { useEffect, useState } from 'react'
 
 import { DayProps } from '@/types/calendar'
@@ -9,7 +9,7 @@ export const useCalendar = () => {
   const [calendar, setCalendar] = useState<DayProps[][]>([])
 
   const handleSetDate = (date: Date) => {
-    const selectedDateString = date.toLocaleDateString()
+    // const selectedDateString = date.toLocaleDateString()
     setDate(date)
     // setCalendar(prevCalendar =>
     //   prevCalendar.map(week =>
