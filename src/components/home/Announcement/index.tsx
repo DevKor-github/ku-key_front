@@ -14,7 +14,7 @@ const Announcement = () => {
         alignItems: 'center',
         // justifyContent: 'space-between',
         // px: 'calc((100vw - 1027px)/2)',
-        flexWrap: 'wrap',
+        // flexWrap: 'wrap',
         gap: 10,
       })}
     >
