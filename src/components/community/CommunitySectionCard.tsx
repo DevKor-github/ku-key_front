@@ -39,7 +39,7 @@ const CommunitySectionCard = ({ card }: { card: CommunityCardType }) => {
         w: 'fit-content',
       })}
     >
-      <img src={CardConfig[card].img} alt={CardConfig[card].title} />
+      <img src={CardConfig[card].img} alt={CardConfig[card].title} style={{ zIndex: 1 }} />
       <img
         src={CardConfig[card].mask}
         alt="mask"
@@ -48,7 +48,7 @@ const CommunitySectionCard = ({ card }: { card: CommunityCardType }) => {
           bottom: 0,
           left: '50%',
           transform: 'translate( -50%, 0 )',
-          zIndex: -1,
+          zIndex: 0,
           filter: { lgDown: 'blur(7px)', lg: 'blur(37px)' },
         })}
       />
@@ -61,6 +61,7 @@ const CommunitySectionCard = ({ card }: { card: CommunityCardType }) => {
           w: 'full',
           h: 'full',
           px: 5,
+          zIndex: 1,
         })}
       >
         <div className={css({ display: 'flex', h: 20 })}>

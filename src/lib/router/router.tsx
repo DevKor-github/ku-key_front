@@ -3,6 +3,7 @@ import { RouteObject } from 'react-router-dom'
 import MainLayout from '@/components/MainLayout'
 import ProtectedRoutes from '@/lib/router/ProtectedRoutes'
 import CommunityPage from '@/pages/CommunityPage'
+import CommunityMainPage from '@/pages/CommunityPage/CommunityMainPage'
 import LandingPage from '@/pages/LandingPage'
 import Login from '@/pages/LoginPage'
 import MyPage from '@/pages/MyPage'
@@ -34,7 +35,11 @@ const routes: RouteObject[] = [
               { path: 'friend/:userHandler', element: <FriendTimetablePage /> },
             ],
           },
-          { path: 'community', element: <CommunityPage /> },
+          {
+            path: 'community',
+            element: <CommunityPage />,
+            // children: [{ path: 'community/:searchParam', element: <CommunityMainPage /> }],
+          },
         ],
       },
       { path: 'home', element: <LandingPage /> },
