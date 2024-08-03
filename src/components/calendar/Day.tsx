@@ -6,8 +6,10 @@ import { getDayStyles } from '@/util/getDaysColor'
 interface CalendarDayProps {
   day: DayProps
   date: Date
+  eventCount: number
 }
-const Day = ({ day, date }: CalendarDayProps) => {
+const Day = ({ day, date, eventCount }: CalendarDayProps) => {
+  console.log(eventCount)
   return (
     <div
       className={css({
@@ -36,7 +38,9 @@ const Day = ({ day, date }: CalendarDayProps) => {
       >
         {day.date.getDate()}
       </div>
-      {/* <div className={css({ display: 'flex', w: '5px', h: '5px', bgColor: 'red.2', rounded: 'full' })} /> */}
+      {eventCount > 0 ?? (
+        <div className={css({ display: 'flex', w: '5px', h: '5px', bgColor: 'red.2', rounded: 'full' })} />
+      )}
     </div>
   )
 }
