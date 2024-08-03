@@ -1,32 +1,42 @@
-import { css } from '@styled-stytem/css'
+import { css, cx } from '@styled-stytem/css'
 
-const Day = () => {
+import { DayProps } from '@/types/calendar'
+import { getDayStyles } from '@/util/getDaysColor'
+
+interface CalendarDayProps {
+  day: DayProps
+  date: Date
+}
+const Day = ({ day, date }: CalendarDayProps) => {
   return (
     <div
       className={css({
         display: 'flex',
-        pt: 2.5,
+        pb: 2.5,
         flexDir: 'column',
         gap: -3,
         justifyContent: 'center',
         alignItems: 'center',
       })}
     >
-      <div className={css({ display: 'flex', w: '5px', h: '5px', bgColor: 'red.2', rounded: 'full' })} />
       <div
-        className={css({
-          display: 'flex',
-          w: '50px',
-          h: '50px',
-          justifyContent: 'center',
-          alignItems: 'center',
-          fontSize: 21,
-          fontWeight: 600,
-          color: '#2D2D2D',
-        })}
+        className={cx(
+          css({
+            display: 'flex',
+            w: '50px',
+            h: '50px',
+            justifyContent: 'center',
+            alignItems: 'center',
+            fontSize: 21,
+            fontWeight: 600,
+            rounded: 'full',
+          }),
+          getDayStyles({ ...day }, date),
+        )}
       >
-        1
+        {day.date.getDate()}
       </div>
+      {/* <div className={css({ display: 'flex', w: '5px', h: '5px', bgColor: 'red.2', rounded: 'full' })} /> */}
     </div>
   )
 }
