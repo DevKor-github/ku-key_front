@@ -14,12 +14,10 @@ const SectionTitle = ({ title, description, link }: SectionTitleProps) => {
       className={css({
         display: 'flex',
         flexDir: 'column',
-        alignItems: 'flex-start',
         px: 1.5,
         py: 5,
-        alignSelf: 'stretch',
         gap: 1.5,
-        maxW: 977,
+        w: 977,
       })}
     >
       <h1
