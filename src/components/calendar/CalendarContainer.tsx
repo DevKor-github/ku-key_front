@@ -2,8 +2,11 @@ import { css } from '@styled-stytem/css'
 
 import Day from '@/components/calendar/Day'
 import WeekHeader from '@/components/calendar/WeekHeader'
+import { useCalendar } from '@/util/useCalendar'
 
 const CalendarContainer = () => {
+  const { calendar, handleSetDate, date } = useCalendar()
+
   return (
     <div
       className={css({
@@ -26,22 +29,23 @@ const CalendarContainer = () => {
           alignSelf: 'stretch',
         })}
       >
-        <div
-          className={css({
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            gap: 2,
-          })}
-        >
-          <Day />
-          <Day />
-          <Day />
-          <Day />
-          <Day />
-          <Day />
-          <Day />
-        </div>
+        {calendar.map((week, index) => (
+          <div
+            key={index}
+            className={css({
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: 2,
+            })}
+          >
+            {week.map((day, index) => (
+              <button key={index} onClick={() => handleSetDate(day.date)}>
+                <Day day={day} date={date} />
+              </button>
+            ))}
+          </div>
+        ))}
       </div>
     </div>
   )
