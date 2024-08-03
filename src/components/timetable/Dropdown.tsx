@@ -33,6 +33,12 @@ const DropdownItemsStyle = cva({
         pointerEvents: 'none',
       },
     },
+    isTimeSelector: {
+      true: {
+        h: 5,
+        fontSize: 14,
+      },
+    },
   },
 })
 
@@ -128,7 +134,7 @@ const Dropdown = ({
               return (
                 <DropdownMenu.Item
                   key={index}
-                  className={DropdownItemsStyle({ active: !canReselect && index == curIndex })}
+                  className={DropdownItemsStyle({ active: !canReselect && index == curIndex, isTimeSelector })}
                   onClick={() => {
                     setCurIndex(index)
                   }}
