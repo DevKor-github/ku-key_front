@@ -6,7 +6,9 @@ import {
   inputRecipe,
   labelRecipe,
   modalCardRecipe,
+  postPreviewRecipe,
   shadowRecipe,
+  tagRecipe,
 } from './src/lib/recipes/index'
 import { tokenToRem } from './src/lib/constants/tokenToRem'
 
@@ -30,6 +32,8 @@ export default defineConfig({
         input: inputRecipe,
         modalCard: modalCardRecipe,
         shadow: shadowRecipe,
+        tag: tagRecipe,
+        postPreview: postPreviewRecipe,
       },
       tokens: {
         colors: {
