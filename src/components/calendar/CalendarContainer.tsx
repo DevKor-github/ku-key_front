@@ -1,12 +1,13 @@
 import { css } from '@styled-stytem/css'
 
+import { useGetCalendar } from '@/api/hooks/calendar'
 import Day from '@/components/calendar/Day'
 import WeekHeader from '@/components/calendar/WeekHeader'
 import { useCalendar } from '@/util/useCalendar'
 
 const CalendarContainer = () => {
-  const { calendar, handleSetDate, date } = useCalendar()
-
+  const { calendar, handleSetDate, date, today } = useCalendar()
+  const { data: calendarEvent } = useGetCalendar(today.getFullYear(), today.getMonth() + 1)
   return (
     <div
       className={css({
@@ -41,7 +42,7 @@ const CalendarContainer = () => {
           >
             {week.map((day, index) => (
               <button key={index} onClick={() => handleSetDate(day.date)}>
-                <Day day={day} date={date} />
+                <Day day={day} date={date} eventCount={0} />
               </button>
             ))}
           </div>
