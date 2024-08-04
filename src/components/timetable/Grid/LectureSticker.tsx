@@ -1,4 +1,5 @@
 import { css } from '@styled-stytem/css'
+import { useSetAtom } from 'jotai/react'
 import { CircleUser, MapPin, MessageSquare, Pencil, SquareGanttChart, Trash2 } from 'lucide-react'
 import { useCallback, useState } from 'react'
 import { createPortal } from 'react-dom'
@@ -7,6 +8,7 @@ import { useDeleteSchedule } from '@/api/hooks/schedule'
 import { useDeleteCourse } from '@/api/hooks/timetable'
 import EditSchedule from '@/components/timetable/Modal/EditSchedule'
 import OptionModal from '@/components/timetable/Modal/OptionModal'
+import { isBottomSheetVisible } from '@/lib/store/bottomSheet'
 import { GridType } from '@/types/timetable'
 import { getDuration, getStartTime } from '@/util/timetableUtil'
 
@@ -40,10 +42,12 @@ const LectureSticker = ({ timetableId, data, bgColor, isMine }: LectureStickerPr
 
   const [isModalOpened, setIsModalOpen] = useState(false)
   const [isScheduleEditOpened, setIsScheduleEditOpened] = useState(false)
+  const setIsSheetOpend = useSetAtom(isBottomSheetVisible)
 
   const closeScheduleModal = useCallback(() => {
     setIsScheduleEditOpened(false)
-  }, [setIsScheduleEditOpened])
+    setIsSheetOpend(true)
+  }, [setIsScheduleEditOpened, setIsSheetOpend])
 
   const { mutate: deleteCourse } = useDeleteCourse()
   const { mutate: deleteSchedule } = useDeleteSchedule()
@@ -59,6 +63,7 @@ const LectureSticker = ({ timetableId, data, bgColor, isMine }: LectureStickerPr
       onClick: () => {
         window.open(syllabus!)
         setIsModalOpen(false)
+        setIsSheetOpend(true)
       },
     },
     {
@@ -71,6 +76,7 @@ const LectureSticker = ({ timetableId, data, bgColor, isMine }: LectureStickerPr
       ),
       onClick: () => {
         setIsModalOpen(false)
+        setIsSheetOpend(true)
       },
     },
     {
@@ -83,6 +89,7 @@ const LectureSticker = ({ timetableId, data, bgColor, isMine }: LectureStickerPr
       onClick: () => {
         setIsModalOpen(false)
         deleteCourse({ courseId: scheduleId, timetableId })
+        setIsSheetOpend(true)
       },
     },
   ]
@@ -109,6 +116,7 @@ const LectureSticker = ({ timetableId, data, bgColor, isMine }: LectureStickerPr
       onClick: () => {
         setIsModalOpen(false)
         deleteSchedule({ scheduleId })
+        setIsSheetOpend(true)
       },
     },
   ]
@@ -138,6 +146,7 @@ const LectureSticker = ({ timetableId, data, bgColor, isMine }: LectureStickerPr
         onClick={() => {
           if (isMine) {
             setIsModalOpen(true)
+            setIsSheetOpend(false)
           }
         }}
       >
@@ -188,6 +197,7 @@ const LectureSticker = ({ timetableId, data, bgColor, isMine }: LectureStickerPr
               // 모달 안쪽을 눌렀을 때도 모달 state가 null 되는 것을 방지
               if (event.target === event.currentTarget) {
                 setIsModalOpen(false)
+                setIsSheetOpend(true)
               }
             }}
           >
@@ -221,6 +231,7 @@ const LectureSticker = ({ timetableId, data, bgColor, isMine }: LectureStickerPr
               // 모달 안쪽을 눌렀을 때도 모달 state가 null 되는 것을 방지
               if (event.target === event.currentTarget) {
                 setIsScheduleEditOpened(false)
+                setIsSheetOpend(true)
               }
             }}
           >

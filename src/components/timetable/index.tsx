@@ -1,4 +1,5 @@
 import { css, cva } from '@styled-stytem/css'
+import { useAtom } from 'jotai/react'
 import { CaseSensitive, Ellipsis, Palette, Trash2 } from 'lucide-react'
 import { forwardRef, useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
@@ -6,6 +7,7 @@ import { createPortal } from 'react-dom'
 import TimetableLayout from '@/components/timetable/Grid/TimetableLayout'
 import LectureBottomSheet from '@/components/timetable/LectureBottomSheet'
 import OptionModal from '@/components/timetable/Modal/OptionModal'
+import { isBottomSheetVisible } from '@/lib/store/bottomSheet'
 import { GlobalModalStateType, TimetableInfo } from '@/types/timetable'
 
 const optBtn = cva({
@@ -36,7 +38,7 @@ interface TimetableProps {
 const Timetable = forwardRef<HTMLDivElement, TimetableProps>(
   ({ timetable: { timetableId, timetableName, year, semester }, deleteTimetableHandler }, ref) => {
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(true)
+    const [isSheetVisible, setIsSheetVisible] = useAtom(isBottomSheetVisible)
     const [globalModalState, setGlobalModalState] = useState<GlobalModalStateType>(null)
     const modalRef = useRef<HTMLDivElement>(null)
 
@@ -90,14 +92,14 @@ const Timetable = forwardRef<HTMLDivElement, TimetableProps>(
 
     const closeTimetableModal = useCallback(() => {
       setGlobalModalState(null)
-      setIsBottomSheetVisible(true)
-    }, [setGlobalModalState])
+      setIsSheetVisible(true)
+    }, [setGlobalModalState, setIsSheetVisible])
 
     useEffect(() => {
       const closeModal = (e: MouseEvent) => {
         if (isModalOpen && modalRef.current && !modalRef.current.contains(e.target as Node)) {
           setIsModalOpen(false)
-          setIsBottomSheetVisible(true)
+          setIsSheetVisible(true)
         }
       }
 
@@ -106,7 +108,7 @@ const Timetable = forwardRef<HTMLDivElement, TimetableProps>(
       return () => {
         document.removeEventListener('mousedown', closeModal)
       }
-    }, [isModalOpen])
+    }, [isModalOpen, setIsSheetVisible])
 
     return (
       <div className={css({ w: '100%' })} ref={ref}>
@@ -165,7 +167,7 @@ const Timetable = forwardRef<HTMLDivElement, TimetableProps>(
               className={optBtn()}
               onClick={() => {
                 setIsModalOpen(true)
-                setIsBottomSheetVisible(false)
+                setIsSheetVisible(false)
               }}
             >
               <Ellipsis size={20} />
@@ -179,7 +181,7 @@ const Timetable = forwardRef<HTMLDivElement, TimetableProps>(
           deleteTimetableHandler={deleteTimetableHandler}
           timetableName={timetableName}
         />
-        {createPortal(<LectureBottomSheet timetableId={timetableId} visible={isBottomSheetVisible} />, document.body)}
+        {createPortal(<LectureBottomSheet timetableId={timetableId} visible={isSheetVisible} />, document.body)}
       </div>
     )
   },
