@@ -35,12 +35,13 @@ interface ColorSelectorProps {
 }
 
 const ColorSelector = ({ colorTheme, closeModal, timetableId, isSelected }: ColorSelectorProps) => {
-  const { mutate } = useUpdateTimetableColor()
+  const { mutate: updateColor } = useUpdateTimetableColor()
+
   return (
     <button
       onClick={() => {
         closeModal()
-        mutate({ timetableColor: colorTheme, timetableId })
+        updateColor({ timetableColor: colorTheme, timetableId })
       }}
       className={ColorSelectorStyle({ isSelected })}
       style={{

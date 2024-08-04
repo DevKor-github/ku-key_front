@@ -29,7 +29,7 @@ const EllipsisText = css({
 })
 
 interface LectureStickerProps {
-  timetableId: number
+  timetableId?: number
   data: GridType
   bgColor: string
   isMine: boolean
@@ -88,7 +88,7 @@ const LectureSticker = ({ timetableId, data, bgColor, isMine }: LectureStickerPr
       ),
       onClick: () => {
         setIsModalOpen(false)
-        deleteCourse({ courseId: scheduleId, timetableId })
+        deleteCourse({ courseId: scheduleId, timetableId: timetableId! })
         setIsSheetOpend(true)
       },
     },
@@ -235,7 +235,7 @@ const LectureSticker = ({ timetableId, data, bgColor, isMine }: LectureStickerPr
               }
             }}
           >
-            <EditSchedule timetableId={timetableId} data={data} closeScheduleModal={closeScheduleModal} />
+            <EditSchedule timetableId={timetableId!} data={data} closeScheduleModal={closeScheduleModal} />
           </div>,
           document.body,
         )}

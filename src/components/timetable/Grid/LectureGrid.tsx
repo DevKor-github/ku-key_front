@@ -7,7 +7,7 @@ import { COLOR_INFO } from '@/lib/constants/timetableColors'
 import { lectureDataPreprocess } from '@/util/timetableUtil'
 
 interface LectureGridProps {
-  timetableId: number
+  timetableId?: number
   timetableData: GetTimetableByTimetableIdResponse
   weekCnt: number
   timeCnt: number

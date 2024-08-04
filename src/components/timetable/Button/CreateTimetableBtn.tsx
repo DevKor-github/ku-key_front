@@ -2,12 +2,12 @@ import { css } from '@styled-stytem/css'
 import { Plus } from 'lucide-react'
 
 interface CreateTimetableBtnProps {
-  handleCreateTimetableBtn: () => void
+  createTimetable: () => void
 }
-const CreateTimetableBtn = ({ handleCreateTimetableBtn }: CreateTimetableBtnProps) => {
+const CreateTimetableBtn = ({ createTimetable }: CreateTimetableBtnProps) => {
   return (
     <button
-      onClick={handleCreateTimetableBtn}
+      onClick={createTimetable}
       className={css({
         h: 9,
         w: 9,
