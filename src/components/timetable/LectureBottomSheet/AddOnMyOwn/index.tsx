@@ -1,6 +1,6 @@
 import { css, cx } from '@styled-stytem/css'
 import { AxiosError } from 'axios'
-import { ReactNode } from 'react'
+import { ReactNode, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { usePostSchedule } from '@/api/hooks/schedule'
@@ -60,6 +60,8 @@ interface AddOnMyOwnProps {
 const AddOnMyOwn = ({ timetableId }: AddOnMyOwnProps) => {
   const { mutate: postSchedule } = usePostSchedule()
 
+  const [trigger, setTrigger] = useState(0)
+
   const {
     register,
     formState: { errors },
@@ -71,14 +73,15 @@ const AddOnMyOwn = ({ timetableId }: AddOnMyOwnProps) => {
     defaultValues: {
       title: '',
       day: 'Mon',
-      startTime: '09:00:00',
-      endTime: '09:00:00',
+      startTime: '09:00',
+      endTime: '09:00',
     },
     mode: 'onSubmit',
   })
 
   const onSubmit = (data: AddOnMyOwnForm) => {
     reset()
+    setTrigger(p => p + 1)
     postSchedule(
       { timetableId, ...data },
       {
@@ -134,10 +137,10 @@ const AddOnMyOwn = ({ timetableId }: AddOnMyOwnProps) => {
         </div>
         <div className={FormLayoutStyle}>
           <FormBox formName="Start Time">
-            <TimeSelector type={'startTime'} setValue={setValue} />
+            <TimeSelector key={trigger} type={'startTime'} setValue={setValue} />
           </FormBox>
           <FormBox formName="End Time">
-            <TimeSelector type={'endTime'} setValue={setValue} />
+            <TimeSelector key={trigger} type={'endTime'} setValue={setValue} />
           </FormBox>
           <input type="hidden" {...register('startTime', { pattern: timePattern })} />
           <input
