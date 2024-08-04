@@ -36,6 +36,7 @@ interface TimetableProps {
 const Timetable = forwardRef<HTMLDivElement, TimetableProps>(
   ({ timetable: { timetableId, timetableName, year, semester }, deleteTimetableHandler }, ref) => {
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(true)
     const [globalModalState, setGlobalModalState] = useState<GlobalModalStateType>(null)
     const modalRef = useRef<HTMLDivElement>(null)
 
@@ -89,12 +90,14 @@ const Timetable = forwardRef<HTMLDivElement, TimetableProps>(
 
     const closeTimetableModal = useCallback(() => {
       setGlobalModalState(null)
+      setIsBottomSheetVisible(true)
     }, [setGlobalModalState])
 
     useEffect(() => {
       const closeModal = (e: MouseEvent) => {
         if (isModalOpen && modalRef.current && !modalRef.current.contains(e.target as Node)) {
           setIsModalOpen(false)
+          setIsBottomSheetVisible(true)
         }
       }
 
@@ -158,7 +161,13 @@ const Timetable = forwardRef<HTMLDivElement, TimetableProps>(
               color: 'darkGray.1',
             })}
           >
-            <button className={optBtn()} onClick={() => setIsModalOpen(true)}>
+            <button
+              className={optBtn()}
+              onClick={() => {
+                setIsModalOpen(true)
+                setIsBottomSheetVisible(false)
+              }}
+            >
               <Ellipsis size={20} />
             </button>
           </div>
@@ -170,7 +179,7 @@ const Timetable = forwardRef<HTMLDivElement, TimetableProps>(
           deleteTimetableHandler={deleteTimetableHandler}
           timetableName={timetableName}
         />
-        {createPortal(<LectureBottomSheet timetableId={timetableId} />, document.body)}
+        {createPortal(<LectureBottomSheet timetableId={timetableId} visible={isBottomSheetVisible} />, document.body)}
       </div>
     )
   },

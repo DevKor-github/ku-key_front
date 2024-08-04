@@ -1,9 +1,7 @@
 import { css, cx } from '@styled-stytem/css'
-import { AxiosError } from 'axios'
 import { ReactNode, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { usePostSchedule } from '@/api/hooks/schedule'
 import { SelectFilterBtnStyle } from '@/components/timetable/LectureBottomSheet/AddClass/FilterSelector'
 import TimeSelector from '@/components/timetable/LectureBottomSheet/AddOnMyOwn/TimeSelector'
 import { DayArray, DayType, timePattern } from '@/types/timetable'
@@ -54,12 +52,11 @@ export interface AddOnMyOwnForm {
 }
 
 interface AddOnMyOwnProps {
-  timetableId: number
+  submitHandler: (data: AddOnMyOwnForm) => void
+  prevValue?: { title: string; day: string; location?: string }
 }
 
-const AddOnMyOwn = ({ timetableId }: AddOnMyOwnProps) => {
-  const { mutate: postSchedule } = usePostSchedule()
-
+const AddOnMyOwn = ({ submitHandler, prevValue }: AddOnMyOwnProps) => {
   const [trigger, setTrigger] = useState(0)
 
   const {
@@ -71,10 +68,11 @@ const AddOnMyOwn = ({ timetableId }: AddOnMyOwnProps) => {
     reset,
   } = useForm<AddOnMyOwnForm>({
     defaultValues: {
-      title: '',
-      day: 'Mon',
+      title: prevValue?.title,
+      day: prevValue?.day,
       startTime: '09:00',
       endTime: '09:00',
+      location: prevValue?.location,
     },
     mode: 'onSubmit',
   })
@@ -82,14 +80,7 @@ const AddOnMyOwn = ({ timetableId }: AddOnMyOwnProps) => {
   const onSubmit = (data: AddOnMyOwnForm) => {
     reset()
     setTrigger(p => p + 1)
-    postSchedule(
-      { timetableId, ...data },
-      {
-        onError: error => {
-          if (error instanceof AxiosError) alert(error.response?.data.message)
-        },
-      },
-    )
+    submitHandler(data)
   }
 
   return (

@@ -43,9 +43,10 @@ interface DrawerProps {
   isOpen: boolean
   sheetState: 'class' | 'schedule' | null
   handleDrawer: (type: 'chevron' | 'class' | 'own') => void
+  visible: boolean
 }
 
-const Drawer = ({ isOpen, sheetState, handleDrawer }: DrawerProps) => {
+const Drawer = ({ isOpen, sheetState, handleDrawer, visible }: DrawerProps) => {
   return (
     <div
       className={cx(
@@ -56,13 +57,13 @@ const Drawer = ({ isOpen, sheetState, handleDrawer }: DrawerProps) => {
           rounded: 'full',
           px: 5,
           py: 2.5,
-          display: 'flex',
           gap: 2.5,
           alignItems: 'center',
           backdropFilter: 'blur(20px)',
         }),
         shadow(),
       )}
+      style={{ display: visible ? 'flex' : 'none' }}
     >
       <motion.button
         className={closeBtnStyle}

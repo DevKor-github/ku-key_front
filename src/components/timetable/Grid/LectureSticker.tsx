@@ -1,10 +1,11 @@
 import { css } from '@styled-stytem/css'
 import { CircleUser, MapPin, MessageSquare, Pencil, SquareGanttChart, Trash2 } from 'lucide-react'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 import { useDeleteSchedule } from '@/api/hooks/schedule'
 import { useDeleteCourse } from '@/api/hooks/timetable'
+import EditSchedule from '@/components/timetable/Modal/EditSchedule'
 import OptionModal from '@/components/timetable/Modal/OptionModal'
 import { GridType } from '@/types/timetable'
 import { getDuration, getStartTime } from '@/util/timetableUtil'
@@ -38,6 +39,11 @@ const LectureSticker = ({ timetableId, data, bgColor, isMine }: LectureStickerPr
   const runningTime = getDuration(end, start)
 
   const [isModalOpened, setIsModalOpen] = useState(false)
+  const [isScheduleEditOpened, setIsScheduleEditOpened] = useState(false)
+
+  const closeScheduleModal = useCallback(() => {
+    setIsScheduleEditOpened(false)
+  }, [setIsScheduleEditOpened])
 
   const { mutate: deleteCourse } = useDeleteCourse()
   const { mutate: deleteSchedule } = useDeleteSchedule()
@@ -90,6 +96,7 @@ const LectureSticker = ({ timetableId, data, bgColor, isMine }: LectureStickerPr
       ),
       onClick: () => {
         setIsModalOpen(false)
+        setIsScheduleEditOpened(true)
       },
     },
     {
@@ -189,6 +196,35 @@ const LectureSticker = ({ timetableId, data, bgColor, isMine }: LectureStickerPr
               modalTitle={title}
               p10
             />
+          </div>,
+          document.body,
+        )}
+      {isScheduleEditOpened &&
+        createPortal(
+          <div
+            className={css({
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              w: '100vw',
+              h: '100vh',
+              bgColor: 'rgba(0, 0, 0, 0.40)',
+              zIndex: 100,
+              display: 'flex',
+              flexDir: 'column',
+              justifyContent: 'flex-end',
+              alignItems: 'center',
+              paddingBottom: '50px',
+            })}
+            role="presentation"
+            onClick={event => {
+              // 모달 안쪽을 눌렀을 때도 모달 state가 null 되는 것을 방지
+              if (event.target === event.currentTarget) {
+                setIsScheduleEditOpened(false)
+              }
+            }}
+          >
+            <EditSchedule timetableId={timetableId} data={data} closeScheduleModal={closeScheduleModal} />
           </div>,
           document.body,
         )}
