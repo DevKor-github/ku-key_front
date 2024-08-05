@@ -10,6 +10,7 @@ interface ReviewTotalRateProps {
   prof?: string
 }
 const ReviewTotalRate = ({ totalRate, reviewCount, courseCode, prof }: ReviewTotalRateProps) => {
+  const viewRate = totalRate ?? 0
   return (
     <div
       className={css({
@@ -24,26 +25,24 @@ const ReviewTotalRate = ({ totalRate, reviewCount, courseCode, prof }: ReviewTot
       })}
     >
       <div className={css({ fontWeight: 700, color: 'lightGray.1', fontSize: 14 })}>Course Review Total Rate</div>
-      {totalRate !== undefined && (
-        <div className={css({ display: 'flex', alignItems: 'center', justifyContent: 'space-between' })}>
-          <div className={css({ display: 'flex', gap: 2.5, color: 'darkGray.2', alignItems: 'center' })}>
-            <span className={css({ fontSize: 18 })}>{totalRate?.toFixed(1)}</span>
-            <CookiesRate rate={totalRate} size={18} gap={4} />
-            <span className={css({ fontSize: 14 })}>({reviewCount})</span>
-          </div>
-          <a
-            href={`/course-review/detail/${courseCode}/${prof}`}
-            className={css({
-              fontSize: 18,
-              color: 'darkGray.2',
-              display: 'flex',
-              alignItems: 'center',
-            })}
-          >
-            Course Review <ChevronRight size={18} />
-          </a>
+      <div className={css({ display: 'flex', alignItems: 'center', justifyContent: 'space-between' })}>
+        <div className={css({ display: 'flex', gap: 2.5, color: 'darkGray.2', alignItems: 'center' })}>
+          <span className={css({ fontSize: 18 })}>{totalRate?.toFixed(1)}</span>
+          <CookiesRate rate={viewRate} size={18} gap={4} />
+          <span className={css({ fontSize: 14 })}>({reviewCount})</span>
         </div>
-      )}
+        <a
+          href={`/course-review/detail/${courseCode}/${prof}`}
+          className={css({
+            fontSize: 18,
+            color: 'darkGray.2',
+            display: 'flex',
+            alignItems: 'center',
+          })}
+        >
+          Course Review <ChevronRight size={18} />
+        </a>
+      </div>
     </div>
   )
 }

@@ -11,4 +11,5 @@ export interface GetReviewSummaryResponse {
   amountLearned: number
   teachingSkills: number
   attendance: number
+  courseName: string
 }
