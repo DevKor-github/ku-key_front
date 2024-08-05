@@ -1,14 +1,18 @@
 import { css, RecipeVariantProps } from '@styled-stytem/css'
 import { postPreview } from '@styled-stytem/recipes'
+import { formatDistanceToNow } from 'date-fns'
 
 import ProfileImg from '@/assets/ProfileImg.jpg'
+import { PostPreviewProps } from '@/types/community'
 
-interface PostTextPreviewProps {
+interface PostTextPreviewProps extends Pick<PostPreviewProps, 'title' | 'username' | 'createdAt'> {
   variant: RecipeVariantProps<typeof postPreview>
   description?: string
 }
-const PostTextPreview = ({ variant, description }: PostTextPreviewProps) => {
+const PostTextPreview = ({ title, username, createdAt, variant, description }: PostTextPreviewProps) => {
   const onlyTitle = variant?.variant === 'onlyTitle'
+
+  const timeDistance = formatDistanceToNow(createdAt)
   return (
     <div className={postPreview(variant)}>
       <img
@@ -45,8 +49,8 @@ const PostTextPreview = ({ variant, description }: PostTextPreviewProps) => {
               color: 'darkGray.2',
             })}
           >
-            <p>Anonymous</p>
-            <p>1 hour ago</p>
+            <p>{username}</p>
+            <p>{timeDistance} ago</p>
           </div>
           <h3
             className={css({
@@ -60,8 +64,7 @@ const PostTextPreview = ({ variant, description }: PostTextPreviewProps) => {
               textOverflow: 'ellipsis',
             })}
           >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua.
+            {title}
           </h3>
         </div>
         {!onlyTitle && (
