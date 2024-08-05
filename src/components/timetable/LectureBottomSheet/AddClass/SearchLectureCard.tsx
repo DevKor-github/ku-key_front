@@ -61,8 +61,11 @@ const SearchLectureCard = ({ data, addCourse }: SearchLectureCardProps) => {
             </span>
             |<span>{data.credit} credits</span>
           </div>
-          <a className={css({ display: 'flex', gap: 2 })} href={data.syllabus} target="_blank">
-            {/* todo:: 강의평 제대로 된 링크 */}
+          <a
+            className={css({ display: 'flex', gap: 2 })}
+            href={`/course-review/info/${data.courseCode}/${data.professorName}`}
+            target="_blank"
+          >
             <CookiesRate rate={data.totalRate} />
             <span>
               Review

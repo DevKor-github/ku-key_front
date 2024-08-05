@@ -61,7 +61,7 @@ const LectureSticker = ({ timetableId, data, bgColor, isMine }: LectureStickerPr
         </>
       ),
       onClick: () => {
-        window.open(syllabus!)
+        window.open(syllabus!, 'rel=noopener noreferrer')
         setIsModalOpen(false)
         setIsSheetOpend(true)
       },
@@ -70,13 +70,13 @@ const LectureSticker = ({ timetableId, data, bgColor, isMine }: LectureStickerPr
       node: (
         <>
           <MessageSquare />
-          {/* TODO: 리뷰로 리다이렉션 */}
           Review
         </>
       ),
       onClick: () => {
         setIsModalOpen(false)
         setIsSheetOpend(true)
+        window.open(`/course-review/info/${data.courseCode}/${data.professorName}`, 'rel=noopener noreferrer')
       },
     },
     {

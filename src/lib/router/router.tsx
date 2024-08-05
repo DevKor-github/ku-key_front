@@ -2,6 +2,9 @@ import { RouteObject } from 'react-router-dom'
 
 import MainLayout from '@/components/MainLayout'
 import ProtectedRoutes from '@/lib/router/ProtectedRoutes'
+import CourseReviewPage from '@/pages/CourseReviewPage'
+import CourseInfoPage from '@/pages/CourseReviewPage/CourseInfoPage'
+import WriteReviewPage from '@/pages/CourseReviewPage/WriteReviewPage'
 import LandingPage from '@/pages/LandingPage'
 import Login from '@/pages/LoginPage'
 import MyPage from '@/pages/MyPage'
@@ -31,6 +34,14 @@ const routes: RouteObject[] = [
                 element: <FriendPage />,
               },
               { path: 'friend/:userHandler', element: <FriendTimetablePage /> },
+            ],
+          },
+          {
+            path: 'course-review',
+            element: <CourseReviewPage />,
+            children: [
+              { path: 'info/:courseCode/:prof', element: <CourseInfoPage /> },
+              { path: 'write/:courseCode/:prof', element: <WriteReviewPage /> },
             ],
           },
         ],
