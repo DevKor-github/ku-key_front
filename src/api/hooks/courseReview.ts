@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { GetReviewSummaryRequest, GetReviewSummaryResponse } from '@/api/types/courseReview'
+import { GetReviewsRequest, GetReviewSummaryRequest, GetReviewSummaryResponse } from '@/api/types/courseReview'
 import { apiInterface } from '@/util/axios/custom-axios'
 
 const getReviewSummary = async (props: GetReviewSummaryRequest) => {
@@ -15,5 +15,20 @@ export const useGetReviewSummary = (props: GetReviewSummaryRequest) => {
   return useQuery({
     queryKey: ['summary'],
     queryFn: () => getReviewSummary(props),
+  })
+}
+
+const getReviews = async (props: GetReviewsRequest) => {
+  const response = await apiInterface.get('/course-review', { params: props })
+  return response.data
+}
+
+/**
+ * 해당 교수의 해당 강의에 대해 강의평을 조회합니다. 열람권이 없으면 열람할 수 없습니다.
+ */
+export const useGetReviews = (props: GetReviewsRequest) => {
+  return useQuery({
+    queryKey: ['reviewList'],
+    queryFn: () => getReviews(props),
   })
 }
