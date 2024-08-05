@@ -76,7 +76,10 @@ const LectureSticker = ({ timetableId, data, bgColor, isMine }: LectureStickerPr
       onClick: () => {
         setIsModalOpen(false)
         setIsSheetOpend(true)
-        window.open(`/course-review/info/${data.courseCode}/${data.professorName}`, 'rel=noopener noreferrer')
+        window.open(
+          `/course-review/info/${data.courseCode?.slice(0, 7)}/${data.professorName}`,
+          'rel=noopener noreferrer',
+        )
       },
     },
     {

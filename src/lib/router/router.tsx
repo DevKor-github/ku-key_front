@@ -4,6 +4,7 @@ import MainLayout from '@/components/MainLayout'
 import ProtectedRoutes from '@/lib/router/ProtectedRoutes'
 import CourseReviewPage from '@/pages/CourseReviewPage'
 import CourseInfoPage from '@/pages/CourseReviewPage/CourseInfoPage'
+import ReviewPage from '@/pages/CourseReviewPage/ReviewPage'
 import WriteReviewPage from '@/pages/CourseReviewPage/WriteReviewPage'
 import LandingPage from '@/pages/LandingPage'
 import Login from '@/pages/LoginPage'
@@ -41,6 +42,7 @@ const routes: RouteObject[] = [
             element: <CourseReviewPage />,
             children: [
               { path: 'info/:courseCode/:prof', element: <CourseInfoPage /> },
+              { path: 'detail/:courseCode/:prof', element: <ReviewPage /> },
               { path: 'write/:courseCode/:prof', element: <WriteReviewPage /> },
             ],
           },

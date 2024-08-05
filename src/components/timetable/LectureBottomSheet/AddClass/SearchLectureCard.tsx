@@ -1,21 +1,12 @@
 import { css } from '@styled-stytem/css'
 import { ChevronRight, Dot } from 'lucide-react'
 
+import CookiesRate from '@/components/courseReview/CookiesRate'
 import { SearchedCourse } from '@/types/course'
 
 interface SearchLectureCardProps {
   data: SearchedCourse
   addCourse: (courseId: number) => void
-}
-
-const CookiesRate = ({ rate }: { rate: number }) => {
-  const rateArr = []
-  for (let i = 0; i < 5; i++) {
-    rateArr.push(
-      <span key={i} className={css({ rounded: 'full', w: 2, h: 2, bgColor: i < rate ? 'red.3' : 'lightGray.1' })} />,
-    )
-  }
-  return <span className={css({ display: 'flex', gap: 0.5, alignItems: 'center' })}>{rateArr}</span>
 }
 
 const SearchLectureCard = ({ data, addCourse }: SearchLectureCardProps) => {
@@ -63,10 +54,10 @@ const SearchLectureCard = ({ data, addCourse }: SearchLectureCardProps) => {
           </div>
           <a
             className={css({ display: 'flex', gap: 2 })}
-            href={`/course-review/info/${data.courseCode}/${data.professorName}`}
+            href={`/course-review/info/${data.courseCode.slice(0, 7)}/${data.professorName}`}
             target="_blank"
           >
-            <CookiesRate rate={data.totalRate} />
+            <CookiesRate rate={data.totalRate} size={8} gap={2} />
             <span>
               Review
               <ChevronRight size={14} />
