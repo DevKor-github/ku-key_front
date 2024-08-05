@@ -8,13 +8,21 @@ import { PostPreviewProps } from '@/types/community'
 interface PostTextPreviewProps extends Pick<PostPreviewProps, 'title' | 'username' | 'createdAt'> {
   variant: RecipeVariantProps<typeof postPreview>
   description?: string
+  handleNavigate?: () => void
 }
-const PostTextPreview = ({ title, username, createdAt, variant, description }: PostTextPreviewProps) => {
+const PostTextPreview = ({
+  title,
+  username,
+  createdAt,
+  variant,
+  description,
+  handleNavigate,
+}: PostTextPreviewProps) => {
   const onlyTitle = variant?.variant === 'onlyTitle'
 
   const timeDistance = formatDistanceToNow(createdAt)
   return (
-    <div className={postPreview(variant)}>
+    <button className={postPreview(variant)} onClick={handleNavigate}>
       <img
         src={ProfileImg}
         alt="Profile"
@@ -83,7 +91,7 @@ const PostTextPreview = ({ title, username, createdAt, variant, description }: P
           </div>
         )}
       </div>
-    </div>
+    </button>
   )
 }
 

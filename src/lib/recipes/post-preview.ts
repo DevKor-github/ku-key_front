@@ -4,6 +4,7 @@ export const postPreviewRecipe = defineRecipe({
   className: 'postPreview',
   description: 'Post preview wrapper',
   base: {
+    all: 'unset',
     display: 'flex',
     alignItems: 'center',
     alignSelf: 'stretch',
@@ -12,6 +13,7 @@ export const postPreviewRecipe = defineRecipe({
     bgColor: 'white',
     pl: 2.5,
     pr: 10,
+    cursor: 'pointer',
   },
   variants: {
     variant: {

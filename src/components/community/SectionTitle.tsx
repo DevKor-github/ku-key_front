@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom'
 
 interface SectionTitleProps {
   title: string
-  description: string
-  link: string
+  description?: string
+  link?: string
 }
 const SectionTitle = ({ title, description, link }: SectionTitleProps) => {
   const navigate = useNavigate()
@@ -20,14 +20,16 @@ const SectionTitle = ({ title, description, link }: SectionTitleProps) => {
           alignSelf: 'stretch',
         })}
       >
-        <p className={css({ fontSize: 18, fontWeight: 500, color: 'darkGray.1' })}>{description}</p>
-        <button
-          className={css({ fontSize: 24, fontWeight: 700, color: 'red.1', px: 2.5, gap: 3.5, cursor: 'pointer' })}
-          onClick={() => navigate(link)}
-        >
-          more
-          <ChevronRight size={24} />
-        </button>
+        {description && <p className={css({ fontSize: 18, fontWeight: 500, color: 'darkGray.1' })}>{description}</p>}
+        {link && (
+          <button
+            className={css({ fontSize: 24, fontWeight: 700, color: 'red.1', px: 2.5, gap: 3.5, cursor: 'pointer' })}
+            onClick={() => navigate(link)}
+          >
+            more
+            <ChevronRight size={24} />
+          </button>
+        )}
       </div>
     </div>
   )

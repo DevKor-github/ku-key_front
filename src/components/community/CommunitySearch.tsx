@@ -4,21 +4,33 @@ import { useGetPostsAll } from '@/api/hooks/community'
 import PostPreview from '@/components/community/PostPreview'
 import SectionTitle from '@/components/community/SectionTitle'
 import SearchBox from '@/components/timetable/SearchBox'
+import { useSearch } from '@/util/useSearch'
 
 const CommunitySearch = () => {
   const { data: posts } = useGetPostsAll()
-  console.log(posts)
+  const { searchParam, handleSetParam, deleteParam } = useSearch()
   const onSubmit = (searchParam: string) => {
-    console.log(searchParam)
+    if (searchParam === '') {
+      return deleteParam('keyword')
+    }
+    handleSetParam('keyword', searchParam)
   }
+
+  const keyword = searchParam.get('keyword')
   return (
     <div className={css({ display: 'flex', flexDir: 'column' })}>
       <SearchBox
-        placeholder="Search posts from entire board"
+        initialKeyword={keyword ?? ''}
+        placeholder={keyword ?? 'Search posts from entire board'}
         onSubmit={onSubmit}
         cssProps={{ width: 608, borderRadius: '50px' }}
       />
-      <SectionTitle title="View recent posts" description="Check out our recent posts" link="/community/board" />
+      {keyword ? (
+        <SectionTitle title={`"${keyword}" Search Results`} />
+      ) : (
+        <SectionTitle title="View recent posts" description="Check out our recent posts" link="/community/board" />
+      )}
+
       <div className={css({ display: 'flex', mt: 20, flexDir: 'column', gap: '50px', mb: 25 })}>
         {posts?.map(post => (
           <PostPreview

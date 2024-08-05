@@ -5,10 +5,10 @@ import PostTextPreview from '@/components/community/PostTextPreview'
 import PreviewTag from '@/components/community/PreviewTag'
 import PreviewTextWrapper from '@/components/community/PreviewTextWrapper'
 import SectionTitle from '@/components/community/SectionTitle'
+import { BoardType } from '@/types/community'
 
 const HotBoardPreview = () => {
   const { data: hotPosts } = useGetHotPosts()
-  console.log(hotPosts)
   return (
     <div
       className={css({
@@ -21,10 +21,17 @@ const HotBoardPreview = () => {
       })}
     >
       <SectionTitle title="Hot Board" description="Check out most popular posts" link="/community/hotboard" />
-      {/* <PreviewTextWrapper>
-        <PreviewTag preview={'C'} />
-        <PostTextPreview variant={{ variant: 'onlyTitle' }} />
-      </PreviewTextWrapper> */}
+      {hotPosts.map(post => (
+        <PreviewTextWrapper key={post.id}>
+          <PreviewTag boardName={post.boardName as BoardType} />
+          <PostTextPreview
+            title={post.title}
+            createdAt={post.createdAt}
+            username={post.username}
+            variant={{ variant: 'onlyTitle' }}
+          />
+        </PreviewTextWrapper>
+      ))}
     </div>
   )
 }
