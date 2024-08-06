@@ -1,4 +1,5 @@
-import { css } from '@styled-stytem/css'
+import { css, cx } from '@styled-stytem/css'
+import { shadow } from '@styled-stytem/recipes'
 
 import RatePercentage from '@/components/courseReview/RatePercentage'
 import {
@@ -29,52 +30,46 @@ const ScoreBoxStyle = css({
 })
 
 interface InfoDetailProps {
-  hasReview: boolean
-  attendance?: number
-  classLevel?: number
-  teamProject?: number
-  amountLearned?: number
-  teachingSkills?: number
+  attendance: number
+  classLevel: number
+  teamProject: number
+  amountLearned: number
+  teachingSkills: number
 }
-const InfoDetail = ({
-  hasReview,
-  attendance,
-  classLevel,
-  teamProject,
-  amountLearned,
-  teachingSkills,
-}: InfoDetailProps) => {
+const InfoDetail = ({ attendance, classLevel, teamProject, amountLearned, teachingSkills }: InfoDetailProps) => {
   return (
     <div
-      className={css({
-        display: 'flex',
-        flexDir: 'column',
-        gap: 5,
-        rounded: 10,
-        boxShadow: '0px 0px 4px 0px #00000040',
-        px: 5,
-        pt: 5,
-        pb: 11,
-      })}
+      className={cx(
+        css({
+          display: 'flex',
+          flexDir: 'column',
+          gap: 5,
+          rounded: 10,
+          px: 5,
+          pt: 5,
+          pb: 11,
+        }),
+        shadow(),
+      )}
     >
       <div className={css({ display: 'flex', gap: 5, alignItems: 'center' })}>
         <span className={LabelStyle}>Attendance</span>
-        <span className={StateStyle}>{hasReview ? attendaceArray[attendance!] : 'No Infomation'}</span>
+        <span className={StateStyle}>{attendaceArray[attendance]}</span>
       </div>
       <div className={css({ display: 'flex', flexDir: 'column', gap: 10 })}>
         <div className={css({ display: 'flex' })}>
           <div className={ScoreBoxStyle}>
             <div className={LabelStyle}>Class Level</div>
             <div className={css({ display: 'flex', gap: 2.5, alignItems: 'center' })}>
-              <span className={StateStyle}>{hasReview ? classLevelArray[classLevel!] : 'No Infomation'}</span>
-              <RatePercentage rate={classLevel ?? 0} total={3} />
+              <span className={StateStyle}>{classLevelArray[classLevel]}</span>
+              <RatePercentage rate={classLevel} total={3} />
             </div>
           </div>
           <div className={ScoreBoxStyle}>
             <div className={LabelStyle}>Difficulty of Team Project</div>
             <div className={css({ display: 'flex', gap: 2.5, alignItems: 'center' })}>
-              <span className={StateStyle}>{hasReview ? teamProjectArray[teamProject!] : 'No Infomation'}</span>
-              <RatePercentage rate={teamProject ?? 0} total={4} />
+              <span className={StateStyle}>{teamProjectArray[teamProject]}</span>
+              <RatePercentage rate={teamProject} total={4} />
             </div>
           </div>
         </div>
@@ -82,15 +77,15 @@ const InfoDetail = ({
           <div className={ScoreBoxStyle}>
             <div className={LabelStyle}>Class Level</div>
             <div className={css({ display: 'flex', gap: 2.5, alignItems: 'center' })}>
-              <span className={StateStyle}>{hasReview ? learnAmountArray[amountLearned!] : 'No Infomation'}</span>
-              <RatePercentage rate={amountLearned ?? 0} total={3} />
+              <span className={StateStyle}>{learnAmountArray[amountLearned]}</span>
+              <RatePercentage rate={amountLearned} total={3} />
             </div>
           </div>
           <div className={ScoreBoxStyle}>
             <div className={LabelStyle}>Difficulty of Team Project</div>
             <div className={css({ display: 'flex', gap: 2.5, alignItems: 'center' })}>
-              <span className={StateStyle}>{hasReview ? teachingSkillsArray[teachingSkills!] : 'No Infomation'}</span>
-              <RatePercentage rate={teachingSkills ?? 0} total={4} />
+              <span className={StateStyle}>{teachingSkillsArray[teachingSkills]}</span>
+              <RatePercentage rate={teachingSkills} total={4} />
             </div>
           </div>
         </div>

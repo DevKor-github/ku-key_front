@@ -8,15 +8,15 @@ import ReviewHeader from '@/components/courseReview/ReviewHeader'
 import { CriteriaType, DirectionType } from '@/types/review'
 
 const ReviewPage = () => {
-  const { courseCode, prof } = useParams()
+  const { courseCode = '', prof = '' } = useParams()
 
   const [criteria, setCriteria] = useState<CriteriaType>('createdAt')
   const [direction, setDirection] = useState<DirectionType>('DESC')
 
   const { data: totalData } = useGetReviewSummary({ courseCode, professorName: prof })
   const { data: reviewList } = useGetReviews({
-    courseCode: courseCode ?? '',
-    professorName: prof ?? '',
+    courseCode,
+    professorName: prof,
     criteria,
     direction,
   })
@@ -26,10 +26,10 @@ const ReviewPage = () => {
       <div className={css({ display: 'flex', flexDir: 'column', gap: 2.5 })}>
         <div className={css({ display: 'flex', gap: 2.5, color: 'darkGray.2', alignItems: 'center' })}>
           <span className={css({ fontSize: 18 })}>{totalData?.totalRate?.toFixed(1)}</span>
-          <CookiesRate rate={totalData?.totalRate ?? 0} size={18} gap={4} />
+          <CookiesRate rate={totalData.totalRate} size={18} gap={4} />
           <span className={css({ fontSize: 14 })}>({totalData?.reviewCount})</span>
         </div>
-        <ReviewHeader courseCode={courseCode ?? ''} courseName={totalData?.courseName ?? ''} prof={prof ?? ''} />
+        <ReviewHeader courseCode={courseCode} courseName={totalData.courseName} prof={prof} />
       </div>
     </div>
   )

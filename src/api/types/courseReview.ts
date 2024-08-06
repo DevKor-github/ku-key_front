@@ -1,8 +1,8 @@
 import { CriteriaType, DirectionType, ReviewType } from '@/types/review'
 
 export interface GetReviewSummaryRequest {
-  professorName?: string
-  courseCode?: string
+  professorName: string
+  courseCode: string
 }
 
 export interface GetReviewSummaryResponse {

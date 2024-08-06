@@ -15,6 +15,16 @@ export const useGetReviewSummary = (props: GetReviewSummaryRequest) => {
   return useQuery({
     queryKey: ['summary'],
     queryFn: () => getReviewSummary(props),
+    initialData: (): GetReviewSummaryResponse => ({
+      totalRate: 0,
+      reviewCount: 0,
+      classLevel: 0,
+      teamProject: 0,
+      amountLearned: 0,
+      teachingSkills: 0,
+      attendance: 0,
+      courseName: '',
+    }),
   })
 }
 
