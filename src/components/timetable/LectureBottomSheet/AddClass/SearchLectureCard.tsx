@@ -1,5 +1,6 @@
 import { css } from '@styled-stytem/css'
 import { ChevronRight, Dot } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 import CookiesRate from '@/components/courseReview/CookiesRate'
 import { SearchedCourse } from '@/types/course'
@@ -15,8 +16,8 @@ const SearchLectureCard = ({ data, addCourse }: SearchLectureCardProps) => {
       <div className={css({ display: 'flex', flexDir: 'column', gap: 2.5 })}>
         <div className={css({ display: 'flex', gap: 4, alignItems: 'center' })}>
           <span className={css({ fontSize: 16, fontWeight: 600, color: 'black.2' })}>{data.courseName}</span>
-          <a
-            href={data.syllabus}
+          <Link
+            to={data.syllabus}
             target="_blank"
             className={css({
               fontSize: 12,
@@ -27,7 +28,7 @@ const SearchLectureCard = ({ data, addCourse }: SearchLectureCardProps) => {
             })}
           >
             Course plan <ChevronRight size={14} />
-          </a>
+          </Link>
         </div>
         <div className={css({ display: 'flex', alignItems: 'center', fontSize: 14, color: 'darkGray.1' })}>
           <span>{data.professorName}</span>
@@ -52,9 +53,9 @@ const SearchLectureCard = ({ data, addCourse }: SearchLectureCardProps) => {
             </span>
             |<span>{data.credit} credits</span>
           </div>
-          <a
+          <Link
             className={css({ display: 'flex', gap: 2 })}
-            href={`/course-review/info/${data.courseCode.slice(0, 7)}/${data.professorName}`}
+            to={`/course-review/info/${data.courseCode.slice(0, 7)}/${data.professorName}`}
             target="_blank"
           >
             <CookiesRate rate={data.totalRate} size={8} gap={2} />
@@ -62,7 +63,7 @@ const SearchLectureCard = ({ data, addCourse }: SearchLectureCardProps) => {
               Review
               <ChevronRight size={14} />
             </span>
-          </a>
+          </Link>
         </div>
       </div>
       <button

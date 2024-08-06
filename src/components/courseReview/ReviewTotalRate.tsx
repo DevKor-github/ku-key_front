@@ -1,5 +1,6 @@
 import { css } from '@styled-stytem/css'
 import { ChevronRight } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 import CookiesRate from '@/components/courseReview/CookiesRate'
 
@@ -31,8 +32,8 @@ const ReviewTotalRate = ({ totalRate, reviewCount, courseCode, prof }: ReviewTot
           <CookiesRate rate={viewRate} size={18} gap={4} />
           <span className={css({ fontSize: 14 })}>({reviewCount})</span>
         </div>
-        <a
-          href={`/course-review/detail/${courseCode}/${prof}`}
+        <Link
+          to={`/course-review/detail/${courseCode}/${prof}`}
           className={css({
             fontSize: 18,
             color: 'darkGray.2',
@@ -41,7 +42,7 @@ const ReviewTotalRate = ({ totalRate, reviewCount, courseCode, prof }: ReviewTot
           })}
         >
           Course Review <ChevronRight size={18} />
-        </a>
+        </Link>
       </div>
     </div>
   )
