@@ -1,4 +1,5 @@
 import { CriteriaType, DirectionType, ReviewType } from '@/types/review'
+import { SemesterType } from '@/types/timetable'
 
 export interface GetReviewSummaryRequest {
   professorName: string
@@ -27,4 +28,18 @@ export interface GetReviewsResponse {
   totalRate: number
   reviewCount: number
   reviews: ReviewType[]
+}
+
+export interface PostReviewRequest {
+  rate: number
+  classLevel: number
+  teamProject: number
+  amountLearned: number
+  teachingSkills: number
+  attendance: number
+  textReview: string
+  year: string
+  semester: SemesterType
+  professorName: string
+  courseCode: string
 }

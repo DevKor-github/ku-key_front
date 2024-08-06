@@ -1,6 +1,11 @@
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 
-import { GetReviewsRequest, GetReviewSummaryRequest, GetReviewSummaryResponse } from '@/api/types/courseReview'
+import {
+  GetReviewsRequest,
+  GetReviewSummaryRequest,
+  GetReviewSummaryResponse,
+  PostReviewRequest,
+} from '@/api/types/courseReview'
 import { apiInterface } from '@/util/axios/custom-axios'
 
 const getReviewSummary = async (props: GetReviewSummaryRequest) => {
@@ -41,4 +46,13 @@ export const useGetReviews = (props: GetReviewsRequest) => {
     queryKey: ['reviewList'],
     queryFn: () => getReviews(props),
   })
+}
+
+const postReview = async (props: PostReviewRequest) => {
+  const response = await apiInterface.post('/course-review', props)
+  return response
+}
+
+export const usePostReview = () => {
+  return useMutation({ mutationFn: postReview })
 }
