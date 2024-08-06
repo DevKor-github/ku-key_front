@@ -15,7 +15,7 @@ const CourseInfoPage = () => {
 
   return (
     <div className={css({ flexGrow: 1, display: 'flex', flexDir: 'column', gap: 10 })}>
-      <ReviewHeader courseName={data?.courseName ?? ''} prof={prof ?? ''} />
+      <ReviewHeader courseCode={courseCode ?? ''} courseName={data?.courseName ?? ''} prof={prof ?? ''} />
       <ReviewTotalRate
         totalRate={data?.totalRate}
         reviewCount={data?.reviewCount}

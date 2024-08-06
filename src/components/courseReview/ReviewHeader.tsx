@@ -1,17 +1,48 @@
 import { css } from '@styled-stytem/css'
+import { Link } from 'react-router-dom'
 
 interface ReviewHeaderProps {
+  courseCode: string
   courseName: string
   prof: string
 }
-const ReviewHeader = ({ courseName, prof }: ReviewHeaderProps) => {
+const ReviewHeader = ({ courseCode, courseName, prof }: ReviewHeaderProps) => {
   return (
     <div className={css({ display: 'flex', justifyContent: 'space-between', alignItems: 'center' })}>
-      <div className={css({ display: 'flex', gap: 5, alignItems: 'center' })}>
-        <span className={css({ fontWeight: 600, fontSize: 26, color: 'black.2' })}>{courseName}</span>
-        <span className={css({ fontSize: 18, color: 'darkGray.2' })}>{prof}</span>
+      <div
+        className={css({
+          display: 'flex',
+          gap: 5,
+          alignItems: 'center',
+          maxW: '75%',
+        })}
+      >
+        <span
+          className={css({
+            fontWeight: 600,
+            fontSize: 26,
+            color: 'black.2',
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis',
+          })}
+        >
+          {courseName}
+        </span>
+        <span
+          className={css({
+            fontSize: 18,
+            color: 'darkGray.2',
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis',
+          })}
+        >
+          {prof}
+        </span>
       </div>
-      <button
+      <Link
+        to={`/course-review/write/${courseCode}/${prof}`}
         className={css({
           bgColor: 'red.2',
           color: 'white',
@@ -24,7 +55,7 @@ const ReviewHeader = ({ courseName, prof }: ReviewHeaderProps) => {
         })}
       >
         Write your Review
-      </button>
+      </Link>
     </div>
   )
 }

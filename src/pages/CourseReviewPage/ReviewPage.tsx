@@ -29,7 +29,7 @@ const ReviewPage = () => {
           <CookiesRate rate={totalData?.totalRate ?? 0} size={18} gap={4} />
           <span className={css({ fontSize: 14 })}>({totalData?.reviewCount})</span>
         </div>
-        <ReviewHeader courseName={totalData?.courseName ?? ''} prof={prof ?? ''} />
+        <ReviewHeader courseCode={courseCode ?? ''} courseName={totalData?.courseName ?? ''} prof={prof ?? ''} />
       </div>
     </div>
   )
