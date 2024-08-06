@@ -17,6 +17,11 @@ const CommunitySearch = () => {
   }
 
   const keyword = searchParam.get('keyword')
+
+  const handleTitle = () => {
+    if (!posts.length) return `No search results for "${keyword}"`
+    return `"${keyword}" Search Results`
+  }
   return (
     <div className={css({ display: 'flex', flexDir: 'column' })}>
       <SearchBox
@@ -26,11 +31,10 @@ const CommunitySearch = () => {
         cssProps={{ width: 608, borderRadius: '50px' }}
       />
       {keyword ? (
-        <SectionTitle title={`"${keyword}" Search Results`} />
+        <SectionTitle title={handleTitle()} />
       ) : (
         <SectionTitle title="View recent posts" description="Check out our recent posts" link="/community/board" />
       )}
-
       <div className={css({ display: 'flex', mt: 20, flexDir: 'column', gap: '50px', mb: 25 })}>
         {posts?.map(post => (
           <PostPreview
