@@ -22,7 +22,7 @@ const PostTextPreview = ({
 
   const timeDistance = formatDistanceToNow(createdAt)
   return (
-    <button className={postPreview(variant)} onClick={handleNavigate}>
+    <button className={postPreview({ variant: variant?.variant })} onClick={handleNavigate}>
       <img
         src={ProfileImg}
         alt="Profile"

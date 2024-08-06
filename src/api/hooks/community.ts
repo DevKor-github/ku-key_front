@@ -1,9 +1,10 @@
 import { useQuery } from '@tanstack/react-query'
 import { useSearchParams } from 'react-router-dom'
 
-import { PostPreviewResponse } from '@/api/types/community'
-import { PostPreviewProps } from '@/types/community'
+import { PostByBoardResponse, PostPreviewResponse } from '@/api/types/community'
+import { BoardInfo, BoardPostPreviewProps, PostPreviewProps } from '@/types/community'
 import { apiInterface } from '@/util/axios/custom-axios'
+import { useSearch } from '@/util/useSearch'
 
 const getBoard = async () => {
   const response = await apiInterface.get('board')
@@ -13,9 +14,9 @@ const getBoard = async () => {
 export const useGetBoard = () => {
   return useQuery({ queryKey: ['board'], queryFn: getBoard })
 }
-const getPostsAll = async (keyword: string | null) => {
+const getPostsAll = async (pageSize: number, keyword?: string | null) => {
   const response = await apiInterface.get<PostPreviewResponse>(
-    `post/all?pageNumber=1&pageSize=10${keyword ? `&keyword=${keyword}` : ''}`,
+    `post/all?pageNumber=1&pageSize=${pageSize}&${keyword ? `&keyword=${keyword}` : ''}`,
   )
   return response.data.posts
 }
@@ -23,14 +24,47 @@ const getPostsAll = async (keyword: string | null) => {
 export const useGetPostsAll = () => {
   const [searchParam] = useSearchParams()
   const keyword = searchParam.get('keyword')
-  return useQuery({ queryKey: ['postsAll', keyword], queryFn: () => getPostsAll(keyword), initialData: [] })
+  return useQuery({
+    queryKey: ['postsAll', keyword],
+    queryFn: () => getPostsAll(10, keyword),
+    initialData: [] as PostPreviewProps[],
+  })
 }
 
-const getHotPosts = async () => {
-  const response = await apiInterface.get<PostPreviewResponse>(`post/hot?pageNumber=1&pageSize=10`)
+export const useGetRecentPostsPreview = () => {
+  return useQuery({ queryKey: ['recentPosts'], queryFn: () => getPostsAll(5), initialData: [] as PostPreviewProps[] })
+}
+
+const getHotPosts = async (pageSize: number) => {
+  const response = await apiInterface.get<PostPreviewResponse>(`post/hot?pageNumber=1&pageSize=${pageSize}`)
   return response.data.posts
 }
 
 export const useGetHotPosts = () => {
-  return useQuery({ queryKey: ['hotPosts'], queryFn: getHotPosts, initialData: [] as PostPreviewProps[] })
+  return useQuery({ queryKey: ['hotPosts'], queryFn: () => getHotPosts(10), initialData: [] as PostPreviewProps[] })
+}
+
+export const useGetHotPostPreview = () => {
+  return useQuery({
+    queryKey: ['hotPostsPreview'],
+    queryFn: () => getHotPosts(5),
+    initialData: [] as PostPreviewProps[],
+  })
+}
+
+const getPostsByBoard = async (boardId: number, pageSize: number, keyword?: string | null) => {
+  const response = await apiInterface.get<PostByBoardResponse>(
+    `post?pageNumber=1&pageSize=${pageSize}&boardId=${boardId}&${keyword ? `&keyword=${keyword}` : ''}`,
+  )
+  return response.data
+}
+
+export const useGetPostsByBoard = (boardId: number) => {
+  const { searchParam } = useSearch()
+  const keyword = searchParam.get('keyword')
+  return useQuery({
+    queryKey: ['postsByBoard', boardId, keyword],
+    queryFn: () => getPostsByBoard(boardId, 10, keyword),
+    initialData: { board: {} as BoardInfo, posts: [] as BoardPostPreviewProps[] },
+  })
 }

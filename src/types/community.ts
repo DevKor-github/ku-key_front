@@ -19,4 +19,10 @@ export interface Reaction {
   funny: number
 }
 
+export interface BoardInfo {
+  id: number
+  name: string
+  description: string
+}
+export type BoardPostPreviewProps = Omit<PostPreviewProps, 'boardName'>
 export type BoardType = 'Community Board' | 'Information Board' | 'Question Board'
