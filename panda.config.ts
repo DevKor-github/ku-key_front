@@ -3,6 +3,7 @@ import { defineConfig } from '@pandacss/dev'
 import {
   buttonRecipe,
   chipRecipe,
+  globalLayoutRecipe,
   inputRecipe,
   labelRecipe,
   modalCardRecipe,
@@ -34,6 +35,7 @@ export default defineConfig({
         shadow: shadowRecipe,
         tag: tagRecipe,
         postPreview: postPreviewRecipe,
+        globalLayout: globalLayoutRecipe,
       },
       tokens: {
         colors: {

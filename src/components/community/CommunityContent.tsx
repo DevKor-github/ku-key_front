@@ -4,7 +4,7 @@ import CommunitySearch from '@/components/community/CommunitySearch'
 import HotBoardPreview from '@/components/community/HotBoardPreview'
 import Button from '@/components/ui/button'
 
-const CommunityContent = () => {
+const MainCommunityContent = () => {
   return (
     <section
       className={css({
@@ -32,4 +32,4 @@ const CommunityContent = () => {
   )
 }
 
-export default CommunityContent
+export default MainCommunityContent

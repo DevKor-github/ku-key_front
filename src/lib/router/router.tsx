@@ -2,8 +2,8 @@ import { RouteObject } from 'react-router-dom'
 
 import MainLayout from '@/components/MainLayout'
 import ProtectedRoutes from '@/lib/router/ProtectedRoutes'
-import CommunityPage from '@/pages/CommunityPage'
-import CommunityMainPage from '@/pages/CommunityPage/CommunityMainPage'
+import MainCommunityPage from '@/pages/CommunityPage'
+import BoardPage from '@/pages/CommunityPage/BoardPage'
 import LandingPage from '@/pages/LandingPage'
 import Login from '@/pages/LoginPage'
 import MyPage from '@/pages/MyPage'
@@ -37,8 +37,11 @@ const routes: RouteObject[] = [
           },
           {
             path: 'community',
-            element: <CommunityPage />,
-            // children: [{ path: 'community/:searchParam', element: <CommunityMainPage /> }],
+            element: <MainCommunityPage />,
+          },
+          {
+            path: 'community/board/:boardName',
+            element: <BoardPage />,
           },
         ],
       },

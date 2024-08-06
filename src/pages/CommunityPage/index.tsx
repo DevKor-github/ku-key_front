@@ -1,9 +1,9 @@
 import { css } from '@styled-stytem/css'
 
-import CommunityContent from '@/components/community/CommunityContent'
+import MainCommunityContent from '@/components/community/CommunityContent'
 import CommunitySectionCard from '@/components/community/CommunitySectionCard'
 
-const CommunityPage = () => {
+const MainCommunityPage = () => {
   return (
     <main className={css({ display: 'flex', flexDir: 'column' })}>
       <section
@@ -28,10 +28,10 @@ const CommunityPage = () => {
           <CommunitySectionCard card="question" />
           <CommunitySectionCard card="information" />
         </div>
-        <CommunityContent />
+        <MainCommunityContent />
       </section>
     </main>
   )
 }
 
-export default CommunityPage
+export default MainCommunityPage

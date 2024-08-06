@@ -1,5 +1,7 @@
 import { css } from '@styled-stytem/css'
 import { ChevronRight } from 'lucide-react'
+import { useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import CommunityBoardSvg from '@/assets/CommunityBoard.svg'
 import CommunityMask from '@/assets/CommunityMask.svg'
@@ -7,30 +9,33 @@ import InformationBoardSvg from '@/assets/InformationBoard.svg'
 import InformationMask from '@/assets/InformationMask.svg'
 import QuestionBoardSvg from '@/assets/QuestionBoard.svg'
 import QuestionMask from '@/assets/QuestionMask.svg'
+
 type CommunityCardType = 'community' | 'question' | 'information'
 
 const CardConfig: Record<CommunityCardType, { title: string; link: string; img: string; mask: string }> = {
   community: {
     title: 'Community Board',
-    link: '/community',
+    link: 'board/community',
     img: CommunityBoardSvg,
     mask: CommunityMask,
   },
   question: {
     title: 'Question Board',
-    link: '/community/question',
+    link: 'board/question',
     img: QuestionBoardSvg,
     mask: QuestionMask,
   },
   information: {
     title: 'Information Board',
-    link: '/community/information',
+    link: 'board/information',
     img: InformationBoardSvg,
     mask: InformationMask,
   },
 }
 
 const CommunitySectionCard = ({ card }: { card: CommunityCardType }) => {
+  const navigate = useNavigate()
+  const handleNavigate = useCallback(() => navigate(CardConfig[card].link), [navigate, card])
   return (
     <div
       className={css({
@@ -75,6 +80,7 @@ const CommunitySectionCard = ({ card }: { card: CommunityCardType }) => {
               gap: 2.5,
               cursor: 'pointer',
             })}
+            onClick={handleNavigate}
           >
             more
             <ChevronRight size={24} />
