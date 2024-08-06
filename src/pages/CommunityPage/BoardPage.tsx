@@ -11,12 +11,19 @@ const BoardPage = () => {
 
   const formattedBoardName = `${boardName?.slice(0, 1).toUpperCase()}${boardName?.slice(1)}`
   return (
-    <main className={css({ display: 'flex', flexDir: 'column' })}>
+    <main className={css({ display: 'flex', flexDir: 'column', bgColor: 'bg.gray' })}>
       <BoardBanner boardName={formattedBoardName} />
       <section
         className={cx(
           globalLayout(),
-          css({ pt: '50px', alignSelf: 'center', gap: 31, border: ' 1.5px solid {colors.lightGray.1}' }),
+          css({
+            pt: '50px',
+            alignSelf: 'center',
+            gap: 31,
+            border: ' 1.5px solid {colors.lightGray.2}',
+            mb: 30,
+            bgColor: 'white',
+          }),
         )}
       >
         <BoardSearch />

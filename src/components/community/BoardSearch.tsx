@@ -24,8 +24,13 @@ const BoardSearch = () => {
   }
 
   const keyword = searchParam.get('keyword')
+
+  const handleTitle = () => {
+    if (!data.posts.length) return `No search results for "${keyword}"`
+    return `"${keyword}" Search Results`
+  }
   return (
-    <div className={css({ display: 'flex', flexDir: 'column' })}>
+    <div className={css({ display: 'flex', flexDir: 'column', alignSelf: 'flex-start' })}>
       <SearchBox
         initialKeyword={keyword ?? ''}
         placeholder={keyword ?? 'Search posts from entire board'}
@@ -33,13 +38,14 @@ const BoardSearch = () => {
         cssProps={{ width: 608, borderRadius: '50px' }}
       />
       {keyword ? (
-        <SectionTitle title={`"${keyword}" Search Results`} />
+        <SectionTitle title={handleTitle()} />
       ) : (
         <SectionTitle title={`View recent ${boardName} posts`} description="Check out our recent posts" />
       )}
       <div className={css({ display: 'flex', mt: 20, flexDir: 'column', gap: '50px', mb: 25 })}>
         {data.posts.map(post => (
           <BoardPostPreview
+            key={post.id}
             id={post.id}
             title={post.title}
             content={post.content}
