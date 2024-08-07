@@ -76,6 +76,17 @@ export const buttonRecipe = defineRecipe({
         _checked: { bgColor: 'red.2', color: 'white', borderColor: 'red.2' },
         transition: 'all 0.25s',
       },
+      gray: {
+        display: 'flex',
+        w: 189,
+        px: 7,
+        py: '14px',
+        border: '1px solid {colors.lightGray.1}',
+        bgColor: 'bg.gray',
+        color: 'lightGray.1',
+        _hover: { borderColor: 'darkGray.2', color: 'darkGray.2' },
+        transition: 'all 0.3s ease-in-out',
+      },
     },
     size: {
       default: { h: 10, px: 4, py: 2 },

@@ -4,6 +4,7 @@ import MainLayout from '@/components/MainLayout'
 import ProtectedRoutes from '@/lib/router/ProtectedRoutes'
 import MainCommunityPage from '@/pages/CommunityPage'
 import BoardPage from '@/pages/CommunityPage/BoardPage'
+import PostViewPage from '@/pages/CommunityPage/PostViewPage'
 import LandingPage from '@/pages/LandingPage'
 import Login from '@/pages/LoginPage'
 import MyPage from '@/pages/MyPage'
@@ -42,6 +43,10 @@ const routes: RouteObject[] = [
           {
             path: 'community/board/:boardName',
             element: <BoardPage />,
+          },
+          {
+            path: 'community/post/:postId',
+            element: <PostViewPage />,
           },
         ],
       },
