@@ -32,7 +32,7 @@ const PostView = () => {
           <ArrowLeft />
           PREV
         </Button>
-        <div>
+        <div className={css({ display: 'flex', w: 817, flexDir: 'column', alignItems: 'flex-start', gap: '50px' })}>
           <Post />
         </div>
       </div>

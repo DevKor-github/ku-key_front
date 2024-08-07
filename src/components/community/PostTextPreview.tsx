@@ -1,12 +1,12 @@
-import { css, RecipeVariantProps } from '@styled-stytem/css'
-import { postPreview } from '@styled-stytem/recipes'
+import { css } from '@styled-stytem/css'
+import { postTextPreview, PostTextPreviewVariant } from '@styled-stytem/recipes'
 import { formatDistanceToNow } from 'date-fns'
 
 import ProfileImg from '@/assets/ProfileImg.jpg'
 import { PostPreviewProps } from '@/types/community'
 
 interface PostTextPreviewProps extends Pick<PostPreviewProps, 'title' | 'username' | 'createdAt'> {
-  variant: RecipeVariantProps<typeof postPreview>
+  variant: PostTextPreviewVariant['variant']
   description?: string
   handleNavigate?: () => void
 }
@@ -18,11 +18,11 @@ const PostTextPreview = ({
   description,
   handleNavigate,
 }: PostTextPreviewProps) => {
-  const onlyTitle = variant?.variant === 'onlyTitle'
+  const onlyTitle = variant === 'onlyTitle'
 
   const timeDistance = formatDistanceToNow(createdAt)
   return (
-    <button className={postPreview({ variant: variant?.variant })} onClick={handleNavigate}>
+    <button className={postTextPreview({ variant })} onClick={handleNavigate}>
       <img
         src={ProfileImg}
         alt="Profile"

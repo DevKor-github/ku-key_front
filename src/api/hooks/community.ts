@@ -23,7 +23,7 @@ const getPostsAll = async (pageSize: number, keyword?: string | null) => {
 
 export const useGetPostsAll = () => {
   const [searchParam] = useSearchParams()
-  const keyword = searchParam.get('keyword')
+  const keyword = searchParam.get('keyword') ?? ''
   return useQuery({
     queryKey: ['postsAll', keyword],
     queryFn: () => getPostsAll(10, keyword),

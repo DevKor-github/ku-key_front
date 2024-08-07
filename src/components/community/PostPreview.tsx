@@ -2,8 +2,8 @@ import { css } from '@styled-stytem/css'
 import { memo, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import BoardTag from '@/components/community/BoardTag'
 import PostTextPreview from '@/components/community/PostTextPreview'
-import PreviewTag from '@/components/community/PreviewTag'
 import PreviewTextWrapper from '@/components/community/PreviewTextWrapper'
 import { BoardType, PostPreviewProps } from '@/types/community'
 
@@ -22,12 +22,14 @@ const PostPreview = memo(
     return (
       <div className={css({ display: 'flex', flexDir: 'column', alignItems: 'flex-start', gap: 5 })}>
         <PreviewTextWrapper>
-          <PreviewTag boardName={boardName as BoardType} />
+          <div className={css({ display: 'flex', pl: 2.5, alignItems: 'flex-start' })}>
+            <BoardTag boardName={boardName as BoardType} variant="small" />
+          </div>
           <PostTextPreview
             title={title}
             createdAt={createdAt}
             username={username}
-            variant={{ variant: 'default' }}
+            variant="default"
             description={content}
             handleNavigate={handleNavigate}
           />

@@ -1,7 +1,7 @@
 import { css } from '@styled-stytem/css'
 
+import BoardTag from '@/components/community/BoardTag'
 import PostTextPreview from '@/components/community/PostTextPreview'
-import PreviewTag from '@/components/community/PreviewTag'
 import PreviewTextWrapper from '@/components/community/PreviewTextWrapper'
 import SectionTitle from '@/components/community/SectionTitle'
 import { BoardType, PostPreviewProps } from '@/types/community'
@@ -27,13 +27,10 @@ const BoardPreview = ({ previewPosts, title, description, link }: BoardPreviewPr
       <SectionTitle title={title} description={description} link={link} />
       {previewPosts.map(post => (
         <PreviewTextWrapper key={post.id}>
-          <PreviewTag boardName={post.boardName as BoardType} />
-          <PostTextPreview
-            title={post.title}
-            createdAt={post.createdAt}
-            username={post.username}
-            variant={{ variant: 'onlyTitle' }}
-          />
+          <div className={css({ display: 'flex', pl: 2.5, alignItems: 'flex-start' })}>
+            <BoardTag boardName={post.boardName as BoardType} variant="small" />
+          </div>
+          <PostTextPreview title={post.title} createdAt={post.createdAt} username={post.username} variant="onlyTitle" />
         </PreviewTextWrapper>
       ))}
     </div>

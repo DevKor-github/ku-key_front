@@ -4,7 +4,7 @@ import { globalLayoutRecipe } from '@/lib/recipes/globalLayout'
 import { inputRecipe } from '@/lib/recipes/input'
 import { labelRecipe } from '@/lib/recipes/label'
 import { modalCardRecipe } from '@/lib/recipes/modal-card'
-import { postPreviewRecipe } from '@/lib/recipes/post-preview'
+import { postTextPreviewRecipe } from '@/lib/recipes/post-text-preview'
 import { shadowRecipe } from '@/lib/recipes/shadow'
 import { tagRecipe } from '@/lib/recipes/tag'
 export {
@@ -15,6 +15,6 @@ export {
   modalCardRecipe,
   shadowRecipe,
   tagRecipe,
-  postPreviewRecipe,
+  postTextPreviewRecipe as postPreviewRecipe,
   globalLayoutRecipe,
 }

@@ -1,6 +1,6 @@
 import { defineRecipe } from '@pandacss/dev'
 
-export const postPreviewRecipe = defineRecipe({
+export const postTextPreviewRecipe = defineRecipe({
   className: 'postPreview',
   description: 'Post preview wrapper',
   base: {

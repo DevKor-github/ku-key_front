@@ -2,7 +2,7 @@ import { css } from '@styled-stytem/css'
 import { formatDistanceToNow } from 'date-fns'
 import { Bookmark, Cookie, Eye, MessageCircle } from 'lucide-react'
 
-import AnonymousProfileImg from '@/assets/anonymous.jpg'
+import AnonymousProfileImg from '@/assets/Anonymous.jpg'
 import { BoardPostPreviewProps } from '@/types/community'
 
 const IconWrapper = css({

@@ -33,8 +33,8 @@ export default defineConfig({
         input: inputRecipe,
         modalCard: modalCardRecipe,
         shadow: shadowRecipe,
-        tag: tagRecipe,
-        postPreview: postPreviewRecipe,
+        boardTag: tagRecipe,
+        postTextPreview: postPreviewRecipe,
         globalLayout: globalLayoutRecipe,
       },
       tokens: {

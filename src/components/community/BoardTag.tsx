@@ -1,10 +1,9 @@
-import { css } from '@styled-stytem/css'
-import { tag } from '@styled-stytem/recipes'
+import { boardTag, BoardTagVariantProps } from '@styled-stytem/recipes'
 import { BookText, LucideProps, MessageCircleQuestion, Users } from 'lucide-react'
 
 import { BoardType } from '@/types/community'
 
-const previewTagConfig: Record<
+const boardTagConfig: Record<
   BoardType,
   { text: string; svg: React.ForwardRefExoticComponent<Omit<LucideProps, 'ref'> & React.RefAttributes<SVGSVGElement>> }
 > = {
@@ -13,19 +12,20 @@ const previewTagConfig: Record<
   'Community Board': { text: 'Community Board', svg: Users },
 }
 
-interface PreviewTagProps {
+interface BoardTagProps {
   boardName: BoardType
+  variant: BoardTagVariantProps['variant']
 }
-const PreviewTag = ({ boardName }: PreviewTagProps) => {
-  const { text, svg: SvgIcon } = previewTagConfig[boardName]
+
+const BoardTag = ({ boardName, variant }: BoardTagProps) => {
+  const { text, svg: SvgIcon } = boardTagConfig[boardName]
+
   return (
-    <div className={css({ display: 'flex', pl: 2.5, alignItems: 'flex-start' })}>
-      <div className={tag()}>
-        <SvgIcon size={16} />
-        <p className={css({ fontSize: 12, fontWeight: 700 })}>{text}</p>
-      </div>
+    <div className={boardTag({ variant })}>
+      <SvgIcon size={variant === 'default' ? 24 : 16} />
+      <p>{text}</p>
     </div>
   )
 }
 
-export default PreviewTag
+export default BoardTag
