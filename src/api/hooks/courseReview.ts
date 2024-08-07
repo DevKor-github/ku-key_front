@@ -2,6 +2,7 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 
 import {
   GetReviewsRequest,
+  GetReviewsResponse,
   GetReviewSummaryRequest,
   GetReviewSummaryResponse,
   PostReviewRequest,
@@ -34,7 +35,7 @@ export const useGetReviewSummary = (props: GetReviewSummaryRequest) => {
 }
 
 const getReviews = async (props: GetReviewsRequest) => {
-  const response = await apiInterface.get('/course-review', { params: props })
+  const response = await apiInterface.get<GetReviewsResponse>('/course-review', { params: props })
   return response.data
 }
 
@@ -43,8 +44,9 @@ const getReviews = async (props: GetReviewsRequest) => {
  */
 export const useGetReviews = (props: GetReviewsRequest) => {
   return useQuery({
-    queryKey: ['reviewList'],
+    queryKey: ['reviewList', props],
     queryFn: () => getReviews(props),
+    initialData: () => ({ totalRate: 0, reviewCount: 0, reviews: [] }),
   })
 }
 

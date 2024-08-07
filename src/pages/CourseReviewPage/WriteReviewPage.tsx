@@ -1,14 +1,16 @@
 import { css, cx } from '@styled-stytem/css'
 import { shadow } from '@styled-stytem/recipes'
+import { useAtomValue } from 'jotai/react'
 import { useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { useGetReviewSummary, usePostReview } from '@/api/hooks/courseReview'
+import { usePostReview } from '@/api/hooks/courseReview'
 import ReviewRadio from '@/components/courseReview/ReviewRadio'
 import ReviewText from '@/components/courseReview/ReviewText'
 import ReviewTotalRate from '@/components/courseReview/ReviewTotalRate'
 import Dropdown from '@/components/timetable/Dropdown'
+import { courseSummary } from '@/lib/store/review'
 import { SemesterType } from '@/types/timetable'
 import {
   attendaceArray,
@@ -38,7 +40,7 @@ const WriteReviewPage = () => {
 
   const navigate = useNavigate()
   const { mutate: postReview } = usePostReview()
-  const { data: totalData } = useGetReviewSummary({ courseCode, professorName: prof })
+  const totalData = useAtomValue(courseSummary)
   const { year, semester } = getCurSemester()
   const methods = useForm<WriteReviewForm>({
     defaultValues: {

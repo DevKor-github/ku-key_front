@@ -75,14 +75,14 @@ const InfoDetail = ({ attendance, classLevel, teamProject, amountLearned, teachi
         </div>
         <div className={css({ display: 'flex' })}>
           <div className={ScoreBoxStyle}>
-            <div className={LabelStyle}>Class Level</div>
+            <div className={LabelStyle}>Amount Learned</div>
             <div className={css({ display: 'flex', gap: 2.5, alignItems: 'center' })}>
               <span className={StateStyle}>{learnAmountArray[amountLearned]}</span>
               <RatePercentage rate={amountLearned} total={3} />
             </div>
           </div>
           <div className={ScoreBoxStyle}>
-            <div className={LabelStyle}>Difficulty of Team Project</div>
+            <div className={LabelStyle}>Teaching Skills </div>
             <div className={css({ display: 'flex', gap: 2.5, alignItems: 'center' })}>
               <span className={StateStyle}>{teachingSkillsArray[teachingSkills]}</span>
               <RatePercentage rate={teachingSkills} total={4} />

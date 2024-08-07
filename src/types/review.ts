@@ -1,3 +1,5 @@
+import { GetReviewSummaryResponse } from '@/api/types/courseReview'
+
 export interface ReviewType {
   id: number
   rate: number
@@ -15,5 +17,10 @@ export interface ReviewType {
   attendance: number
 }
 
-export type CriteriaType = 'createdAt' | 'recommended' | 'rate'
+export interface CourseSummaryType extends GetReviewSummaryResponse {
+  courseCode: string
+  prof: string
+}
+
+export type CriteriaType = 'createdAt' | 'recommendCount' | 'rate'
 export type DirectionType = 'DESC' | 'ASC'
