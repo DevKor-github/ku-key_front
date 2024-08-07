@@ -7,7 +7,8 @@ import {
   inputRecipe,
   labelRecipe,
   modalCardRecipe,
-  postPreviewRecipe,
+  postTextPreviewRecipe,
+  reactionTagRecipe,
   shadowRecipe,
   tagRecipe,
 } from './src/lib/recipes/index'
@@ -34,8 +35,9 @@ export default defineConfig({
         modalCard: modalCardRecipe,
         shadow: shadowRecipe,
         boardTag: tagRecipe,
-        postTextPreview: postPreviewRecipe,
+        postTextPreview: postTextPreviewRecipe,
         globalLayout: globalLayoutRecipe,
+        reactionButton: reactionTagRecipe,
       },
       tokens: {
         colors: {
@@ -43,12 +45,17 @@ export default defineConfig({
           bg: {
             gray: { value: '#F9F9F9' },
             red: {
-              value: '#FFF4F4',
+              1: {
+                value: '#FFF4F4',
+              },
+              2: {
+                value: '#FFFDFD',
+              },
             },
           },
           black: {
             1: { value: '#000000' },
-            2: { value: '#383838' },
+            2: { value: '#2D2D2D' },
           },
           darkGray: {
             1: { value: '#6B6B6B' },

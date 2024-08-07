@@ -19,6 +19,7 @@ export interface Reaction {
   funny: number
 }
 
+export type ReactionType = keyof Reaction
 export interface BoardInfo {
   id: number
   name: string
