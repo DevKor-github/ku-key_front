@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import { useGetReviewSummary } from '@/api/hooks/courseReview'
 import InfoDetail from '@/components/courseReview/InfoDetail'
 import ReviewHeader from '@/components/courseReview/ReviewHeader'
-import ReviewTotalRate from '@/components/courseReview/ReviewTotalRate'
+import TotalRate from '@/components/courseReview/TotalRate'
 
 const CourseInfoPage = () => {
   const { courseCode = '', prof = '' } = useParams()
@@ -14,7 +14,7 @@ const CourseInfoPage = () => {
   return (
     <div className={css({ flexGrow: 1, display: 'flex', flexDir: 'column', gap: 10 })}>
       <ReviewHeader courseCode={courseCode} courseName={data.courseName} prof={prof} />
-      <ReviewTotalRate totalRate={data.totalRate} reviewCount={data.reviewCount} courseCode={courseCode} prof={prof} />
+      <TotalRate totalRate={data.totalRate} reviewCount={data.reviewCount} courseCode={courseCode} prof={prof} />
       <InfoDetail
         attendance={data.attendance}
         amountLearned={data.amountLearned}

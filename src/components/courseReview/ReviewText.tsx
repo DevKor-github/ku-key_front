@@ -65,7 +65,11 @@ const ReviewText = () => {
             },
           },
         })({ isError: errorMessage !== undefined })}
-        {...register('textReview', { required: REQUIRE_TEXT })}
+        {...register('textReview', {
+          required: REQUIRE_TEXT,
+          minLength: { value: 50, message: 'Course Review must be at least 50 characters long.' },
+          maxLength: { value: 1000, message: 'Course Review cannot exceed 1000 characters.' },
+        })}
       />
     </div>
   )

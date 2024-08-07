@@ -1,11 +1,15 @@
 import { css, cx } from '@styled-stytem/css'
 import { shadow } from '@styled-stytem/recipes'
+import { useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
-import { useGetReviewSummary } from '@/api/hooks/courseReview'
+import { useGetReviewSummary, usePostReview } from '@/api/hooks/courseReview'
 import ReviewRadio from '@/components/courseReview/ReviewRadio'
 import ReviewText from '@/components/courseReview/ReviewText'
+import ReviewTotalRate from '@/components/courseReview/ReviewTotalRate'
+import Dropdown from '@/components/timetable/Dropdown'
+import { SemesterType } from '@/types/timetable'
 import {
   attendaceArray,
   classLevelArray,
@@ -13,19 +17,7 @@ import {
   teachingSkillsArray,
   teamProjectArray,
 } from '@/util/reviewUtil'
-import { getCurSemester } from '@/util/timetableUtil'
-
-const ReviewSectionStyle = css({
-  display: 'flex',
-  flexDir: 'column',
-  alignItems: 'flex-start',
-  gap: 2.5,
-})
-const LabelStyle = css({
-  fontWeight: 700,
-  fontSize: 14,
-  color: 'lightGray.1',
-})
+import { getCurSemester, makeSemesterDropdownList, timetablePreprocess } from '@/util/timetableUtil'
 
 interface WriteReviewForm {
   rate: number
@@ -36,7 +28,7 @@ interface WriteReviewForm {
   attendance: number
   textReview: string
   year: string
-  semester: string
+  semester: SemesterType
   professorName: string
   courseCode: string
 }
@@ -44,6 +36,8 @@ interface WriteReviewForm {
 const WriteReviewPage = () => {
   const { courseCode = '', prof = '' } = useParams()
 
+  const navigate = useNavigate()
+  const { mutate: postReview } = usePostReview()
   const { data: totalData } = useGetReviewSummary({ courseCode, professorName: prof })
   const { year, semester } = getCurSemester()
   const methods = useForm<WriteReviewForm>({
@@ -63,8 +57,18 @@ const WriteReviewPage = () => {
     mode: 'onSubmit',
   })
 
+  const semesters = timetablePreprocess([])
+  const semesterList = makeSemesterDropdownList(semesters)
+  const [curSemester, setCurSemester] = useState(2)
+
+  useEffect(() => {
+    methods.setValue('year', semesters[curSemester].year)
+    methods.setValue('semester', semesters[curSemester].semester)
+  }, [curSemester, semesters, methods])
+
   const onSubmit = (formData: WriteReviewForm) => {
-    console.log(formData)
+    postReview(formData)
+    navigate(`/course-review/info/${courseCode}/${prof}`)
   }
 
   return (
@@ -73,6 +77,7 @@ const WriteReviewPage = () => {
         className={cx(
           css({
             flexGrow: 1,
+            minW: 0,
             rounded: 10,
             p: 5,
             pb: 10,
@@ -84,16 +89,44 @@ const WriteReviewPage = () => {
         )}
         onSubmit={methods.handleSubmit(onSubmit)}
       >
-        <div className={css({ display: 'flex', justifyContent: 'space-between', alignItems: 'center' })}>
-          <div className={css({ display: 'flex', gap: 5, alignItems: 'center' })}>
-            <span className={css({ fontWeight: 600, fontSize: 26, color: 'black.2' })}>{totalData?.courseName}</span>
-            <span className={css({ fontSize: 18, color: 'darkGray.2' })}>{prof}</span>
+        <div className={css({ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 3 })}>
+          <div
+            className={css({
+              display: 'flex',
+              gap: 5,
+              alignItems: 'center',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+            })}
+          >
+            <span
+              className={css({
+                fontWeight: 600,
+                fontSize: 26,
+                color: 'black.2',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+              })}
+            >
+              {totalData?.courseName}
+            </span>
+            <span
+              className={css({
+                fontSize: 18,
+                color: 'darkGray.2',
+              })}
+            >
+              {prof}
+            </span>
+          </div>
+          <div className={css({ flexBasis: 68, flexShrink: 0 })}>
+            <Dropdown dropdownList={semesterList} curIndex={curSemester} setCurIndex={setCurSemester} />
           </div>
         </div>
         <div className={css({ display: 'flex', flexDir: 'column', gap: 5, alignItems: 'flex-start' })}>
-          <div className={ReviewSectionStyle}>
-            <div className={LabelStyle}>Total Rate</div>
-          </div>
+          <ReviewTotalRate />
           <div className={css({ display: 'flex', flexDir: 'column', gap: 2.5, alignItems: 'flex-start' })}>
             <ReviewRadio title="Attendance" options={attendaceArray} category="attendance" />
             <ReviewRadio title="Class Level" options={classLevelArray} category="classLevel" />
