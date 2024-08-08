@@ -121,6 +121,10 @@ const FriendCardBtn = ({ type, data }: FriendCardProp) => {
 const FriendCard = ({ data, type }: FriendCardProp) => {
   const { mutate: deleteFriendship } = useDeleteFriendshipRequest()
 
+  const handleClick = useCallback(() => {
+    deleteFriendship({ friendshipId: data.friendshipId! })
+  }, [deleteFriendship, data.friendshipId])
+
   return (
     <div
       className={css({ display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'relative' })}
@@ -141,9 +145,7 @@ const FriendCard = ({ data, type }: FriendCardProp) => {
               bgColor: 'lightGray.1',
             },
           })}
-          onClick={() => {
-            deleteFriendship({ friendshipId: data.friendshipId! })
-          }}
+          onClick={handleClick}
         >
           <CircleX size={16} />
         </button>

@@ -1,5 +1,6 @@
 import { cva } from '@styled-stytem/css'
 import { Check } from 'lucide-react'
+import { useCallback } from 'react'
 
 import { useUpdateMainTimetable } from '@/api/hooks/timetable'
 import { TimetableInfo } from '@/types/timetable'
@@ -51,22 +52,25 @@ interface MainPinBtnProps {
 
 const MainPinBtn = ({ hasTimetable, curTimetable, setCurIndexZero }: MainPinBtnProps) => {
   const { mutate: updateMainTimetable } = useUpdateMainTimetable()
+
+  const handleClick = useCallback(() => {
+    if (hasTimetable && !curTimetable.mainTimetable) {
+      setCurIndexZero()
+      updateMainTimetable({
+        semester: curTimetable.semester,
+        year: curTimetable.year,
+        timetableId: curTimetable.timetableId,
+      })
+    }
+  }, [curTimetable, hasTimetable, setCurIndexZero, updateMainTimetable])
+
   return (
     <button
       className={MainPinBtnStyle({
         main: hasTimetable ? curTimetable.mainTimetable : undefined,
         disabled: !hasTimetable,
       })}
-      onClick={() => {
-        if (hasTimetable && !curTimetable.mainTimetable) {
-          setCurIndexZero()
-          updateMainTimetable({
-            semester: curTimetable.semester,
-            year: curTimetable.year,
-            timetableId: curTimetable.timetableId,
-          })
-        }
-      }}
+      onClick={handleClick}
     >
       <Check size={22} />
       Main

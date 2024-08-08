@@ -1,9 +1,10 @@
 import { css, cva } from '@styled-stytem/css'
 import { CircleX } from 'lucide-react'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { useDeleteFriendship, useGetFriendList } from '@/api/hooks/friends'
+import { FriendInterface } from '@/types/friends'
 
 export const FriendPageBtnStyle = cva({
   base: {
@@ -108,6 +109,20 @@ const FriendsList = () => {
   const [isEditMode, setIsEditMode] = useState(false)
   const { mutate: deleteFriend } = useDeleteFriendship()
 
+  const handleClick = useCallback(
+    (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, friend: FriendInterface) => {
+      if (isEditMode) {
+        event.preventDefault()
+        if (
+          confirm(`Are you sure?\nThis action will remove ${friend.username} from your friends list!\nDo you agree?`)
+        ) {
+          deleteFriend({ friendshipId: friend.friendshipId })
+        }
+      }
+    },
+    [isEditMode, deleteFriend],
+  )
+
   return (
     <div className={css({ display: 'flex', flexDir: 'column', gap: 3.5, alignItems: 'center' })}>
       <button className={FriendPageBtnStyle({ isEditMode })} onClick={() => setIsEditMode(prev => !prev)}>
@@ -121,18 +136,7 @@ const FriendsList = () => {
                 key={friend.userId}
                 className={FriendBlock({ isEditMode })}
                 to={`/timetable/friend/${friend.username}`}
-                onClick={e => {
-                  if (isEditMode) {
-                    e.preventDefault()
-                    if (
-                      confirm(
-                        `Are you sure?\nThis action will remove ${friend.username} from your friends list!\nDo you agree?`,
-                      )
-                    ) {
-                      deleteFriend({ friendshipId: friend.friendshipId })
-                    }
-                  }
-                }}
+                onClick={event => handleClick(event, friend)}
               >
                 <span>{friend.username}</span>
                 {isEditMode && <CircleX size={16} />}

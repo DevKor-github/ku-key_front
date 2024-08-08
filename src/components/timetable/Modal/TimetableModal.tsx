@@ -1,7 +1,7 @@
 import { css, cva, cx } from '@styled-stytem/css'
 import { shadow } from '@styled-stytem/recipes'
 import { CaseSensitive, CircleAlert, Palette } from 'lucide-react'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 import { useUpdateTimetableName } from '@/api/hooks/timetable'
 import ColorSelector from '@/components/timetable/Button/ColorSelector'
@@ -44,19 +44,23 @@ const NameChangeModal = ({
 }) => {
   const [nameInput, setNameInput] = useState('')
   const { mutate: changetableName } = useUpdateTimetableName()
+
+  const handleSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
+      closeModal()
+      changetableName({ timetableName: nameInput, timetableId })
+    },
+    [closeModal, changetableName, nameInput, timetableId],
+  )
+
   return (
     <>
       <div className={css({ display: 'flex', flexDir: 'column', alignItems: 'center', gap: 2.5 })}>
         <CaseSensitive size={58} className={css({ color: 'lightGray.1' })} />
         <div className={css({ fontWeight: 700, fontSize: 24, color: 'black.2' })}>Name</div>
       </div>
-      <form
-        onSubmit={e => {
-          e.preventDefault()
-          closeModal()
-          changetableName({ timetableName: nameInput, timetableId })
-        }}
-      >
+      <form onSubmit={handleSubmit}>
         <Input
           // eslint-disable-next-line
           autoFocus
