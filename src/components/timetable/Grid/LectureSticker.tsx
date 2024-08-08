@@ -3,6 +3,7 @@ import { useSetAtom } from 'jotai/react'
 import { CircleUser, MapPin, MessageSquare, Pencil, SquareGanttChart, Trash2 } from 'lucide-react'
 import { useCallback, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { useDeleteSchedule } from '@/api/hooks/schedule'
 import { useDeleteCourse } from '@/api/hooks/timetable'
@@ -36,6 +37,8 @@ interface LectureStickerProps {
 }
 
 const LectureSticker = ({ timetableId, data, bgColor, isMine }: LectureStickerProps) => {
+  const navigate = useNavigate()
+
   const { title, startTime: start, endTime: end, professorName, location, schedType, scheduleId, syllabus } = data
   const startTime = getStartTime(start)
   const runningTime = getDuration(end, start)
@@ -76,10 +79,7 @@ const LectureSticker = ({ timetableId, data, bgColor, isMine }: LectureStickerPr
       onClick: () => {
         setIsModalOpen(false)
         setIsSheetOpend(true)
-        window.open(
-          `/course-review/info/${data.courseCode?.slice(0, 7)}/${data.professorName}`,
-          'rel=noopener noreferrer',
-        )
+        navigate(`/course-review/info/${data.courseCode?.slice(0, 7)}/${data.professorName}`)
       },
     },
     {

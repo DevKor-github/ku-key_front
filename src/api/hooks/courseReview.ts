@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import {
   GetReviewsRequest,
@@ -56,5 +56,11 @@ const postReview = async (props: PostReviewRequest) => {
 }
 
 export const usePostReview = () => {
-  return useMutation({ mutationFn: postReview })
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: postReview,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['summary'] })
+    },
+  })
 }
