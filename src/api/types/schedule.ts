@@ -10,7 +10,6 @@ export interface PostScheduleRequest {
 }
 
 export interface DeleteScheduleRequest {
-  timetableId: number
   scheduleId: number
 }
 
