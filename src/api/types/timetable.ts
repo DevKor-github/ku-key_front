@@ -46,3 +46,13 @@ export interface PostCourseRequest {
   timetableId: number
   courseId: number
 }
+
+export interface UpdateTimetableColorResponse {
+  id: number
+  userId: number
+  timetableName: string
+  semester: SemesterType
+  year: string
+  mainTimetable: boolean
+  color: ColorType
+}

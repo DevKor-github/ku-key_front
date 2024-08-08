@@ -9,6 +9,7 @@ import {
   PostCourseRequest,
   UpdateMainTimetableRequest,
   UpdateTimetableColorRequest,
+  UpdateTimetableColorResponse,
   UpdateTimetableNameRequest,
 } from '@/api/types/timetable'
 import { apiInterface } from '@/util/axios/custom-axios'
@@ -122,8 +123,10 @@ export const useUpdateMainTimetable = () => {
 }
 
 const patchColor = async ({ timetableColor, timetableId }: UpdateTimetableColorRequest) => {
-  const response = await apiInterface.patch(`/timetable/color/${timetableId}`, { timetableColor })
-  return response
+  const response = await apiInterface.patch<UpdateTimetableColorResponse>(`/timetable/color/${timetableId}`, {
+    timetableColor,
+  })
+  return response.data
 }
 
 /**
@@ -133,8 +136,12 @@ export const useUpdateTimetableColor = () => {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: patchColor,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['timetable'] })
+    onSuccess: response => {
+      const prevData = queryClient.getQueryData<GetTimetableByTimetableIdResponse>(['timetable', response.id])
+      if (prevData !== undefined) {
+        const newData: GetTimetableByTimetableIdResponse = { ...prevData, color: response.color }
+        queryClient.setQueryData(['timetable', response.id], newData)
+      }
     },
   })
 }
@@ -160,8 +167,8 @@ export const usePostCourse = () => {
 }
 
 const deleteCourse = async (params: PostCourseRequest) => {
-  const response = await apiInterface.delete('/timetable/course', { params })
-  return response
+  const response = await apiInterface.delete<{ deleted: boolean }>('/timetable/course', { params })
+  return response.data
 }
 
 /**
@@ -171,8 +178,21 @@ export const useDeleteCourse = () => {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: deleteCourse,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['timetable'] })
+    onSuccess: (response, request) => {
+      if (response.deleted) {
+        const prevData = queryClient.getQueryData<GetTimetableByTimetableIdResponse>(['timetable', request.timetableId])
+
+        if (prevData !== undefined) {
+          const newData: GetTimetableByTimetableIdResponse = {
+            ...prevData,
+            courses: prevData.courses.filter(course => {
+              return course.courseId !== request.courseId
+            }),
+          }
+
+          queryClient.setQueryData(['timetable', request.timetableId], newData)
+        }
+      }
     },
   })
 }

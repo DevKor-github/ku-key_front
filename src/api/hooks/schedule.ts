@@ -6,6 +6,7 @@ import {
   PostScheduleRequest,
   PostScheduleResponse,
 } from '@/api/types/schedule'
+import { GetTimetableByTimetableIdResponse } from '@/api/types/timetable'
 import { apiInterface } from '@/util/axios/custom-axios'
 
 const postSchedule = async ({ timetableId, title, day, startTime, endTime, location }: PostScheduleRequest) => {
@@ -24,8 +25,27 @@ export const usePostSchedule = () => {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: postSchedule,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['timetable'] })
+    onSuccess: response => {
+      const prevData = queryClient.getQueryData<GetTimetableByTimetableIdResponse>([
+        'timetable',
+        String(response.timetableId),
+      ])
+      if (prevData !== undefined) {
+        const newData: GetTimetableByTimetableIdResponse = {
+          ...prevData,
+          schedules: prevData.schedules.concat([
+            {
+              location: response.location,
+              scheduleDay: response.day,
+              scheduleEndTime: response.endTime,
+              scheduleId: response.id,
+              scheduleStartTime: response.startTime,
+              scheduleTitle: response.title,
+            },
+          ]),
+        }
+        queryClient.setQueryData(['timetable', String(response.timetableId)], newData)
+      }
     },
   })
 }
@@ -57,7 +77,7 @@ const patchSchedule = async ({
   title,
   location,
 }: PatchScheduleRequest) => {
-  const response = await apiInterface.patch(`/schedule/${scheduleId}`, {
+  const response = await apiInterface.patch<PostScheduleResponse>(`/schedule/${scheduleId}`, {
     timetableId,
     title,
     day,
@@ -65,7 +85,7 @@ const patchSchedule = async ({
     endTime,
     location,
   })
-  return response
+  return response.data
 }
 
 /**
@@ -75,8 +95,30 @@ export const usePatchSchedule = () => {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: patchSchedule,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['timetable'] })
+    onSuccess: response => {
+      const prevData = queryClient.getQueryData<GetTimetableByTimetableIdResponse>([
+        'timetable',
+        String(response.timetableId),
+      ])
+      if (prevData !== undefined) {
+        const newData: GetTimetableByTimetableIdResponse = {
+          ...prevData,
+          schedules: prevData.schedules.map(schedule => {
+            if (schedule.scheduleId === response.id) {
+              return {
+                location: response.location,
+                scheduleDay: response.day,
+                scheduleEndTime: response.endTime,
+                scheduleId: response.id,
+                scheduleStartTime: response.startTime,
+                scheduleTitle: response.title,
+              }
+            }
+            return schedule
+          }),
+        }
+        queryClient.setQueryData(['timetable', String(response.timetableId)], newData)
+      }
     },
   })
 }
