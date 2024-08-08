@@ -1,10 +1,15 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { DeleteScheduleRequest, PatchScheduleRequest, PostScheduleRequest } from '@/api/types/schedule'
+import {
+  DeleteScheduleRequest,
+  PatchScheduleRequest,
+  PostScheduleRequest,
+  PostScheduleResponse,
+} from '@/api/types/schedule'
 import { apiInterface } from '@/util/axios/custom-axios'
 
 const postSchedule = async ({ timetableId, title, day, startTime, endTime, location }: PostScheduleRequest) => {
-  const response = await apiInterface.post('/schedule', {
+  const response = await apiInterface.post<PostScheduleResponse>('/schedule', {
     timetableId,
     title,
     day,
@@ -12,7 +17,7 @@ const postSchedule = async ({ timetableId, title, day, startTime, endTime, locat
     endTime,
     location,
   })
-  return response
+  return response.data
 }
 
 export const usePostSchedule = () => {

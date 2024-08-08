@@ -38,7 +38,7 @@ const FriendTimetablePage = () => {
           />
         </div>
         <div className={css({ display: 'flex', flexDir: 'row', gap: 2.5 })}>
-          <ShareBtn icon={true} shareHandler={() => convertHtmlToImage(imgRef.current, `${user}_timetable`)}>
+          <ShareBtn shareHandler={() => convertHtmlToImage(imgRef.current, `${user}_timetable`)}>
             <Download />
           </ShareBtn>
         </div>

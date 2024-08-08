@@ -1,5 +1,5 @@
 import { css } from '@styled-stytem/css'
-import { AxiosError } from 'axios'
+import { isAxiosError } from 'axios'
 import { useCallback, useState } from 'react'
 import { createPortal } from 'react-dom'
 
@@ -59,7 +59,7 @@ const AddClass = ({ timetableId }: AddClassProps) => {
         { courseId, timetableId },
         {
           onError: error => {
-            if (error instanceof AxiosError) alert(error.response?.data.message)
+            if (isAxiosError(error)) alert(error.response?.data.message)
           },
         },
       )
@@ -199,7 +199,7 @@ const AddClass = ({ timetableId }: AddClassProps) => {
           {/* todo: 검색창 비활성화 디자인 */}
           {isSearchAvailable && <SearchBox placeholder={filterTypeMap[curFilter]} onSubmit={handleSearchBoxOnSubmit} />}
         </div>
-        {error instanceof AxiosError ? (
+        {isAxiosError(error) ? (
           <div className={SearchMessageStyle}>{error.response?.data.message}</div>
         ) : searchData === undefined ? (
           <div className={SearchMessageStyle}></div>

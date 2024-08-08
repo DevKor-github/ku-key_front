@@ -15,7 +15,7 @@ const TimeSelector = ({ type, setValue }: TimeSelector) => {
   const [curM, setCurM] = useState(0)
 
   useEffect(() => {
-    setValue(type, `${hSelectors[curH].slice(0, 2)}:${mSelectors[curM].slice(0, 2)}`)
+    setValue(type, `${hSelectors[curH].slice(0, 2)}:${mSelectors[curM].slice(0, 2)}:00`)
   }, [curH, curM, setValue, type])
 
   return (

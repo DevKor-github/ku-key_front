@@ -1,5 +1,6 @@
 import { css } from '@styled-stytem/css'
-import { AxiosError } from 'axios'
+import { isAxiosError } from 'axios'
+import { useCallback } from 'react'
 
 import { usePatchSchedule } from '@/api/hooks/schedule'
 import AddOnMyOwn, { AddOnMyOwnForm } from '@/components/timetable/LectureBottomSheet/AddOnMyOwn'
@@ -12,6 +13,22 @@ interface EditScheduleProps {
 }
 const EditSchedule = ({ timetableId, data, closeScheduleModal }: EditScheduleProps) => {
   const { mutate: editSchedule } = usePatchSchedule()
+
+  const handleSubmit = useCallback(
+    (formData: AddOnMyOwnForm) => {
+      closeScheduleModal()
+      editSchedule(
+        { scheduleId: data.scheduleId, timetableId, ...formData },
+        {
+          onError: error => {
+            if (isAxiosError(error)) alert(error.response?.data.message)
+          },
+        },
+      )
+    },
+    [closeScheduleModal, editSchedule, timetableId, data.scheduleId],
+  )
+
   return (
     <div
       className={css({
@@ -27,17 +44,7 @@ const EditSchedule = ({ timetableId, data, closeScheduleModal }: EditSchedulePro
       })}
     >
       <AddOnMyOwn
-        submitHandler={(formData: AddOnMyOwnForm) => {
-          closeScheduleModal()
-          editSchedule(
-            { scheduleId: data.scheduleId, timetableId, ...formData },
-            {
-              onError: error => {
-                if (error instanceof AxiosError) alert(error.response?.data.message)
-              },
-            },
-          )
-        }}
+        submitHandler={handleSubmit}
         prevValue={{ title: data.title, day: data.day, location: data.location }}
       />
     </div>

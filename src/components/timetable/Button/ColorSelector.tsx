@@ -1,5 +1,6 @@
 import { css, cva, cx } from '@styled-stytem/css'
 import { shadow } from '@styled-stytem/recipes'
+import { useCallback } from 'react'
 
 import { useUpdateTimetableColor } from '@/api/hooks/timetable'
 import { COLOR_INFO } from '@/lib/constants/timetableColors'
@@ -37,12 +38,14 @@ interface ColorSelectorProps {
 const ColorSelector = ({ colorTheme, closeModal, timetableId, isSelected }: ColorSelectorProps) => {
   const { mutate: updateColor } = useUpdateTimetableColor()
 
+  const handleClick = useCallback(() => {
+    closeModal()
+    updateColor({ timetableColor: colorTheme, timetableId })
+  }, [closeModal, timetableId, colorTheme, updateColor])
+
   return (
     <button
-      onClick={() => {
-        closeModal()
-        updateColor({ timetableColor: colorTheme, timetableId })
-      }}
+      onClick={handleClick}
       className={ColorSelectorStyle({ isSelected })}
       style={{
         backgroundColor: COLOR_INFO[colorTheme].symbol,

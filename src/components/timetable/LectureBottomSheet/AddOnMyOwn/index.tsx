@@ -45,7 +45,7 @@ const InputBoxStyle = css({
 
 export interface AddOnMyOwnForm {
   title: string
-  day: string
+  day: DayType
   startTime: string
   endTime: string
   location?: string
@@ -53,10 +53,10 @@ export interface AddOnMyOwnForm {
 
 interface AddOnMyOwnProps {
   submitHandler: (data: AddOnMyOwnForm) => void
-  prevValue?: { title: string; day: string; location?: string }
+  prevValue?: { title: string; day: DayType; location?: string }
 }
 
-const AddOnMyOwn = ({ submitHandler, prevValue }: AddOnMyOwnProps) => {
+const AddOnMyOwn = ({ submitHandler, prevValue = { title: '', day: 'Mon', location: '' } }: AddOnMyOwnProps) => {
   const [trigger, setTrigger] = useState(0)
 
   const {
@@ -70,8 +70,8 @@ const AddOnMyOwn = ({ submitHandler, prevValue }: AddOnMyOwnProps) => {
     defaultValues: {
       title: prevValue?.title,
       day: prevValue?.day,
-      startTime: '09:00',
-      endTime: '09:00',
+      startTime: '09:00:00',
+      endTime: '09:00:00',
       location: prevValue?.location,
     },
     mode: 'onSubmit',

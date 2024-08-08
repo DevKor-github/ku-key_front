@@ -1,5 +1,5 @@
 import { css } from '@styled-stytem/css'
-import { AxiosError } from 'axios'
+import { isAxiosError } from 'axios'
 import { motion } from 'framer-motion'
 import { useCallback, useState } from 'react'
 
@@ -44,7 +44,7 @@ const LectureBottomSheet = ({ timetableId, visible }: LectureBottomSheetProps) =
       { timetableId, ...data },
       {
         onError: error => {
-          if (error instanceof AxiosError) alert(error.response?.data.message)
+          if (isAxiosError(error)) alert(error.response?.data.message)
         },
       },
     )

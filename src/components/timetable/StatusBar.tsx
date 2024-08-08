@@ -1,5 +1,5 @@
 import { css } from '@styled-stytem/css'
-import { AxiosError } from 'axios'
+import { isAxiosError } from 'axios'
 import { useCallback } from 'react'
 
 import { usePostTimetable } from '@/api/hooks/timetable'
@@ -28,7 +28,7 @@ const StatusBar = ({ curSemester, curIndex, setCurIndex }: StatusBarProps) => {
       },
       {
         onError: error => {
-          if (error instanceof AxiosError) alert(error.response?.data.message)
+          if (isAxiosError(error)) alert(error.response?.data.message)
         },
       },
     )

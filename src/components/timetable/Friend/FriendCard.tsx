@@ -1,5 +1,6 @@
 import { css, cva } from '@styled-stytem/css'
 import { CircleX, Dot } from 'lucide-react'
+import { useCallback } from 'react'
 
 import {
   useAddFriendship,
@@ -91,35 +92,27 @@ const FriendCardBtn = ({ type, data }: FriendCardProp) => {
         break
     }
   } else {
+    isActive = true
     if (type === 'recieved') {
       btnText = 'Friend accept'
       color = 'red1'
-      isActive = true
     } else {
       btnText = 'Cancel request'
       color = 'red2'
-      isActive = true
     }
   }
 
+  const handleClick = useCallback(() => {
+    if (data.status === undefined) {
+      const action = type === 'recieved' ? receiveFriendship : deleteSentRequest
+      action({ friendshipId: data.friendshipId! })
+    } else if (data.status === 'unknown') {
+      addFriend({ toUsername: data.username })
+    }
+  }, [addFriend, data, deleteSentRequest, receiveFriendship, type])
+
   return (
-    <button
-      className={buttonStyle({ active: isActive, color })}
-      onClick={() => {
-        switch (data.status) {
-          case undefined:
-            if (type === 'recieved') {
-              receiveFriendship({ friendshipId: data.friendshipId! })
-            } else {
-              deleteSentRequest({ friendshipId: data.friendshipId! })
-            }
-            break
-          case 'unknown':
-            addFriend({ toUsername: data.username })
-            break
-        }
-      }}
-    >
+    <button className={buttonStyle({ active: isActive, color })} onClick={handleClick}>
       {btnText}
     </button>
   )

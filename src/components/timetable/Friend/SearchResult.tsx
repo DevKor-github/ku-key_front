@@ -1,5 +1,5 @@
 import { css } from '@styled-stytem/css'
-import { AxiosError } from 'axios'
+import { isAxiosError } from 'axios'
 import { memo } from 'react'
 
 import { GetSearchUserResponse } from '@/api/types/friends'
@@ -22,7 +22,7 @@ const SearchResult = memo(({ data, error }: SearchResultProps) => {
       })}
     >
       <h2 className={css({ fontWeight: 700, fontSize: 20, color: 'darkGray.1' })}>Search results</h2>
-      {error instanceof AxiosError && error.response?.data.message === '올바르지 않은 상대입니다.' && (
+      {isAxiosError(error) && error.response?.data.message === '올바르지 않은 상대입니다.' && (
         <div
           className={css({
             fontWeight: 600,

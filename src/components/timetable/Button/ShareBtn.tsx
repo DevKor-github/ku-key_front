@@ -1,38 +1,33 @@
-import { cva } from '@styled-stytem/css'
+import { css } from '@styled-stytem/css'
 
-const BtnStyle = cva({
-  base: {
-    h: 12,
-    px: 7,
-    rounded: 10,
-    display: 'inline-flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    border: '1px {colors.lightGray.1} solid',
-    cursor: 'pointer',
-    color: 'darkGray.2',
-    fontSize: 18,
-    fontWeight: 500,
-    zIndex: 2,
-    bgColor: 'white',
-    transition: 'border 0.256s',
-    _hover: {
-      borderColor: 'darkGray.2',
-    },
-  },
-  variants: {
-    icon: { true: { w: 14, px: 0 } },
+const BtnStyle = css({
+  h: 12,
+  w: 14,
+  px: 7,
+  rounded: 10,
+  display: 'inline-flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  border: '1px {colors.lightGray.1} solid',
+  cursor: 'pointer',
+  color: 'darkGray.2',
+  fontSize: 18,
+  fontWeight: 500,
+  zIndex: 2,
+  bgColor: 'white',
+  transition: 'border 0.256s',
+  _hover: {
+    borderColor: 'darkGray.2',
   },
 })
 
 interface ShareBtnProps extends React.HTMLAttributes<HTMLDivElement> {
   shareHandler: () => void
-  icon?: boolean
 }
 
-const ShareBtn = ({ children, shareHandler, icon }: ShareBtnProps) => {
+const ShareBtn = ({ children, shareHandler }: ShareBtnProps) => {
   return (
-    <button className={BtnStyle({ icon })} onClick={shareHandler}>
+    <button className={BtnStyle} onClick={shareHandler}>
       {children}
     </button>
   )
