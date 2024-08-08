@@ -16,6 +16,7 @@ const ReactionSection = () => {
     funny: 20,
   }
   const [currentReaction, setCurrentReaction] = useState<Set<ReactionType>>(new Set([]))
+  const [scrap, setScrap] = useState(false)
   const handleReacitonSet = useCallback((reactionType: ReactionType) => {
     setCurrentReaction(prev => {
       if (prev.has(reactionType)) {
@@ -27,6 +28,7 @@ const ReactionSection = () => {
       return new Set(prev)
     })
   }, [])
+  const handleScrap = useCallback(() => setScrap(prev => !prev), [])
   return (
     <section
       className={css({
@@ -52,7 +54,7 @@ const ReactionSection = () => {
             handleReactionSet={handleReacitonSet}
           />
         ))}
-        <button className={reactionButton()}>
+        <button className={reactionButton()} aria-pressed={scrap} onClick={handleScrap}>
           <Bookmark />1
         </button>
       </div>

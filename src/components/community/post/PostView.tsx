@@ -4,6 +4,7 @@ import { ArrowLeft } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
 import Post from '@/components/community/post/Post'
+import PostComment from '@/components/community/post/PostComment'
 import Button from '@/components/ui/button'
 
 const PostView = () => {
@@ -34,6 +35,7 @@ const PostView = () => {
         </Button>
         <div className={css({ display: 'flex', w: 817, flexDir: 'column', alignItems: 'flex-start', gap: '50px' })}>
           <Post />
+          <PostComment />
         </div>
       </div>
     </section>
