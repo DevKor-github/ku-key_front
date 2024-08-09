@@ -1,9 +1,9 @@
 import { css } from '@styled-stytem/css'
+import { Download } from 'lucide-react'
 
 const BtnStyle = css({
   h: 12,
   w: 14,
-  px: 7,
   rounded: 10,
   display: 'inline-flex',
   justifyContent: 'center',
@@ -21,14 +21,14 @@ const BtnStyle = css({
   },
 })
 
-interface ShareBtnProps extends React.HTMLAttributes<HTMLDivElement> {
+interface ShareBtnProps {
   shareHandler: () => void
 }
 
-const ShareBtn = ({ children, shareHandler }: ShareBtnProps) => {
+const ShareBtn = ({ shareHandler }: ShareBtnProps) => {
   return (
     <button className={BtnStyle} onClick={shareHandler}>
-      {children}
+      <Download />
     </button>
   )
 }
