@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useSearchParams } from 'react-router-dom'
 
 import { PostByBoardResponse, PostPreviewResponse } from '@/api/types/community'
-import { BoardInfo, BoardPostPreviewProps, PostPreviewProps } from '@/types/community'
+import { BoardInfo, BoardPostPreviewProps, PostPreviewProps, PostViewProps } from '@/types/community'
 import { apiInterface } from '@/util/axios/custom-axios'
 import { useSearch } from '@/util/useSearch'
 
@@ -66,5 +66,19 @@ export const useGetPostsByBoard = (boardId: number) => {
     queryKey: ['postsByBoard', boardId, keyword],
     queryFn: () => getPostsByBoard(boardId, 10, keyword),
     initialData: { board: {} as BoardInfo, posts: [] as BoardPostPreviewProps[] },
+  })
+}
+
+const getPostById = async (postId: number) => {
+  const response = await apiInterface.get<PostViewProps[]>(`post/${postId}`)
+  return response.data
+}
+
+export const useGetPostById = (postId: number) => {
+  return useQuery({
+    queryKey: ['postById', postId],
+    queryFn: () => getPostById(postId),
+    initialData: [] as PostViewProps[],
+    enabled: !isNaN(postId),
   })
 }

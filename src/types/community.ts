@@ -27,3 +27,33 @@ export interface BoardInfo {
 }
 export type BoardPostPreviewProps = Omit<PostPreviewProps, 'boardName'>
 export type BoardType = 'Community Board' | 'Information Board' | 'Question Board'
+
+export interface CommentProps {
+  id: number
+  isDeleted: boolean
+  createdAt: Date
+  updatedAt: Date
+  isMyComment: boolean
+  content: string
+  username: string
+  likeCount: number
+  repyly: string[]
+}
+interface ImageProps {
+  id: number
+  imgDir: string
+}
+export interface PostViewProps {
+  id: number
+  isMyPost: boolean
+  title: string
+  content: string
+  createdAt: Date
+  updatedAt: Date
+  username: string
+  views: number
+  scrapCount: number
+  reaction: Reaction
+  comments: CommentProps[]
+  imageDirs: ImageProps[]
+}

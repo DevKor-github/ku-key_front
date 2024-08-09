@@ -1,14 +1,18 @@
 import { css, cx } from '@styled-stytem/css'
 import { globalLayout } from '@styled-stytem/recipes'
 import { ArrowLeft } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
+import { useGetPostById } from '@/api/hooks/community'
 import Post from '@/components/community/post/Post'
 import PostComment from '@/components/community/post/PostComment'
 import Button from '@/components/ui/button'
 
 const PostView = () => {
   const navigate = useNavigate()
+  const { postId } = useParams()
+  const { data: post } = useGetPostById(parseInt(postId ?? ''))
+  console.log(post)
   return (
     <section
       className={cx(
