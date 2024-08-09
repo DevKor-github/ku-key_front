@@ -47,6 +47,7 @@ export const useGetReviews = (props: GetReviewsRequest) => {
     queryKey: ['reviewList', props],
     queryFn: () => getReviews(props),
     initialData: () => ({ totalRate: 0, reviewCount: 0, reviews: [] }),
+    retry: false,
   })
 }
 

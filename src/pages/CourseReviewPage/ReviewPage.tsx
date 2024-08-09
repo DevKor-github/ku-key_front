@@ -1,9 +1,10 @@
 import { css, cva } from '@styled-stytem/css'
+import { isAxiosError } from 'axios'
 import { motion } from 'framer-motion'
 import { useAtomValue } from 'jotai/react'
 import { ChevronDown } from 'lucide-react'
-import { useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import { useGetReviews } from '@/api/hooks/courseReview'
 import CookiesRate from '@/components/courseReview/CookiesRate'
@@ -44,17 +45,35 @@ const CriteriaBtnStyle = cva({
 
 const ReviewPage = () => {
   const { courseCode = '', prof = '' } = useParams()
+  const navigate = useNavigate()
 
   const [criteria, setCriteria] = useState<CriteriaType>('createdAt')
   const [direction, setDirection] = useState<DirectionType>('DESC')
 
   const totalData = useAtomValue(courseSummary)
-  const { data: reviewsData } = useGetReviews({
+
+  const {
+    data: reviewsData,
+    isError,
+    error,
+    isFetching,
+  } = useGetReviews({
     courseCode,
     professorName: prof,
     criteria,
     direction,
   })
+
+  useEffect(() => {
+    if (!isFetching && isError) {
+      if (isAxiosError(error)) {
+        if (error.response?.data.error === 'Forbidden') {
+          alert('You must purchase a course evaluation access ticket!')
+          navigate(-1)
+        }
+      }
+    }
+  }, [isError, error, isFetching, navigate])
 
   return (
     <div className={css({ flexGrow: 1, display: 'flex', flexDir: 'column', gap: 12 })}>
