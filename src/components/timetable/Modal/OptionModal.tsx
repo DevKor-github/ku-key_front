@@ -1,5 +1,6 @@
 import { css, cva, cx } from '@styled-stytem/css'
 import { shadow } from '@styled-stytem/recipes'
+import { MessageSquare, Pencil, SquareGanttChart, Trash2 } from 'lucide-react'
 import { CSSProperties, forwardRef, ReactNode } from 'react'
 
 import ModalCard from '@/components/ui/modal'
@@ -27,8 +28,15 @@ const optBlockInfo = css({
   fontWeight: 700,
 })
 
+const ICON_MAP: { [key in string]: ReactNode } = {
+  'Course plan': <SquareGanttChart />,
+  Review: <MessageSquare />,
+  Delete: <Trash2 />,
+  Edit: <Pencil />,
+}
+
 interface OptionModalProps {
-  optionHandler: { node: ReactNode; onClick: () => void }[]
+  optionHandler: { title: string; onClick: () => void }[]
   modalTitle?: string
   customStyle?: CSSProperties
   p10?: boolean
@@ -79,9 +87,12 @@ const OptionModal = forwardRef<HTMLDivElement, OptionModalProps>(
               {modalTitle}
             </div>
           )}
-          {optionHandler.map(({ node, onClick }, index) => (
+          {optionHandler.map(({ title, onClick }, index) => (
             <button key={index} className={optBlock} onClick={onClick}>
-              <div className={optBlockInfo}>{node}</div>
+              <div className={optBlockInfo}>
+                {ICON_MAP[title]}
+                {title}
+              </div>
             </button>
           ))}
         </ModalCard>

@@ -1,6 +1,6 @@
 import { css } from '@styled-stytem/css'
 import { useSetAtom } from 'jotai/react'
-import { CircleUser, MapPin, MessageSquare, Pencil, SquareGanttChart, Trash2 } from 'lucide-react'
+import { CircleUser, MapPin } from 'lucide-react'
 import { useCallback, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useNavigate } from 'react-router-dom'
@@ -55,72 +55,57 @@ const LectureSticker = ({ timetableId, data, bgColor, isMine }: LectureStickerPr
   const { mutate: deleteCourse } = useDeleteCourse()
   const { mutate: deleteSchedule } = useDeleteSchedule()
 
+  const handleCoursePlanClick = useCallback(() => {
+    window.open(syllabus!, 'rel=noopener noreferrer')
+    setIsModalOpen(false)
+    setIsSheetOpend(true)
+  }, [syllabus, setIsSheetOpend])
+
+  const handleReviewClick = useCallback(() => {
+    setIsModalOpen(false)
+    setIsSheetOpend(true)
+    navigate(`/course-review/info/${data.courseCode?.slice(0, 7)}/${data.professorName}`)
+  }, [navigate, setIsSheetOpend, data.courseCode, data.professorName])
+
+  const handleCourseDelete = useCallback(() => {
+    setIsModalOpen(false)
+    deleteCourse({ courseId: scheduleId, timetableId: timetableId! })
+    setIsSheetOpend(true)
+  }, [scheduleId, timetableId, deleteCourse, setIsSheetOpend])
+
+  const handleEditClick = useCallback(() => {
+    setIsModalOpen(false)
+    setIsScheduleEditOpened(true)
+  }, [])
+
+  const handleScheduleDelete = useCallback(() => {
+    setIsModalOpen(false)
+    deleteSchedule({ scheduleId })
+    setIsSheetOpend(true)
+  }, [setIsSheetOpend, deleteSchedule, scheduleId])
+
   const courseOptions = [
     {
-      node: (
-        <>
-          <SquareGanttChart />
-          Course plan
-        </>
-      ),
-      onClick: () => {
-        window.open(syllabus!, 'rel=noopener noreferrer')
-        setIsModalOpen(false)
-        setIsSheetOpend(true)
-      },
+      title: 'Course plan',
+      onClick: handleCoursePlanClick,
     },
     {
-      node: (
-        <>
-          <MessageSquare />
-          Review
-        </>
-      ),
-      onClick: () => {
-        setIsModalOpen(false)
-        setIsSheetOpend(true)
-        navigate(`/course-review/info/${data.courseCode?.slice(0, 7)}/${data.professorName}`)
-      },
+      title: 'Review',
+      onClick: handleReviewClick,
     },
     {
-      node: (
-        <>
-          <Trash2 />
-          Delete
-        </>
-      ),
-      onClick: () => {
-        setIsModalOpen(false)
-        deleteCourse({ courseId: scheduleId, timetableId: timetableId! })
-        setIsSheetOpend(true)
-      },
+      title: 'Delete',
+      onClick: handleCourseDelete,
     },
   ]
   const scheduleOptions = [
     {
-      node: (
-        <>
-          <Pencil />
-          Edit
-        </>
-      ),
-      onClick: () => {
-        setIsModalOpen(false)
-        setIsScheduleEditOpened(true)
-      },
+      title: 'Edit',
+      onClick: handleEditClick,
     },
     {
-      node: (
-        <>
-          <Trash2 />
-          Delete
-        </>
-      ),
-      onClick: () => {
-        setIsModalOpen(false)
-        deleteSchedule({ scheduleId })
-        setIsSheetOpend(true)
-      },
+      title: 'Delete',
+      onClick: handleScheduleDelete,
     },
   ]
 
