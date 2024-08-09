@@ -48,7 +48,16 @@ const TimetablePage = () => {
           zIndex: 1,
         })}
       />
-      <div className={css({ h: 20, bgColor: 'red.2', px: '149px', display: 'flex', flexDir: 'row', zIndex: 0 })}>
+      <div
+        className={css({
+          h: 20,
+          bgColor: 'red.2',
+          px: { base: '149px', mdDown: 4 },
+          display: 'flex',
+          flexDir: 'row',
+          zIndex: 0,
+        })}
+      >
         <div className={css({ display: 'flex', flexDir: 'row', alignItems: 'center', gap: 5 })}>
           <Link to={'/timetable'} className={css(TimetableBtn.raw({ selected: curPathRoot === undefined }))}>
             My schedule
@@ -58,7 +67,7 @@ const TimetablePage = () => {
           </Link>
         </div>
       </div>
-      <div className={css({ display: 'flex', flexDir: 'column', px: 64, mb: 40 })}>
+      <div className={css({ display: 'flex', flexDir: 'column', px: { base: 64, mdDown: 4 }, mb: 40 })}>
         <Outlet />
       </div>
     </>

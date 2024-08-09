@@ -1,15 +1,28 @@
 import { css } from '@styled-stytem/css'
-import { Download } from 'lucide-react'
-import { useParams } from 'react-router-dom'
+import { ArrowLeft, Download } from 'lucide-react'
+import { useCallback, useRef, useState } from 'react'
+import { Link, useParams } from 'react-router-dom'
 
-import ShareBtn from '@/components/timetable/ShareBtn'
-// import TimetableDropdown from '@/components/timetable/TimetableDropdown'
+import ShareBtn from '@/components/timetable/Button/ShareBtn'
+import Dropdown from '@/components/timetable/Dropdown'
+import { FriendPageBtnStyle } from '@/components/timetable/Friend/FriendsList'
+import FriendTimetable from '@/components/timetable/Friend/FriendTimetable'
+import { convertHtmlToImage, makeSemesterDropdownList, timetablePreprocess } from '@/util/timetableUtil'
 
 const FriendTimetablePage = () => {
   const params = useParams()
   const user = params.userHandler
 
-  // const { data: timetableList, isPending } = useGetUserTimetableList()
+  const imgRef = useRef(null)
+  const [curSemester, setCurSemester] = useState(2)
+  const semesterList = timetablePreprocess([])
+
+  const setSemesterIndex = useCallback(
+    (toIndex: number) => {
+      setCurSemester(toIndex)
+    },
+    [setCurSemester],
+  )
 
   return (
     <>
@@ -18,21 +31,30 @@ const FriendTimetablePage = () => {
           <div className={css({ color: 'black.2', fontSize: 32, fontWeight: '800', wordWrap: 'break-word' })}>
             {user}
           </div>
-          {/* <TimetableDropdown
-            semesterList={semesterList}
-            curSemester={curSemester}
-            setCurSemester={setCurSemester}
-            setCurIndex={setCurIndex}
-          /> */}
+          <Dropdown
+            dropdownList={makeSemesterDropdownList(semesterList)}
+            curIndex={curSemester}
+            setCurIndex={setSemesterIndex}
+          />
         </div>
         <div className={css({ display: 'flex', flexDir: 'row', gap: 2.5 })}>
-          <ShareBtn>Link</ShareBtn>
-          <ShareBtn icon={true}>
+          <ShareBtn shareHandler={() => convertHtmlToImage(imgRef.current, `${user}_timetable`)}>
             <Download />
           </ShareBtn>
         </div>
       </div>
-      <div className={css({ display: 'flex', flexDir: 'row', gap: 5 })}>친구 시간표</div>
+      <div className={css({ display: 'flex', flexDir: 'column', gap: 5 })}>
+        <Link className={FriendPageBtnStyle({ prev: true })} to="/timetable/friend">
+          <ArrowLeft />
+          PREV
+        </Link>
+        <FriendTimetable
+          user={user!}
+          semester={semesterList[curSemester].semester}
+          year={semesterList[curSemester].year}
+          ref={imgRef}
+        />
+      </div>
     </>
   )
 }

@@ -1,6 +1,6 @@
 import { css } from '@styled-stytem/css'
 
-const NullTable = () => {
+const NullTimetable = ({ children }: { children: React.ReactNode }) => {
   return (
     <div
       className={css({
@@ -18,9 +18,9 @@ const NullTable = () => {
         textAlign: 'center',
       })}
     >
-      There is no set timetable <br /> Press the plus button to create a timetable!
+      {children}
     </div>
   )
 }
 
-export default NullTable
+export default NullTimetable

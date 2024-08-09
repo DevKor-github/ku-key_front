@@ -17,7 +17,7 @@ export const modalCardRecipe = defineRecipe({
         alignItems: 'flex-start',
         borderColor: 'red.3',
         borderWidth: 1,
-        bgColor: 'bg.red',
+        bgColor: 'bg.red.1',
       },
       alert: {
         bgColor: 'white',
