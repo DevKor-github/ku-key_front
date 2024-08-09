@@ -44,7 +44,7 @@ const SchedulePage = () => {
       >
         Academic Schedule
       </div>
-      <div className={css({ px: 64, pt: 29, display: 'flex', flexDir: 'column', gap: 10, bgColor: 'bg.gray' })}>
+      <div className={css({ px: 64, py: 30, display: 'flex', flexDir: 'column', gap: 10, bgColor: 'bg.gray' })}>
         <div
           className={css({
             display: 'flex',
@@ -52,7 +52,7 @@ const SchedulePage = () => {
             justifyContent: 'space-between',
           })}
         >
-          <div className={css({ display: 'flex', gap: 4 })}>
+          <div className={css({ display: 'flex', gap: 4, alignItems: 'center' })}>
             <img src={koreaUniv} alt="Korea University Logo" className={css({ w: 11 })} />
             <div className={css({ display: 'flex', flexDir: 'column', justifyContent: 'space-between' })}>
               <div className={css({ display: 'flex', gap: 4, alignItems: 'flex-end', color: 'black.2' })}>

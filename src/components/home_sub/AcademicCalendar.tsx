@@ -32,6 +32,7 @@ const AcademicCalendar = ({ data }: AcademicCalendarProps) => (
             borderRight: '{colors.darkGray.2} solid 0.5px',
             display: 'flex',
             alignItems: 'center',
+            minH: 22,
           })}
         >
           {numberToMonthAbb[month].toUpperCase()}
