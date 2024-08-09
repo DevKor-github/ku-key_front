@@ -1,6 +1,6 @@
 import { css, cva } from '@styled-stytem/css'
 import { useAtom } from 'jotai/react'
-import { CaseSensitive, Ellipsis, Palette, Trash2 } from 'lucide-react'
+import { Ellipsis } from 'lucide-react'
 import { forwardRef, useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
@@ -44,51 +44,25 @@ const Timetable = forwardRef<HTMLDivElement, TimetableProps>(
 
     const optionHandler = [
       {
-        node: (
-          <>
-            <CaseSensitive />
-            Name
-          </>
-        ),
-        onClick: () => {
-          setIsModalOpen(false)
-          openTimetableModal('name')
-        },
+        title: 'Name',
+        onClick: () => handleOptionClick('name'),
       },
       {
-        node: (
-          <>
-            <Palette />
-            Color
-          </>
-        ),
-        onClick: () => {
-          setIsModalOpen(false)
-          openTimetableModal('color')
-        },
+        title: 'Color',
+        onClick: () => handleOptionClick('color'),
       },
       {
-        node: (
-          <>
-            <Trash2 />
-            Delete
-          </>
-        ),
-        onClick: () => {
-          setIsModalOpen(false)
-          openTimetableModal('delete')
-        },
+        title: 'Delete',
+        onClick: () => handleOptionClick('delete'),
       },
     ]
 
-    const openTimetableModal = useCallback(
-      (value: GlobalModalStateType) => {
-        if (value !== null) {
-          setGlobalModalState(value)
-        }
-      },
-      [setGlobalModalState],
-    )
+    const handleOptionClick = useCallback((value: GlobalModalStateType) => {
+      setIsModalOpen(false)
+      if (value !== null) {
+        setGlobalModalState(value)
+      }
+    }, [])
 
     const closeTimetableModal = useCallback(() => {
       setGlobalModalState(null)

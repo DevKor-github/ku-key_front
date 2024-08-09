@@ -1,5 +1,5 @@
 import { css } from '@styled-stytem/css'
-import { ArrowLeft, Download } from 'lucide-react'
+import { ArrowLeft } from 'lucide-react'
 import { useCallback, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
@@ -38,9 +38,7 @@ const FriendTimetablePage = () => {
           />
         </div>
         <div className={css({ display: 'flex', flexDir: 'row', gap: 2.5 })}>
-          <ShareBtn shareHandler={() => convertHtmlToImage(imgRef.current, `${user}_timetable`)}>
-            <Download />
-          </ShareBtn>
+          <ShareBtn shareHandler={() => convertHtmlToImage(imgRef.current, `${user}_timetable`)} />
         </div>
       </div>
       <div className={css({ display: 'flex', flexDir: 'column', gap: 5 })}>

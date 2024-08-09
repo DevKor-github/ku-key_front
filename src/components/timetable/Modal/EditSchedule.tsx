@@ -1,4 +1,5 @@
-import { css } from '@styled-stytem/css'
+import { css, cx } from '@styled-stytem/css'
+import { shadow } from '@styled-stytem/recipes'
 import { isAxiosError } from 'axios'
 import { useCallback } from 'react'
 
@@ -31,17 +32,19 @@ const EditSchedule = ({ timetableId, data, closeScheduleModal }: EditSchedulePro
 
   return (
     <div
-      className={css({
-        bgColor: '#FFFFFFCC',
-        w: 'calc(100vw - 298px)',
-        h: 'calc(50vh - 20px)',
-        backdropFilter: 'blur(25px)',
-        rounded: 50,
-        boxShadow: '0px 0px 4px 0px #00000040',
-        px: 26,
-        pt: 10,
-        pb: 3.5,
-      })}
+      className={cx(
+        shadow(),
+        css({
+          bgColor: '#FFFFFFCC',
+          w: 'calc(100vw - 298px)',
+          h: 'calc(50vh - 20px)',
+          backdropFilter: 'blur(25px)',
+          rounded: 50,
+          px: 26,
+          pt: 10,
+          pb: 3.5,
+        }),
+      )}
     >
       <AddOnMyOwn
         submitHandler={handleSubmit}

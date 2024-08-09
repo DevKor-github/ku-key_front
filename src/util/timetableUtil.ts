@@ -41,6 +41,29 @@ export const getStartTime = (time: string) => {
   return date.getMinutes()
 }
 
+export const getCurSemester = () => {
+  const KSTtoday = new Date()
+  const year = KSTtoday.getFullYear()
+  const month = KSTtoday.getMonth() + 1
+
+  let curSemester = 0
+
+  if (1 < month && month <= 6) {
+    // 1학기
+    curSemester = 0
+  } else if (6 < month && month <= 7) {
+    // 여름학기
+    curSemester = 1
+  } else if (7 < month && month <= 12) {
+    // 2학기
+    curSemester = 2
+  } else {
+    // 겨울학기
+    curSemester = 3
+  }
+  return { year, semester: numberToSemester[curSemester] }
+}
+
 /**
  * 현재 학기, 현재 학기 이전의 2학기, 현재 학기 이후의 3학기 지원
  * 총 6개 학기의 Semester[] 반환
