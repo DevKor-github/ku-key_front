@@ -52,7 +52,7 @@ const SelectTimetableBtn = ({
           textOverflow: 'ellipsis',
         })}
       >
-        {timetable.tableName}
+        {timetable.timetableName}
       </button>
     </div>
   )

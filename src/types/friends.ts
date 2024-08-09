@@ -15,3 +15,5 @@ export interface FriendRequestInterface {
   major: string
   language: string
 }
+
+export type friendStatusType = 'me' | 'friend' | 'requested' | 'pending' | 'unknown'

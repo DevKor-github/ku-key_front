@@ -1,18 +1,20 @@
 import { css } from '@styled-stytem/css'
 
-import { GetTimeTableByTimeTableIdResponse } from '@/api/types/timetable'
-import LectureSticker from '@/components/timetable/LectureSticker'
-import { TimeCell } from '@/components/timetable/TimetableLayout'
+import { GetTimetableByTimetableIdResponse } from '@/api/types/timetable'
+import LectureSticker from '@/components/timetable/Grid/LectureSticker'
+import { TimeCell } from '@/components/timetable/Grid/TimetableLayout'
 import { COLOR_INFO } from '@/lib/constants/timetableColors'
-import { getDuration, lectureDataPreprocess } from '@/util/timetableUtil'
+import { lectureDataPreprocess } from '@/util/timetableUtil'
 
 interface LectureGridProps {
-  timetableData: GetTimeTableByTimeTableIdResponse
+  timetableId?: number
+  timetableData: GetTimetableByTimetableIdResponse
   weekCnt: number
   timeCnt: number
+  isMine?: boolean
 }
 
-const LectureGrid = ({ timetableData, weekCnt, timeCnt }: LectureGridProps) => {
+const LectureGrid = ({ timetableId, timetableData, weekCnt, timeCnt, isMine = false }: LectureGridProps) => {
   const lecGrid = lectureDataPreprocess(timetableData.courses, timetableData.schedules, weekCnt, timeCnt)
   const colorTheme = timetableData.color
   let lecCnt = 0
@@ -29,11 +31,10 @@ const LectureGrid = ({ timetableData, weekCnt, timeCnt }: LectureGridProps) => {
               return (
                 <LectureSticker
                   key={lecInd}
-                  name={lecture.title}
-                  runningTime={getDuration(lecture.endTime, lecture.startTime)}
-                  room={lecture.location}
-                  professor={lecture.professorName ? lecture.professorName : null}
+                  timetableId={timetableId}
+                  data={lecture}
                   bgColor={COLOR_INFO[colorTheme]['rand'][lecCnt++ % COLOR_INFO[colorTheme]['rand'].length]}
+                  isMine={isMine}
                 />
               )
             })}

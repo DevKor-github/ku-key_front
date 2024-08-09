@@ -37,7 +37,12 @@ export default defineConfig({
           bg: {
             gray: { value: '#F9F9F9' },
             red: {
-              value: '#FFF4F4',
+              1: {
+                value: '#FFF4F4',
+              },
+              2: {
+                value: '#FFFDFD',
+              },
             },
           },
           black: {

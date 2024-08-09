@@ -1,45 +1,58 @@
 import { ColorType, CourseType, ScheduleType, SemesterType, TimetableInfo } from '@/types/timetable'
 
-export interface GetTimeTableByTimeTableIdRequest {
-  authHeader: string | null
+export interface GetTimetableByTimetableIdRequest {
   timetableId: number
 }
 
-export interface GetTimeTableByTimeTableIdResponse {
+export interface GetTimetableByTimetableIdResponse {
   courses: CourseType[]
   schedules: ScheduleType[]
   color: ColorType
 }
 
-export type GetTimeTableByUserIdResponse = TimetableInfo[]
+export interface GetFriendTimetableResponse extends GetTimetableByTimetableIdResponse {
+  timetableName: string
+}
 
-export interface CreateTimeTableRequest {
-  authHeader: string | null
-  tableName: string
+export type GetTimetableByUserIdResponse = TimetableInfo[]
+
+export interface CreateTimetableRequest {
+  timetableName: string
   semester: SemesterType
   year: string
 }
 
-export interface UpdateTimeTableNameRequest {
-  authHeader: string | null
-  tableName: string
-  timeTableId: number
-}
-
-export interface UpdateMainTimeTableRequest {
-  authHeader: string | null
-  semester: SemesterType
-  year: string
-  timeTableId: number
-}
-
-export interface DeleteTimeTableRequest {
-  authHeader: string | null
+export interface UpdateTimetableNameRequest {
+  timetableName: string
   timetableId: number
 }
 
-export interface UpdateTableColorRequest {
-  authHeader: string | null
-  timeTableId: number
-  tableColor: ColorType
+export interface UpdateMainTimetableRequest {
+  semester: SemesterType
+  year: string
+  timetableId: number
+}
+
+export interface DeleteTimetableRequest {
+  timetableId: number
+}
+
+export interface UpdateTimetableColorRequest {
+  timetableId: number
+  timetableColor: ColorType
+}
+
+export interface PostCourseRequest {
+  timetableId: number
+  courseId: number
+}
+
+export interface UpdateTimetableColorResponse {
+  id: number
+  userId: number
+  timetableName: string
+  semester: SemesterType
+  year: string
+  mainTimetable: boolean
+  color: ColorType
 }

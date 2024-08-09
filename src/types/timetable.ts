@@ -1,17 +1,23 @@
-export type DayType = 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri' | 'Sat' | 'Sun'
+export const DayArray = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] as const
+
+export type DayType = (typeof DayArray)[number]
 
 export type SemesterType = 'Spring' | 'Summer' | 'Fall' | 'Winter'
 
-export type ColorType = 'Red' | 'Blue' | 'Green' | 'Purple' | 'Orange' | 'Gray'
+export type ColorType = 'Red' | 'Blue' | 'Green' | 'Purple' | 'Gray'
 
 export type GlobalModalStateType = 'color' | 'name' | 'delete' | null
 
+export type FilterType = 'course' | 'professor' | 'code'
+
+export const timePattern = /^([01]\d|2[0-3]):[0-5]\d:[0-5]\d$/
+
 export interface TimetableInfo {
-  timeTableId: number
+  timetableId: number
   semester: SemesterType
   year: string
-  mainTimeTable: boolean
-  tableName: string
+  mainTimetable: boolean
+  timetableName: string
 }
 
 export interface Semester {
@@ -25,6 +31,7 @@ export interface CourseType {
   professorName: string
   courseName: string
   courseCode: string
+  syllabus: string
   startTime: string
   endTime: string
   classroom: string
@@ -50,4 +57,5 @@ export interface GridType {
   day: DayType
   professorName?: string
   courseCode?: string
+  syllabus?: string
 }
