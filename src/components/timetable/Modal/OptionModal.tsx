@@ -1,6 +1,6 @@
 import { css, cva, cx } from '@styled-stytem/css'
 import { shadow } from '@styled-stytem/recipes'
-import { MessageSquare, Pencil, SquareGanttChart, Trash2 } from 'lucide-react'
+import { CaseSensitive, MessageSquare, Palette, Pencil, SquareGanttChart, Trash2 } from 'lucide-react'
 import { CSSProperties, forwardRef, ReactNode } from 'react'
 
 import ModalCard from '@/components/ui/modal'
@@ -33,6 +33,8 @@ const ICON_MAP: { [key in string]: ReactNode } = {
   Review: <MessageSquare />,
   Delete: <Trash2 />,
   Edit: <Pencil />,
+  Color: <Palette />,
+  Name: <CaseSensitive />,
 }
 
 interface OptionModalProps {
