@@ -3,12 +3,13 @@ import { carouselButton } from '@styled-stytem/recipes'
 import useEmblaCarousel from 'embla-carousel-react'
 import { useAtomValue } from 'jotai'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { memo } from 'react'
 
 import PostImgContainer from '@/components/community/post/PostImgContainer'
 import { postAtom } from '@/lib/store/post'
 import { usePrevNextButtons } from '@/util/usePrevNextButtons'
 
-const PostImgCarousel = () => {
+const PostImgCarousel = memo(() => {
   const postAtomData = useAtomValue(postAtom)
   const [emblaRef, emblaApi] = useEmblaCarousel({})
 
@@ -32,7 +33,7 @@ const PostImgCarousel = () => {
           <PostImgContainer key={img.id} img={img?.imgDir} />
         ))}
       </div>
-      <div className={css({ display: 'flex', pos: 'absolute', px: 5, left: 0, zIndex: 10 })}>
+      <div className={css({ display: 'flex', pos: 'absolute', px: 5, left: 0 })}>
         <button
           disabled={prevBtnDisabled}
           className={carouselButton()}
@@ -43,7 +44,7 @@ const PostImgCarousel = () => {
         </button>
       </div>
       <div
-        className={css({ display: 'flex', pos: 'absolute', px: 5, right: 0, zIndex: 10 })}
+        className={css({ display: 'flex', pos: 'absolute', px: 5, right: 0 })}
         hidden={postAtomData.imageDirs.length === 1}
       >
         <button disabled={nextBtnDisabled} className={carouselButton()} onClick={onNextButtonClick}>
@@ -82,6 +83,6 @@ const PostImgCarousel = () => {
       </div>
     </section>
   )
-}
+})
 
 export default PostImgCarousel

@@ -1,9 +1,10 @@
 import { css } from '@styled-stytem/css'
+import { memo } from 'react'
 
 interface PostImgContainerProps {
   img: string
 }
-const PostImgContainer = ({ img }: PostImgContainerProps) => {
+const PostImgContainer = memo(({ img }: PostImgContainerProps) => {
   return (
     <div className={css({ display: 'flex', w: 'full', flex: '0 0 100%', pos: 'relative' })}>
       <div
@@ -44,6 +45,6 @@ const PostImgContainer = ({ img }: PostImgContainerProps) => {
       </div>
     </div>
   )
-}
+})
 
 export default PostImgContainer

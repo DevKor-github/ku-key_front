@@ -10,6 +10,8 @@ export const modalCardRecipe = defineRecipe({
     py: '30px',
     rounded: 20,
     gap: 5,
+    zIndex: 100,
+    backfaceVisibility: 'hidden',
   },
   variants: {
     variant: {
