@@ -4,6 +4,7 @@ import { useAtomValue } from 'jotai'
 import { Bookmark, CircleAlert, Cookie } from 'lucide-react'
 import { useCallback, useState } from 'react'
 
+import { usePostReaciton, usePostScrap } from '@/api/hooks/community'
 import ReactionButton from '@/components/community/post/ReactionButton'
 import ReactionView from '@/components/community/post/ReactionView'
 import ModalCard from '@/components/ui/modal'
@@ -17,8 +18,10 @@ const ReactionSection = () => {
   const [currentReaction, setCurrentReaction] = useState<Set<ReactionType>>(new Set([]))
   const [scrap, setScrap] = useState(false)
   const { isOpen, handleOpen, handleClose } = useModal(true)
+  const { mutate: mutateReaction } = usePostReaciton()
+  const { mutate: mutateScrap } = usePostScrap()
   const handleReacitonSet = useCallback(
-    (reactionType: ReactionType) => {
+    (reactionType: ReactionType, i: number) => {
       if (postAtomData.isMyPost) return handleOpen()
       setCurrentReaction(prev => {
         if (prev.has(reactionType)) {
@@ -29,13 +32,14 @@ const ReactionSection = () => {
         prev.add(reactionType)
         return new Set(prev)
       })
+      mutateReaction({ postId: postAtomData.id, reaction: i })
     },
-    [postAtomData, handleOpen],
+    [postAtomData, handleOpen, mutateReaction],
   )
   const handleScrap = useCallback(() => {
     if (postAtomData.isMyPost) return handleOpen()
-    setScrap(prev => !prev)
-  }, [postAtomData, handleOpen])
+    mutateScrap(postAtomData.id, { onSuccess: () => setScrap(prev => !prev) })
+  }, [postAtomData, handleOpen, mutateScrap])
   return (
     <section
       className={css({
@@ -53,12 +57,12 @@ const ReactionSection = () => {
       </div>
       <div className={css({ display: 'flex', alignItems: 'center', gap: 4, flexWrap: 'wrap' })}>
         <Cookie size={22} className={css({ color: 'lightGray.1' })} />
-        {Object.keys(postAtomData.reaction).map(reactionType => (
+        {Object.keys(postAtomData.reaction).map((reactionType, i) => (
           <ReactionButton
             key={reactionType}
             active={currentReaction.has(reactionType as ReactionType)}
             reaction={reactionType as ReactionType}
-            handleReactionSet={handleReacitonSet}
+            handleReactionSet={() => handleReacitonSet(reactionType as ReactionType, i)}
           />
         ))}
         <button className={reactionButton()} aria-pressed={scrap} onClick={handleScrap}>

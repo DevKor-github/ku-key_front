@@ -1,8 +1,14 @@
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useSearchParams } from 'react-router-dom'
 
-import { PostByBoardResponse, PostPreviewResponse } from '@/api/types/community'
-import { BoardInfo, BoardPostPreviewProps, PostPreviewProps, PostViewProps } from '@/types/community'
+import {
+  PostByBoardResponse,
+  PostPreviewResponse,
+  PostReactionRequest,
+  PostReactionResponse,
+  PostScrapResponse,
+} from '@/api/types/community'
+import { BoardInfo, BoardPostPreviewProps, PostPreviewProps, PostViewProps, ReactionType } from '@/types/community'
 import { apiInterface } from '@/util/axios/custom-axios'
 import { useSearch } from '@/util/useSearch'
 
@@ -80,5 +86,48 @@ export const useGetPostById = (postId: number) => {
     queryFn: () => getPostById(postId),
     initialData: {} as PostViewProps,
     enabled: !isNaN(postId),
+  })
+}
+
+const postReaction = async ({ postId, reaction }: PostReactionRequest) => {
+  const response = await apiInterface.post<PostReactionResponse>(`post/${postId}/reaction`, { reaction })
+  const postIdString = postId.toString()
+  return { postId: postIdString, ...response.data }
+}
+
+export const usePostReaciton = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: postReaction,
+    onSuccess: data => {
+      queryClient.setQueryData<PostViewProps>(['postById', parseInt(data.postId)], (oldData): PostViewProps => {
+        if (!oldData) {
+          return {} as PostViewProps
+        }
+        const reactionTarget = Object.keys(oldData.reaction)[data.isReacted] as ReactionType
+        return { ...oldData, reaction: { ...oldData.reaction, [reactionTarget]: oldData.reaction[reactionTarget] + 1 } }
+      })
+    },
+  })
+}
+
+const postScrap = async (postId: number) => {
+  const response = await apiInterface.post<PostScrapResponse>(`post/${postId}/scrap`)
+  const postIdString = postId.toString()
+  return { postId: postIdString, ...response.data }
+}
+
+export const usePostScrap = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: postScrap,
+    onSuccess: data => {
+      queryClient.setQueryData<PostViewProps>(['postById', parseInt(data.postId)], (oldData): PostViewProps => {
+        if (!oldData) {
+          return {} as PostViewProps
+        }
+        return { ...oldData, scrapCount: data.isScrapped ? oldData.scrapCount + 1 : oldData.scrapCount - 1 }
+      })
+    },
   })
 }

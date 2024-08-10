@@ -10,5 +10,8 @@ export const globalLayoutRecipe = defineRecipe({
     w: '100vw',
     pl: `calc((100vw / 14) * 2.5)`,
     pr: `calc((100vw / 14) * 1.7)`,
+    mdDown: {
+      px: 5,
+    },
   },
 })
