@@ -35,17 +35,20 @@ const PostPreview = memo(
           />
         </PreviewTextWrapper>
         {thumbnailDir && (
-          <img
-            src={thumbnailDir}
-            alt="Post"
-            className={css({
-              w: 'full',
-              h: 254,
-              rounded: 20,
-              boxShadow: '0px 0px 4px rgba(0, 0, 0, 0.25)',
-            })}
-            style={{ objectFit: 'cover', backgroundPosition: 'top' }}
-          />
+          <button onClick={handleNavigate} className={css({ display: 'flex', w: 'full' })}>
+            <img
+              src={thumbnailDir}
+              alt="Post"
+              className={css({
+                w: 'full',
+                h: 254,
+                rounded: 20,
+                boxShadow: '0px 0px 4px rgba(0, 0, 0, 0.25)',
+                cursor: 'pointer',
+              })}
+              style={{ objectFit: 'cover', backgroundPosition: 'top' }}
+            />
+          </button>
         )}
       </div>
     )

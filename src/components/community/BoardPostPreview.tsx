@@ -1,6 +1,8 @@
 import { css } from '@styled-stytem/css'
 import { formatDistanceToNow } from 'date-fns'
 import { Bookmark, Cookie, Eye, MessageCircle } from 'lucide-react'
+import { useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import AnonymousProfileImg from '@/assets/Anonymous.jpg'
 import { BoardPostPreviewProps } from '@/types/community'
@@ -23,10 +25,13 @@ const BoardPostPreview = ({
   reaction,
 }: BoardPostPreviewProps) => {
   const timeDistance = formatDistanceToNow(createdAt)
+  const navigate = useNavigate()
+  const handleNavigate = useCallback(() => navigate(`/community/post/${id}`), [navigate, id])
 
   return (
-    <div
+    <button
       className={css({
+        all: 'unset',
         display: 'flex',
         maxW: 608,
         flexDir: 'column',
@@ -36,7 +41,9 @@ const BoardPostPreview = ({
         rounded: 20,
         boxShadow: '0px 0px 4px 0px rgba(0, 0, 0, 0.25)',
         bgColor: 'white',
+        cursor: 'pointer',
       })}
+      onClick={handleNavigate}
     >
       <div
         className={css({
@@ -132,7 +139,7 @@ const BoardPostPreview = ({
           </div>
         </div>
       </div>
-    </div>
+    </button>
   )
 }
 

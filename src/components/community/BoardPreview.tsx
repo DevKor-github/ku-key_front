@@ -1,4 +1,6 @@
 import { css } from '@styled-stytem/css'
+import { useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import BoardTag from '@/components/community/BoardTag'
 import PostTextPreview from '@/components/community/PostTextPreview'
@@ -13,6 +15,8 @@ interface BoardPreviewProps {
   link: string
 }
 const BoardPreview = ({ previewPosts, title, description, link }: BoardPreviewProps) => {
+  const navigate = useNavigate()
+  const handleNavigate = useCallback((id: number) => navigate(`/community/post/${id}`), [navigate])
   return (
     <div
       className={css({
@@ -30,7 +34,13 @@ const BoardPreview = ({ previewPosts, title, description, link }: BoardPreviewPr
           <div className={css({ display: 'flex', pl: 2.5, alignItems: 'flex-start' })}>
             <BoardTag boardName={post.boardName as BoardType} variant="small" />
           </div>
-          <PostTextPreview title={post.title} createdAt={post.createdAt} username={post.username} variant="onlyTitle" />
+          <PostTextPreview
+            title={post.title}
+            createdAt={post.createdAt}
+            username={post.username}
+            variant="onlyTitle"
+            handleNavigate={() => handleNavigate(post.id)}
+          />
         </PreviewTextWrapper>
       ))}
     </div>
