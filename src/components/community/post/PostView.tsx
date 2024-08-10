@@ -41,7 +41,7 @@ const PostView = () => {
           gap: 5,
         })}
       >
-        <Button variant="gray" onClick={() => navigate(-1)} className={css({ smDown: { display: 'none' } })}>
+        <Button variant="gray" onClick={() => navigate(-1)} className={css({ lgDown: { display: 'none' } })}>
           <ArrowLeft />
           PREV
         </Button>
