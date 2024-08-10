@@ -15,8 +15,8 @@ const CategorySelector = ({ curCategory, setCategory }: CategorySelectorProps) =
           key={ind}
           text={category.text}
           imgSrc={category.imgSrc}
-          onClick={() => setCategory(category.text)}
-          selected={curCategory === category.text}
+          onClick={() => setCategory(category.type)}
+          selected={curCategory === category.type}
         />
       ))}
     </div>
