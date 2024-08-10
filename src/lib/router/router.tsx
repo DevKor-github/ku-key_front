@@ -11,6 +11,7 @@ import MainCommunityPage from '@/pages/CommunityPage'
 import BoardPage from '@/pages/CommunityPage/BoardPage'
 import PostViewPage from '@/pages/CommunityPage/PostViewPage'
 import WritePostPage from '@/pages/CommunityPage/WritePostPage'
+import ClubPage from '@/pages/ClubPage'
 import LandingPage from '@/pages/LandingPage'
 import Login from '@/pages/LoginPage'
 import MyPage from '@/pages/MyPage'
@@ -71,6 +72,7 @@ const routes: RouteObject[] = [
         ],
       },
       { path: 'home', element: <LandingPage /> },
+      { path: 'club', element: <ClubPage /> },
       { path: 'login', element: <Login /> },
       { path: 'register', element: <RegisterPage /> },
     ],
