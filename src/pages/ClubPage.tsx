@@ -1,12 +1,35 @@
 import { css } from '@styled-stytem/css'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
+import { useGetClubSearch } from '@/api/hooks/club'
+import { GetClubRequest } from '@/api/types/club'
 import CategorySelector from '@/components/club/CategorySelector'
+import ClubCard from '@/components/club/ClubCard'
 import { CategoryType } from '@/components/club/constants'
 import SearchArea from '@/components/club/SearchArea'
 
 const ClubPage = () => {
-  const [category, setCategory] = useState<CategoryType>('ALL')
+  const [query, setQuery] = useState<GetClubRequest>({
+    keyword: '',
+    category: 'ALL',
+    sortBy: 'like',
+    wishList: false,
+  })
+
+  const { data } = useGetClubSearch(query)
+
+  const setCategory = useCallback((target: CategoryType) => {
+    setQuery(p => {
+      return { ...p, category: target }
+    })
+  }, [])
+
+  const handleSubmit = useCallback((inputKeyword: string) => {
+    setQuery(p => {
+      return { ...p, keyword: inputKeyword }
+    })
+  }, [])
+
   return (
     <>
       <div
@@ -27,9 +50,10 @@ const ClubPage = () => {
         Club
       </div>
       <div className={css({ px: 64, pt: 29, display: 'flex', flexDir: 'column', gap: 19, bgColor: 'bg.gray' })}>
-        <CategorySelector curCategory={category} setCategory={setCategory} />
+        <CategorySelector curCategory={query.category} setCategory={setCategory} />
         <div className={css({ display: 'flex', flexDir: 'column', gap: 20 })}>
-          <SearchArea />
+          <SearchArea onSubmit={handleSubmit} />
+          <div>{data?.map(club => <ClubCard key={club.clubId} clubData={club} />)}</div>
         </div>
       </div>
     </>
