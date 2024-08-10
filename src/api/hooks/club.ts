@@ -11,6 +11,9 @@ const getClub = async (params: GetClubRequest) => {
 }
 
 export const useGetClubSearch = (params: GetClubRequest) => {
-  const query: GetClubRequest = { ...params, keyword: params.keyword || null }
+  const query: GetClubRequest = {
+    ...params,
+    keyword: params.keyword || null,
+  }
   return useQuery({ queryKey: ['clubSearchResult', query], queryFn: () => getClub(query), retry: false })
 }

@@ -11,7 +11,7 @@ import SearchArea from '@/components/club/SearchArea'
 const ClubPage = () => {
   const [query, setQuery] = useState<GetClubRequest>({
     keyword: '',
-    category: 'ALL',
+    category: null,
     sortBy: 'like',
     wishList: false,
   })
