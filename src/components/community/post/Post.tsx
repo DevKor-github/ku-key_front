@@ -93,6 +93,9 @@ const Post = () => {
           {postAtomData.content}
         </p>
       </section>
+      <section>
+        <img src={postAtomData.imageDirs[0].imgDir} alt="post" />
+      </section>
       <ReactionSection />
     </div>
   )
