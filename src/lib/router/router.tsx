@@ -13,6 +13,7 @@ import ReviewDetailPage from '@/pages/CourseReviewPage/ReviewDetailPage'
 import ReviewPage from '@/pages/CourseReviewPage/ReviewPage'
 import WriteReviewPage from '@/pages/CourseReviewPage/WriteReviewPage'
 import HomePage from '@/pages/HomePage'
+import ClubPage from '@/pages/ClubPage'
 import LandingPage from '@/pages/LandingPage'
 import Login from '@/pages/LoginPage'
 import MyPage from '@/pages/MyPage'
@@ -83,6 +84,7 @@ const routes: RouteObject[] = [
       },
       { path: 'home', element: <HomePage /> },
       { path: 'calendar', element: <SchedulePage /> },
+      { path: 'club', element: <ClubPage /> },
       { path: 'login', element: <Login /> },
       { path: 'register', element: <RegisterPage /> },
     ],
