@@ -39,7 +39,7 @@ export interface CommentProps {
   likeCount: number
   repyly: string[]
 }
-interface ImageProps {
+export interface ImageProps {
   id: number
   imgDir: string
 }

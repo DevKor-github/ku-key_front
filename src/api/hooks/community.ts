@@ -70,7 +70,7 @@ export const useGetPostsByBoard = (boardId: number) => {
 }
 
 const getPostById = async (postId: number) => {
-  const response = await apiInterface.get<PostViewProps[]>(`post/${postId}`)
+  const response = await apiInterface.get<PostViewProps>(`post/${postId}`)
   return response.data
 }
 
@@ -78,7 +78,7 @@ export const useGetPostById = (postId: number) => {
   return useQuery({
     queryKey: ['postById', postId],
     queryFn: () => getPostById(postId),
-    initialData: [] as PostViewProps[],
+    initialData: {} as PostViewProps,
     enabled: !isNaN(postId),
   })
 }
