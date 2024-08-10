@@ -4,6 +4,7 @@ import { useAtomValue } from 'jotai'
 import { Ellipsis, Eye } from 'lucide-react'
 
 import BoardTag from '@/components/community/BoardTag'
+import PostImgCarousel from '@/components/community/post/PostImgCarousel'
 import ReactionSection from '@/components/community/post/ReactionSection'
 import { postAtom } from '@/lib/store/post'
 
@@ -93,49 +94,7 @@ const Post = () => {
           {postAtomData.content}
         </p>
       </section>
-      <section className={css({ display: 'flex', w: 'full', pos: 'relative' })}>
-        <div
-          className={css({
-            display: 'flex',
-            pos: 'relative',
-            flexDir: 'column',
-            h: 437,
-            border: '1px solid',
-            w: '100%',
-            alignItems: 'center',
-            rounded: 10,
-          })}
-          style={{
-            backgroundImage: `url(${postAtomData.imageDirs[0]?.imgDir})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        />
-        <div
-          className={css({
-            display: 'flex',
-            pos: 'absolute',
-            rounded: 10,
-            w: 'full',
-            justifyContent: 'center',
-            alignItems: 'center',
-            bgColor: 'rgba(0, 0, 0, 0.20)',
-            backdropFilter: 'blur(25px)',
-          })}
-        >
-          <img
-            src={postAtomData.imageDirs[0]?.imgDir}
-            alt="post"
-            className={css({
-              h: 437,
-              rounded: 10,
-              backdropFilter: 'blur(25px)',
-              backdropBlur: '25px',
-              zIndex: 1,
-            })}
-          />
-        </div>
-      </section>
+      {postAtomData.imageDirs.length > 0 && <PostImgCarousel />}
       <ReactionSection />
     </div>
   )

@@ -2,6 +2,7 @@ import { defineConfig } from '@pandacss/dev'
 
 import {
   buttonRecipe,
+  carouselButtonRecipe,
   chipRecipe,
   globalLayoutRecipe,
   inputRecipe,
@@ -38,6 +39,7 @@ export default defineConfig({
         postTextPreview: postTextPreviewRecipe,
         globalLayout: globalLayoutRecipe,
         reactionButton: reactionTagRecipe,
+        carouselButton: carouselButtonRecipe,
       },
       tokens: {
         colors: {

@@ -1,4 +1,5 @@
 import { buttonRecipe } from '@/lib/recipes/button'
+import { carouselButtonRecipe } from '@/lib/recipes/carousel-button'
 import { chipRecipe } from '@/lib/recipes/chip'
 import { globalLayoutRecipe } from '@/lib/recipes/globalLayout'
 import { inputRecipe } from '@/lib/recipes/input'
@@ -19,4 +20,5 @@ export {
   postTextPreviewRecipe,
   globalLayoutRecipe,
   reactionTagRecipe,
+  carouselButtonRecipe,
 }

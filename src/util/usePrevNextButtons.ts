@@ -1,7 +1,10 @@
 import { UseEmblaCarouselType } from 'embla-carousel-react'
-import { useCallback } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 type UsePrevNextButtonsType = {
+  prevBtnDisabled: boolean
+  nextBtnDisabled: boolean
+  currentSlide: number
   onPrevButtonClick: () => void
   onNextButtonClick: () => void
   onToggleAutoplay: () => void
@@ -9,6 +12,9 @@ type UsePrevNextButtonsType = {
 }
 
 export const usePrevNextButtons = (emblaApi: UseEmblaCarouselType[1] | undefined): UsePrevNextButtonsType => {
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const [prevBtnDisabled, setPrevBtnDisabled] = useState(true)
+  const [nextBtnDisabled, setNextBtnDisabled] = useState(true)
   const onPrevButtonClick = useCallback(() => {
     if (!emblaApi) return
     emblaApi.scrollPrev()
@@ -41,5 +47,28 @@ export const usePrevNextButtons = (emblaApi: UseEmblaCarouselType[1] | undefined
     [emblaApi],
   )
 
-  return { onPrevButtonClick, onNextButtonClick, onToggleAutoplay, onButtonAutoplayClick }
+  const onSelect = useCallback((emblaApi: UseEmblaCarouselType[1]) => {
+    if (!emblaApi) return
+    setPrevBtnDisabled(!emblaApi.canScrollPrev())
+    setNextBtnDisabled(!emblaApi.canScrollNext())
+    const currentSlideIndex = emblaApi.internalEngine().index.get()
+    setCurrentSlide(currentSlideIndex)
+  }, [])
+
+  useEffect(() => {
+    if (!emblaApi) return
+
+    onSelect(emblaApi)
+    emblaApi.on('reInit', onSelect).on('select', onSelect)
+  }, [emblaApi, onSelect])
+
+  return {
+    onPrevButtonClick,
+    onNextButtonClick,
+    currentSlide,
+    onToggleAutoplay,
+    onButtonAutoplayClick,
+    prevBtnDisabled,
+    nextBtnDisabled,
+  }
 }
