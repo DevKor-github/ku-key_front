@@ -1,7 +1,7 @@
 import { css } from '@styled-stytem/css'
 
-import FriendsList from '@/components/timetable/FriendTimetable/FriendsList'
-import FriendsManage from '@/components/timetable/FriendTimetable/FriendsManage'
+import FriendsList from '@/components/timetable/Friend/FriendsList'
+import FriendsManage from '@/components/timetable/Friend/FriendsManage'
 
 const FriendPage = () => {
   return (
@@ -11,7 +11,7 @@ const FriendPage = () => {
           Friend list
         </div>
       </div>
-      <div className={css({ display: 'flex', flexDir: 'row', gap: 5 })}>
+      <div className={css({ display: 'flex', flexDir: { base: 'row', mdDown: 'column' }, gap: 5 })}>
         <FriendsList />
         <FriendsManage />
       </div>
