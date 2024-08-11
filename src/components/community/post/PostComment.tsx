@@ -2,33 +2,32 @@ import { css } from '@styled-stytem/css'
 import { reactionButton } from '@styled-stytem/recipes'
 import { useAtomValue } from 'jotai'
 import { SendHorizonal } from 'lucide-react'
-import { memo, useCallback, useState } from 'react'
-import TextareaAutosize from 'react-textarea-autosize'
+import { memo, useCallback, useRef, useState } from 'react'
 
 import { usePostComment } from '@/api/hooks/community'
 import { MemoizedTextAreaAutosize } from '@/components/ui/textarea-autosize'
 import { postAtom } from '@/lib/store/post'
-import { useTextArea } from '@/util/useTextArea'
 
 const PostComment = memo(() => {
-  const { value, onChange } = useTextArea('')
+  const textRef = useRef<HTMLTextAreaElement>(null)
   const [anonymous, setAnonymous] = useState(false)
   const { mutate: mutateComment } = usePostComment()
   const postAtomData = useAtomValue(postAtom)
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-      if (e.key === 'Enter' && !e.shiftKey) {
+      if (e.key === 'Enter' && !e.shiftKey && textRef.current) {
         e.preventDefault()
-        mutateComment({ postId: postAtomData.id, content: value, isAnonymous: anonymous })
+        mutateComment({ postId: postAtomData.id, content: textRef.current.value, isAnonymous: anonymous })
       }
     },
-    [anonymous, value, mutateComment, postAtomData.id],
+    [anonymous, mutateComment, postAtomData.id],
   )
   const handleAnonymous = useCallback(() => setAnonymous(prev => !prev), [])
-  const handleSubmitClick = useCallback(
-    () => mutateComment({ postId: postAtomData.id, content: value, isAnonymous: anonymous }),
-    [anonymous, value, mutateComment, postAtomData.id],
-  )
+  const handleSubmitClick = useCallback(() => {
+    if (textRef.current) {
+      mutateComment({ postId: postAtomData.id, content: textRef.current.value, isAnonymous: anonymous })
+    }
+  }, [anonymous, mutateComment, postAtomData.id])
 
   return (
     <div
@@ -54,10 +53,9 @@ const PostComment = memo(() => {
       >
         <span hidden>send</span>
         <MemoizedTextAreaAutosize
+          ref={textRef}
           maxRows={3}
           form="comment"
-          value={value}
-          onChange={onChange}
           placeholder="Add a comment..."
           className={css({
             display: 'flex',

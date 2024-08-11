@@ -33,7 +33,7 @@ const CommunitySearch = () => {
       {keyword ? (
         <SectionTitle title={handleTitle()} />
       ) : (
-        <SectionTitle title="View recent posts" description="Check out our recent posts" link="/community/board" />
+        <SectionTitle title="View recent posts" description="Check out our recent posts" />
       )}
       <div className={css({ display: 'flex', mt: 20, flexDir: 'column', gap: '50px', mb: 25 })}>
         {posts?.data.map(post => (
