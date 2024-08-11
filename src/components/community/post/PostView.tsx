@@ -17,6 +17,7 @@ const PostView = () => {
   const { data: post, isFetched } = useGetPostById(parseInt(postId ?? ''))
   const setPostData = useSetAtom(postAtom)
   useEffect(() => {
+    console.log(post, isFetched)
     if (isFetched) {
       setPostData(post)
     }

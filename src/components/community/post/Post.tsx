@@ -2,13 +2,14 @@ import { css } from '@styled-stytem/css'
 import { formatDistanceToNow } from 'date-fns'
 import { useAtomValue } from 'jotai'
 import { Ellipsis, Eye } from 'lucide-react'
+import { memo } from 'react'
 
 import BoardTag from '@/components/community/BoardTag'
 import PostImgCarousel from '@/components/community/post/PostImgCarousel'
 import ReactionSection from '@/components/community/post/ReactionSection'
 import { postAtom } from '@/lib/store/post'
 
-const Post = () => {
+const Post = memo(() => {
   const postAtomData = useAtomValue(postAtom)
   const timeDistance = formatDistanceToNow(postAtomData.createdAt)
 
@@ -48,7 +49,7 @@ const Post = () => {
               color: 'darkGray.2',
             })}
           >
-            <p>{postAtomData.username}</p>
+            <p>{postAtomData.user.username}</p>
             <p>{timeDistance} ago</p>
           </div>
           <button>
@@ -98,6 +99,6 @@ const Post = () => {
       <ReactionSection />
     </div>
   )
-}
+})
 
 export default Post

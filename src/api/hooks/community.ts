@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useAtom, useSetAtom } from 'jotai'
 import { useSearchParams } from 'react-router-dom'
 
 import {
@@ -10,6 +11,7 @@ import {
   PostReactionResponse,
   PostScrapResponse,
 } from '@/api/types/community'
+import { postAtom } from '@/lib/store/post'
 import { BoardInfo, BoardPostPreviewProps, PostPreviewProps, PostViewProps, ReactionType } from '@/types/community'
 import { apiInterface } from '@/util/axios/custom-axios'
 import { useSearch } from '@/util/useSearch'
@@ -106,8 +108,20 @@ export const usePostReaciton = () => {
         if (!oldData) {
           return {} as PostViewProps
         }
-        const reactionTarget = Object.keys(oldData.reaction)[data.isReacted] as ReactionType
-        return { ...oldData, reaction: { ...oldData.reaction, [reactionTarget]: oldData.reaction[reactionTarget] + 1 } }
+        const newReactionTarget = Object.keys(oldData.reactionCount)[data.isReacted] as ReactionType
+        const newReactionCount = {
+          ...oldData.reactionCount,
+          [newReactionTarget]: oldData.reactionCount[newReactionTarget] + 1,
+        }
+        if (oldData.myReaction !== null) {
+          const beforeReaction = Object.keys(oldData.reactionCount)[oldData.myReaction] as ReactionType
+          newReactionCount[beforeReaction] = oldData.reactionCount[beforeReaction] - 1
+        }
+        return {
+          ...oldData,
+          reactionCount: newReactionCount,
+          myReaction: data.isReacted,
+        }
       })
     },
   })
@@ -128,7 +142,11 @@ export const usePostScrap = () => {
         if (!oldData) {
           return {} as PostViewProps
         }
-        return { ...oldData, scrapCount: data.isScrapped ? oldData.scrapCount + 1 : oldData.scrapCount - 1 }
+        return {
+          ...oldData,
+          scrapCount: data.isScrapped ? oldData.scrapCount + 1 : oldData.scrapCount - 1,
+          myScrap: data.isScrapped,
+        }
       })
     },
   })

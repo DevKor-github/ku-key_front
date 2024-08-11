@@ -2,7 +2,7 @@ import { css } from '@styled-stytem/css'
 import { reactionButton } from '@styled-stytem/recipes'
 import { useAtomValue } from 'jotai'
 import { Bookmark, CircleAlert, Cookie } from 'lucide-react'
-import { useCallback, useState } from 'react'
+import { memo, useCallback } from 'react'
 
 import { usePostReaciton, usePostScrap } from '@/api/hooks/community'
 import ReactionButton from '@/components/community/post/ReactionButton'
@@ -13,32 +13,21 @@ import { postAtom } from '@/lib/store/post'
 import { ReactionType } from '@/types/community'
 import { useModal } from '@/util/useModal'
 
-const ReactionSection = () => {
+const ReactionSection = memo(() => {
   const postAtomData = useAtomValue(postAtom)
-  const [currentReaction, setCurrentReaction] = useState<Set<ReactionType>>(new Set([]))
-  const [scrap, setScrap] = useState(false)
   const { isOpen, handleOpen, handleClose } = useModal(true)
   const { mutate: mutateReaction } = usePostReaciton()
   const { mutate: mutateScrap } = usePostScrap()
   const handleReacitonSet = useCallback(
-    (reactionType: ReactionType, i: number) => {
+    (i: number) => {
       if (postAtomData.isMyPost) return handleOpen()
-      setCurrentReaction(prev => {
-        if (prev.has(reactionType)) {
-          prev.delete(reactionType)
-          return new Set(prev)
-        }
-        prev.clear()
-        prev.add(reactionType)
-        return new Set(prev)
-      })
       mutateReaction({ postId: postAtomData.id, reaction: i })
     },
     [postAtomData, handleOpen, mutateReaction],
   )
   const handleScrap = useCallback(() => {
     if (postAtomData.isMyPost) return handleOpen()
-    mutateScrap(postAtomData.id, { onSuccess: () => setScrap(prev => !prev) })
+    mutateScrap(postAtomData.id)
   }, [postAtomData, handleOpen, mutateScrap])
   return (
     <section
@@ -51,21 +40,21 @@ const ReactionSection = () => {
       })}
     >
       <div className={css({ display: 'flex', alignItems: 'center', gap: 4, alignSelf: 'stretch' })}>
-        {Object.entries(postAtomData.reaction).map(([reactionType, count]) => (
+        {Object.entries(postAtomData.reactionCount).map(([reactionType, count]) => (
           <ReactionView reaction={reactionType as ReactionType} count={count} key={reactionType} />
         ))}
       </div>
       <div className={css({ display: 'flex', alignItems: 'center', gap: 4, flexWrap: 'wrap' })}>
         <Cookie size={22} className={css({ color: 'lightGray.1' })} />
-        {Object.keys(postAtomData.reaction).map((reactionType, i) => (
+        {Object.keys(postAtomData.reactionCount).map((reactionType, i) => (
           <ReactionButton
             key={reactionType}
-            active={currentReaction.has(reactionType as ReactionType)}
+            active={postAtomData.myReaction === i}
             reaction={reactionType as ReactionType}
-            handleReactionSet={() => handleReacitonSet(reactionType as ReactionType, i)}
+            handleReactionSet={() => handleReacitonSet(i)}
           />
         ))}
-        <button className={reactionButton()} aria-pressed={scrap} onClick={handleScrap}>
+        <button className={reactionButton()} aria-pressed={postAtomData.myScrap} onClick={handleScrap}>
           <Bookmark />
           {postAtomData.scrapCount}
         </button>
@@ -83,6 +72,6 @@ const ReactionSection = () => {
       </ModalPortal>
     </section>
   )
-}
+})
 
 export default ReactionSection

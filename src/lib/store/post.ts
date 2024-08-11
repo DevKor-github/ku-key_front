@@ -1,6 +1,6 @@
 import { atom } from 'jotai'
 
-import { CommentProps, ImageProps, Reaction } from '@/types/community'
+import { CommentProps, ImageProps, Reaction, User } from '@/types/community'
 
 export const postAtom = atom({
   id: 0,
@@ -9,10 +9,12 @@ export const postAtom = atom({
   content: '',
   createdAt: new Date(),
   updatedAt: new Date(),
-  username: '',
+  user: { username: '', profileImgUrl: '' } as User,
   views: 0,
   scrapCount: 0,
-  reaction: {} as Reaction,
+  myScrap: false,
+  reactionCount: {} as Reaction,
+  myReaction: null as number | null,
   comments: [] as CommentProps[],
   imageDirs: [] as ImageProps[],
 })

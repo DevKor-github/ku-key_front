@@ -35,13 +35,18 @@ export interface CommentProps {
   updatedAt: Date
   isMyComment: boolean
   content: string
-  username: string
+  user: User
   likeCount: number
   reply: string[]
 }
 export interface ImageProps {
   id: number
   imgDir: string
+}
+
+export interface User {
+  username: string
+  profileImgUrl: string
 }
 export interface PostViewProps {
   id: number
@@ -50,10 +55,12 @@ export interface PostViewProps {
   content: string
   createdAt: Date
   updatedAt: Date
-  username: string
+  user: User
   views: number
   scrapCount: number
-  reaction: Reaction
+  myScrap: boolean
+  reactionCount: Reaction
+  myReaction: number | null
   comments: CommentProps[]
   imageDirs: ImageProps[]
 }
