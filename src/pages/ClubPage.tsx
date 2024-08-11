@@ -51,9 +51,13 @@ const ClubPage = () => {
       </div>
       <div className={css({ px: 64, pt: 29, display: 'flex', flexDir: 'column', gap: 19, bgColor: 'bg.gray' })}>
         <CategorySelector curCategory={query.category} setCategory={setCategory} />
-        <div className={css({ display: 'flex', flexDir: 'column', gap: 20 })}>
-          <SearchArea onSubmit={handleSubmit} />
-          <div>{data?.map(club => <ClubCard key={club.clubId} clubData={club} />)}</div>
+        <div className={css({ display: 'flex', flexDir: 'column', gap: 20, pb: 30 })}>
+          <div className={css({ display: 'flex', justifyContent: 'center', alignItems: 'center' })}>
+            <SearchArea onSubmit={handleSubmit} />
+          </div>
+          <div className={css({ display: 'flex', flexDir: 'column', gap: 15 })}>
+            {data?.map(club => <ClubCard key={club.clubId} clubData={club} />)}
+          </div>
         </div>
       </div>
     </>
