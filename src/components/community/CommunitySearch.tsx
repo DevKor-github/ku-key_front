@@ -19,7 +19,7 @@ const CommunitySearch = () => {
   const keyword = searchParam.get('keyword')
 
   const handleTitle = () => {
-    if (!posts.length) return `No search results for "${keyword}"`
+    if (!posts.data.length) return `No search results for "${keyword}"`
     return `"${keyword}" Search Results`
   }
   return (
@@ -36,13 +36,13 @@ const CommunitySearch = () => {
         <SectionTitle title="View recent posts" description="Check out our recent posts" link="/community/board" />
       )}
       <div className={css({ display: 'flex', mt: 20, flexDir: 'column', gap: '50px', mb: 25 })}>
-        {posts?.map(post => (
+        {posts?.data.map(post => (
           <PostPreview
             key={post.id}
             id={post.id}
             title={post.title}
             boardName={post.boardName}
-            username={post.username}
+            user={post.user}
             createdAt={post.createdAt}
             content={post.content}
             thumbnailDir={post.thumbnailDir}

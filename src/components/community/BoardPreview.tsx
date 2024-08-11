@@ -37,7 +37,7 @@ const BoardPreview = ({ previewPosts, title, description, link }: BoardPreviewPr
           <PostTextPreview
             title={post.title}
             createdAt={post.createdAt}
-            username={post.username}
+            username={post.user.username}
             variant="onlyTitle"
             handleNavigate={() => handleNavigate(post.id)}
           />

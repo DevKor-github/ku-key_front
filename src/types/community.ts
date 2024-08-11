@@ -3,7 +3,10 @@ export interface PostPreviewProps {
   title: string
   content: string
   createdAt: Date
-  username: string
+  myScrap: boolean
+  views: number
+  reactionCount: number
+  user: User
   commentCount: number
   scrapCount: number
   thumbnailDir: string | null
@@ -25,7 +28,12 @@ export interface BoardInfo {
   name: string
   description: string
 }
-export type BoardPostPreviewProps = Omit<PostPreviewProps, 'boardName'>
+
+export interface PostPreviewByBoardMeta {
+  hasNextData: boolean
+  nextCursor: number
+}
+export type BoardPostPreviewProps = Omit<PostPreviewProps, 'boardName' | 'reaction'>
 export type BoardType = 'Community Board' | 'Information Board' | 'Question Board'
 
 export interface CommentProps {
@@ -60,7 +68,7 @@ export interface PostViewProps {
   scrapCount: number
   myScrap: boolean
   reactionCount: Reaction
-  myReaction: number | null
+  myReaction?: number
   comments: CommentProps[]
   imageDirs: ImageProps[]
 }

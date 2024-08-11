@@ -1,12 +1,14 @@
-import { BoardInfo, BoardPostPreviewProps, PostPreviewProps } from '@/types/community'
+import { BoardInfo, BoardPostPreviewProps, PostPreviewByBoardMeta, PostPreviewProps } from '@/types/community'
 
 export interface PostPreviewResponse {
-  posts: PostPreviewProps[]
+  data: PostPreviewProps[]
+  meta: PostPreviewByBoardMeta
 }
 
 export interface PostByBoardResponse {
   board: BoardInfo
-  posts: BoardPostPreviewProps[]
+  data: BoardPostPreviewProps[]
+  meta: PostPreviewByBoardMeta
 }
 
 export interface PostReactionRequest {

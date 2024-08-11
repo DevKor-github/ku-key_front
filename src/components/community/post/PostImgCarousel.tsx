@@ -11,7 +11,7 @@ import { usePrevNextButtons } from '@/util/usePrevNextButtons'
 
 const PostImgCarousel = memo(() => {
   const postAtomData = useAtomValue(postAtom)
-  const [emblaRef, emblaApi] = useEmblaCarousel({})
+  const [emblaRef, emblaApi] = useEmblaCarousel({ active: postAtomData.imageDirs.length > 1 })
 
   const { onPrevButtonClick, onNextButtonClick, prevBtnDisabled, nextBtnDisabled, currentSlide } =
     usePrevNextButtons(emblaApi)

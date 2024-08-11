@@ -19,9 +19,10 @@ const PostView = () => {
   useEffect(() => {
     console.log(post, isFetched)
     if (isFetched) {
-      setPostData(post)
+      setPostData({ ...post, myReaction: post.myReaction ?? undefined })
     }
   }, [post, setPostData, isFetched])
+
   return (
     <section
       className={cx(

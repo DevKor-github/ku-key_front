@@ -14,7 +14,7 @@ export const postAtom = atom({
   scrapCount: 0,
   myScrap: false,
   reactionCount: {} as Reaction,
-  myReaction: null as number | null,
+  myReaction: undefined as number | undefined,
   comments: [] as CommentProps[],
   imageDirs: [] as ImageProps[],
 })

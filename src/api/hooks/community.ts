@@ -12,7 +12,14 @@ import {
   PostScrapResponse,
 } from '@/api/types/community'
 import { postAtom } from '@/lib/store/post'
-import { BoardInfo, BoardPostPreviewProps, PostPreviewProps, PostViewProps, ReactionType } from '@/types/community'
+import {
+  BoardInfo,
+  BoardPostPreviewProps,
+  PostPreviewByBoardMeta,
+  PostPreviewProps,
+  PostViewProps,
+  ReactionType,
+} from '@/types/community'
 import { apiInterface } from '@/util/axios/custom-axios'
 import { useSearch } from '@/util/useSearch'
 
@@ -24,11 +31,11 @@ const getBoard = async () => {
 export const useGetBoard = () => {
   return useQuery({ queryKey: ['board'], queryFn: getBoard })
 }
-const getPostsAll = async (pageSize: number, keyword?: string | null) => {
-  const response = await apiInterface.get<PostPreviewResponse>(
-    `post/all?pageNumber=1&pageSize=${pageSize}&${keyword ? `&keyword=${keyword}` : ''}`,
-  )
-  return response.data.posts
+const getPostsAll = async (take: number, keyword?: string | null) => {
+  const response = await apiInterface.get<PostPreviewResponse>(`post/all?${keyword ? `&keyword=${keyword}` : ''}`, {
+    params: { take },
+  })
+  return response.data
 }
 
 export const useGetPostsAll = () => {
@@ -37,35 +44,57 @@ export const useGetPostsAll = () => {
   return useQuery({
     queryKey: ['postsAll', keyword],
     queryFn: () => getPostsAll(10, keyword),
-    initialData: [] as PostPreviewProps[],
+    initialData: {
+      data: [] as PostPreviewProps[],
+      meta: { hasNextData: false, nextCursor: 0 } as PostPreviewByBoardMeta,
+    },
   })
 }
 
 export const useGetRecentPostsPreview = () => {
-  return useQuery({ queryKey: ['recentPosts'], queryFn: () => getPostsAll(5), initialData: [] as PostPreviewProps[] })
+  return useQuery({
+    queryKey: ['recentPosts'],
+    queryFn: () => getPostsAll(5),
+    initialData: {
+      data: [] as PostPreviewProps[],
+      meta: { hasNextData: false, nextCursor: 0 } as PostPreviewByBoardMeta,
+    },
+  })
 }
 
-const getHotPosts = async (pageSize: number) => {
-  const response = await apiInterface.get<PostPreviewResponse>(`post/hot?pageNumber=1&pageSize=${pageSize}`)
-  return response.data.posts
+const getHotPosts = async (take: number) => {
+  const response = await apiInterface.get<PostPreviewResponse>(`post/hot`, {
+    params: { take },
+  })
+  return response.data
 }
 
 export const useGetHotPosts = () => {
-  return useQuery({ queryKey: ['hotPosts'], queryFn: () => getHotPosts(10), initialData: [] as PostPreviewProps[] })
+  return useQuery({
+    queryKey: ['hotPosts'],
+    queryFn: () => getHotPosts(10),
+    initialData: {
+      data: [] as PostPreviewProps[],
+      meta: { hasNextData: false, nextCursor: 0 } as PostPreviewByBoardMeta,
+    },
+  })
 }
 
 export const useGetHotPostPreview = () => {
   return useQuery({
     queryKey: ['hotPostsPreview'],
     queryFn: () => getHotPosts(5),
-    initialData: [] as PostPreviewProps[],
+    initialData: {
+      data: [] as PostPreviewProps[],
+      meta: { hasNextData: false, nextCursor: 0 } as PostPreviewByBoardMeta,
+    },
   })
 }
 
-const getPostsByBoard = async (boardId: number, pageSize: number, keyword?: string | null) => {
-  const response = await apiInterface.get<PostByBoardResponse>(
-    `post?pageNumber=1&pageSize=${pageSize}&boardId=${boardId}&${keyword ? `&keyword=${keyword}` : ''}`,
-  )
+const getPostsByBoard = async (boardId: number, take: number, keyword?: string | null) => {
+  const response = await apiInterface.get<PostByBoardResponse>(`post?${keyword ? `&keyword=${keyword}` : ''}`, {
+    params: { take, boardId },
+  })
   return response.data
 }
 
@@ -75,7 +104,11 @@ export const useGetPostsByBoard = (boardId: number) => {
   return useQuery({
     queryKey: ['postsByBoard', boardId, keyword],
     queryFn: () => getPostsByBoard(boardId, 10, keyword),
-    initialData: { board: {} as BoardInfo, posts: [] as BoardPostPreviewProps[] },
+    initialData: {
+      board: {} as BoardInfo,
+      data: [] as BoardPostPreviewProps[],
+      meta: { hasNextData: false, nextCursor: 0 } as PostPreviewByBoardMeta,
+    },
   })
 }
 
@@ -113,7 +146,7 @@ export const usePostReaciton = () => {
           ...oldData.reactionCount,
           [newReactionTarget]: oldData.reactionCount[newReactionTarget] + 1,
         }
-        if (oldData.myReaction !== null) {
+        if (oldData.myReaction !== undefined) {
           const beforeReaction = Object.keys(oldData.reactionCount)[oldData.myReaction] as ReactionType
           newReactionCount[beforeReaction] = oldData.reactionCount[beforeReaction] - 1
         }

@@ -26,7 +26,7 @@ const BoardSearch = () => {
   const keyword = searchParam.get('keyword')
 
   const handleTitle = () => {
-    if (!data.posts.length) return `No search results for "${keyword}"`
+    if (!data.data.length) return `No search results for "${keyword}"`
     return `"${keyword}" Search Results`
   }
   return (
@@ -43,18 +43,20 @@ const BoardSearch = () => {
         <SectionTitle title={`View recent ${boardName} posts`} description="Check out our recent posts" />
       )}
       <div className={css({ display: 'flex', mt: 20, flexDir: 'column', gap: '50px', mb: 25 })}>
-        {data.posts.map(post => (
+        {data.data.map(post => (
           <BoardPostPreview
             key={post.id}
             id={post.id}
             title={post.title}
             content={post.content}
             createdAt={post.createdAt}
-            username={post.username}
+            user={post.user}
+            reactionCount={post.reactionCount}
+            views={post.views}
+            myScrap={post.myScrap}
             commentCount={post.commentCount}
             scrapCount={post.scrapCount}
             thumbnailDir={post.thumbnailDir}
-            reaction={post.reaction}
           />
         ))}
       </div>

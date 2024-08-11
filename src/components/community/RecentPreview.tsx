@@ -5,7 +5,7 @@ const RecentPreview = () => {
   const { data: recentPostsPreview } = useGetRecentPostsPreview()
   return (
     <BoardPreview
-      previewPosts={recentPostsPreview}
+      previewPosts={recentPostsPreview.data}
       title="Recent posts"
       description="Check out our recent posts"
       link="/community"

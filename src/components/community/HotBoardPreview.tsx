@@ -5,7 +5,7 @@ const HotBoardPreview = () => {
   const { data: hotPosts } = useGetHotPosts()
   return (
     <BoardPreview
-      previewPosts={hotPosts}
+      previewPosts={hotPosts.data}
       title="Hot Board"
       description="Check out most popular posts"
       link="/community/hotboard"

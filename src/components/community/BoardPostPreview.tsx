@@ -18,11 +18,13 @@ const BoardPostPreview = ({
   title,
   content,
   createdAt,
-  username,
+  user,
+  reactionCount,
+  views,
   commentCount,
   scrapCount,
   thumbnailDir,
-  reaction,
+  myScrap,
 }: BoardPostPreviewProps) => {
   const timeDistance = formatDistanceToNow(createdAt)
   const navigate = useNavigate()
@@ -69,7 +71,7 @@ const BoardPostPreview = ({
           <p>{timeDistance} ago</p>
           <div className={css({ display: 'flex', alignItems: 'center', gap: 1 })}>
             <Eye size={16} />
-            <p>100</p>
+            <p>{views}</p>
           </div>
         </div>
         <h1
@@ -109,32 +111,35 @@ const BoardPostPreview = ({
           alignSelf: 'stretch',
           px: 5,
           py: thumbnailDir ? 10 : 2.5,
-          bgGradient: thumbnailDir ? 'linear-gradient(0deg, rgba(0, 0, 0, 0.30), rgba(0, 0, 0, 0.30))' : '',
           rounded: '0 0 20px 20px',
           color: thumbnailDir ? 'white' : 'darkGray.2',
-          //   backgroundImage: thumbnailDir ? `url(${thumbnailDir})` : '',
         })}
         style={{
-          backgroundImage: thumbnailDir ? `url(${thumbnailDir})` : '',
+          background: thumbnailDir
+            ? `linear-gradient(0deg, rgba(0, 0, 0, 0.20), rgba(0, 0, 0, 0.20)), url(${thumbnailDir})`
+            : '',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
       >
         <div className={css({ display: 'flex', alignItems: 'center', gap: 2.5 })}>
           <img src={AnonymousProfileImg} alt="Profile" className={css({ w: 15, h: 15, rounded: 'full' })} />
-          <p className={css({ fontSize: 16, fontWeight: 600 })}>{username}</p>
+          <p className={css({ fontSize: 16, fontWeight: 600 })}>{user.username}</p>
         </div>
         <div className={css({ display: 'flex', alignItems: 'center', gap: 4 })}>
           <div className={IconWrapper}>
             <Cookie size={16} />
-            <p>35</p>
+            <p>{reactionCount}</p>
           </div>
           <div className={IconWrapper}>
             <MessageCircle size={16} />
             <p>{commentCount}</p>
           </div>
           <div className={IconWrapper}>
-            <Bookmark size={16} />
+            <Bookmark
+              size={16}
+              className={css({ fill: myScrap ? 'red.2' : 'none', color: myScrap ? 'red.2' : 'inherit' })}
+            />
             <p>{scrapCount}</p>
           </div>
         </div>

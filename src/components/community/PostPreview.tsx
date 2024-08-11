@@ -13,10 +13,10 @@ const PostPreview = memo(
     title,
     content,
     createdAt,
-    username,
+    user,
     thumbnailDir,
     boardName,
-  }: Omit<PostPreviewProps, 'commentCount' | 'reaction' | 'scrapCount'>) => {
+  }: Omit<PostPreviewProps, 'commentCount' | 'reaction' | 'scrapCount' | 'myScrap' | 'views' | 'reactionCount'>) => {
     const navigate = useNavigate()
     const handleNavigate = useCallback(() => navigate(`/community/post/${id}`), [navigate, id])
     return (
@@ -28,7 +28,7 @@ const PostPreview = memo(
           <PostTextPreview
             title={title}
             createdAt={createdAt}
-            username={username}
+            username={user.username}
             variant="default"
             description={content}
             handleNavigate={handleNavigate}
