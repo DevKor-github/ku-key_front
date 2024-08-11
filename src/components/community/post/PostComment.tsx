@@ -1,21 +1,35 @@
 import { css } from '@styled-stytem/css'
 import { reactionButton } from '@styled-stytem/recipes'
+import { useAtomValue } from 'jotai'
 import { SendHorizonal } from 'lucide-react'
-import { useCallback, useState } from 'react'
+import { memo, useCallback, useState } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
-const PostComment = () => {
-  const [comment, setComment] = useState('')
+
+import { usePostComment } from '@/api/hooks/community'
+import { MemoizedTextAreaAutosize } from '@/components/ui/textarea-autosize'
+import { postAtom } from '@/lib/store/post'
+import { useTextArea } from '@/util/useTextArea'
+
+const PostComment = memo(() => {
+  const { value, onChange } = useTextArea('')
   const [anonymous, setAnonymous] = useState(false)
+  const { mutate: mutateComment } = usePostComment()
+  const postAtomData = useAtomValue(postAtom)
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
       if (e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault()
-        console.log(comment)
+        mutateComment({ postId: postAtomData.id, content: value, isAnonymous: anonymous })
       }
     },
-    [comment],
+    [anonymous, value, mutateComment, postAtomData.id],
   )
   const handleAnonymous = useCallback(() => setAnonymous(prev => !prev), [])
+  const handleSubmitClick = useCallback(
+    () => mutateComment({ postId: postAtomData.id, content: value, isAnonymous: anonymous }),
+    [anonymous, value, mutateComment, postAtomData.id],
+  )
+
   return (
     <div
       className={css({ display: 'flex', flexDir: 'column', alignItems: 'flex-end', gap: 2.5, alignSelf: 'stretch' })}
@@ -39,11 +53,11 @@ const PostComment = () => {
         })}
       >
         <span hidden>send</span>
-        <TextareaAutosize
+        <MemoizedTextAreaAutosize
           maxRows={3}
           form="comment"
-          value={comment}
-          onChange={e => setComment(e.target.value)}
+          value={value}
+          onChange={onChange}
           placeholder="Add a comment..."
           className={css({
             display: 'flex',
@@ -59,7 +73,7 @@ const PostComment = () => {
         <button
           type="button"
           className={css({ display: 'flex', color: 'lightGray.1', cursor: 'pointer' })}
-          onClick={() => console.log(comment)}
+          onClick={handleSubmitClick}
         >
           <SendHorizonal />
         </button>
@@ -69,6 +83,6 @@ const PostComment = () => {
       </button>
     </div>
   )
-}
+})
 
 export default PostComment

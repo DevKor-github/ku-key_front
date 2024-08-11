@@ -21,3 +21,21 @@ export interface PostReactionResponse {
 export interface PostScrapResponse {
   isScrapped: boolean
 }
+
+export interface PostCommentRequest {
+  postId: number
+  parentCommentId?: number
+  content: string
+  isAnonymous: boolean
+}
+
+export interface PostCommentResponse {
+  id: number
+  isDeleted: boolean
+  createdAt: Date
+  updatedAt: Date
+  isMyComment: boolean
+  content: string
+  username: string
+  likeCount: number
+}

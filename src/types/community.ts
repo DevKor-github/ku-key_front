@@ -37,7 +37,7 @@ export interface CommentProps {
   content: string
   username: string
   likeCount: number
-  repyly: string[]
+  reply: string[]
 }
 export interface ImageProps {
   id: number

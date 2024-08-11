@@ -3,6 +3,8 @@ import { useSearchParams } from 'react-router-dom'
 
 import {
   PostByBoardResponse,
+  PostCommentRequest,
+  PostCommentResponse,
   PostPreviewResponse,
   PostReactionRequest,
   PostReactionResponse,
@@ -127,6 +129,31 @@ export const usePostScrap = () => {
           return {} as PostViewProps
         }
         return { ...oldData, scrapCount: data.isScrapped ? oldData.scrapCount + 1 : oldData.scrapCount - 1 }
+      })
+    },
+  })
+}
+
+const postComment = async ({ postId, parentCommentId, content, isAnonymous }: PostCommentRequest) => {
+  const response = await apiInterface.post<PostCommentResponse>(
+    '/comment',
+    { content, isAnonymous },
+    { params: { postId, parentCommentId } },
+  )
+  const postIdString = postId.toString()
+  return { postId: postIdString, comment: response.data }
+}
+
+export const usePostComment = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: postComment,
+    onSuccess: data => {
+      queryClient.setQueryData<PostViewProps>(['postById', data.postId], (oldData): PostViewProps => {
+        if (!oldData) {
+          return {} as PostViewProps
+        }
+        return { ...oldData, comments: [...oldData.comments, { ...data.comment, reply: [''] }] }
       })
     },
   })
