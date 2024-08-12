@@ -24,7 +24,7 @@ const ReviewDetailPage = () => {
         </div>
         <div
           className={css({
-            color: 'lightGray.1',
+            color: 'darkGray.1',
             fontSize: 14,
           })}
         >
