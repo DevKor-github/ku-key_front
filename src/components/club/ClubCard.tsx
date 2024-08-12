@@ -1,11 +1,13 @@
-import { css } from '@styled-stytem/css'
+import { css, cva } from '@styled-stytem/css'
+import { Heart } from 'lucide-react'
 
 import { ClubInterface } from '@/types/club'
 
 interface ClubCardProps {
   clubData: ClubInterface
+  handleLikeClick: (clubId: number) => void
 }
-const ClubCard = ({ clubData }: ClubCardProps) => {
+const ClubCard = ({ clubData, handleLikeClick }: ClubCardProps) => {
   return (
     <div className={css({ display: 'flex', justifyContent: 'space-between', alignItems: 'center' })}>
       <div className={css({ display: 'flex', gap: 5 })}>
@@ -37,10 +39,43 @@ const ClubCard = ({ clubData }: ClubCardProps) => {
             </div>
           </div>
           <div className={css({ display: 'flex', flexDir: 'column', gap: 3 })}>
-            <p className={css({ fontWeight: 400, color: 'darkGray.1', fontSize: 16 })}>{clubData.description}</p>
+            <p
+              className={css({
+                fontWeight: 400,
+                color: 'darkGray.1',
+                fontSize: 16,
+                maxW: '580px',
+                lineClamp: 3,
+              })}
+            >
+              {clubData.description}
+            </p>
           </div>
         </div>
       </div>
+      <button
+        className={cva({
+          base: {
+            display: 'flex',
+            flexDir: 'column',
+            alignItems: 'center',
+            cursor: 'pointer',
+            color: 'lightGray.1',
+            fontSize: 14,
+          },
+          variants: {
+            hasMine: {
+              true: {
+                color: 'red.3',
+              },
+            },
+          },
+        })({ hasMine: clubData.isLiked })}
+        onClick={() => handleLikeClick(clubData.clubId)}
+      >
+        <Heart />
+        {clubData.likeCount}
+      </button>
     </div>
   )
 }

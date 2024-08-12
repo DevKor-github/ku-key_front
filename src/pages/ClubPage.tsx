@@ -1,7 +1,7 @@
 import { css } from '@styled-stytem/css'
 import { useCallback, useState } from 'react'
 
-import { useGetClubSearch } from '@/api/hooks/club'
+import { useGetClubSearch, usePostClubLike } from '@/api/hooks/club'
 import { GetClubRequest } from '@/api/types/club'
 import CategorySelector from '@/components/club/CategorySelector'
 import ClubCard from '@/components/club/ClubCard'
@@ -9,6 +9,8 @@ import { CategoryType } from '@/components/club/constants'
 import SearchArea from '@/components/club/SearchArea'
 
 const ClubPage = () => {
+  const { mutate: likeClub } = usePostClubLike()
+
   const [query, setQuery] = useState<GetClubRequest>({
     keyword: '',
     category: null,
@@ -29,6 +31,13 @@ const ClubPage = () => {
       return { ...p, keyword: inputKeyword }
     })
   }, [])
+
+  const handleLikeClick = useCallback(
+    (clubId: number) => {
+      likeClub({ clubId, queryParams: query })
+    },
+    [likeClub, query],
+  )
 
   return (
     <>
@@ -56,7 +65,7 @@ const ClubPage = () => {
             <SearchArea onSubmit={handleSubmit} />
           </div>
           <div className={css({ display: 'flex', flexDir: 'column', gap: 15 })}>
-            {data?.map(club => <ClubCard key={club.clubId} clubData={club} />)}
+            {data?.map(club => <ClubCard key={club.clubId} clubData={club} handleLikeClick={handleLikeClick} />)}
           </div>
         </div>
       </div>
