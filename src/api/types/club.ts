@@ -9,3 +9,10 @@ export interface GetClubRequest {
 }
 
 export type GetClubResponse = ClubInterface[]
+
+export interface PostClubLikeRequest {
+  queryParams: GetClubRequest
+  clubId: number
+}
+
+export type PostClubLikeResponse = ClubInterface
