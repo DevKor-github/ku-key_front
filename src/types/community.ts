@@ -47,6 +47,7 @@ export interface CommentProps {
   likeCount: number
   reply: string[]
 }
+
 export interface ImageProps {
   id: number
   imgDir: string

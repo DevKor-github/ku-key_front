@@ -28,7 +28,7 @@ export const tagRecipe = defineRecipe({
         fontWeight: 700,
       },
       red: {
-        bgColor: 'red.1',
+        bgColor: 'bg.red.1',
         boxShadow: '0px 0px 4px 0px rgba(255, 0, 0, 0.25)',
         color: 'red.1',
         fontSize: 12,

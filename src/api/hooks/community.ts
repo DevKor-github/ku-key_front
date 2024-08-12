@@ -1,5 +1,4 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { useAtom, useSetAtom } from 'jotai'
 import { useSearchParams } from 'react-router-dom'
 
 import {
@@ -11,7 +10,6 @@ import {
   PostReactionResponse,
   PostScrapResponse,
 } from '@/api/types/community'
-import { postAtom } from '@/lib/store/post'
 import {
   BoardInfo,
   BoardPostPreviewProps,

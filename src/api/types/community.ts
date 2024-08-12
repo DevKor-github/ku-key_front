@@ -1,4 +1,4 @@
-import { BoardInfo, BoardPostPreviewProps, PostPreviewByBoardMeta, PostPreviewProps } from '@/types/community'
+import { BoardInfo, BoardPostPreviewProps, PostPreviewByBoardMeta, PostPreviewProps, User } from '@/types/community'
 
 export interface PostPreviewResponse {
   data: PostPreviewProps[]
@@ -38,6 +38,7 @@ export interface PostCommentResponse {
   updatedAt: Date
   isMyComment: boolean
   content: string
-  username: string
+  user: User
   likeCount: number
+  myLike: boolean
 }

@@ -13,10 +13,15 @@ const Checkbox = forwardRef<
       css({
         h: 4,
         w: 4,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
         flexShrink: 0,
-        rounded: 'sm',
-        borderWidth: 1,
+        rounded: 2,
+        borderWidth: 1.5,
         cursor: 'pointer',
+        borderColor: 'lightGray.1',
+        transition: 'all 0.25s ease',
         _focusVisible: {
           outline: '2px solid transparent',
           outlineOffset: '2px',
@@ -28,7 +33,8 @@ const Checkbox = forwardRef<
         },
 
         _checked: {
-          bgColor: '#09090b',
+          borderColor: 'red.2',
+          bgColor: 'red.2/90',
           color: 'gray.50',
         },
       }),
@@ -39,7 +45,7 @@ const Checkbox = forwardRef<
     <CheckboxPrimitive.Indicator
       className={cx(css({ display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'current' }))}
     >
-      <Check className={css({ w: 4, h: 4 })} />
+      <Check className={css({ w: 4, h: 4, color: 'white' })} />
     </CheckboxPrimitive.Indicator>
   </CheckboxPrimitive.Root>
 ))

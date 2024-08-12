@@ -12,6 +12,7 @@ import {
   reactionTagRecipe,
   shadowRecipe,
   tagRecipe,
+  textStyles,
 } from './src/lib/recipes/index'
 import { tokenToRem } from './src/lib/constants/tokenToRem'
 
@@ -77,6 +78,7 @@ export default defineConfig({
         spacing: tokenToRem,
         sizes: tokenToRem,
       },
+      textStyles,
     },
   },
   jsxFramework: 'react',

@@ -1,85 +1,87 @@
 import { css } from '@styled-stytem/css'
-import { reactionButton } from '@styled-stytem/recipes'
 import { useAtomValue } from 'jotai'
 import { SendHorizonal } from 'lucide-react'
-import { memo, useCallback, useRef, useState } from 'react'
+import { memo, useCallback, useState } from 'react'
 
 import { usePostComment } from '@/api/hooks/community'
+import { Checkbox } from '@/components/ui/checkbox'
 import { MemoizedTextAreaAutosize } from '@/components/ui/textarea-autosize'
 import { postAtom } from '@/lib/store/post'
+import { useTextArea } from '@/util/useTextArea'
 
 const PostComment = memo(() => {
-  const textRef = useRef<HTMLTextAreaElement>(null)
+  const { value, onChange } = useTextArea('')
   const [anonymous, setAnonymous] = useState(false)
   const { mutate: mutateComment } = usePostComment()
   const postAtomData = useAtomValue(postAtom)
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-      if (e.key === 'Enter' && !e.shiftKey && textRef.current) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        if (value.trim() === '') return alert('Please enter a comment')
         e.preventDefault()
-        mutateComment({ postId: postAtomData.id, content: textRef.current.value, isAnonymous: anonymous })
+        mutateComment({ postId: postAtomData.id, content: value, isAnonymous: anonymous })
       }
     },
-    [anonymous, mutateComment, postAtomData.id],
+    [anonymous, value, mutateComment, postAtomData.id],
   )
   const handleAnonymous = useCallback(() => setAnonymous(prev => !prev), [])
   const handleSubmitClick = useCallback(() => {
-    if (textRef.current) {
-      mutateComment({ postId: postAtomData.id, content: textRef.current.value, isAnonymous: anonymous })
-    }
-  }, [anonymous, mutateComment, postAtomData.id])
+    if (value.trim() === '') return alert('Please enter a comment')
+    mutateComment({ postId: postAtomData.id, content: value, isAnonymous: anonymous })
+  }, [anonymous, value, mutateComment, postAtomData.id])
 
   return (
-    <div
-      className={css({ display: 'flex', flexDir: 'column', alignItems: 'flex-end', gap: 2.5, alignSelf: 'stretch' })}
+    <label
+      htmlFor="comment"
+      className={css({
+        display: 'flex',
+        px: 5,
+        h: 'auto',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+        py: '13px',
+        alignSelf: 'stretch',
+        rounded: 10,
+        border: '1px solid {colors.lightGray.1}',
+        bgColor: 'bg.gray',
+        resize: 'none',
+        gap: 4,
+      })}
     >
-      <label
-        htmlFor="comment"
+      <span hidden>send</span>
+      <MemoizedTextAreaAutosize
+        value={value}
+        onChange={onChange}
+        maxRows={3}
+        form="comment"
+        placeholder="Add a comment..."
         className={css({
           display: 'flex',
-          px: 5,
-          h: 'auto',
-          justifyContent: 'space-between',
-          alignItems: 'center',
+          w: 'full',
           alignSelf: 'stretch',
-          rounded: 10,
-          border: '1px solid {colors.lightGray.1}',
-          bgColor: 'bg.gray',
-          _placeholder: { fontSize: 18, fontWeight: 500, color: 'lightGray.1' },
+          border: 'none',
           resize: 'none',
-          _focus: { outlineColor: 'darkGray.2' },
-          gap: 4,
+          outline: 'none',
+          textStyle: 'heading4_M',
+          color: 'darkGray.1',
+          _placeholder: { textStyle: 'heading4_M', color: 'lightGray.1' },
         })}
-      >
-        <span hidden>send</span>
-        <MemoizedTextAreaAutosize
-          ref={textRef}
-          maxRows={3}
-          form="comment"
-          placeholder="Add a comment..."
-          className={css({
-            display: 'flex',
-            w: 'full',
-            alignSelf: 'stretch',
-            border: 'none',
-            resize: 'none',
-            py: '13px',
-            outline: 'none',
-          })}
-          onKeyDown={handleKeyDown}
-        />
+        onKeyDown={handleKeyDown}
+      />
+      <div className={css({ display: 'flex', gap: 4, alignItems: 'center' })}>
+        <div className={css({ display: 'flex', alignItems: 'center', gap: 1.5 })}>
+          <Checkbox checked={anonymous} onCheckedChange={handleAnonymous} />
+          <p className={css({ textStyle: 'heading4_M', color: 'darkGray.2' })}>Anonymous</p>
+        </div>
         <button
           type="button"
           className={css({ display: 'flex', color: 'lightGray.1', cursor: 'pointer' })}
           onClick={handleSubmitClick}
         >
-          <SendHorizonal />
+          <SendHorizonal style={{ color: value ? '#6B6B6B' : 'lightGray.1' }} />
         </button>
-      </label>
-      <button aria-pressed={anonymous} className={reactionButton()} onClick={handleAnonymous}>
-        Anonymous
-      </button>
-    </div>
+      </div>
+    </label>
   )
 })
 

@@ -6,6 +6,7 @@ import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { useGetPostById } from '@/api/hooks/community'
+import CommentView from '@/components/community/post/CommentView'
 import Post from '@/components/community/post/Post'
 import PostComment from '@/components/community/post/PostComment'
 import Button from '@/components/ui/button'
@@ -17,7 +18,6 @@ const PostView = () => {
   const { data: post, isFetched } = useGetPostById(parseInt(postId ?? ''))
   const setPostData = useSetAtom(postAtom)
   useEffect(() => {
-    console.log(post, isFetched)
     if (isFetched) {
       setPostData({ ...post, myReaction: post.myReaction ?? undefined })
     }
@@ -50,6 +50,7 @@ const PostView = () => {
         <div className={css({ display: 'flex', w: 817, flexDir: 'column', alignItems: 'flex-start', gap: '50px' })}>
           <Post />
           <PostComment />
+          <CommentView />
         </div>
       </div>
     </section>

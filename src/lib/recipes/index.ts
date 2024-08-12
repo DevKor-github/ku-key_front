@@ -9,6 +9,7 @@ import { postTextPreviewRecipe } from '@/lib/recipes/post-text-preview'
 import { reactionTagRecipe } from '@/lib/recipes/reaction-tag'
 import { shadowRecipe } from '@/lib/recipes/shadow'
 import { tagRecipe } from '@/lib/recipes/tag'
+import { textStyles } from '@/lib/recipes/textStyles'
 export {
   buttonRecipe,
   chipRecipe,
@@ -21,4 +22,5 @@ export {
   globalLayoutRecipe,
   reactionTagRecipe,
   carouselButtonRecipe,
+  textStyles,
 }
