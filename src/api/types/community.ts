@@ -42,3 +42,10 @@ export interface PostCommentResponse {
   likeCount: number
   myLike: boolean
 }
+
+export interface PostCommentLikeRequest {
+  postId: number
+  commentId: number
+  isReply: boolean
+  parentCommentId?: number
+}

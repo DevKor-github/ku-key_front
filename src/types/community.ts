@@ -45,7 +45,8 @@ export interface CommentProps {
   content: string
   user: User
   likeCount: number
-  reply: string[]
+  myLike: boolean
+  reply: Omit<CommentProps, 'reply'>[]
 }
 
 export interface ImageProps {

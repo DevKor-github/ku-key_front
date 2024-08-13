@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 
 import {
   PostByBoardResponse,
+  PostCommentLikeRequest,
   PostCommentRequest,
   PostCommentResponse,
   PostPreviewResponse,
@@ -13,6 +14,7 @@ import {
 import {
   BoardInfo,
   BoardPostPreviewProps,
+  CommentProps,
   PostPreviewByBoardMeta,
   PostPreviewProps,
   PostViewProps,
@@ -190,7 +192,7 @@ const postComment = async ({ postId, parentCommentId, content, isAnonymous }: Po
     { params: { postId, parentCommentId } },
   )
   const postIdString = postId.toString()
-  return { postId: postIdString, comment: response.data }
+  return { postId: postIdString, comment: response.data, parentCommentId }
 }
 
 export const usePostComment = () => {
@@ -198,11 +200,70 @@ export const usePostComment = () => {
   return useMutation({
     mutationFn: postComment,
     onSuccess: data => {
-      queryClient.setQueryData<PostViewProps>(['postById', data.postId], (oldData): PostViewProps => {
+      queryClient.setQueryData<PostViewProps>(['postById', parseInt(data.postId)], (oldData): PostViewProps => {
         if (!oldData) {
           return {} as PostViewProps
         }
-        return { ...oldData, comments: [...oldData.comments, { ...data.comment, reply: [''] }] }
+        return { ...oldData, comments: [...oldData.comments, { ...data.comment, reply: [] }] }
+      })
+    },
+  })
+}
+
+export const usePostCommentReply = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: postComment,
+    onSuccess: data => {
+      queryClient.setQueryData<PostViewProps>(['postById', parseInt(data.postId)], (oldData): PostViewProps => {
+        if (!oldData) {
+          return {} as PostViewProps
+        }
+        const newComments = oldData.comments.map(comment => {
+          if (comment.id === data.parentCommentId) {
+            return { ...comment, reply: [...comment.reply, data.comment] }
+          }
+          return comment
+        })
+        return { ...oldData, comments: newComments }
+      })
+    },
+  })
+}
+
+const postCommentLike = async ({ postId, commentId, isReply, parentCommentId }: PostCommentLikeRequest) => {
+  const response = await apiInterface.post<{ isLiked: boolean }>(`/comment/${commentId}/like`)
+  const postIdString = postId.toString()
+  return { postId: postIdString, commentId, isReply, parentCommentId, ...response.data }
+}
+
+export const usePostCommentLike = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: postCommentLike,
+    onSuccess: data => {
+      queryClient.setQueryData<PostViewProps>(['postById', parseInt(data.postId)], (oldData): PostViewProps => {
+        if (!oldData) return {} as PostViewProps
+        const updateLike = <T extends CommentProps | Omit<CommentProps, 'reply'>>(item: T, isLiked: boolean) => ({
+          ...item,
+          likeCount: isLiked ? item.likeCount + 1 : item.likeCount - 1,
+          myLike: isLiked,
+        })
+        const updateComment = (comment: CommentProps) => {
+          if (data.isReply && comment.id === data.parentCommentId) {
+            return {
+              ...comment,
+              reply: comment.reply.map(reply =>
+                reply.id === data.commentId ? updateLike(reply, data.isLiked) : reply,
+              ),
+            }
+          }
+          if (!data.isReply && comment.id === data.commentId) return updateLike(comment, data.isLiked)
+
+          return comment
+        }
+        const newComments = oldData.comments.map(updateComment)
+        return { ...oldData, comments: newComments }
       })
     },
   })

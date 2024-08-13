@@ -1,10 +1,25 @@
 import { css } from '@styled-stytem/css'
 import { reactionButton } from '@styled-stytem/recipes'
+import { useAtomValue } from 'jotai'
 import { Cookie, Forward } from 'lucide-react'
+import { useCallback } from 'react'
 
+import { usePostCommentLike } from '@/api/hooks/community'
 import CommentHeader from '@/components/community/post/CommentHeader'
+import { postAtom } from '@/lib/store/post'
+import { CommentProps } from '@/types/community'
 
-const CommentReply = () => {
+interface CommentReplyProps {
+  reply: Omit<CommentProps, 'reply'>
+  parentId: number
+}
+const CommentReply = ({ reply, parentId }: CommentReplyProps) => {
+  const post = useAtomValue(postAtom)
+  const { mutate: mutateLike } = usePostCommentLike()
+  const handleLikeClick = useCallback(
+    () => mutateLike({ postId: post.id, commentId: reply.id, parentCommentId: parentId, isReply: true }),
+    [mutateLike, parentId, post.id, reply.id],
+  )
   return (
     <div className={css({ display: 'flex', w: 'full', maxW: 756, alignItems: 'flex-start', gap: 5 })}>
       <Forward className={css({ color: 'darkGray.2', transform: 'scale(1,-1)' })} size={24} />
@@ -18,7 +33,7 @@ const CommentReply = () => {
           alignSelf: 'stretch',
         })}
       >
-        <CommentHeader />
+        <CommentHeader username={reply.user.username} date={reply.createdAt} isMyComment={reply.isMyComment} />
         <p
           className={css({
             display: 'flex',
@@ -29,12 +44,11 @@ const CommentReply = () => {
             smDown: { fontSize: 14 },
           })}
         >
-          Lorem ipsum dolor sit amet consectetur. Luctus venenatis ac amet volutpat magna cum. Lorem ipsum dolor sit
-          amet consectetur. Luctus venenatis ac amet volutpat magna cum.
+          {reply.content}
         </p>
-        <button className={reactionButton()}>
+        <button aria-pressed={reply.myLike} className={reactionButton()} onClick={handleLikeClick}>
           <Cookie size={22} />
-          <p>1</p>
+          <p>{reply.likeCount}</p>
         </button>
       </div>
     </div>

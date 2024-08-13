@@ -1,11 +1,11 @@
 import { css } from '@styled-stytem/css'
-import { formatDistanceToNow } from 'date-fns'
 import { Bookmark, Cookie, Eye, MessageCircle } from 'lucide-react'
 import { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import AnonymousProfileImg from '@/assets/Anonymous.jpg'
 import { BoardPostPreviewProps } from '@/types/community'
+import { getFormatedTimeString } from '@/util/getFormatedTimeString'
 
 const IconWrapper = css({
   display: 'flex',
@@ -26,7 +26,6 @@ const BoardPostPreview = ({
   thumbnailDir,
   myScrap,
 }: BoardPostPreviewProps) => {
-  const timeDistance = formatDistanceToNow(createdAt)
   const navigate = useNavigate()
   const handleNavigate = useCallback(() => navigate(`/community/post/${id}`), [navigate, id])
 
@@ -68,7 +67,7 @@ const BoardPostPreview = ({
             color: 'darkGray.2',
           })}
         >
-          <p>{timeDistance} ago</p>
+          <p>{getFormatedTimeString(createdAt)}</p>
           <div className={css({ display: 'flex', alignItems: 'center', gap: 1 })}>
             <Eye size={16} />
             <p>{views}</p>

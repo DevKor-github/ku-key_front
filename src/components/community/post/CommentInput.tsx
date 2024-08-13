@@ -4,17 +4,41 @@ import { useAtomValue } from 'jotai'
 import { Forward, SendHorizonal } from 'lucide-react'
 import { useCallback, useState } from 'react'
 
+import { usePostCommentReply } from '@/api/hooks/community'
 import { Checkbox } from '@/components/ui/checkbox'
 import { MemoizedTextAreaAutosize } from '@/components/ui/textarea-autosize'
-import { isInputOpenAtom } from '@/lib/store/comment'
+import { postAtom } from '@/lib/store/post'
 import { useTextArea } from '@/util/useTextArea'
 
-const CommentInput = () => {
-  const isOpen = useAtomValue(isInputOpenAtom)
+interface CommentInputProps {
+  isOpen: boolean
+  currentIndex: number
+}
+const CommentInput = ({ isOpen, currentIndex }: CommentInputProps) => {
+  const postAtomData = useAtomValue(postAtom)
+  const comment = postAtomData.comments[currentIndex]
   const { value, onChange } = useTextArea('')
   const [anonymous, setAnonymous] = useState(false)
   const handleAnonymous = useCallback(() => setAnonymous(prev => !prev), [])
+  const { mutate: mutateReply } = usePostCommentReply()
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        if (value.trim() === '') return alert('Please enter a comment')
+        e.preventDefault()
+        mutateReply({ postId: postAtomData.id, parentCommentId: comment.id, content: value, isAnonymous: anonymous })
+      }
+    },
+    [value, mutateReply, postAtomData.id, comment.id, anonymous],
+  )
 
+  const handleSend = useCallback(() => {
+    if (value.trim() === '') return alert('Please enter a comment')
+    mutateReply(
+      { postId: postAtomData.id, parentCommentId: comment.id, content: value, isAnonymous: anonymous },
+      { onSuccess: () => onChange('') },
+    )
+  }, [anonymous, comment.id, mutateReply, postAtomData.id, value])
   return (
     <AnimatePresence>
       {isOpen && (
@@ -61,13 +85,18 @@ const CommentInput = () => {
               color: 'darkGray.1',
               _placeholder: { textStyle: 'heading4_M', color: 'lightGray.1' },
             })}
+            onKeyDown={handleKeyDown}
           />
           <div className={css({ display: 'flex', gap: 4, alignItems: 'center' })}>
             <div className={css({ display: 'flex', alignItems: 'center', gap: 1.5 })}>
               <Checkbox checked={anonymous} onCheckedChange={handleAnonymous} />
               <p className={css({ textStyle: 'heading4_M', color: 'darkGray.2' })}>Anonymous</p>
             </div>
-            <button type="button" className={css({ display: 'flex', color: 'darkGray.2', cursor: 'pointer' })}>
+            <button
+              type="button"
+              className={css({ display: 'flex', color: 'darkGray.2', cursor: 'pointer' })}
+              onClick={handleSend}
+            >
               <SendHorizonal style={{ color: value ? '#6B6B6B' : 'inherit' }} />
             </button>
           </div>
