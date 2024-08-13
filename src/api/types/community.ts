@@ -49,3 +49,11 @@ export interface PostCommentLikeRequest {
   isReply: boolean
   parentCommentId?: number
 }
+
+export interface PostCreateRequest {
+  boardId: number
+  title: string
+  content: string
+  isAnonymous: boolean
+  images?: File[]
+}

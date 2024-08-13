@@ -1,5 +1,7 @@
 import { css, cx } from '@styled-stytem/css'
 import { globalLayout } from '@styled-stytem/recipes'
+import { useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import BackgroundImage from '@/assets/CommunityBG.jpg'
 import Button from '@/components/ui/button'
@@ -8,6 +10,11 @@ interface BoardBannerProps {
   boardName: string
 }
 const BoardBanner = ({ boardName }: BoardBannerProps) => {
+  const navigate = useNavigate()
+  const handleNavigation = useCallback(
+    () => navigate(`/community/write/post/${boardName.toLowerCase()}`),
+    [navigate, boardName],
+  )
   return (
     <section
       className={css({
@@ -62,7 +69,9 @@ const BoardBanner = ({ boardName }: BoardBannerProps) => {
           })}
         >
           <h1 className={css({ fontSize: 36, fontWeight: 700 })}>{boardName} board</h1>
-          <Button variant="loginColored">Create Post</Button>
+          <Button variant="loginColored" onClick={handleNavigation}>
+            Create Post
+          </Button>
         </div>
       </div>
     </section>

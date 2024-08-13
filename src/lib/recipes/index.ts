@@ -5,6 +5,7 @@ import { globalLayoutRecipe } from '@/lib/recipes/globalLayout'
 import { inputRecipe } from '@/lib/recipes/input'
 import { labelRecipe } from '@/lib/recipes/label'
 import { modalCardRecipe } from '@/lib/recipes/modal-card'
+import { postCardRecipe } from '@/lib/recipes/post-card'
 import { postTextPreviewRecipe } from '@/lib/recipes/post-text-preview'
 import { reactionTagRecipe } from '@/lib/recipes/reaction-tag'
 import { shadowRecipe } from '@/lib/recipes/shadow'
@@ -23,4 +24,5 @@ export {
   reactionTagRecipe,
   carouselButtonRecipe,
   textStyles,
+  postCardRecipe,
 }

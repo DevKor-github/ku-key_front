@@ -8,6 +8,7 @@ import {
   inputRecipe,
   labelRecipe,
   modalCardRecipe,
+  postCardRecipe,
   postTextPreviewRecipe,
   reactionTagRecipe,
   shadowRecipe,
@@ -41,6 +42,7 @@ export default defineConfig({
         globalLayout: globalLayoutRecipe,
         reactionButton: reactionTagRecipe,
         carouselButton: carouselButtonRecipe,
+        postCard: postCardRecipe,
       },
       tokens: {
         colors: {

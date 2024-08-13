@@ -5,6 +5,7 @@ import ProtectedRoutes from '@/lib/router/ProtectedRoutes'
 import MainCommunityPage from '@/pages/CommunityPage'
 import BoardPage from '@/pages/CommunityPage/BoardPage'
 import PostViewPage from '@/pages/CommunityPage/PostViewPage'
+import WritePostPage from '@/pages/CommunityPage/WritePostPage'
 import LandingPage from '@/pages/LandingPage'
 import Login from '@/pages/LoginPage'
 import MyPage from '@/pages/MyPage'
@@ -39,6 +40,10 @@ const routes: RouteObject[] = [
           {
             path: 'community',
             element: <MainCommunityPage />,
+          },
+          {
+            path: 'community/write/post/:boardName',
+            element: <WritePostPage />,
           },
           {
             path: 'community/board/:boardName',

@@ -6,6 +6,7 @@ import {
   PostCommentLikeRequest,
   PostCommentRequest,
   PostCommentResponse,
+  PostCreateRequest,
   PostPreviewResponse,
   PostReactionRequest,
   PostReactionResponse,
@@ -266,5 +267,21 @@ export const usePostCommentLike = () => {
         return { ...oldData, comments: newComments }
       })
     },
+  })
+}
+
+const postCreate = async ({ boardId, title, content, isAnonymous, images }: PostCreateRequest) => {
+  const formData = new FormData()
+  formData.append('title', title)
+  formData.append('content', content)
+  formData.append('isAnonymous', isAnonymous.toString())
+  images?.forEach(image => formData.append('images', image))
+  const response = await apiInterface.post<PostViewProps>(`/post`, formData, { params: { boardId } })
+  return response.data
+}
+
+export const usePostCreate = () => {
+  return useMutation({
+    mutationFn: postCreate,
   })
 }

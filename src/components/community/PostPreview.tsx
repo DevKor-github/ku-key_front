@@ -28,7 +28,7 @@ const PostPreview = memo(
           <PostTextPreview
             title={title}
             createdAt={createdAt}
-            username={user.username}
+            user={user}
             variant="default"
             description={content}
             handleNavigate={handleNavigate}

@@ -1,4 +1,5 @@
 import { css } from '@styled-stytem/css'
+import { postCard } from '@styled-stytem/recipes'
 import { formatDistanceToNow } from 'date-fns'
 import { useAtomValue } from 'jotai'
 import { Ellipsis, Eye } from 'lucide-react'
@@ -14,20 +15,7 @@ const Post = memo(() => {
   const timeDistance = formatDistanceToNow(postAtomData.createdAt)
 
   return (
-    <div
-      className={css({
-        display: 'flex',
-        px: 5,
-        pt: 5,
-        pb: 10,
-        flexDir: 'column',
-        alignItems: 'flex-start',
-        gap: '50px',
-        alignSelf: 'stretch',
-        boxShadow: '0px 0px 4px 0px rgba(0, 0, 0, 0.25)',
-        rounded: 10,
-      })}
-    >
+    <div className={postCard()}>
       <section
         className={css({ display: 'flex', flexDir: 'column', alignItems: 'flex-start', gap: 5, alignSelf: 'stretch' })}
       >

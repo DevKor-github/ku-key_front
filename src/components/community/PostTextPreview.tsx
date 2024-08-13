@@ -5,19 +5,12 @@ import { formatDistanceToNow } from 'date-fns'
 import ProfileImg from '@/assets/ProfileImg.jpg'
 import { PostPreviewProps } from '@/types/community'
 
-interface PostTextPreviewProps extends Pick<PostPreviewProps, 'title' | 'username' | 'createdAt'> {
+interface PostTextPreviewProps extends Pick<PostPreviewProps, 'title' | 'user' | 'createdAt'> {
   variant: PostTextPreviewVariant['variant']
   description?: string
   handleNavigate?: () => void
 }
-const PostTextPreview = ({
-  title,
-  username,
-  createdAt,
-  variant,
-  description,
-  handleNavigate,
-}: PostTextPreviewProps) => {
+const PostTextPreview = ({ title, user, createdAt, variant, description, handleNavigate }: PostTextPreviewProps) => {
   const onlyTitle = variant === 'onlyTitle'
 
   const timeDistance = formatDistanceToNow(createdAt)
@@ -57,7 +50,7 @@ const PostTextPreview = ({
               color: 'darkGray.2',
             })}
           >
-            <p>{username}</p>
+            <p>{user.username}</p>
             <p>{timeDistance} ago</p>
           </div>
           <h3
