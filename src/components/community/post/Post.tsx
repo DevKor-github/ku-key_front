@@ -4,15 +4,19 @@ import { formatDistanceToNow } from 'date-fns'
 import { useAtomValue } from 'jotai'
 import { Ellipsis, Eye } from 'lucide-react'
 import { memo } from 'react'
+import { useParams } from 'react-router-dom'
 
 import BoardTag from '@/components/community/BoardTag'
 import PostImgCarousel from '@/components/community/post/PostImgCarousel'
 import ReactionSection from '@/components/community/post/ReactionSection'
 import { postAtom } from '@/lib/store/post'
+import { BoardType } from '@/types/community'
 
 const Post = memo(() => {
   const postAtomData = useAtomValue(postAtom)
   const timeDistance = formatDistanceToNow(postAtomData.createdAt)
+  const { boardName } = useParams()
+  const formattedBoardName = `${boardName?.slice(0, 1).toUpperCase()}${boardName?.slice(1)} Board`
 
   return (
     <div className={postCard()}>
@@ -52,7 +56,7 @@ const Post = memo(() => {
             alignSelf: 'stretch',
           })}
         >
-          <BoardTag boardName={'Community Board'} variant="default" />
+          <BoardTag boardName={formattedBoardName as BoardType} variant="default" />
           <div className={css({ display: 'flex', alignItems: 'center', gap: 1, color: 'darkGray.2' })}>
             <Eye size={16} />
             <p className={css({ fontSize: 16, fontWeight: 600 })}>{postAtomData.views}</p>

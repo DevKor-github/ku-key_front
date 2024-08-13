@@ -16,7 +16,10 @@ interface BoardPreviewProps {
 }
 const BoardPreview = ({ previewPosts, title, description, link }: BoardPreviewProps) => {
   const navigate = useNavigate()
-  const handleNavigate = useCallback((id: number) => navigate(`/community/post/${id}`), [navigate])
+  const handleNavigate = useCallback(
+    (id: number, boardName: string) => navigate(`/community/${boardName}/post/${id}`),
+    [navigate],
+  )
   return (
     <div
       className={css({
@@ -39,7 +42,7 @@ const BoardPreview = ({ previewPosts, title, description, link }: BoardPreviewPr
             createdAt={post.createdAt}
             user={post.user}
             variant="onlyTitle"
-            handleNavigate={() => handleNavigate(post.id)}
+            handleNavigate={() => handleNavigate(post.id, post.boardName.split(' ')[0].toLowerCase())}
           />
         </PreviewTextWrapper>
       ))}

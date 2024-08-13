@@ -57,6 +57,7 @@ const BoardSearch = () => {
             commentCount={post.commentCount}
             scrapCount={post.scrapCount}
             thumbnailDir={post.thumbnailDir}
+            boardName={boardName!}
           />
         ))}
       </div>

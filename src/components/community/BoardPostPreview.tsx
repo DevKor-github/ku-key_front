@@ -25,9 +25,10 @@ const BoardPostPreview = ({
   scrapCount,
   thumbnailDir,
   myScrap,
+  boardName,
 }: BoardPostPreviewProps) => {
   const navigate = useNavigate()
-  const handleNavigate = useCallback(() => navigate(`/community/post/${id}`), [navigate, id])
+  const handleNavigate = useCallback(() => navigate(`/community/${boardName}/post/${id}`), [navigate, boardName, id])
 
   return (
     <button

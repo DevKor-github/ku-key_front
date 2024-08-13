@@ -18,7 +18,10 @@ const PostPreview = memo(
     boardName,
   }: Omit<PostPreviewProps, 'commentCount' | 'reaction' | 'scrapCount' | 'myScrap' | 'views' | 'reactionCount'>) => {
     const navigate = useNavigate()
-    const handleNavigate = useCallback(() => navigate(`/community/post/${id}`), [navigate, id])
+    const handleNavigate = useCallback(
+      () => navigate(`/community/${boardName.split(' ')[0].toLowerCase()}/post/${id}`),
+      [navigate, boardName, id],
+    )
     return (
       <div className={css({ display: 'flex', flexDir: 'column', alignItems: 'flex-start', gap: 5 })}>
         <PreviewTextWrapper>

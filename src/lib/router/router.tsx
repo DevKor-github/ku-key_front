@@ -50,7 +50,7 @@ const routes: RouteObject[] = [
             element: <BoardPage />,
           },
           {
-            path: 'community/post/:postId',
+            path: 'community/:boardName/post/:postId',
             element: <PostViewPage />,
           },
         ],
