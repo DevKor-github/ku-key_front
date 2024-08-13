@@ -34,11 +34,9 @@ const CommentInput = ({ isOpen, currentIndex }: CommentInputProps) => {
 
   const handleSend = useCallback(() => {
     if (value.trim() === '') return alert('Please enter a comment')
-    mutateReply(
-      { postId: postAtomData.id, parentCommentId: comment.id, content: value, isAnonymous: anonymous },
-      { onSuccess: () => onChange('') },
-    )
+    mutateReply({ postId: postAtomData.id, parentCommentId: comment.id, content: value, isAnonymous: anonymous })
   }, [anonymous, comment.id, mutateReply, postAtomData.id, value])
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -47,6 +45,7 @@ const CommentInput = ({ isOpen, currentIndex }: CommentInputProps) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          transition={{ duration: 0.2, east: 'ease' }}
           htmlFor="comment"
           className={css({
             display: 'flex',
