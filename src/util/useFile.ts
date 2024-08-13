@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react'
 
 import { resizeFile } from '@/util/resizeFile'
 
-export const useFile = (fileType?: string) => {
+export const useFile = (fileType?: string, limit?: number) => {
   const [files, setFiles] = useState<File[] | null>(null)
 
   const handleFilesChange = useCallback(
@@ -18,6 +18,10 @@ export const useFile = (fileType?: string) => {
       }
       const resizedFiles: File[] = []
       for (const file of currentFiles) {
+        if (limit && resizedFiles.length >= limit) {
+          alert(`You can upload up to ${limit} files`)
+          break
+        }
         try {
           const image = (await resizeFile(file)) as File
           resizedFiles.push(image)
@@ -27,7 +31,7 @@ export const useFile = (fileType?: string) => {
       }
       setFiles(prev => (prev ? [...prev, ...resizedFiles] : resizedFiles))
     },
-    [fileType],
+    [fileType, limit],
   )
 
   const handleFileDelete = useCallback(

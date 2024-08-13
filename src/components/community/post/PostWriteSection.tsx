@@ -1,7 +1,7 @@
 import { css, cx } from '@styled-stytem/css'
 import { postCard } from '@styled-stytem/recipes'
 import { useCallback, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import { usePostCreate } from '@/api/hooks/community'
 import ImageInputSection from '@/components/community/post/ImageInputSection'
@@ -19,22 +19,33 @@ enum boardConfig {
 const PostWriteSection = () => {
   const { boardName } = useParams() as { boardName: 'main' | 'community' | 'question' | 'information' }
   const [currentIndex, setCurIndex] = useState(boardConfig[boardName ?? 'main'])
-  const { files, handleFilesChange, handleFileDelete } = useFile('image')
+  const { files, handleFilesChange, handleFileDelete } = useFile('image', 5)
   const titleRef = useRef<HTMLTextAreaElement>(null)
   const bodyRef = useRef<HTMLTextAreaElement>(null)
 
   const [anonymous, setAnonymous] = useState(false)
   const { mutate: mutatePost } = usePostCreate()
+
+  const navigate = useNavigate()
   const handleClick = useCallback(() => {
     if (!titleRef.current || !bodyRef.current) return
-    mutatePost({
-      boardId: currentIndex,
-      title: titleRef.current?.value,
-      content: bodyRef.current?.value,
-      isAnonymous: anonymous,
-      images: files ?? undefined,
-    })
-  }, [anonymous, currentIndex, files, mutatePost])
+    if (!currentIndex) return alert('Please select a board')
+    mutatePost(
+      {
+        boardId: currentIndex,
+        title: titleRef.current?.value,
+        content: bodyRef.current?.value,
+        isAnonymous: anonymous,
+        images: files ?? undefined,
+      },
+      {
+        onSuccess: () => {
+          alert('Post has been successful')
+          navigate(-1)
+        },
+      },
+    )
+  }, [anonymous, currentIndex, files, mutatePost, navigate])
   const handleAnonymous = useCallback(() => setAnonymous(prev => !prev), [])
   return (
     <section className={cx(postCard(), css({ w: 817 }))}>
