@@ -39,6 +39,7 @@
   },
   "devDependencies": {
     "@pandacss/dev": "^0.37.2",
+    "@tanstack/eslint-plugin-query": "^5.51.15",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
