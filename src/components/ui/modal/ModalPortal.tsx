@@ -29,6 +29,7 @@ const ModalPortal = ({ children, isOpen, selfClose, handleClose }: ModalPortalPr
             bgColor: 'rgba(0,0,0,0.4)',
             w: 'full',
             h: 'full',
+            zIndex: 100,
           })}
           transition={{ ease: 'easeInOut' }}
           onClick={e => !selfClose && handleClose && handleClose(e)}

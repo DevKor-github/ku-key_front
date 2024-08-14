@@ -4,7 +4,7 @@ import { useAtomValue } from 'jotai'
 import { Bookmark, Cookie } from 'lucide-react'
 import { memo, useCallback } from 'react'
 
-import { usePostReaciton, usePostScrap } from '@/api/hooks/community'
+import { usePostReaction, usePostScrap } from '@/api/hooks/community'
 import ReactionButton from '@/components/community/post/ReactionButton'
 import ReactionView from '@/components/community/post/ReactionView'
 import NoticeModal from '@/components/ui/modal/NoticeModal'
@@ -15,7 +15,7 @@ import { useModal } from '@/util/useModal'
 const ReactionSection = memo(() => {
   const postAtomData = useAtomValue(postAtom)
   const { isOpen, handleOpen } = useModal(true)
-  const { mutate: mutateReaction } = usePostReaciton()
+  const { mutate: mutateReaction } = usePostReaction()
   const { mutate: mutateScrap } = usePostScrap()
   const handleReacitonSet = useCallback(
     (i: number) => {

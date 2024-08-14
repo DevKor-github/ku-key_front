@@ -25,15 +25,15 @@ export const useGetBoard = () => {
   return useQuery({ queryKey: ['board'], queryFn: getBoard })
 }
 const getPostsAll = async (take: number, keyword?: string | null, cursor?: string) => {
-  const response = await apiInterface.get<PostPreviewResponse>(`post/all?${keyword ? `&keyword=${keyword}` : ''}`, {
-    params: { take, cursor: cursor?.length === 14 ? cursor : undefined },
+  const response = await apiInterface.get<PostPreviewResponse>(`post/all`, {
+    params: { take, cursor: cursor?.length === 14 ? cursor : undefined, keyword: keyword ?? undefined },
   })
   return response.data
 }
 
 export const useGetPostsAll = () => {
   const [searchParam] = useSearchParams()
-  const keyword = searchParam.get('keyword') ?? ''
+  const keyword = searchParam.get('keyword')
   return useInfiniteQuery({
     queryKey: ['postsAll', keyword],
     queryFn: ({ pageParam: cursor }) => getPostsAll(10, keyword, cursor.toString()),
@@ -84,8 +84,8 @@ export const useGetHotPostPreview = () => {
 }
 
 const getPostsByBoard = async (boardId: number, take: number, keyword?: string | null, cursor?: string) => {
-  const response = await apiInterface.get<PostByBoardResponse>(`post?${keyword ? `&keyword=${keyword}` : ''}`, {
-    params: { take, boardId, cursor: cursor?.length === 14 ? cursor : undefined },
+  const response = await apiInterface.get<PostByBoardResponse>(`post`, {
+    params: { take, boardId, cursor: cursor?.length === 14 ? cursor : undefined, keyword: keyword ?? undefined },
   })
   return response.data
 }
@@ -122,7 +122,7 @@ const postReaction = async ({ postId, reaction }: PostReactionRequest) => {
   return { postId: postIdString, ...response.data }
 }
 
-export const usePostReaciton = () => {
+export const usePostReaction = () => {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: postReaction,

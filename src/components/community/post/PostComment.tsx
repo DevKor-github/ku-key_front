@@ -14,21 +14,22 @@ const PostComment = memo(() => {
   const [anonymous, setAnonymous] = useState(false)
   const { mutate: mutateComment } = usePostComment()
   const postAtomData = useAtomValue(postAtom)
-  const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-      if (e.key === 'Enter' && !e.shiftKey) {
-        if (value.trim() === '') return alert('Please enter a comment')
-        e.preventDefault()
-        mutateComment({ postId: postAtomData.id, content: value, isAnonymous: anonymous })
-      }
-    },
-    [anonymous, value, mutateComment, postAtomData.id],
-  )
-  const handleAnonymous = useCallback(() => setAnonymous(prev => !prev), [])
+
   const handleSubmitClick = useCallback(() => {
     if (value.trim() === '') return alert('Please enter a comment')
     mutateComment({ postId: postAtomData.id, content: value, isAnonymous: anonymous })
   }, [anonymous, value, mutateComment, postAtomData.id])
+
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault()
+        handleSubmitClick()
+      }
+    },
+    [handleSubmitClick],
+  )
+  const handleAnonymous = useCallback(() => setAnonymous(prev => !prev), [])
 
   return (
     <label

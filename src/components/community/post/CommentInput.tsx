@@ -21,21 +21,21 @@ const CommentInput = ({ isOpen, currentIndex }: CommentInputProps) => {
   const [anonymous, setAnonymous] = useState(false)
   const handleAnonymous = useCallback(() => setAnonymous(prev => !prev), [])
   const { mutate: mutateReply } = usePostCommentReply()
-  const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-      if (e.key === 'Enter' && !e.shiftKey) {
-        if (value.trim() === '') return alert('Please enter a comment')
-        e.preventDefault()
-        mutateReply({ postId: postAtomData.id, parentCommentId: comment.id, content: value, isAnonymous: anonymous })
-      }
-    },
-    [value, mutateReply, postAtomData.id, comment.id, anonymous],
-  )
 
   const handleSend = useCallback(() => {
     if (value.trim() === '') return alert('Please enter a comment')
     mutateReply({ postId: postAtomData.id, parentCommentId: comment.id, content: value, isAnonymous: anonymous })
   }, [anonymous, comment.id, mutateReply, postAtomData.id, value])
+
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault()
+        handleSend()
+      }
+    },
+    [handleSend],
+  )
 
   return (
     <AnimatePresence>

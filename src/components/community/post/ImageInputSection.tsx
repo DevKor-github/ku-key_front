@@ -32,7 +32,7 @@ const ImageInputSection = ({
           htmlFor="postImage"
           className={css({ display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' })}
         >
-          <p hidden>파일 선택</p>
+          <p hidden>Choose files</p>
           <Paperclip
             className={css({
               color: 'lightGray.1',
@@ -117,7 +117,7 @@ const ImageInputSection = ({
                   border: '1px solid {colors.lightGray.1}',
                 })}
               >
-                <p hidden>파일 선택</p>
+                <p hidden>Choose files</p>
                 <Plus
                   className={css({
                     color: 'lightGray.1',

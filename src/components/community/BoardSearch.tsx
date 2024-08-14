@@ -5,7 +5,10 @@ import { useGetPostsByBoard } from '@/api/hooks/community'
 import BoardPostPreview from '@/components/community/BoardPostPreview'
 import SectionTitle from '@/components/community/SectionTitle'
 import SearchBox from '@/components/timetable/SearchBox'
+import NoticeModal from '@/components/ui/modal/NoticeModal'
+import { COMMUNITY_SEARCH_MESSAGES } from '@/lib/messages/community'
 import useIntersect from '@/util/useIntersect'
+import { useModal } from '@/util/useModal'
 import { useSearch } from '@/util/useSearch'
 
 const boardConfig: { [key: string]: number } = {
@@ -17,10 +20,12 @@ const BoardSearch = () => {
   const { boardName } = useParams()
   const { searchParam, handleSetParam, deleteParam } = useSearch()
   const { data, hasNextPage, isFetching, fetchNextPage } = useGetPostsByBoard(boardConfig[boardName ?? 'community'])
+  const { isOpen, handleOpen } = useModal(true)
   const onSubmit = (searchParam: string) => {
     if (searchParam === '') {
       return deleteParam('keyword')
     }
+    if (searchParam.length < 2) return handleOpen()
     handleSetParam('keyword', searchParam)
   }
 
@@ -68,6 +73,7 @@ const BoardSearch = () => {
           </div>
         ))}
       </div>
+      <NoticeModal content={COMMUNITY_SEARCH_MESSAGES.REQUIRED_LENGTH} isOpen={isOpen} />
     </div>
   )
 }
