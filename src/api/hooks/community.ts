@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useSearchParams } from 'react-router-dom'
 
 import {
@@ -32,23 +32,35 @@ const getBoard = async () => {
 export const useGetBoard = () => {
   return useQuery({ queryKey: ['board'], queryFn: getBoard })
 }
-const getPostsAll = async (take: number, keyword?: string | null) => {
+const getPostsAll = async (take: number, keyword?: string | null, cursor?: string) => {
   const response = await apiInterface.get<PostPreviewResponse>(`post/all?${keyword ? `&keyword=${keyword}` : ''}`, {
-    params: { take },
+    params: { take, cursor: cursor?.length === 14 ? cursor : undefined },
   })
   return response.data
 }
 
+// export const useGetPostsAll = () => {
+//   const [searchParam] = useSearchParams()
+//   const keyword = searchParam.get('keyword') ?? ''
+//   return useQuery({
+//     queryKey: ['postsAll', keyword],
+//     queryFn: () => getPostsAll(10, keyword),
+//     initialData: {
+//       data: [] as PostPreviewProps[],
+//       meta: { hasNextData: false, nextCursor: 0 } as PostPreviewByBoardMeta,
+//     },
+//   })
+// }
+
 export const useGetPostsAll = () => {
   const [searchParam] = useSearchParams()
   const keyword = searchParam.get('keyword') ?? ''
-  return useQuery({
+  return useInfiniteQuery({
     queryKey: ['postsAll', keyword],
-    queryFn: () => getPostsAll(10, keyword),
-    initialData: {
-      data: [] as PostPreviewProps[],
-      meta: { hasNextData: false, nextCursor: 0 } as PostPreviewByBoardMeta,
-    },
+    queryFn: ({ pageParam: cursor }) => getPostsAll(10, keyword, cursor.toString()),
+    getNextPageParam: lastPage => (lastPage.meta.hasNextData ? lastPage.meta.nextCursor : undefined),
+    initialPageParam: 0,
+    select: data => (data.pages ?? []).flatMap(page => page.data),
   })
 }
 
