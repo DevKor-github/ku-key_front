@@ -2,11 +2,11 @@ import { css } from '@styled-stytem/css'
 import { AnimatePresence, motion } from 'framer-motion'
 import { createPortal } from 'react-dom'
 
-interface ModalPortalProps {
+export interface ModalPortalProps {
   children: React.ReactNode
   isOpen: boolean
   selfClose?: boolean
-  handleClose: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
+  handleClose?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
 }
 const ModalPortal = ({ children, isOpen, selfClose, handleClose }: ModalPortalProps) => {
   return createPortal(
@@ -31,7 +31,7 @@ const ModalPortal = ({ children, isOpen, selfClose, handleClose }: ModalPortalPr
             h: 'full',
           })}
           transition={{ ease: 'easeInOut' }}
-          onClick={e => !selfClose && handleClose(e)}
+          onClick={e => !selfClose && handleClose && handleClose(e)}
         >
           {children}
         </motion.div>

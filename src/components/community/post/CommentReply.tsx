@@ -6,8 +6,10 @@ import { useCallback } from 'react'
 
 import { usePostCommentLike } from '@/api/hooks/community'
 import CommentHeader from '@/components/community/post/CommentHeader'
+import NoticeModal from '@/components/ui/modal/NoticeModal'
 import { postAtom } from '@/lib/store/post'
 import { CommentProps } from '@/types/community'
+import { useModal } from '@/util/useModal'
 
 interface CommentReplyProps {
   reply: Omit<CommentProps, 'reply'>
@@ -16,10 +18,11 @@ interface CommentReplyProps {
 const CommentReply = ({ reply, parentId }: CommentReplyProps) => {
   const post = useAtomValue(postAtom)
   const { mutate: mutateLike } = usePostCommentLike()
-  const handleLikeClick = useCallback(
-    () => mutateLike({ postId: post.id, commentId: reply.id, parentCommentId: parentId, isReply: true }),
-    [mutateLike, parentId, post.id, reply.id],
-  )
+  const { isOpen, handleOpen } = useModal(true)
+  const handleLikeClick = useCallback(() => {
+    if (reply.isMyComment) return handleOpen()
+    mutateLike({ postId: post.id, commentId: reply.id, parentCommentId: parentId, isReply: true })
+  }, [handleOpen, mutateLike, parentId, post.id, reply.id, reply.isMyComment])
   return (
     <div className={css({ display: 'flex', w: 'full', maxW: 756, alignItems: 'flex-start', gap: 5 })}>
       <Forward className={css({ color: 'darkGray.2', transform: 'scale(1,-1)' })} size={24} />
@@ -51,6 +54,7 @@ const CommentReply = ({ reply, parentId }: CommentReplyProps) => {
           <p>{reply.likeCount}</p>
         </button>
       </div>
+      <NoticeModal content="You can't like your own comment" isOpen={isOpen} />
     </div>
   )
 }

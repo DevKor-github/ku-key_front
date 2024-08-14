@@ -1,21 +1,20 @@
 import { css } from '@styled-stytem/css'
 import { reactionButton } from '@styled-stytem/recipes'
 import { useAtomValue } from 'jotai'
-import { Bookmark, CircleAlert, Cookie } from 'lucide-react'
+import { Bookmark, Cookie } from 'lucide-react'
 import { memo, useCallback } from 'react'
 
 import { usePostReaciton, usePostScrap } from '@/api/hooks/community'
 import ReactionButton from '@/components/community/post/ReactionButton'
 import ReactionView from '@/components/community/post/ReactionView'
-import ModalCard from '@/components/ui/modal'
-import ModalPortal from '@/components/ui/modal/ModalPortal'
+import NoticeModal from '@/components/ui/modal/NoticeModal'
 import { postAtom } from '@/lib/store/post'
 import { ReactionType } from '@/types/community'
 import { useModal } from '@/util/useModal'
 
 const ReactionSection = memo(() => {
   const postAtomData = useAtomValue(postAtom)
-  const { isOpen, handleOpen, handleClose } = useModal(true)
+  const { isOpen, handleOpen } = useModal(true)
   const { mutate: mutateReaction } = usePostReaciton()
   const { mutate: mutateScrap } = usePostScrap()
   const handleReacitonSet = useCallback(
@@ -59,17 +58,7 @@ const ReactionSection = memo(() => {
           {postAtomData.scrapCount}
         </button>
       </div>
-      <ModalPortal selfClose={true} isOpen={isOpen} handleClose={handleClose}>
-        <ModalCard>
-          <div className={css({ display: 'flex', gap: 2.5, alignItems: 'center' })}>
-            <CircleAlert size={20} className={css({ color: 'white', fill: 'red.3' })} />
-            <p className={css({ fontSize: 20, fontWeight: 800, color: 'red.1' })}>Notice</p>
-          </div>
-          <p className={css({ fontSize: 18, fontWeight: 500, color: 'red.1' })}>
-            Reaction is not allowed on your own post
-          </p>
-        </ModalCard>
-      </ModalPortal>
+      <NoticeModal content="Reaction is not allowed on your own post" isOpen={isOpen} />
     </section>
   )
 })

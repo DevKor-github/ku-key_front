@@ -176,12 +176,14 @@ export const usePostScrap = () => {
 }
 
 const postComment = async ({ postId, parentCommentId, content, isAnonymous }: PostCommentRequest) => {
+  console.log('comment sending...', new Date())
   const response = await apiInterface.post<PostCommentResponse>(
     '/comment',
     { content, isAnonymous },
     { params: { postId, parentCommentId } },
   )
   const postIdString = postId.toString()
+  console.log('comment sent...', new Date())
   return { postId: postIdString, comment: response.data, parentCommentId }
 }
 

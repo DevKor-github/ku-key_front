@@ -6,7 +6,9 @@ import { memo, useCallback } from 'react'
 
 import { usePostCommentLike } from '@/api/hooks/community'
 import CommentHeader from '@/components/community/post/CommentHeader'
+import NoticeModal from '@/components/ui/modal/NoticeModal'
 import { postAtom } from '@/lib/store/post'
+import { useModal } from '@/util/useModal'
 
 interface CommentProps {
   isOpen: boolean
@@ -16,12 +18,13 @@ interface CommentProps {
 const Comment = memo(({ isOpen, currnetIndex, handleClick }: CommentProps) => {
   const post = useAtomValue(postAtom)
   const comment = post.comments[currnetIndex]
+  const { isOpen: modalOpen, handleOpen } = useModal(true)
 
   const { mutate: mutateLike } = usePostCommentLike()
-  const handleLikeClick = useCallback(
-    () => mutateLike({ postId: post.id, commentId: comment.id, isReply: false }),
-    [mutateLike, post.id, comment.id],
-  )
+  const handleLikeClick = useCallback(() => {
+    if (comment.isMyComment) return handleOpen()
+    mutateLike({ postId: post.id, commentId: comment.id, isReply: false })
+  }, [comment.isMyComment, comment.id, handleOpen, mutateLike, post.id])
   return (
     <div
       className={css({
@@ -55,6 +58,7 @@ const Comment = memo(({ isOpen, currnetIndex, handleClick }: CommentProps) => {
           <p>{comment.likeCount}</p>
         </button>
       </div>
+      <NoticeModal content="You can't like your own comment" isOpen={modalOpen} />
     </div>
   )
 })
