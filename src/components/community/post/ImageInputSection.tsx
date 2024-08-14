@@ -45,7 +45,7 @@ const ImageInputSection = ({
             type="file"
             hidden
             onChange={handleFilesChange}
-            accept="image/*"
+            accept="image/*,image/heic"
             multiple
             disabled={files ? files.length >= 5 : false}
           />

@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react'
 
+import { convertHeic } from '@/util/convert-heic'
 import { resizeFile } from '@/util/resizeFile'
 
 export const useFile = (fileType?: string, limit?: number) => {
@@ -16,22 +17,34 @@ export const useFile = (fileType?: string, limit?: number) => {
           return
         }
       }
+
       const resizedFiles: File[] = []
+      if (limit && (files ? files.length : 0) + currentFiles.length > limit)
+        return alert(`You can upload up to ${limit} files`)
+
       for (const file of currentFiles) {
-        if (limit && resizedFiles.length >= limit) {
-          alert(`You can upload up to ${limit} files`)
-          break
+        if (file.type === 'image/heic' || file.type === 'image/HEIC') {
+          try {
+            const jpgFile = await convertHeic(file)
+            const image = await resizeFile<File>(jpgFile)
+            resizedFiles.push(image)
+            continue
+          } catch (e) {
+            console.log(e)
+          }
         }
+
         try {
-          const image = (await resizeFile(file)) as File
+          const image = await resizeFile<File>(file)
           resizedFiles.push(image)
         } catch (e) {
           console.log(e)
         }
       }
+
       setFiles(prev => (prev ? [...prev, ...resizedFiles] : resizedFiles))
     },
-    [fileType, limit],
+    [fileType, files, limit],
   )
 
   const handleFileDelete = useCallback(
