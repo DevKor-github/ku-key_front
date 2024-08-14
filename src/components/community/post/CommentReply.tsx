@@ -7,6 +7,7 @@ import { useCallback } from 'react'
 import { usePostCommentLike } from '@/api/hooks/community'
 import CommentHeader from '@/components/community/post/CommentHeader'
 import NoticeModal from '@/components/ui/modal/NoticeModal'
+import { POST_MEESSAGES } from '@/lib/messages/community'
 import { postAtom } from '@/lib/store/post'
 import { CommentProps } from '@/types/community'
 import { useModal } from '@/util/useModal'
@@ -54,7 +55,7 @@ const CommentReply = ({ reply, parentId }: CommentReplyProps) => {
           <p>{reply.likeCount}</p>
         </button>
       </div>
-      <NoticeModal content="You can't like your own comment" isOpen={isOpen} />
+      <NoticeModal content={POST_MEESSAGES.NO_LIKE_OWN_COMMENT} isOpen={isOpen} />
     </div>
   )
 }

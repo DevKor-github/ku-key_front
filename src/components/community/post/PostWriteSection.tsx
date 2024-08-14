@@ -7,8 +7,11 @@ import { usePostCreate } from '@/api/hooks/community'
 import ImageInputSection from '@/components/community/post/ImageInputSection'
 import Dropdown from '@/components/timetable/Dropdown'
 import Button from '@/components/ui/button'
+import NoticeModal from '@/components/ui/modal/NoticeModal'
 import { MemoizedTextAreaAutosize } from '@/components/ui/textarea-autosize'
+import { POST_MEESSAGES } from '@/lib/messages/community'
 import { useFile } from '@/util/useFile'
+import { useModal } from '@/util/useModal'
 
 enum boardConfig {
   main = 0,
@@ -19,17 +22,26 @@ enum boardConfig {
 const PostWriteSection = () => {
   const { boardName } = useParams() as { boardName: 'main' | 'community' | 'question' | 'information' }
   const [currentIndex, setCurIndex] = useState(boardConfig[boardName ?? 'main'])
+  const { isOpen, handleOpen } = useModal(true)
   const { files, handleFilesChange, handleFileDelete } = useFile('image', 5)
   const titleRef = useRef<HTMLTextAreaElement>(null)
   const bodyRef = useRef<HTMLTextAreaElement>(null)
 
   const [anonymous, setAnonymous] = useState(false)
+  const [alertMessage, setAlertMessage] = useState('')
   const { mutate: mutatePost } = usePostCreate()
 
   const navigate = useNavigate()
   const handleClick = useCallback(() => {
     if (!titleRef.current || !bodyRef.current) return
-    if (!currentIndex) return alert('Please select a board')
+    if (!currentIndex) {
+      setAlertMessage(POST_MEESSAGES.BOARD_REQUIRED)
+      return handleOpen()
+    }
+    if (!titleRef.current.value || !bodyRef.current.value) {
+      setAlertMessage(POST_MEESSAGES.CONTENT_REQUIRED)
+      return handleOpen()
+    }
     mutatePost(
       {
         boardId: currentIndex,
@@ -45,7 +57,7 @@ const PostWriteSection = () => {
         },
       },
     )
-  }, [anonymous, currentIndex, files, mutatePost, navigate])
+  }, [anonymous, currentIndex, files, handleOpen, mutatePost, navigate])
   const handleAnonymous = useCallback(() => setAnonymous(prev => !prev), [])
   return (
     <section className={cx(postCard(), css({ w: 817 }))}>
@@ -145,6 +157,7 @@ const PostWriteSection = () => {
           POST
         </Button>
       </div>
+      <NoticeModal content={alertMessage} isOpen={isOpen} />
     </section>
   )
 }

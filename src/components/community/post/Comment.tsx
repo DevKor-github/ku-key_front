@@ -7,6 +7,7 @@ import { memo, useCallback } from 'react'
 import { usePostCommentLike } from '@/api/hooks/community'
 import CommentHeader from '@/components/community/post/CommentHeader'
 import NoticeModal from '@/components/ui/modal/NoticeModal'
+import { POST_MEESSAGES } from '@/lib/messages/community'
 import { postAtom } from '@/lib/store/post'
 import { useModal } from '@/util/useModal'
 
@@ -58,7 +59,7 @@ const Comment = memo(({ isOpen, currnetIndex, handleClick }: CommentProps) => {
           <p>{comment.likeCount}</p>
         </button>
       </div>
-      <NoticeModal content="You can't like your own comment" isOpen={modalOpen} />
+      <NoticeModal content={POST_MEESSAGES.NO_LIKE_OWN_COMMENT} isOpen={modalOpen} />
     </div>
   )
 })
