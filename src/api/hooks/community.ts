@@ -12,15 +12,7 @@ import {
   PostReactionResponse,
   PostScrapResponse,
 } from '@/api/types/community'
-import {
-  BoardInfo,
-  BoardPostPreviewProps,
-  CommentProps,
-  PostPreviewByBoardMeta,
-  PostPreviewProps,
-  PostViewProps,
-  ReactionType,
-} from '@/types/community'
+import { CommentProps, PostPreviewByBoardMeta, PostPreviewProps, PostViewProps, ReactionType } from '@/types/community'
 import { apiInterface } from '@/util/axios/custom-axios'
 import { useSearch } from '@/util/useSearch'
 
@@ -91,9 +83,9 @@ export const useGetHotPostPreview = () => {
   })
 }
 
-const getPostsByBoard = async (boardId: number, take: number, keyword?: string | null) => {
+const getPostsByBoard = async (boardId: number, take: number, keyword?: string | null, cursor?: string) => {
   const response = await apiInterface.get<PostByBoardResponse>(`post?${keyword ? `&keyword=${keyword}` : ''}`, {
-    params: { take, boardId },
+    params: { take, boardId, cursor: cursor?.length === 14 ? cursor : undefined },
   })
   return response.data
 }
@@ -101,14 +93,12 @@ const getPostsByBoard = async (boardId: number, take: number, keyword?: string |
 export const useGetPostsByBoard = (boardId: number) => {
   const { searchParam } = useSearch()
   const keyword = searchParam.get('keyword')
-  return useQuery({
+  return useInfiniteQuery({
     queryKey: ['postsByBoard', boardId, keyword],
-    queryFn: () => getPostsByBoard(boardId, 10, keyword),
-    initialData: {
-      board: {} as BoardInfo,
-      data: [] as BoardPostPreviewProps[],
-      meta: { hasNextData: false, nextCursor: 0 } as PostPreviewByBoardMeta,
-    },
+    queryFn: ({ pageParam: cursor }) => getPostsByBoard(boardId, 10, keyword, cursor.toString()),
+    getNextPageParam: lastPage => (lastPage.meta.hasNextData ? lastPage.meta.nextCursor : undefined),
+    initialPageParam: 0,
+    select: data => (data.pages ?? []).flatMap(page => page.data),
   })
 }
 
