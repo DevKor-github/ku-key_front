@@ -39,19 +39,6 @@ const getPostsAll = async (take: number, keyword?: string | null, cursor?: strin
   return response.data
 }
 
-// export const useGetPostsAll = () => {
-//   const [searchParam] = useSearchParams()
-//   const keyword = searchParam.get('keyword') ?? ''
-//   return useQuery({
-//     queryKey: ['postsAll', keyword],
-//     queryFn: () => getPostsAll(10, keyword),
-//     initialData: {
-//       data: [] as PostPreviewProps[],
-//       meta: { hasNextData: false, nextCursor: 0 } as PostPreviewByBoardMeta,
-//     },
-//   })
-// }
-
 export const useGetPostsAll = () => {
   const [searchParam] = useSearchParams()
   const keyword = searchParam.get('keyword') ?? ''
