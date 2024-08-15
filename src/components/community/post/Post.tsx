@@ -9,6 +9,7 @@ import { useParams } from 'react-router-dom'
 import BoardTag from '@/components/community/BoardTag'
 import PostImgCarousel from '@/components/community/post/PostImgCarousel'
 import ReactionSection from '@/components/community/post/ReactionSection'
+import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger } from '@/components/ui/menubar'
 import { postAtom } from '@/lib/store/post'
 import { BoardType } from '@/types/community'
 
@@ -44,9 +45,26 @@ const Post = memo(() => {
             <p>{postAtomData.user.username}</p>
             <p>{timeDistance} ago</p>
           </div>
-          <button>
-            <Ellipsis className={css({ color: 'darkGray.1' })} />
-          </button>
+          <Menubar>
+            <MenubarMenu>
+              <MenubarTrigger
+                className={css({
+                  rounded: 'full',
+                  w: '30px',
+                  h: '30px',
+                  _hover: { bgColor: 'lightGray.1', transition: 'background-color 0.25s ease-in-out' },
+                  _open: { bgColor: 'lightGray.1', transition: 'background-color 0.25s ease-in-out' },
+                })}
+              >
+                <Ellipsis className={css({ color: 'darkGray.1' })} />
+              </MenubarTrigger>
+              <MenubarContent>
+                <MenubarItem>Edit</MenubarItem>
+                <MenubarItem>Report</MenubarItem>
+                <MenubarItem>Delete</MenubarItem>
+              </MenubarContent>
+            </MenubarMenu>
+          </Menubar>
         </div>
         <div
           className={css({
