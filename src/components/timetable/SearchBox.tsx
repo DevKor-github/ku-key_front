@@ -26,13 +26,14 @@ const FormStyle = cva({
 })
 
 interface SearchBoxProps {
+  initialKeyword?: string
   placeholder: string
   onSubmit: (queryKeyword: string) => void
   cssProps?: CSSProperties
 }
 
-const SearchBox = ({ placeholder, onSubmit, cssProps = {} }: SearchBoxProps) => {
-  const [inputKeyword, setInputKeyword] = useState('')
+const SearchBox = ({ initialKeyword, placeholder, onSubmit, cssProps = {} }: SearchBoxProps) => {
+  const [inputKeyword, setInputKeyword] = useState(initialKeyword ?? '')
   const [isFocus, setIsFocus] = useState(false)
   return (
     <form

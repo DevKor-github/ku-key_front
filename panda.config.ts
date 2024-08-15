@@ -2,11 +2,18 @@ import { defineConfig } from '@pandacss/dev'
 
 import {
   buttonRecipe,
+  carouselButtonRecipe,
   chipRecipe,
+  globalLayoutRecipe,
   inputRecipe,
   labelRecipe,
   modalCardRecipe,
+  postCardRecipe,
+  postTextPreviewRecipe,
+  reactionTagRecipe,
   shadowRecipe,
+  tagRecipe,
+  textStyles,
 } from './src/lib/recipes/index'
 import { tokenToRem } from './src/lib/constants/tokenToRem'
 
@@ -30,6 +37,12 @@ export default defineConfig({
         input: inputRecipe,
         modalCard: modalCardRecipe,
         shadow: shadowRecipe,
+        boardTag: tagRecipe,
+        postTextPreview: postTextPreviewRecipe,
+        globalLayout: globalLayoutRecipe,
+        reactionButton: reactionTagRecipe,
+        carouselButton: carouselButtonRecipe,
+        postCard: postCardRecipe,
       },
       tokens: {
         colors: {
@@ -47,7 +60,7 @@ export default defineConfig({
           },
           black: {
             1: { value: '#000000' },
-            2: { value: '#383838' },
+            2: { value: '#2D2D2D' },
           },
           darkGray: {
             1: { value: '#6B6B6B' },
@@ -67,6 +80,7 @@ export default defineConfig({
         spacing: tokenToRem,
         sizes: tokenToRem,
       },
+      textStyles,
     },
   },
   jsxFramework: 'react',
