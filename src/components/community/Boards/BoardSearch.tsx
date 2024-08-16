@@ -41,12 +41,12 @@ const BoardSearch = () => {
     if (hasNextPage && !isFetching) fetchNextPage()
   })
   return (
-    <div className={css({ display: 'flex', flexDir: 'column', alignSelf: 'flex-start' })}>
+    <div className={css({ display: 'flex', flexDir: 'column', alignSelf: 'flex-start', maxW: 608, w: 'full' })}>
       <SearchBox
         initialKeyword={keyword ?? ''}
         placeholder={keyword ?? 'Search posts from entire board'}
         onSubmit={onSubmit}
-        cssProps={{ borderRadius: '50px' }}
+        cssProps={{ width: 'full', alignSelf: 'stretch', borderRadius: '50px' }}
       />
       {keyword ? (
         <SectionTitle title={handleTitle()} />
