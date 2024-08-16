@@ -8,7 +8,16 @@ import { useTextArea } from '@/util/useTextArea'
 type MemoizedTextAreaAutosizeProps = TextareaAutosizeProps & { css?: SystemStyleObject }
 export const MemoizedTextAreaAutosize = memo(
   forwardRef<HTMLTextAreaElement, MemoizedTextAreaAutosizeProps>(({ className, ...props }, ref) => {
-    const { value, onChange } = useTextArea('')
-    return <TextareaAutosize value={value} onChange={onChange} className={className} ref={ref} {...props} />
+    const { value, onChange } = useTextArea(props.value?.toString() ?? '')
+    const parentControlled = props.value !== undefined && props.onChange !== undefined
+    return (
+      <TextareaAutosize
+        {...props}
+        ref={ref}
+        value={parentControlled ? props.value : value}
+        onChange={parentControlled ? props.onChange : onChange}
+        className={className}
+      />
+    )
   }),
 )
