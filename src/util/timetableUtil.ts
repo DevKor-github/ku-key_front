@@ -1,4 +1,4 @@
-import { toPng } from 'html-to-image'
+import html2canvas from 'html2canvas'
 
 import {
   ColorType,
@@ -233,16 +233,12 @@ export const getWeeknTimeList = (courseData: CourseType[], scheduleData: Schedul
  */
 export const convertHtmlToImage = (ref: HTMLDivElement | null, fileName: string) => {
   if (ref) {
-    toPng(ref, { cacheBust: false })
-      .then(dataUrl => {
-        const link = document.createElement('a')
-        link.download = `${fileName}.png`
-        link.href = dataUrl
-        link.click()
-      })
-      .catch(() => {
-        // todo: 에러 핸들링
-      })
+    html2canvas(ref).then(canvas => {
+      const link = document.createElement('a')
+      link.href = canvas.toDataURL()
+      link.download = `${fileName}`
+      link.click()
+    })
   } else {
     // todo: null (시간표가 없는 경우 처리)
   }
