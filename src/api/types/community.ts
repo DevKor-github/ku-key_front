@@ -57,3 +57,12 @@ export interface PostCreateRequest {
   isAnonymous: boolean
   images?: File[]
 }
+
+export interface PostEditRequest {
+  postId: number
+  title: string
+  content: string
+  isAnonymous: boolean
+  images?: File[]
+  imageUpdate: boolean
+}

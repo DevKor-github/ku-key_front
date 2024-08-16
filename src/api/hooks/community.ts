@@ -7,6 +7,7 @@ import {
   PostCommentRequest,
   PostCommentResponse,
   PostCreateRequest,
+  PostEditRequest,
   PostPreviewResponse,
   PostReactionRequest,
   PostReactionResponse,
@@ -273,5 +274,29 @@ const postCreate = async ({ boardId, title, content, isAnonymous, images }: Post
 export const usePostCreate = () => {
   return useMutation({
     mutationFn: postCreate,
+  })
+}
+
+const patchPost = async ({ postId, title, content, isAnonymous, images, imageUpdate }: PostEditRequest) => {
+  const formData = new FormData()
+  formData.append('title', title)
+  formData.append('content', content)
+  formData.append('isAnonymous', isAnonymous.toString())
+  formData.append('imageUpdate', imageUpdate.toString())
+  images?.forEach(image => formData.append('images', image))
+  const response = await apiInterface.patch<PostViewProps>(`/post/${postId}`, formData)
+  return response.data
+}
+
+export const usePatchEditPost = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: patchPost,
+    onSuccess: data => {
+      queryClient.setQueryData<PostViewProps>(['postById', data.id], (oldData): PostViewProps => {
+        if (!oldData) return {} as PostViewProps
+        return { ...data }
+      })
+    },
   })
 }

@@ -10,7 +10,7 @@ import CommentView from '@/components/community/post/CommentView'
 import Post from '@/components/community/post/Post'
 import PostComment from '@/components/community/post/PostComment'
 import Button from '@/components/ui/button'
-import { postAtom } from '@/lib/store/post'
+import { initialPostData, postAtom } from '@/lib/store/post'
 
 const PostView = () => {
   const navigate = useNavigate()
@@ -19,8 +19,9 @@ const PostView = () => {
   const setPostData = useSetAtom(postAtom)
   useEffect(() => {
     if (isFetched) {
-      setPostData({ ...post, myReaction: post.myReaction ?? undefined })
+      setPostData({ ...post, myReaction: post.myReaction })
     }
+    return () => setPostData(initialPostData)
   }, [post, setPostData, isFetched])
 
   return (

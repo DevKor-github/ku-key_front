@@ -1,24 +1,29 @@
 import { css } from '@styled-stytem/css'
 import { postCard } from '@styled-stytem/recipes'
 import { formatDistanceToNow } from 'date-fns'
-import { useAtomValue } from 'jotai'
-import { Ellipsis, Eye } from 'lucide-react'
-import { memo } from 'react'
-import { useParams } from 'react-router-dom'
+import { useAtomValue, useSetAtom } from 'jotai'
+import { Eye } from 'lucide-react'
+import { memo, useCallback } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import BoardTag from '@/components/community/BoardTag'
 import PostImgCarousel from '@/components/community/post/PostImgCarousel'
 import ReactionSection from '@/components/community/post/ReactionSection'
-import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger } from '@/components/ui/menubar'
-import { postAtom } from '@/lib/store/post'
+import UtilButton from '@/components/community/post/UtilButton'
+import { postAtom, postEditAtom } from '@/lib/store/post'
 import { BoardType } from '@/types/community'
 
 const Post = memo(() => {
   const postAtomData = useAtomValue(postAtom)
+  const postEditData = useSetAtom(postEditAtom)
   const timeDistance = formatDistanceToNow(postAtomData.createdAt)
   const { boardName } = useParams()
   const formattedBoardName = `${boardName?.slice(0, 1).toUpperCase()}${boardName?.slice(1)} Board`
-
+  const navigate = useNavigate()
+  const handleNavigation = useCallback(() => {
+    navigate(`/community/action/edit/post/${boardName}`)
+    postEditData(postAtomData)
+  }, [navigate, boardName, postEditData, postAtomData])
   return (
     <div className={postCard()}>
       <section
@@ -45,26 +50,11 @@ const Post = memo(() => {
             <p>{postAtomData.user.username}</p>
             <p>{timeDistance} ago</p>
           </div>
-          <Menubar>
-            <MenubarMenu>
-              <MenubarTrigger
-                className={css({
-                  rounded: 'full',
-                  w: '30px',
-                  h: '30px',
-                  _hover: { bgColor: 'lightGray.1', transition: 'background-color 0.25s ease-in-out' },
-                  _open: { bgColor: 'lightGray.1', transition: 'background-color 0.25s ease-in-out' },
-                })}
-              >
-                <Ellipsis className={css({ color: 'darkGray.1' })} />
-              </MenubarTrigger>
-              <MenubarContent>
-                <MenubarItem>Edit</MenubarItem>
-                <MenubarItem>Report</MenubarItem>
-                <MenubarItem>Delete</MenubarItem>
-              </MenubarContent>
-            </MenubarMenu>
-          </Menubar>
+          <UtilButton
+            isMine={postAtomData.isMyPost}
+            isEditable={postAtomData.isMyPost && (boardName !== 'question' || postAtomData.comments.length < 0)}
+            handleNavigation={handleNavigation}
+          />
         </div>
         <div
           className={css({

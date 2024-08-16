@@ -12,7 +12,7 @@ interface BoardBannerProps {
 const BoardBanner = ({ boardName }: BoardBannerProps) => {
   const navigate = useNavigate()
   const handleNavigation = useCallback(
-    () => navigate(`/community/write/post/${boardName.toLowerCase()}`),
+    () => navigate(`/community/action/write/post/${boardName.toLowerCase()}`),
     [navigate, boardName],
   )
   return (

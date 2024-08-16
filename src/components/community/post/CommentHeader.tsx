@@ -1,7 +1,7 @@
 import { css } from '@styled-stytem/css'
 import { boardTag } from '@styled-stytem/recipes'
-import { Ellipsis } from 'lucide-react'
 
+import UtilButton from '@/components/community/post/UtilButton'
 import { getFormatedTimeString } from '@/util/getFormatedTimeString'
 
 interface CommentHeaderProps {
@@ -23,9 +23,7 @@ const CommentHeader = ({ isMyComment, username, date }: CommentHeaderProps) => {
         <div className={boardTag({ variant: isMyComment ? 'red' : 'small' })}>{isMyComment ? 'Author' : username}</div>
         <p className={css({ fontSize: 18, fontWeight: 500, color: 'darkGray.2' })}>{getFormatedTimeString(date)}</p>
       </div>
-      <button>
-        <Ellipsis className={css({ color: 'darkGray.1' })} />
-      </button>
+      <UtilButton isMine={isMyComment} isEditable={false} />
     </div>
   )
 }

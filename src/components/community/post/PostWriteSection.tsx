@@ -1,15 +1,18 @@
 import { css, cx } from '@styled-stytem/css'
 import { postCard } from '@styled-stytem/recipes'
-import { useCallback, useRef, useState } from 'react'
+import { useAtom } from 'jotai'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { usePostCreate } from '@/api/hooks/community'
+import { usePatchEditPost, usePostCreate } from '@/api/hooks/community'
 import ImageInputSection from '@/components/community/post/ImageInputSection'
 import Dropdown from '@/components/timetable/Dropdown'
 import Button from '@/components/ui/button'
 import NoticeModal from '@/components/ui/modal/NoticeModal'
 import { MemoizedTextAreaAutosize } from '@/components/ui/textarea-autosize'
 import { POST_MEESSAGES } from '@/lib/messages/community'
+import { initialPostData, postEditAtom } from '@/lib/store/post'
+import { createFileFromUrl } from '@/util/create-file-from -url'
 import { useFile } from '@/util/useFile'
 import { useModal } from '@/util/useModal'
 
@@ -19,18 +22,23 @@ enum boardConfig {
   question = 2,
   information = 3,
 }
+type ActionType = 'write' | 'edit'
 const PostWriteSection = () => {
-  const { boardName } = useParams() as { boardName: 'main' | 'community' | 'question' | 'information' }
+  const { boardName, type } = useParams() as {
+    boardName: 'main' | 'community' | 'question' | 'information'
+    type: ActionType
+  }
+  const [initialData, setInitialData] = useAtom(postEditAtom)
+  const [initialImgFiles, setInitialImgFiles] = useState<File[]>()
   const [currentIndex, setCurIndex] = useState(boardConfig[boardName ?? 'main'])
   const { isOpen, handleOpen } = useModal(true)
-  const { files, handleFilesChange, handleFileDelete } = useFile('image', 5)
+  const { files, isChanged, handleFilesChange, handleFileDelete } = useFile('image', 5, initialImgFiles)
   const titleRef = useRef<HTMLTextAreaElement>(null)
   const bodyRef = useRef<HTMLTextAreaElement>(null)
-
-  const [anonymous, setAnonymous] = useState(false)
+  const [anonymous, setAnonymous] = useState(initialData ? initialData.user.username === 'Anonymous' : false)
   const [alertMessage, setAlertMessage] = useState('')
   const { mutate: mutatePost } = usePostCreate()
-
+  const { mutate: mutateEditPost } = usePatchEditPost()
   const navigate = useNavigate()
   const handleClick = useCallback(() => {
     if (!titleRef.current || !bodyRef.current) return
@@ -42,23 +50,65 @@ const PostWriteSection = () => {
       setAlertMessage(POST_MEESSAGES.CONTENT_REQUIRED)
       return handleOpen()
     }
-    mutatePost(
-      {
-        boardId: currentIndex,
-        title: titleRef.current?.value,
-        content: bodyRef.current?.value,
-        isAnonymous: anonymous,
-        images: files ?? undefined,
-      },
-      {
-        onSuccess: () => {
-          alert('Post has been successful')
-          navigate(-1)
+    if (type === 'write') {
+      mutatePost(
+        {
+          boardId: currentIndex,
+          title: titleRef.current?.value,
+          content: bodyRef.current?.value,
+          isAnonymous: anonymous,
+          images: files ?? undefined,
         },
-      },
-    )
-  }, [anonymous, currentIndex, files, handleOpen, mutatePost, navigate])
+        {
+          onSuccess: () => {
+            alert('Post has been successful')
+            navigate(-1)
+          },
+        },
+      )
+    } else if (type === 'edit') {
+      mutateEditPost(
+        {
+          postId: initialData.id,
+          title: titleRef.current?.value,
+          content: bodyRef.current?.value,
+          isAnonymous: anonymous,
+          images: files ?? undefined,
+          imageUpdate: isChanged,
+        },
+        {
+          onSuccess: () => {
+            alert('Edit has been successful')
+            setInitialData(initialPostData)
+            navigate(-1)
+          },
+        },
+      )
+    }
+  }, [
+    anonymous,
+    currentIndex,
+    files,
+    handleOpen,
+    initialData,
+    isChanged,
+    mutateEditPost,
+    mutatePost,
+    navigate,
+    setInitialData,
+    type,
+  ])
   const handleAnonymous = useCallback(() => setAnonymous(prev => !prev), [])
+
+  useEffect(() => {
+    if (type === 'edit' && initialData.imageDirs.length) {
+      const getInitialImgDirs = async () => {
+        if (!initialData?.imageDirs) return []
+        return await Promise.all(initialData?.imageDirs.map(dir => createFileFromUrl(dir.imgDir, `${dir.id}.jpeg`)))
+      }
+      getInitialImgDirs().then(res => setInitialImgFiles(res))
+    }
+  }, [initialData?.imageDirs, type])
   return (
     <section className={cx(postCard(), css({ w: 817 }))}>
       <div
@@ -69,11 +119,14 @@ const PostWriteSection = () => {
           alignSelf: 'stretch',
         })}
       >
-        <h2 className={css({ textStyle: 'title3', color: '#2D2D2D', smDown: { fontSize: 18 } })}>Create Post</h2>
+        <h2 className={css({ textStyle: 'title3', color: '#2D2D2D', smDown: { fontSize: 18 } })}>
+          {type === 'write' ? 'Create' : 'Edit'} Post
+        </h2>
         <Dropdown
           dropdownList={['Select Board', 'Community Board', 'Question Board', 'Information Board']}
           curIndex={currentIndex}
           setCurIndex={setCurIndex}
+          disabled={type === 'edit'}
         />
       </div>
       <div className={css({ display: 'flex', w: 'full', flexDir: 'column', alignItems: 'flex-start', gap: 5 })}>
@@ -89,6 +142,7 @@ const PostWriteSection = () => {
           <p className={css({ textStyle: 'body2_L', color: 'lightGray.1' })}>Title</p>
           <MemoizedTextAreaAutosize
             ref={titleRef}
+            value={initialData?.title}
             maxRows={2}
             className={css({
               display: 'flex',
@@ -119,6 +173,7 @@ const PostWriteSection = () => {
           <p className={css({ textStyle: 'body2_L', color: 'lightGray.1' })}>Body</p>
           <MemoizedTextAreaAutosize
             ref={bodyRef}
+            value={initialData?.content}
             maxRows={13}
             className={css({
               display: 'flex',
