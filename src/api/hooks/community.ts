@@ -54,21 +54,20 @@ export const useGetRecentPostsPreview = () => {
   })
 }
 
-const getHotPosts = async (take: number) => {
+const getHotPosts = async (take: number, cursor?: string) => {
   const response = await apiInterface.get<PostPreviewResponse>(`post/hot`, {
-    params: { take },
+    params: { take, cursor: cursor?.length === 14 ? cursor : undefined },
   })
   return response.data
 }
 
 export const useGetHotPosts = () => {
-  return useQuery({
+  return useInfiniteQuery({
     queryKey: ['hotPosts'],
-    queryFn: () => getHotPosts(10),
-    initialData: {
-      data: [] as PostPreviewProps[],
-      meta: { hasNextData: false, nextCursor: 0 } as PostPreviewByBoardMeta,
-    },
+    queryFn: ({ pageParam: cursor }) => getHotPosts(10, cursor.toString()),
+    getNextPageParam: lastPage => (lastPage.meta.hasNextData ? lastPage.meta.nextCursor : undefined),
+    initialPageParam: 0,
+    select: data => (data.pages ?? []).flatMap(page => page.data),
   })
 }
 

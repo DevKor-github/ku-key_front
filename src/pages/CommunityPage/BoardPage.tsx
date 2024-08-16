@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 
 import BoardBanner from '@/components/community/BoardBanner'
 import BoardSearch from '@/components/community/BoardSearch'
-import HotBoardPreview from '@/components/community/HotBoardPreview'
+import HotBoardPreview from '@/components/community/HotBoard/HotBoardPreview'
 import RecentPreview from '@/components/community/RecentPreview'
 const BoardPage = () => {
   const { boardName } = useParams()
