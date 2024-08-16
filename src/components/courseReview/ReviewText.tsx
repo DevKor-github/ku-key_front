@@ -1,7 +1,7 @@
 import { css, cva } from '@styled-stytem/css'
 import { useFormContext } from 'react-hook-form'
 
-import { REQUIRE_TEXT } from '@/components/courseReview/ReviewRadio'
+import { REQUIRE_TEXT } from '@/components/courseReview/ReviewChoiceChips'
 
 const ReviewText = () => {
   const { register, formState } = useFormContext()
@@ -55,6 +55,7 @@ const ReviewText = () => {
             w: '100%',
             h: 45,
             color: 'black.2',
+            resize: 'none',
           },
           variants: {
             isError: {

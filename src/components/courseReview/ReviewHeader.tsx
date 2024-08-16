@@ -42,6 +42,7 @@ const ReviewHeader = ({ courseCode, courseName, prof }: ReviewHeaderProps) => {
         </span>
       </div>
       <Link
+        // TODO: 이미 작성한 사람이면 막아놓기
         to={`/course-review/write/${courseCode}/${prof}`}
         className={css({
           bgColor: 'red.2',

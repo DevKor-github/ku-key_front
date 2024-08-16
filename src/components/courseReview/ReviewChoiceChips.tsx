@@ -4,12 +4,12 @@ import { useFormContext } from 'react-hook-form'
 
 export const REQUIRE_TEXT = 'This field is required'
 
-interface ReviewRadioProps {
+interface ReviewChoiceChipsProps {
   title: string
   category: string
   options: readonly string[]
 }
-const ReviewRadio = ({ title, category, options }: ReviewRadioProps) => {
+const ReviewChoiceChips = ({ title, category, options }: ReviewChoiceChipsProps) => {
   const { setValue, register, watch, formState } = useFormContext()
   const errorMessage = formState.errors[category] ? String(formState.errors[category]?.message) : undefined
   return (
@@ -96,4 +96,4 @@ const ReviewRadio = ({ title, category, options }: ReviewRadioProps) => {
   )
 }
 
-export default ReviewRadio
+export default ReviewChoiceChips

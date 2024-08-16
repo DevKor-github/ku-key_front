@@ -7,7 +7,7 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { usePostReview } from '@/api/hooks/courseReview'
-import ReviewRadio from '@/components/courseReview/ReviewRadio'
+import ReviewChoiceChips from '@/components/courseReview/ReviewChoiceChips'
 import ReviewText from '@/components/courseReview/ReviewText'
 import ReviewTotalRate from '@/components/courseReview/ReviewTotalRate'
 import Dropdown from '@/components/timetable/Dropdown'
@@ -141,11 +141,11 @@ const WriteReviewPage = () => {
         <div className={css({ display: 'flex', flexDir: 'column', gap: 5, alignItems: 'flex-start' })}>
           <ReviewTotalRate />
           <div className={css({ display: 'flex', flexDir: 'column', gap: 2.5, alignItems: 'flex-start' })}>
-            <ReviewRadio title="Attendance" options={attendaceArray} category="attendance" />
-            <ReviewRadio title="Class Level" options={classLevelArray} category="classLevel" />
-            <ReviewRadio title="Difficulty of Team Project" options={teamProjectArray} category="teamProject" />
-            <ReviewRadio title="Amount Learned" options={learnAmountArray} category="amountLearned" />
-            <ReviewRadio title="Teaching Skills" options={teachingSkillsArray} category="teachingSkills" />
+            <ReviewChoiceChips title="Attendance" options={attendaceArray} category="attendance" />
+            <ReviewChoiceChips title="Class Level" options={classLevelArray} category="classLevel" />
+            <ReviewChoiceChips title="Difficulty of Team Project" options={teamProjectArray} category="teamProject" />
+            <ReviewChoiceChips title="Amount Learned" options={learnAmountArray} category="amountLearned" />
+            <ReviewChoiceChips title="Teaching Skills" options={teachingSkillsArray} category="teachingSkills" />
           </div>
           <ReviewText />
         </div>

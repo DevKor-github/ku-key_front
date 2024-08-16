@@ -1,16 +1,16 @@
 import { css, cva } from '@styled-stytem/css'
 import { useFormContext } from 'react-hook-form'
 
-import { REQUIRE_TEXT } from '@/components/courseReview/ReviewRadio'
+import { REQUIRE_TEXT } from '@/components/courseReview/ReviewChoiceChips'
 
 const ReviewTotalRate = () => {
   const { register, formState, watch, setValue } = useFormContext()
   const errorMessage = formState.errors.rate ? String(formState.errors.rate.message) : undefined
 
-  const radioArray: JSX.Element[] = []
+  const chipsArray: JSX.Element[] = []
 
   for (let i = 0; i < 5; i++) {
-    radioArray.push(
+    chipsArray.push(
       <button
         key={i}
         type="button"
@@ -93,7 +93,7 @@ const ReviewTotalRate = () => {
           },
         })({ isError: errorMessage !== undefined })}
       >
-        <div className={css({ display: 'flex', gap: 1, alignItems: 'center' })}>{radioArray}</div>
+        <div className={css({ display: 'flex', gap: 1, alignItems: 'center' })}>{chipsArray}</div>
         <span>{watch('rate')}/5</span>
         <input type="hidden" {...register('rate', { min: { value: 1, message: REQUIRE_TEXT }, max: 5 })} />
       </div>
