@@ -2,7 +2,7 @@ import { css } from '@styled-stytem/css'
 import { useParams } from 'react-router-dom'
 
 import { useGetPostsByBoard } from '@/api/hooks/community'
-import BoardPostPreview from '@/components/community/BoardPostPreview'
+import BoardPostPreview from '@/components/community/Boards/BoardPostPreview'
 import SectionTitle from '@/components/community/SectionTitle'
 import SearchBox from '@/components/timetable/SearchBox'
 import NoticeModal from '@/components/ui/modal/NoticeModal'
@@ -46,7 +46,7 @@ const BoardSearch = () => {
         initialKeyword={keyword ?? ''}
         placeholder={keyword ?? 'Search posts from entire board'}
         onSubmit={onSubmit}
-        cssProps={{ width: 608, borderRadius: '50px' }}
+        cssProps={{ borderRadius: '50px' }}
       />
       {keyword ? (
         <SectionTitle title={handleTitle()} />

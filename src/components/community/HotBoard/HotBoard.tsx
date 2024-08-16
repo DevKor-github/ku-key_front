@@ -1,7 +1,7 @@
 import { css } from '@styled-stytem/css'
 
 import { useGetHotPosts } from '@/api/hooks/community'
-import BoardPostPreview from '@/components/community/BoardPostPreview'
+import BoardPostPreview from '@/components/community/Boards/BoardPostPreview'
 import SectionTitle from '@/components/community/SectionTitle'
 import useIntersect from '@/util/useIntersect'
 

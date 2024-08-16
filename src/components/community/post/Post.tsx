@@ -6,7 +6,7 @@ import { Eye } from 'lucide-react'
 import { memo, useCallback } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import BoardTag from '@/components/community/BoardTag'
+import BoardTag from '@/components/community/Boards/BoardTag'
 import PostImgCarousel from '@/components/community/post/PostImgCarousel'
 import ReactionSection from '@/components/community/post/ReactionSection'
 import UtilButton from '@/components/community/post/UtilButton'
