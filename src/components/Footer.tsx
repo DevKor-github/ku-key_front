@@ -37,6 +37,7 @@ const Footer = () => {
         py: 13,
         px: 40,
         alignItems: 'center',
+        mt: 'auto',
       })}
     >
       <div className={css({ flex: 1.5, display: 'flex', flexDir: 'column', gap: '16px' })}>
