@@ -48,6 +48,7 @@ interface DropdownProps {
   setCurIndex: (toIndex: number) => void
   canReselect?: boolean
   isTimeSelector?: boolean
+  disabled?: boolean
 }
 
 const Dropdown = ({
@@ -56,12 +57,13 @@ const Dropdown = ({
   setCurIndex,
   canReselect = false,
   isTimeSelector = false,
+  disabled = false,
 }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
     <DropdownMenu.Root modal={false} onOpenChange={open => setIsOpen(open)}>
-      <DropdownMenu.Trigger asChild>
+      <DropdownMenu.Trigger asChild disabled={disabled}>
         <button
           className={cva({
             base: {
