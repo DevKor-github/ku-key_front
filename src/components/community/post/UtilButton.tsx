@@ -6,9 +6,10 @@ import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger } fro
 interface UtilButtonProps {
   isMine: boolean
   handleNavigation?: () => void
+  handleDelete?: () => void
   isEditable: boolean
 }
-const UtilButton = ({ isMine, handleNavigation, isEditable }: UtilButtonProps) => {
+const UtilButton = ({ isMine, handleNavigation, isEditable, handleDelete }: UtilButtonProps) => {
   return (
     <Menubar>
       <MenubarMenu>
@@ -27,7 +28,7 @@ const UtilButton = ({ isMine, handleNavigation, isEditable }: UtilButtonProps) =
           {isEditable && (
             <>
               <MenubarItem onClick={handleNavigation}>Edit</MenubarItem>
-              <MenubarItem>Delete</MenubarItem>
+              <MenubarItem onClick={handleDelete}>Delete</MenubarItem>
             </>
           )}
           {!isMine && <MenubarItem>Report</MenubarItem>}

@@ -6,7 +6,7 @@ export interface ModalPortalProps {
   children: React.ReactNode
   isOpen: boolean
   selfClose?: boolean
-  handleClose?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
+  handleClose?: (e: React.MouseEvent<HTMLDivElement | HTMLButtonElement, MouseEvent>) => void
 }
 const ModalPortal = ({ children, isOpen, selfClose, handleClose }: ModalPortalProps) => {
   return createPortal(
