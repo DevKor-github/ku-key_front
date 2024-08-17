@@ -2,16 +2,16 @@ import { css } from '@styled-stytem/css'
 import { postCard } from '@styled-stytem/recipes'
 import { formatDistanceToNow } from 'date-fns'
 import { useAtomValue, useSetAtom } from 'jotai'
-import { CircleAlert, Eye } from 'lucide-react'
+import { Eye } from 'lucide-react'
 import { memo, useCallback } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
+import { useDeletePost } from '@/api/hooks/community'
 import BoardTag from '@/components/community/Boards/BoardTag'
 import PostImgCarousel from '@/components/community/post/PostImgCarousel'
 import ReactionSection from '@/components/community/post/ReactionSection'
 import UtilButton from '@/components/community/post/UtilButton'
-import ModalCard from '@/components/ui/modal'
-import ModalPortal from '@/components/ui/modal/ModalPortal'
+import AlertModal from '@/components/ui/modal/AlertModal'
 import { postAtom, postEditAtom } from '@/lib/store/post'
 import { BoardType } from '@/types/community'
 import { useModal } from '@/util/useModal'
@@ -27,8 +27,17 @@ const Post = memo(() => {
     navigate(`/community/action/edit/post/${boardName}`)
     postEditData(postAtomData)
   }, [navigate, boardName, postEditData, postAtomData])
-  const { modalRef, isOpen, handleOpen, handleClose } = useModal()
+  const { mutate: mutateDeletePost } = useDeletePost()
+  const { modalRef, isOpen, handleOpen, handleLayoutClose, handleButtonClose } = useModal()
 
+  const handleConfirm = useCallback(() => {
+    mutateDeletePost(postAtomData.id, {
+      onSuccess: () => {
+        handleButtonClose()
+        navigate(-1)
+      },
+    })
+  }, [handleButtonClose, mutateDeletePost, navigate, postAtomData.id])
   return (
     <div className={postCard()}>
       <section
@@ -103,21 +112,17 @@ const Post = memo(() => {
       </section>
       {postAtomData.imageDirs.length > 0 && <PostImgCarousel />}
       <ReactionSection />
-      <ModalPortal isOpen={isOpen} handleClose={handleClose}>
-        <ModalCard variant="alert" ref={modalRef}>
-          <div className={css({ display: 'flex', flexDir: 'column', alignItems: 'center', bgColor: 'white' })}>
-            <CircleAlert size={58} className={css({ fill: 'red.3', color: 'white' })} />
-            <div className={css({ fontWeight: 700, color: 'black.2', fontSize: 24 })}>Are you sure?</div>
-          </div>
-          <div className={css({ fontWeight: 500, fontSize: 18, textAlign: 'center', color: 'black.2' })}>
-            Once a post has been deleted, it cannot be restored.
-          </div>
-          <div className={css({ display: 'flex', gap: 5 })}>
-            <button onClick={handleClose}>No, Keep it</button>
-            <button onClick={() => {}}>Yes, Delete!</button>
-          </div>
-        </ModalCard>
-      </ModalPortal>
+      <AlertModal
+        modalRef={modalRef}
+        title="Are you sure?"
+        content="Once a post has been deleted, it cannot be restored."
+        closeText="No, Keep it"
+        confirmText="Yes, Delete!"
+        onConfirm={handleConfirm}
+        isOpen={isOpen}
+        handleLayoutClose={handleLayoutClose}
+        handleButtonClose={handleButtonClose}
+      />
     </div>
   )
 })

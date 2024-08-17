@@ -300,3 +300,12 @@ export const usePatchEditPost = () => {
     },
   })
 }
+
+const deletePost = async (postId: number) => {
+  const response = await apiInterface.delete(`/post/${postId}`)
+  return response.data
+}
+
+export const useDeletePost = () => {
+  return useMutation({ mutationFn: deletePost })
+}
