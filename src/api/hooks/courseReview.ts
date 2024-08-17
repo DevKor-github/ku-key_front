@@ -19,7 +19,7 @@ const getReviewSummary = async (props: GetReviewSummaryRequest) => {
  */
 export const useGetReviewSummary = (props: GetReviewSummaryRequest) => {
   return useQuery({
-    queryKey: ['summary'],
+    queryKey: ['summary', props],
     queryFn: () => getReviewSummary(props),
     initialData: (): GetReviewSummaryResponse => ({
       totalRate: 0,
