@@ -12,13 +12,13 @@ import PostImgCarousel from '@/components/community/post/PostImgCarousel'
 import ReactionSection from '@/components/community/post/ReactionSection'
 import UtilButton from '@/components/community/post/UtilButton'
 import AlertModal from '@/components/ui/modal/AlertModal'
-import { persistedPostData, postAtom } from '@/lib/store/post'
+import { postAtom, postEditAtom } from '@/lib/store/post'
 import { BoardType } from '@/types/community'
 import { useModal } from '@/util/useModal'
 
 const Post = memo(() => {
   const postAtomData = useAtomValue(postAtom)
-  const postEditData = useSetAtom(persistedPostData)
+  const postEditData = useSetAtom(postEditAtom)
   const timeDistance = formatDistanceToNow(postAtomData.createdAt)
   const { boardName } = useParams()
   const formattedBoardName = `${boardName?.slice(0, 1).toUpperCase()}${boardName?.slice(1)} Board`
