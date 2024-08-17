@@ -11,8 +11,7 @@ export const buttonRecipe = defineRecipe({
     h: '54px',
     cursor: 'pointer',
     rounded: '66px',
-    fontSize: 18,
-    fontWeight: 500,
+    textStyle: 'heading4_M',
     px: '30px',
   },
   variants: {
@@ -85,7 +84,23 @@ export const buttonRecipe = defineRecipe({
         bgColor: 'bg.gray',
         color: 'lightGray.1',
         _hover: { borderColor: 'darkGray.2', color: 'darkGray.2' },
-        transition: 'all 0.3s ease-in-out',
+        transition: 'all 0.25s ease-in-out',
+      },
+      cancel: {
+        bgColor: 'lightGray.2',
+        color: 'black.2',
+        transition: 'all 0.25s ease',
+        border: '1px solid {colors.lightGray.2}',
+        _hover: { bgColor: 'transparent', color: 'darkGray.2', border: '1px solid {colors.darkGray.2}' },
+        _active: { bgColor: 'transparent', color: 'darkGray.2', border: '1px solid {colors.darkGray.2}' },
+      },
+      confirm: {
+        bgColor: 'red.3',
+        color: 'white',
+        transition: 'all 0.25s ease-in-out',
+        border: '1px solid {colors.red.3}',
+        _hover: { bgColor: 'transparent', color: 'red.3', border: '1px solid {colors.red.3}' },
+        _active: { bgColor: 'transparent', color: 'red.3', border: '1px solid {colors.red.3}' },
       },
     },
     size: {
@@ -94,12 +109,6 @@ export const buttonRecipe = defineRecipe({
       lg: { h: 11, px: 8 },
       icon: { h: 10, w: 10 },
     },
-    // size: {
-    //   default: { h: 10, px: 4, py: 2 },
-    //   sm: { h: 9, px: 3 },
-    //   lg: { h: 11, px: 8 },
-    //   icon: { h: 10, w: 10 },
-    // },
   },
   defaultVariants: {
     variant: 'default',

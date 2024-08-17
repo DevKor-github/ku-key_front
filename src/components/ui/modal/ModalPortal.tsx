@@ -6,9 +6,9 @@ export interface ModalPortalProps {
   children: React.ReactNode
   isOpen: boolean
   selfClose?: boolean
-  handleClose?: (e: React.MouseEvent<HTMLDivElement | HTMLButtonElement, MouseEvent>) => void
+  handleLayoutClose?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
 }
-const ModalPortal = ({ children, isOpen, selfClose, handleClose }: ModalPortalProps) => {
+const ModalPortal = ({ children, isOpen, selfClose, handleLayoutClose }: ModalPortalProps) => {
   return createPortal(
     <AnimatePresence>
       {isOpen && (
@@ -32,7 +32,7 @@ const ModalPortal = ({ children, isOpen, selfClose, handleClose }: ModalPortalPr
             zIndex: 100,
           })}
           transition={{ ease: 'easeInOut' }}
-          onClick={e => !selfClose && handleClose && handleClose(e)}
+          onClick={e => !selfClose && handleLayoutClose && handleLayoutClose(e)}
         >
           {children}
         </motion.div>

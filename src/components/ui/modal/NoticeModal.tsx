@@ -4,7 +4,7 @@ import { CircleAlert } from 'lucide-react'
 import ModalCard from '@/components/ui/modal'
 import ModalPortal, { ModalPortalProps } from '@/components/ui/modal/ModalPortal'
 
-interface NoticeModalProps extends Omit<ModalPortalProps, 'children' | 'handleClose' | 'selfClose'> {
+interface NoticeModalProps extends Omit<ModalPortalProps, 'children' | 'handleLayoutClose' | 'selfClose'> {
   content: string
 }
 const NoticeModal = ({ content, isOpen }: NoticeModalProps) => {
