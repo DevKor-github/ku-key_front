@@ -9,6 +9,8 @@ const CalendarHeader = () => {
     <div
       className={css({
         display: 'flex',
+        w: 'full',
+        maxW: 117,
         flexDir: 'column',
         justifyContent: 'center',
         alignItems: 'flex-start',

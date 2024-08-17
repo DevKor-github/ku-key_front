@@ -12,9 +12,6 @@ const Announcement = () => {
         bgColor: 'bg.gray',
         justifyContent: 'center',
         alignItems: 'center',
-        // justifyContent: 'space-between',
-        // px: 'calc((100vw - 1027px)/2)',
-        // flexWrap: 'wrap',
         gap: 10,
       })}
     >

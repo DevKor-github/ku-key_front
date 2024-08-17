@@ -1,27 +1,21 @@
 // import { isEqual } from 'date-fns'
-import { useEffect, useState } from 'react'
+import { useAtom } from 'jotai'
+import { useCallback, useEffect } from 'react'
 
+import { calendarAtom, selectedDateAtom, todayAtom } from '@/lib/store/calendar'
 import { DayProps } from '@/types/calendar'
 
 const DAY_NUMBER = 7
-const WEEK_NUMBER = 5
+const WEEK_NUMBER = 6
 export const useCalendar = () => {
-  const [today, setToday] = useState(new Date()) //오늘 날짜
-  const [date, setDate] = useState(today) //선택한 날짜
-  const [calendar, setCalendar] = useState<DayProps[][]>([])
+  const [today, setToday] = useAtom(todayAtom) //오늘 날짜
+  const [selectedDate, setSelectedDate] = useAtom(selectedDateAtom) //선택한 날짜
+  const [calendar, setCalendar] = useAtom(calendarAtom)
 
-  const handleSetDate = (date: Date) => {
-    // const selectedDateString = date.toLocaleDateString()
-    setDate(date)
-    // setCalendar(prevCalendar =>
-    //   prevCalendar.map(week =>
-    //     week.map(day => ({
-    //       ...day,
-    //       selected: isEqual(day.date.toLocaleDateString(), selectedDateString),
-    //     })),
-    //   ),
-    // )
-  }
+  const handleSetSelectedDate = useCallback(
+    (date: Date) => setSelectedDate(prev => (prev === date ? today : date)),
+    [setSelectedDate, today],
+  )
   useEffect(() => {
     const currentMonthStartDay = new Date(today.getFullYear(), today.getMonth(), 1).getDay() //현재 월 시작 요일
     const currentMonthStartDate = new Date(today.getFullYear(), today.getMonth(), 1).getDate() //현재 월 시작 날짜
@@ -51,5 +45,5 @@ export const useCalendar = () => {
     const totalCalendar = [...prevMonth, ...currentMonth, ...nextMonth]
     setCalendar(Array.from({ length: 6 }, (_, i) => totalCalendar.slice(i * 7, (i + 1) * 7)))
   }, [today])
-  return { today, date, calendar, setToday, handleSetDate }
+  return { today, selectedDate, calendar, setToday, handleSetSelectedDate }
 }
