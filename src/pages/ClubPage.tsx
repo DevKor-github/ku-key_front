@@ -1,35 +1,33 @@
 import { css } from '@styled-stytem/css'
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 
 import { useGetClubSearch, usePostClubLike } from '@/api/hooks/club'
-import { GetClubRequest } from '@/api/types/club'
 import CategorySelector from '@/components/club/CategorySelector'
 import ClubCard from '@/components/club/ClubCard'
 import { CategoryType } from '@/components/club/constants'
 import SearchArea from '@/components/club/SearchArea'
+import { useSearch } from '@/util/useSearch'
 
 const ClubPage = () => {
   const { mutate: likeClub } = usePostClubLike()
 
-  const [query, setQuery] = useState<GetClubRequest>({
-    keyword: '',
-    category: null,
-    sortBy: 'like',
-    wishList: false,
-  })
-
+  const { searchParam, handleSetParam, deleteParam } = useSearch()
+  const query = {
+    category: searchParam.get('category') as CategoryType,
+    keyword: searchParam.get('keyword'),
+    sortBy: searchParam.get('like') as 'like' | null,
+    wishList: searchParam.get('wishlist') === 'true',
+  }
   const { data } = useGetClubSearch(query)
 
   const setCategory = useCallback((target: CategoryType) => {
-    setQuery(p => {
-      return { ...p, category: target }
-    })
+    if (target === null) deleteParam('category')
+    else handleSetParam('category', target)
   }, [])
 
   const handleSubmit = useCallback((inputKeyword: string) => {
-    setQuery(p => {
-      return { ...p, keyword: inputKeyword }
-    })
+    if (inputKeyword === '') deleteParam('keyword')
+    else handleSetParam('keyword', inputKeyword)
   }, [])
 
   const handleLikeClick = useCallback(
