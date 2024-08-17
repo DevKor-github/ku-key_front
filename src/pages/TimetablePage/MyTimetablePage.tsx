@@ -1,5 +1,4 @@
 import { css } from '@styled-stytem/css'
-import { Download } from 'lucide-react'
 import { useCallback, useRef, useState } from 'react'
 
 import { useDeleteTimetable, useGetUserTimetableList } from '@/api/hooks/timetable'
@@ -57,9 +56,7 @@ const MyTimetablePage = () => {
           />
         </div>
         <div className={css({ display: { base: 'flex', mdDown: 'none' }, flexDir: 'row', gap: 2.5 })}>
-          <ShareBtn shareHandler={() => convertHtmlToImage(imgRef.current, 'my_timetable')}>
-            <Download />
-          </ShareBtn>
+          <ShareBtn shareHandler={() => convertHtmlToImage(imgRef.current, 'my_timetable')} />
         </div>
       </div>
       <StatusBar curSemester={semesterList[curSemester]} curIndex={curIndex} setCurIndex={setTimetableIndex} />

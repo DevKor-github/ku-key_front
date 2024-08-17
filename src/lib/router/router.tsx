@@ -2,6 +2,11 @@ import { RouteObject } from 'react-router-dom'
 
 import MainLayout from '@/components/MainLayout'
 import ProtectedRoutes from '@/lib/router/ProtectedRoutes'
+import CourseReviewPage from '@/pages/CourseReviewPage'
+import CourseInfoPage from '@/pages/CourseReviewPage/CourseInfoPage'
+import ReviewDetailPage from '@/pages/CourseReviewPage/ReviewDetailPage'
+import ReviewPage from '@/pages/CourseReviewPage/ReviewPage'
+import WriteReviewPage from '@/pages/CourseReviewPage/WriteReviewPage'
 import MainCommunityPage from '@/pages/CommunityPage'
 import BoardPage from '@/pages/CommunityPage/BoardPage'
 import PostViewPage from '@/pages/CommunityPage/PostViewPage'
@@ -35,6 +40,16 @@ const routes: RouteObject[] = [
                 element: <FriendPage />,
               },
               { path: 'friend/:userHandler', element: <FriendTimetablePage /> },
+            ],
+          },
+          {
+            path: 'course-review',
+            element: <CourseReviewPage />,
+            children: [
+              { path: 'info/:courseCode/:prof', element: <CourseInfoPage /> },
+              { path: 'detail/:courseCode/:prof', element: <ReviewPage /> },
+              { path: 'review/:courseCode/:prof/:reviewId', element: <ReviewDetailPage /> },
+              { path: 'write/:courseCode/:prof', element: <WriteReviewPage /> },
             ],
           },
           {
