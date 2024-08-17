@@ -18,7 +18,6 @@ import { useModal } from '@/util/useModal'
 
 const Post = memo(() => {
   const postAtomData = useAtomValue(postAtom)
-  console.log(postAtomData)
   const postEditData = useSetAtom(postEditAtom)
   const timeDistance = formatDistanceToNow(postAtomData.createdAt)
   const { boardName } = useParams()

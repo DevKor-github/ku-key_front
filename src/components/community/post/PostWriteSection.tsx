@@ -109,6 +109,21 @@ const PostWriteSection = () => {
       getInitialImgDirs().then(res => setInitialImgFiles(res))
     }
   }, [initialData?.imageDirs, type])
+
+  const preventClose = (e: BeforeUnloadEvent) => {
+    e.preventDefault()
+    e.returnValue = '' // chrome에서는 설정이 필요해서 넣은 코드
+  }
+
+  useEffect(() => {
+    ;(() => {
+      window.addEventListener('beforeunload', preventClose)
+    })()
+
+    return () => {
+      window.removeEventListener('beforeunload', preventClose)
+    }
+  }, [])
   return (
     <section className={cx(postCard(), css({ w: 817 }))}>
       <div
