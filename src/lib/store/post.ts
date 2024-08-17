@@ -1,3 +1,4 @@
+import { atomWithStorage, createJSONStorage } from 'jotai/utils'
 import { atom } from 'jotai/vanilla'
 
 import { CommentProps, ImageProps, PostViewProps, Reaction, User } from '@/types/community'
@@ -20,4 +21,9 @@ export const initialPostData = {
 }
 export const postAtom = atom<PostViewProps>(initialPostData)
 
-export const postEditAtom = atom<PostViewProps>(initialPostData)
+export const persistedPostData = atomWithStorage<PostViewProps>(
+  'persistedPostData',
+  initialPostData,
+  createJSONStorage(() => localStorage),
+  { getOnInit: true },
+)
