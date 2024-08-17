@@ -2,6 +2,7 @@ import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tansta
 import { useSearchParams } from 'react-router-dom'
 
 import {
+  CommentReportRequest,
   PostByBoardResponse,
   PostCommentLikeRequest,
   PostCommentRequest,
@@ -318,4 +319,13 @@ const reportPost = async ({ postId, reason }: PostReportRequest) => {
 
 export const useReportPost = () => {
   return useMutation({ mutationFn: reportPost })
+}
+
+const reportComment = async ({ commentId, reason }: CommentReportRequest) => {
+  const response = await apiInterface.post(`/comment/${commentId}/report`, { reason })
+  return response.data
+}
+
+export const useReportComment = () => {
+  return useMutation({ mutationFn: reportComment })
 }

@@ -71,3 +71,8 @@ export interface PostReportRequest {
   postId: number
   reason: string
 }
+
+export interface CommentReportRequest {
+  commentId: number
+  reason: string
+}

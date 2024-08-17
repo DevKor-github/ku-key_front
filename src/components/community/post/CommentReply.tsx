@@ -37,7 +37,12 @@ const CommentReply = ({ reply, parentId }: CommentReplyProps) => {
           alignSelf: 'stretch',
         })}
       >
-        <CommentHeader username={reply.user.username} date={reply.createdAt} isMyComment={reply.isMyComment} />
+        <CommentHeader
+          username={reply.user.username}
+          date={reply.createdAt}
+          isMyComment={reply.isMyComment}
+          commentId={reply.id}
+        />
         <p
           className={css({
             display: 'flex',
