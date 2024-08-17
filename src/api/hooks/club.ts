@@ -16,7 +16,7 @@ export const useGetClubSearch = (params: GetClubRequest) => {
     keyword: params.keyword || null,
   }
   return useQuery({
-    queryKey: ['clubSearchResult', params.category, params.keyword, params.sortBy, params.wishList],
+    queryKey: ['clubSearchResult', query],
     queryFn: () => getClub(query),
     retry: false,
   })
@@ -31,17 +31,20 @@ export const usePostClubLike = () => {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: postClubLike,
-    onSuccess: (response, { queryParams: { category, keyword, sortBy, wishList } }) => {
-      queryClient.setQueryData<GetClubResponse>(['clubSearchResult', category, keyword, sortBy, wishList], oldData => {
-        if (oldData !== undefined) {
-          return oldData.map(club => {
-            if (club.clubId === response.clubId) {
-              return response
-            }
-            return club
-          })
-        }
-      })
+    onSuccess: (response, { queryParams }) => {
+      queryClient.setQueryData<GetClubResponse>(
+        ['clubSearchResult', { ...queryParams, keyword: queryParams.keyword || null }],
+        oldData => {
+          if (oldData !== undefined) {
+            return oldData.map(club => {
+              if (club.clubId === response.clubId) {
+                return response
+              }
+              return club
+            })
+          }
+        },
+      )
     },
   })
 }
