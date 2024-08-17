@@ -2,6 +2,7 @@ import { css } from '@styled-stytem/css'
 import { useCallback, useState } from 'react'
 
 import { useGetAcademicCalendar } from '@/api/hooks/home_sub'
+import AcademicBGImg from '@/assets/AcademicBGImg.png'
 import koreaUniv from '@/assets/koreaUniv.png'
 import AcademicCalendar from '@/components/home_sub/AcademicCalendar'
 import Dropdown from '@/components/timetable/Dropdown'
@@ -30,7 +31,6 @@ const SchedulePage = () => {
       <div
         className={css({
           h: '400px',
-          bgColor: 'red.3',
           bgPosition: 'center',
           bgSize: 'cover',
           bgRepeat: 'no-repeat',
@@ -40,7 +40,9 @@ const SchedulePage = () => {
           px: 64,
           display: 'flex',
           alignItems: 'center',
+          position: 'relative',
         })}
+        style={{ backgroundImage: `url(${AcademicBGImg})` }}
       >
         Academic Schedule
       </div>

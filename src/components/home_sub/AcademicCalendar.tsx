@@ -30,6 +30,7 @@ const AcademicCalendar = ({ data, semester }: AcademicCalendarProps) => (
             display: 'flex',
             alignItems: 'center',
             minH: 22,
+            flexShrink: 0,
           })}
         >
           {numberToMonthAbb[month].toUpperCase()}
@@ -50,6 +51,7 @@ const AcademicCalendar = ({ data, semester }: AcademicCalendarProps) => (
                       borderRight: '{colors.darkGray.2} solid 0.5px',
                       display: 'flex',
                       alignItems: 'center',
+                      flexShrink: 0,
                     },
                     variants: {
                       isStart: {
