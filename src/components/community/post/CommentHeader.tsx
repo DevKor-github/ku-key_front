@@ -40,7 +40,7 @@ const CommentHeader = ({ isMyComment, username, date, commentId }: CommentHeader
         <div className={boardTag({ variant: isMyComment ? 'red' : 'small' })}>{isMyComment ? 'Author' : username}</div>
         <p className={css({ fontSize: 18, fontWeight: 500, color: 'darkGray.2' })}>{getFormatedTimeString(date)}</p>
       </div>
-      <UtilButton isMine={isMyComment} isEditable={false} handleReport={handleOpen} />
+      <UtilButton isComment isMine={isMyComment} isEditable={false} handleReport={handleOpen} />
       <AlertModal
         modalRef={modalRef}
         title="Are you sure?"

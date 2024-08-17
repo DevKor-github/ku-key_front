@@ -1,16 +1,34 @@
 import { css } from '@styled-stytem/css'
 import { Ellipsis } from 'lucide-react'
+import { useCallback } from 'react'
 
 import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger } from '@/components/ui/menubar'
+import ModalPortal from '@/components/ui/modal/ModalPortal'
+import { useModal } from '@/util/useModal'
 
 interface UtilButtonProps {
+  isComment: boolean
   isMine: boolean
   handleNavigation?: () => void
   handleDelete?: () => void
   handleReport?: () => void
   isEditable: boolean
 }
-const UtilButton = ({ isMine, handleNavigation, isEditable, handleDelete, handleReport }: UtilButtonProps) => {
+const UtilButton = ({
+  isComment,
+  isMine,
+  handleNavigation,
+  isEditable,
+  handleDelete,
+  handleReport,
+}: UtilButtonProps) => {
+  const { isOpen, handleOpen } = useModal(true)
+
+  const currentUrl = window.location.href
+  const handleShare = useCallback(() => {
+    navigator.clipboard.writeText(currentUrl)
+    handleOpen()
+  }, [currentUrl, handleOpen])
   return (
     <Menubar>
       <MenubarMenu>
@@ -33,9 +51,12 @@ const UtilButton = ({ isMine, handleNavigation, isEditable, handleDelete, handle
             </>
           )}
           {!isMine && <MenubarItem onClick={handleReport}>Report</MenubarItem>}
-          <MenubarItem>Share URL</MenubarItem>
+          {!isComment && <MenubarItem onClick={handleShare}>Share URL</MenubarItem>}
         </MenubarContent>
       </MenubarMenu>
+      <ModalPortal isOpen={isOpen} handleLayoutClose={handleOpen}>
+        <div className={css({ display: 'flex', bgColor: 'white', px: 4, py: 3, rounded: 8 })}>URL has been copied.</div>
+      </ModalPortal>
     </Menubar>
   )
 }

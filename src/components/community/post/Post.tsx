@@ -79,6 +79,7 @@ const Post = memo(() => {
             <p>{timeDistance} ago</p>
           </div>
           <UtilButton
+            isComment={false}
             isMine={postAtomData.isMyPost}
             isEditable={postAtomData.isMyPost && (boardName !== 'question' || postAtomData.comments.length < 0)}
             handleNavigation={handleNavigation}
