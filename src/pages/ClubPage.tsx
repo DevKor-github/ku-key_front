@@ -1,5 +1,5 @@
 import { css } from '@styled-stytem/css'
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 
 import { useGetClubSearch, usePostClubLike } from '@/api/hooks/club'
 import CategorySelector from '@/components/club/CategorySelector'
@@ -9,26 +9,34 @@ import SearchArea from '@/components/club/SearchArea'
 import { useSearch } from '@/util/useSearch'
 
 const ClubPage = () => {
+  const { searchParam, handleSetParam, deleteParam } = useSearch()
+  const query = useMemo(
+    () => ({
+      category: searchParam.get('category') as CategoryType,
+      keyword: searchParam.get('keyword'),
+      sortBy: searchParam.get('like') as 'like' | null,
+      wishList: searchParam.get('wishlist') === 'true',
+    }),
+    [searchParam],
+  )
+  const { data } = useGetClubSearch(query)
   const { mutate: likeClub } = usePostClubLike()
 
-  const { searchParam, handleSetParam, deleteParam } = useSearch()
-  const query = {
-    category: searchParam.get('category') as CategoryType,
-    keyword: searchParam.get('keyword'),
-    sortBy: searchParam.get('like') as 'like' | null,
-    wishList: searchParam.get('wishlist') === 'true',
-  }
-  const { data } = useGetClubSearch(query)
+  const setCategory = useCallback(
+    (target: CategoryType) => {
+      if (target === null) deleteParam('category')
+      else handleSetParam('category', target)
+    },
+    [deleteParam, handleSetParam],
+  )
 
-  const setCategory = useCallback((target: CategoryType) => {
-    if (target === null) deleteParam('category')
-    else handleSetParam('category', target)
-  }, [])
-
-  const handleSubmit = useCallback((inputKeyword: string) => {
-    if (inputKeyword === '') deleteParam('keyword')
-    else handleSetParam('keyword', inputKeyword)
-  }, [])
+  const handleSubmit = useCallback(
+    (inputKeyword: string) => {
+      if (inputKeyword === '') deleteParam('keyword')
+      else handleSetParam('keyword', inputKeyword)
+    },
+    [deleteParam, handleSetParam],
+  )
 
   const handleLikeClick = useCallback(
     (clubId: number) => {
