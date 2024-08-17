@@ -1,25 +1,22 @@
 import { css, cva } from '@styled-stytem/css'
 
-import { DayArray } from '@/types/timetable'
+import { GetCalendarYearlyResponse } from '@/api/types/home_sub'
+import { SemesterType } from '@/types/timetable'
 import { numberToMonthAbb } from '@/util/academicCalendar'
 
 interface AcademicCalendarProps {
-  data: {
-    id: number
-    title: string
-    description: string
-    date: string
-  }[][]
+  semester: SemesterType
+  data: GetCalendarYearlyResponse
 }
-const AcademicCalendar = ({ data }: AcademicCalendarProps) => (
+const AcademicCalendar = ({ data, semester }: AcademicCalendarProps) => (
   <section className={css({ display: 'flex', flexDir: 'column' })}>
-    {data.map((monthData, month) => (
+    {data.map(({ month, schedules }) => (
       <div
         key={month}
         className={cva({
           base: { display: 'flex', borderBottom: '2px solid {colors.darkGray.2}' },
           variants: { isStart: { true: { borderTop: '2px solid {colors.darkGray.2}' } } },
-        })({ isStart: month === 0 })}
+        })({ isStart: (semester === 'Spring' && month === 2) || (semester === 'Fall' && month === 8) })}
       >
         <div
           className={css({
@@ -38,8 +35,8 @@ const AcademicCalendar = ({ data }: AcademicCalendarProps) => (
           {numberToMonthAbb[month].toUpperCase()}
         </div>
         <div className={css({ display: 'flex', flexDir: 'column', alignItems: 'flex-start', flexGrow: 1 })}>
-          {monthData.map((event, index) => {
-            const date = new Date(event.date)
+          {schedules.map((event, index) => {
+            const date = new Date(event.startDate)
             return (
               <div key={`${month}-${index}`} className={css({ display: 'flex', h: 22, w: '100%' })}>
                 <div
@@ -63,7 +60,7 @@ const AcademicCalendar = ({ data }: AcademicCalendarProps) => (
                     },
                   })({ isStart: index === 0 })}
                 >
-                  {date.getDate()} ({DayArray[date.getDay()].toUpperCase()})
+                  {date.getDate()} ({event.startDay.toUpperCase()})
                 </div>
                 <div
                   className={cva({

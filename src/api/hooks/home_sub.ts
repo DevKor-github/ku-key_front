@@ -1,18 +1,18 @@
 import { useQuery } from '@tanstack/react-query'
 
 import { GetCalendarYearlyRequest, GetCalendarYearlyResponse } from '@/api/types/home_sub'
-import { initialGetCalendarYearlyResponse } from '@/util/academicCalendar'
+import { getInitialCanlendarResponse } from '@/util/academicCalendar'
 import { apiInterface } from '@/util/axios/custom-axios'
 
-const getCalendarYearly = async ({ year }: GetCalendarYearlyRequest) => {
-  const response = await apiInterface.get<GetCalendarYearlyResponse>('/calendar/yearly', { params: { year } })
+const getAcademicCalendar = async (params: GetCalendarYearlyRequest) => {
+  const response = await apiInterface.get<GetCalendarYearlyResponse>('/calendar/academic', { params })
   return response.data
 }
 
-export const useGetCalendarYearly = ({ year }: GetCalendarYearlyRequest) => {
+export const useGetAcademicCalendar = ({ year, semester }: GetCalendarYearlyRequest) => {
   return useQuery({
-    queryKey: ['academic-calendar', year],
-    queryFn: () => getCalendarYearly({ year }),
-    initialData: initialGetCalendarYearlyResponse,
+    queryKey: ['academic-calendar', year, semester],
+    queryFn: () => getAcademicCalendar({ year, semester }),
+    initialData: getInitialCanlendarResponse(semester),
   })
 }

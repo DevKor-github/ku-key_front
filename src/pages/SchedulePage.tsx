@@ -1,22 +1,22 @@
 import { css } from '@styled-stytem/css'
 import { useCallback, useState } from 'react'
 
-import { useGetCalendarYearly } from '@/api/hooks/home_sub'
+import { useGetAcademicCalendar } from '@/api/hooks/home_sub'
 import koreaUniv from '@/assets/koreaUniv.png'
 import AcademicCalendar from '@/components/home_sub/AcademicCalendar'
 import Dropdown from '@/components/timetable/Dropdown'
-import { academicSchedulePreprocess } from '@/util/academicCalendar'
-import { makeSemesterDropdownList, timetablePreprocess } from '@/util/timetableUtil'
+import { useAcademicSemester } from '@/util/academicCalendar'
+import { makeSemesterDropdownList } from '@/util/timetableUtil'
 
 const SchedulePage = () => {
-  const semesterList = timetablePreprocess([])
+  const academicSemester = useAcademicSemester()
 
-  const [dropdownIndex, setDropdownIndex] = useState(2)
-  const curYear = semesterList[dropdownIndex].year
+  const [dropdownIndex, setDropdownIndex] = useState(3)
 
-  const { data: rawData } = useGetCalendarYearly({ year: curYear })
-
-  const data = academicSchedulePreprocess(rawData)
+  const { data } = useGetAcademicCalendar({
+    year: Number(academicSemester[dropdownIndex].year),
+    semester: academicSemester[dropdownIndex].semester === 'Spring' ? 1 : 2,
+  })
 
   const setSemesterIndex = useCallback(
     (toIndex: number) => {
@@ -66,11 +66,11 @@ const SchedulePage = () => {
           </div>
           <Dropdown
             curIndex={dropdownIndex}
-            dropdownList={makeSemesterDropdownList(semesterList)}
+            dropdownList={makeSemesterDropdownList(academicSemester)}
             setCurIndex={setSemesterIndex}
           />
         </div>
-        <AcademicCalendar data={data} />
+        <AcademicCalendar semester={academicSemester[dropdownIndex].semester} data={data} />
       </div>
     </>
   )
