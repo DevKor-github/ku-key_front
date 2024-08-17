@@ -11,6 +11,7 @@ import {
   PostPreviewResponse,
   PostReactionRequest,
   PostReactionResponse,
+  PostReportRequest,
   PostScrapResponse,
 } from '@/api/types/community'
 import { CommentProps, PostPreviewByBoardMeta, PostPreviewProps, PostViewProps, ReactionType } from '@/types/community'
@@ -308,4 +309,13 @@ const deletePost = async (postId: number) => {
 
 export const useDeletePost = () => {
   return useMutation({ mutationFn: deletePost })
+}
+
+const reportPost = async ({ postId, reason }: PostReportRequest) => {
+  const response = await apiInterface.post(`/post/${postId}/report`, { reason })
+  return response.data
+}
+
+export const useReportPost = () => {
+  return useMutation({ mutationFn: reportPost })
 }

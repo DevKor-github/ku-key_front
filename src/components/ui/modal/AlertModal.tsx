@@ -24,7 +24,17 @@ const AlertModal = (props: AlertModalProps) => {
           <CircleAlert size={58} className={css({ fill: 'red.3', color: 'white' })} />
           <div className={css({ fontWeight: 700, color: 'black.2', fontSize: 24 })}>{title}</div>
         </div>
-        <div className={css({ fontWeight: 500, fontSize: 18, textAlign: 'center', color: 'black.2' })}>{content}</div>
+        <div
+          className={css({
+            fontWeight: 500,
+            fontSize: 18,
+            textAlign: 'center',
+            color: 'black.2',
+            whiteSpace: 'pre-wrap',
+          })}
+        >
+          {content}
+        </div>
         <div className={css({ display: 'flex', gap: 5 })}>
           {handleButtonClose && (
             <Button variant="cancel" onClick={handleButtonClose}>

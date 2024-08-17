@@ -7,9 +7,10 @@ interface UtilButtonProps {
   isMine: boolean
   handleNavigation?: () => void
   handleDelete?: () => void
+  handleReport?: () => void
   isEditable: boolean
 }
-const UtilButton = ({ isMine, handleNavigation, isEditable, handleDelete }: UtilButtonProps) => {
+const UtilButton = ({ isMine, handleNavigation, isEditable, handleDelete, handleReport }: UtilButtonProps) => {
   return (
     <Menubar>
       <MenubarMenu>
@@ -31,7 +32,7 @@ const UtilButton = ({ isMine, handleNavigation, isEditable, handleDelete }: Util
               <MenubarItem onClick={handleDelete}>Delete</MenubarItem>
             </>
           )}
-          {!isMine && <MenubarItem>Report</MenubarItem>}
+          {!isMine && <MenubarItem onClick={handleReport}>Report</MenubarItem>}
           <MenubarItem>Share URL</MenubarItem>
         </MenubarContent>
       </MenubarMenu>

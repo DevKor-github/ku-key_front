@@ -6,7 +6,7 @@ import { Eye } from 'lucide-react'
 import { memo, useCallback } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { useDeletePost } from '@/api/hooks/community'
+import { useDeletePost, useReportPost } from '@/api/hooks/community'
 import BoardTag from '@/components/community/Boards/BoardTag'
 import PostImgCarousel from '@/components/community/post/PostImgCarousel'
 import ReactionSection from '@/components/community/post/ReactionSection'
@@ -18,6 +18,7 @@ import { useModal } from '@/util/useModal'
 
 const Post = memo(() => {
   const postAtomData = useAtomValue(postAtom)
+  console.log(postAtomData)
   const postEditData = useSetAtom(postEditAtom)
   const timeDistance = formatDistanceToNow(postAtomData.createdAt)
   const { boardName } = useParams()
@@ -28,6 +29,7 @@ const Post = memo(() => {
     postEditData(postAtomData)
   }, [navigate, boardName, postEditData, postAtomData])
   const { mutate: mutateDeletePost } = useDeletePost()
+  const { mutate: mutateReportPost } = useReportPost()
   const { modalRef, isOpen, handleOpen, handleLayoutClose, handleButtonClose } = useModal()
 
   const handleConfirm = useCallback(() => {
@@ -38,6 +40,18 @@ const Post = memo(() => {
       },
     })
   }, [handleButtonClose, mutateDeletePost, navigate, postAtomData.id])
+
+  const handleReportConfirm = useCallback(() => {
+    mutateReportPost(
+      { postId: postAtomData.id, reason: 'Inappropriate' },
+      {
+        onSuccess: () => {
+          handleButtonClose()
+        },
+      },
+    )
+  }, [handleButtonClose, mutateReportPost, postAtomData.id])
+
   return (
     <div className={postCard()}>
       <section
@@ -69,6 +83,7 @@ const Post = memo(() => {
             isEditable={postAtomData.isMyPost && (boardName !== 'question' || postAtomData.comments.length < 0)}
             handleNavigation={handleNavigation}
             handleDelete={handleOpen}
+            handleReport={handleOpen}
           />
         </div>
         <div
@@ -112,17 +127,32 @@ const Post = memo(() => {
       </section>
       {postAtomData.imageDirs.length > 0 && <PostImgCarousel />}
       <ReactionSection />
-      <AlertModal
-        modalRef={modalRef}
-        title="Are you sure?"
-        content="Once a post has been deleted, it cannot be restored."
-        closeText="No, Keep it"
-        confirmText="Yes, Delete!"
-        onConfirm={handleConfirm}
-        isOpen={isOpen}
-        handleLayoutClose={handleLayoutClose}
-        handleButtonClose={handleButtonClose}
-      />
+      {postAtomData.isMyPost && (
+        <AlertModal
+          modalRef={modalRef}
+          title="Are you sure?"
+          content="Once a post has been deleted, it cannot be restored."
+          closeText="No, Keep it"
+          confirmText="Yes, Delete!"
+          onConfirm={handleConfirm}
+          isOpen={isOpen}
+          handleLayoutClose={handleLayoutClose}
+          handleButtonClose={handleButtonClose}
+        />
+      )}
+      {!postAtomData.isMyPost && (
+        <AlertModal
+          modalRef={modalRef}
+          title="Are you sure?"
+          content={`Do you want to report this post? ${'\n'} The report will not be processed ${'\n'}if the reason for reporting is inappropriate.`}
+          closeText="Cancel"
+          confirmText="Confirm"
+          onConfirm={handleReportConfirm}
+          isOpen={isOpen}
+          handleLayoutClose={handleLayoutClose}
+          handleButtonClose={handleButtonClose}
+        />
+      )}
     </div>
   )
 })

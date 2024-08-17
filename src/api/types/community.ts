@@ -66,3 +66,8 @@ export interface PostEditRequest {
   images?: File[]
   imageUpdate: boolean
 }
+
+export interface PostReportRequest {
+  postId: number
+  reason: string
+}
