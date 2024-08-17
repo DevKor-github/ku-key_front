@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 
 import { GetCalendarYearlyRequest, GetCalendarYearlyResponse } from '@/api/types/home_sub'
-import { getInitialCanlendarResponse } from '@/util/academicCalendar'
+import { getInitialAcademicCalendar } from '@/util/academicCalendar'
 import { apiInterface } from '@/util/axios/custom-axios'
 
 const getAcademicCalendar = async (params: GetCalendarYearlyRequest) => {
@@ -13,6 +13,6 @@ export const useGetAcademicCalendar = ({ year, semester }: GetCalendarYearlyRequ
   return useQuery({
     queryKey: ['academic-calendar', year, semester],
     queryFn: () => getAcademicCalendar({ year, semester }),
-    initialData: getInitialCanlendarResponse(semester),
+    initialData: getInitialAcademicCalendar(semester),
   })
 }

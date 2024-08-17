@@ -48,7 +48,6 @@ interface DropdownProps {
   setCurIndex: (toIndex: number) => void
   canReselect?: boolean
   isTimeSelector?: boolean
-  width?: number
 }
 
 const Dropdown = ({
@@ -57,7 +56,6 @@ const Dropdown = ({
   setCurIndex,
   canReselect = false,
   isTimeSelector = false,
-  width = 68,
 }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -67,7 +65,7 @@ const Dropdown = ({
         <button
           className={cva({
             base: {
-              w: width,
+              w: 68,
               h: '49px',
               rounded: 10,
               border: '1px {colors.lightGray.1} solid',
@@ -116,7 +114,7 @@ const Dropdown = ({
                 base: {
                   h: 0,
                   overflow: 'hidden',
-                  w: width,
+                  w: 68,
                   bgColor: 'white',
                   rounded: 10,
                   py: 0.5,
