@@ -7,6 +7,10 @@ import CourseInfoPage from '@/pages/CourseReviewPage/CourseInfoPage'
 import ReviewDetailPage from '@/pages/CourseReviewPage/ReviewDetailPage'
 import ReviewPage from '@/pages/CourseReviewPage/ReviewPage'
 import WriteReviewPage from '@/pages/CourseReviewPage/WriteReviewPage'
+import MainCommunityPage from '@/pages/CommunityPage'
+import BoardPage from '@/pages/CommunityPage/BoardPage'
+import PostViewPage from '@/pages/CommunityPage/PostViewPage'
+import WritePostPage from '@/pages/CommunityPage/WritePostPage'
 import LandingPage from '@/pages/LandingPage'
 import Login from '@/pages/LoginPage'
 import MyPage from '@/pages/MyPage'
@@ -47,6 +51,22 @@ const routes: RouteObject[] = [
               { path: 'review/:courseCode/:prof/:reviewId', element: <ReviewDetailPage /> },
               { path: 'write/:courseCode/:prof', element: <WriteReviewPage /> },
             ],
+          },
+          {
+            path: 'community',
+            element: <MainCommunityPage />,
+          },
+          {
+            path: 'community/write/post/:boardName',
+            element: <WritePostPage />,
+          },
+          {
+            path: 'community/board/:boardName',
+            element: <BoardPage />,
+          },
+          {
+            path: 'community/:boardName/post/:postId',
+            element: <PostViewPage />,
           },
         ],
       },

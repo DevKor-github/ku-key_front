@@ -137,11 +137,11 @@ export const useUpdateTimetableColor = () => {
   return useMutation({
     mutationFn: patchColor,
     onSuccess: response => {
-      const prevData = queryClient.getQueryData<GetTimetableByTimetableIdResponse>(['timetable', response.id])
-      if (prevData !== undefined) {
-        const newData: GetTimetableByTimetableIdResponse = { ...prevData, color: response.color }
-        queryClient.setQueryData(['timetable', response.id], newData)
-      }
+      queryClient.setQueryData<GetTimetableByTimetableIdResponse>(['timetable', response.id], prevData => {
+        if (prevData !== undefined) {
+          return { ...prevData, color: response.color }
+        }
+      })
     },
   })
 }
@@ -180,18 +180,16 @@ export const useDeleteCourse = () => {
     mutationFn: deleteCourse,
     onSuccess: (response, request) => {
       if (response.deleted) {
-        const prevData = queryClient.getQueryData<GetTimetableByTimetableIdResponse>(['timetable', request.timetableId])
-
-        if (prevData !== undefined) {
-          const newData: GetTimetableByTimetableIdResponse = {
-            ...prevData,
-            courses: prevData.courses.filter(course => {
-              return course.courseId !== request.courseId
-            }),
+        queryClient.setQueryData<GetTimetableByTimetableIdResponse>(['timetable', request.timetableId], prevData => {
+          if (prevData !== undefined) {
+            return {
+              ...prevData,
+              courses: prevData.courses.filter(course => {
+                return course.courseId !== request.courseId
+              }),
+            }
           }
-
-          queryClient.setQueryData(['timetable', request.timetableId], newData)
-        }
+        })
       }
     },
   })

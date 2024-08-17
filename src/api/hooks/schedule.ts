@@ -26,26 +26,26 @@ export const usePostSchedule = () => {
   return useMutation({
     mutationFn: postSchedule,
     onSuccess: response => {
-      const prevData = queryClient.getQueryData<GetTimetableByTimetableIdResponse>([
-        'timetable',
-        String(response.timetableId),
-      ])
-      if (prevData !== undefined) {
-        const newData: GetTimetableByTimetableIdResponse = {
-          ...prevData,
-          schedules: prevData.schedules.concat([
-            {
-              location: response.location,
-              scheduleDay: response.day,
-              scheduleEndTime: response.endTime,
-              scheduleId: response.id,
-              scheduleStartTime: response.startTime,
-              scheduleTitle: response.title,
-            },
-          ]),
-        }
-        queryClient.setQueryData(['timetable', String(response.timetableId)], newData)
-      }
+      queryClient.setQueryData<GetTimetableByTimetableIdResponse>(
+        ['timetable', String(response.timetableId)],
+        prevData => {
+          if (prevData !== undefined) {
+            return {
+              ...prevData,
+              schedules: prevData.schedules.concat([
+                {
+                  location: response.location,
+                  scheduleDay: response.day,
+                  scheduleEndTime: response.endTime,
+                  scheduleId: response.id,
+                  scheduleStartTime: response.startTime,
+                  scheduleTitle: response.title,
+                },
+              ]),
+            }
+          }
+        },
+      )
     },
   })
 }
@@ -96,29 +96,29 @@ export const usePatchSchedule = () => {
   return useMutation({
     mutationFn: patchSchedule,
     onSuccess: response => {
-      const prevData = queryClient.getQueryData<GetTimetableByTimetableIdResponse>([
-        'timetable',
-        String(response.timetableId),
-      ])
-      if (prevData !== undefined) {
-        const newData: GetTimetableByTimetableIdResponse = {
-          ...prevData,
-          schedules: prevData.schedules.map(schedule => {
-            if (schedule.scheduleId === response.id) {
-              return {
-                location: response.location,
-                scheduleDay: response.day,
-                scheduleEndTime: response.endTime,
-                scheduleId: response.id,
-                scheduleStartTime: response.startTime,
-                scheduleTitle: response.title,
-              }
+      queryClient.setQueryData<GetTimetableByTimetableIdResponse>(
+        ['timetable', String(response.timetableId)],
+        prevData => {
+          if (prevData !== undefined) {
+            return {
+              ...prevData,
+              schedules: prevData.schedules.map(schedule => {
+                if (schedule.scheduleId === response.id) {
+                  return {
+                    location: response.location,
+                    scheduleDay: response.day,
+                    scheduleEndTime: response.endTime,
+                    scheduleId: response.id,
+                    scheduleStartTime: response.startTime,
+                    scheduleTitle: response.title,
+                  }
+                }
+                return schedule
+              }),
             }
-            return schedule
-          }),
-        }
-        queryClient.setQueryData(['timetable', String(response.timetableId)], newData)
-      }
+          }
+        },
+      )
     },
   })
 }
