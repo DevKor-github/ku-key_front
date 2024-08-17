@@ -30,11 +30,11 @@ const SchedulePage = () => {
     <>
       <div
         className={css({
-          h: '400px',
+          h: { base: '400px', mdDown: '200px' },
           bgPosition: 'center',
           bgSize: 'cover',
           bgRepeat: 'no-repeat',
-          fontSize: 64,
+          fontSize: { base: 64, mdDown: 32 },
           fontWeight: 700,
           color: 'white',
           px: { base: 64, mdDown: 5 },
