@@ -12,7 +12,9 @@ const MainLayout = () => {
         <title>KU-key</title>
       </Helmet>
       <Header />
-      <Outlet />
+      <div>
+        <Outlet />
+      </div>
       <Footer />
     </div>
   )
