@@ -1,10 +1,10 @@
-export interface Event {
+export interface CalendarEventProps {
   id: number
   title: string
   description: string
 }
 export interface CalendarResponse {
   date: Date
-  events: Event[]
+  event: CalendarEventProps[]
   eventCount: number
 }

@@ -32,9 +32,6 @@ const routes: RouteObject[] = [
         path: '/',
         element: <LandingPage />,
       },
-        path: '/',
-        element: <LandingPage />,
-      },
       {
         path: '',
         element: <ProtectedRoutes />,

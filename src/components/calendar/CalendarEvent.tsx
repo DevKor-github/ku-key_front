@@ -1,42 +1,55 @@
 import { css } from '@styled-stytem/css'
-import { format } from 'date-fns'
+import { format, isEqual } from 'date-fns'
+import { useAtomValue } from 'jotai'
 
+import { CalendarResponse } from '@/api/types/calendar'
 import Event from '@/components/calendar/Event'
+import { selectedDateAtom } from '@/lib/store/calendar'
 
-const CalendarEvent = () => {
-  const today = new Date()
+interface CalendarEventProps {
+  calendarEvent: CalendarResponse[]
+}
+const CalendarEvent = ({ calendarEvent }: CalendarEventProps) => {
+  const selectedDate = useAtomValue(selectedDateAtom)
   return (
     <div
       className={css({
         display: 'flex',
-        w: '369px',
-        maxH: '456px',
+        w: 'full',
+        maxW: 398,
+        maxH: '493px',
         flexDir: 'column',
         alignItems: 'flex-start',
-        flexShrink: 0,
+        alignSelf: 'stretch',
       })}
     >
-      <div className={css({ display: 'flex', px: 1.5, py: 5 })}>
-        <p className={css({ fontSize: 28, fontWeight: 600 })}>{format(today, 'MMMM')}</p>
+      <div className={css({ display: 'flex', p: 5, alignItems: 'center' })}>
+        <p className={css({ fontSize: 26, fontWeight: 600 })}>{format(selectedDate, 'MMMM')} Events</p>
       </div>
       <div
         className={css({
           display: 'flex',
           flexDir: 'column',
+          alignItems: 'flex-start',
           gap: 5,
           w: 'full',
-          maxH: 383,
+          maxH: 422,
           overflowY: 'scroll',
-          px: 1,
-          py: 1.5,
-          pr: '23px',
+          p: 1,
+          // mr: 5,
         })}
       >
-        <Event date={new Date()} isToday content="Start Date of School" />
-        <Event date={new Date()} isToday content="Start Date of School" />
-        <Event date={new Date()} isToday content="Start Date of School" />
-        <Event date={new Date()} isToday content="Start Date of School" />
-        <Event date={new Date()} isToday content="Start Date of School" />
+        {calendarEvent?.map(
+          (event, index) =>
+            event.eventCount > 0 && (
+              <Event
+                key={index}
+                date={new Date(event.date)}
+                isSelected={isEqual(selectedDate.toLocaleDateString(), new Date(event.date).toLocaleDateString())}
+                content={event.event[0].title}
+              />
+            ),
+        )}
       </div>
     </div>
   )

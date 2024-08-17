@@ -1,22 +1,25 @@
 import { css } from '@styled-stytem/css'
+import { isEqual } from 'date-fns'
 
-import { useGetCalendar } from '@/api/hooks/calendar'
+import { CalendarResponse } from '@/api/types/calendar'
 import Day from '@/components/calendar/Day'
 import WeekHeader from '@/components/calendar/WeekHeader'
 import { useCalendar } from '@/util/useCalendar'
 
-const CalendarContainer = () => {
-  const { calendar, handleSetDate, date, today } = useCalendar()
-  const { data: calendarEvent } = useGetCalendar(today.getFullYear(), today.getMonth() + 1)
+interface CalendarContainerProps {
+  calendarEvent: CalendarResponse[]
+}
+const CalendarContainer = ({ calendarEvent }: CalendarContainerProps) => {
+  const { calendar, handleSetSelectedDate, selectedDate, today } = useCalendar()
   return (
     <div
       className={css({
         display: 'flex',
         flexDir: 'column',
-        py: '13px',
+        pt: '13px',
         px: 2.5,
         justifyContent: 'center',
-        alignItems: 'flex-start',
+        alignItems: 'center',
         gap: 5,
       })}
     >
@@ -26,7 +29,6 @@ const CalendarContainer = () => {
           display: 'flex',
           flexDir: 'column',
           alignItems: 'flex-start',
-          gap: 2.5,
           alignSelf: 'stretch',
         })}
       >
@@ -35,14 +37,22 @@ const CalendarContainer = () => {
             key={index}
             className={css({
               display: 'flex',
+              w: 'full',
+              maxW: 410,
+              alignSelf: 'stretch',
               justifyContent: 'center',
               alignItems: 'center',
               gap: 2,
             })}
           >
             {week.map((day, index) => (
-              <button key={index} onClick={() => handleSetDate(day.date)}>
-                <Day day={day} date={date} eventCount={0} />
+              <button key={index} onClick={() => handleSetSelectedDate(day.date)}>
+                <Day
+                  day={day}
+                  isToday={isEqual(today.toLocaleDateString(), day.date.toLocaleDateString())}
+                  selectedDate={selectedDate}
+                  eventCount={calendarEvent[index]?.eventCount}
+                />
               </button>
             ))}
           </div>
