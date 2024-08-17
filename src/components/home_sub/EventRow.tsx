@@ -22,6 +22,11 @@ const EventRow = ({ index, event }: EventRowProps) => {
             borderRight: '{colors.darkGray.2} solid 0.5px',
             display: 'flex',
             alignItems: 'center',
+            mdDown: {
+              fontSize: 14,
+              w: 22,
+              px: 3,
+            },
           },
           variants: {
             isStart: {
@@ -44,6 +49,10 @@ const EventRow = ({ index, event }: EventRowProps) => {
             letterSpacing: '-0.4px',
             display: 'flex',
             alignItems: 'center',
+            mdDown: {
+              fontSize: 12,
+              pl: 3,
+            },
           },
           variants: {
             isStart: {

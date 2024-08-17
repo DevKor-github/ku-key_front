@@ -10,13 +10,13 @@ import { useAcademicSemester } from '@/util/academicCalendar'
 import { makeSemesterDropdownList } from '@/util/timetableUtil'
 
 const SchedulePage = () => {
-  const academicSemester = useAcademicSemester()
-
   const [dropdownIndex, setDropdownIndex] = useState(3)
 
+  const academicSemester = useAcademicSemester()
+  const curSemester = academicSemester[dropdownIndex]
   const { data } = useGetAcademicCalendar({
-    year: Number(academicSemester[dropdownIndex].year),
-    semester: academicSemester[dropdownIndex].semester === 'Spring' ? 1 : 2,
+    year: Number(curSemester.year),
+    semester: curSemester.semester === 'Spring' ? 1 : 2,
   })
 
   const setSemesterIndex = useCallback(
@@ -37,7 +37,7 @@ const SchedulePage = () => {
           fontSize: 64,
           fontWeight: 700,
           color: 'white',
-          px: 64,
+          px: { base: 64, mdDown: 5 },
           display: 'flex',
           alignItems: 'center',
           position: 'relative',
@@ -46,7 +46,16 @@ const SchedulePage = () => {
       >
         Academic Schedule
       </div>
-      <div className={css({ px: 64, py: 30, display: 'flex', flexDir: 'column', gap: 10, bgColor: 'bg.gray' })}>
+      <div
+        className={css({
+          px: { base: 64, mdDown: 5 },
+          py: 30,
+          display: 'flex',
+          flexDir: 'column',
+          gap: 10,
+          bgColor: 'bg.gray',
+        })}
+      >
         <div
           className={css({
             display: 'flex',
@@ -56,7 +65,14 @@ const SchedulePage = () => {
         >
           <div className={css({ display: 'flex', gap: 4, alignItems: 'center' })}>
             <img src={koreaUniv} alt="Korea University Logo" className={css({ w: 11 })} />
-            <div className={css({ display: 'flex', flexDir: 'column', justifyContent: 'space-between' })}>
+            <div
+              className={css({
+                display: 'flex',
+                flexDir: 'column',
+                justifyContent: 'space-between',
+                mdDown: { display: 'none' },
+              })}
+            >
               <div className={css({ display: 'flex', gap: 4, alignItems: 'flex-end', color: 'black.2' })}>
                 <span className={css({ fontSize: 30, fontWeight: 700 })}>KOREA Univ</span>
                 <span className={css({ fontSize: 24 })}>Academic Schedule</span>
@@ -72,7 +88,7 @@ const SchedulePage = () => {
             setCurIndex={setSemesterIndex}
           />
         </div>
-        <AcademicCalendar semester={academicSemester[dropdownIndex].semester} data={data} />
+        <AcademicCalendar semester={curSemester.semester} data={data} />
       </div>
     </>
   )
