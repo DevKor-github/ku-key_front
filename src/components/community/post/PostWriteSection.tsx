@@ -11,7 +11,7 @@ import Button from '@/components/ui/button'
 import NoticeModal from '@/components/ui/modal/NoticeModal'
 import { MemoizedTextAreaAutosize } from '@/components/ui/textarea-autosize'
 import { POST_MEESSAGES } from '@/lib/messages/community'
-import { initialPostData, postEditAtom } from '@/lib/store/post'
+import { initialPostData, persistedPostData } from '@/lib/store/post'
 import { createFileFromUrl } from '@/util/create-file-from -url'
 import { useFile } from '@/util/useFile'
 import { useModal } from '@/util/useModal'
@@ -28,7 +28,7 @@ const PostWriteSection = () => {
     boardName: 'main' | 'community' | 'question' | 'information'
     type: ActionType
   }
-  const [initialData, setInitialData] = useAtom(postEditAtom)
+  const [initialData, setInitialData] = useAtom(persistedPostData)
   const [initialImgFiles, setInitialImgFiles] = useState<File[]>()
   const [currentIndex, setCurIndex] = useState(boardConfig[boardName ?? 'main'])
   const { isOpen, handleOpen } = useModal(true)
