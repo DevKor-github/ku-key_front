@@ -1,6 +1,7 @@
 import { css, cva } from '@styled-stytem/css'
 import { useCallback, useEffect } from 'react'
 
+import DeleteAccount from '@/components/mypage/Contents/DeleteAccount'
 import MyCourseReview from '@/components/mypage/Contents/MyCourseReview'
 import MyPoint from '@/components/mypage/Contents/MyPoint'
 import PointHistory from '@/components/mypage/Contents/PointHistory'
@@ -89,8 +90,10 @@ const MyPageContents = () => {
           switch (curPage) {
             case 'point-history':
               return <PointHistory />
-            case 'course-review' :
+            case 'course-review':
               return <MyCourseReview />
+            case 'delete-account':
+              return <DeleteAccount />
             default:
               return <MyPoint />
           }
