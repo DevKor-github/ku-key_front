@@ -18,7 +18,6 @@ const SchoolInstitutionSection = () => {
       className={css({
         display: 'flex',
         flexDir: 'column',
-        border: '1px solid',
         justifyContent: 'center',
         alignItems: 'center',
       })}

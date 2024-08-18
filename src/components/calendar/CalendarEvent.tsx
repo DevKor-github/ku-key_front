@@ -1,6 +1,7 @@
 import { css } from '@styled-stytem/css'
 import { format, isEqual } from 'date-fns'
 import { useAtomValue } from 'jotai'
+import { useEffect, useRef } from 'react'
 
 import { CalendarResponse } from '@/api/types/calendar'
 import Event from '@/components/calendar/Event'
@@ -11,6 +12,20 @@ interface CalendarEventProps {
 }
 const CalendarEvent = ({ calendarEvent }: CalendarEventProps) => {
   const selectedDate = useAtomValue(selectedDateAtom)
+  const scrollRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (selectedDate && scrollRef.current) {
+      const selectedEventElement = Array.from(scrollRef.current.children).find((_, index) => {
+        const eventDate = new Date(calendarEvent[index].date) // Event 컴포넌트에서 date prop을 가져옵니다.
+        return isEqual(eventDate.toLocaleDateString(), selectedDate.toLocaleDateString())
+      })
+
+      if (selectedEventElement) {
+        selectedEventElement.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      }
+    }
+  }, [selectedDate, calendarEvent])
   return (
     <div
       className={css({
@@ -27,6 +42,7 @@ const CalendarEvent = ({ calendarEvent }: CalendarEventProps) => {
         <p className={css({ fontSize: 26, fontWeight: 600 })}>{format(selectedDate, 'MMMM')} Events</p>
       </div>
       <div
+        ref={scrollRef}
         className={css({
           display: 'flex',
           flexDir: 'column',
@@ -43,7 +59,7 @@ const CalendarEvent = ({ calendarEvent }: CalendarEventProps) => {
           (event, index) =>
             event.eventCount > 0 && (
               <Event
-                key={index}
+                key={`${new Date(event.date).toTimeString()}-${index}`}
                 date={new Date(event.date)}
                 isSelected={isEqual(selectedDate.toLocaleDateString(), new Date(event.date).toLocaleDateString())}
                 content={event.event[0].title}
