@@ -43,3 +43,22 @@ export interface PostReviewRequest {
   professorName: string
   courseCode: string
 }
+
+export type GetMyReviewResponse = {
+  id: number
+  reviewer: string
+  createdAt: string
+  rate: number
+  classLevel: number
+  teamProject: number
+  amountLearned: number
+  teachingSkills: number
+  attendance: number
+  recommendCount: number
+  textReview: string
+  professorName: string
+  year: string
+  semester: string
+  courseCode: string
+  userId: number
+}[]

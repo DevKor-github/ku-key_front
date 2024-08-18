@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import {
+  GetMyReviewResponse,
   GetReviewsRequest,
   GetReviewsResponse,
   GetReviewSummaryRequest,
@@ -63,5 +64,18 @@ export const usePostReview = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['summary'] })
     },
+  })
+}
+
+const getMyReview = async () => {
+  const response = await apiInterface.get<GetMyReviewResponse>('/course-review/my-course-reviews')
+  return response.data
+}
+
+export const useGetMyReview = () => {
+  return useQuery({
+    queryKey: ['myReview'],
+    queryFn: getMyReview,
+    initialData: [],
   })
 }
