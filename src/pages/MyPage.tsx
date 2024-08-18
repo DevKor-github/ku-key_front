@@ -2,7 +2,8 @@ import { css } from '@styled-stytem/css'
 
 import MypageBG from '@/assets/MypageBG.jpg'
 import DueDateCard from '@/components/mypage/DueDateCard'
-import MemoryCarousel from '@/components/mypage/MemoryCarousel'
+import Mask from '@/components/mypage/Mask'
+import MyPageContents from '@/components/mypage/MyPageContents'
 import MypageWrapper from '@/components/mypage/MypageWrapper'
 import UserInfo from '@/components/mypage/UserInfo'
 
@@ -14,10 +15,9 @@ const MyPage = () => {
           display: 'flex',
           flexDir: 'column',
           w: 'full',
-          h: { base: 680, mdDown: 340 },
           alignItems: 'flex-start',
           color: 'white',
-          bg: 'white',
+          bgColor: 'bg.gray',
         })}
       >
         <div
@@ -41,7 +41,7 @@ const MyPage = () => {
         </div>
         <DueDateCard />
       </div>
-      <MemoryCarousel />
+      <MyPageContents />
     </MypageWrapper>
   )
 }
