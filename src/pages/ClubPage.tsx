@@ -7,6 +7,7 @@ import ClubCard from '@/components/club/ClubCard'
 import { CategoryType } from '@/components/club/constants'
 import SearchArea from '@/components/club/SearchArea'
 import { useSearch } from '@/util/useSearch'
+import ClubBGImg from '@/assets/ClubBGImg.png'
 
 const ClubPage = () => {
   const { searchParam, handleSetParam, deleteParam } = useSearch()
@@ -49,18 +50,18 @@ const ClubPage = () => {
     <>
       <div
         className={css({
-          h: '400px',
-          bgColor: 'red.3',
+          h: { base: '400px', mdDown: '200px' },
           bgPosition: 'center',
           bgSize: 'cover',
           bgRepeat: 'no-repeat',
-          fontSize: 64,
+          fontSize: { base: 64, mdDown: 32 },
           fontWeight: 700,
           color: 'white',
-          px: 64,
+          px: { base: 64, mdDown: 5 },
           display: 'flex',
           alignItems: 'center',
         })}
+        style={{ backgroundImage: `url(${ClubBGImg})` }}
       >
         Club
       </div>
