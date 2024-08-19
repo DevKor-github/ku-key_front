@@ -7,14 +7,13 @@ interface EventRowProps {
   event: EventType
 }
 const EventRow = ({ index, event }: EventRowProps) => {
-  const date = new Date(event.startDate)
   return (
     <div className={css({ display: 'flex', h: 22, w: '100%' })}>
       <div
         className={cva({
           base: {
             flexShrink: 0,
-            w: 57,
+            w: 60,
             px: 7,
             color: 'black.1',
             fontSize: 20,
@@ -37,7 +36,9 @@ const EventRow = ({ index, event }: EventRowProps) => {
           },
         })({ isStart: index === 0 })}
       >
-        {date.getDate()} ({event.startDay.toUpperCase()})
+        {event.startDate === event.endDate
+          ? `${new Date(event.startDate).getDate()} (${event.startDay.toUpperCase()})`
+          : `${new Date(event.startDate).getDate()} (${event.startDay.toUpperCase()}) ~ ${new Date(event.endDate).getDate()} (${event.endDay.toUpperCase()})`}
       </div>
       <div
         className={cva({
