@@ -11,7 +11,6 @@ import { todayAtom } from '@/lib/store/calendar'
 const CalendarSection = () => {
   const today = useAtomValue(todayAtom)
   const { data: calendarEvent } = useGetCalendar(today.getFullYear(), today.getMonth() + 1)
-
   return (
     <section
       className={css({
