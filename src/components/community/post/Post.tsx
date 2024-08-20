@@ -1,5 +1,6 @@
 import { css } from '@styled-stytem/css'
 import { postCard } from '@styled-stytem/recipes'
+import { isAxiosError } from 'axios'
 import { formatDistanceToNow } from 'date-fns'
 import { useAtomValue, useSetAtom } from 'jotai'
 import { Eye } from 'lucide-react'
@@ -12,6 +13,7 @@ import PostImgCarousel from '@/components/community/post/PostImgCarousel'
 import ReactionSection from '@/components/community/post/ReactionSection'
 import UtilButton from '@/components/community/post/UtilButton'
 import AlertModal from '@/components/ui/modal/AlertModal'
+import { REPORT_MESSAGES } from '@/lib/messages/community'
 import { persistedPostData, postAtom } from '@/lib/store/post'
 import { BoardType } from '@/types/community'
 import { useModal } from '@/util/useModal'
@@ -46,6 +48,12 @@ const Post = memo(() => {
       {
         onSuccess: () => {
           handleButtonClose()
+        },
+        onError: error => {
+          if (isAxiosError(error) && error.response?.data.message === REPORT_MESSAGES.REPORT_ERROR) {
+            handleButtonClose()
+            alert(REPORT_MESSAGES.REPORT_ERROR)
+          }
         },
       },
     )
