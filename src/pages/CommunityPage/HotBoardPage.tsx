@@ -2,7 +2,7 @@ import { css, cx } from '@styled-stytem/css'
 import { globalLayout } from '@styled-stytem/recipes'
 
 import BackgroundImage from '@/assets/CommunityBG.jpg'
-import HotBoard from '@/components/community/HotBoard/HotBoard'
+import HotBoard from '@/components/community/HotBoard'
 // import HotBoardHorizontalPreview from '@/components/community/HotBoard/HotBoardHorizontalPreview'
 import RecentPreview from '@/components/community/RecentPreview'
 

@@ -1,4 +1,4 @@
-import { UseEmblaCarouselType } from 'embla-carousel-react'
+import useEmblaCarousel, { UseEmblaCarouselType } from 'embla-carousel-react'
 import { useCallback, useEffect, useState } from 'react'
 
 type UsePrevNextButtonsType = {
@@ -10,6 +10,12 @@ type UsePrevNextButtonsType = {
   onToggleAutoplay: () => void
   onButtonAutoplayClick: (callback: () => void) => void
 }
+
+type CarouselApi = UseEmblaCarouselType[1]
+type UseCarouselParameters = Parameters<typeof useEmblaCarousel>
+type CarouselOptions = UseCarouselParameters[0]
+type CarouselPlugin = UseCarouselParameters[1]
+type test = CarouselPlugin & { isPlaying: () => boolean; stop: () => void; play: () => void; reset: () => void }
 
 export const usePrevNextButtons = (emblaApi: UseEmblaCarouselType[1] | undefined): UsePrevNextButtonsType => {
   const [currentSlide, setCurrentSlide] = useState(0)
@@ -27,9 +33,8 @@ export const usePrevNextButtons = (emblaApi: UseEmblaCarouselType[1] | undefined
 
   const onToggleAutoplay = useCallback(() => {
     if (!emblaApi) return
-    const autoplay = emblaApi.plugins()?.autoplay
+    const autoplay = emblaApi.plugins().autoplay
     if (!autoplay) return
-
     const playOrStop = autoplay.isPlaying() ? autoplay.stop : autoplay.play
     playOrStop()
   }, [emblaApi])

@@ -49,18 +49,18 @@ const CommunitySearch = () => {
       )}
       <div className={css({ display: 'flex', mt: 20, flexDir: 'column', gap: '50px', mb: 25 })}>
         {posts?.map(post => (
-          <div ref={fetchNextRef} key={post.id}>
-            <PostPreview
-              id={post.id}
-              title={post.title}
-              boardName={post.boardName}
-              user={post.user}
-              createdAt={post.createdAt}
-              content={post.content}
-              thumbnailDir={post.thumbnailDir}
-            />
-          </div>
+          <PostPreview
+            key={post.id}
+            id={post.id}
+            title={post.title}
+            boardName={post.boardName}
+            user={post.user}
+            createdAt={post.createdAt}
+            content={post.content}
+            thumbnailDir={post.thumbnailDir}
+          />
         ))}
+        <div ref={fetchNextRef} />
       </div>
       <NoticeModal content={COMMUNITY_SEARCH_MESSAGES.REQUIRED_LENGTH} isOpen={isOpen} />
     </div>

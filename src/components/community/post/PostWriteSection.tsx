@@ -12,7 +12,7 @@ import NoticeModal from '@/components/ui/modal/NoticeModal'
 import { MemoizedTextAreaAutosize } from '@/components/ui/textarea-autosize'
 import { POST_MEESSAGES } from '@/lib/messages/community'
 import { initialPostData, persistedPostData } from '@/lib/store/post'
-import { createFileFromUrl } from '@/util/create-file-from -url'
+import { createFileFromUrl } from '@/util/create-file-from-url'
 import { useFile } from '@/util/useFile'
 import { useModal } from '@/util/useModal'
 
@@ -124,6 +124,10 @@ const PostWriteSection = () => {
       window.removeEventListener('beforeunload', preventClose)
     }
   }, [])
+
+  useEffect(() => {
+    return setInitialData(initialPostData)
+  }, [setInitialData])
   return (
     <section className={cx(postCard(), css({ w: 817 }))}>
       <div

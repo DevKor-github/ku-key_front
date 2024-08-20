@@ -18,23 +18,23 @@ const HotBoard = () => {
 
       <div className={css({ display: 'flex', mt: 20, flexDir: 'column', gap: '50px', mb: 25 })}>
         {data?.map(post => (
-          <div key={post.id} ref={fetchNextRef}>
-            <BoardPostPreview
-              id={post.id}
-              title={post.title}
-              content={post.content}
-              createdAt={post.createdAt}
-              user={post.user}
-              reactionCount={post.reactionCount}
-              views={post.views}
-              myScrap={post.myScrap}
-              commentCount={post.commentCount}
-              scrapCount={post.scrapCount}
-              thumbnailDir={post.thumbnailDir}
-              boardName={post.boardName}
-            />
-          </div>
+          <BoardPostPreview
+            key={post.id}
+            id={post.id}
+            title={post.title}
+            content={post.content}
+            createdAt={post.createdAt}
+            user={post.user}
+            reactionCount={post.reactionCount}
+            views={post.views}
+            myScrap={post.myScrap}
+            commentCount={post.commentCount}
+            scrapCount={post.scrapCount}
+            thumbnailDir={post.thumbnailDir}
+            boardName={post.boardName}
+          />
         ))}
+        <div ref={fetchNextRef} />
       </div>
     </div>
   )
