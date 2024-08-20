@@ -6,6 +6,11 @@ import { apiInterface } from '@/util/axios/custom-axios'
 const getClub = async (params: GetClubRequest) => {
   const response = await apiInterface.get<GetClubResponse>('/club', {
     params,
+    headers: {
+      'Cache-Control': 'no-store',
+      Pragma: 'no-cache',
+      Expires: '0',
+    },
   })
   return response.data
 }
