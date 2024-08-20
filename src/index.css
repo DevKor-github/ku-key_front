@@ -9,6 +9,10 @@ svg {
   font-family: 'Pretendard';
 }
 
+img {
+  display: inline-block;
+}
+
 /*
 a {
   font-weight: 500;
