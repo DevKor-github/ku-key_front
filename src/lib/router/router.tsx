@@ -15,6 +15,7 @@ import LandingPage from '@/pages/LandingPage'
 import Login from '@/pages/LoginPage'
 import MyPage from '@/pages/MyPage'
 import RegisterPage from '@/pages/RegisterPage'
+import SchedulePage from '@/pages/SchedulePage'
 import TimetablePage from '@/pages/TimetablePage'
 import FriendPage from '@/pages/TimetablePage/FriendPage'
 import FriendTimetablePage from '@/pages/TimetablePage/FriendTimetablePage'
@@ -71,6 +72,7 @@ const routes: RouteObject[] = [
         ],
       },
       { path: 'home', element: <LandingPage /> },
+      { path: 'schedule', element: <SchedulePage /> },
       { path: 'login', element: <Login /> },
       { path: 'register', element: <RegisterPage /> },
     ],
