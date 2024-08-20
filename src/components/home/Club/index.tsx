@@ -6,13 +6,20 @@ import HomeTitle from '@/components/home/HomeTitle'
 
 const Club = () => {
   return (
-    <div className={css({ display: 'flex', flexDir: 'column' })}>
-      <div className={css({ w: 'full', h: 15, bgColor: 'bg.gray' })} />
+    <section
+      className={css({
+        display: 'flex',
+        flexDir: 'column',
+        bgColor: 'bg.gray',
+        justifyContent: 'center',
+        alignItems: 'center',
+      })}
+    >
       <HomeTitle title="Club" navLink="" />
       <HotClub />
       <RecommendClub />
-      <div className={css({ w: 'full', h: 30, bgColor: 'bg.gray' })} />
-    </div>
+      {/* <div className={css({ w: 'full', h: 30, bgColor: 'bg.gray' })} /> */}
+    </section>
   )
 }
 
