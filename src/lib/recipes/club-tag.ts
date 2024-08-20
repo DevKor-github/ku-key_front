@@ -5,7 +5,7 @@ export const clubTagRecipe = defineRecipe({
   description: 'A club tag component',
   base: {
     display: 'flex',
-    h: '31px',
+    bgColor: 'white',
     py: 1.5,
     px: 2.5,
     rounded: 91,

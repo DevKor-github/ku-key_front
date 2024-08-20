@@ -13,16 +13,16 @@ const HomeTitle = ({ title, navLink }: HomeTitleProps) => {
     <div
       className={css({
         display: 'flex',
-        flexDir: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
         py: 4,
         bgColor: 'bg.gray',
-        gap: 679,
-        px: 'calc((100vw - 1027px)/2)',
+        w: 'full',
+        maxW: 1026,
+        // px: 'calc((100vw - 1026px)/2)',
       })}
     >
-      <h1 className={css({ fontSize: 32, fontWeight: 800 })}>{title}</h1>
+      <h1 className={css({ fontSize: 36, fontWeight: 700 })}>{title}</h1>
       <button
         className={css({
           display: 'flex',

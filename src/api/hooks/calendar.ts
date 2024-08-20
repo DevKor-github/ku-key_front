@@ -12,6 +12,6 @@ export const useGetCalendar = (year: number, month: number) => {
   return useQuery({
     queryKey: ['calendar', year, month],
     queryFn: () => getCalendar(year, month),
-    initialData: [{ date: new Date(), events: [], eventCount: 0 }] as CalendarResponse[],
+    initialData: [{ date: new Date(), event: [], eventCount: 0 }] as CalendarResponse[],
   })
 }

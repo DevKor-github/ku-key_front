@@ -3,5 +3,4 @@ export interface ClubProfileProps {
   name: string
   description: string
   clubDivision: string
-  rank: number
 }
