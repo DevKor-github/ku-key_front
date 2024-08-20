@@ -15,6 +15,13 @@ export const textStyles = defineTextStyles({
       fontWeight: 700,
     },
   },
+  heading3_M: {
+    description: 'Heading 3 Medium',
+    value: {
+      fontSize: 20,
+      fontWeight: 500,
+    },
+  },
   heading4_M: {
     description: 'Heading 4 Medium',
     value: {

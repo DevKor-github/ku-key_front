@@ -1,7 +1,6 @@
 import { css } from '@styled-stytem/css'
 import { Link, useLocation } from 'react-router-dom'
 
-import LanguageButton from '@/components/header/LanguageButton'
 import { NavLinkButton } from '@/components/header/NavLinkButton'
 import { headerRouteConfig } from '@/lib/router/header-route'
 
@@ -11,34 +10,32 @@ const Header = () => {
   const curPathRoot = curPath.split('/')[1]
 
   return (
-    <div
+    <header
       className={css({
         display: 'flex',
-        flexDir: 'row',
         h: 20,
         minH: 20,
-        borderBottom: '1.5px solid {colors.lightGray.2}',
+        // borderBottom: '1.5px solid {colors.lightGray.2}',
         bg: 'white',
         justifyContent: 'space-between',
         alignItems: 'center',
-        px: { base: '149px', mdDown: 5 },
+        px: { base: '150px', mdDown: 5 },
       })}
     >
-      <div
+      <nav
         className={css({
-          color: 'red.2',
-          fontSize: { base: 24, mdDown: 20 },
-          fontWeight: 700,
+          color: 'black.2',
+          base: { textStyle: 'heading3_L' },
+          mdDown: { textStyle: 'heading4_L' },
         })}
       >
         <Link to="/">KU-key</Link>
-      </div>
-      <div
+      </nav>
+      <nav
         className={css({
           display: { base: 'flex', mdDown: 'none' },
-          gap: 15,
-          alignSelf: 'flex-end',
-          mb: '10px',
+          gap: '50px',
+          alignItems: 'center',
         })}
       >
         {headerRouteConfig.map(nav => (
@@ -49,9 +46,10 @@ const Header = () => {
             navName={nav.navName}
           />
         ))}
-      </div>
-      <LanguageButton />
-    </div>
+      </nav>
+      <div className={css({ display: 'flex', alignItems: 'center', gap: 5 })}></div>
+      {/* <LanguageButton /> */}
+    </header>
   )
 }
 
