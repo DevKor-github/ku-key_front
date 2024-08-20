@@ -2,12 +2,12 @@ import { css } from '@styled-stytem/css'
 import { useCallback, useMemo } from 'react'
 
 import { useGetClubSearch, usePostClubLike } from '@/api/hooks/club'
+import ClubBGImg from '@/assets/ClubBGImg.png'
 import CategorySelector from '@/components/club/CategorySelector'
 import ClubCard from '@/components/club/ClubCard'
 import { CategoryType } from '@/components/club/constants'
 import SearchArea from '@/components/club/SearchArea'
 import { useSearch } from '@/util/useSearch'
-import ClubBGImg from '@/assets/ClubBGImg.png'
 
 const ClubPage = () => {
   const { searchParam, handleSetParam, deleteParam } = useSearch()
@@ -39,6 +39,10 @@ const ClubPage = () => {
     [deleteParam, handleSetParam],
   )
 
+  const clearKeyword = useCallback(() => {
+    deleteParam('keyword')
+  }, [deleteParam])
+
   const handleLikeClick = useCallback(
     (clubId: number) => {
       likeClub({ clubId, queryParams: query })
@@ -69,7 +73,7 @@ const ClubPage = () => {
         <CategorySelector curCategory={query.category} setCategory={setCategory} />
         <div className={css({ display: 'flex', flexDir: 'column', gap: 20, pb: 30 })}>
           <div className={css({ display: 'flex', justifyContent: 'center', alignItems: 'center' })}>
-            <SearchArea onSubmit={handleSubmit} />
+            <SearchArea onSubmit={handleSubmit} clearKeywordParam={clearKeyword} />
           </div>
           <div className={css({ display: 'flex', flexDir: 'column', gap: 15 })}>
             {data?.map(club => <ClubCard key={club.clubId} clubData={club} handleLikeClick={handleLikeClick} />)}

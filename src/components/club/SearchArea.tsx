@@ -4,8 +4,9 @@ import { useCallback, useRef, useState } from 'react'
 
 interface SearchAreaProps {
   onSubmit: (inputKeyword: string) => void
+  clearKeywordParam: () => void
 }
-const SearchArea = ({ onSubmit }: SearchAreaProps) => {
+const SearchArea = ({ onSubmit, clearKeywordParam }: SearchAreaProps) => {
   const inputRef = useRef<HTMLInputElement | null>(null)
   const [focus, setFocus] = useState(false)
   const [keyword, setKeyword] = useState('')
@@ -20,8 +21,9 @@ const SearchArea = ({ onSubmit }: SearchAreaProps) => {
 
   const handleClearSearchBox = useCallback(() => {
     setKeyword('')
+    clearKeywordParam()
     inputRef.current?.focus()
-  }, [])
+  }, [clearKeywordParam])
 
   return (
     <form

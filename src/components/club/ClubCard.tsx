@@ -63,6 +63,7 @@ const ClubCard = ({ clubData, handleLikeClick }: ClubCardProps) => {
             cursor: 'pointer',
             color: 'lightGray.1',
             fontSize: 14,
+            transition: 'color 0.25s ease',
           },
           variants: {
             hasMine: {
