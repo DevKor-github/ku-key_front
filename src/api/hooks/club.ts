@@ -41,12 +41,7 @@ export const usePostClubLike = () => {
         ['clubSearchResult', { ...queryParams, keyword: queryParams.keyword || null }],
         oldData => {
           if (oldData !== undefined) {
-            return oldData.map(club => {
-              if (club.clubId === response.clubId) {
-                return response
-              }
-              return club
-            })
+            return oldData.map(club => (club.clubId === response.clubId ? response : club))
           }
         },
       )
