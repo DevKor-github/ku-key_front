@@ -17,7 +17,7 @@ export const NavLinkButton = ({ isSelected, targetRoute, navName, innerTab }: Na
         display: 'inline-flex',
         pos: 'relative',
       })}
-      onHoverStart={() => setIsHover(true)}
+      // onHoverStart={() => setIsHover(true)}
       // onHoverEnd={() => setIsHover(false)}
     >
       <motion.div
@@ -30,15 +30,15 @@ export const NavLinkButton = ({ isSelected, targetRoute, navName, innerTab }: Na
           rounded: 30,
           textStyle: 'heading3_M',
           letterSpacing: '-0.4px',
-          color: isSelected && !isHover ? 'white' : 'darkGray.2',
-          _hover: { bgColor: 'bg.gray' },
+          color: isSelected ? 'white' : 'darkGray.2',
+          _hover: { bgColor: 'bg.gray', color: 'darkGray.2' },
           bgColor: isSelected ? 'darkGray.2' : 'transparent',
           transition: 'all 0.3s ease-out',
         })}
       >
         <Link to={`/${targetRoute}`}>{navName}</Link>
       </motion.div>
-      <AnimatePresence>
+      {/* <AnimatePresence>
         {isHover && (
           <motion.button
             className={css({
@@ -63,7 +63,7 @@ export const NavLinkButton = ({ isSelected, targetRoute, navName, innerTab }: Na
             hi
           </motion.button>
         )}
-      </AnimatePresence>
+      </AnimatePresence> */}
     </motion.div>
   )
 }
