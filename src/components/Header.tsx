@@ -8,7 +8,6 @@ const Header = () => {
   const location = useLocation()
   const curPath = location.pathname
   const curPathRoot = curPath.split('/')[1]
-
   return (
     <header
       className={css({

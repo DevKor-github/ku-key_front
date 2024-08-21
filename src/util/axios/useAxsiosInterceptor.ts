@@ -1,6 +1,8 @@
 import { AxiosError } from 'axios'
+import { useStore } from 'jotai'
 import { useLayoutEffect } from 'react'
 
+import { userCredentialAtom } from '@/lib/store/auth'
 import { UserCredential } from '@/types/user'
 import { apiInterface } from '@/util/axios/custom-axios'
 import { onRequest } from '@/util/axios/onRequest'
@@ -11,11 +13,17 @@ export const useAxsiosInterceptor = (
   handleSet: (value: Omit<UserCredential, 'verified'>) => void,
   handleError: (error: Error) => void,
 ) => {
+  const authStore = useStore()
+  const sub = authStore.sub(userCredentialAtom, () =>
+    console.log('subscribed:', authStore.get(userCredentialAtom)?.accessToken),
+  )
   useLayoutEffect(() => {
-    if (!userCredential) return
+    console.log('useAxsiosInterceptor:', new Date().toTimeString())
+    if (!userCredential) return console.log('no userCredential')
 
+    console.log('useAxsiosInterceptor:', userCredential.accessToken)
     const requestInterceptor = apiInterface.interceptors.request.use(
-      config => onRequest(config),
+      config => onRequest(config, authStore.get(userCredentialAtom)?.accessToken ?? userCredential.accessToken),
       error => Promise.reject(error),
     )
     const responseInterceptor = apiInterface.interceptors.response.use(
@@ -26,5 +34,5 @@ export const useAxsiosInterceptor = (
       apiInterface.interceptors.request.eject(requestInterceptor)
       apiInterface.interceptors.response.eject(responseInterceptor)
     }
-  }, [handleSet, userCredential, handleError])
+  }, [handleSet, userCredential, handleError, authStore])
 }

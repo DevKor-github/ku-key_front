@@ -16,6 +16,7 @@ export const onResponse = async (
     try {
       const res = await getNewToken(refreshToken)
       console.log('refreshed:', new Date().toTimeString())
+      console.log('new accessToken:', res.accessToken)
       originalConfig.headers['Authorization'] = `Bearer ${res.accessToken}`
       handleSet({
         accessToken: res.accessToken,
