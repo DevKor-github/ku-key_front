@@ -1,15 +1,40 @@
 import { css } from '@styled-stytem/css'
 import { boardTag } from '@styled-stytem/recipes'
-import { Ellipsis } from 'lucide-react'
+import { isAxiosError } from 'axios'
+import { useCallback } from 'react'
 
+import { useReportComment } from '@/api/hooks/community'
+import UtilButton from '@/components/community/post/UtilButton'
+import AlertModal from '@/components/ui/modal/AlertModal'
+import { REPORT_MESSAGES } from '@/lib/messages/community'
 import { getFormatedTimeString } from '@/util/getFormatedTimeString'
+import { useModal } from '@/util/useModal'
 
 interface CommentHeaderProps {
   username: string
   date: Date
   isMyComment: boolean
+  commentId: number
 }
-const CommentHeader = ({ isMyComment, username, date }: CommentHeaderProps) => {
+const CommentHeader = ({ isMyComment, username, date, commentId }: CommentHeaderProps) => {
+  const { modalRef, isOpen, handleOpen, handleLayoutClose, handleButtonClose } = useModal()
+  const { mutate: mutateReportComment } = useReportComment()
+  const handleReportConfirm = useCallback(() => {
+    mutateReportComment(
+      { commentId, reason: 'Inappropriate' },
+      {
+        onSuccess: () => {
+          handleButtonClose()
+        },
+        onError: error => {
+          if (isAxiosError(error) && error.response?.data.message === REPORT_MESSAGES.REPORT_ERROR) {
+            handleButtonClose()
+            alert(REPORT_MESSAGES.REPORT_ERROR)
+          }
+        },
+      },
+    )
+  }, [commentId, handleButtonClose, mutateReportComment])
   return (
     <div
       className={css({
@@ -23,9 +48,18 @@ const CommentHeader = ({ isMyComment, username, date }: CommentHeaderProps) => {
         <div className={boardTag({ variant: isMyComment ? 'red' : 'small' })}>{isMyComment ? 'Author' : username}</div>
         <p className={css({ fontSize: 18, fontWeight: 500, color: 'darkGray.2' })}>{getFormatedTimeString(date)}</p>
       </div>
-      <button>
-        <Ellipsis className={css({ color: 'darkGray.1' })} />
-      </button>
+      <UtilButton isComment isMine={isMyComment} isEditable={false} handleReport={handleOpen} />
+      <AlertModal
+        modalRef={modalRef}
+        title="Are you sure?"
+        content={`Do you want to report this comment? ${'\n'} The report will not be processed ${'\n'}if the reason for reporting is inappropriate.`}
+        closeText="Cancel"
+        confirmText="Confirm"
+        onConfirm={handleReportConfirm}
+        isOpen={isOpen}
+        handleLayoutClose={handleLayoutClose}
+        handleButtonClose={handleButtonClose}
+      />
     </div>
   )
 }

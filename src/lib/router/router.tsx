@@ -9,6 +9,7 @@ import ReviewPage from '@/pages/CourseReviewPage/ReviewPage'
 import WriteReviewPage from '@/pages/CourseReviewPage/WriteReviewPage'
 import MainCommunityPage from '@/pages/CommunityPage'
 import BoardPage from '@/pages/CommunityPage/BoardPage'
+import HotBoardPage from '@/pages/CommunityPage/HotBoardPage'
 import PostViewPage from '@/pages/CommunityPage/PostViewPage'
 import WritePostPage from '@/pages/CommunityPage/WritePostPage'
 import LandingPage from '@/pages/LandingPage'
@@ -58,12 +59,16 @@ const routes: RouteObject[] = [
             element: <MainCommunityPage />,
           },
           {
-            path: 'community/write/post/:boardName',
+            path: 'community/action/:type/post/:boardName',
             element: <WritePostPage />,
           },
           {
             path: 'community/board/:boardName',
             element: <BoardPage />,
+          },
+          {
+            path: 'community/board/hotboard',
+            element: <HotBoardPage />,
           },
           {
             path: 'community/:boardName/post/:postId',

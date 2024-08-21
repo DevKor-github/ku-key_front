@@ -2,9 +2,9 @@ import { css, cx } from '@styled-stytem/css'
 import { globalLayout } from '@styled-stytem/recipes'
 import { useParams } from 'react-router-dom'
 
-import BoardBanner from '@/components/community/BoardBanner'
-import BoardSearch from '@/components/community/BoardSearch'
-import HotBoardPreview from '@/components/community/HotBoardPreview'
+import BoardBanner from '@/components/community/Boards/BoardBanner'
+import BoardSearch from '@/components/community/Boards/BoardSearch'
+import HotBoardPreview from '@/components/community/HotBoard/HotBoardPreview'
 import RecentPreview from '@/components/community/RecentPreview'
 const BoardPage = () => {
   const { boardName } = useParams()
@@ -27,7 +27,9 @@ const BoardPage = () => {
         )}
       >
         <BoardSearch />
-        <div className={css({ display: 'flex', flexDir: 'column', alignSelf: 'flex-start' })}>
+        <div
+          className={css({ display: 'flex', flexDir: 'column', alignSelf: 'flex-start', mdDown: { display: 'none' } })}
+        >
           <RecentPreview />
           <HotBoardPreview />
         </div>

@@ -1,6 +1,13 @@
 import { defineTextStyles } from '@pandacss/dev'
 
 export const textStyles = defineTextStyles({
+  heading4_L: {
+    description: 'Heading 4 Large',
+    value: {
+      fontSize: 18,
+      fontWeight: 700,
+    },
+  },
   heading4_M: {
     description: 'Heading 4 Medium',
     value: {

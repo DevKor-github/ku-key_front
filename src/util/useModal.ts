@@ -5,11 +5,14 @@ export const useModal = (selfClose?: boolean) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const handleOpen = useCallback(() => setIsOpen(true), [])
-  const handleClose = useCallback((e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const handleLayoutClose = useCallback((e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
       setIsOpen(false)
     }
   }, [])
+
+  const handleButtonClose = useCallback(() => setIsOpen(false), [])
+
   useEffect(() => {
     if (isOpen && selfClose) {
       const timer = setTimeout(() => {
@@ -18,5 +21,5 @@ export const useModal = (selfClose?: boolean) => {
       return () => clearTimeout(timer)
     }
   }, [selfClose, isOpen])
-  return { isOpen, handleOpen, handleClose }
+  return { isOpen, handleOpen, handleLayoutClose, handleButtonClose, modalRef }
 }

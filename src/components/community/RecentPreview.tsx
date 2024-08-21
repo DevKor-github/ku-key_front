@@ -1,5 +1,5 @@
 import { useGetRecentPostsPreview } from '@/api/hooks/community'
-import BoardPreview from '@/components/community/BoardPreview'
+import BoardPreview from '@/components/community/Boards/BoardPreview'
 
 const RecentPreview = () => {
   const { data: recentPostsPreview } = useGetRecentPostsPreview()

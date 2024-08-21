@@ -2,7 +2,7 @@ import { css } from '@styled-stytem/css'
 import { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import BoardTag from '@/components/community/BoardTag'
+import BoardTag from '@/components/community/Boards/BoardTag'
 import PostTextPreview from '@/components/community/PostTextPreview'
 import PreviewTextWrapper from '@/components/community/PreviewTextWrapper'
 import SectionTitle from '@/components/community/SectionTitle'

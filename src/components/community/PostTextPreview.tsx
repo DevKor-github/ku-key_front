@@ -75,6 +75,7 @@ const PostTextPreview = ({ title, user, createdAt, variant, description, handleN
               fontSize: 16,
               fontWeight: 400,
               color: 'darkGray.2',
+              overflow: 'hidden',
               overflowY: 'hidden',
               whiteSpace: 'nowrap',
               textOverflow: 'ellipsis',

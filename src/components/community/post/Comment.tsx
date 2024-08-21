@@ -36,7 +36,12 @@ const Comment = memo(({ isOpen, currnetIndex, handleClick }: CommentProps) => {
         alignSelf: 'stretch',
       })}
     >
-      <CommentHeader username={comment.user.username} date={comment.createdAt} isMyComment={comment.isMyComment} />
+      <CommentHeader
+        username={comment.user.username}
+        date={comment.createdAt}
+        isMyComment={comment.isMyComment}
+        commentId={comment.id}
+      />
       <p
         className={css({
           display: 'flex',

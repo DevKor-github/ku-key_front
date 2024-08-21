@@ -2,14 +2,17 @@ import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tansta
 import { useSearchParams } from 'react-router-dom'
 
 import {
+  CommentReportRequest,
   PostByBoardResponse,
   PostCommentLikeRequest,
   PostCommentRequest,
   PostCommentResponse,
   PostCreateRequest,
+  PostEditRequest,
   PostPreviewResponse,
   PostReactionRequest,
   PostReactionResponse,
+  PostReportRequest,
   PostScrapResponse,
 } from '@/api/types/community'
 import { CommentProps, PostPreviewByBoardMeta, PostPreviewProps, PostViewProps, ReactionType } from '@/types/community'
@@ -54,21 +57,20 @@ export const useGetRecentPostsPreview = () => {
   })
 }
 
-const getHotPosts = async (take: number) => {
+const getHotPosts = async (take: number, cursor?: string) => {
   const response = await apiInterface.get<PostPreviewResponse>(`post/hot`, {
-    params: { take },
+    params: { take, cursor: cursor?.length === 14 ? cursor : undefined },
   })
   return response.data
 }
 
 export const useGetHotPosts = () => {
-  return useQuery({
+  return useInfiniteQuery({
     queryKey: ['hotPosts'],
-    queryFn: () => getHotPosts(10),
-    initialData: {
-      data: [] as PostPreviewProps[],
-      meta: { hasNextData: false, nextCursor: 0 } as PostPreviewByBoardMeta,
-    },
+    queryFn: ({ pageParam: cursor }) => getHotPosts(10, cursor.toString()),
+    getNextPageParam: lastPage => (lastPage.meta.hasNextData ? lastPage.meta.nextCursor : undefined),
+    initialPageParam: 0,
+    select: data => (data.pages ?? []).flatMap(page => page.data),
   })
 }
 
@@ -275,4 +277,55 @@ export const usePostCreate = () => {
   return useMutation({
     mutationFn: postCreate,
   })
+}
+
+const patchPost = async ({ postId, title, content, isAnonymous, images, imageUpdate }: PostEditRequest) => {
+  const formData = new FormData()
+  formData.append('title', title)
+  formData.append('content', content)
+  formData.append('isAnonymous', isAnonymous.toString())
+  formData.append('imageUpdate', imageUpdate.toString())
+  images?.forEach(image => formData.append('images', image))
+  const response = await apiInterface.patch<PostViewProps>(`/post/${postId}`, formData)
+  return response.data
+}
+
+export const usePatchEditPost = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: patchPost,
+    onSuccess: data => {
+      queryClient.setQueryData<PostViewProps>(['postById', data.id], (oldData): PostViewProps => {
+        if (!oldData) return {} as PostViewProps
+        return { ...data }
+      })
+    },
+  })
+}
+
+const deletePost = async (postId: number) => {
+  const response = await apiInterface.delete(`/post/${postId}`)
+  return response.data
+}
+
+export const useDeletePost = () => {
+  return useMutation({ mutationFn: deletePost })
+}
+
+const reportPost = async ({ postId, reason }: PostReportRequest) => {
+  const response = await apiInterface.post(`/post/${postId}/report`, { reason })
+  return response.data
+}
+
+export const useReportPost = () => {
+  return useMutation({ mutationFn: reportPost })
+}
+
+const reportComment = async ({ commentId, reason }: CommentReportRequest) => {
+  const response = await apiInterface.post(`/comment/${commentId}/report`, { reason })
+  return response.data
+}
+
+export const useReportComment = () => {
+  return useMutation({ mutationFn: reportComment })
 }

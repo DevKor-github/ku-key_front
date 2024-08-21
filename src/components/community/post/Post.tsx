@@ -1,22 +1,63 @@
 import { css } from '@styled-stytem/css'
 import { postCard } from '@styled-stytem/recipes'
+import { isAxiosError } from 'axios'
 import { formatDistanceToNow } from 'date-fns'
-import { useAtomValue } from 'jotai'
-import { Ellipsis, Eye } from 'lucide-react'
-import { memo } from 'react'
-import { useParams } from 'react-router-dom'
+import { useAtomValue, useSetAtom } from 'jotai'
+import { Eye } from 'lucide-react'
+import { memo, useCallback } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 
-import BoardTag from '@/components/community/BoardTag'
+import { useDeletePost, useReportPost } from '@/api/hooks/community'
+import BoardTag from '@/components/community/Boards/BoardTag'
 import PostImgCarousel from '@/components/community/post/PostImgCarousel'
 import ReactionSection from '@/components/community/post/ReactionSection'
-import { postAtom } from '@/lib/store/post'
+import UtilButton from '@/components/community/post/UtilButton'
+import AlertModal from '@/components/ui/modal/AlertModal'
+import { REPORT_MESSAGES } from '@/lib/messages/community'
+import { persistedPostData, postAtom } from '@/lib/store/post'
 import { BoardType } from '@/types/community'
+import { useModal } from '@/util/useModal'
 
 const Post = memo(() => {
   const postAtomData = useAtomValue(postAtom)
+  const postEditData = useSetAtom(persistedPostData)
   const timeDistance = formatDistanceToNow(postAtomData.createdAt)
   const { boardName } = useParams()
   const formattedBoardName = `${boardName?.slice(0, 1).toUpperCase()}${boardName?.slice(1)} Board`
+  const navigate = useNavigate()
+  const handleNavigation = useCallback(() => {
+    navigate(`/community/action/edit/post/${boardName}`)
+    postEditData(postAtomData)
+  }, [navigate, boardName, postEditData, postAtomData])
+  const { mutate: mutateDeletePost } = useDeletePost()
+  const { mutate: mutateReportPost } = useReportPost()
+  const { modalRef, isOpen, handleOpen, handleLayoutClose, handleButtonClose } = useModal()
+
+  const handleConfirm = useCallback(() => {
+    mutateDeletePost(postAtomData.id, {
+      onSuccess: () => {
+        handleButtonClose()
+        navigate(-1)
+      },
+    })
+  }, [handleButtonClose, mutateDeletePost, navigate, postAtomData.id])
+
+  const handleReportConfirm = useCallback(() => {
+    mutateReportPost(
+      { postId: postAtomData.id, reason: 'Inappropriate' },
+      {
+        onSuccess: () => {
+          handleButtonClose()
+        },
+        onError: error => {
+          if (isAxiosError(error) && error.response?.data.message === REPORT_MESSAGES.REPORT_ERROR) {
+            handleButtonClose()
+            alert(REPORT_MESSAGES.REPORT_ERROR)
+          }
+        },
+      },
+    )
+  }, [handleButtonClose, mutateReportPost, postAtomData.id])
 
   return (
     <div className={postCard()}>
@@ -44,9 +85,14 @@ const Post = memo(() => {
             <p>{postAtomData.user.username}</p>
             <p>{timeDistance} ago</p>
           </div>
-          <button>
-            <Ellipsis className={css({ color: 'darkGray.1' })} />
-          </button>
+          <UtilButton
+            isComment={false}
+            isMine={postAtomData.isMyPost}
+            isEditable={postAtomData.isMyPost && (boardName !== 'question' || postAtomData.comments.length < 0)}
+            handleNavigation={handleNavigation}
+            handleDelete={handleOpen}
+            handleReport={handleOpen}
+          />
         </div>
         <div
           className={css({
@@ -89,6 +135,32 @@ const Post = memo(() => {
       </section>
       {postAtomData.imageDirs.length > 0 && <PostImgCarousel />}
       <ReactionSection />
+      {postAtomData.isMyPost && (
+        <AlertModal
+          modalRef={modalRef}
+          title="Are you sure?"
+          content="Once a post has been deleted, it cannot be restored."
+          closeText="No, Keep it"
+          confirmText="Yes, Delete!"
+          onConfirm={handleConfirm}
+          isOpen={isOpen}
+          handleLayoutClose={handleLayoutClose}
+          handleButtonClose={handleButtonClose}
+        />
+      )}
+      {!postAtomData.isMyPost && (
+        <AlertModal
+          modalRef={modalRef}
+          title="Are you sure?"
+          content={`Do you want to report this post? ${'\n'} The report will not be processed ${'\n'}if the reason for reporting is inappropriate.`}
+          closeText="Cancel"
+          confirmText="Confirm"
+          onConfirm={handleReportConfirm}
+          isOpen={isOpen}
+          handleLayoutClose={handleLayoutClose}
+          handleButtonClose={handleButtonClose}
+        />
+      )}
     </div>
   )
 })

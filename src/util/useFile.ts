@@ -1,11 +1,11 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { convertHeic } from '@/util/convert-heic'
 import { resizeFile } from '@/util/resizeFile'
 
-export const useFile = (fileType?: string, limit?: number) => {
+export const useFile = (fileType?: string, limit?: number, initialData?: File[]) => {
   const [files, setFiles] = useState<File[] | null>(null)
-
+  const [isChanged, setIsChanged] = useState(false)
   const handleFilesChange = useCallback(
     async (e: React.ChangeEvent<HTMLInputElement>) => {
       const currentFiles = e.target.files
@@ -41,16 +41,18 @@ export const useFile = (fileType?: string, limit?: number) => {
           console.log(e)
         }
       }
-
       setFiles(prev => (prev ? [...prev, ...resizedFiles] : resizedFiles))
+      setIsChanged(true)
+      e.target.value = ''
     },
     [fileType, files, limit],
   )
 
-  const handleFileDelete = useCallback(
-    (index: number) => setFiles(prev => (prev ? prev?.filter((_, i) => i !== index) : [])),
-    [],
-  )
+  const handleFileDelete = useCallback((index: number) => {
+    setFiles(prev => (prev ? prev?.filter((_, i) => i !== index) : []))
+    setIsChanged(true)
+  }, [])
 
-  return { files, handleFilesChange, handleFileDelete }
+  useEffect(() => initialData && setFiles(initialData), [initialData])
+  return { files, isChanged, handleFilesChange, handleFileDelete }
 }

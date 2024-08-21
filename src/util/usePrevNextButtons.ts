@@ -10,7 +10,6 @@ type UsePrevNextButtonsType = {
   onToggleAutoplay: () => void
   onButtonAutoplayClick: (callback: () => void) => void
 }
-
 export const usePrevNextButtons = (emblaApi: UseEmblaCarouselType[1] | undefined): UsePrevNextButtonsType => {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [prevBtnDisabled, setPrevBtnDisabled] = useState(true)
@@ -27,9 +26,8 @@ export const usePrevNextButtons = (emblaApi: UseEmblaCarouselType[1] | undefined
 
   const onToggleAutoplay = useCallback(() => {
     if (!emblaApi) return
-    const autoplay = emblaApi.plugins()?.autoplay
+    const autoplay = emblaApi.plugins().autoplay
     if (!autoplay) return
-
     const playOrStop = autoplay.isPlaying() ? autoplay.stop : autoplay.play
     playOrStop()
   }, [emblaApi])

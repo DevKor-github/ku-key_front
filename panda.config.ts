@@ -7,6 +7,7 @@ import {
   globalLayoutRecipe,
   inputRecipe,
   labelRecipe,
+  menubar,
   modalCardRecipe,
   postCardRecipe,
   postTextPreviewRecipe,
@@ -43,6 +44,9 @@ export default defineConfig({
         reactionButton: reactionTagRecipe,
         carouselButton: carouselButtonRecipe,
         postCard: postCardRecipe,
+      },
+      slotRecipes: {
+        menubar: menubar,
       },
       tokens: {
         colors: {
@@ -81,6 +85,16 @@ export default defineConfig({
         sizes: tokenToRem,
       },
       textStyles,
+      keyframes: {
+        animateIn: {
+          from: { transform: 'scale(0.95)', opacity: 0 },
+          to: { transform: 'scale(1)', opacity: 1 },
+        },
+        animateOut: {
+          from: { transform: 'scale(1)', opacity: 1 },
+          to: { transform: 'scale(0.95)', opacity: 0 },
+        },
+      },
     },
   },
   jsxFramework: 'react',

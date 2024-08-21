@@ -36,7 +36,6 @@ const CommentInput = ({ isOpen, currentIndex }: CommentInputProps) => {
     },
     [handleSend],
   )
-
   return (
     <AnimatePresence>
       {isOpen && (

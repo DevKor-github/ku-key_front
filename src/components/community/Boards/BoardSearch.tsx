@@ -2,7 +2,7 @@ import { css } from '@styled-stytem/css'
 import { useParams } from 'react-router-dom'
 
 import { useGetPostsByBoard } from '@/api/hooks/community'
-import BoardPostPreview from '@/components/community/BoardPostPreview'
+import BoardPostPreview from '@/components/community/Boards/BoardPostPreview'
 import SectionTitle from '@/components/community/SectionTitle'
 import SearchBox from '@/components/timetable/SearchBox'
 import NoticeModal from '@/components/ui/modal/NoticeModal'
@@ -41,12 +41,12 @@ const BoardSearch = () => {
     if (hasNextPage && !isFetching) fetchNextPage()
   })
   return (
-    <div className={css({ display: 'flex', flexDir: 'column', alignSelf: 'flex-start' })}>
+    <div className={css({ display: 'flex', flexDir: 'column', alignSelf: 'flex-start', maxW: 608, w: 'full' })}>
       <SearchBox
         initialKeyword={keyword ?? ''}
         placeholder={keyword ?? 'Search posts from entire board'}
         onSubmit={onSubmit}
-        cssProps={{ width: 608, borderRadius: '50px' }}
+        cssProps={{ width: 'full', alignSelf: 'stretch', borderRadius: '50px' }}
       />
       {keyword ? (
         <SectionTitle title={handleTitle()} />
@@ -55,23 +55,23 @@ const BoardSearch = () => {
       )}
       <div className={css({ display: 'flex', mt: 20, flexDir: 'column', gap: '50px', mb: 25 })}>
         {data?.map(post => (
-          <div key={post.id} ref={fetchNextRef}>
-            <BoardPostPreview
-              id={post.id}
-              title={post.title}
-              content={post.content}
-              createdAt={post.createdAt}
-              user={post.user}
-              reactionCount={post.reactionCount}
-              views={post.views}
-              myScrap={post.myScrap}
-              commentCount={post.commentCount}
-              scrapCount={post.scrapCount}
-              thumbnailDir={post.thumbnailDir}
-              boardName={boardName!}
-            />
-          </div>
+          <BoardPostPreview
+            key={post.id}
+            id={post.id}
+            title={post.title}
+            content={post.content}
+            createdAt={post.createdAt}
+            user={post.user}
+            reactionCount={post.reactionCount}
+            views={post.views}
+            myScrap={post.myScrap}
+            commentCount={post.commentCount}
+            scrapCount={post.scrapCount}
+            thumbnailDir={post.thumbnailDir}
+            boardName={boardName!}
+          />
         ))}
+        <div ref={fetchNextRef} />
       </div>
       <NoticeModal content={COMMUNITY_SEARCH_MESSAGES.REQUIRED_LENGTH} isOpen={isOpen} />
     </div>

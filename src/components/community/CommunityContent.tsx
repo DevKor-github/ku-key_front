@@ -3,12 +3,12 @@ import { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import CommunitySearch from '@/components/community/CommunitySearch'
-import HotBoardPreview from '@/components/community/HotBoardPreview'
+import HotBoardPreview from '@/components/community/HotBoard/HotBoardPreview'
 import Button from '@/components/ui/button'
 
 const MainCommunityContent = () => {
   const navigate = useNavigate()
-  const handleNavigation = useCallback(() => navigate('/community/write/post/main'), [navigate])
+  const handleNavigation = useCallback(() => navigate('/community/action/write/post/main'), [navigate])
   return (
     <section
       className={css({

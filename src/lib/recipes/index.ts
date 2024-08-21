@@ -4,6 +4,7 @@ import { chipRecipe } from '@/lib/recipes/chip'
 import { globalLayoutRecipe } from '@/lib/recipes/globalLayout'
 import { inputRecipe } from '@/lib/recipes/input'
 import { labelRecipe } from '@/lib/recipes/label'
+import { menubar } from '@/lib/recipes/menubar'
 import { modalCardRecipe } from '@/lib/recipes/modal-card'
 import { postCardRecipe } from '@/lib/recipes/post-card'
 import { postTextPreviewRecipe } from '@/lib/recipes/post-text-preview'
@@ -25,4 +26,5 @@ export {
   carouselButtonRecipe,
   textStyles,
   postCardRecipe,
+  menubar,
 }

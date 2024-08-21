@@ -16,6 +16,7 @@ const Header = () => {
         display: 'flex',
         flexDir: 'row',
         h: 20,
+        minH: 20,
         borderBottom: '1.5px solid {colors.lightGray.2}',
         bg: 'white',
         justifyContent: 'space-between',
