@@ -8,9 +8,7 @@ import { ETC } from '@/lib/school-institute/etc'
 const ProfileContainer = css({
   display: 'flex',
   h: 'auto',
-  px: 1.5,
   alignItems: 'baseline',
-  columnGap: '30px',
   flexWrap: 'wrap',
   mdDown: { px: 4 },
 })
