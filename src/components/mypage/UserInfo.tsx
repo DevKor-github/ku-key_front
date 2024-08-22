@@ -1,4 +1,5 @@
 import { css } from '@styled-stytem/css'
+import { hasFlag } from 'country-flag-icons'
 import getUnicodeFlagIcon from 'country-flag-icons/unicode'
 import { findByAlpha2 } from 'iso-3166-1-ts'
 
@@ -41,7 +42,7 @@ const UserInfo = ({ name, country, point, languages, homeUniversity }: UserInfoP
           {name}
         </p>
         <p>님</p>
-        <p>{getUnicodeFlagIcon(country)}</p>
+        <p>{hasFlag(country) && getUnicodeFlagIcon(country)}</p>
       </div>
       <div
         className={css({

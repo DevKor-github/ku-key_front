@@ -9,8 +9,7 @@ import MypageWrapper from '@/components/mypage/MypageWrapper'
 import UserInfo from '@/components/mypage/UserInfo'
 
 const MyPage = () => {
-  // const { data: myProfileData } = useGetMyProfile()
-
+  const { data: myProfileData } = useGetMyProfile()
   return (
     <MypageWrapper>
       <div
@@ -41,11 +40,11 @@ const MyPage = () => {
         >
           {/* <Mask /> */}
           <UserInfo
-            name={'하승준'}
-            country={'kr'}
-            point={100}
-            languages={['kor', 'eng']}
-            homeUniversity="Korea University"
+            name={myProfileData.name}
+            country={myProfileData.country}
+            point={myProfileData.point}
+            languages={myProfileData.languages}
+            homeUniversity={myProfileData.homeUniversity}
           />
         </div>
         <DueDateCard />

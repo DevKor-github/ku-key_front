@@ -35,5 +35,17 @@ export const useGetMyProfile = () => {
   return useQuery({
     queryKey: ['myProfile'],
     queryFn: getMyProfile,
+    initialData: {
+      name: '',
+      country: '',
+      homeUniversity: '',
+      major: '',
+      startDay: '',
+      endDay: '',
+      point: 0,
+      languages: [],
+      level: 0,
+      type: '',
+    },
   })
 }
