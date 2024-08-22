@@ -1,9 +1,19 @@
 import { css } from '@styled-stytem/css'
+import getUnicodeFlagIcon from 'country-flag-icons/unicode'
+import { findByAlpha2 } from 'iso-3166-1-ts'
 
 import Cookie from '@/assets/cookie.svg'
 import { Chip } from '@/components/ui/chip'
+import { Language } from '@/lib/constants/language'
 
-const UserInfo = () => {
+interface UserInfoProps {
+  name: string
+  country: string
+  point: number
+  languages: Language[]
+  homeUniversity: string
+}
+const UserInfo = ({ name, country, point, languages, homeUniversity }: UserInfoProps) => {
   return (
     <div
       className={css({
@@ -28,10 +38,10 @@ const UserInfo = () => {
             fontSize: { base: 40, mdDown: 24 },
           })}
         >
-          김현아
+          {name}
         </p>
         <p>님</p>
-        <p>🇸🇬</p>
+        <p>{getUnicodeFlagIcon(country)}</p>
       </div>
       <div
         className={css({
@@ -44,12 +54,14 @@ const UserInfo = () => {
         })}
       >
         <img src={Cookie} alt="cookie" className={css({ w: { base: 9, mdDown: 5 } })} />
-        <p>180p</p>
+        <p>{point}p</p>
       </div>
       <div className={css({ display: 'flex', gap: 2, mt: 5 })}>
-        <Chip variant="default">KOR</Chip>
-        <Chip variant="red3">ENG</Chip>
-        <Chip variant="red4">JPN</Chip>
+        {languages.map(lan => (
+          <Chip variant="default" key={lan}>
+            {lan.toUpperCase()}
+          </Chip>
+        ))}
       </div>
       <div
         className={css({
@@ -59,9 +71,11 @@ const UserInfo = () => {
           mt: { base: 12, mdDown: 4 },
         })}
       >
-        <p className={css({ fontSize: { base: 20, mdDown: 11 }, fontWeight: 600, lineHeight: 'normal' })}>Singapore</p>
+        <p className={css({ fontSize: { base: 20, mdDown: 11 }, fontWeight: 600, lineHeight: 'normal' })}>
+          {findByAlpha2(country)?.name}
+        </p>
         <p className={css({ fontSize: { base: 24, mdDown: 13 }, fontWeight: 700, lineHeight: 'normal' })}>
-          Nanyang Technological UNIV
+          {homeUniversity}
         </p>
       </div>
     </div>

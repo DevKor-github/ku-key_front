@@ -1,6 +1,7 @@
 import { css } from '@styled-stytem/css'
 
 import MypageBG from '@/assets/MypageBG.jpg'
+import { useGetMyProfile } from '@/api/hooks/user'
 import DueDateCard from '@/components/mypage/DueDateCard'
 import Mask from '@/components/mypage/Mask'
 import MyPageContents from '@/components/mypage/MyPageContents'
@@ -8,6 +9,8 @@ import MypageWrapper from '@/components/mypage/MypageWrapper'
 import UserInfo from '@/components/mypage/UserInfo'
 
 const MyPage = () => {
+  // const { data: myProfileData } = useGetMyProfile()
+
   return (
     <MypageWrapper>
       <div
@@ -37,7 +40,13 @@ const MyPage = () => {
           }}
         >
           {/* <Mask /> */}
-          <UserInfo />
+          <UserInfo
+            name={'하승준'}
+            country={'kr'}
+            point={100}
+            languages={['kor', 'eng']}
+            homeUniversity="Korea University"
+          />
         </div>
         <DueDateCard />
       </div>

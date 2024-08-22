@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 
-import { GetPointHistroyResponse } from '@/api/types/user'
+import { GetMyProfileResponse, GetPointHistroyResponse } from '@/api/types/user'
 import { useSignOut } from '@/util/auth/useSignOut'
 import { apiInterface } from '@/util/axios/custom-axios'
 
@@ -23,5 +23,17 @@ export const useDeleteUser = () => {
   return useMutation({
     mutationFn: deleteUser,
     onSuccess: signOut,
+  })
+}
+
+const getMyProfile = async () => {
+  const response = await apiInterface.get<GetMyProfileResponse>('/user/profile')
+  return response.data
+}
+
+export const useGetMyProfile = () => {
+  return useQuery({
+    queryKey: ['myProfile'],
+    queryFn: getMyProfile,
   })
 }
