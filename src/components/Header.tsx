@@ -1,6 +1,7 @@
 import { css } from '@styled-stytem/css'
 import { Link, useLocation } from 'react-router-dom'
 
+import { useLogOut } from '@/api/hooks/auth'
 import { NavLinkButton } from '@/components/header/NavLinkButton'
 import { headerRouteConfig } from '@/lib/router/header-route'
 
@@ -8,6 +9,7 @@ const Header = () => {
   const location = useLocation()
   const curPath = location.pathname
   const curPathRoot = curPath.split('/')[1]
+  const { mutate: mutateSignOut } = useLogOut()
   return (
     <header
       className={css({
@@ -46,7 +48,9 @@ const Header = () => {
           />
         ))}
       </nav>
-      <div className={css({ display: 'flex', alignItems: 'center', gap: 5 })}></div>
+      <div className={css({ display: 'flex', alignItems: 'center', gap: 5 })}>
+        <button onClick={() => mutateSignOut()}>로그아웃</button>
+      </div>
       {/* <LanguageButton /> */}
     </header>
   )

@@ -2,16 +2,16 @@ import { RouteObject } from 'react-router-dom'
 
 import MainLayout from '@/components/MainLayout'
 import ProtectedRoutes from '@/lib/router/ProtectedRoutes'
-import CourseReviewPage from '@/pages/CourseReviewPage'
-import CourseInfoPage from '@/pages/CourseReviewPage/CourseInfoPage'
-import ReviewDetailPage from '@/pages/CourseReviewPage/ReviewDetailPage'
-import ReviewPage from '@/pages/CourseReviewPage/ReviewPage'
-import WriteReviewPage from '@/pages/CourseReviewPage/WriteReviewPage'
 import MainCommunityPage from '@/pages/CommunityPage'
 import BoardPage from '@/pages/CommunityPage/BoardPage'
 import HotBoardPage from '@/pages/CommunityPage/HotBoardPage'
 import PostViewPage from '@/pages/CommunityPage/PostViewPage'
 import WritePostPage from '@/pages/CommunityPage/WritePostPage'
+import CourseReviewPage from '@/pages/CourseReviewPage'
+import CourseInfoPage from '@/pages/CourseReviewPage/CourseInfoPage'
+import ReviewDetailPage from '@/pages/CourseReviewPage/ReviewDetailPage'
+import ReviewPage from '@/pages/CourseReviewPage/ReviewPage'
+import WriteReviewPage from '@/pages/CourseReviewPage/WriteReviewPage'
 import HomePage from '@/pages/HomePage'
 import LandingPage from '@/pages/LandingPage'
 import Login from '@/pages/LoginPage'
@@ -81,7 +81,7 @@ const routes: RouteObject[] = [
           },
         ],
       },
-      { path: 'home', element: <LandingPage /> },
+      { path: 'home', element: <HomePage /> },
       { path: 'schedule', element: <SchedulePage /> },
       { path: 'login', element: <Login /> },
       { path: 'register', element: <RegisterPage /> },
