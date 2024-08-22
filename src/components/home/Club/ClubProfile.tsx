@@ -1,10 +1,23 @@
 import { css } from '@styled-stytem/css'
 import { clubTag } from '@styled-stytem/recipes'
 
-import One from '@/assets/One.jpg'
+import Four from '@/assets/Four.svg'
+import One from '@/assets/One.svg'
+import Three from '@/assets/Three.svg'
+import Two from '@/assets/Two.svg'
 import { ClubProfileProps } from '@/types/club'
 
-const ClubProfile = ({ img, description, name, clubDivision }: ClubProfileProps) => {
+interface ClubPreviewProps extends ClubProfileProps {
+  index: number
+  type: 'hot' | 'recommend'
+}
+const HotClubConfig: Record<number, { img: string }> = {
+  0: { img: One },
+  1: { img: Two },
+  2: { img: Three },
+  3: { img: Four },
+}
+const ClubProfile = ({ img, description, name, clubDivision, index, type }: ClubPreviewProps) => {
   return (
     <div
       className={css({
@@ -15,7 +28,11 @@ const ClubProfile = ({ img, description, name, clubDivision }: ClubProfileProps)
         justifyContent: 'flex-end',
       })}
     >
-      <img src={One} alt="club" className={css({ pos: 'absolute', left: 6, top: 170, zIndex: 1 })} />
+      <img
+        src={HotClubConfig[index].img}
+        alt="club"
+        className={css({ pos: 'absolute', left: 0, top: 120, zIndex: 1, w: 23 })}
+      />
       <div
         className={css({
           display: 'inline-flex',

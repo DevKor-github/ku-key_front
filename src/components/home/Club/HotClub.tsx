@@ -16,8 +16,10 @@ const HotClub = () => {
           justifyContent: 'center',
         })}
       >
-        {hotClubs.map(club => (
+        {hotClubs.map((club, index) => (
           <ClubProfile
+            index={index}
+            type="hot"
             key={club.name}
             img={club.imageUrl}
             description={club.summary}

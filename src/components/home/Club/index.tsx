@@ -18,7 +18,6 @@ const Club = () => {
       <HomeTitle title="Club" navLink="" />
       <HotClub />
       <RecommendClub />
-      {/* <div className={css({ w: 'full', h: 30, bgColor: 'bg.gray' })} /> */}
     </section>
   )
 }
