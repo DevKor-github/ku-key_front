@@ -42,7 +42,7 @@ const ClubProfile = ({ img, description, name, clubDivision, index, type }: Club
       <img
         src={type === 'hot' ? HotClubConfig[index].img : RecommendedClubConfig[index].img}
         alt="club"
-        className={css({ pos: 'absolute', left: 0, top: 120, zIndex: 1, w: 23 })}
+        className={css({ pos: 'absolute', left: 0, top: type === 'hot' ? 120 : 140, zIndex: 1, w: 23 })}
       />
       <div
         className={css({
