@@ -19,3 +19,10 @@ export interface GetMyProfileResponse {
   level: number
   type: string
 }
+
+export interface PatchMyProfileRequest {
+  name: string
+  country: string
+  homeUniversity: string
+  major: string
+}

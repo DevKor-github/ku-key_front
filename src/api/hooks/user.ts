@@ -1,6 +1,6 @@
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
-import { GetMyProfileResponse, GetPointHistroyResponse } from '@/api/types/user'
+import { GetMyProfileResponse, GetPointHistroyResponse, PatchMyProfileRequest } from '@/api/types/user'
 import { useSignOut } from '@/util/auth/useSignOut'
 import { apiInterface } from '@/util/axios/custom-axios'
 
@@ -46,6 +46,22 @@ export const useGetMyProfile = () => {
       languages: [],
       level: 0,
       type: '',
+    },
+  })
+}
+
+const patchMyProfile = async (props: PatchMyProfileRequest) => {
+  const response = await apiInterface.patch('/user/profile', props)
+  return response
+}
+
+export const usePatchMyProfile = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: patchMyProfile,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['myProfile'] })
     },
   })
 }

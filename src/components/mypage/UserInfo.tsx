@@ -28,21 +28,14 @@ const UserInfo = ({ name, country, point, languages, homeUniversity }: UserInfoP
       <div
         className={css({
           display: 'flex',
-          gap: { base: 3, mdDown: 1 },
+          gap: { base: 6, mdDown: 1 },
           fontWeight: 'bold',
-          fontSize: { base: 34, mdDown: 20 },
+          fontSize: { base: 48, mdDown: 20 },
           alignItems: 'flex-end',
         })}
       >
-        <p
-          className={css({
-            fontSize: { base: 40, mdDown: 24 },
-          })}
-        >
-          {name}
-        </p>
-        <p>님</p>
-        <p>{hasFlag(country) && getUnicodeFlagIcon(country)}</p>
+        <p>{name}</p>
+        <p>{hasFlag(country.toUpperCase()) && getUnicodeFlagIcon(country.toUpperCase())}</p>
       </div>
       <div
         className={css({
