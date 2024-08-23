@@ -1,11 +1,13 @@
 import { css } from '@styled-stytem/css'
+import { Bell, CircleUser } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 import { useLogOut } from '@/api/hooks/auth'
 import KUkeyLogo from '@/assets/KU-keyLogo.svg'
 import { NavLinkButton } from '@/components/header/NavLinkButton'
 import { headerRouteConfig } from '@/lib/router/header-route'
+import { useAuth } from '@/util/auth/useAuth'
 const Header = () => {
   const location = useLocation()
   const curPath = location.pathname
@@ -13,6 +15,11 @@ const Header = () => {
   const { mutate: mutateSignOut } = useLogOut()
   const innerTabRef = useRef<HTMLDivElement>(null)
   const [isOpen, setIsOpen] = useState(false)
+  const { isAuthenticated } = useAuth()
+  const navigate = useNavigate()
+  const handleUserButton = useCallback(() => {
+    isAuthenticated ? mutateSignOut() : navigate('/login')
+  }, [isAuthenticated, mutateSignOut, navigate])
   const handleOpen = useCallback(() => {
     setIsOpen(prev => !prev)
   }, [])
@@ -75,8 +82,31 @@ const Header = () => {
           />
         ))}
       </nav>
-      <div className={css({ display: 'flex', alignItems: 'center', gap: 5 })}>
-        <button onClick={() => mutateSignOut()}>로그아웃</button>
+      <div className={css({ display: 'flex', alignItems: 'center', gap: '30px' })}>
+        <div
+          className={css({
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 4,
+            color: 'darkGray.2',
+          })}
+        >
+          <button
+            className={css({ display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' })}
+          >
+            <Bell size={20} />
+          </button>
+          <Link to="/mypage" className={css({ display: 'flex', alignItems: 'center' })}>
+            <CircleUser size={20} />
+          </Link>
+        </div>
+        <button
+          onClick={handleUserButton}
+          className={css({ cursor: 'pointer', textStyle: 'body1_L', color: 'lightGray.1' })}
+        >
+          {isAuthenticated ? 'Log out' : 'Log in'}
+        </button>
       </div>
       {/* <LanguageButton /> */}
     </header>
