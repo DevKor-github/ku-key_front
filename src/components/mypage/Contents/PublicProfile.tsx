@@ -7,7 +7,14 @@ import ProfileChangeHeader from '@/components/mypage/ProfileChangeHeader'
 import Button from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
-const ProfileFormWrapper = css({ display: 'flex', gap: 5, alignItems: 'stretch' })
+const ProfileFormWrapper = css({
+  display: 'flex',
+  gap: 5,
+  alignItems: 'stretch',
+  '& input': {
+    w: '400px',
+  },
+})
 const ProfileFormTitle = css({
   flexShrink: 0,
   w: '189px',
