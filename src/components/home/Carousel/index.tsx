@@ -4,8 +4,14 @@ import useEmblaCarousel, { UseEmblaCarouselType } from 'embla-carousel-react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 
+import BannerFive from '@/assets/BannerFive.png'
+import BannerFour from '@/assets/BannerFour.png'
+import BannerOne from '@/assets/BannerOne.png'
+import BannerSix from '@/assets/BannerSix.png'
+import BannerThree from '@/assets/BannerThree.png'
+import BannerTwo from '@/assets/BannerTwo.png'
 import PlayIcon from '@/assets/play.svg'
-import CarouselCard from '@/components/home/Carousel/CarouselCard'
+// import CarouselCard from '@/components/home/Carousel/CarouselCard'
 import { usePrevNextButtons } from '@/util/carousel-button'
 
 const HomeCarousel = () => {
@@ -41,25 +47,12 @@ const HomeCarousel = () => {
     >
       <div ref={emblaRef} className={css({ overflow: 'hidden' })}>
         <div className={css({ display: 'flex', backfaceVisibility: 'hidden' })}>
-          <CarouselCard
-            title="Welcome to KU!"
-            content="new semester start"
-            date="2024.03.02"
-            selected={currentSlide === 0}
-          />
-          <CarouselCard
-            title="Study with KU!"
-            content="Course registration period"
-            date="2024.03.11"
-            selected={currentSlide === 1}
-          />
-          <CarouselCard
-            title="Notice from KU!"
-            content="currently updated notice"
-            date="2024.06.14"
-            selected={currentSlide === 2}
-          />
-          <CarouselCard title="Test from KU!" content="dummy data" date="2024.06.18" selected={currentSlide === 3} />
+          <img src={BannerOne} alt="banner-one" className={css({ w: '608px', h: 75, ml: 5 })} />
+          <img src={BannerTwo} alt="banner-one" className={css({ w: '608px', h: 75, ml: 5 })} />
+          <img src={BannerThree} alt="banner-one" className={css({ w: '608px', h: 75, ml: 5 })} />
+          <img src={BannerFour} alt="banner-one" className={css({ w: '608px', h: 75, ml: 5 })} />
+          <img src={BannerFive} alt="banner-one" className={css({ w: '608px', h: 75, ml: 5 })} />
+          <img src={BannerSix} alt="banner-one" className={css({ w: '608px', h: 75, ml: 5 })} />
         </div>
       </div>
       <div

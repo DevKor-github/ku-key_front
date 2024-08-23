@@ -1,8 +1,12 @@
 import { css } from '@styled-stytem/css'
 import { clubTag } from '@styled-stytem/recipes'
 
+import Book from '@/assets/Book.svg'
 import Four from '@/assets/Four.svg'
+import Heart from '@/assets/Heart.svg'
 import One from '@/assets/One.svg'
+import People from '@/assets/People.svg'
+import Tennis from '@/assets/Tennis.svg'
 import Three from '@/assets/Three.svg'
 import Two from '@/assets/Two.svg'
 import { ClubProfileProps } from '@/types/club'
@@ -17,6 +21,13 @@ const HotClubConfig: Record<number, { img: string }> = {
   2: { img: Three },
   3: { img: Four },
 }
+
+const RecommendedClubConfig: Record<number, { img: string }> = {
+  0: { img: Heart },
+  1: { img: Tennis },
+  2: { img: People },
+  3: { img: Book },
+}
 const ClubProfile = ({ img, description, name, clubDivision, index, type }: ClubPreviewProps) => {
   return (
     <div
@@ -29,7 +40,7 @@ const ClubProfile = ({ img, description, name, clubDivision, index, type }: Club
       })}
     >
       <img
-        src={HotClubConfig[index].img}
+        src={type === 'hot' ? HotClubConfig[index].img : RecommendedClubConfig[index].img}
         alt="club"
         className={css({ pos: 'absolute', left: 0, top: 120, zIndex: 1, w: 23 })}
       />
