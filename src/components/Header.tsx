@@ -1,15 +1,36 @@
 import { css } from '@styled-stytem/css'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
 import { useLogOut } from '@/api/hooks/auth'
+import KUkeyLogo from '@/assets/KU-keyLogo.svg'
 import { NavLinkButton } from '@/components/header/NavLinkButton'
 import { headerRouteConfig } from '@/lib/router/header-route'
-
 const Header = () => {
   const location = useLocation()
   const curPath = location.pathname
   const curPathRoot = curPath.split('/')[1]
   const { mutate: mutateSignOut } = useLogOut()
+  const innerTabRef = useRef<HTMLDivElement>(null)
+  const [isOpen, setIsOpen] = useState(false)
+  const handleOpen = useCallback(() => {
+    setIsOpen(prev => !prev)
+  }, [])
+
+  const handleClickOutside = useCallback((e: MouseEvent) => {
+    if (
+      innerTabRef.current &&
+      !innerTabRef.current.contains(e.target as Node) &&
+      !innerTabRef.current?.parentNode?.contains(e.target as Node)
+    ) {
+      setIsOpen(prev => !prev)
+    }
+  }, [])
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [handleClickOutside])
+
   return (
     <header
       className={css({
@@ -25,12 +46,14 @@ const Header = () => {
     >
       <nav
         className={css({
-          color: 'black.2',
-          base: { textStyle: 'heading3_L' },
-          mdDown: { textStyle: 'heading4_L' },
+          display: 'flex',
+          alignItems: 'center',
+          flexShrink: 0,
         })}
       >
-        <Link to="/">KU-key</Link>
+        <Link to="/">
+          <img src={KUkeyLogo} alt="KU-key" />
+        </Link>
       </nav>
       <nav
         className={css({
@@ -41,10 +64,14 @@ const Header = () => {
       >
         {headerRouteConfig.map(nav => (
           <NavLinkButton
+            ref={nav.navName === 'Timetable' ? innerTabRef : null}
             key={nav.route}
             isSelected={curPathRoot === nav.route}
             targetRoute={nav.route}
             navName={nav.navName}
+            innerTab={nav.innerTab}
+            isOpen={isOpen}
+            handleOpen={handleOpen}
           />
         ))}
       </nav>

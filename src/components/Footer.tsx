@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 import instagramIcon from '@/assets/instagram.svg'
 import kakaoIcon from '@/assets/kakaocorp.svg'
+import KUkeyLogo from '@/assets/KU-keyLogo.svg'
 import mailIcon from '@/assets/mail.svg'
 import notionIcon from '@/assets/notion.svg'
 
@@ -41,16 +42,17 @@ const Footer = () => {
       })}
     >
       <div className={css({ flex: 1.5, display: 'flex', flexDir: 'column', gap: '16px' })}>
-        <div
+        <nav
           className={css({
-            color: 'black.1',
-            // todo: 폰트 사이즈 규격화 필요
-            fontSize: 26,
-            fontWeight: '800',
+            display: 'flex',
+            alignItems: 'center',
+            flexShrink: 0,
           })}
         >
-          KU-key
-        </div>
+          <Link to="/">
+            <img src={KUkeyLogo} alt="KU-key" />
+          </Link>
+        </nav>
         <div
           className={css({
             color: 'black.1',
