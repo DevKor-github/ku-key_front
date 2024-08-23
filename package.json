@@ -25,7 +25,6 @@
     "country-flag-icons": "^1.5.13",
     "date-fns": "^3.6.0",
     "embla-carousel-autoplay": "^8.2.0",
-    "html2canvas": "^1.4.1",
     "embla-carousel-react": "^8.1.8",
     "framer-motion": "^11.3.24",
     "heic2any": "^0.0.4",
