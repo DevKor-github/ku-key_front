@@ -49,7 +49,7 @@ const MyPage = () => {
         </div>
         <DueDateCard />
       </div>
-      <MyPageContents />
+      <MyPageContents myProfileData={myProfileData} />
     </MypageWrapper>
   )
 }

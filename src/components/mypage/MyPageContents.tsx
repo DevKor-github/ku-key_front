@@ -1,14 +1,22 @@
 import { css, cva } from '@styled-stytem/css'
 import { useCallback, useEffect } from 'react'
 
+import { GetMyProfileResponse } from '@/api/types/user'
+import ChangePassword from '@/components/mypage/Contents/ChangePassword'
 import DeleteAccount from '@/components/mypage/Contents/DeleteAccount'
+import ExchangeProfile from '@/components/mypage/Contents/ExchangeProfile'
+import MyCommunity from '@/components/mypage/Contents/MyCommunity'
 import MyCourseReview from '@/components/mypage/Contents/MyCourseReview'
 import MyPoint from '@/components/mypage/Contents/MyPoint'
 import PointHistory from '@/components/mypage/Contents/PointHistory'
+import PublicProfile from '@/components/mypage/Contents/PublicProfile'
 import { PAGE_LIST, PageType } from '@/types/myPage'
 import { useSearch } from '@/util/useSearch'
 
-const MyPageContents = () => {
+interface MyPageContentsProps {
+  myProfileData: GetMyProfileResponse
+}
+const MyPageContents = ({ myProfileData }: MyPageContentsProps) => {
   const { searchParam, handleSetParam } = useSearch()
   const curPage = searchParam.get('page') as PageType
 
@@ -90,8 +98,16 @@ const MyPageContents = () => {
           switch (curPage) {
             case 'point-history':
               return <PointHistory />
+            case 'community':
+              return <MyCommunity />
             case 'course-review':
               return <MyCourseReview />
+            case 'public-profile':
+              return <PublicProfile myProfileData={myProfileData} />
+            case 'exchange-profile':
+              return <ExchangeProfile />
+            case 'password':
+              return <ChangePassword />
             case 'delete-account':
               return <DeleteAccount />
             default:
