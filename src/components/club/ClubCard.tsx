@@ -14,8 +14,7 @@ const ClubCard = ({ clubData, handleLikeClick }: ClubCardProps) => {
       <div className={css({ display: 'flex', gap: 5 })}>
         <img
           className={css({ w: '294px', h: '100%', objectFit: 'cover', rounded: 10, flexShrink: 0, minH: '294px' })}
-          // TODO: 실제 이미지로 변경
-          src="https://previews.123rf.com/images/avs1/avs12006/avs1200600713/149429617-%ED%88%AC%EB%AA%85-%EB%B0%B0%EA%B2%BD%EC%9E%85%EB%8B%88%EB%8B%A4-%ED%88%AC%EB%AA%85-%EA%B7%B8%EB%A6%AC%EB%93%9C-%EB%B2%A1%ED%84%B0-%EC%9D%BC%EB%9F%AC%EC%8A%A4%ED%8A%B8-%EB%A0%88%EC%9D%B4-%EC%85%98.jpg"
+          src={clubData.imageUrl}
           alt={clubData.name}
         />
         <div className={css({ display: 'flex', flexDir: 'column', gap: 6 })}>
@@ -53,8 +52,8 @@ const ClubCard = ({ clubData, handleLikeClick }: ClubCardProps) => {
               {clubData.description}
             </p>
             <div className={css({ display: 'flex', gap: 2 })}>
-              <ContactButton type="instagram" url="https://www.instagram.com/halionaz/" />
-              <ContactButton type="youtube" url="https://www.instagram.com/halionaz/" />
+              {clubData.instagramLink && <ContactButton type="instagram" url={clubData.instagramLink} />}
+              {clubData.youtubeLink && <ContactButton type="youtube" url={clubData.youtubeLink} />}
             </div>
           </div>
         </div>

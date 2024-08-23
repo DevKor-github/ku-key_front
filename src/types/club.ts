@@ -14,4 +14,6 @@ export interface ClubInterface {
   imageUrl: string
   likeCount: number
   isLiked: boolean
+  instagramLink: string | null
+  youtubeLink: string | null
 }
