@@ -111,11 +111,7 @@ const MyPageContents = ({ myProfileData }: MyPageContentsProps) => {
             case 'delete-account':
               return <DeleteAccount />
             default:
-<<<<<<< Updated upstream
-              return <MyPoint />
-=======
               return <MyPoint myProfileData={myProfileData} />
->>>>>>> Stashed changes
           }
         })()}
       </div>

@@ -13,7 +13,7 @@ export interface FriendRequestInterface {
   name: string
   username: string
   major: string
-  language: string
+  country: string
 }
 
 export type friendStatusType = 'me' | 'friend' | 'requested' | 'pending' | 'unknown'
