@@ -11,6 +11,7 @@ interface EventProps {
 const Event = ({ date, content, isSelected }: EventProps) => {
   return (
     <div
+      aria-label={date.toLocaleDateString()}
       className={css({
         display: 'flex',
         alignItems: 'center',

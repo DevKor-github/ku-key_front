@@ -16,16 +16,23 @@ const CalendarEvent = ({ calendarEvent }: CalendarEventProps) => {
 
   useEffect(() => {
     if (selectedDate && scrollRef.current) {
-      const selectedEventElement = Array.from(scrollRef.current.children).find((_, index) => {
-        const eventDate = new Date(calendarEvent[index].date) // Event 컴포넌트에서 date prop을 가져옵니다.
+      const selectedEventElement = Array.from(scrollRef.current.children).find(node => {
+        if (!node.ariaLabel) return false
+        const eventDate = new Date(node.ariaLabel) // Event 컴포넌트에서 date prop을 가져옵니다.
         return isEqual(eventDate.toLocaleDateString(), selectedDate.toLocaleDateString())
       })
 
-      if (selectedEventElement) {
-        selectedEventElement.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      if (selectedEventElement && scrollRef.current) {
+        const elementPosition =
+          selectedEventElement.getBoundingClientRect().top -
+          scrollRef.current.getBoundingClientRect().top +
+          scrollRef.current.scrollTop
+        scrollRef.current.scrollTo({ top: elementPosition, behavior: 'smooth' })
+        // selectedEventElement.scrollIntoView({ behavior: 'smooth', block: 'center' })
       }
     }
   }, [selectedDate, calendarEvent])
+
   return (
     <div
       className={css({
