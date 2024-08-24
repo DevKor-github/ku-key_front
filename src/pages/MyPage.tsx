@@ -2,8 +2,8 @@ import { css } from '@styled-stytem/css'
 
 import MypageBG from '@/assets/MypageBG.jpg'
 import { useGetMyProfile } from '@/api/hooks/user'
+import MyPageBG from '@/assets/MypageBG.jpg'
 import DueDateCard from '@/components/mypage/DueDateCard'
-import Mask from '@/components/mypage/Mask'
 import MyPageContents from '@/components/mypage/MyPageContents'
 import MypageWrapper from '@/components/mypage/MypageWrapper'
 import UserInfo from '@/components/mypage/UserInfo'
@@ -28,9 +28,10 @@ const MyPage = () => {
             px: { base: 56, mdDown: 5 },
             h: { base: 500, mdDown: 250 },
             w: 'full',
-            bg: 'red.2',
             alignItems: 'center',
             zIndex: 0,
+            bgSize: 'cover',
+            bgPosition: 'center',
           })}
           style={{
             backgroundImage: `url(${MypageBG})`,
@@ -38,7 +39,6 @@ const MyPage = () => {
             backgroundPosition: 'center',
           }}
         >
-          {/* <Mask /> */}
           <UserInfo
             name={myProfileData.name}
             country={myProfileData.country}
