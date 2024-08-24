@@ -13,7 +13,7 @@ const TimetablePage = () => {
           alignItems: 'center',
         })}
       >
-        <div className={css({ display: 'flex', flexDir: 'column', maxW: '1200px', width: '100%' })}>
+        <div className={css({ display: 'flex', flexDir: 'column', maxW: '1131px', width: '100%' })}>
           <Outlet />
         </div>
       </div>
