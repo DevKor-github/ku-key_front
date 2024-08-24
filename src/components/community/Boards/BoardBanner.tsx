@@ -10,6 +10,7 @@ import Button from '@/components/ui/button'
 
 interface BoardBannerProps {
   boardName: string
+  boardDescription: string
 }
 
 const BoardImgConfig: Record<string, string> = {
@@ -17,7 +18,7 @@ const BoardImgConfig: Record<string, string> = {
   information: InformationBG,
   question: QuestionBG,
 }
-const BoardBanner = ({ boardName }: BoardBannerProps) => {
+const BoardBanner = ({ boardName, boardDescription }: BoardBannerProps) => {
   const navigate = useNavigate()
   const handleNavigation = useCallback(
     () => navigate(`/community/action/write/post/${boardName.toLowerCase()}`),
@@ -71,7 +72,7 @@ const BoardBanner = ({ boardName }: BoardBannerProps) => {
             {boardName} Board
           </h1>
           <p className={css({ fontSize: 20, fontWeight: 500, letterSpacing: -0.4, color: 'lightGray.1' })}>
-            Lorem ipsum dolor sit amet consectetur.
+            {boardDescription}
           </p>
         </div>
       </div>
