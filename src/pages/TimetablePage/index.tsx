@@ -38,37 +38,18 @@ const TimetablePage = () => {
 
   return (
     <>
-      {/* <div
-        className={css({
-          position: 'absolute',
-          h: 20,
-          w: '100%',
-          bg: 'linear-gradient(0deg, black 35%, rgba(0, 0, 0, 0.20) 88%)',
-          opacity: 0.2,
-          zIndex: 1,
-        })}
-      />
       <div
         className={css({
-          h: 20,
-          bgColor: 'red.2',
-          px: { base: '149px', mdDown: 4 },
           display: 'flex',
-          flexDir: 'row',
-          zIndex: 0,
+          flexDir: 'column',
+          px: { base: 64, mdDown: 4 },
+          mb: 40,
+          alignItems: 'center',
         })}
       >
-        <div className={css({ display: 'flex', flexDir: 'row', alignItems: 'center', gap: 5 })}>
-          <Link to={'/timetable'} className={css(TimetableBtn.raw({ selected: curPathRoot === undefined }))}>
-            My schedule
-          </Link>
-          <Link to={'/timetable/friend'} className={css(TimetableBtn.raw({ selected: curPathRoot === 'friend' }))}>
-            Friend list
-          </Link>
+        <div className={css({ display: 'flex', flexDir: 'column', maxW: '1200px', width: '100%' })}>
+          <Outlet />
         </div>
-      </div> */}
-      <div className={css({ display: 'flex', flexDir: 'column', px: { base: 64, mdDown: 4 }, mb: 40 })}>
-        <Outlet />
       </div>
     </>
   )
