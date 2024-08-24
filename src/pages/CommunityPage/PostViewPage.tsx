@@ -1,9 +1,13 @@
 import { css, cx } from '@styled-stytem/css'
 import { globalLayout } from '@styled-stytem/recipes'
+import { useEffect } from 'react'
 
 import PostView from '@/components/community/post/PostView'
 
 const PostViewPage = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
   return (
     <main className={css({ display: 'flex', flexDir: 'column' })}>
       <div
