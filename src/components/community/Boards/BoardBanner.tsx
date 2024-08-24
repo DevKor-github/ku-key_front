@@ -56,9 +56,20 @@ const BoardBanner = ({ boardName }: BoardBannerProps) => {
             flexDir: 'column',
             gap: 5,
             w: 1131,
+            mt: '80px',
           })}
         >
-          <h1 className={css({ fontSize: 80, fontWeight: 700, color: 'white' })}>{boardName} Board</h1>
+          <h1
+            className={css({
+              display: 'flex',
+              lineHeight: 1,
+              fontSize: 80,
+              fontWeight: 700,
+              color: 'white',
+            })}
+          >
+            {boardName} Board
+          </h1>
           <p className={css({ fontSize: 20, fontWeight: 500, letterSpacing: -0.4, color: 'lightGray.1' })}>
             Lorem ipsum dolor sit amet consectetur.
           </p>
