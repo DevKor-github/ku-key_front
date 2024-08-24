@@ -1,4 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
+import { useNavigate } from 'react-router-dom'
 
 import { LoginRequest, LoginResponse } from '@/api/types/auth'
 import { useAuth } from '@/util/auth/useAuth'
@@ -35,5 +36,12 @@ const logOut = async () => {
 
 export const useLogOut = () => {
   const { signOut } = useAuth()
-  return useMutation({ mutationFn: logOut, onSuccess: signOut })
+  const navigate = useNavigate()
+  return useMutation({
+    mutationFn: logOut,
+    onSuccess: () => {
+      signOut()
+      navigate('/login')
+    },
+  })
 }

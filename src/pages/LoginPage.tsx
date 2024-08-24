@@ -25,7 +25,7 @@ const Login = () => {
     mutateLogin(
       { ...values, keepingLogin: maintain },
       {
-        onSuccess: () => navigate('/'),
+        onSuccess: () => navigate('/home'),
         onError: error => {
           if (error instanceof AxiosError) {
             const errorMessage = error.response?.data.message ?? 'An error occurred'
