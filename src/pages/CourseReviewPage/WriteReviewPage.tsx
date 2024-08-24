@@ -21,6 +21,7 @@ import {
   teamProjectArray,
 } from '@/util/reviewUtil'
 import { getCurSemester, makeSemesterDropdownList, timetablePreprocess } from '@/util/timetableUtil'
+import useScrollUp from '@/util/useScrollUp'
 
 interface WriteReviewForm {
   rate: number
@@ -37,6 +38,7 @@ interface WriteReviewForm {
 }
 
 const WriteReviewPage = () => {
+  useScrollUp()
   const { courseCode = '', prof = '' } = useParams()
 
   const navigate = useNavigate()
