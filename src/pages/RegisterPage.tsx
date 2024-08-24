@@ -3,7 +3,7 @@ import { ArrowLeft, ArrowRight } from 'lucide-react'
 import { memo, useCallback, useState } from 'react'
 
 import { useRegister } from '@/api/hooks/register'
-import RegisterBGImg from '@/assets/RegisterBGImg.jpg'
+import LoginPageBg from '@/assets/LoginPageBG.jpg'
 import CredentialForm from '@/components/register/CredentialForm'
 import EmailForm from '@/components/register/EmailForm'
 import Progress from '@/components/register/Progress'
@@ -92,10 +92,9 @@ const RegisterPage = memo(() => {
           bgColor: 'bg',
         })}
       >
-        <img
-          src={RegisterBGImg}
-          alt="register background img"
-          className={css({ pos: 'absolute', top: 0, zIndex: 0 })}
+        <div
+          className={css({ pos: 'absolute', w: 'full', h: '500px', top: 0, zIndex: 1 })}
+          style={{ backgroundImage: `url(${LoginPageBg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
         />
         <title>Register Page</title>
         <section
