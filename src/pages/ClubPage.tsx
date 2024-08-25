@@ -74,12 +74,23 @@ const ClubPage = () => {
       >
         Club
       </div>
-      <div className={css({ px: 64, pt: 29, display: 'flex', flexDir: 'column', gap: 19, bgColor: 'bg.gray' })}>
+      <div
+        className={css({
+          px: { base: 64, mdDown: 5 },
+          pt: 29,
+          display: 'flex',
+          flexDir: 'column',
+          gap: 19,
+          bgColor: 'bg.gray',
+        })}
+      >
         <CategorySelector curCategory={query.category} setCategory={setCategory} />
         <div className={css({ display: 'flex', flexDir: 'column', gap: 20, pb: 30 })}>
           <div className={css({ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 4 })}>
             <SearchArea onSubmit={handleSubmit} clearKeywordParam={clearKeyword} />
-            <div className={css({ display: 'flex', alignItems: 'center', gap: 2.5, px: 2.5 })}>
+            <div
+              className={css({ display: { base: 'flex', mdDown: 'none' }, alignItems: 'center', gap: 2.5, px: 2.5 })}
+            >
               <Checkbox checked={query.wishList} onCheckedChange={handleWishList} />
               <p className={css({ textStyle: 'heading4_M', color: 'darkGray.2' })}>View only I like</p>
             </div>

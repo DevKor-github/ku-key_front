@@ -13,22 +13,29 @@ const ClubCard = ({ clubData, handleLikeClick }: ClubCardProps) => {
     <div className={css({ display: 'flex', justifyContent: 'space-between', alignItems: 'center' })}>
       <div className={css({ display: 'flex', gap: 5 })}>
         <img
-          className={css({ w: '294px', h: '100%', objectFit: 'cover', rounded: 10, flexShrink: 0, minH: '294px' })}
+          className={css({
+            w: { base: '294px', mdDown: '80px' },
+            h: '100%',
+            objectFit: 'cover',
+            rounded: 10,
+            flexShrink: 0,
+            minH: { base: '294px', mdDown: '100%' },
+          })}
           src={clubData.imageUrl}
           alt={clubData.name}
         />
-        <div className={css({ display: 'flex', flexDir: 'column', gap: 6 })}>
-          <div className={css({ display: 'flex', flexDir: 'column', gap: 4 })}>
+        <div className={css({ display: 'flex', flexDir: 'column', gap: { base: 6, mdDown: 3 } })}>
+          <div className={css({ display: 'flex', flexDir: 'column', gap: { base: 4, mdDown: 2 } })}>
             <div className={css({ display: 'flex', flexDir: 'column', gap: 1.5 })}>
-              <p className={css({ fontSize: 18 })}>{clubData.summary}</p>
-              <h2 className={css({ fontSize: 30, fontWeight: 700 })}>{clubData.name}</h2>
+              <p className={css({ fontSize: { base: 18, mdDown: 12 } })}>{clubData.summary}</p>
+              <h2 className={css({ fontSize: { base: 30, mdDown: 18 }, fontWeight: 700 })}>{clubData.name}</h2>
             </div>
             <div
               className={css({
                 display: 'flex',
                 flexDir: 'column',
                 gap: 1.5,
-                fontSize: 16,
+                fontSize: { base: 16, mdDown: 12 },
                 fontWeight: 600,
                 '& span': {
                   color: 'red.1',
@@ -39,12 +46,12 @@ const ClubCard = ({ clubData, handleLikeClick }: ClubCardProps) => {
               <p>Recruitment Period | {clubData.recruitmentPeriod}</p>
             </div>
           </div>
-          <div className={css({ display: 'flex', flexDir: 'column', gap: 3 })}>
+          <div className={css({ display: 'flex', flexDir: 'column', gap: { base: 3 } })}>
             <p
               className={css({
                 fontWeight: 400,
                 color: 'darkGray.1',
-                fontSize: 16,
+                fontSize: { base: 16, mdDown: 12 },
                 maxW: '580px',
                 lineClamp: 3,
               })}
@@ -66,7 +73,7 @@ const ClubCard = ({ clubData, handleLikeClick }: ClubCardProps) => {
             alignItems: 'center',
             cursor: 'pointer',
             color: 'lightGray.1',
-            fontSize: 14,
+            fontSize: { base: 14, mdDown: 12 },
             transition: 'color 0.25s ease',
           },
           variants: {
