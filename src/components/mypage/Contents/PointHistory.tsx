@@ -15,7 +15,7 @@ const PointHistory = () => {
   const { data } = useGetPointHistory()
 
   return (
-    <div className={css({ display: 'flex', flexDir: 'column', gap: 10 })}>
+    <div className={css({ display: 'flex', flexDir: 'column', gap: 10, maxW: '818px' })}>
       <h1 className={css({ fontSize: 30, fontWeight: 700 })}>Point history</h1>
       <div className={css({ display: 'flex', flexDir: 'column' })}>
         <div className={css({ display: 'flex', alignItems: 'center', bgColor: 'lightGray.2', py: 5 })}>

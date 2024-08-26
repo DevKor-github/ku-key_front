@@ -26,3 +26,9 @@ export interface PatchMyProfileRequest {
   homeUniversity: string
   major: string
 }
+
+export interface PostPurchaseItemRequest {
+  requiredPoints: number
+  itemCategory: 'COURSE_REVIEW_READING_TICKET'
+  days?: number
+}

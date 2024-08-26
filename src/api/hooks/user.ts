@@ -1,6 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
-import { GetMyProfileResponse, GetPointHistroyResponse, PatchMyProfileRequest } from '@/api/types/user'
+import {
+  GetMyProfileResponse,
+  GetPointHistroyResponse,
+  PatchMyProfileRequest,
+  PostPurchaseItemRequest,
+} from '@/api/types/user'
 import { useSignOut } from '@/util/auth/useSignOut'
 import { apiInterface } from '@/util/axios/custom-axios'
 
@@ -62,6 +67,20 @@ export const usePatchMyProfile = () => {
     mutationFn: patchMyProfile,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['myProfile'] })
+    },
+  })
+}
+
+const postPurchaseItem = async (props: PostPurchaseItemRequest) => {
+  const response = await apiInterface.post('/user/purchase-item', props)
+  return response
+}
+
+export const usePostPurchaseItem = () => {
+  return useMutation({
+    mutationFn: postPurchaseItem,
+    onSuccess: () => {
+      // TODO: 아이템 관련 정보 업데이트 로직
     },
   })
 }
