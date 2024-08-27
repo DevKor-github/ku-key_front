@@ -346,3 +346,35 @@ export const useGetMyPost = () => {
     select: data => (data.pages ?? []).flatMap(page => page.data),
   })
 }
+const getMyScrap = async (take: number, cursor?: string) => {
+  const response = await apiInterface.get<PostPreviewResponse>('post/scrap', {
+    params: { take, cursor: cursor?.length === 14 ? cursor : undefined },
+  })
+  return response.data
+}
+
+export const useGetMyScrap = () => {
+  return useInfiniteQuery({
+    queryKey: ['myScrap'],
+    queryFn: ({ pageParam: cursor }) => getMyScrap(10, cursor.toString()),
+    getNextPageParam: lastPage => (lastPage.meta.hasNextData ? lastPage.meta.nextCursor : undefined),
+    initialPageParam: 0,
+    select: data => (data.pages ?? []).flatMap(page => page.data),
+  })
+}
+const getMyReactPost = async (take: number, cursor?: string) => {
+  const response = await apiInterface.get<PostPreviewResponse>('post/react', {
+    params: { take, cursor: cursor?.length === 14 ? cursor : undefined },
+  })
+  return response.data
+}
+
+export const useGetMyReactPost = () => {
+  return useInfiniteQuery({
+    queryKey: ['myReactPost'],
+    queryFn: ({ pageParam: cursor }) => getMyReactPost(10, cursor.toString()),
+    getNextPageParam: lastPage => (lastPage.meta.hasNextData ? lastPage.meta.nextCursor : undefined),
+    initialPageParam: 0,
+    select: data => (data.pages ?? []).flatMap(page => page.data),
+  })
+}

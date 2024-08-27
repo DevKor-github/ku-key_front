@@ -1,7 +1,9 @@
 import { css, cva } from '@styled-stytem/css'
 import { useState } from 'react'
 
+import LikedPost from '@/components/mypage/Contents/Community/LikedPost'
 import MyPost from '@/components/mypage/Contents/Community/MyPost'
+import MyScrap from '@/components/mypage/Contents/Community/MyScrap'
 
 const ButtonStyle = cva({
   base: {
@@ -32,7 +34,7 @@ const ButtonStyle = cva({
   },
 })
 
-type ViewType = 'myPost' | 'likedPost' | 'myComment' | 'likedComment'
+type ViewType = 'myPost' | 'likedPost' | 'myComment' | 'myScrap'
 const MyCommunity = () => {
   const [curView, setCurView] = useState<ViewType>('myPost')
 
@@ -43,6 +45,9 @@ const MyCommunity = () => {
         <div className={css({ display: 'flex', alignItems: 'center', gap: 3.5 })}>
           <button className={ButtonStyle({ selected: curView === 'myPost' })} onClick={() => setCurView('myPost')}>
             My post
+          </button>
+          <button className={ButtonStyle({ selected: curView === 'myScrap' })} onClick={() => setCurView('myScrap')}>
+            Scrapped post
           </button>
           <button
             className={ButtonStyle({ selected: curView === 'likedPost' })}
@@ -56,14 +61,8 @@ const MyCommunity = () => {
           >
             My comment
           </button>
-          <button
-            className={ButtonStyle({ selected: curView === 'likedComment' })}
-            onClick={() => setCurView('likedComment')}
-          >
-            Liked comment
-          </button>
         </div>
-        {curView === 'myPost' && <MyPost />}
+        {curView === 'myPost' ? <MyPost /> : curView === 'myScrap' ? <MyScrap /> : <LikedPost />}
       </div>
     </div>
   )
