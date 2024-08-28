@@ -3,7 +3,20 @@ import { css } from '@styled-stytem/css'
 import CircularProgress from '@/components/mypage/CircularProgress'
 import GenericDueDate from '@/components/mypage/GenericDueDate'
 
-const DueDateCard = () => {
+interface DueDateCardProps {
+  startDay: string
+  endDay: string
+}
+const DueDateCard = ({ startDay, endDay }: DueDateCardProps) => {
+  const today = new Date()
+  const startDate = new Date(startDay)
+  const endDate = new Date(endDay)
+
+  const untilNow = Math.abs(today.getTime() - startDate.getTime())
+  const total = Math.abs(endDate.getTime() - startDate.getTime())
+  const fromNowOn = Math.abs(endDate.getTime() - today.getTime())
+  const percentage = Math.round((untilNow / total) * 100)
+
   return (
     <div
       className={css({
@@ -22,9 +35,17 @@ const DueDateCard = () => {
         h: { base: 52, mdDown: 20 },
       })}
     >
-      <CircularProgress progress={50} />
-      <GenericDueDate type="start" due={120} date="2024. 02. 07" />
-      <GenericDueDate type="end" due={98} date="2024. 07. 29" />
+      <CircularProgress progress={percentage <= 100 ? percentage : 100} />
+      <GenericDueDate
+        type="start"
+        due={Math.floor(untilNow / (1000 * 60 * 60 * 24))}
+        date={`${startDate.getFullYear()}. ${String(startDate.getMonth() + 1).padStart(2, '0')}. ${String(startDate.getDate()).padStart(2, '0')}`}
+      />
+      <GenericDueDate
+        type="end"
+        due={Math.floor(fromNowOn / (1000 * 60 * 60 * 24))}
+        date={`${endDate.getFullYear()}. ${String(endDate.getMonth() + 1).padStart(2, '0')}. ${String(endDate.getDate()).padStart(2, '0')}`}
+      />
     </div>
   )
 }

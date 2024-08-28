@@ -47,7 +47,7 @@ const MyPage = () => {
             homeUniversity={myProfileData.homeUniversity}
           />
         </div>
-        <DueDateCard />
+        <DueDateCard startDay={myProfileData.startDay} endDay={myProfileData.endDay} />
       </div>
       <MyPageContents myProfileData={myProfileData} />
     </MypageWrapper>
