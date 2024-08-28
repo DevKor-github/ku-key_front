@@ -82,7 +82,7 @@ const routes: RouteObject[] = [
         ],
       },
       { path: 'home', element: <HomePage /> },
-      { path: 'schedule', element: <SchedulePage /> },
+      { path: 'calendar', element: <SchedulePage /> },
       { path: 'login', element: <Login /> },
       { path: 'register', element: <RegisterPage /> },
     ],

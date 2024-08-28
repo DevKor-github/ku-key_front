@@ -15,7 +15,7 @@ const Club = () => {
         alignItems: 'center',
       })}
     >
-      <HomeTitle title="Club" navLink="" />
+      <HomeTitle title="Club" navLink="/club" />
       <HotClub />
       <RecommendClub />
     </section>
