@@ -34,9 +34,8 @@ const CommentSet = ({ index }: CommentSetProps) => {
         })}
       >
         <Comment currnetIndex={index} isOpen={open} handleClick={handleClick} />
-        {comment.reply.map(reply => (
-          <CommentReply key={reply.id} reply={reply} parentId={comment.id} />
-        ))}
+        {comment.reply &&
+          comment.reply.map(reply => <CommentReply key={reply.id} reply={reply} parentId={comment.id} />)}
       </div>
       <CommentInput currentIndex={index} isOpen={open} />
     </div>

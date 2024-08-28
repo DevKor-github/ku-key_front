@@ -2,6 +2,7 @@ import { css, cva } from '@styled-stytem/css'
 import { useState } from 'react'
 
 import LikedPost from '@/components/mypage/Contents/Community/LikedPost'
+import MyComments from '@/components/mypage/Contents/Community/MyComments'
 import MyPost from '@/components/mypage/Contents/Community/MyPost'
 import MyScrap from '@/components/mypage/Contents/Community/MyScrap'
 
@@ -62,7 +63,15 @@ const MyCommunity = () => {
             My comment
           </button>
         </div>
-        {curView === 'myPost' ? <MyPost /> : curView === 'myScrap' ? <MyScrap /> : <LikedPost />}
+        {curView === 'myPost' ? (
+          <MyPost />
+        ) : curView === 'myScrap' ? (
+          <MyScrap />
+        ) : curView === 'likedPost' ? (
+          <LikedPost />
+        ) : (
+          <MyComments />
+        )}
       </div>
     </div>
   )
