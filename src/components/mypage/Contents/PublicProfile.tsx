@@ -1,4 +1,5 @@
 import { css } from '@styled-stytem/css'
+import { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { usePatchMyProfile } from '@/api/hooks/user'
@@ -7,7 +8,7 @@ import ProfileChangeHeader from '@/components/mypage/ProfileChangeHeader'
 import Button from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
-const ProfileFormWrapper = css({
+export const ProfileFormWrapper = css({
   display: 'flex',
   gap: 5,
   alignItems: 'stretch',
@@ -15,7 +16,7 @@ const ProfileFormWrapper = css({
     w: '400px',
   },
 })
-const ProfileFormTitle = css({
+export const ProfileFormTitle = css({
   flexShrink: 0,
   w: '189px',
   display: 'flex',
@@ -36,14 +37,14 @@ interface PublicProfileProps {
   myProfileData: GetMyProfileResponse
 }
 const PublicProfile = ({ myProfileData: { name, country, homeUniversity, major } }: PublicProfileProps) => {
-  const { register, handleSubmit } = useForm<PublicProfileForm>({
-    defaultValues: {
-      name,
-      country,
-      homeUniversity,
-      major,
-    },
-  })
+  const { register, handleSubmit, setValue } = useForm<PublicProfileForm>()
+  useEffect(() => {
+    setValue('name', name)
+    setValue('country', country)
+    setValue('homeUniversity', homeUniversity)
+    setValue('major', major)
+  }, [name, country, homeUniversity, major, setValue])
+
   const { mutate: patchProfile } = usePatchMyProfile()
 
   const onSubmit: SubmitHandler<PublicProfileForm> = data => {
