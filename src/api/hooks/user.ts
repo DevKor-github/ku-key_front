@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   GetMyProfileResponse,
   GetPointHistroyResponse,
+  PatchExchangeDayRequest,
   PatchMyProfileRequest,
   PostPurchaseItemRequest,
 } from '@/api/types/user'
@@ -81,6 +82,21 @@ export const usePostPurchaseItem = () => {
     mutationFn: postPurchaseItem,
     onSuccess: () => {
       // TODO: 아이템 관련 정보 업데이트 로직
+    },
+  })
+}
+
+const patchExchangeDay = async (params: PatchExchangeDayRequest) => {
+  const response = apiInterface.patch('/user/exchange-day', params)
+  return response
+}
+
+export const usePatchExchangeDay = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: patchExchangeDay,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['myProfile'] })
     },
   })
 }

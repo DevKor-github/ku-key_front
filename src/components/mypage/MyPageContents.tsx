@@ -105,7 +105,7 @@ const MyPageContents = ({ myProfileData }: MyPageContentsProps) => {
             case 'public-profile':
               return <PublicProfile myProfileData={myProfileData} />
             case 'exchange-profile':
-              return <ExchangeProfile />
+              return <ExchangeProfile myProfileData={myProfileData} />
             case 'password':
               return <ChangePassword />
             case 'delete-account':

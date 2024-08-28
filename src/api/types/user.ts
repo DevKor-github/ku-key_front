@@ -32,3 +32,8 @@ export interface PostPurchaseItemRequest {
   itemCategory: 'COURSE_REVIEW_READING_TICKET'
   days?: number
 }
+
+export interface PatchExchangeDayRequest {
+  startDay: string
+  endDay: string
+}
