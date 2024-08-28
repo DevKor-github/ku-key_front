@@ -1,4 +1,5 @@
 import { css } from '@styled-stytem/css'
+import { Fragment } from 'react/jsx-runtime'
 
 import { useGetMyComments } from '@/api/hooks/community'
 import CommentCard from '@/components/mypage/Contents/Community/CommentCard'
@@ -11,10 +12,10 @@ const MyComments = () => {
       {comments !== undefined &&
         comments.map((comment, index) => {
           return (
-            <>
+            <Fragment key={index}>
               {index !== 0 && <div className={css({ h: 0.25, bgColor: 'lightGray.1', w: 'full' })} />}
-              <CommentCard key={index} comment={comment} />
-            </>
+              <CommentCard comment={comment} />
+            </Fragment>
           )
         })}
     </section>
