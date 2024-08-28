@@ -6,6 +6,7 @@ export interface GetClubRequest {
   wishList: boolean
   category: CategoryType
   keyword: string | null
+  isLogin: boolean
 }
 
 export type GetClubResponse = ClubInterface[]
