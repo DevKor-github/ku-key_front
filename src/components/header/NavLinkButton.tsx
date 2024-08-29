@@ -1,36 +1,105 @@
 import { css } from '@styled-stytem/css'
+import { AnimatePresence, motion } from 'framer-motion'
+import { ChevronDown } from 'lucide-react'
+import { forwardRef } from 'react'
 import { Link } from 'react-router-dom'
-
 interface NavLinkProps {
   isSelected: boolean
   targetRoute: string
   navName: string
+  innerTab?: string[]
+  isOpen: boolean
+  handleOpen: () => void
 }
-export const NavLinkButton = ({ isSelected, targetRoute, navName }: NavLinkProps) => {
-  return (
-    <button
-      className={css({ display: 'flex', flexDir: 'column', gap: 3, justifyContent: 'center', alignItems: 'center' })}
-    >
-      <Link
+export const NavLinkButton = forwardRef<HTMLDivElement, NavLinkProps>(
+  ({ isSelected, targetRoute, navName, innerTab, isOpen, handleOpen }, ref) => {
+    return (
+      <motion.div
         className={css({
-          fontSize: 20,
-          fontWeight: 600,
-          color: isSelected ? 'red.2' : 'darkGray.2',
-          _hover: { color: 'red.2' },
-          transition: 'color 0.15s ease-in',
+          display: 'inline-flex',
+          pos: 'relative',
         })}
-        to={`/${targetRoute}`}
       >
-        {navName}
-      </Link>
-      <div
-        aria-selected={isSelected}
-        className={css({
-          w: 'full',
-          h: 1.5,
-          _selected: { bgColor: 'red.2', rounded: 15, transition: 'background-color 0.15s ease-in' },
-        })}
-      />
-    </button>
-  )
-}
+        <motion.div
+          className={css({
+            display: 'inline-flex',
+            px: 2.5,
+            py: 1.5,
+            alignItems: 'center',
+            justifyContent: 'center',
+            rounded: 30,
+            textStyle: 'heading3_M',
+            letterSpacing: '-0.4px',
+            color: isSelected ? 'red.2' : 'darkGray.1',
+            _hover: { color: 'red.2' },
+            transition: 'all 0.3s ease-out',
+            gap: 2.5,
+          })}
+        >
+          <Link
+            to={`/${targetRoute}`}
+            onClick={e => {
+              if (navName === 'Timetable') {
+                e.preventDefault()
+                handleOpen()
+              }
+            }}
+          >
+            {navName}
+          </Link>
+          {navName === 'Timetable' && (
+            <ChevronDown size={20} style={{ rotate: isOpen ? '180deg' : 'none', transition: 'all 0.3s ease' }} />
+          )}
+        </motion.div>
+        <AnimatePresence>
+          {isOpen && innerTab && (
+            <motion.div
+              ref={ref}
+              initial={{ opacity: 0, zoom: 0.5 }}
+              animate={{ opacity: 1, zoom: 1 }}
+              exit={{ opacity: 0, zoom: 0.5 }}
+              className={css({
+                display: 'flex',
+                pos: 'absolute',
+                bottom: -25,
+                left: '50%',
+                transform: 'translateX(-50%)',
+                px: '30px',
+                py: 5,
+                gap: 5,
+                alignSelf: 'stretch',
+                rounded: 10,
+                bgColor: 'darkGray.1',
+                color: 'white',
+                zIndex: 10,
+              })}
+            >
+              <Link
+                to={`/${innerTab[0]}`}
+                onClickCapture={handleOpen}
+                className={css({
+                  textStyle: 'heading3_M',
+                  _hover: { color: 'lightGray.1', transition: 'all 0.3s ease-out' },
+                })}
+                style={{ whiteSpace: 'nowrap' }}
+              >
+                {'My schedule'}
+              </Link>
+              <Link
+                to={`/${innerTab[1]}`}
+                onClickCapture={handleOpen}
+                className={css({
+                  textStyle: 'heading3_M',
+                  _hover: { color: 'lightGray.1', transition: 'all 0.3s ease-out' },
+                })}
+                style={{ whiteSpace: 'nowrap' }}
+              >
+                {'Friend list'}
+              </Link>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
+    )
+  },
+)

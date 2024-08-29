@@ -110,12 +110,16 @@ const PostWriteSection = () => {
     }
   }, [initialData?.imageDirs, type])
 
-  const preventClose = (e: BeforeUnloadEvent) => {
-    e.preventDefault()
-    e.returnValue = '' // chrome에서는 설정이 필요해서 넣은 코드
-  }
+  useEffect(() => {
+    return () => setInitialData(initialPostData)
+  }, [setInitialData])
 
   useEffect(() => {
+    const preventClose = (e: BeforeUnloadEvent) => {
+      e.preventDefault()
+      e.returnValue = '' // chrome에서는 설정이 필요해서 넣은 코드
+    }
+
     ;(() => {
       window.addEventListener('beforeunload', preventClose)
     })()
@@ -124,10 +128,6 @@ const PostWriteSection = () => {
       window.removeEventListener('beforeunload', preventClose)
     }
   }, [])
-
-  useEffect(() => {
-    return setInitialData(initialPostData)
-  }, [setInitialData])
   return (
     <section className={cx(postCard(), css({ w: 817 }))}>
       <div

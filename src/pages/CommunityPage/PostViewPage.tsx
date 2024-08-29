@@ -2,8 +2,10 @@ import { css, cx } from '@styled-stytem/css'
 import { globalLayout } from '@styled-stytem/recipes'
 
 import PostView from '@/components/community/post/PostView'
+import useScrollUp from '@/util/useScrollUp'
 
 const PostViewPage = () => {
+  useScrollUp()
   return (
     <main className={css({ display: 'flex', flexDir: 'column' })}>
       <div

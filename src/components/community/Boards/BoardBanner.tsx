@@ -3,13 +3,22 @@ import { globalLayout } from '@styled-stytem/recipes'
 import { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import BackgroundImage from '@/assets/CommunityBG.jpg'
+import CommunityBG from '@/assets/CommunityBG.jpg'
+import InformationBG from '@/assets/InformationBG.jpg'
+import QuestionBG from '@/assets/QuestionBG.jpg'
 import Button from '@/components/ui/button'
 
 interface BoardBannerProps {
   boardName: string
+  boardDescription: string
 }
-const BoardBanner = ({ boardName }: BoardBannerProps) => {
+
+const BoardImgConfig: Record<string, string> = {
+  community: CommunityBG,
+  information: InformationBG,
+  question: QuestionBG,
+}
+const BoardBanner = ({ boardName, boardDescription }: BoardBannerProps) => {
   const navigate = useNavigate()
   const handleNavigation = useCallback(
     () => navigate(`/community/action/write/post/${boardName.toLowerCase()}`),
@@ -31,12 +40,11 @@ const BoardBanner = ({ boardName }: BoardBannerProps) => {
           globalLayout(),
           css({
             h: 400,
-            mt: '50px',
             mb: 30,
           }),
         )}
         style={{
-          backgroundImage: `url(${BackgroundImage})`,
+          backgroundImage: `url(${BoardImgConfig[boardName.toLowerCase()]})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
@@ -49,11 +57,22 @@ const BoardBanner = ({ boardName }: BoardBannerProps) => {
             flexDir: 'column',
             gap: 5,
             w: 1131,
+            mt: '80px',
           })}
         >
-          <h1 className={css({ fontSize: 80, fontWeight: 700, color: 'white' })}>{boardName} Board</h1>
+          <h1
+            className={css({
+              display: 'flex',
+              lineHeight: 1,
+              fontSize: 80,
+              fontWeight: 700,
+              color: 'white',
+            })}
+          >
+            {boardName} Board
+          </h1>
           <p className={css({ fontSize: 20, fontWeight: 500, letterSpacing: -0.4, color: 'lightGray.1' })}>
-            Lorem ipsum dolor sit amet consectetur.
+            {boardDescription}
           </p>
         </div>
       </div>

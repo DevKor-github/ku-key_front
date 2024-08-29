@@ -7,8 +7,10 @@ import CookiesRate from '@/components/courseReview/CookiesRate'
 import InfoDetail from '@/components/courseReview/InfoDetail'
 import { courseSummary } from '@/lib/store/review'
 import { ReviewType } from '@/types/review'
+import useScrollUp from '@/util/useScrollUp'
 
 const ReviewDetailPage = () => {
+  useScrollUp()
   const data = useLocation().state as ReviewType
   const infoData = useAtomValue(courseSummary)
   return (

@@ -7,6 +7,7 @@
     "prepare": "panda codegen",
     "dev": "vite",
     "dev:testserver": "vite --mode testserver",
+    "production": "vite --mode production",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
