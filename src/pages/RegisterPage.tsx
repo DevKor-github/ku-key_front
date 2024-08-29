@@ -1,6 +1,7 @@
 import { css } from '@styled-stytem/css'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 import { memo, useCallback, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { useRegister } from '@/api/hooks/register'
 import LoginPageBg from '@/assets/LoginPageBG.jpg'
@@ -16,6 +17,7 @@ import { ProgressState, RegisterationKey, RegistrationState, ValidState } from '
 import { useRegisterForm } from '@/util/useRegisterForm'
 
 const RegisterPage = memo(() => {
+  const navigate = useNavigate()
   const [page, setPage] = useState<ProgressState>(1)
   const [file, setFile] = useState<File | null>(null)
   const [valid, setValid] = useState<RegistrationState>({
@@ -47,13 +49,16 @@ const RegisterPage = memo(() => {
     for (const key in valid) {
       if (valid[key as RegisterationKey] !== 'valid') return
     }
-    mutateRegister({
-      screenshot: file,
-      ...emailForm.getValues(),
-      ...userInfoForm.getValues(),
-      username: credentialForm.getValues('username'),
-      password: credentialForm.getValues('password').password,
-    })
+    mutateRegister(
+      {
+        screenshot: file,
+        ...emailForm.getValues(),
+        ...userInfoForm.getValues(),
+        username: credentialForm.getValues('username'),
+        password: credentialForm.getValues('password').password,
+      },
+      { onSuccess: () => navigate('/login') },
+    )
   }
 
   const handleValidation = useCallback((target: keyof RegistrationState, value: ValidState) => {

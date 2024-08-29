@@ -38,7 +38,7 @@ const Event = ({ date, content, isSelected }: EventProps) => {
           })}
         >
           <p className={css({ textStyle: 'body2_M' })}>{daysOfWeek[date.getDay()]}</p>
-          <p className={css({ textStyle: 'heading1_L' })}>{date.toLocaleString('en-US', { month: '2-digit' })}</p>
+          <p className={css({ textStyle: 'heading1_L' })}>{date.toLocaleString('en-US', { day: '2-digit' })}</p>
         </div>
         <div
           className={css({
