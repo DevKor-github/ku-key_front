@@ -49,7 +49,7 @@ const EmailForm = memo(({ form, handleValidation, valid }: RegisterFormProps<'em
   }
 
   return (
-    <section className={css({ display: 'flex', flexDir: 'column', gap: '50px' })}>
+    <section className={css({ display: 'flex', flexDir: 'column', gap: '25px' })}>
       <FormField
         control={form.control}
         name="email"

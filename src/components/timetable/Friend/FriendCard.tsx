@@ -8,6 +8,8 @@ import {
   useDeleteSentRequest,
   useReceiveFriendship,
 } from '@/api/hooks/friends'
+import Anonymous from '@/assets/Anonymous.jpg'
+import ProfileImg from '@/assets/ProfileImg.jpg'
 import { friendStatusType } from '@/types/friends'
 
 const buttonStyle = cva({
@@ -154,7 +156,7 @@ const FriendCard = ({ data, type }: FriendCardProp) => {
         {/* todo: 프로필 사진 등록 */}
         <img
           className={css({ h: 17, w: 17, rounded: 10 })}
-          src="https://previews.123rf.com/images/avs1/avs12006/avs1200600713/149429617-%ED%88%AC%EB%AA%85-%EB%B0%B0%EA%B2%BD%EC%9E%85%EB%8B%88%EB%8B%A4-%ED%88%AC%EB%AA%85-%EA%B7%B8%EB%A6%AC%EB%93%9C-%EB%B2%A1%ED%84%B0-%EC%9D%BC%EB%9F%AC%EC%8A%A4%ED%8A%B8-%EB%A0%88%EC%9D%B4-%EC%85%98.jpg"
+          src={type === 'recieved' ? ProfileImg : Anonymous}
           alt="profile"
         />
         <div className={css({ display: 'flex', flexDir: 'column', justifyContent: 'space-between' })}>

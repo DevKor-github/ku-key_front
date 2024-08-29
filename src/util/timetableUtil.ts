@@ -1,4 +1,4 @@
-import { toPng } from 'html-to-image'
+import html2canvas from 'html2canvas'
 
 import {
   ColorType,
@@ -39,6 +39,29 @@ export const getDuration = (timeA: string, timeB: string) => {
 export const getStartTime = (time: string) => {
   const date = new Date(`2024/05/27 ${time}`)
   return date.getMinutes()
+}
+
+export const getCurSemester = () => {
+  const KSTtoday = new Date()
+  const year = KSTtoday.getFullYear()
+  const month = KSTtoday.getMonth() + 1
+
+  let curSemester = 0
+
+  if (1 < month && month <= 6) {
+    // 1학기
+    curSemester = 0
+  } else if (6 < month && month <= 7) {
+    // 여름학기
+    curSemester = 1
+  } else if (7 < month && month <= 12) {
+    // 2학기
+    curSemester = 2
+  } else {
+    // 겨울학기
+    curSemester = 3
+  }
+  return { year, semester: numberToSemester[curSemester] }
 }
 
 /**
@@ -210,16 +233,12 @@ export const getWeeknTimeList = (courseData: CourseType[], scheduleData: Schedul
  */
 export const convertHtmlToImage = (ref: HTMLDivElement | null, fileName: string) => {
   if (ref) {
-    toPng(ref, { cacheBust: false })
-      .then(dataUrl => {
-        const link = document.createElement('a')
-        link.download = `${fileName}.png`
-        link.href = dataUrl
-        link.click()
-      })
-      .catch(() => {
-        // todo: 에러 핸들링
-      })
+    html2canvas(ref).then(canvas => {
+      const link = document.createElement('a')
+      link.href = canvas.toDataURL()
+      link.download = `${fileName}`
+      link.click()
+    })
   } else {
     // todo: null (시간표가 없는 경우 처리)
   }

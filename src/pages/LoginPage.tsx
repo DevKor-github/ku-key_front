@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 
 import { useLogIn } from '@/api/hooks/auth'
+import LoginPageBg from '@/assets/LoginPageBG.jpg'
 import Button from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
@@ -14,7 +15,6 @@ import { Label } from '@/components/ui/label'
 import AuthNavigate from '@/lib/router/AuthNavigate'
 import { LoginSchema } from '@/lib/zod/login-schema'
 import { useRegisterForm } from '@/util/useRegisterForm'
-
 const Login = () => {
   const [maintain, setMaintain] = useState(false)
   const { mutate: mutateLogin } = useLogIn()
@@ -25,7 +25,7 @@ const Login = () => {
     mutateLogin(
       { ...values, keepingLogin: maintain },
       {
-        onSuccess: () => navigate('/'),
+        onSuccess: () => navigate('/home'),
         onError: error => {
           if (error instanceof AxiosError) {
             const errorMessage = error.response?.data.message ?? 'An error occurred'
@@ -49,14 +49,17 @@ const Login = () => {
           position: 'relative',
           flexDir: 'column',
           w: 'full',
-          h: 'calc(100vh - 359px)',
+          h: '90vh',
           justifyContent: 'center',
           alignItems: 'center',
           bgColor: 'lightGray.2',
         })}
       >
         <title>Login Page</title>
-        <div className={css({ pos: 'absolute', w: 'full', h: '500px', bgColor: 'red.2', top: 0, zIndex: 1 })} />
+        <div
+          className={css({ pos: 'absolute', w: 'full', h: '500px', top: 0, zIndex: 1 })}
+          style={{ backgroundImage: `url(${LoginPageBg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+        />
         <Form {...loginForm}>
           <form
             onSubmit={loginForm.handleSubmit(onSubmit)}
@@ -72,7 +75,7 @@ const Login = () => {
               zIndex: 2,
               justifyContent: 'center',
               alignItems: 'center',
-              gap: '70px',
+              gap: '50px',
             })}
           >
             <div
@@ -145,10 +148,14 @@ const Login = () => {
                   </FormItem>
                 )}
               />
-              <div className={css({ display: 'flex', alignItems: 'center', spaceX: 2, alignSelf: 'flex-start' })}>
-                <Checkbox id="login" checked={maintain} onCheckedChange={() => setMaintain(m => !m)} />
-                <Label htmlFor="login">Remember me</Label>
-              </div>
+            </div>
+            <div
+              className={css({ display: 'flex', alignItems: 'center', spaceX: 2.5, alignSelf: 'flex-start', px: 5 })}
+            >
+              <Checkbox id="login" checked={maintain} onCheckedChange={() => setMaintain(m => !m)} />
+              <Label htmlFor="login" className={css({ fontSize: 20, fontWeight: 600, color: 'darkGray.1' })}>
+                Remember me
+              </Label>
             </div>
             <div className={css({ display: 'flex', gap: 5 })}>
               <Button

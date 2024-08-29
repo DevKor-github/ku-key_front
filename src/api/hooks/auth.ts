@@ -1,8 +1,8 @@
 import { useMutation } from '@tanstack/react-query'
+import { useNavigate } from 'react-router-dom'
 
 import { LoginRequest, LoginResponse } from '@/api/types/auth'
-import { useSignOut } from '@/util/auth/useSignOut'
-import { useSignIn } from '@/util/auth/useSingnIn'
+import { useAuth } from '@/util/auth/useAuth'
 import { apiInterface } from '@/util/axios/custom-axios'
 
 const logIn = async ({ email, password, keepingLogin }: LoginRequest) => {
@@ -15,7 +15,7 @@ const logIn = async ({ email, password, keepingLogin }: LoginRequest) => {
 }
 
 export const useLogIn = () => {
-  const signIn = useSignIn()
+  const { signIn } = useAuth()
   return useMutation({
     mutationFn: logIn,
     onSuccess: data => {
@@ -35,6 +35,13 @@ const logOut = async () => {
 }
 
 export const useLogOut = () => {
-  const signOut = useSignOut()
-  return useMutation({ mutationFn: logOut, onSuccess: signOut })
+  const { signOut } = useAuth()
+  const navigate = useNavigate()
+  return useMutation({
+    mutationFn: logOut,
+    onSuccess: () => {
+      signOut()
+      navigate('/login')
+    },
+  })
 }
