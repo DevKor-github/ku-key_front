@@ -8,10 +8,11 @@ const COST = {
 
 interface CourseReviewTicketProps {
   days: 3 | 7 | 30
+  purchase: (days: number, cost: number) => void
 }
-const CourseReviewTicket = ({ days }: CourseReviewTicketProps) => {
+const CourseReviewTicket = ({ days, purchase }: CourseReviewTicketProps) => {
   return (
-    <div
+    <button
       className={css({
         display: 'flex',
         p: 5,
@@ -21,6 +22,7 @@ const CourseReviewTicket = ({ days }: CourseReviewTicketProps) => {
         border: '{colors.lightGray.1} 1px solid',
         cursor: 'pointer',
       })}
+      onClick={() => purchase(days, COST[days])}
     >
       <div className={css({ w: 20, h: 20, bgColor: 'red.3', rounded: 5, flexShrink: 0 })} />
       <div className={css({ display: 'flex', flexDir: 'column', justifyContent: 'space-between', w: '110px' })}>
@@ -30,7 +32,7 @@ const CourseReviewTicket = ({ days }: CourseReviewTicketProps) => {
           <div className={css({ color: 'red.1', fontSize: 20, fontWeight: 600 })}>{COST[days]}</div>
         </div>
       </div>
-    </div>
+    </button>
   )
 }
 

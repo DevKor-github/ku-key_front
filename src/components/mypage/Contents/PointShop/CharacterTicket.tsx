@@ -1,13 +1,14 @@
 import { css } from '@styled-stytem/css'
 
-const COST = [0, 30, 100, 200, 300, 400]
+const COST = [200, 30, 100, 200, 300, 400]
 
 interface CharacterTicketProps {
   level?: number
+  purchase: (cost: number, type: 'CHARACTER_EVOLUTION' | 'CHARACTER_TYPE_CHANGE') => void
 }
-const CharacterTicket = ({ level }: CharacterTicketProps) => {
+const CharacterTicket = ({ level = 0, purchase }: CharacterTicketProps) => {
   return (
-    <div
+    <button
       className={css({
         display: 'flex',
         p: '30px',
@@ -18,6 +19,7 @@ const CharacterTicket = ({ level }: CharacterTicketProps) => {
         w: '400px',
         cursor: 'pointer',
       })}
+      onClick={() => purchase(COST[level], level === 0 ? 'CHARACTER_TYPE_CHANGE' : 'CHARACTER_EVOLUTION')}
     >
       <div className={css({ w: '110px', h: '110px', bgColor: 'red.3', rounded: 5, flexShrink: 0 })} />
       <div className={css({ display: 'flex', flexDir: 'column', justifyContent: 'space-between' })}>
@@ -28,20 +30,18 @@ const CharacterTicket = ({ level }: CharacterTicketProps) => {
               fontWeight: 500,
             })}
           >
-            {level !== undefined ? `Evolution Lv.${level + 1}` : 'Character change'}
+            {level !== 0 ? `Evolution Lv.${level + 1}` : 'Character change'}
           </h3>
           <p className={css({ color: 'darkGray.1', fontSize: 16, fontWeight: 400, lineHeight: 1 })}>
-            {level !== undefined ? 'it evolves your character' : 'It changes your character into a different type'}
+            {level !== 0 ? 'it evolves your character' : 'It changes your character into a different type'}
           </p>
         </div>
         <div className={css({ my: 1, display: 'flex', gap: 3, alignItems: 'center' })}>
           <div className={css({ w: 6, h: 6, bgColor: 'red.3', rounded: 'full' })} />
-          <div className={css({ color: 'red.1', fontSize: 20, fontWeight: 600 })}>
-            {level === undefined ? 200 : COST[level]}
-          </div>
+          <div className={css({ color: 'red.1', fontSize: 20, fontWeight: 600 })}>{COST[level]}</div>
         </div>
       </div>
-    </div>
+    </button>
   )
 }
 

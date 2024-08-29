@@ -29,7 +29,7 @@ export interface PatchMyProfileRequest {
 
 export interface PostPurchaseItemRequest {
   requiredPoints: number
-  itemCategory: 'COURSE_REVIEW_READING_TICKET'
+  itemCategory: 'COURSE_REVIEW_READING_TICKET' | 'CHARACTER_EVOLUTION' | 'CHARACTER_TYPE_CHANGE'
   days?: number
 }
 
