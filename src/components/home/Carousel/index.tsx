@@ -40,19 +40,19 @@ const HomeCarousel = () => {
         justifyContent: 'center',
         bgColor: 'bg.gray',
         w: 'full',
-        maxW: 'auto',
+        // maxW: 'auto',
         pt: '50px',
         pb: 25,
       })}
     >
       <div ref={emblaRef} className={css({ overflow: 'hidden' })}>
         <div className={css({ display: 'flex', backfaceVisibility: 'hidden' })}>
-          <img src={BannerOne} alt="banner-one" className={css({ w: '608px', h: 75, ml: 5 })} />
-          <img src={BannerTwo} alt="banner-two" className={css({ w: '608px', h: 75, ml: 5 })} />
-          <img src={BannerThree} alt="banner-three" className={css({ w: '608px', h: 75, ml: 5 })} />
-          <img src={BannerFour} alt="banner-four" className={css({ w: '608px', h: 75, ml: 5 })} />
-          <img src={BannerFive} alt="banner-five" className={css({ w: '608px', h: 75, ml: 5 })} />
-          <img src={BannerSix} alt="banner-six" className={css({ w: '608px', h: 75, ml: 5 })} />
+          <img src={BannerOne} alt="banner-one" className={css({ w: '608px', ml: 5, flex: '0 0 20%' })} />
+          <img src={BannerTwo} alt="banner-two" className={css({ w: '608px', ml: 5, flex: '0 0 20%' })} />
+          <img src={BannerThree} alt="banner-three" className={css({ w: '608px', ml: 5, flex: '0 0 20%' })} />
+          <img src={BannerFour} alt="banner-four" className={css({ w: '608px', ml: 5, flex: '0 0 20%' })} />
+          <img src={BannerFive} alt="banner-five" className={css({ w: '608px', ml: 5, flex: '0 0 20%' })} />
+          <img src={BannerSix} alt="banner-six" className={css({ w: '608px', ml: 5, flex: '0 0 20%' })} />
         </div>
       </div>
       <div
