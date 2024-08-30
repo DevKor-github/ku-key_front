@@ -41,7 +41,7 @@ export const usePostClubLike = () => {
     mutationFn: postClubLike,
     onSuccess: (response, { queryParams }) => {
       queryClient.setQueryData<GetClubResponse>(
-        ['clubSearchResult', { ...queryParams, keyword: queryParams.keyword || null, isLogin }],
+        ['clubSearchResult', { ...queryParams, keyword: queryParams.keyword || null }, isLogin],
         oldData => {
           if (oldData !== undefined) {
             return oldData.map(club => (club.clubId === response.clubId ? response : club))
