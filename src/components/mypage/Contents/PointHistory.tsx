@@ -1,6 +1,7 @@
 import { css, cx } from '@styled-stytem/css'
 
 import { useGetPointHistory } from '@/api/hooks/user'
+import PointHistoryRow from '@/components/mypage/Contents/PointHistory/PointHistoryRow'
 
 const CellHeaderStyle = css({
   flexShrink: 0,
@@ -25,47 +26,7 @@ const PointHistory = () => {
           <span className={cx(CellHeaderStyle, css({ w: 47 }))}>Date</span>
         </div>
         {data.map((historyData, ind) => (
-          <div
-            key={`history-${ind}`}
-            className={css({ display: 'flex', alignItems: 'center', bgColor: 'lightGray.2', py: 5 })}
-          >
-            <span
-              className={css({ w: 30, flexShrink: 0, display: 'flex', justifyContent: 'center', alignItems: 'center' })}
-            ></span>
-            <span
-              className={css({
-                flexShrink: 0,
-                flexGrow: 1,
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-              })}
-            >
-              {historyData.history}
-            </span>
-            <span
-              className={css({
-                flexShrink: 0,
-                w: 21,
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-              })}
-            >
-              {historyData.changePoint}
-            </span>
-            <span
-              className={css({
-                flexShrink: 0,
-                w: 47,
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-              })}
-            >
-              {historyData.date}
-            </span>
-          </div>
+          <PointHistoryRow key={`history-${ind}`} historyData={historyData} />
         ))}
       </div>
     </div>
