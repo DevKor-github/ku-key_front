@@ -56,6 +56,8 @@ export interface ImageProps {
 
 export interface User {
   username: string
+  isAnonymous: boolean
+  isDeleted: boolean
   profileImgUrl: string
 }
 export interface PostViewProps {

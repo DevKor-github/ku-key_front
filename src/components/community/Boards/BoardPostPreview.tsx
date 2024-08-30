@@ -125,7 +125,7 @@ const BoardPostPreview = ({
       >
         <div className={css({ display: 'flex', alignItems: 'center', gap: 2.5 })}>
           <img src={AnonymousProfileImg} alt="Profile" className={css({ w: 15, h: 15, rounded: 'full' })} />
-          <p className={css({ fontSize: 16, fontWeight: 600 })}>{user.username}</p>
+          <p className={css({ fontSize: 16, fontWeight: 600 })}>{user.isAnonymous ? 'Anonymous' : user.username}</p>
         </div>
         <div className={css({ display: 'flex', alignItems: 'center', gap: 4 })}>
           <div className={IconWrapper}>

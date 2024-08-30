@@ -82,7 +82,7 @@ const Post = memo(() => {
               color: 'darkGray.2',
             })}
           >
-            <p>{postAtomData.user.username}</p>
+            <p>{postAtomData.user.isAnonymous ? 'Anonymous' : postAtomData.user.username}</p>
             <p>{timeDistance} ago</p>
           </div>
           <UtilButton

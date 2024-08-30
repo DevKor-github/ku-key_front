@@ -50,7 +50,7 @@ const PostTextPreview = ({ title, user, createdAt, variant, description, handleN
               color: 'darkGray.2',
             })}
           >
-            <p>{user.username}</p>
+            <p>{user.isAnonymous ? 'Anonymous' : user.username}</p>
             <p>{timeDistance} ago</p>
           </div>
           <h3

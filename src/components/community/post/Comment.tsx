@@ -37,7 +37,7 @@ const Comment = memo(({ isOpen, currnetIndex, handleClick }: CommentProps) => {
       })}
     >
       <CommentHeader
-        username={comment.user.username}
+        username={comment.user.isAnonymous ? 'Anonymous' : comment.user.username}
         date={comment.createdAt}
         isMyComment={comment.isMyComment}
         commentId={comment.id}
