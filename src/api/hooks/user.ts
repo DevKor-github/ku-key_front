@@ -7,7 +7,7 @@ import {
   PatchMyProfileRequest,
   PostPurchaseItemRequest,
 } from '@/api/types/user'
-import { useSignOut } from '@/util/auth/useSignOut'
+import { useAuth } from '@/util/auth/useAuth'
 import { apiInterface } from '@/util/axios/custom-axios'
 
 const getPointHistory = async () => {
@@ -25,7 +25,7 @@ const deleteUser = async () => {
 }
 
 export const useDeleteUser = () => {
-  const signOut = useSignOut()
+  const { signOut } = useAuth()
   return useMutation({
     mutationFn: deleteUser,
     onSuccess: signOut,

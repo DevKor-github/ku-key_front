@@ -1,8 +1,7 @@
 import { css } from '@styled-stytem/css'
 
-import MypageBG from '@/assets/MypageBG.jpg'
 import { useGetMyProfile } from '@/api/hooks/user'
-import MyPageBG from '@/assets/MypageBG.jpg'
+import MypageBG from '@/assets/MypageBG.jpg'
 import DueDateCard from '@/components/mypage/DueDateCard'
 import MyPageContents from '@/components/mypage/MyPageContents'
 import MypageWrapper from '@/components/mypage/MypageWrapper'
