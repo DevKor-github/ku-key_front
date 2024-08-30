@@ -8,9 +8,12 @@ import ClubCard from '@/components/club/ClubCard'
 import { CategoryType } from '@/components/club/constants'
 import SearchArea from '@/components/club/SearchArea'
 import { Checkbox } from '@/components/ui/checkbox'
+import { useAuth } from '@/util/auth/useAuth'
 import { useSearch } from '@/util/useSearch'
 
 const ClubPage = () => {
+  const isLogin = useAuth().authState ?? false
+
   const { searchParam, handleSetParam, deleteParam } = useSearch()
   const query = useMemo(
     () => ({
@@ -18,8 +21,9 @@ const ClubPage = () => {
       keyword: searchParam.get('keyword'),
       sortBy: searchParam.get('like') as 'like' | null,
       wishList: searchParam.get('wishlist') === 'true',
+      isLogin,
     }),
-    [searchParam],
+    [searchParam, isLogin],
   )
   const { data } = useGetClubSearch(query)
   const { mutate: likeClub } = usePostClubLike()
@@ -46,9 +50,11 @@ const ClubPage = () => {
 
   const handleLikeClick = useCallback(
     (clubId: number) => {
-      likeClub({ clubId, queryParams: query })
+      if (isLogin) {
+        likeClub({ clubId, queryParams: query })
+      }
     },
-    [likeClub, query],
+    [likeClub, query, isLogin],
   )
 
   const handleWishList = useCallback(() => {
