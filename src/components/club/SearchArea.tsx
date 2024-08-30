@@ -1,6 +1,8 @@
 import { css, cva } from '@styled-stytem/css'
 import { Search, X } from 'lucide-react'
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
+
+import { useSearch } from '@/util/useSearch'
 
 interface SearchAreaProps {
   onSubmit: (inputKeyword: string) => void
@@ -10,6 +12,16 @@ const SearchArea = ({ onSubmit, clearKeywordParam }: SearchAreaProps) => {
   const inputRef = useRef<HTMLInputElement | null>(null)
   const [focus, setFocus] = useState(false)
   const [keyword, setKeyword] = useState('')
+
+  const { searchParam } = useSearch()
+
+  useEffect(() => {
+    // parameter에 키워드가 있다면 이걸로 탐색
+    const prevVal = searchParam.get('keyword')
+    if (prevVal) {
+      setKeyword(prevVal)
+    }
+  }, [searchParam])
 
   const handleSubmit = useCallback(
     (event: React.FormEvent<HTMLFormElement>) => {
