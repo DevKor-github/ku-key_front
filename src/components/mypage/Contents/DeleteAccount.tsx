@@ -3,6 +3,8 @@ import { useCallback } from 'react'
 
 import { useDeleteUser } from '@/api/hooks/user'
 import Button from '@/components/ui/button'
+import AlertModal from '@/components/ui/modal/AlertModal'
+import { useModal } from '@/util/useModal'
 
 const SectionStyle = css({
   display: 'flex',
@@ -21,10 +23,10 @@ const SectionStyle = css({
 })
 
 const DeleteAccount = () => {
+  const { modalRef, isOpen, handleOpen, handleLayoutClose, handleButtonClose } = useModal()
   const { mutate: deleteUser } = useDeleteUser()
-  const handleDeleteButton = useCallback(() => {
-    if (confirm('Are you sure you want to delete this member?\nThis action cannot be undone.')) deleteUser()
-  }, [deleteUser])
+
+  const handleDelete = useCallback(() => deleteUser(), [deleteUser])
 
   return (
     <div className={css({ display: 'flex', gap: 15, flexDir: 'column', alignItems: 'center' })}>
@@ -68,9 +70,20 @@ const DeleteAccount = () => {
           </section>
         </div>
       </div>
-      <Button variant={'loginColored'} className={css({ w: 'fit-content' })} onClick={handleDeleteButton}>
+      <Button variant={'loginColored'} className={css({ w: 'fit-content' })} onClick={handleOpen}>
         Delete this account
       </Button>
+      <AlertModal
+        modalRef={modalRef}
+        title="Are you sure you want to delete the account?"
+        content={`If you delete your account, you cannot recover it again`}
+        closeText="Cancel"
+        confirmText="Delete"
+        onConfirm={handleDelete}
+        isOpen={isOpen}
+        handleLayoutClose={handleLayoutClose}
+        handleButtonClose={handleButtonClose}
+      />
     </div>
   )
 }

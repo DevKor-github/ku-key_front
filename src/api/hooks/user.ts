@@ -78,10 +78,12 @@ const postPurchaseItem = async (props: PostPurchaseItemRequest) => {
 }
 
 export const usePostPurchaseItem = () => {
+  const queryClient = useQueryClient()
   return useMutation({
     mutationFn: postPurchaseItem,
     onSuccess: () => {
-      // TODO: 아이템 관련 정보 업데이트 로직
+      // TODO: 아이템 & 포인트 관련 정보 업데이트 로직
+      queryClient.invalidateQueries({ queryKey: ['myProfile'] })
     },
   })
 }
