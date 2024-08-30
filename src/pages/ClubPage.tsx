@@ -1,7 +1,7 @@
 import { css } from '@styled-stytem/css'
 import { useCallback, useMemo } from 'react'
 
-import { useGetClubSearch, usePostClubLike } from '@/api/hooks/club'
+import { useGetClubSearch, usePostClubLike } from '@/api/hooks/institution'
 import ClubBGImg from '@/assets/ClubBGImg.png'
 import CategorySelector from '@/components/club/CategorySelector'
 import ClubCard from '@/components/club/ClubCard'
@@ -106,13 +106,15 @@ const ClubPage = () => {
           </div>
           <div className={css({ display: 'flex', flexDir: 'column', gap: 11 })}>
             {query.keyword && (
-              <div className={css({ fontSize: 30, fontWeight: 700, color: 'darkGray.1' })}>‘KU’ Search Results</div>
+              <div className={css({ fontSize: 30, fontWeight: 700, color: 'darkGray.1' })}>
+                {`'${query.keyword}' Search Results`}
+              </div>
             )}
             <div className={css({ display: 'flex', flexDir: 'column', gap: 15 })}>
               {data?.length ? (
                 data?.map(club => <ClubCard key={club.clubId} clubData={club} handleLikeClick={handleLikeClick} />)
               ) : (
-                <div>No search results</div>
+                <div className={css({ color: 'darkGray.1', fontSize: 20 })}>No search results</div>
               )}
             </div>
           </div>
