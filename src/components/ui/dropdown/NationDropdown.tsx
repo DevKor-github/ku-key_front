@@ -2,8 +2,8 @@ import { css } from '@styled-stytem/css'
 import getUnicodeFlagIcon from 'country-flag-icons/unicode'
 import { alpha2Codes, findByAlpha2 } from 'iso-3166-1-ts'
 import { MapPin } from 'lucide-react'
-import { useEffect, useState } from 'react'
-import Select, { components, ControlProps, OptionProps, SingleValue } from 'react-select'
+import { useMemo, useState } from 'react'
+import Select, { components, ControlProps, GroupBase, OptionProps, SingleValue, StylesConfig } from 'react-select'
 
 interface NationOption {
   readonly value: string
@@ -11,30 +11,55 @@ interface NationOption {
   readonly emoji: string
 }
 
-interface NationDropdownProps {
-  curNation?: string
-  handleChange: (nation: string) => void
+const DropdownStyle: StylesConfig<NationOption, false, GroupBase<NationOption>> = {
+  control: baseStyles => ({
+    ...baseStyles,
+    border: '1px solid #D9D9D9',
+    borderRadius: '10px',
+  }),
+  placeholder: baseStyles => ({
+    ...baseStyles,
+    color: '#D9D9D9',
+  }),
+  option: (styles, { isDisabled, isFocused, isSelected }) => {
+    return {
+      ...styles,
+      backgroundColor: isDisabled ? undefined : isSelected ? '#D9D9D9' : isFocused ? '#F4F4F4' : undefined,
+      cursor: isDisabled ? 'not-allowed' : 'default',
+      ':active': {
+        ...styles[':active'],
+        backgroundColor: !isDisabled ? (isSelected ? '#D9D9D9' : '#F4F4F4') : undefined,
+      },
+    }
+  },
+  dropdownIndicator: baseStyles => ({
+    ...baseStyles,
+    color: '#D9D9D9',
+  }),
+  indicatorSeparator: baseStyles => ({
+    ...baseStyles,
+    display: 'none',
+  }),
 }
-const NationDropdown = ({ curNation, handleChange }: NationDropdownProps) => {
+
+interface NationDropdownProps {
+  handleChange: (nation: string) => void
+  curNation?: string
+}
+const NationDropdown = ({ handleChange, curNation }: NationDropdownProps) => {
   const [defaultIndex, setDefaultIndex] = useState<number | null>(null)
 
-  const options = alpha2Codes.map(val => {
-    const value = val.toUpperCase()
-    return {
-      value,
-      label: findByAlpha2(val)?.name ?? '',
-      emoji: getUnicodeFlagIcon(val),
-    }
-  })
-
-  useEffect(() => {
-    for (let i = 0; i < options.length; i++) {
-      if (options[i].value === curNation) {
-        setDefaultIndex(i)
-        break
+  const options = useMemo(() => {
+    return alpha2Codes.map((val, ind) => {
+      const value = val.toUpperCase()
+      if (val === curNation) setDefaultIndex(ind)
+      return {
+        value,
+        label: findByAlpha2(val)?.name ?? '',
+        emoji: getUnicodeFlagIcon(val),
       }
-    }
-  }, [curNation, options])
+    })
+  }, [curNation])
 
   const handleChangeNation = (newValue: SingleValue<NationOption>) => {
     const value = newValue ? newValue.value : ''
@@ -86,36 +111,7 @@ const NationDropdown = ({ curNation, handleChange }: NationDropdownProps) => {
       options={options}
       placeholder={'Country/Region Selection'}
       onChange={handleChangeNation}
-      styles={{
-        control: baseStyles => ({
-          ...baseStyles,
-          border: '1px solid #D9D9D9',
-          borderRadius: '10px',
-        }),
-        placeholder: baseStyles => ({
-          ...baseStyles,
-          color: '#D9D9D9',
-        }),
-        option: (styles, { isDisabled, isFocused, isSelected }) => {
-          return {
-            ...styles,
-            backgroundColor: isDisabled ? undefined : isSelected ? '#D9D9D9' : isFocused ? '#F4F4F4' : undefined,
-            cursor: isDisabled ? 'not-allowed' : 'default',
-            ':active': {
-              ...styles[':active'],
-              backgroundColor: !isDisabled ? (isSelected ? '#D9D9D9' : '#F4F4F4') : undefined,
-            },
-          }
-        },
-        dropdownIndicator: baseStyles => ({
-          ...baseStyles,
-          color: '#D9D9D9',
-        }),
-        indicatorSeparator: baseStyles => ({
-          ...baseStyles,
-          display: 'none',
-        }),
-      }}
+      styles={DropdownStyle}
     />
   )
 }
