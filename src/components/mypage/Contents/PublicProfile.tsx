@@ -1,11 +1,12 @@
 import { css } from '@styled-stytem/css'
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { usePatchMyProfile } from '@/api/hooks/user'
 import { GetMyProfileResponse } from '@/api/types/user'
 import ProfileChangeHeader from '@/components/mypage/ProfileChangeHeader'
 import Button from '@/components/ui/button'
+import NationDropdown from '@/components/ui/dropdown/NationDropdown'
 import { Input } from '@/components/ui/input'
 
 export const ProfileFormWrapper = css({
@@ -37,7 +38,7 @@ interface PublicProfileProps {
   myProfileData: GetMyProfileResponse
 }
 const PublicProfile = ({ myProfileData: { name, country, homeUniversity, major } }: PublicProfileProps) => {
-  const { register, handleSubmit, setValue } = useForm<PublicProfileForm>()
+  const { register, handleSubmit, setValue, watch } = useForm<PublicProfileForm>()
   useEffect(() => {
     setValue('name', name)
     setValue('country', country)
@@ -51,6 +52,13 @@ const PublicProfile = ({ myProfileData: { name, country, homeUniversity, major }
     patchProfile(data)
   }
 
+  const handleNationSelect = useCallback(
+    (nation: string) => {
+      setValue('country', nation)
+    },
+    [setValue],
+  )
+
   return (
     <div className={css({ display: 'flex', flexDir: 'column', gap: 20 })}>
       <ProfileChangeHeader type="public" />
@@ -63,7 +71,9 @@ const PublicProfile = ({ myProfileData: { name, country, homeUniversity, major }
             </div>
             <div className={ProfileFormWrapper}>
               <span className={ProfileFormTitle}>Nation</span>
-              <Input placeholder={country} {...register('country', { required: true })} />
+              <span className={css({ w: '400px' })}>
+                <NationDropdown curNation={watch('country')} handleChange={handleNationSelect} />
+              </span>
             </div>
           </div>
           <div className={css({ display: 'flex', flexDir: 'column', gap: 2.5 })}>
