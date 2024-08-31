@@ -49,7 +49,9 @@ const PublicProfile = ({ myProfileData: { name, country, homeUniversity, major }
   const { mutate: patchProfile } = usePatchMyProfile()
 
   const onSubmit: SubmitHandler<PublicProfileForm> = data => {
-    patchProfile(data)
+    patchProfile(data, {
+      onSuccess: () => alert('Changed successfully!'),
+    })
   }
 
   const handleNationSelect = useCallback(

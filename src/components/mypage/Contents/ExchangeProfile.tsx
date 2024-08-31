@@ -36,7 +36,12 @@ const ExchangeProfile = ({ myProfileData }: ExchangeProfileProps) => {
 
   const onSubmit: SubmitHandler<ExchangeDayForm> = data => {
     if (data.startDay <= data.endDay) {
-      patchDate({ startDay: data.startDay, endDay: data.endDay })
+      patchDate(
+        { startDay: data.startDay, endDay: data.endDay },
+        {
+          onSuccess: () => alert('Changed successfully!'),
+        },
+      )
     } else {
       setError('endDay', {
         message: 'The end date is earlier than the start date!',
