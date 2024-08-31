@@ -9,7 +9,7 @@ interface SearchAreaProps {
   clearKeywordParam: () => void
 }
 const SearchArea = ({ onSubmit, clearKeywordParam }: SearchAreaProps) => {
-  const inputRef = useRef<HTMLInputElement | null>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
   const [focus, setFocus] = useState(false)
   const [keyword, setKeyword] = useState('')
 

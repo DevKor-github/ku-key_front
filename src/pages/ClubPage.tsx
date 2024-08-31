@@ -53,16 +53,16 @@ const ClubPage = () => {
 
   const handleLikeClick = useCallback(
     (clubId: number) => {
-      if (isLogin) {
-        likeClub({ clubId, queryParams: query })
-      }
+      if (isLogin) likeClub({ clubId, queryParams: query })
+      else alert('Please sign in to use!')
     },
     [likeClub, query, isLogin],
   )
 
   const handleWishList = useCallback(() => {
-    handleSetParam('wishlist', `${!query.wishList}`)
-  }, [handleSetParam, query.wishList])
+    if (isLogin) handleSetParam('wishlist', `${!query.wishList}`)
+    else alert('Please sign in to use!')
+  }, [handleSetParam, query.wishList, isLogin])
 
   return (
     <>
