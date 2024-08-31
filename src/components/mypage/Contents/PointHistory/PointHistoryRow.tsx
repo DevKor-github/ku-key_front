@@ -1,6 +1,7 @@
 import { css } from '@styled-stytem/css'
 
 import TypeChip from '@/components/mypage/Contents/PointHistory/TypeChip'
+import dateFormatter from '@/util/dateFormatter'
 
 interface PointHistoryRowProps {
   historyData: {
@@ -11,7 +12,6 @@ interface PointHistoryRowProps {
   }
 }
 const PointHistoryRow = ({ historyData }: PointHistoryRowProps) => {
-  const dateData = new Date(historyData.date)
   return (
     <div
       className={css({ display: 'flex', alignItems: 'center', py: 7, borderBottom: 'solid 1px {colors.lightGray.1}' })}
@@ -57,7 +57,7 @@ const PointHistoryRow = ({ historyData }: PointHistoryRowProps) => {
           color: 'darkGray.1',
         })}
       >
-        {`${dateData.getFullYear()}.${String(dateData.getMonth() + 1).padStart(2, '0')}.${String(dateData.getDate()).padStart(2, '0')}`}
+        {dateFormatter({ date: new Date(historyData.date) })}
       </span>
     </div>
   )

@@ -12,8 +12,8 @@ export interface GetMyProfileResponse {
   country: string
   homeUniversity: string
   major: string
-  startDay: string
-  endDay: string
+  startDay: string | null
+  endDay: string | null
   point: number
   languages: Language[]
   level: number

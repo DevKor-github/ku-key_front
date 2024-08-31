@@ -2,15 +2,16 @@ import { css } from '@styled-stytem/css'
 
 import CircularProgress from '@/components/mypage/CircularProgress'
 import GenericDueDate from '@/components/mypage/GenericDueDate'
+import dateFormatter from '@/util/dateFormatter'
 
 interface DueDateCardProps {
-  startDay: string
-  endDay: string
+  startDay: string | null
+  endDay: string | null
 }
 const DueDateCard = ({ startDay, endDay }: DueDateCardProps) => {
   const today = new Date()
-  const startDate = new Date(startDay)
-  const endDate = new Date(endDay)
+  const startDate = startDay ? new Date(startDay) : today
+  const endDate = endDay ? new Date(endDay) : today
 
   const untilNow = Math.abs(today.getTime() - startDate.getTime())
   const total = Math.abs(endDate.getTime() - startDate.getTime())
@@ -39,12 +40,12 @@ const DueDateCard = ({ startDay, endDay }: DueDateCardProps) => {
       <GenericDueDate
         type="start"
         due={Math.floor(untilNow / (1000 * 60 * 60 * 24))}
-        date={`${startDate.getFullYear()}. ${String(startDate.getMonth() + 1).padStart(2, '0')}. ${String(startDate.getDate()).padStart(2, '0')}`}
+        date={dateFormatter({ date: startDate, space: true })}
       />
       <GenericDueDate
         type="end"
         due={Math.floor(fromNowOn / (1000 * 60 * 60 * 24))}
-        date={`${endDate.getFullYear()}. ${String(endDate.getMonth() + 1).padStart(2, '0')}. ${String(endDate.getDate()).padStart(2, '0')}`}
+        date={dateFormatter({ date: endDate, space: true })}
       />
     </div>
   )

@@ -9,6 +9,7 @@ import { ProfileFormTitle, ProfileFormWrapper } from '@/components/mypage/Conten
 import ProfileChangeHeader from '@/components/mypage/ProfileChangeHeader'
 import Button from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import dateFormatter from '@/util/dateFormatter'
 
 interface ExchangeDayForm {
   startDay: string
@@ -20,8 +21,9 @@ interface ExchangeProfileProps {
 const ExchangeProfile = ({ myProfileData }: ExchangeProfileProps) => {
   const { register, handleSubmit, setValue, setError, formState } = useForm<ExchangeDayForm>()
   useEffect(() => {
-    setValue('startDay', myProfileData.startDay.split('T')[0])
-    setValue('endDay', myProfileData.endDay.split('T')[0])
+    const today = new Date()
+    setValue('startDay', myProfileData.startDay ? myProfileData.startDay.split('T')[0] : dateFormatter({ date: today }))
+    setValue('endDay', myProfileData.endDay ? myProfileData.endDay.split('T')[0] : dateFormatter({ date: today }))
   }, [myProfileData, setValue])
 
   useEffect(() => {
