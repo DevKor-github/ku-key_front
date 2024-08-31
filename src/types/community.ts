@@ -54,11 +54,15 @@ export interface ImageProps {
   imgDir: string
 }
 
+type characterType = 'character1' | 'character2' | 'character3' | 'character4' | 'default'
 export interface User {
   username: string
   isAnonymous: boolean
   isDeleted: boolean
-  profileImgUrl: string
+  character: {
+    type: characterType
+    level: number
+  }
 }
 export interface PostViewProps {
   id: number
