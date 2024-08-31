@@ -13,9 +13,8 @@ const HotBoard = () => {
     if (hasNextPage && !isFetching) fetchNextPage()
   })
   return (
-    <div className={css({ display: 'flex', flexDir: 'column', alignSelf: 'flex-start' })}>
+    <div className={css({ display: 'flex', flexDir: 'column', alignSelf: 'flex-start', maxW: 608, w: 'full' })}>
       <SectionTitle title={`View recent Hot posts`} description="Check out our hottest posts right now" />
-
       <div className={css({ display: 'flex', mt: 20, flexDir: 'column', gap: '50px', mb: 25 })}>
         {data?.map(post => (
           <BoardPostPreview
@@ -31,7 +30,7 @@ const HotBoard = () => {
             commentCount={post.commentCount}
             scrapCount={post.scrapCount}
             thumbnailDir={post.thumbnailDir}
-            boardName={post.boardName}
+            boardName={post.boardName.split(' ')[0].toLowerCase()}
           />
         ))}
         <div ref={fetchNextRef} />

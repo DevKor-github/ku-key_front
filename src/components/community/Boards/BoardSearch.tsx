@@ -40,6 +40,7 @@ const BoardSearch = () => {
     observer.unobserve(entry.target)
     if (hasNextPage && !isFetching) fetchNextPage()
   })
+
   return (
     <div className={css({ display: 'flex', flexDir: 'column', alignSelf: 'flex-start', maxW: 608, w: 'full' })}>
       <SearchBox
