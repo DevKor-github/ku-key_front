@@ -1,5 +1,6 @@
 import { css, cva } from '@styled-stytem/css'
 import { Heart } from 'lucide-react'
+import { memo } from 'react'
 
 import ContactButton from '@/components/club/\bContactButton'
 import { ClubInterface } from '@/types/club'
@@ -8,7 +9,7 @@ interface ClubCardProps {
   clubData: ClubInterface
   handleLikeClick: (clubId: number) => void
 }
-const ClubCard = ({ clubData, handleLikeClick }: ClubCardProps) => {
+const ClubCard = memo(({ clubData, handleLikeClick }: ClubCardProps) => {
   return (
     <div className={css({ display: 'flex', justifyContent: 'space-between', alignItems: 'center' })}>
       <div className={css({ display: 'flex', gap: 5 })}>
@@ -91,6 +92,6 @@ const ClubCard = ({ clubData, handleLikeClick }: ClubCardProps) => {
       </button>
     </div>
   )
-}
+})
 
 export default ClubCard
