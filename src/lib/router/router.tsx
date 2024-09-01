@@ -2,6 +2,7 @@ import { RouteObject } from 'react-router-dom'
 
 import MainLayout from '@/components/MainLayout'
 import ProtectedRoutes from '@/lib/router/ProtectedRoutes'
+import ClubPage from '@/pages/ClubPage'
 import MainCommunityPage from '@/pages/CommunityPage'
 import BoardPage from '@/pages/CommunityPage/BoardPage'
 import HotBoardPage from '@/pages/CommunityPage/HotBoardPage'
@@ -85,6 +86,7 @@ const routes: RouteObject[] = [
       { path: 'calendar', element: <SchedulePage /> },
       { path: 'login', element: <Login /> },
       { path: 'register', element: <RegisterPage /> },
+      { path: 'club', element: <ClubPage /> },
     ],
   },
 ]

@@ -24,10 +24,10 @@ const getFriendList = async ({ keyword }: GetFriendListRequest) => {
 /**
  * 전체 친구 목록을 조회하거나, keyword를 query로 받아 친구 목록을 필터링하여 조회합니다.
  */
-export const useGetFriendList = (props: GetFriendListRequest) => {
+export const useGetFriendList = ({ keyword }: GetFriendListRequest) => {
   return useQuery({
     queryKey: ['friendList'],
-    queryFn: () => getFriendList(props),
+    queryFn: () => getFriendList({ keyword }),
     initialData: [],
   })
 }
