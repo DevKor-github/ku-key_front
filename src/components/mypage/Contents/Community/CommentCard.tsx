@@ -16,10 +16,6 @@ interface CommentCardProps {
 const CommentCard = ({ comment }: CommentCardProps) => {
   const { isOpen: modalOpen, handleOpen } = useModal(true)
 
-  const handleLikeClick = useCallback(() => {
-    return handleOpen()
-  }, [handleOpen])
-
   const handleNavigate = useCallback(() => {
     window.open(`/community/community/post/${comment.postId}`, '_blank')
   }, [comment.postId])
@@ -67,7 +63,7 @@ const CommentCard = ({ comment }: CommentCardProps) => {
           <MessageCircle size={22} />
           <p>{comment.replyCount}</p>
         </button>
-        <button aria-pressed={false} className={reactionButton()} onClick={handleLikeClick}>
+        <button aria-pressed={false} className={reactionButton()} onClick={handleOpen}>
           <Cookie size={22} />
           <p>{comment.likeCount}</p>
         </button>
