@@ -54,14 +54,14 @@ export interface ImageProps {
   imgDir: string
 }
 
-type characterType = 'character1' | 'character2' | 'character3' | 'character4' | 'character5' | 'default'
+export type CharacterType = 'character1' | 'character2' | 'character3' | 'character4' | 'character5' | 'default'
 export interface User {
   username: string
   isAnonymous: boolean
   isDeleted: boolean
   character: {
-    type: characterType
-    level: number
+    type: CharacterType
+    level: number | null
   }
 }
 export interface PostViewProps {
