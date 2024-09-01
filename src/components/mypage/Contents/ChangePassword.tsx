@@ -2,6 +2,7 @@ import { css } from '@styled-stytem/css'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { useCheckPassword } from '@/api/hooks/auth'
 import { usePatchPassword } from '@/api/hooks/register'
 import ChangeForm from '@/components/mypage/Contents/ChangeForm'
 import Button from '@/components/ui/button'
@@ -15,44 +16,48 @@ export interface ChangePasswordForm {
 
 const ChangePassword = () => {
   const { mutate: patchPassword } = usePatchPassword()
+  const { mutate: checkPassword } = useCheckPassword()
 
   const { register, handleSubmit, setError, formState, reset } = useForm<ChangePasswordForm>()
 
   const onSubmit = (data: ChangePasswordForm) => {
-    // TODO: Validation Check
-    if (data.curPassword === 'kukey1234!') {
-      if (data.newPassword === data.curPassword) {
-        setError('newPassword', {
-          message: 'Same as current password',
-        })
-      } else {
-        if (data.newPassword === data.confirmPassword) {
-          try {
-            PasswordSchema.parse(data.newPassword)
-            patchPassword(data.newPassword, {
-              onSuccess: () => {
-                reset()
-                alert('Your password has been successfully changed')
-              },
+    checkPassword(data.curPassword, {
+      onSuccess: check => {
+        if (check) {
+          if (data.newPassword === data.curPassword) {
+            setError('newPassword', {
+              message: 'Same as current password',
             })
-          } catch (error) {
-            if (error instanceof z.ZodError) {
-              setError('newPassword', {
-                message: error.issues[0].message,
+          } else {
+            if (data.newPassword === data.confirmPassword) {
+              try {
+                PasswordSchema.parse(data.newPassword)
+                patchPassword(data.newPassword, {
+                  onSuccess: () => {
+                    reset()
+                    alert('Your password has been successfully changed')
+                  },
+                })
+              } catch (error) {
+                if (error instanceof z.ZodError) {
+                  setError('newPassword', {
+                    message: error.issues[0].message,
+                  })
+                }
+              }
+            } else {
+              setError('confirmPassword', {
+                message: 'Mismatch with new password',
               })
             }
           }
         } else {
-          setError('confirmPassword', {
-            message: 'Mismatch with new password',
+          setError('curPassword', {
+            message: "It's different from your current password!",
           })
         }
-      }
-    } else {
-      setError('curPassword', {
-        message: "It's different from your current password!",
-      })
-    }
+      },
+    })
   }
 
   return (
