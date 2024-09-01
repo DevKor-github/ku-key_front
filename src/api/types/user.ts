@@ -39,3 +39,7 @@ export interface PatchExchangeDayRequest {
   startDay: string
   endDay: string
 }
+
+export interface PostLanguageRequest {
+  language: Language
+}
