@@ -28,6 +28,15 @@ const DropdownStyle: StylesConfig<LanguageOption, false, GroupBase<LanguageOptio
     border: '1px solid #D9D9D9',
     borderRadius: '10px',
   }),
+  valueContainer: base => ({
+    ...base,
+    overflowX: 'scroll',
+    flexWrap: 'unset',
+  }),
+  multiValue: base => ({
+    ...base,
+    flex: '0 0 auto',
+  }),
   placeholder: baseStyles => ({
     ...baseStyles,
     color: '#D9D9D9',
@@ -68,10 +77,14 @@ const LanguageDropdown = ({ handleChange, curLanguage }: LanguageDropdownProps) 
     })
   }, [])
 
-  const handleChangeNation = (newValue: MultiValue<LanguageOption> | SingleValue<LanguageOption>) => {
+  const handleChangeLanguage = (newValue: MultiValue<LanguageOption> | SingleValue<LanguageOption>) => {
     if (isMultiValue(newValue)) {
-      const value = newValue.map(option => option.value)
-      handleChange(value)
+      if (newValue.length > 5) {
+        alert('You can add up to five languages!')
+      } else {
+        const value = newValue.map(option => option.value)
+        handleChange(value)
+      }
     } else {
       if (newValue) {
         handleChange([newValue.value])
@@ -86,7 +99,7 @@ const LanguageDropdown = ({ handleChange, curLanguage }: LanguageDropdownProps) 
       <components.Control
         {...props}
         className={css({
-          px: '14px',
+          pr: '14px',
           h: '46px',
           color: 'lightGray.1',
           fontSize: 16,
@@ -103,7 +116,7 @@ const LanguageDropdown = ({ handleChange, curLanguage }: LanguageDropdownProps) 
         className={css({
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'space-between',
+          gap: 4,
           color: 'darkGray.1',
           fontSize: 18,
           fontWeight: 500,
@@ -112,6 +125,8 @@ const LanguageDropdown = ({ handleChange, curLanguage }: LanguageDropdownProps) 
         })}
       >
         <span>{props.data.label}</span>
+        <span>|</span>
+        <span>{props.data.value.toUpperCase()}</span>
       </div>
     </components.Option>
   )
@@ -128,10 +143,11 @@ const LanguageDropdown = ({ handleChange, curLanguage }: LanguageDropdownProps) 
       className={css({ w: 'full' })}
       components={{ Option: CustomOption, Control }}
       options={options}
-      placeholder={'Country/Region Selection'}
-      onChange={handleChangeNation}
+      placeholder={'Language Selection'}
+      onChange={handleChangeLanguage}
       styles={DropdownStyle}
       isMulti
+      isClearable={false}
     />
   )
 }
