@@ -12,7 +12,7 @@ interface SearchLectureCardProps {
 
 const SearchLectureCard = ({ data, addCourse }: SearchLectureCardProps) => {
   return (
-    <div className={css({ display: 'flex', justifyContent: 'space-between', alignItems: 'center' })}>
+    <div className={css({ display: 'flex', justifyContent: 'space-between', alignItems: 'center', pr: 4 })}>
       <div className={css({ display: 'flex', flexDir: 'column', gap: 2.5 })}>
         <div className={css({ display: 'flex', gap: 4, alignItems: 'center' })}>
           <span className={css({ fontSize: 16, fontWeight: 600, color: 'black.2' })}>{data.courseName}</span>
