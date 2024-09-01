@@ -10,7 +10,15 @@ export const initialPostData = {
   content: '',
   createdAt: new Date(),
   updatedAt: new Date(),
-  user: { username: '', profileImgUrl: '' } as User,
+  user: {
+    username: '',
+    isAnonymous: true,
+    isDeleted: false,
+    character: {
+      type: 'character1',
+      level: null,
+    },
+  } as User,
   views: 0,
   scrapCount: 0,
   myScrap: false,
