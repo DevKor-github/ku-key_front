@@ -2,9 +2,6 @@ import { css } from '@styled-stytem/css'
 
 import * as Characters from '@/components/ui/profile/profile-img'
 import { CharacterType, User } from '@/types/community'
-interface ProfileProps extends Pick<User, 'isAnonymous' | 'isDeleted' | 'character'> {
-  onlyTitle: boolean
-}
 
 const characterConfig: Record<CharacterType, Record<number, string>> = {
   character1: {
@@ -55,7 +52,12 @@ const bgConfig: Record<CharacterType, string> = {
   character5: '#939393',
   default: '#D9D9D9',
 }
-const Profile = ({ isAnonymous, isDeleted, character, onlyTitle }: ProfileProps) => {
+interface ProfileProps extends Pick<User, 'isAnonymous' | 'isDeleted' | 'character'> {
+  onlyTitle: boolean
+  bgWhite?: boolean
+}
+
+const Profile = ({ isAnonymous, isDeleted, character, onlyTitle, bgWhite }: ProfileProps) => {
   const profileImg = characterConfig[character.type][character.level ?? 1]
   const bgColor = bgConfig[character.type]
   return (
@@ -63,7 +65,7 @@ const Profile = ({ isAnonymous, isDeleted, character, onlyTitle }: ProfileProps)
       src={isDeleted ? Characters.CharacterDeleted : isAnonymous ? Characters.CharacterDefault : profileImg}
       alt="Profile"
       className={css({ w: onlyTitle ? 15 : 20, h: onlyTitle ? 15 : 20, rounded: 'full' })}
-      style={{ backgroundColor: bgColor }}
+      style={{ backgroundColor: bgWhite ? 'white' : bgColor }}
     />
   )
 }

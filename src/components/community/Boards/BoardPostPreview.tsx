@@ -3,7 +3,7 @@ import { Bookmark, Cookie, Eye, MessageCircle } from 'lucide-react'
 import { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import AnonymousProfileImg from '@/assets/Anonymous.jpg'
+import Profile from '@/components/ui/profile'
 import { BoardPostPreviewProps } from '@/types/community'
 import { getFormatedTimeString } from '@/util/getFormatedTimeString'
 
@@ -124,7 +124,13 @@ const BoardPostPreview = ({
         }}
       >
         <div className={css({ display: 'flex', alignItems: 'center', gap: 2.5 })}>
-          <img src={AnonymousProfileImg} alt="Profile" className={css({ w: 15, h: 15, rounded: 'full' })} />
+          <Profile
+            isAnonymous={user.isAnonymous}
+            isDeleted={user.isDeleted}
+            character={user.character}
+            onlyTitle
+            bgWhite={!!thumbnailDir}
+          />
           <p className={css({ fontSize: 16, fontWeight: 600 })}>{user.isAnonymous ? 'Anonymous' : user.username}</p>
         </div>
         <div className={css({ display: 'flex', alignItems: 'center', gap: 4 })}>
