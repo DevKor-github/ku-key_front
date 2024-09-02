@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 
 import {
   CommentReportRequest,
+  GetMyCommentsResponse,
   PostByBoardResponse,
   PostCommentLikeRequest,
   PostCommentRequest,
@@ -328,4 +329,70 @@ const reportComment = async ({ commentId, reason }: CommentReportRequest) => {
 
 export const useReportComment = () => {
   return useMutation({ mutationFn: reportComment })
+}
+
+const getMyPost = async (take: number, cursor?: string) => {
+  const response = await apiInterface.get<PostPreviewResponse>('post/my', {
+    params: { take, cursor: cursor?.length === 14 ? cursor : undefined },
+  })
+  return response.data
+}
+
+export const useGetMyPost = () => {
+  return useInfiniteQuery({
+    queryKey: ['myPost'],
+    queryFn: ({ pageParam: cursor }) => getMyPost(10, cursor.toString()),
+    getNextPageParam: lastPage => (lastPage.meta.hasNextData ? lastPage.meta.nextCursor : undefined),
+    initialPageParam: 0,
+    select: data => (data.pages ?? []).flatMap(page => page.data),
+  })
+}
+const getMyScrap = async (take: number, cursor?: string) => {
+  const response = await apiInterface.get<PostPreviewResponse>('post/scrap', {
+    params: { take, cursor: cursor?.length === 14 ? cursor : undefined },
+  })
+  return response.data
+}
+
+export const useGetMyScrap = () => {
+  return useInfiniteQuery({
+    queryKey: ['myScrap'],
+    queryFn: ({ pageParam: cursor }) => getMyScrap(10, cursor.toString()),
+    getNextPageParam: lastPage => (lastPage.meta.hasNextData ? lastPage.meta.nextCursor : undefined),
+    initialPageParam: 0,
+    select: data => (data.pages ?? []).flatMap(page => page.data),
+  })
+}
+const getMyReactPost = async (take: number, cursor?: string) => {
+  const response = await apiInterface.get<PostPreviewResponse>('post/react', {
+    params: { take, cursor: cursor?.length === 14 ? cursor : undefined },
+  })
+  return response.data
+}
+
+export const useGetMyReactPost = () => {
+  return useInfiniteQuery({
+    queryKey: ['myReactPost'],
+    queryFn: ({ pageParam: cursor }) => getMyReactPost(10, cursor.toString()),
+    getNextPageParam: lastPage => (lastPage.meta.hasNextData ? lastPage.meta.nextCursor : undefined),
+    initialPageParam: 0,
+    select: data => (data.pages ?? []).flatMap(page => page.data),
+  })
+}
+
+const getMyComments = async (take: number, cursor?: string) => {
+  const response = await apiInterface.get<GetMyCommentsResponse>('/comment/my', {
+    params: { take, cursor: cursor?.length === 14 ? cursor : undefined },
+  })
+  return response.data
+}
+
+export const useGetMyComments = () => {
+  return useInfiniteQuery({
+    queryKey: ['myComments'],
+    queryFn: ({ pageParam: cursor }) => getMyComments(10, cursor.toString()),
+    getNextPageParam: lastPage => (lastPage.meta.hasNextData ? lastPage.meta.nextCursor : undefined),
+    initialPageParam: 0,
+    select: data => (data.pages ?? []).flatMap(page => page.data),
+  })
 }
