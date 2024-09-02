@@ -1,10 +1,10 @@
 import { css } from '@styled-stytem/css'
+import { motion } from 'framer-motion'
 import { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useGetHotPosts } from '@/api/hooks/community'
 import PostTextPreview from '@/components/community/PostTextPreview'
-
 const HotBoardHorizontalPreview = () => {
   const { data: hotPosts } = useGetHotPosts()
   const navigate = useNavigate()
@@ -19,23 +19,34 @@ const HotBoardHorizontalPreview = () => {
         display: 'flex',
         flexDir: 'column',
         gap: '30px',
+        w: '100vw',
+        maxW: '100%',
+        overflowX: 'hidden',
         alignItems: 'flex-start',
         overflow: 'hidden',
         // border: '1px solid #E5E5E5',
         alignSelf: 'center',
       })}
     >
-      <div
+      <motion.div
         className={css({
           display: 'flex',
-          w: 'auto',
-          maxW: 'screen',
-          overflow: 'hidden',
           py: 0.5,
           alignItems: 'center',
           gap: '30px',
           alignSelf: 'stretch',
         })}
+        animate={{
+          x: [0, '-80%'],
+          transition: {
+            x: {
+              repeat: Infinity,
+              repeatType: 'reverse',
+              duration: 20,
+              ease: 'linear',
+            },
+          },
+        }}
       >
         {hotPosts?.map(post => (
           <PostTextPreview
@@ -47,8 +58,18 @@ const HotBoardHorizontalPreview = () => {
             handleNavigate={() => handleNavigate(post.id, post.boardName.split(' ')[0].toLowerCase())}
           />
         ))}
-      </div>
-      <div
+        {hotPosts?.map(post => (
+          <PostTextPreview
+            key={post.id}
+            title={post.title}
+            createdAt={post.createdAt}
+            user={post.user}
+            variant="default"
+            handleNavigate={() => handleNavigate(post.id, post.boardName.split(' ')[0].toLowerCase())}
+          />
+        ))}
+      </motion.div>
+      <motion.div
         className={css({
           display: 'flex',
           w: 'min-content',
@@ -60,6 +81,17 @@ const HotBoardHorizontalPreview = () => {
           alignSelf: 'stretch',
         })}
         style={{ left: -400 }}
+        animate={{
+          x: [0, '80%'],
+          transition: {
+            x: {
+              repeat: Infinity,
+              repeatType: 'reverse',
+              duration: 20,
+              ease: 'linear',
+            },
+          },
+        }}
       >
         {hotPosts
           ?.reverse()
@@ -73,7 +105,17 @@ const HotBoardHorizontalPreview = () => {
               handleNavigate={() => handleNavigate(post.id, post.boardName.split(' ')[0].toLowerCase())}
             />
           ))}
-      </div>
+        {hotPosts?.map(post => (
+          <PostTextPreview
+            key={post.id}
+            title={post.title}
+            createdAt={post.createdAt}
+            user={post.user}
+            variant="default"
+            handleNavigate={() => handleNavigate(post.id, post.boardName.split(' ')[0].toLowerCase())}
+          />
+        ))}
+      </motion.div>
     </div>
   )
 }
