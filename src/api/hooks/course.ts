@@ -66,3 +66,17 @@ export const getInAcademicFoundation = async ({ college, cursorId }: GetInAcadem
   })
   return response.data
 }
+
+export const getGeneral = async ({ cursorId }: Pick<GetByCourseNameInGeneralRequest, 'cursorId'>) => {
+  const response = await apiInterface.get<GetCourseResponse>('/course/general', {
+    params: { cursorId },
+  })
+  return response.data
+}
+
+export const getMajor = async ({ major, cursorId }: Omit<GetByCourseNameInMajorRequest, 'courseName'>) => {
+  const response = await apiInterface.get<GetCourseResponse>('/course/major', {
+    params: { major, cursorId },
+  })
+  return response.data
+}
