@@ -1,5 +1,5 @@
 import { css, cva } from '@styled-stytem/css'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import LikedPost from '@/components/mypage/Contents/Community/LikedPost'
 import MyComments from '@/components/mypage/Contents/Community/MyComments'
@@ -36,8 +36,17 @@ const ButtonStyle = cva({
 })
 
 type ViewType = 'myPost' | 'likedPost' | 'myComment' | 'myScrap'
+const currentViewConfig: Record<ViewType, React.FC> = {
+  myPost: MyPost,
+  myScrap: MyScrap,
+  likedPost: LikedPost,
+  myComment: MyComments,
+}
+
 const MyCommunity = () => {
   const [curView, setCurView] = useState<ViewType>('myPost')
+
+  const ViewComonent = useMemo(() => currentViewConfig[curView], [curView])
 
   return (
     <div className={css({ display: 'flex', flexDir: 'column', gap: 12 })}>
@@ -63,15 +72,7 @@ const MyCommunity = () => {
             My comment
           </button>
         </div>
-        {curView === 'myPost' ? (
-          <MyPost />
-        ) : curView === 'myScrap' ? (
-          <MyScrap />
-        ) : curView === 'likedPost' ? (
-          <LikedPost />
-        ) : (
-          <MyComments />
-        )}
+        <ViewComonent />
       </div>
     </div>
   )
