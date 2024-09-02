@@ -1,4 +1,11 @@
-import { BoardInfo, BoardPostPreviewProps, PostPreviewByBoardMeta, PostPreviewProps, User } from '@/types/community'
+import {
+  BoardInfo,
+  BoardPostPreviewProps,
+  MyCommentProps,
+  PostPreviewByBoardMeta,
+  PostPreviewProps,
+  User,
+} from '@/types/community'
 
 export interface PostPreviewResponse {
   data: PostPreviewProps[]
@@ -75,4 +82,9 @@ export interface PostReportRequest {
 export interface CommentReportRequest {
   commentId: number
   reason: string
+}
+
+export interface GetMyCommentsResponse {
+  data: MyCommentProps[]
+  meta: PostPreviewByBoardMeta
 }

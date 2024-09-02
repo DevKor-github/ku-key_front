@@ -45,3 +45,16 @@ export const useLogOut = () => {
     },
   })
 }
+
+const checkPassword = async (password: string) => {
+  const response = await apiInterface.post<boolean>('/auth/password', {
+    password,
+  })
+  return response.data
+}
+
+export const useCheckPassword = () => {
+  return useMutation({
+    mutationFn: checkPassword,
+  })
+}

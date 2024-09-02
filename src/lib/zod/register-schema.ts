@@ -1,5 +1,14 @@
 import { z } from 'zod'
 
+export const PasswordSchema = z
+  .string()
+  .min(10, { message: 'password must be at least 10 characters long.' })
+  .max(20, { message: 'password must be at most 20 characters long.' })
+  .regex(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]+$/, {
+    message: 'password must include alphabet, numbers, and special sysmbols (e.g., !@#$%^&*).',
+  })
+  .refine(value => value !== '', { message: 'This field is required.' })
+
 export const RegisterFormSchema = {
   step1: z.object({
     email: z
@@ -25,14 +34,7 @@ export const RegisterFormSchema = {
       .refine(value => value !== '', { message: 'This field is required.' }),
     password: z
       .object({
-        password: z
-          .string()
-          .min(10, { message: 'password must be at least 10 characters long.' })
-          .max(20, { message: 'password must be at most 20 characters long.' })
-          .regex(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]+$/, {
-            message: 'password must include alphabet, numbers, and special sysmbols (e.g., !@#$%^&*).',
-          })
-          .refine(value => value !== '', { message: 'This field is required.' }),
+        password: PasswordSchema,
         confirm: z.string(),
       })
       .refine(data => data.password === data.confirm, { message: 'passwords do not match', path: ['confirm'] }),

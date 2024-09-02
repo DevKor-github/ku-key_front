@@ -71,3 +71,16 @@ const register = async (data: RegisterReqProps) => {
 export const useRegister = () => {
   return useMutation({ mutationFn: register })
 }
+
+const patchPassword = async (newPassword: string) => {
+  const response = await apiInterface.patch('/auth/password', {
+    newPassword,
+  })
+  return response
+}
+
+export const usePatchPassword = () => {
+  return useMutation({
+    mutationFn: patchPassword,
+  })
+}
