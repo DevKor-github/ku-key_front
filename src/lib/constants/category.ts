@@ -26,7 +26,7 @@ export const categoryObject: { [key in string]: string[] } = {
     'College of Liberal Arts',
     'EML(Emerging Market and Latin America)',
     'Global Leader for East Asian Century',
-    'LB&amp;C(Language, Brain &amp; Computer)',
+    'LB&C(Language, Brain & Computer)',
     'Department of Korean Language and Literature',
     'Department of Russian Language and Literature',
     'Department of German Language and Literature',
@@ -102,7 +102,7 @@ export const categoryObject: { [key in string]: string[] } = {
   'College of Informatics': [
     'Brain and Cognitive Sciences',
     'Department of Data Science',
-    'Software Technology &amp; Entrepreneurship Program',
+    'Software Technology & Entrepreneurship Program',
     'Interdisciplinary Major in Artificial Intelligence',
     'Information Security',
     'Department of Computer Science and Engineering',
