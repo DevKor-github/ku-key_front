@@ -16,11 +16,9 @@ export interface useCourseSearchProps {
   filter: 'course' | 'professor' | 'code'
 }
 
-export const useCourseSearch = (props: useCourseSearchProps) => {
-  const { queryKeyword, category, classification, filter } = props
-
+export const useCourseSearch = ({ queryKeyword, category, classification, filter }: useCourseSearchProps) => {
   return useInfiniteQuery({
-    queryKey: ['courseSearchResult', props],
+    queryKey: ['courseSearchResult', queryKeyword, category, classification, filter],
     queryFn: ({ pageParam: cursorId }) => {
       if (category === 'Academic Foundations') {
         // 검색 미진행, 바로 띄워주기

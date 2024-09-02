@@ -6,7 +6,7 @@ interface GenericDueDateProps {
   date: string
 }
 const GenericDueDate = ({ type, due, date }: GenericDueDateProps) => {
-  const dueDate = type === 'start' ? `D - ${due}` : `D + ${due}`
+  const dueDate = type === 'start' ? `D + ${due}` : `D - ${due}`
   const dueTitle = type === 'start' ? 'Start' : 'End'
   return (
     <div className={css({ display: 'flex', flexDir: 'column', gap: 3 })}>
