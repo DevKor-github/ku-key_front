@@ -1,6 +1,6 @@
 import { css } from '@styled-stytem/css'
 import { motion } from 'framer-motion'
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useGetHotPosts } from '@/api/hooks/community'
@@ -13,6 +13,8 @@ const HotBoardHorizontalPreview = () => {
     [navigate],
   )
 
+  const doubledHotPosts = useMemo(() => (hotPosts ? [...hotPosts, ...hotPosts] : []), [hotPosts])
+
   return (
     <div
       className={css({
@@ -24,7 +26,6 @@ const HotBoardHorizontalPreview = () => {
         overflowX: 'hidden',
         alignItems: 'flex-start',
         overflow: 'hidden',
-        // border: '1px solid #E5E5E5',
         alignSelf: 'center',
       })}
     >
@@ -48,19 +49,9 @@ const HotBoardHorizontalPreview = () => {
           },
         }}
       >
-        {hotPosts?.map(post => (
+        {doubledHotPosts.map((post, index) => (
           <PostTextPreview
-            key={post.id}
-            title={post.title}
-            createdAt={post.createdAt}
-            user={post.user}
-            variant="default"
-            handleNavigate={() => handleNavigate(post.id, post.boardName.split(' ')[0].toLowerCase())}
-          />
-        ))}
-        {hotPosts?.map(post => (
-          <PostTextPreview
-            key={post.id}
+            key={post.id + index}
             title={post.title}
             createdAt={post.createdAt}
             user={post.user}
@@ -80,7 +71,6 @@ const HotBoardHorizontalPreview = () => {
           gap: '30px',
           alignSelf: 'stretch',
         })}
-        style={{ left: -400 }}
         animate={{
           x: [0, '80%'],
           transition: {
@@ -93,21 +83,9 @@ const HotBoardHorizontalPreview = () => {
           },
         }}
       >
-        {hotPosts
-          ?.reverse()
-          .map(post => (
-            <PostTextPreview
-              key={post.id}
-              title={post.title}
-              createdAt={post.createdAt}
-              user={post.user}
-              variant="default"
-              handleNavigate={() => handleNavigate(post.id, post.boardName.split(' ')[0].toLowerCase())}
-            />
-          ))}
-        {hotPosts?.map(post => (
+        {doubledHotPosts?.map((post, index) => (
           <PostTextPreview
-            key={post.id}
+            key={post.id + index}
             title={post.title}
             createdAt={post.createdAt}
             user={post.user}
