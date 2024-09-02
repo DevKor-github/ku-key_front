@@ -6,6 +6,12 @@ import { FormState, UseFormRegister } from 'react-hook-form'
 import { ChangePasswordForm } from '@/components/mypage/Contents/ChangePassword'
 import { Input } from '@/components/ui/input'
 
+const labelConfig = {
+  curPassword: 'Current Password',
+  newPassword: 'New Password',
+  confirmPassword: 'New Password Check',
+}
+
 interface ChangeFormProps {
   type: 'curPassword' | 'newPassword' | 'confirmPassword'
   register: UseFormRegister<ChangePasswordForm>
@@ -23,7 +29,7 @@ const ChangeForm = ({ type, register, formState }: ChangeFormProps) => {
         gap: 138,
       })}
     >
-      <Label className={cx(css({ fontSize: 20, fontWeight: 700 }))}>Current Password</Label>
+      <Label className={cx(css({ fontSize: 20, fontWeight: 700 }))}>{labelConfig[type]}</Label>
       <div className={css({ display: 'flex', flexDir: 'column', alignItems: 'flex-end' })}>
         <Input
           placeholder={
