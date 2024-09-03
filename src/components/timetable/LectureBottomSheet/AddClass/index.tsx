@@ -20,6 +20,9 @@ const SearchMessageStyle = css({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
+  color: 'darkGray.2',
+  fontSize: 16,
+  fontWeight: 600,
 })
 
 const initialQuery: useCourseSearchProps = {
