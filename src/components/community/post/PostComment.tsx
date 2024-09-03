@@ -10,7 +10,7 @@ import { postAtom } from '@/lib/store/post'
 import { useTextArea } from '@/util/useTextArea'
 
 const PostComment = memo(() => {
-  const { value, onChange } = useTextArea('')
+  const { value, onChange, clear } = useTextArea('')
   const [anonymous, setAnonymous] = useState(false)
   const { mutate: mutateComment } = usePostComment()
   const postAtomData = useAtomValue(postAtom)
@@ -18,10 +18,11 @@ const PostComment = memo(() => {
   const handleSubmitClick = useCallback(() => {
     if (value.trim() === '') return alert('Please enter a comment')
     mutateComment({ postId: postAtomData.id, content: value, isAnonymous: anonymous })
-  }, [anonymous, value, mutateComment, postAtomData.id])
+  }, [value, mutateComment, postAtomData.id, anonymous])
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+      if (e.nativeEvent.isComposing || e.keyCode === 229) return
       if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) {
         e.preventDefault()
         handleSubmitClick()
@@ -67,7 +68,7 @@ const PostComment = memo(() => {
           color: 'darkGray.1',
           _placeholder: { textStyle: 'heading4_M', color: 'lightGray.1' },
         })}
-        onKeyDown={handleKeyDown}
+        onKeyUp={handleKeyDown}
       />
       <div className={css({ display: 'flex', gap: 4, alignItems: 'center' })}>
         <div className={css({ display: 'flex', alignItems: 'center', gap: 1.5 })}>
