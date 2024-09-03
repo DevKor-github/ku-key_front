@@ -1,6 +1,6 @@
 import { css } from '@styled-stytem/css'
 import { isAxiosError } from 'axios'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { match } from 'ts-pattern'
 
@@ -37,6 +37,8 @@ interface AddClassProps {
   timetableId: number
 }
 const AddClass = ({ timetableId }: AddClassProps) => {
+  const scrollSectionRef = useRef<HTMLDivElement>(null)
+
   const [isSearchAvailable, setIsSearchAvailable] = useState(true)
   // 검색 Filter
   const [curFilter, setCurFilter] = useState<'course' | 'professor' | 'code'>('code')
@@ -56,6 +58,10 @@ const AddClass = ({ timetableId }: AddClassProps) => {
     observer.unobserve(entry.target)
     if (hasNextPage && !isFetching) fetchNextPage()
   })
+
+  useEffect(() => {
+    if (scrollSectionRef.current) scrollSectionRef.current.scrollTo(0, 0)
+  }, [query])
 
   const addCourse = useCallback(
     (courseId: number) => {
@@ -221,6 +227,7 @@ const AddClass = ({ timetableId }: AddClassProps) => {
           <div className={SearchMessageStyle}></div>
         ) : searchData.length ? (
           <div
+            ref={scrollSectionRef}
             className={css({
               overflowY: 'auto',
               display: 'flex',
