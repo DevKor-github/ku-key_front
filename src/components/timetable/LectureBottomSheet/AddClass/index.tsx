@@ -26,7 +26,7 @@ const SearchMessageStyle = css({
 })
 
 const initialQuery: useCourseSearchProps = {
-  category: categoryList[0],
+  category: 'All Class',
   filter: 'code',
   queryKeyword: '',
   classification: null,
@@ -102,7 +102,7 @@ const AddClass = ({ timetableId }: AddClassProps) => {
         // todo: filter state 어떻게 할지
         setIsSearchAvailable(false)
         setQuery({
-          queryKeyword: '_blank',
+          queryKeyword: '',
           filter: 'course',
           category: 'Academic Foundations',
           classification,
@@ -111,7 +111,7 @@ const AddClass = ({ timetableId }: AddClassProps) => {
         setQuery({
           queryKeyword: '',
           filter: 'course',
-          category: categoryList[curCategory],
+          category: 'Major',
           classification,
         })
         setIsSearchAvailable(true)
@@ -132,14 +132,22 @@ const AddClass = ({ timetableId }: AddClassProps) => {
           break
         case 'course':
         case 'professor':
-          if (curCategory !== 0) {
-            setCurFilter(filter)
-            setQuery(initialQuery)
+          setCurFilter(filter)
+          if (curCategory === 0) {
+            setCurCategory(2)
+            setQuery({ ...initialQuery, filter, category: 'General Studies' })
+          } else {
+            setQuery({
+              queryKeyword: '',
+              filter,
+              category: categoryList[curCategory],
+              classification: curClassification,
+            })
           }
           break
       }
     },
-    [curCategory],
+    [curCategory, curClassification],
   )
 
   const handleSearchBoxOnSubmit = useCallback(
