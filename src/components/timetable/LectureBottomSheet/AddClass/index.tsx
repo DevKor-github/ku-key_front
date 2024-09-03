@@ -76,12 +76,13 @@ const AddClass = ({ timetableId }: AddClassProps) => {
         setIsModalOpen(true)
       } else {
         setIsSearchAvailable(true)
-        setQuery(initialQuery)
         if (toIndex === 0) {
           // All
+          setQuery(initialQuery)
           setCurFilter('code')
         } else if (toIndex === 2) {
           // General
+          setQuery({ ...initialQuery, category: 'General Studies' })
           setCurFilter('course')
         }
       }
@@ -104,7 +105,12 @@ const AddClass = ({ timetableId }: AddClassProps) => {
           classification,
         })
       } else {
-        setQuery(initialQuery)
+        setQuery({
+          queryKeyword: '',
+          filter: 'course',
+          category: categoryList[curCategory],
+          classification,
+        })
         setIsSearchAvailable(true)
         setCurFilter('course')
       }

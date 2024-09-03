@@ -6,7 +6,9 @@ import {
   getByCourseNameInMajor,
   getByProfInGeneral,
   getByProfInMajor,
+  getGeneral,
   getInAcademicFoundation,
+  getMajor,
 } from '@/api/hooks/course'
 
 export interface useCourseSearchProps {
@@ -24,6 +26,16 @@ export const useCourseSearch = ({ queryKeyword, category, classification, filter
         // 검색 미진행, 바로 띄워주기
         return getInAcademicFoundation({ college: classification!, cursorId })
       }
+
+      if (queryKeyword === '') {
+        if (category === 'General Studies') {
+          return getGeneral({ cursorId })
+        }
+        if (category === 'Major') {
+          return getMajor({ major: classification!, cursorId })
+        }
+      }
+
       if (filter === 'code') {
         // 학수번호로 검색, category는 무조건 All Class
         return getByCourseCode({ courseCode: queryKeyword, cursorId })
@@ -49,7 +61,6 @@ export const useCourseSearch = ({ queryKeyword, category, classification, filter
     },
     initialPageParam: 0,
     select: data => (data.pages ?? []).flatMap(page => page.data),
-    enabled: !!queryKeyword,
     retry: false,
   })
 }
