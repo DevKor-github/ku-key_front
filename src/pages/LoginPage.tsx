@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 
 import { useLogIn } from '@/api/hooks/auth'
-import LoginPageBg from '@/assets/LoginPageBG.jpg'
+import LoginPageBg from '@/assets/LoginBanner.webp'
 import Button from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
