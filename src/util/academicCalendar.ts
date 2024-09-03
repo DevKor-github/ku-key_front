@@ -1,3 +1,5 @@
+import { match } from 'ts-pattern'
+
 import { GetCalendarYearlyResponse } from '@/api/types/home_sub'
 import { Semester } from '@/types/timetable'
 import { numberToSemester } from '@/util/timetableUtil'
@@ -5,17 +7,18 @@ import { numberToSemester } from '@/util/timetableUtil'
 /**
  * Semester에 해당하는 빈 학기 배열을 전달합니다
  */
-export const getInitialAcademicCalendar = (semester: number): GetCalendarYearlyResponse => {
-  switch (semester) {
-    case 1:
+export const getInitialAcademicCalendar = (semester: 1 | 2): GetCalendarYearlyResponse => {
+  return match(semester)
+    .with(1, () => {
       // 1학기, 2월 ~ 8월
       return Array.from({ length: 7 }, (_, ind) => ({ month: ind + 2, schedules: [] }))
-    default:
+    })
+    .otherwise(() => {
       // 2학기, 8월 ~ 2월
       return Array.from({ length: 5 }, (_, ind) => ({ month: ind + 8, schedules: [] })).concat(
         Array.from({ length: 2 }, (_, ind) => ({ month: ind + 1, schedules: [] })),
       )
-  }
+    })
 }
 
 /**
