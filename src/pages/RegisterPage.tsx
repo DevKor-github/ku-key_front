@@ -62,7 +62,7 @@ const RegisterPage = memo(() => {
         username: credentialForm.getValues('username'),
         password: credentialForm.getValues('password').password,
       },
-      { onSuccess: () => handleOpen() },
+      { onSuccess: handleOpen },
     )
   }
 
