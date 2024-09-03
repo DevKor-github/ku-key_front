@@ -2,6 +2,7 @@ import { css, cva } from '@styled-stytem/css'
 import { findByAlpha2 } from 'iso-3166-1-ts'
 import { CircleX, Dot } from 'lucide-react'
 import { useCallback } from 'react'
+import { match } from 'ts-pattern'
 
 import {
   useAddFriendship,
@@ -75,25 +76,16 @@ const FriendCardBtn = ({ type, data }: FriendCardProp) => {
   let btnText = ''
 
   if (type === 'search') {
-    switch (data.status) {
-      case 'friend':
-        btnText = 'friend'
-        break
-      case 'me':
-        btnText = "It's me"
-        break
-      case 'pending':
-        btnText = 'pending'
-        break
-      case 'requested':
-        btnText = 'requested'
-        break
-      case 'unknown':
+    match(data.status)
+      .with('friend', () => (btnText = 'friend'))
+      .with('me', () => (btnText = "It's me"))
+      .with('pending', () => (btnText = 'pending'))
+      .with('requested', () => (btnText = 'requested'))
+      .with('unknown', () => {
         btnText = 'Add friend'
         color = 'red2'
         isActive = true
-        break
-    }
+      })
   } else {
     isActive = true
     if (type === 'recieved') {
