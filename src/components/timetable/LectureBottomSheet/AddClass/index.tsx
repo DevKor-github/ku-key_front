@@ -60,7 +60,9 @@ const AddClass = ({ timetableId }: AddClassProps) => {
   })
 
   useEffect(() => {
-    if (scrollSectionRef.current) scrollSectionRef.current.scrollTo(0, 0)
+    setTimeout(() => {
+      scrollSectionRef.current && scrollSectionRef.current.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+    }, 100)
   }, [query])
 
   const addCourse = useCallback(
