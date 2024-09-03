@@ -103,7 +103,7 @@ const EmailForm = memo(({ form, handleValidation, valid }: RegisterFormProps<'em
                     valid.email === 'valid'
                   }
                 >
-                  Send
+                  <p className={css({ textStyle: 'body1_L', lineHeight: '100%' })}>Send</p>
                 </Button>
               </div>
             </FormControl>
@@ -170,7 +170,7 @@ const EmailForm = memo(({ form, handleValidation, valid }: RegisterFormProps<'em
                     valid.email === 'valid'
                   }
                 >
-                  Verify
+                  <p className={css({ textStyle: 'body1_L', lineHeight: '100%' })}>Verify</p>
                 </Button>
               </div>
             </FormControl>

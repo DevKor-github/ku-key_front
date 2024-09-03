@@ -68,6 +68,7 @@ export const buttonRecipe = defineRecipe({
       input: {
         px: 4,
         py: 2.5,
+        h: '39px',
         rounded: 10,
         border: '1px solid {colors.lightGray.1}',
         bgColor: 'white',

@@ -11,13 +11,18 @@ import Progress from '@/components/register/Progress'
 import UserInfoForm from '@/components/register/UserInfoForm'
 import Button from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
+import ModalCard from '@/components/ui/modal'
+import ModalPortal from '@/components/ui/modal/ModalPortal'
+import { REGISTER_MESSAGES } from '@/lib/messages/register'
 import AuthNavigate from '@/lib/router/AuthNavigate'
 import { RegisterFormSchema } from '@/lib/zod/register-schema'
 import { ProgressState, RegisterationKey, RegistrationState, ValidState } from '@/types/register'
+import { useModal } from '@/util/useModal'
 import { useRegisterForm } from '@/util/useRegisterForm'
 
 const RegisterPage = memo(() => {
   const navigate = useNavigate()
+  const { isOpen, handleButtonClose, handleOpen, modalRef } = useModal()
   const [page, setPage] = useState<ProgressState>(1)
   const [file, setFile] = useState<File | null>(null)
   const [valid, setValid] = useState<RegistrationState>({
@@ -57,7 +62,7 @@ const RegisterPage = memo(() => {
         username: credentialForm.getValues('username'),
         password: credentialForm.getValues('password').password,
       },
-      { onSuccess: () => navigate('/login') },
+      { onSuccess: handleOpen },
     )
   }
 
@@ -80,6 +85,11 @@ const RegisterPage = memo(() => {
       credentialForm.handleSubmit(onSubmit)()
     }
   }
+
+  const handleModalClose = useCallback(() => {
+    handleButtonClose()
+    navigate('/login')
+  }, [handleButtonClose, navigate])
 
   return (
     <AuthNavigate>
@@ -155,6 +165,7 @@ const RegisterPage = memo(() => {
               variant="loginOutline"
               onClick={() => setPage(p => (p - 1) as ProgressState)}
               disabled={page === 1}
+              hidden={page === 1}
             >
               <ArrowLeft className={css({ w: 4, h: 4 })} />
               <p className={css({ fontSize: 20, fontWeight: 500, lineHeight: 'none' })}>PREV</p>
@@ -167,6 +178,34 @@ const RegisterPage = memo(() => {
             </Button>
           </div>
         </section>
+        <ModalPortal isOpen={isOpen}>
+          <ModalCard variant="alert" ref={modalRef}>
+            <div className={css({ fontWeight: 700, color: 'black.2', fontSize: 24 })}>{REGISTER_MESSAGES.TITLE}</div>
+            <div className={css({ display: 'flex', flexDir: 'column', alignItems: 'center', gap: 2.5 })}>
+              <p className={css({ textStyle: 'heading4_M', color: 'black.2' })}>{REGISTER_MESSAGES.SUBTITLE}</p>
+              <p
+                className={css({
+                  fontSize: 16,
+                  fontWeight: 400,
+                  whiteSpace: 'pre-wrap',
+                  textAlign: 'center',
+                  color: 'darkGray.1',
+                  lineHeight: '1',
+                })}
+              >
+                {REGISTER_MESSAGES.CONTENT}
+              </p>
+              <p className={css({ textStyle: 'heading4_M', color: 'black.2' })}>
+                This process takes <span className={css({ color: 'red.3' })}>1-2 business days</span> on average.
+              </p>
+            </div>
+            <div className={css({ display: 'flex', gap: 5 })}>
+              <Button variant="confirm" onClick={handleModalClose}>
+                Confirm
+              </Button>
+            </div>
+          </ModalCard>
+        </ModalPortal>
       </main>
     </AuthNavigate>
   )
