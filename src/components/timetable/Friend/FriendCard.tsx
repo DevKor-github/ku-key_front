@@ -60,6 +60,7 @@ interface FriendCardProp {
     major: string
     country: string
     friendshipId?: number
+    homeUniversity: string
     userId?: number
     status?: friendStatusType
     character: {
@@ -172,12 +173,12 @@ const FriendCard = ({ data, type }: FriendCardProp) => {
             })}
           >
             {/* TODO: 더미데이터 수정 */}
-            <div>Psick UNIV</div>
+            <div>{data.homeUniversity ?? 'Home University Unknown'}</div>
             <Dot />
             <div>{data.major ?? 'Major Unknown'}</div>
           </div>
           <div className={css({ fontWeight: 400, fontSize: 12, color: 'darkGray.2' })}>
-            {data.country ? findByAlpha2(data.country)?.name : 'Origin Country'}
+            {data.country ? findByAlpha2(data.country)?.name : 'Origin Country Unknown'}
           </div>
         </div>
       </div>

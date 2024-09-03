@@ -18,6 +18,7 @@ export interface GetSearchUserResponse {
   country: string
   status: friendStatusType
   level: number
+  homeUniversity: string
   character: {
     type: CharacterType
     level: number | null

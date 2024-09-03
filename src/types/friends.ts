@@ -7,6 +7,7 @@ export interface FriendInterface {
   username: string
   major: string
   country: string
+  homeUniversity: string
   character: {
     type: CharacterType
     level: number | null
