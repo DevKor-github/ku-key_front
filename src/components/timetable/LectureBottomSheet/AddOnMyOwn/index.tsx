@@ -84,87 +84,98 @@ const AddOnMyOwn = ({ submitHandler, prevValue = { title: '', day: 'Mon', locati
   }
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className={css({ height: '100%', display: 'flex', flexDir: 'column', justifyContent: 'space-between', pb: 2.5 })}
-    >
-      <div className={css({ display: 'flex', flexDir: 'column', gap: 10 })}>
-        <div className={FormLayoutStyle}>
-          <FormBox formName="Title">
-            <input
-              className={cx(InputBoxStyle, css({ h: '50px' }))}
-              type="text"
-              {...register('title', { required: 'The name of the schedule is required.' })}
-            ></input>
-          </FormBox>
-          <FormBox formName="Place">
-            <input className={cx(InputBoxStyle, css({ h: '50px' }))} type="text" {...register('location')}></input>
-          </FormBox>
-        </div>
-        <div className={FormLayoutStyle}>
-          <FormBox formName="Day">
-            {DayArray.map(day => (
-              <button
-                key={day}
-                type="button"
-                className={SelectFilterBtnStyle({
-                  isDayBtn: true,
-                  state: watch('day') === day ? 'active' : 'default',
+    <div className={css({ h: '100%', w: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' })}>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className={css({
+          h: '100%',
+          w: '100%',
+          maxH: '300px',
+          maxW: '1000px',
+          display: 'flex',
+          flexDir: 'column',
+          justifyContent: 'space-between',
+          pb: 2.5,
+        })}
+      >
+        <div className={css({ display: 'flex', flexDir: 'column', gap: 10 })}>
+          <div className={FormLayoutStyle}>
+            <FormBox formName="Title">
+              <input
+                className={cx(InputBoxStyle, css({ h: '50px' }))}
+                type="text"
+                {...register('title', { required: 'The name of the schedule is required.' })}
+              ></input>
+            </FormBox>
+            <FormBox formName="Place">
+              <input className={cx(InputBoxStyle, css({ h: '50px' }))} type="text" {...register('location')}></input>
+            </FormBox>
+          </div>
+          <div className={FormLayoutStyle}>
+            <FormBox formName="Day">
+              {DayArray.map(day => (
+                <button
+                  key={day}
+                  type="button"
+                  className={SelectFilterBtnStyle({
+                    isDayBtn: true,
+                    state: watch('day') === day ? 'active' : 'default',
+                  })}
+                  onClick={() => setValue('day', day)}
+                >
+                  {day}
+                </button>
+              ))}
+              <input
+                type="hidden"
+                {...register('day', {
+                  validate: val => {
+                    return DayArray.includes(val as DayType)
+                  },
                 })}
-                onClick={() => setValue('day', day)}
-              >
-                {day}
-              </button>
-            ))}
+              />
+            </FormBox>
+          </div>
+          <div className={FormLayoutStyle}>
+            <FormBox formName="Start Time">
+              <TimeSelector key={trigger} type={'startTime'} setValue={setValue} />
+            </FormBox>
+            <FormBox formName="End Time">
+              <TimeSelector key={trigger} type={'endTime'} setValue={setValue} />
+            </FormBox>
+            <input type="hidden" {...register('startTime', { pattern: timePattern })} />
             <input
               type="hidden"
-              {...register('day', {
+              {...register('endTime', {
+                pattern: timePattern,
                 validate: val => {
-                  return DayArray.includes(val as DayType)
+                  return getDuration(val, watch('startTime')) > 0 || 'The end time must be later than the start time.'
                 },
               })}
             />
-          </FormBox>
+          </div>
         </div>
-        <div className={FormLayoutStyle}>
-          <FormBox formName="Start Time">
-            <TimeSelector key={trigger} type={'startTime'} setValue={setValue} />
-          </FormBox>
-          <FormBox formName="End Time">
-            <TimeSelector key={trigger} type={'endTime'} setValue={setValue} />
-          </FormBox>
-          <input type="hidden" {...register('startTime', { pattern: timePattern })} />
-          <input
-            type="hidden"
-            {...register('endTime', {
-              pattern: timePattern,
-              validate: val => {
-                return getDuration(val, watch('startTime')) > 0 || 'The end time must be later than the start time.'
-              },
+        <div className={css({ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 5 })}>
+          {errors?.title?.message ?? errors?.endTime?.message}
+          <button
+            type="submit"
+            className={css({
+              fontWeight: 700,
+              fontSize: 12,
+              color: 'white',
+              px: 2.5,
+              py: 1,
+              rounded: 'full',
+              transition: 'all 0.256s',
+              cursor: 'pointer',
+              bgColor: 'darkGray.1',
             })}
-          />
+          >
+            Complete
+          </button>
         </div>
-      </div>
-      <div className={css({ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 5 })}>
-        {errors?.title?.message ?? errors?.endTime?.message}
-        <button
-          type="submit"
-          className={css({
-            fontWeight: 700,
-            fontSize: 12,
-            color: 'white',
-            px: 2.5,
-            py: 1,
-            rounded: 'full',
-            transition: 'all 0.256s',
-            cursor: 'pointer',
-            bgColor: 'darkGray.1',
-          })}
-        >
-          Complete
-        </button>
-      </div>
-    </form>
+      </form>
+    </div>
   )
 }
 
