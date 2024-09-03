@@ -42,7 +42,7 @@ const ClassSelectModal = ({ category, handleMajorBtn, handleQuitModal }: ClassSe
         )}
       >
         <div className={css({ color: 'darkGray.2', fontWeight: 700, fontSize: 24 })}>{category}</div>
-        <ul className={css({ h: 60, overflow: 'scroll', display: 'flex', flexDir: 'column', gap: 1, px: 7, w: 94 })}>
+        <ul className={css({ h: 60, overflowY: 'auto', display: 'flex', flexDir: 'column', gap: 1, px: 7, w: 94 })}>
           {Object.entries(categoryObject).map(([college, majors], ind) => (
             <MajorList
               key={ind}

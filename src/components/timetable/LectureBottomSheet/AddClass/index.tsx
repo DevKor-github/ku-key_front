@@ -222,7 +222,7 @@ const AddClass = ({ timetableId }: AddClassProps) => {
         ) : searchData.length ? (
           <div
             className={css({
-              overflow: 'scroll',
+              overflowY: 'auto',
               display: 'flex',
               flexDir: 'column',
               gap: 5,
