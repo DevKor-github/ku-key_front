@@ -4,6 +4,7 @@ import { memo } from 'react'
 
 import ContactButton from '@/components/club/\bContactButton'
 import { ClubInterface } from '@/types/club'
+import upperCaseHighlight from '@/util/upperCaseHighlight'
 
 interface ClubCardProps {
   clubData: ClubInterface
@@ -38,13 +39,10 @@ const ClubCard = memo(({ clubData, handleLikeClick }: ClubCardProps) => {
                 gap: 1.5,
                 fontSize: { base: 16, mdDown: 12 },
                 fontWeight: 600,
-                '& span': {
-                  color: 'red.1',
-                },
               })}
             >
-              <p>Regular Meeting | {clubData.regularMeeting}</p>
-              <p>Recruitment Period | {clubData.recruitmentPeriod}</p>
+              <p>Regular Meeting | {upperCaseHighlight(clubData.regularMeeting)}</p>
+              <p>Recruitment Period | {upperCaseHighlight(clubData.recruitmentPeriod)}</p>
             </div>
           </div>
           <div className={css({ display: 'flex', flexDir: 'column', gap: { base: 3 } })}>

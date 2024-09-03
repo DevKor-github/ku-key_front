@@ -26,7 +26,6 @@ export const SelectFilterBtnStyle = cva({
         color: 'red.1',
         borderColor: 'red.1',
       },
-      disabled: { cursor: 'auto' },
       default: {
         _hover: {
           borderColor: 'darkGray.2',
@@ -47,7 +46,7 @@ interface FilterSelectorProps {
   curCategory: number
   handleFilterSelector: (filter: FilterType) => void
 }
-const FilterSelector = ({ curFilter, curCategory, handleFilterSelector }: FilterSelectorProps) => {
+const FilterSelector = ({ curFilter, handleFilterSelector }: FilterSelectorProps) => {
   return (
     <div className={css({ display: 'flex', gap: 3.5, justifyContent: 'center' })}>
       <div
@@ -64,7 +63,7 @@ const FilterSelector = ({ curFilter, curCategory, handleFilterSelector }: Filter
       <div className={css({ display: 'flex', justifyContent: 'center', gap: 2.5, alignItems: 'center' })}>
         <button
           className={SelectFilterBtnStyle({
-            state: curFilter === 'course' ? 'active' : curCategory === 0 ? 'disabled' : 'default',
+            state: curFilter === 'course' ? 'active' : 'default',
           })}
           onClick={() => handleFilterSelector('course')}
         >
@@ -72,7 +71,7 @@ const FilterSelector = ({ curFilter, curCategory, handleFilterSelector }: Filter
         </button>
         <button
           className={SelectFilterBtnStyle({
-            state: curFilter === 'professor' ? 'active' : curCategory === 0 ? 'disabled' : 'default',
+            state: curFilter === 'professor' ? 'active' : 'default',
           })}
           onClick={() => handleFilterSelector('professor')}
         >

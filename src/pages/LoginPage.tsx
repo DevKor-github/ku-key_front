@@ -109,7 +109,7 @@ const Login = () => {
                     <FormLabel className={css({ fontSize: 24, fontWeight: 700 })}>Email</FormLabel>
                     <FormControl>
                       <div className={css({ display: 'flex', flexDir: 'column', alignItems: 'flex-end' })}>
-                        <Input placeholder="Please enter your Email  address" {...field} />
+                        <Input placeholder="Please enter your Email address" {...field} />
                         <div className={css({ display: 'flex', px: 1.5, py: 1, gap: 1, alignItems: 'center' })}>
                           {loginForm.getFieldState('email').invalid && (
                             <ShieldAlert size={16} className={css({ color: 'red.2' })} />

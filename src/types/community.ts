@@ -49,6 +49,17 @@ export interface CommentProps {
   reply: Omit<CommentProps, 'reply'>[]
 }
 
+export interface MyCommentProps {
+  id: number
+  createdAt: Date
+  updatedAt: Date
+  content: string
+  likeCount: number
+  isAnonymouse: boolean
+  postId: number
+  replyCount: number
+}
+
 export interface ImageProps {
   id: number
   imgDir: string
@@ -57,6 +68,8 @@ export interface ImageProps {
 export interface User {
   username: string
   profileImgUrl: string
+  isAnonymous: boolean
+  isDeleted: boolean
 }
 export interface PostViewProps {
   id: number
