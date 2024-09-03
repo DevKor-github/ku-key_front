@@ -31,7 +31,8 @@ const AcademicCalendar = ({ data, semester }: AcademicCalendarProps) => {
               w: 48,
               borderRight: '{colors.darkGray.2} solid 0.5px',
               display: 'flex',
-              alignItems: 'center',
+              pt: '26px',
+              lineHeight: '100%',
               minH: 22,
               mdDown: { justifyContent: 'center', px: 0, w: 20, fontSize: 16 },
             })}

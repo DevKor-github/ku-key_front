@@ -37,8 +37,8 @@ const EventRow = ({ index, event }: EventRowProps) => {
         })({ isStart: index === 0 })}
       >
         {event.startDate === event.endDate
-          ? `${new Date(event.startDate).getDate()} (${event.startDay.toUpperCase()})`
-          : `${new Date(event.startDate).getDate()} (${event.startDay.toUpperCase()}) ~ ${new Date(event.endDate).getDate()} (${event.endDay.toUpperCase()})`}
+          ? `${new Date(event.startDate).getDate()}(${event.startDay.toUpperCase()})`
+          : `${new Date(event.startDate).getDate()}(${event.startDay.toUpperCase()}) ~ ${new Date(event.endDate).getDate()}(${event.endDay.toUpperCase()})`}
       </div>
       <div
         className={cva({
