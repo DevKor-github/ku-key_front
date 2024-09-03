@@ -17,25 +17,34 @@ interface CommentInputProps {
 const CommentInput = ({ isOpen, currentIndex }: CommentInputProps) => {
   const postAtomData = useAtomValue(postAtom)
   const comment = postAtomData.comments[currentIndex]
-  const { value, onChange } = useTextArea('')
+  const { value, onChange, clear } = useTextArea('')
   const [anonymous, setAnonymous] = useState(false)
+  const [isKeyDown, setIsKeyDown] = useState(false)
   const handleAnonymous = useCallback(() => setAnonymous(prev => !prev), [])
   const { mutate: mutateReply } = usePostCommentReply()
 
   const handleSend = useCallback(() => {
     if (value.trim() === '') return alert('Please enter a comment')
-    mutateReply({ postId: postAtomData.id, parentCommentId: comment.id, content: value, isAnonymous: anonymous })
-  }, [anonymous, comment.id, mutateReply, postAtomData.id, value])
+    mutateReply(
+      { postId: postAtomData.id, parentCommentId: comment.id, content: value, isAnonymous: anonymous },
+      { onSuccess: clear },
+    )
+  }, [anonymous, clear, comment.id, mutateReply, postAtomData.id, value])
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
       if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) {
         e.preventDefault()
-        handleSend()
+        if (!isKeyDown) {
+          setIsKeyDown(true)
+          handleSend()
+        }
       }
     },
-    [handleSend],
+    [handleSend, isKeyDown],
   )
+  const handleKeyUp = useCallback(() => setIsKeyDown(false), [])
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -83,6 +92,7 @@ const CommentInput = ({ isOpen, currentIndex }: CommentInputProps) => {
               color: 'darkGray.1',
               _placeholder: { textStyle: 'heading4_M', color: 'lightGray.1' },
             })}
+            onKeyUp={handleKeyUp}
             onKeyDown={handleKeyDown}
           />
           <div className={css({ display: 'flex', gap: 4, alignItems: 'center' })}>
