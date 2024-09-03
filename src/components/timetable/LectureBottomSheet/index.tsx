@@ -86,6 +86,7 @@ const LectureBottomSheet = ({ timetableId, visible }: LectureBottomSheetProps) =
               w: 'calc(100vw - 298px)',
               h: 'calc(50vh - 20px)',
               backdropFilter: 'blur(25px)',
+              maxW: '1500px',
               rounded: 50,
               px: 26,
               pt: 10,
