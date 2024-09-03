@@ -41,10 +41,8 @@ export const useCourseSearch = ({ queryKeyword, category, classification, filter
           data: [],
         }))
       }
-      if (filter === 'code') {
-        // 학수번호로 검색, category는 무조건 All Class
-        return getByCourseCode({ courseCode: queryKeyword, cursorId })
-      } else if (filter === 'course') {
+
+      if (filter === 'course') {
         // 강의명으로 검색
         if (category === 'General Studies') {
           // 교양 내 검색
@@ -52,14 +50,17 @@ export const useCourseSearch = ({ queryKeyword, category, classification, filter
         }
         // 전공 내 검색
         return getByCourseNameInMajor({ courseName: queryKeyword, major: classification!, cursorId })
+      } else if (filter === 'professor') {
+        // 교수명으로 검색
+        if (category === 'General Studies') {
+          // 교양 내 검색
+          return getByProfInGeneral({ professorName: queryKeyword, cursorId })
+        }
+        // 전공 내 검색
+        return getByProfInMajor({ professorName: queryKeyword, major: classification!, cursorId })
       }
-      // 교수명으로 검색
-      if (category === 'General Studies') {
-        // 교양 내 검색
-        return getByProfInGeneral({ professorName: queryKeyword, cursorId })
-      }
-      // 전공 내 검색
-      return getByProfInMajor({ professorName: queryKeyword, major: classification!, cursorId })
+      // 학수번호로 검색, category는 무조건 All Class
+      return getByCourseCode({ courseCode: queryKeyword, cursorId })
     },
     getNextPageParam: lastPage => {
       return lastPage?.nextCursorId === null ? undefined : lastPage?.nextCursorId

@@ -2,6 +2,7 @@ import { css } from '@styled-stytem/css'
 import { isAxiosError } from 'axios'
 import { useCallback, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { match } from 'ts-pattern'
 
 import { usePostCourse } from '@/api/hooks/timetable'
 import Dropdown from '@/components/timetable/Dropdown'
@@ -123,29 +124,27 @@ const AddClass = ({ timetableId }: AddClassProps) => {
 
   const handleFilterSelector = useCallback(
     (filter: FilterType) => {
-      switch (filter) {
-        case 'code':
+      match(filter)
+        .with('code', () => {
           setCurFilter('code')
           setCurCategory(0)
           setCurClassification(null)
           setQuery(initialQuery)
-          break
-        case 'course':
-        case 'professor':
-          setCurFilter(filter)
+        })
+        .otherwise(targetFilter => {
+          setCurFilter(targetFilter)
           if (curCategory === 0) {
             setCurCategory(2)
-            setQuery({ ...initialQuery, filter, category: 'General Studies' })
+            setQuery({ ...initialQuery, filter: targetFilter, category: 'General Studies' })
           } else {
             setQuery({
               queryKeyword: '',
-              filter,
+              filter: targetFilter,
               category: categoryList[curCategory],
               classification: curClassification,
             })
           }
-          break
-      }
+        })
     },
     [curCategory, curClassification],
   )
