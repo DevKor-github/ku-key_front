@@ -172,7 +172,6 @@ const FriendCard = ({ data, type }: FriendCardProp) => {
               color: 'darkGray.1',
             })}
           >
-            {/* TODO: 더미데이터 수정 */}
             <div>{data.homeUniversity ?? 'Home University Unknown'}</div>
             <Dot />
             <div>{data.major ?? 'Major Unknown'}</div>
