@@ -14,7 +14,7 @@ export interface GetSearchUserResponse {
   name: string
   username: string
   major: string
-  language: string
+  country: string
   status: friendStatusType
 }
 

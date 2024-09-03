@@ -1,6 +1,8 @@
 import { css, cva } from '@styled-stytem/css'
+import { findByAlpha2 } from 'iso-3166-1-ts'
 import { CircleX, Dot } from 'lucide-react'
 import { useCallback } from 'react'
+import { match } from 'ts-pattern'
 
 import {
   useAddFriendship,
@@ -57,7 +59,7 @@ interface FriendCardProp {
     name: string
     username: string
     major: string
-    language: string
+    country: string
     friendshipId?: number
     userId?: number
     status?: friendStatusType
@@ -74,25 +76,16 @@ const FriendCardBtn = ({ type, data }: FriendCardProp) => {
   let btnText = ''
 
   if (type === 'search') {
-    switch (data.status) {
-      case 'friend':
-        btnText = 'friend'
-        break
-      case 'me':
-        btnText = "It's me"
-        break
-      case 'pending':
-        btnText = 'pending'
-        break
-      case 'requested':
-        btnText = 'requested'
-        break
-      case 'unknown':
+    match(data.status)
+      .with('friend', () => (btnText = 'friend'))
+      .with('me', () => (btnText = "It's me"))
+      .with('pending', () => (btnText = 'pending'))
+      .with('requested', () => (btnText = 'requested'))
+      .with('unknown', () => {
         btnText = 'Add friend'
         color = 'red2'
         isActive = true
-        break
-    }
+      })
   } else {
     isActive = true
     if (type === 'recieved') {
@@ -170,14 +163,14 @@ const FriendCard = ({ data, type }: FriendCardProp) => {
               color: 'darkGray.1',
             })}
           >
-            <div>Korea UNIV</div>
+            <div>Psick UNIV</div>
             <Dot />
             {/* todo: major이 필수값이 된 이후, 아래 코드 변경 */}
             <div>{data.major ? data.major : 'Major'}</div>
           </div>
           <div className={css({ fontWeight: 400, fontSize: 12, color: 'darkGray.2' })}>
             {/* todo: language가 필수값이 된 이후, 아래 코드 변경 */}
-            {data.language ? data.language : 'Origin Country'}
+            {data.country ? findByAlpha2(data.country)?.name : 'Origin Country'}
           </div>
         </div>
       </div>

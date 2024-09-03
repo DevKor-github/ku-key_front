@@ -2,6 +2,7 @@ import { css } from '@styled-stytem/css'
 import { isAxiosError } from 'axios'
 import { useCallback, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { match } from 'ts-pattern'
 
 import { usePostCourse } from '@/api/hooks/timetable'
 import Dropdown from '@/components/timetable/Dropdown'
@@ -20,10 +21,13 @@ const SearchMessageStyle = css({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
+  color: 'darkGray.2',
+  fontSize: 16,
+  fontWeight: 600,
 })
 
 const initialQuery: useCourseSearchProps = {
-  category: categoryList[0],
+  category: 'All Class',
   filter: 'code',
   queryKeyword: '',
   classification: null,
@@ -76,12 +80,13 @@ const AddClass = ({ timetableId }: AddClassProps) => {
         setIsModalOpen(true)
       } else {
         setIsSearchAvailable(true)
-        setQuery(initialQuery)
         if (toIndex === 0) {
           // All
+          setQuery(initialQuery)
           setCurFilter('code')
         } else if (toIndex === 2) {
           // General
+          setQuery({ ...initialQuery, category: 'General Studies' })
           setCurFilter('course')
         }
       }
@@ -98,13 +103,18 @@ const AddClass = ({ timetableId }: AddClassProps) => {
         // todo: filter state 어떻게 할지
         setIsSearchAvailable(false)
         setQuery({
-          queryKeyword: '_blank',
+          queryKeyword: '',
           filter: 'course',
           category: 'Academic Foundations',
           classification,
         })
       } else {
-        setQuery(initialQuery)
+        setQuery({
+          queryKeyword: '',
+          filter: 'course',
+          category: 'Major',
+          classification,
+        })
         setIsSearchAvailable(true)
         setCurFilter('course')
       }
@@ -114,23 +124,29 @@ const AddClass = ({ timetableId }: AddClassProps) => {
 
   const handleFilterSelector = useCallback(
     (filter: FilterType) => {
-      switch (filter) {
-        case 'code':
+      match(filter)
+        .with('code', () => {
           setCurFilter('code')
           setCurCategory(0)
           setCurClassification(null)
           setQuery(initialQuery)
-          break
-        case 'course':
-        case 'professor':
-          if (curCategory !== 0) {
-            setCurFilter(filter)
-            setQuery(initialQuery)
+        })
+        .otherwise(targetFilter => {
+          setCurFilter(targetFilter)
+          if (curCategory === 0) {
+            setCurCategory(2)
+            setQuery({ ...initialQuery, filter: targetFilter, category: 'General Studies' })
+          } else {
+            setQuery({
+              queryKeyword: '',
+              filter: targetFilter,
+              category: categoryList[curCategory],
+              classification: curClassification,
+            })
           }
-          break
-      }
+        })
     },
-    [curCategory],
+    [curCategory, curClassification],
   )
 
   const handleSearchBoxOnSubmit = useCallback(

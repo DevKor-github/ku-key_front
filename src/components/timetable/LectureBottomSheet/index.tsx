@@ -3,6 +3,7 @@ import { shadow } from '@styled-stytem/recipes'
 import { isAxiosError } from 'axios'
 import { motion } from 'framer-motion'
 import { useCallback, useState } from 'react'
+import { match } from 'ts-pattern'
 
 import { usePostSchedule } from '@/api/hooks/schedule'
 import AddClass from '@/components/timetable/LectureBottomSheet/AddClass'
@@ -20,22 +21,21 @@ const LectureBottomSheet = ({ timetableId, visible }: LectureBottomSheetProps) =
 
   const handleDrawer = useCallback(
     (type: 'chevron' | 'class' | 'own') => {
-      switch (type) {
-        case 'chevron':
+      match(type)
+        .with('chevron', () => {
           setIsOpen(prev => !prev)
           if (sheetState === null) {
             setSheetState('class')
           }
-          break
-        case 'class':
+        })
+        .with('class', () => {
           setIsOpen(true)
           setSheetState('class')
-          break
-        case 'own':
+        })
+        .with('own', () => {
           setIsOpen(true)
           setSheetState('schedule')
-          break
-      }
+        })
     },
     [sheetState],
   )
