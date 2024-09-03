@@ -10,6 +10,7 @@ import {
   getInAcademicFoundation,
   getMajor,
 } from '@/api/hooks/course'
+import { GetCourseResponse } from '@/api/types/course'
 
 export interface useCourseSearchProps {
   queryKeyword: string
@@ -34,8 +35,12 @@ export const useCourseSearch = ({ queryKeyword, category, classification, filter
         if (category === 'Major') {
           return getMajor({ major: classification!, cursorId })
         }
+        return new Promise<GetCourseResponse>(() => ({
+          hasNextPage: false,
+          nextCursorId: null,
+          data: [],
+        }))
       }
-
       if (filter === 'code') {
         // 학수번호로 검색, category는 무조건 All Class
         return getByCourseCode({ courseCode: queryKeyword, cursorId })
