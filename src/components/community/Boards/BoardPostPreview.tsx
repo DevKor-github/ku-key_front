@@ -3,7 +3,7 @@ import { Bookmark, Cookie, Eye, MessageCircle } from 'lucide-react'
 import { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import AnonymousProfileImg from '@/assets/Anonymous.jpg'
+import Profile from '@/components/ui/profile'
 import { BoardPostPreviewProps } from '@/types/community'
 import { getFormatedTimeString } from '@/util/getFormatedTimeString'
 
@@ -39,7 +39,7 @@ const BoardPostPreview = ({
         flexDir: 'column',
         alignItems: 'flex-start',
         pt: 10,
-        gap: 10,
+        gap: thumbnailDir ? 10 : 5,
         rounded: 20,
         boxShadow: '0px 0px 4px 0px rgba(0, 0, 0, 0.25)',
         bgColor: 'white',
@@ -81,7 +81,7 @@ const BoardPostPreview = ({
             fontSize: 20,
             fontWeight: 500,
             letterSpacing: -0.4,
-            overflowY: 'hidden',
+            overflow: 'hidden',
             whiteSpace: 'nowrap',
             textOverflow: 'ellipsis',
           })}
@@ -94,7 +94,7 @@ const BoardPostPreview = ({
             w: 'full',
             fontSize: 16,
             fontWeight: 400,
-            overflowY: 'hidden',
+            overflow: 'hidden',
             boxOrient: 'vertical',
             textOverflow: 'ellipsis',
             color: 'darkGray.2',
@@ -124,8 +124,14 @@ const BoardPostPreview = ({
         }}
       >
         <div className={css({ display: 'flex', alignItems: 'center', gap: 2.5 })}>
-          <img src={AnonymousProfileImg} alt="Profile" className={css({ w: 15, h: 15, rounded: 'full' })} />
-          <p className={css({ fontSize: 16, fontWeight: 600 })}>{user.username}</p>
+          <Profile
+            isAnonymous={user.isAnonymous}
+            isDeleted={user.isDeleted}
+            character={user.character}
+            onlyTitle
+            bgWhite={!!thumbnailDir}
+          />
+          <p className={css({ fontSize: 16, fontWeight: 600 })}>{user.isAnonymous ? 'Anonymous' : user.username}</p>
         </div>
         <div className={css({ display: 'flex', alignItems: 'center', gap: 4 })}>
           <div className={IconWrapper}>

@@ -2,7 +2,7 @@ import { css } from '@styled-stytem/css'
 import { postTextPreview, PostTextPreviewVariant } from '@styled-stytem/recipes'
 import { formatDistanceToNow } from 'date-fns'
 
-import ProfileImg from '@/assets/ProfileImg.jpg'
+import Profile from '@/components/ui/profile'
 import { PostPreviewProps } from '@/types/community'
 
 interface PostTextPreviewProps extends Pick<PostPreviewProps, 'title' | 'user' | 'createdAt'> {
@@ -16,10 +16,11 @@ const PostTextPreview = ({ title, user, createdAt, variant, description, handleN
   const timeDistance = formatDistanceToNow(createdAt)
   return (
     <button className={postTextPreview({ variant })} onClick={handleNavigate}>
-      <img
-        src={ProfileImg}
-        alt="Profile"
-        className={css({ w: onlyTitle ? 15 : 20, h: onlyTitle ? 15 : 20, rounded: 'full' })}
+      <Profile
+        isAnonymous={user.isAnonymous}
+        isDeleted={user.isDeleted}
+        character={user.character}
+        onlyTitle={onlyTitle}
       />
       <div
         className={css({
@@ -50,7 +51,7 @@ const PostTextPreview = ({ title, user, createdAt, variant, description, handleN
               color: 'darkGray.2',
             })}
           >
-            <p>{user.username}</p>
+            <p>{user.isAnonymous ? 'Anonymous' : user.username}</p>
             <p>{timeDistance} ago</p>
           </div>
           <h3

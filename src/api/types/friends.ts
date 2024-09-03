@@ -1,4 +1,5 @@
-import { FriendInterface, FriendRequestInterface, friendStatusType } from '@/types/friends'
+import { CharacterType } from '@/types/community'
+import { FriendInterface, friendStatusType } from '@/types/friends'
 
 export interface GetFriendListRequest {
   keyword: string | null
@@ -16,13 +17,19 @@ export interface GetSearchUserResponse {
   major: string
   country: string
   status: friendStatusType
+  level: number
+  homeUniversity: string
+  character: {
+    type: CharacterType
+    level: number | null
+  }
 }
 
 export interface PostFriendshipRequest {
   toUsername: string
 }
 
-export type GetRequestListResponse = FriendRequestInterface[]
+export type GetRequestListResponse = FriendInterface[]
 
 export interface PatchFriendshipRequestRequest {
   friendshipId: number

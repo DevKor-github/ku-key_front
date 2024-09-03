@@ -11,7 +11,6 @@ export const postTextPreviewRecipe = defineRecipe({
     rounded: 80,
     boxShadow: '0px 0px 4px 0px rgba(0, 0, 0, 0.25)',
     bgColor: 'white',
-    pl: 2.5,
     pr: 10,
     cursor: 'pointer',
   },
@@ -20,10 +19,12 @@ export const postTextPreviewRecipe = defineRecipe({
       default: {
         gap: 5,
         py: 2.5,
+        pl: '11px',
       },
       onlyTitle: {
         gap: 2.5,
         py: 1.5,
+        pl: 2,
       },
     },
   },

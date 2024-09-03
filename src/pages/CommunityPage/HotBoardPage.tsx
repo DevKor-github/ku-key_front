@@ -3,12 +3,12 @@ import { globalLayout } from '@styled-stytem/recipes'
 
 import BackgroundImage from '@/assets/CommunityBG.jpg'
 import HotBoard from '@/components/community/HotBoard'
-// import HotBoardHorizontalPreview from '@/components/community/HotBoard/HotBoardHorizontalPreview'
+import HotBoardHorizontalPreview from '@/components/community/HotBoard/HotBoardHorizontalPreview'
 import RecentPreview from '@/components/community/RecentPreview'
 
 const HotBoardPage = () => {
   return (
-    <main className={css({ display: 'flex', flexDir: 'column', bgColor: 'bg.gray' })}>
+    <main className={css({ display: 'flex', flexDir: 'column', bgColor: 'bg.gray', overflowX: 'hidden' })}>
       <section
         className={css({
           display: 'flex',
@@ -47,11 +47,11 @@ const HotBoardPage = () => {
           >
             <h1 className={css({ fontSize: 80, fontWeight: 700, color: 'white' })}>Hot Board</h1>
             <p className={css({ fontSize: 20, fontWeight: 500, letterSpacing: -0.4, color: 'lightGray.1' })}>
-              Lorem ipsum dolor sit amet consectetur.
+              Explore the top trending posts right now!
             </p>
           </div>
         </div>
-        {/* <HotBoardHorizontalPreview /> */}
+        <HotBoardHorizontalPreview />
       </section>
       <section
         className={cx(

@@ -38,7 +38,7 @@ const CommentReply = ({ reply, parentId }: CommentReplyProps) => {
         })}
       >
         <CommentHeader
-          username={reply.user.username}
+          username={reply.user.isAnonymous ? 'Anonymous' : reply.user.username}
           date={reply.createdAt}
           isMyComment={reply.isMyComment}
           commentId={reply.id}

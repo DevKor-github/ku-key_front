@@ -1,8 +1,8 @@
-import AngryTagImg from '@/assets/AngryTagImg.jpg'
-import FunnyTagImg from '@/assets/FunnyTagImg.jpg'
-import LikeTagImg from '@/assets/LikeTagImg.jpg'
-import SadTagImg from '@/assets/SadTagImg.jpg'
-import SurprisedTagImg from '@/assets/SurprisedTagImg.jpg'
+import AngryTagImg from '@/assets/AngryTagImg.png'
+import FunnyTagImg from '@/assets/FunnyTagImg.png'
+import LikeTagImg from '@/assets/LikeTagImg.png'
+import SadTagImg from '@/assets/SadTagImg.png'
+import SurprisedTagImg from '@/assets/SurprisedTagImg.png'
 import { ReactionType } from '@/types/community'
 
 const reactionImgConfig: Record<ReactionType, string> = {

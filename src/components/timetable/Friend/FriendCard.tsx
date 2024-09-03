@@ -10,8 +10,8 @@ import {
   useDeleteSentRequest,
   useReceiveFriendship,
 } from '@/api/hooks/friends'
-import Anonymous from '@/assets/Anonymous.jpg'
-import ProfileImg from '@/assets/ProfileImg.jpg'
+import Profile from '@/components/ui/profile'
+import { CharacterType } from '@/types/community'
 import { friendStatusType } from '@/types/friends'
 
 const buttonStyle = cva({
@@ -61,8 +61,13 @@ interface FriendCardProp {
     major: string
     country: string
     friendshipId?: number
+    homeUniversity: string
     userId?: number
     status?: friendStatusType
+    character: {
+      type: CharacterType
+      level: number | null
+    }
   }
 }
 
@@ -145,13 +150,9 @@ const FriendCard = ({ data, type }: FriendCardProp) => {
           <CircleX size={16} />
         </button>
       )}
-      <div className={css({ display: 'flex', gap: 5 })}>
+      <div className={css({ display: 'flex', gap: 5, alignItems: 'center' })}>
         {/* todo: 프로필 사진 등록 */}
-        <img
-          className={css({ h: 17, w: 17, rounded: 10 })}
-          src={type === 'recieved' ? ProfileImg : Anonymous}
-          alt="profile"
-        />
+        <Profile isAnonymous={false} isDeleted={false} character={data.character} onlyTitle={true} />
         <div className={css({ display: 'flex', flexDir: 'column', justifyContent: 'space-between' })}>
           <div className={css({ fontWeight: 600, fontSize: 16 })}>{data.username}</div>
           <div
@@ -163,14 +164,12 @@ const FriendCard = ({ data, type }: FriendCardProp) => {
               color: 'darkGray.1',
             })}
           >
-            <div>Psick UNIV</div>
+            <div>{data.homeUniversity ?? 'Home University Unknown'}</div>
             <Dot />
-            {/* todo: major이 필수값이 된 이후, 아래 코드 변경 */}
-            <div>{data.major ? data.major : 'Major'}</div>
+            <div>{data.major ?? 'Major Unknown'}</div>
           </div>
           <div className={css({ fontWeight: 400, fontSize: 12, color: 'darkGray.2' })}>
-            {/* todo: language가 필수값이 된 이후, 아래 코드 변경 */}
-            {data.country ? findByAlpha2(data.country)?.name : 'Origin Country'}
+            {data.country ? findByAlpha2(data.country)?.name : 'Origin Country Unknown'}
           </div>
         </div>
       </div>

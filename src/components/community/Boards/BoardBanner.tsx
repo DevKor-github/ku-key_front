@@ -57,7 +57,6 @@ const BoardBanner = ({ boardName, boardDescription }: BoardBannerProps) => {
             flexDir: 'column',
             gap: 5,
             w: 1131,
-            mt: '80px',
           })}
         >
           <h1
