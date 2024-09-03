@@ -26,7 +26,7 @@ const ClubCard = memo(({ clubData, handleLikeClick }: ClubCardProps) => {
           src={clubData.imageUrl}
           alt={clubData.name}
         />
-        <div className={css({ display: 'flex', flexDir: 'column', gap: { base: 6, mdDown: 3 } })}>
+        <div className={css({ display: 'flex', flexDir: 'column', justifyContent: 'space-between', gap: 3 })}>
           <div className={css({ display: 'flex', flexDir: 'column', gap: { base: 4, mdDown: 2 } })}>
             <div className={css({ display: 'flex', flexDir: 'column', gap: 1.5 })}>
               <p className={css({ fontSize: { base: 18, mdDown: 12 } })}>{clubData.summary}</p>
@@ -44,23 +44,21 @@ const ClubCard = memo(({ clubData, handleLikeClick }: ClubCardProps) => {
               <p>Regular Meeting | {upperCaseHighlight(clubData.regularMeeting)}</p>
               <p>Recruitment Period | {upperCaseHighlight(clubData.recruitmentPeriod)}</p>
             </div>
-          </div>
-          <div className={css({ display: 'flex', flexDir: 'column', gap: { base: 3 } })}>
             <p
               className={css({
                 fontWeight: 400,
                 color: 'darkGray.1',
-                fontSize: { base: 16, mdDown: 12 },
+                fontSize: 12,
                 maxW: '580px',
-                lineClamp: 3,
+                lineClamp: 4,
               })}
             >
               {clubData.description}
             </p>
-            <div className={css({ display: 'flex', gap: 2 })}>
-              {clubData.instagramLink && <ContactButton type="instagram" url={clubData.instagramLink} />}
-              {clubData.youtubeLink && <ContactButton type="youtube" url={clubData.youtubeLink} />}
-            </div>
+          </div>
+          <div className={css({ display: 'flex', gap: 2 })}>
+            {clubData.instagramLink && <ContactButton type="instagram" url={clubData.instagramLink} />}
+            {clubData.youtubeLink && <ContactButton type="youtube" url={clubData.youtubeLink} />}
           </div>
         </div>
       </div>
