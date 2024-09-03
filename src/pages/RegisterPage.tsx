@@ -165,6 +165,7 @@ const RegisterPage = memo(() => {
               variant="loginOutline"
               onClick={() => setPage(p => (p - 1) as ProgressState)}
               disabled={page === 1}
+              hidden={page === 1}
             >
               <ArrowLeft className={css({ w: 4, h: 4 })} />
               <p className={css({ fontSize: 20, fontWeight: 500, lineHeight: 'none' })}>PREV</p>
