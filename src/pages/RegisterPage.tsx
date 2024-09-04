@@ -124,6 +124,7 @@ const RegisterPage = memo(() => {
             gap: '50px',
             bgColor: 'white',
             py: 20,
+            smDown: { py: 10 },
             zIndex: 1,
             boxShadow: '0px 0px 4px 0px rgba(0, 0, 0, 0.25)',
             rounded: 30,
@@ -172,10 +173,10 @@ const RegisterPage = memo(() => {
               hidden={page === 1}
             >
               <ArrowLeft className={css({ w: 4, h: 4 })} />
-              <p className={css({ fontSize: 20, fontWeight: 500, lineHeight: 'none' })}>PREV</p>
+              <p className={css({ fontSize: 20, fontWeight: 500, lineHeight: '100%' })}>PREV</p>
             </Button>
             <Button type="submit" variant={page === 3 ? 'loginColored' : 'loginOutline'} onClick={handleNextPage}>
-              <p className={css({ fontSize: 20, fontWeight: 500, lineHeight: 'none' })}>
+              <p className={css({ fontSize: 20, fontWeight: 500, lineHeight: '100%' })}>
                 {page === 3 ? 'Submit' : 'NEXT'}
               </p>
               {page !== 3 && <ArrowRight className={css({ w: 4, h: 4 })} />}
