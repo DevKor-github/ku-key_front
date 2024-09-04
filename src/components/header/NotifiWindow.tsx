@@ -17,7 +17,21 @@ const NotifiWindow = () => {
         <Popover.Content
           sideOffset={30}
           align="end"
-          className={cx(css({ bgColor: 'darkGray.1', rounded: 10, w: '320px', p: 5 }), shadow())}
+          className={cx(
+            css({
+              bgColor: 'darkGray.1',
+              rounded: 10,
+              w: '320px',
+              p: 5,
+              "&[data-state='open']": {
+                animation: 'animateIn 0.2s ease',
+              },
+              "&[data-state='closed']": {
+                animation: 'animateOut 0.2s ease',
+              },
+            }),
+            shadow(),
+          )}
         >
           <div className={css({ display: 'flex', flexDir: 'column', gap: 5 })}>
             <div className={css({ display: 'flex', alignItems: 'center', justifyContent: 'space-between' })}>
