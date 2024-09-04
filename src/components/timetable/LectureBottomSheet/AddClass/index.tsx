@@ -207,7 +207,7 @@ const AddClass = ({ timetableId }: AddClassProps) => {
                     textOverflow: 'ellipsis',
                     overflow: 'hidden',
                     whiteSpace: 'nowrap',
-                    maxW: 50,
+                    maxW: '150px',
                   })}
                 >
                   {curClassification}
@@ -220,7 +220,6 @@ const AddClass = ({ timetableId }: AddClassProps) => {
               handleFilterSelector={handleFilterSelector}
             />
           </div>
-          {/* todo: 검색창 비활성화 디자인 */}
           {isSearchAvailable && <SearchBox placeholder={filterTypeMap[curFilter]} onSubmit={handleSearchBoxOnSubmit} />}
         </div>
         {isAxiosError(error) ? (

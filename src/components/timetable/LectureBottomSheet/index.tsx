@@ -73,20 +73,20 @@ const LectureBottomSheet = ({ timetableId, visible }: LectureBottomSheetProps) =
           display: { base: 'flex', mdDown: 'none' },
           justifyContent: 'center',
           zIndex: 100,
+          transform: 'translate3d(0, 100%, 0)',
         })}
         animate={isOpen ? 'open' : 'close'}
-        initial={{ top: '100vh' }}
-        variants={{ open: { top: '50vh' }, close: { top: '100vh' } }}
+        initial={{ bottom: 0 }}
+        variants={{ open: { bottom: '400px' }, close: { bottom: 0 } }}
       >
         <Drawer isOpen={isOpen} sheetState={sheetState} handleDrawer={handleDrawer} visible={visible} />
         <div
           className={cx(
             css({
               bgColor: '#FFFFFF80',
-              w: 'calc(100vw - 298px)',
-              h: 'calc(50vh - 20px)',
+              w: '1200px',
+              h: '380px',
               backdropFilter: 'blur(25px)',
-              maxW: '1500px',
               rounded: 50,
               px: 26,
               pt: 10,

@@ -37,6 +37,7 @@ const InputBoxStyle = css({
   outline: 'none',
   fontSize: 18,
   fontWeight: 500,
+  lineHeight: 1,
   color: 'black.2',
   _placeholder: {
     color: 'lightGray.1',
@@ -105,27 +106,29 @@ const AddOnMyOwn = ({ submitHandler, prevValue = { title: '', day: 'Mon', locati
                 className={cx(InputBoxStyle, css({ h: '50px' }))}
                 type="text"
                 {...register('title', { required: 'The name of the schedule is required.' })}
-              ></input>
+              />
             </FormBox>
             <FormBox formName="Place">
-              <input className={cx(InputBoxStyle, css({ h: '50px' }))} type="text" {...register('location')}></input>
+              <input className={cx(InputBoxStyle, css({ h: '50px' }))} type="text" {...register('location')} />
             </FormBox>
           </div>
           <div className={FormLayoutStyle}>
             <FormBox formName="Day">
-              {DayArray.map(day => (
-                <button
-                  key={day}
-                  type="button"
-                  className={SelectFilterBtnStyle({
-                    isDayBtn: true,
-                    state: watch('day') === day ? 'active' : 'default',
-                  })}
-                  onClick={() => setValue('day', day)}
-                >
-                  {day}
-                </button>
-              ))}
+              <div className={css({ display: 'flex', alignItems: 'center', gap: 1 })}>
+                {DayArray.map(day => (
+                  <button
+                    key={day}
+                    type="button"
+                    className={SelectFilterBtnStyle({
+                      isDayBtn: true,
+                      state: watch('day') === day ? 'active' : 'default',
+                    })}
+                    onClick={() => setValue('day', day)}
+                  >
+                    {day}
+                  </button>
+                ))}
+              </div>
               <input
                 type="hidden"
                 {...register('day', {
