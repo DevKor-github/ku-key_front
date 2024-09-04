@@ -49,7 +49,17 @@ const EmailForm = memo(({ form, handleValidation, valid }: RegisterFormProps<'em
   }
 
   return (
-    <section className={css({ display: 'flex', flexDir: 'column', gap: '25px' })}>
+    <form
+      className={css({
+        display: 'flex',
+        flexDir: 'column',
+        gap: '25px',
+        w: 'full',
+        maxW: 608,
+        alignItems: 'center',
+        justifyContent: 'center',
+      })}
+    >
       <FormField
         control={form.control}
         name="email"
@@ -57,9 +67,11 @@ const EmailForm = memo(({ form, handleValidation, valid }: RegisterFormProps<'em
           <FormItem
             className={css({
               display: 'flex',
+              justifyContent: 'space-between',
               alignItems: 'baseline',
               alignSelf: 'stretch',
-              gap: 138,
+              flexWrap: 'wrap',
+              rowGap: 2.5,
             })}
           >
             <FormLabel>Email</FormLabel>
@@ -69,14 +81,23 @@ const EmailForm = memo(({ form, handleValidation, valid }: RegisterFormProps<'em
                   display: 'flex',
                   flexDir: 'column',
                   alignItems: 'flex-start',
+                  w: 'full',
+                  maxW: 418,
                 })}
               >
-                <div className={css({ display: 'flex', gap: 2, alignItems: 'flex-start' })}>
+                <div
+                  className={css({
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    gap: 2.5,
+                    w: 'full',
+                  })}
+                >
                   <Input
                     placeholder="Email"
                     {...field}
                     onFocus={() => emailSent && setEmailSent(false)}
-                    className={css({ alignSelf: 'stretch' })}
+                    className={css({ alignSelf: 'stretch', w: 'full', maxW: 333 })}
                     disabled={valid.email === 'valid' || isRunning}
                   />
                   <Button
@@ -117,9 +138,11 @@ const EmailForm = memo(({ form, handleValidation, valid }: RegisterFormProps<'em
           <FormItem
             className={css({
               display: 'flex',
+              justifyContent: 'space-between',
               alignItems: 'baseline',
               alignSelf: 'stretch',
-              gap: 138,
+              flexWrap: 'wrap',
+              rowGap: 2.5,
             })}
           >
             <FormLabel>Code</FormLabel>
@@ -129,14 +152,23 @@ const EmailForm = memo(({ form, handleValidation, valid }: RegisterFormProps<'em
                   display: 'flex',
                   flexDir: 'column',
                   alignItems: 'flex-start',
+                  w: 'full',
+                  maxW: 418,
                 })}
               >
-                <div className={css({ display: 'flex', gap: 2, alignItems: 'flex-start' })}>
+                <div
+                  className={css({
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    gap: 2.5,
+                    w: 'full',
+                  })}
+                >
                   <Input
                     type="text"
                     {...field}
                     placeholder="Code"
-                    className={css({ alignSelf: 'stretch' })}
+                    className={css({ alignSelf: 'stretch', w: 'full', maxW: 333 })}
                     disabled={!emailSent}
                   />
                   <Button
@@ -179,7 +211,7 @@ const EmailForm = memo(({ form, handleValidation, valid }: RegisterFormProps<'em
           </FormItem>
         )}
       />
-    </section>
+    </form>
   )
 })
 

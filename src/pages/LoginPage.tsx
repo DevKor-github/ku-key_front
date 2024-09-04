@@ -49,10 +49,11 @@ const Login = () => {
           position: 'relative',
           flexDir: 'column',
           w: 'full',
-          h: 'calc(100vh - 80px)',
+          h: 'full',
           justifyContent: 'center',
           alignItems: 'center',
           bgColor: 'lightGray.2',
+          px: 5,
         })}
       >
         <title>Login Page</title>
@@ -69,13 +70,15 @@ const Login = () => {
               border: '1px solid {colors.lightGray.2}',
               pt: 20,
               pb: '70px',
-              px: 105,
               rounded: 30,
               bgColor: 'white',
               zIndex: 2,
               justifyContent: 'center',
               alignItems: 'center',
               gap: '50px',
+              w: 'full',
+              maxW: 648,
+              px: 5,
             })}
           >
             <div
@@ -103,7 +106,10 @@ const Login = () => {
                       display: 'flex',
                       justifyContent: 'space-between',
                       alignItems: 'baseline',
-                      alignSelf: 'stretch',
+                      w: 'full',
+                      maxW: 438,
+                      flexWrap: 'wrap',
+                      rowGap: 2.5,
                     })}
                   >
                     <FormLabel className={css({ fontSize: 24, fontWeight: 700 })}>Email</FormLabel>
@@ -130,7 +136,10 @@ const Login = () => {
                       display: 'flex',
                       justifyContent: 'space-between',
                       alignItems: 'baseline',
-                      alignSelf: 'stretch',
+                      w: 'full',
+                      maxW: 438,
+                      flexWrap: 'wrap',
+                      rowGap: 2.5,
                     })}
                   >
                     <FormLabel className={css({ fontSize: 24, fontWeight: 700 })}>Password</FormLabel>
@@ -150,7 +159,14 @@ const Login = () => {
               />
             </div>
             <div
-              className={css({ display: 'flex', alignItems: 'center', spaceX: 2.5, alignSelf: 'flex-start', px: 5 })}
+              className={css({
+                display: 'flex',
+                alignItems: 'center',
+                spaceX: 2.5,
+                px: 5,
+                w: 'full',
+                maxW: 438,
+              })}
             >
               <Checkbox id="login" checked={maintain} onCheckedChange={() => setMaintain(m => !m)} />
               <Label htmlFor="login" className={css({ fontSize: 20, fontWeight: 600, color: 'darkGray.1' })}>

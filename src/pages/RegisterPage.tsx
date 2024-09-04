@@ -23,7 +23,7 @@ import { useRegisterForm } from '@/util/useRegisterForm'
 const RegisterPage = memo(() => {
   const navigate = useNavigate()
   const { isOpen, handleButtonClose, handleOpen, modalRef } = useModal()
-  const [page, setPage] = useState<ProgressState>(3)
+  const [page, setPage] = useState<ProgressState>(1)
   const [file, setFile] = useState<File | null>(null)
   const [valid, setValid] = useState<RegistrationState>({
     email: 'unknown',
@@ -99,11 +99,11 @@ const RegisterPage = memo(() => {
           pos: 'relative',
           flexDir: 'column',
           w: 'full',
-          h: 'calc(100vh - 80px)',
+          h: 'full',
           justifyContent: 'center',
           alignItems: 'center',
           gap: 5,
-          // py: '142px',
+          py: '142px',
           bgColor: 'bg.gray',
           px: 5,
         })}
@@ -139,29 +139,23 @@ const RegisterPage = memo(() => {
           <Progress stageState={page} />
           {page === 1 && (
             <Form {...emailForm}>
-              <form>
-                <EmailForm form={emailForm} valid={valid} handleValidation={handleValidation} />
-              </form>
+              <EmailForm form={emailForm} valid={valid} handleValidation={handleValidation} />
             </Form>
           )}
           {page === 2 && (
             <Form {...userInfoForm}>
-              <form>
-                <UserInfoForm
-                  form={userInfoForm}
-                  handleFileChange={handleFileChange}
-                  valid={valid}
-                  handleValidation={handleValidation}
-                  fileName={file?.name ?? ''}
-                />
-              </form>
+              <UserInfoForm
+                form={userInfoForm}
+                handleFileChange={handleFileChange}
+                valid={valid}
+                handleValidation={handleValidation}
+                fileName={file?.name ?? ''}
+              />
             </Form>
           )}
           {page === 3 && (
             <Form {...credentialForm}>
-              {/* <form> */}
               <CredentialForm form={credentialForm} valid={valid.username} handleValidation={handleValidation} />
-              {/* </form> */}
             </Form>
           )}
           <div className={css({ display: 'flex', gap: 5 })}>
