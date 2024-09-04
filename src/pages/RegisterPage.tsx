@@ -23,7 +23,7 @@ import { useRegisterForm } from '@/util/useRegisterForm'
 const RegisterPage = memo(() => {
   const navigate = useNavigate()
   const { isOpen, handleButtonClose, handleOpen, modalRef } = useModal()
-  const [page, setPage] = useState<ProgressState>(1)
+  const [page, setPage] = useState<ProgressState>(3)
   const [file, setFile] = useState<File | null>(null)
   const [valid, setValid] = useState<RegistrationState>({
     email: 'unknown',
@@ -99,12 +99,12 @@ const RegisterPage = memo(() => {
           pos: 'relative',
           flexDir: 'column',
           w: 'full',
-          h: 'full',
+          h: 'calc(100vh - 80px)',
           justifyContent: 'center',
           alignItems: 'center',
           gap: 5,
           py: '142px',
-          bgColor: 'bg',
+          bgColor: 'bg.gray',
         })}
       >
         <div
@@ -154,9 +154,9 @@ const RegisterPage = memo(() => {
           )}
           {page === 3 && (
             <Form {...credentialForm}>
-              <form>
-                <CredentialForm form={credentialForm} valid={valid.username} handleValidation={handleValidation} />
-              </form>
+              {/* <form> */}
+              <CredentialForm form={credentialForm} valid={valid.username} handleValidation={handleValidation} />
+              {/* </form> */}
             </Form>
           )}
           <div className={css({ display: 'flex', gap: 5 })}>
