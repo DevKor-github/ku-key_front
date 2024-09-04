@@ -1,6 +1,6 @@
 import { css } from '@styled-stytem/css'
 import { isAxiosError } from 'axios'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { match } from 'ts-pattern'
 
@@ -37,6 +37,8 @@ interface AddClassProps {
   timetableId: number
 }
 const AddClass = ({ timetableId }: AddClassProps) => {
+  const scrollSectionRef = useRef<HTMLDivElement>(null)
+
   const [isSearchAvailable, setIsSearchAvailable] = useState(true)
   // 검색 Filter
   const [curFilter, setCurFilter] = useState<'course' | 'professor' | 'code'>('code')
@@ -56,6 +58,12 @@ const AddClass = ({ timetableId }: AddClassProps) => {
     observer.unobserve(entry.target)
     if (hasNextPage && !isFetching) fetchNextPage()
   })
+
+  useEffect(() => {
+    setTimeout(() => {
+      scrollSectionRef.current && scrollSectionRef.current.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+    }, 100)
+  }, [query])
 
   const addCourse = useCallback(
     (courseId: number) => {
@@ -199,7 +207,7 @@ const AddClass = ({ timetableId }: AddClassProps) => {
                     textOverflow: 'ellipsis',
                     overflow: 'hidden',
                     whiteSpace: 'nowrap',
-                    maxW: 50,
+                    maxW: '150px',
                   })}
                 >
                   {curClassification}
@@ -212,7 +220,6 @@ const AddClass = ({ timetableId }: AddClassProps) => {
               handleFilterSelector={handleFilterSelector}
             />
           </div>
-          {/* todo: 검색창 비활성화 디자인 */}
           {isSearchAvailable && <SearchBox placeholder={filterTypeMap[curFilter]} onSubmit={handleSearchBoxOnSubmit} />}
         </div>
         {isAxiosError(error) ? (
@@ -221,8 +228,9 @@ const AddClass = ({ timetableId }: AddClassProps) => {
           <div className={SearchMessageStyle}></div>
         ) : searchData.length ? (
           <div
+            ref={scrollSectionRef}
             className={css({
-              overflow: 'scroll',
+              overflowY: 'auto',
               display: 'flex',
               flexDir: 'column',
               gap: 5,

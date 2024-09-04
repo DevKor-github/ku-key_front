@@ -7,6 +7,7 @@ export const SelectFilterBtnStyle = cva({
   base: {
     color: 'lightGray.1',
     fontSize: 18,
+    lineHeight: 1,
     fontWeight: 500,
     border: '1px solid {colors.lightGray.1}',
     px: 2.5,

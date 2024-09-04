@@ -12,10 +12,12 @@ interface SearchLectureCardProps {
 
 const SearchLectureCard = ({ data, addCourse }: SearchLectureCardProps) => {
   return (
-    <div className={css({ display: 'flex', justifyContent: 'space-between', alignItems: 'center', pr: 4 })}>
+    <div className={css({ display: 'flex', justifyContent: 'space-between', alignItems: 'center', pr: 4, gap: 10 })}>
       <div className={css({ display: 'flex', flexDir: 'column', gap: 2.5 })}>
         <div className={css({ display: 'flex', gap: 4, alignItems: 'center' })}>
-          <span className={css({ fontSize: 16, fontWeight: 600, color: 'black.2' })}>{data.courseName}</span>
+          <span className={css({ fontSize: 16, fontWeight: 600, color: 'black.2', maxW: '430px', lineClamp: 2 })}>
+            {data.courseName}
+          </span>
           <Link
             to={data.syllabus}
             target="_blank"
@@ -25,6 +27,7 @@ const SearchLectureCard = ({ data, addCourse }: SearchLectureCardProps) => {
               fontWeight: 400,
               display: 'flex',
               alignItems: 'center',
+              flexShrink: 0,
             })}
           >
             Course plan <ChevronRight size={14} />
@@ -77,6 +80,7 @@ const SearchLectureCard = ({ data, addCourse }: SearchLectureCardProps) => {
           fontWeight: 700,
           color: 'white',
           _hover: { bgColor: 'red.2' },
+          flexShrink: 0,
         })}
         onClick={() => addCourse(data.id)}
       >
