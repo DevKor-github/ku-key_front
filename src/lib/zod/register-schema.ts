@@ -31,7 +31,7 @@ export const RegisterFormSchema = {
       .min(5, { message: 'username must be at least 5 characters long.' })
       .max(10, { message: 'username must be at most 10 characters long.' })
       .refine(value => value !== '', { message: 'This field is required.' }),
-      // .regex(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]+$/, { message: 'username must include aplphabet and numbers' }): 추후 가능성을 위해 주석처리
+    // .regex(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]+$/, { message: 'username must include aplphabet and numbers' }): 추후 가능성을 위해 주석처리
     password: z
       .object({
         password: PasswordSchema,

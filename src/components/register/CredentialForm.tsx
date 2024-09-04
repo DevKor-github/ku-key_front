@@ -28,7 +28,18 @@ const CredentialForm = ({ form, valid, handleValidation }: CredentialFormProps) 
     })
   }
   return (
-    <section className={css({ display: 'flex', flexDir: 'column', gap: '50px' })}>
+    // <section className={css({ display: 'flex', flexDir: 'column', gap: '25px', w: 'full', alignSelf: 'stretch' })}>
+    <form
+      className={css({
+        display: 'flex',
+        flexDir: 'column',
+        gap: '25px',
+        w: 'full',
+        maxW: 608,
+        alignItems: 'center',
+        justifyContent: 'center',
+      })}
+    >
       <FormField
         name="username"
         control={form.control}
@@ -39,42 +50,63 @@ const CredentialForm = ({ form, valid, handleValidation }: CredentialFormProps) 
               justifyContent: 'space-between',
               alignItems: 'baseline',
               alignSelf: 'stretch',
-              gap: 138,
+              flexWrap: 'wrap',
+              rowGap: 2.5,
             })}
           >
             <FormLabel>Username</FormLabel>
             <FormControl>
-              <div className={css({ display: 'flex', alignItems: 'flex-start', gap: 2.5 })}>
-                <div className={css({ display: 'flex', flexDir: 'column', alignItems: 'flex-end' })}>
-                  <Input type="text" placeholder="Username" {...field} disabled={valid === 'valid'} />
-                  <div className={css({ display: 'flex', px: 1.5, py: 1, gap: 1, alignItems: 'center' })}>
-                    {form.getFieldState('username').invalid ? (
-                      <ShieldAlert size={16} className={css({ color: 'red.2' })} />
-                    ) : (
-                      valid === 'valid' && (
-                        <>
-                          <CheckCircle2 size={14} />
-                          <p className={css({ fontSize: 14, fontWeight: 400 })}>available username</p>
-                        </>
-                      )
-                    )}
-
-                    <FormMessage />
-                  </div>
-                </div>
-                <Button
-                  aria-checked={
-                    form.getValues('username') !== '' && !form.getFieldState('username').invalid && valid !== 'valid'
-                  }
-                  variant="input"
-                  type="button"
-                  disabled={
-                    form.getValues('username') === '' || form.getFieldState('username').invalid || valid === 'valid'
-                  }
-                  onClick={handleUsernameDuplicationCheck}
+              <div
+                className={css({
+                  display: 'flex',
+                  flexDir: 'column',
+                  alignItems: 'flex-start',
+                  w: 'full',
+                  maxW: 418,
+                })}
+              >
+                <div
+                  className={css({
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    gap: 2.5,
+                    w: 'full',
+                  })}
                 >
-                  Verify
-                </Button>
+                  <Input
+                    type="text"
+                    placeholder="Username"
+                    {...field}
+                    disabled={valid === 'valid'}
+                    className={css({ alignSelf: 'stretch', w: 'full', maxW: 333 })}
+                  />
+                  <Button
+                    aria-checked={
+                      form.getValues('username') !== '' && !form.getFieldState('username').invalid && valid !== 'valid'
+                    }
+                    variant="input"
+                    type="button"
+                    disabled={
+                      form.getValues('username') === '' || form.getFieldState('username').invalid || valid === 'valid'
+                    }
+                    onClick={handleUsernameDuplicationCheck}
+                  >
+                    Verify
+                  </Button>
+                </div>
+                <div className={css({ display: 'flex', px: 1.5, py: 1, gap: 1, alignItems: 'center' })}>
+                  {form.getFieldState('username').invalid ? (
+                    <ShieldAlert size={16} className={css({ color: 'red.2' })} />
+                  ) : (
+                    valid === 'valid' && (
+                      <>
+                        <CheckCircle2 size={14} />
+                        <p className={css({ fontSize: 14, fontWeight: 400 })}>available username</p>
+                      </>
+                    )
+                  )}
+                  <FormMessage />
+                </div>
               </div>
             </FormControl>
           </FormItem>
@@ -90,7 +122,8 @@ const CredentialForm = ({ form, valid, handleValidation }: CredentialFormProps) 
               justifyContent: 'space-between',
               alignItems: 'baseline',
               alignSelf: 'stretch',
-              gap: 138,
+              flexWrap: 'wrap',
+              rowGap: 2.5,
             })}
           >
             <FormLabel>Password</FormLabel>
@@ -99,15 +132,26 @@ const CredentialForm = ({ form, valid, handleValidation }: CredentialFormProps) 
                 className={css({
                   display: 'flex',
                   flexDir: 'column',
-                  alignItems: 'flex-end',
+                  alignItems: 'flex-start',
+                  w: 'full',
+                  justifyContent: 'flex-end',
+                  maxW: 418,
                 })}
               >
-                <Input placeholder="password" {...field} type="password" />
-                <div className={css({ display: 'flex', px: 1.5, py: 1, gap: 1, alignItems: 'center' })}>
+                <Input placeholder="password" type="password" {...field} className={css({ w: 'full' })} />
+                <div
+                  className={css({
+                    display: 'flex',
+                    px: 1.5,
+                    py: 1,
+                    gap: 1,
+                    alignItems: 'flex-start',
+                  })}
+                >
                   {form.getFieldState('password.password').invalid && (
                     <ShieldAlert size={16} className={css({ color: 'red.2' })} />
                   )}
-                  <FormMessage />
+                  <FormMessage className={css({ whiteSpace: 'pre-wrap' })} />
                 </div>
               </div>
             </FormControl>
@@ -124,7 +168,8 @@ const CredentialForm = ({ form, valid, handleValidation }: CredentialFormProps) 
               justifyContent: 'space-between',
               alignItems: 'baseline',
               alignSelf: 'stretch',
-              gap: 138,
+              flexWrap: 'wrap',
+              rowGap: 2.5,
             })}
           >
             <FormLabel>Password Confirm</FormLabel>
@@ -133,7 +178,10 @@ const CredentialForm = ({ form, valid, handleValidation }: CredentialFormProps) 
                 className={css({
                   display: 'flex',
                   flexDir: 'column',
-                  alignItems: 'flex-end',
+                  alignItems: 'flex-start',
+                  w: 'full',
+                  justifyContent: 'flex-end',
+                  maxW: 418,
                 })}
               >
                 <Input
@@ -143,6 +191,7 @@ const CredentialForm = ({ form, valid, handleValidation }: CredentialFormProps) 
                     form.getFieldState('password.password').invalid || form.getValues('password.password') === ''
                   }
                   type="password"
+                  className={css({ w: 'full' })}
                 />
                 <div className={css({ display: 'flex', px: 1.5, py: 1, gap: 1, alignItems: 'center' })}>
                   {form.getFieldState('password.confirm').invalid && (
@@ -155,7 +204,8 @@ const CredentialForm = ({ form, valid, handleValidation }: CredentialFormProps) 
           </FormItem>
         )}
       />
-    </section>
+    </form>
+    // </section>
   )
 }
 

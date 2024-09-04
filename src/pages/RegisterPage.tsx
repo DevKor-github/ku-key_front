@@ -103,8 +103,9 @@ const RegisterPage = memo(() => {
           justifyContent: 'center',
           alignItems: 'center',
           gap: 5,
-          py: '142px',
+          // py: '142px',
           bgColor: 'bg.gray',
+          px: 5,
         })}
       >
         <div
@@ -115,6 +116,8 @@ const RegisterPage = memo(() => {
         <section
           className={css({
             display: 'flex',
+            w: 'full',
+            maxW: 818,
             flexDir: 'column',
             justifyContent: 'center',
             alignItems: 'center',
@@ -124,7 +127,8 @@ const RegisterPage = memo(() => {
             zIndex: 1,
             boxShadow: '0px 0px 4px 0px rgba(0, 0, 0, 0.25)',
             rounded: 30,
-            px: 105,
+            px: 5,
+            // px: 105,
           })}
         >
           <div className={css({ display: 'flex', flexDir: 'column', justifyContent: 'center', alignItems: 'center' })}>
