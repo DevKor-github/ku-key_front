@@ -1,6 +1,6 @@
 import { useStore } from 'jotai/react'
 import { RESET } from 'jotai/utils'
-import { useCallback, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 
 import { userCredentialAtom } from '@/lib/store/auth'
 import { UserCredential } from '@/types/user'
@@ -11,11 +11,13 @@ export const useAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(!!authStore.get(userCredentialAtom))
   const [authState, setAuthState] = useState(authStore.get(userCredentialAtom)?.verified)
 
-  const unsubscribe = authStore.sub(userCredentialAtom, () => {
+  const subscribe = useCallback(() => {
     const userState = authStore.get(userCredentialAtom)
     setIsAuthenticated(!!userState)
     setAuthState(userState?.verified)
-  })
+  }, [authStore])
+
+  const unsubscribe = authStore.sub(userCredentialAtom, subscribe)
 
   const signIn = useCallback(
     (userState: UserCredential) => {
@@ -31,5 +33,5 @@ export const useAuth = () => {
 
   console.log('useAuth:', isAuthenticated, authState, new Date().toTimeString())
 
-  return { isAuthenticated, authState, signIn, signOut }
+  return useMemo(() => ({ isAuthenticated, authState, signIn, signOut }), [isAuthenticated, authState, signIn, signOut])
 }
