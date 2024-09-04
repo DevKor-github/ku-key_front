@@ -48,47 +48,57 @@ const SchedulePage = () => {
       </div>
       <div
         className={css({
-          px: { base: 64, mdDown: 5 },
-          py: 30,
           display: 'flex',
           flexDir: 'column',
-          gap: 10,
+          alignItems: 'center',
           bgColor: 'bg.gray',
+          px: { base: 64, mdDown: 5 },
+          py: 30,
         })}
       >
         <div
           className={css({
+            w: 'full',
+            maxW: '1300px',
             display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
+            flexDir: 'column',
+            gap: 10,
           })}
         >
-          <div className={css({ display: 'flex', gap: 4, alignItems: 'center' })}>
-            <img src={koreaUniv} alt="Korea University Logo" className={css({ w: 11 })} />
-            <div
-              className={css({
-                display: 'flex',
-                flexDir: 'column',
-                justifyContent: 'space-between',
-                mdDown: { display: 'none' },
-              })}
-            >
-              <div className={css({ display: 'flex', gap: 4, alignItems: 'flex-end', color: 'black.2' })}>
-                <span className={css({ fontSize: 30, fontWeight: 700 })}>KOREA Univ</span>
-                <span className={css({ fontSize: 24 })}>Academic Schedule</span>
-              </div>
-              <div className={css({ color: 'darkGray.1', fontSize: 18 })}>
-                Check out Korea University's academic schedule
+          <div
+            className={css({
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            })}
+          >
+            <div className={css({ display: 'flex', gap: 4, alignItems: 'center' })}>
+              <img src={koreaUniv} alt="Korea University Logo" className={css({ w: 11 })} />
+              <div
+                className={css({
+                  display: 'flex',
+                  flexDir: 'column',
+                  justifyContent: 'space-between',
+                  mdDown: { display: 'none' },
+                })}
+              >
+                <div className={css({ display: 'flex', gap: 4, alignItems: 'flex-end', color: 'black.2' })}>
+                  <span className={css({ fontSize: 30, fontWeight: 700 })}>KOREA Univ</span>
+                  <span className={css({ fontSize: 24 })}>Academic Schedule</span>
+                </div>
+                <div className={css({ color: 'darkGray.1', fontSize: 18 })}>
+                  Check out Korea University's academic schedule
+                </div>
               </div>
             </div>
+            <Dropdown
+              curIndex={dropdownIndex}
+              dropdownList={makeSemesterDropdownList(academicSemester)}
+              setCurIndex={setSemesterIndex}
+            />
           </div>
-          <Dropdown
-            curIndex={dropdownIndex}
-            dropdownList={makeSemesterDropdownList(academicSemester)}
-            setCurIndex={setSemesterIndex}
-          />
+          <AcademicCalendar semester={curSemester.semester} data={data} />
         </div>
-        <AcademicCalendar semester={curSemester.semester} data={data} />
       </div>
     </>
   )
