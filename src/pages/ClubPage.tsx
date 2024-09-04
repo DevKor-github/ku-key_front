@@ -105,7 +105,14 @@ const ClubPage = () => {
           <CategorySelector curCategory={query.category} setCategory={setCategory} />
           <div className={css({ display: 'flex', flexDir: 'column', gap: 20, pb: 30 })}>
             <div className={css({ display: 'flex', justifyContent: 'center' })}>
-              <div className={css({ display: 'flex', alignItems: 'center', gap: 4 })}>
+              <div
+                className={css({
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 4,
+                  transform: 'translate3d(80px, 0, 0)',
+                })}
+              >
                 <SearchArea onSubmit={handleSubmit} clearKeywordParam={clearKeyword} />
                 <div
                   className={css({
