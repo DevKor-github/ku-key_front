@@ -1,13 +1,15 @@
 import { css } from '@styled-stytem/css'
-import { Bell, CircleUser } from 'lucide-react'
+import { CircleUser } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 import { useLogOut } from '@/api/hooks/auth'
 import KUkeyLogo from '@/assets/KU-keyLogo.svg'
 import { NavLinkButton } from '@/components/header/NavLinkButton'
+import NotifiWindow from '@/components/header/NotifiWindow'
 import { headerRouteConfig } from '@/lib/router/header-route'
 import { useAuth } from '@/util/auth/useAuth'
+
 const Header = () => {
   const location = useLocation()
   const curPath = location.pathname
@@ -92,11 +94,7 @@ const Header = () => {
             color: 'darkGray.2',
           })}
         >
-          <button
-            className={css({ display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' })}
-          >
-            <Bell size={20} />
-          </button>
+          <NotifiWindow />
           <Link to="/mypage" className={css({ display: 'flex', alignItems: 'center' })}>
             <CircleUser size={20} />
           </Link>

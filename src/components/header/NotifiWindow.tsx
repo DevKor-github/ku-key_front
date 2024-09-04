@@ -1,0 +1,33 @@
+import * as Popover from '@radix-ui/react-popover'
+import { css } from '@styled-stytem/css'
+import { Bell } from 'lucide-react'
+
+import AttendanceBtn from '@/components/header/notification/AttendanceBtn'
+
+const NotifiWindow = () => {
+  return (
+    <Popover.Root>
+      <Popover.Trigger>
+        <button className={css({ display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' })}>
+          <Bell size={20} />
+        </button>
+      </Popover.Trigger>
+      <Popover.Portal>
+        <Popover.Content sideOffset={30} className={css({ bgColor: 'darkGray.1', rounded: 10, w: '320px', p: 5 })}>
+          <div className={css({ display: 'flex', flexDir: 'column', gap: 5 })}>
+            <div className={css({ display: 'flex', alignItems: 'center', justifyContent: 'space-between' })}>
+              <AttendanceBtn />
+              <h2
+                className={css({ color: 'white', textAlign: 'center', fontSize: 24, fontWeight: 700, lineHeight: 1 })}
+              >
+                Alarm
+              </h2>
+            </div>
+          </div>
+        </Popover.Content>
+      </Popover.Portal>
+    </Popover.Root>
+  )
+}
+
+export default NotifiWindow
