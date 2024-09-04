@@ -89,33 +89,57 @@ const ClubPage = () => {
           pt: 29,
           display: 'flex',
           flexDir: 'column',
-          gap: 19,
+          alignItems: 'center',
           bgColor: 'bg.gray',
         })}
       >
-        <CategorySelector curCategory={query.category} setCategory={setCategory} />
-        <div className={css({ display: 'flex', flexDir: 'column', gap: 20, pb: 30 })}>
-          <div className={css({ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 4 })}>
-            <SearchArea onSubmit={handleSubmit} clearKeywordParam={clearKeyword} />
-            <div
-              className={css({ display: { base: 'flex', mdDown: 'none' }, alignItems: 'center', gap: 2.5, px: 2.5 })}
-            >
-              <Checkbox checked={query.wishList} onCheckedChange={handleWishList} />
-              <p className={css({ textStyle: 'heading4_M', color: 'darkGray.2' })}>View only I like</p>
-            </div>
-          </div>
-          <div className={css({ display: 'flex', flexDir: 'column', gap: 11 })}>
-            {query.keyword && (
-              <div className={css({ fontSize: 30, fontWeight: 700, color: 'darkGray.1' })}>
-                {`'${query.keyword}' Search Results`}
+        <div
+          className={css({
+            display: 'flex',
+            flexDir: 'column',
+            gap: 19,
+            width: 'full',
+            maxW: '1300px',
+          })}
+        >
+          <CategorySelector curCategory={query.category} setCategory={setCategory} />
+          <div className={css({ display: 'flex', flexDir: 'column', gap: 20, pb: 30 })}>
+            <div className={css({ display: 'flex', justifyContent: 'center' })}>
+              <div
+                className={css({
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 4,
+                  transform: 'translate3d(80px, 0, 0)',
+                })}
+              >
+                <SearchArea onSubmit={handleSubmit} clearKeywordParam={clearKeyword} />
+                <div
+                  className={css({
+                    display: { base: 'flex', mdDown: 'none' },
+                    alignItems: 'center',
+                    gap: 2.5,
+                    px: 2.5,
+                  })}
+                >
+                  <Checkbox checked={query.wishList} onCheckedChange={handleWishList} />
+                  <p className={css({ textStyle: 'heading4_M', color: 'darkGray.2' })}>View only I like</p>
+                </div>
               </div>
-            )}
-            <div className={css({ display: 'flex', flexDir: 'column', gap: 15 })}>
-              {data?.length ? (
-                data?.map(club => <ClubCard key={club.clubId} clubData={club} handleLikeClick={handleLikeClick} />)
-              ) : (
-                <div className={css({ color: 'darkGray.1', fontSize: 20 })}>No search results</div>
+            </div>
+            <div className={css({ display: 'flex', flexDir: 'column', gap: 11 })}>
+              {query.keyword && (
+                <div className={css({ fontSize: 30, fontWeight: 700, color: 'darkGray.1' })}>
+                  {`'${query.keyword}' Search Results`}
+                </div>
               )}
+              <div className={css({ display: 'flex', flexDir: 'column', gap: 15 })}>
+                {data?.length ? (
+                  data?.map(club => <ClubCard key={club.clubId} clubData={club} handleLikeClick={handleLikeClick} />)
+                ) : (
+                  <div className={css({ color: 'darkGray.1', fontSize: 20 })}>No search results</div>
+                )}
+              </div>
             </div>
           </div>
         </div>
