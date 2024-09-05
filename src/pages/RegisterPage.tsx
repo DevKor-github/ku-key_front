@@ -103,7 +103,7 @@ const RegisterPage = memo(() => {
           justifyContent: 'center',
           alignItems: 'center',
           gap: 5,
-          py: '142px',
+          // py: '142px',
           bgColor: 'bg.gray',
           px: 5,
         })}

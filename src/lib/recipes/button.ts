@@ -50,6 +50,7 @@ export const buttonRecipe = defineRecipe({
       },
       loginColored: {
         w: '209px',
+        smDown: { w: 'auto' },
         h: 'fit-content',
         px: 7,
         py: '13px',
@@ -59,6 +60,7 @@ export const buttonRecipe = defineRecipe({
       },
       loginOutline: {
         w: '209px',
+        smDown: { w: 'auto' },
         h: 'fit-content',
         px: 7,
         py: 3,
