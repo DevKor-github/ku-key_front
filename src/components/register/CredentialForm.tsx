@@ -28,7 +28,6 @@ const CredentialForm = ({ form, valid, handleValidation }: CredentialFormProps) 
     })
   }
   return (
-    // <section className={css({ display: 'flex', flexDir: 'column', gap: '25px', w: 'full', alignSelf: 'stretch' })}>
     <form
       className={css({
         display: 'flex',
@@ -145,7 +144,7 @@ const CredentialForm = ({ form, valid, handleValidation }: CredentialFormProps) 
                     px: 1.5,
                     py: 1,
                     gap: 1,
-                    alignItems: 'flex-start',
+                    alignItems: 'center',
                   })}
                 >
                   {form.getFieldState('password.password').invalid && (
@@ -205,7 +204,6 @@ const CredentialForm = ({ form, valid, handleValidation }: CredentialFormProps) 
         )}
       />
     </form>
-    // </section>
   )
 }
 
