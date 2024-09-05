@@ -14,13 +14,13 @@ interface NavLinkProps {
 export const NavLinkButton = forwardRef<HTMLDivElement, NavLinkProps>(
   ({ isSelected, targetRoute, navName, innerTab, isOpen, handleOpen }, ref) => {
     return (
-      <motion.div
+      <div
         className={css({
           display: 'inline-flex',
           pos: 'relative',
         })}
       >
-        <motion.div
+        <div
           className={css({
             display: 'inline-flex',
             px: 2.5,
@@ -32,7 +32,7 @@ export const NavLinkButton = forwardRef<HTMLDivElement, NavLinkProps>(
             letterSpacing: '-0.4px',
             color: isSelected ? 'red.2' : 'darkGray.1',
             _hover: { color: 'red.2' },
-            transition: 'all 0.3s ease-out',
+            transition: 'all 0.2s ease-out',
             gap: 2.5,
           })}
         >
@@ -48,16 +48,17 @@ export const NavLinkButton = forwardRef<HTMLDivElement, NavLinkProps>(
             {navName}
           </Link>
           {navName === 'Timetable' && (
-            <ChevronDown size={20} style={{ rotate: isOpen ? '180deg' : 'none', transition: 'all 0.3s ease' }} />
+            <ChevronDown size={20} style={{ rotate: isOpen ? '180deg' : 'none', transition: 'all 0.2s ease' }} />
           )}
-        </motion.div>
+        </div>
         <AnimatePresence>
           {isOpen && innerTab && (
             <motion.div
               ref={ref}
-              initial={{ opacity: 0, zoom: 0.5 }}
+              initial={{ opacity: 0, zoom: 0.95 }}
               animate={{ opacity: 1, zoom: 1 }}
-              exit={{ opacity: 0, zoom: 0.5 }}
+              exit={{ opacity: 0, zoom: 0.95 }}
+              transition={{ duration: 0.2 }}
               className={css({
                 display: 'flex',
                 pos: 'absolute',
@@ -79,7 +80,7 @@ export const NavLinkButton = forwardRef<HTMLDivElement, NavLinkProps>(
                 onClickCapture={handleOpen}
                 className={css({
                   textStyle: 'heading3_M',
-                  _hover: { color: 'lightGray.1', transition: 'all 0.3s ease-out' },
+                  _hover: { color: 'lightGray.1', transition: 'all 0.2s ease-out' },
                 })}
                 style={{ whiteSpace: 'nowrap' }}
               >
@@ -90,7 +91,7 @@ export const NavLinkButton = forwardRef<HTMLDivElement, NavLinkProps>(
                 onClickCapture={handleOpen}
                 className={css({
                   textStyle: 'heading3_M',
-                  _hover: { color: 'lightGray.1', transition: 'all 0.3s ease-out' },
+                  _hover: { color: 'lightGray.1', transition: 'all 0.2s ease-out' },
                 })}
                 style={{ whiteSpace: 'nowrap' }}
               >
@@ -99,7 +100,7 @@ export const NavLinkButton = forwardRef<HTMLDivElement, NavLinkProps>(
             </motion.div>
           )}
         </AnimatePresence>
-      </motion.div>
+      </div>
     )
   },
 )

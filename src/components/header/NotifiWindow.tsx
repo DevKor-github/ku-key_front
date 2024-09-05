@@ -15,7 +15,7 @@ const NotifiWindow = () => {
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Content
-          sideOffset={30}
+          sideOffset={40}
           align="end"
           className={cx(
             css({
@@ -24,10 +24,10 @@ const NotifiWindow = () => {
               w: '320px',
               p: 5,
               _open: {
-                animation: 'animateIn 0.2s ease',
+                animation: 'animateIn 0.2s',
               },
               _closed: {
-                animation: 'animateOut 0.2s ease',
+                animation: 'animateOut 0.2s',
               },
             }),
             shadow(),
