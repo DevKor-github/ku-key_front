@@ -54,18 +54,18 @@ const Showcase = ({ myLevel }: ShowcaseProps) => {
   return (
     <div className={css({ display: 'flex', flexDir: 'column', gap: 10 })}>
       <div className={css({ display: 'flex', flexDir: 'column', gap: 5 })}>
+        <h2 className={HeadingStyle}>Decorating characters</h2>
+        <div className={ShowCaseStyle}>
+          <CharacterTicket level={myLevel} purchase={handlePurchaseCharacterTicket} />
+          <CharacterTicket purchase={handlePurchaseCharacterTicket} />
+        </div>
+      </div>
+      <div className={css({ display: 'flex', flexDir: 'column', gap: 5 })}>
         <h2 className={HeadingStyle}>Course review reading ticket</h2>
         <div className={ShowCaseStyle}>
           <CourseReviewTicket days={3} purchase={handlePurchaseReviewTicket} />
           <CourseReviewTicket days={7} purchase={handlePurchaseReviewTicket} />
           <CourseReviewTicket days={30} purchase={handlePurchaseReviewTicket} />
-        </div>
-      </div>
-      <div className={css({ display: 'flex', flexDir: 'column', gap: 5 })}>
-        <h2 className={HeadingStyle}>Decorating characters</h2>
-        <div className={ShowCaseStyle}>
-          <CharacterTicket level={myLevel} purchase={handlePurchaseCharacterTicket} />
-          <CharacterTicket purchase={handlePurchaseCharacterTicket} />
         </div>
       </div>
     </div>
