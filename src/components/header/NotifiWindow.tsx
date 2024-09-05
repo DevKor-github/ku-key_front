@@ -23,10 +23,10 @@ const NotifiWindow = () => {
               rounded: 10,
               w: '320px',
               p: 5,
-              "&[data-state='open']": {
+              _open: {
                 animation: 'animateIn 0.2s ease',
               },
-              "&[data-state='closed']": {
+              _closed: {
                 animation: 'animateOut 0.2s ease',
               },
             }),
