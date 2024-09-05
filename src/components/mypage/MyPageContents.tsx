@@ -41,8 +41,9 @@ const MyPageContents = ({ myProfileData }: MyPageContentsProps) => {
         flexDir: 'row',
         gap: 5,
         width: 'full',
-        px: 38,
         pb: 33,
+        maxW: '1200px',
+        px: '60px',
       })}
     >
       <div className={css({ display: 'flex', flexDir: 'column', gap: 10, w: 47, flexShrink: 0 })}>
