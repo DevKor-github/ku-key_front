@@ -1,4 +1,5 @@
 import { css } from '@styled-stytem/css'
+import { isAxiosError } from 'axios'
 import { useCallback } from 'react'
 
 import { usePostPurchaseItem } from '@/api/hooks/user'
@@ -8,11 +9,6 @@ import CourseReviewTicket from '@/components/mypage/Contents/PointShop/CourseRev
 const HeadingStyle = css({
   fontSize: 26,
   fontWeight: 600,
-})
-const ShowCaseStyle = css({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
 })
 
 interface ShowcaseProps {
@@ -31,6 +27,13 @@ const Showcase = ({ myLevel }: ShowcaseProps) => {
         },
         {
           onSuccess: () => alert('Your purchase was successful'),
+          onError: error => {
+            if (isAxiosError(error)) {
+              alert(error.response?.data.message)
+            } else {
+              alert('Somthing is Wrong!')
+            }
+          },
         },
       )
     },
@@ -45,6 +48,13 @@ const Showcase = ({ myLevel }: ShowcaseProps) => {
             // TODO: 캐릭터 로직
             alert('Your purchase has been successful')
           },
+          onError: error => {
+            if (isAxiosError(error)) {
+              alert(error.response?.data.message)
+            } else {
+              alert('Somthing is Wrong!')
+            }
+          },
         },
       )
     },
@@ -55,14 +65,34 @@ const Showcase = ({ myLevel }: ShowcaseProps) => {
     <div className={css({ display: 'flex', flexDir: 'column', gap: 10 })}>
       <div className={css({ display: 'flex', flexDir: 'column', gap: 5 })}>
         <h2 className={HeadingStyle}>Decorating characters</h2>
-        <div className={ShowCaseStyle}>
-          <CharacterTicket level={myLevel} purchase={handlePurchaseCharacterTicket} />
-          <CharacterTicket purchase={handlePurchaseCharacterTicket} />
+        <div
+          className={css({
+            display: 'flex',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            columnGap: 5,
+            rowGap: 10,
+          })}
+        >
+          <CharacterTicket level={1} myLevel={myLevel} selectedLevel={1} purchase={handlePurchaseCharacterTicket} />
+          <CharacterTicket level={2} myLevel={myLevel} selectedLevel={1} purchase={handlePurchaseCharacterTicket} />
+          <CharacterTicket level={3} myLevel={myLevel} selectedLevel={1} purchase={handlePurchaseCharacterTicket} />
+          <CharacterTicket level={4} myLevel={myLevel} selectedLevel={1} purchase={handlePurchaseCharacterTicket} />
+          <CharacterTicket level={5} myLevel={myLevel} selectedLevel={1} purchase={handlePurchaseCharacterTicket} />
+          <CharacterTicket level={6} myLevel={myLevel} selectedLevel={1} purchase={handlePurchaseCharacterTicket} />
+          <CharacterTicket level={0} purchase={handlePurchaseCharacterTicket} />
         </div>
       </div>
       <div className={css({ display: 'flex', flexDir: 'column', gap: 5 })}>
         <h2 className={HeadingStyle}>Course review reading ticket</h2>
-        <div className={ShowCaseStyle}>
+        <div
+          className={css({
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            gap: 2.5,
+          })}
+        >
           <CourseReviewTicket days={3} purchase={handlePurchaseReviewTicket} />
           <CourseReviewTicket days={7} purchase={handlePurchaseReviewTicket} />
           <CourseReviewTicket days={30} purchase={handlePurchaseReviewTicket} />
