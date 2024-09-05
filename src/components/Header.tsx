@@ -85,20 +85,22 @@ const Header = () => {
         ))}
       </nav>
       <div className={css({ display: 'flex', alignItems: 'center', gap: '30px' })}>
-        <div
-          className={css({
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: 4,
-            color: 'darkGray.2',
-          })}
-        >
-          <NotifiWindow />
-          <Link to="/mypage" className={css({ display: 'flex', alignItems: 'center' })}>
-            <CircleUser size={20} />
-          </Link>
-        </div>
+        {isAuthenticated && (
+          <div
+            className={css({
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 4,
+              color: 'darkGray.2',
+            })}
+          >
+            <NotifiWindow />
+            <Link to="/mypage" className={css({ display: 'flex', alignItems: 'center' })}>
+              <CircleUser size={20} />
+            </Link>
+          </div>
+        )}
         <button
           onClick={handleUserButton}
           className={css({ cursor: 'pointer', textStyle: 'body1_L', color: 'lightGray.1' })}

@@ -27,5 +27,6 @@ export const useGetAttendance = () => {
   return useQuery({
     queryKey: ['attendance'],
     queryFn: getAttendance,
+    retry: false,
   })
 }
