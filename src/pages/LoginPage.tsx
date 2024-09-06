@@ -53,12 +53,12 @@ const Login = () => {
           justifyContent: 'center',
           alignItems: 'center',
           bgColor: 'lightGray.2',
-          px: 5,
+          pt: 40,
         })}
       >
         <title>Login Page</title>
         <div
-          className={css({ pos: 'absolute', w: 'full', h: '500px', top: 0, zIndex: 1 })}
+          className={css({ pos: 'absolute', w: 'full', h: '500px', top: 0, zIndex: 1, smDown: { h: '300px' } })}
           style={{ backgroundImage: `url(${LoginPageBg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
         />
         <Form {...loginForm}>
@@ -79,13 +79,24 @@ const Login = () => {
               w: 'full',
               maxW: 648,
               px: 5,
+              smDown: { pt: 10, pb: 15, gap: 5 },
             })}
           >
             <div
               className={css({ display: 'flex', flexDir: 'column', justifyContent: 'center', alignItems: 'center' })}
             >
-              <h1 className={css({ fontSize: 40, fontWeight: 700 })}>Login</h1>
-              <p className={css({ fontSize: 20, fontWeight: 500, p: 2.5, color: 'darkGray.2' })}>Welcome to KU-key</p>
+              <h1 className={css({ fontSize: 40, fontWeight: 700, smDown: { fontSize: 32 } })}>Login</h1>
+              <p
+                className={css({
+                  fontSize: 20,
+                  fontWeight: 500,
+                  p: 2.5,
+                  color: 'darkGray.2',
+                  smDown: { fontSize: 16 },
+                })}
+              >
+                Welcome to KU-key
+              </p>
             </div>
             <div
               className={css({
@@ -94,7 +105,7 @@ const Login = () => {
                 gap: 6,
                 justifyContent: 'center',
                 alignItems: 'center',
-                alignSelf: 'stretch',
+                w: 'full',
               })}
             >
               <FormField
@@ -112,10 +123,16 @@ const Login = () => {
                       rowGap: 2.5,
                     })}
                   >
-                    <FormLabel className={css({ fontSize: 24, fontWeight: 700 })}>Email</FormLabel>
+                    <FormLabel className={css({ fontSize: 24, fontWeight: 700, smDown: { fontSize: 19 } })}>
+                      Email
+                    </FormLabel>
                     <FormControl>
-                      <div className={css({ display: 'flex', flexDir: 'column', alignItems: 'flex-end' })}>
-                        <Input placeholder="Please enter your Email address" {...field} />
+                      <div className={InputMessageWrapper}>
+                        <Input
+                          placeholder="Please enter your Email address"
+                          {...field}
+                          className={css({ smDown: { w: 'full' } })}
+                        />
                         <div className={css({ display: 'flex', px: 1.5, py: 1, gap: 1, alignItems: 'center' })}>
                           {loginForm.getFieldState('email').invalid && (
                             <ShieldAlert size={16} className={css({ color: 'red.2' })} />
@@ -142,10 +159,17 @@ const Login = () => {
                       rowGap: 2.5,
                     })}
                   >
-                    <FormLabel className={css({ fontSize: 24, fontWeight: 700 })}>Password</FormLabel>
+                    <FormLabel className={css({ fontSize: 24, fontWeight: 700, smDown: { fontSize: 19 } })}>
+                      Password
+                    </FormLabel>
                     <FormControl>
-                      <div className={css({ display: 'flex', flexDir: 'column', alignItems: 'flex-end' })}>
-                        <Input placeholder="Please enter your Password" type="password" {...field} />
+                      <div className={InputMessageWrapper}>
+                        <Input
+                          placeholder="Please enter your Password"
+                          type="password"
+                          {...field}
+                          className={css({ smDown: { w: 'full' } })}
+                        />
                         <div className={css({ display: 'flex', px: 1.5, py: 1, gap: 1, alignItems: 'center' })}>
                           {loginForm.getFieldState('password').invalid && (
                             <ShieldAlert size={16} className={css({ color: 'red.2' })} />
@@ -169,15 +193,24 @@ const Login = () => {
               })}
             >
               <Checkbox id="login" checked={maintain} onCheckedChange={() => setMaintain(m => !m)} />
-              <Label htmlFor="login" className={css({ fontSize: 20, fontWeight: 600, color: 'darkGray.1' })}>
+              <Label
+                htmlFor="login"
+                className={css({ fontSize: 20, fontWeight: 600, color: 'darkGray.1', smDown: { fontSize: 16 } })}
+              >
                 Remember me
               </Label>
             </div>
-            <div className={css({ display: 'flex', gap: 5 })}>
+            <div className={css({ display: 'flex', gap: 5, smDown: { w: 'full', flexWrap: 'wrap' } })}>
               <Button
                 type="button"
                 variant="loginOutline"
-                className={css({ fontSize: 20, fontWeight: 500, lineHeight: 'none' })}
+                className={css({
+                  fontSize: 20,
+                  fontWeight: 500,
+                  lineHeight: 'none',
+                  rounded: 10,
+                  smDown: { w: 'full', fontSize: 14 },
+                })}
                 onClick={() => navigate('/register')}
               >
                 JOIN
@@ -185,7 +218,13 @@ const Login = () => {
               <Button
                 type="submit"
                 variant="loginColored"
-                className={css({ fontSize: 20, fontWeight: 500, lineHeight: 'none' })}
+                className={css({
+                  fontSize: 20,
+                  fontWeight: 500,
+                  lineHeight: 'none',
+                  rounded: 10,
+                  smDown: { w: 'full', fontSize: 14 },
+                })}
               >
                 LOGIN
               </Button>
@@ -198,3 +237,10 @@ const Login = () => {
 }
 
 export default Login
+
+const InputMessageWrapper = css({
+  display: 'flex',
+  flexDir: 'column',
+  alignItems: 'flex-end',
+  smDown: { w: 'full' },
+})

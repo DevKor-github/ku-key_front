@@ -90,7 +90,9 @@ const CredentialForm = ({ form, valid, handleValidation }: CredentialFormProps) 
                     }
                     onClick={handleUsernameDuplicationCheck}
                   >
-                    Verify
+                    <p className={css({ textStyle: 'body1_L', lineHeight: '100%', smDown: { fontSize: 12 } })}>
+                      Verify
+                    </p>
                   </Button>
                 </div>
                 <div className={css({ display: 'flex', px: 1.5, py: 1, gap: 1, alignItems: 'center' })}>

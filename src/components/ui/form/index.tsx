@@ -79,7 +79,11 @@ const FormLabel = forwardRef<
   return (
     <Label
       ref={ref}
-      className={cx(error && css({ color: 'red.2' }), css({ fontSize: 20, fontWeight: 700 }), className)}
+      className={cx(
+        error && css({ color: 'red.2' }),
+        css({ fontSize: 20, fontWeight: 700, smDown: { fontSize: 14 } }),
+        className,
+      )}
       htmlFor={formItemId}
       {...props}
     />

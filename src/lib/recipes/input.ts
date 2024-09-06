@@ -15,6 +15,7 @@ export const inputRecipe = defineRecipe({
     lineHeight: '100%',
     _file: { border: 0, bg: 'transparent', fontSize: 'sm', fontWeight: 'medium' },
     _placeholder: { color: 'lightGray.1' },
+    smDown: { fontSize: 12, fontWeight: 600 },
   },
   variants: {
     variant: {

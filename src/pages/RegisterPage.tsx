@@ -109,7 +109,7 @@ const RegisterPage = memo(() => {
         })}
       >
         <div
-          className={css({ pos: 'absolute', w: 'full', h: '500px', top: 0, zIndex: 1 })}
+          className={css({ pos: 'absolute', w: 'full', h: '500px', top: 0, zIndex: 1, smDown: { h: '300px' } })}
           style={{ backgroundImage: `url(${LoginPageBg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
         />
         <title>Register Page</title>
@@ -133,8 +133,17 @@ const RegisterPage = memo(() => {
           })}
         >
           <div className={css({ display: 'flex', flexDir: 'column', justifyContent: 'center', alignItems: 'center' })}>
-            <h1 className={css({ fontSize: 40, fontWeight: 700 })}>Join</h1>
-            <h2 className={css({ fontSize: 20, fontWeight: 500, color: 'darkGray.2' })}>Welcome to KU-Key</h2>
+            <h1 className={css({ fontSize: 40, fontWeight: 700, smDown: { fontSize: 32 } })}>Join</h1>
+            <h2
+              className={css({
+                fontSize: 20,
+                fontWeight: 500,
+                color: 'darkGray.2',
+                smDown: { fontSize: 16 },
+              })}
+            >
+              Welcome to KU-Key
+            </h2>
           </div>
           <Progress stageState={page} />
           {page === 1 && (
@@ -158,19 +167,40 @@ const RegisterPage = memo(() => {
               <CredentialForm form={credentialForm} valid={valid.username} handleValidation={handleValidation} />
             </Form>
           )}
-          <div className={css({ display: 'flex', gap: 5 })}>
+          <div className={css({ display: 'flex', gap: 5, smDown: { w: 'full', flexWrap: 'wrap' } })}>
             <Button
               type="submit"
               variant="loginOutline"
               onClick={() => setPage(p => (p - 1) as ProgressState)}
               disabled={page === 1}
               hidden={page === 1}
+              className={css({
+                rounded: 10,
+                smDown: { w: 'full' },
+              })}
             >
               <ArrowLeft className={css({ w: 4, h: 4 })} />
-              <p className={css({ fontSize: 20, fontWeight: 500, lineHeight: '100%' })}>PREV</p>
+              <p className={css({ fontSize: 20, fontWeight: 500, lineHeight: '100%', smDown: { fontSize: 14 } })}>
+                PREV
+              </p>
             </Button>
-            <Button type="submit" variant={page === 3 ? 'loginColored' : 'loginOutline'} onClick={handleNextPage}>
-              <p className={css({ fontSize: 20, fontWeight: 500, lineHeight: '100%' })}>
+            <Button
+              type="submit"
+              variant={page === 3 ? 'loginColored' : 'loginOutline'}
+              onClick={handleNextPage}
+              className={css({
+                rounded: 10,
+                smDown: { w: 'full' },
+              })}
+            >
+              <p
+                className={css({
+                  fontSize: 20,
+                  fontWeight: 500,
+                  lineHeight: '100%',
+                  smDown: { fontSize: 14 },
+                })}
+              >
                 {page === 3 ? 'Submit' : 'NEXT'}
               </p>
               {page !== 3 && <ArrowRight className={css({ w: 4, h: 4 })} />}
