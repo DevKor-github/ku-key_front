@@ -23,7 +23,7 @@ import { useRegisterForm } from '@/util/useRegisterForm'
 const RegisterPage = memo(() => {
   const navigate = useNavigate()
   const { isOpen, handleButtonClose, handleOpen, modalRef } = useModal()
-  const [page, setPage] = useState<ProgressState>(1)
+  const [page, setPage] = useState<ProgressState>(3)
   const [file, setFile] = useState<File | null>(null)
   const [valid, setValid] = useState<RegistrationState>({
     email: 'unknown',
@@ -105,13 +105,22 @@ const RegisterPage = memo(() => {
           gap: 5,
           // py: '142px',
           bgColor: 'bg.gray',
-          px: 5,
         })}
       >
         <div
           className={css({ pos: 'absolute', w: 'full', h: '500px', top: 0, zIndex: 1, smDown: { h: '300px' } })}
-          style={{ backgroundImage: `url(${LoginPageBg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+          style={{
+            backgroundImage: `url(${LoginPageBg})`,
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'start',
+          }}
         />
+        {/* <img
+          src={LoginPageBg}
+          alt="background"
+          className={css({ pos: 'absolute', w: 'full', h: '500px', top: 0, zIndex: 1, smDown: { h: '126px' } })}
+        /> */}
         <title>Register Page</title>
         <section
           className={css({
@@ -129,7 +138,6 @@ const RegisterPage = memo(() => {
             boxShadow: '0px 0px 4px 0px rgba(0, 0, 0, 0.25)',
             rounded: 30,
             px: 5,
-            // px: 105,
           })}
         >
           <div className={css({ display: 'flex', flexDir: 'column', justifyContent: 'center', alignItems: 'center' })}>

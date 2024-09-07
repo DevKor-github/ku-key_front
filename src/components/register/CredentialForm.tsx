@@ -146,13 +146,13 @@ const CredentialForm = ({ form, valid, handleValidation }: CredentialFormProps) 
                     px: 1.5,
                     py: 1,
                     gap: 1,
-                    alignItems: 'center',
+                    alignItems: 'flex-start',
                   })}
                 >
                   {form.getFieldState('password.password').invalid && (
                     <ShieldAlert size={16} className={css({ color: 'red.2' })} />
                   )}
-                  <FormMessage className={css({ whiteSpace: 'pre-wrap' })} />
+                  <FormMessage className={css({ whiteSpace: 'pre-wrap', lineHeight: '100%' })} />
                 </div>
               </div>
             </FormControl>

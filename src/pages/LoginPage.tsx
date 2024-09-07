@@ -53,14 +53,19 @@ const Login = () => {
           justifyContent: 'center',
           alignItems: 'center',
           bgColor: 'lightGray.2',
-          pt: 40,
+          // pt: 40,
         })}
       >
         <title>Login Page</title>
         <div
           className={css({ pos: 'absolute', w: 'full', h: '500px', top: 0, zIndex: 1, smDown: { h: '300px' } })}
-          style={{ backgroundImage: `url(${LoginPageBg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+          style={{ backgroundImage: `url(${LoginPageBg})`, backgroundSize: 'cover', backgroundPosition: 'start' }}
         />
+        {/* <img
+          src={LoginPageBg}
+          alt="background"
+          className={css({ pos: 'absolute', w: 'full', h: '500px', top: 0, zIndex: 1, objectFit: 'cover' })}
+        /> */}
         <Form {...loginForm}>
           <form
             onSubmit={loginForm.handleSubmit(onSubmit)}
