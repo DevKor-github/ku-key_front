@@ -39,8 +39,11 @@ const characterConfig: Record<CharacterType, Record<number, string>> = {
     4: Characters.Character5Lv4,
     5: Characters.Character5Lv5,
   },
-  default: {
+  anonymous: {
     1: Characters.CharacterDefault,
+  },
+  deleted: {
+    1: Characters.CharacterDeleted,
   },
 }
 
@@ -50,7 +53,8 @@ const bgConfig: Record<CharacterType, string> = {
   character3: '#FFCFCF',
   character4: '#D2F4B8',
   character5: '#939393',
-  default: '#D9D9D9',
+  anonymous: '#D9D9D9',
+  deleted: '#D9D9D9',
 }
 interface ProfileProps extends Pick<User, 'isAnonymous' | 'isDeleted' | 'character'> {
   onlyTitle: boolean
