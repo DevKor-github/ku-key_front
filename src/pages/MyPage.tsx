@@ -44,6 +44,7 @@ const MyPage = () => {
             point={myProfileData.point}
             languages={myProfileData.languages}
             homeUniversity={myProfileData.homeUniversity}
+            level={myProfileData.selectedLevel}
           />
         </div>
         <DueDateCard startDay={myProfileData.startDay} endDay={myProfileData.endDay} />

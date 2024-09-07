@@ -18,6 +18,7 @@ export interface GetMyProfileResponse {
   languages: Language[]
   level: number
   type: string
+  selectedLevel: number
 }
 
 export interface PatchMyProfileRequest {

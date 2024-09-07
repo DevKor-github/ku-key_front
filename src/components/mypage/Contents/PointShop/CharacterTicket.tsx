@@ -35,8 +35,9 @@ interface CharacterTicketProps {
   myLevel?: number
   selectedLevel?: number
   purchase: (cost: number, type: 'CHARACTER_EVOLUTION' | 'CHARACTER_TYPE_CHANGE') => void
+  handleApply: (target: number) => void
 }
-const CharacterTicket = ({ level, myLevel = 0, purchase, selectedLevel = 0 }: CharacterTicketProps) => {
+const CharacterTicket = ({ level, myLevel = 0, purchase, selectedLevel = 0, handleApply }: CharacterTicketProps) => {
   const { modalRef, isOpen, handleOpen, handleLayoutClose, handleButtonClose } = useModal()
 
   const canBuy = level === myLevel + 1 || level === 0
@@ -118,7 +119,14 @@ const CharacterTicket = ({ level, myLevel = 0, purchase, selectedLevel = 0 }: Ch
             </button>
           )}
         </div>
-        {<button className={ButtonStyle({ visible: selectedLevel !== level && level <= myLevel })}>Apply</button>}
+        {
+          <button
+            className={ButtonStyle({ visible: selectedLevel !== level && level <= myLevel })}
+            onClick={() => handleApply(level)}
+          >
+            Apply
+          </button>
+        }
       </div>
       <AlertModal
         modalRef={modalRef}

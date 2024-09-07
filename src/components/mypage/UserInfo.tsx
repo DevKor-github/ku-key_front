@@ -13,8 +13,9 @@ interface UserInfoProps {
   point: number
   languages: Language[]
   homeUniversity: string
+  level: number
 }
-const UserInfo = ({ name, country, point, languages, homeUniversity }: UserInfoProps) => {
+const UserInfo = ({ name, country, point, languages, homeUniversity, level }: UserInfoProps) => {
   return (
     <div
       className={css({
