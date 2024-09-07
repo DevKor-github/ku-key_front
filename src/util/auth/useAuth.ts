@@ -29,7 +29,13 @@ export const useAuth = () => {
     unsubscribe()
   }, [authStore, unsubscribe])
 
+  const setVerified = useCallback(() => {
+    const credential = authStore.get(userCredentialAtom)
+    if (credential) {
+      authStore.set(userCredentialAtom, { ...credential, verified: true })
+    }
+  }, [authStore])
   console.log('useAuth:', isAuthenticated, authState, new Date().toTimeString())
 
-  return { isAuthenticated, authState, signIn, signOut }
+  return { isAuthenticated, authState, signIn, signOut, setVerified }
 }
