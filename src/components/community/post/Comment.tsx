@@ -2,7 +2,7 @@ import { css } from '@styled-system/css'
 import { reactionButton } from '@styled-system/recipes'
 import { useAtomValue } from 'jotai'
 import { Cookie, MessageCircle } from 'lucide-react'
-import { memo, useCallback } from 'react'
+import { memo, useCallback, useMemo } from 'react'
 
 import { usePostCommentLike } from '@/api/hooks/community'
 import CommentHeader from '@/components/community/post/CommentHeader'
@@ -26,6 +26,11 @@ const Comment = memo(({ isOpen, currentIndex, handleClick }: CommentProps) => {
     if (comment.isMyComment) return handleOpen()
     mutateLike({ postId: post.id, commentId: comment.id, isReply: false })
   }, [comment.isMyComment, comment.id, handleOpen, mutateLike, post.id])
+
+  const username = useMemo(() => {
+    if (comment.isDeleted) return 'Unknown'
+    return comment.user.isAnonymous ? 'Anonymous' : comment.user.username
+  }, [comment.isDeleted, comment.user.isAnonymous, comment.user.username])
   return (
     <div
       className={css({
@@ -37,7 +42,7 @@ const Comment = memo(({ isOpen, currentIndex, handleClick }: CommentProps) => {
       })}
     >
       <CommentHeader
-        username={comment.user.isAnonymous ? 'Anonymous' : comment.user.username}
+        username={username}
         date={comment.createdAt}
         isMyComment={comment.isMyComment}
         commentId={comment.id}
