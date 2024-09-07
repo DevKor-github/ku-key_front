@@ -1,11 +1,12 @@
 import { css } from '@styled-stytem/css'
 
 import { useGetMyProfile } from '@/api/hooks/user'
-import MypageBG from '@/assets/MypageBG.jpg'
+import MypageBG from '@/assets/MypageBG.png'
 import DueDateCard from '@/components/mypage/DueDateCard'
 import MyPageContents from '@/components/mypage/MyPageContents'
 import MypageWrapper from '@/components/mypage/MypageWrapper'
 import UserInfo from '@/components/mypage/UserInfo'
+import { characterConfig } from '@/components/ui/profile/CharacterConfig'
 
 const MyPage = () => {
   const { data: myProfileData } = useGetMyProfile()
@@ -31,6 +32,7 @@ const MyPage = () => {
             zIndex: 0,
             bgSize: 'cover',
             bgPosition: 'center',
+            position: 'relative',
           })}
           style={{
             backgroundImage: `url(${MypageBG})`,
@@ -45,6 +47,16 @@ const MyPage = () => {
             languages={myProfileData.languages}
             homeUniversity={myProfileData.homeUniversity}
             level={myProfileData.selectedLevel}
+          />
+          <img
+            src={characterConfig[myProfileData.type][myProfileData.selectedLevel]}
+            alt="My Character"
+            className={css({
+              w: { base: '450px', mdDown: '250px' },
+              position: 'absolute',
+              right: { base: '150px', mdDown: 0 },
+              top: { base: '20px', mdDown: 0 },
+            })}
           />
         </div>
         <DueDateCard startDay={myProfileData.startDay} endDay={myProfileData.endDay} />

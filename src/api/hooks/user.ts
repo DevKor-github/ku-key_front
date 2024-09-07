@@ -51,7 +51,7 @@ export const useGetMyProfile = () => {
       point: 0,
       languages: [],
       level: 0,
-      type: '',
+      type: 'character1',
       selectedLevel: 0,
     },
   })
