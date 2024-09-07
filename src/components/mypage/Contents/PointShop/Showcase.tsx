@@ -5,6 +5,7 @@ import { useCallback } from 'react'
 import { usePatchLevel, usePostPurchaseItem } from '@/api/hooks/user'
 import CharacterTicket from '@/components/mypage/Contents/PointShop/CharacterTicket'
 import CourseReviewTicket from '@/components/mypage/Contents/PointShop/CourseReviewTicket'
+import { CharacterType } from '@/types/community'
 
 const HeadingStyle = css({
   fontSize: 26,
@@ -14,8 +15,9 @@ const HeadingStyle = css({
 interface ShowcaseProps {
   myLevel: number
   selectedLevel: number
+  myCharacterType: CharacterType
 }
-const Showcase = ({ myLevel, selectedLevel }: ShowcaseProps) => {
+const Showcase = ({ myLevel, selectedLevel, myCharacterType }: ShowcaseProps) => {
   const { mutate: purchase } = usePostPurchaseItem()
   const { mutate: selectLevel } = usePatchLevel()
 
@@ -91,9 +93,15 @@ const Showcase = ({ myLevel, selectedLevel }: ShowcaseProps) => {
                 selectedLevel={selectedLevel}
                 purchase={handlePurchaseCharacterTicket}
                 handleApply={handleApplyCharacter}
+                myCharacterType={myCharacterType}
               />
             ))}
-          <CharacterTicket level={0} purchase={handlePurchaseCharacterTicket} handleApply={handleApplyCharacter} />
+          <CharacterTicket
+            level={0}
+            purchase={handlePurchaseCharacterTicket}
+            handleApply={handleApplyCharacter}
+            myCharacterType={myCharacterType}
+          />
         </div>
       </div>
       <div className={css({ display: 'flex', flexDir: 'column', gap: 5 })}>
