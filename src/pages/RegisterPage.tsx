@@ -23,7 +23,7 @@ import { useRegisterForm } from '@/util/useRegisterForm'
 const RegisterPage = memo(() => {
   const navigate = useNavigate()
   const { isOpen, handleButtonClose, handleOpen, modalRef } = useModal()
-  const [page, setPage] = useState<ProgressState>(3)
+  const [page, setPage] = useState<ProgressState>(1)
   const [file, setFile] = useState<File | null>(null)
   const [valid, setValid] = useState<RegistrationState>({
     email: 'unknown',
