@@ -7,8 +7,10 @@ import { useLogOut } from '@/api/hooks/auth'
 import KUkeyLogo from '@/assets/KU-keyLogo.svg'
 import { NavLinkButton } from '@/components/header/NavLinkButton'
 import NotifiWindow from '@/components/header/NotifiWindow'
+import NoticeModal from '@/components/ui/modal/NoticeModal'
 import { headerRouteConfig } from '@/lib/router/header-route'
 import { useAuth } from '@/util/auth/useAuth'
+import { useModal } from '@/util/useModal'
 
 const Header = () => {
   const location = useLocation()
@@ -17,7 +19,8 @@ const Header = () => {
   const { mutate: mutateSignOut } = useLogOut()
   const innerTabRef = useRef<HTMLDivElement>(null)
   const [isOpen, setIsOpen] = useState(false)
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, authState } = useAuth()
+  const { isOpen: isModalOpen, handleOpen: handleModalOpen } = useModal(true)
   const navigate = useNavigate()
   const handleUserButton = useCallback(() => {
     isAuthenticated ? mutateSignOut() : navigate('/login')
@@ -35,6 +38,19 @@ const Header = () => {
       setIsOpen(prev => !prev)
     }
   }, [])
+  const handleNavClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, navName: string) => {
+      if (navName === 'Timetable') {
+        e.preventDefault()
+        authState ? handleOpen() : handleModalOpen()
+      } else if (navName === 'Community' && !authState) {
+        e.preventDefault()
+        handleModalOpen()
+      }
+    },
+    [authState, handleModalOpen, handleOpen],
+  )
+
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
@@ -46,7 +62,6 @@ const Header = () => {
         display: 'flex',
         h: 20,
         minH: 20,
-        // borderBottom: '1.5px solid {colors.lightGray.2}',
         bg: 'white',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -81,6 +96,7 @@ const Header = () => {
             innerTab={nav.innerTab}
             isOpen={isOpen}
             handleOpen={handleOpen}
+            handleNavClick={handleNavClick}
           />
         ))}
       </nav>
@@ -108,7 +124,7 @@ const Header = () => {
           {isAuthenticated ? 'Log out' : 'Log in'}
         </button>
       </div>
-      {/* <LanguageButton /> */}
+      <NoticeModal isOpen={isModalOpen} content="Waiting for confirm...We will let you know through your e-mail" />
     </header>
   )
 }

@@ -9,12 +9,12 @@ export const useAuth = () => {
   const authStore = useStore()
 
   const [isAuthenticated, setIsAuthenticated] = useState(!!authStore.get(userCredentialAtom))
-  const [authState, setAuthState] = useState(authStore.get(userCredentialAtom)?.verified)
+  const [authState, setAuthState] = useState(authStore.get(userCredentialAtom)?.verified ?? false)
 
   const unsubscribe = authStore.sub(userCredentialAtom, () => {
     const userState = authStore.get(userCredentialAtom)
     setIsAuthenticated(!!userState)
-    setAuthState(userState?.verified)
+    setAuthState(userState?.verified ?? false)
   })
 
   const signIn = useCallback(
