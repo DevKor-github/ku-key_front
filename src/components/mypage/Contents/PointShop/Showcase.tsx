@@ -2,9 +2,10 @@ import { css } from '@styled-stytem/css'
 import { isAxiosError } from 'axios'
 import { useCallback } from 'react'
 
-import { usePostPurchaseItem } from '@/api/hooks/user'
+import { usePatchLevel, usePostPurchaseItem } from '@/api/hooks/user'
 import CharacterTicket from '@/components/mypage/Contents/PointShop/CharacterTicket'
 import CourseReviewTicket from '@/components/mypage/Contents/PointShop/CourseReviewTicket'
+import { CharacterType } from '@/types/community'
 
 const HeadingStyle = css({
   fontSize: 26,
@@ -13,9 +14,12 @@ const HeadingStyle = css({
 
 interface ShowcaseProps {
   myLevel: number
+  selectedLevel: number
+  myCharacterType: CharacterType
 }
-const Showcase = ({ myLevel }: ShowcaseProps) => {
+const Showcase = ({ myLevel, selectedLevel, myCharacterType }: ShowcaseProps) => {
   const { mutate: purchase } = usePostPurchaseItem()
+  const { mutate: selectLevel } = usePatchLevel()
 
   const handlePurchaseReviewTicket = useCallback(
     (days: number, cost: number) => {
@@ -60,6 +64,12 @@ const Showcase = ({ myLevel }: ShowcaseProps) => {
     },
     [purchase],
   )
+  const handleApplyCharacter = useCallback(
+    (target: number) => {
+      selectLevel(target)
+    },
+    [selectLevel],
+  )
 
   return (
     <div className={css({ display: 'flex', flexDir: 'column', gap: 10 })}>
@@ -74,13 +84,24 @@ const Showcase = ({ myLevel }: ShowcaseProps) => {
             rowGap: 10,
           })}
         >
-          <CharacterTicket level={1} myLevel={myLevel} selectedLevel={1} purchase={handlePurchaseCharacterTicket} />
-          <CharacterTicket level={2} myLevel={myLevel} selectedLevel={1} purchase={handlePurchaseCharacterTicket} />
-          <CharacterTicket level={3} myLevel={myLevel} selectedLevel={1} purchase={handlePurchaseCharacterTicket} />
-          <CharacterTicket level={4} myLevel={myLevel} selectedLevel={1} purchase={handlePurchaseCharacterTicket} />
-          <CharacterTicket level={5} myLevel={myLevel} selectedLevel={1} purchase={handlePurchaseCharacterTicket} />
-          <CharacterTicket level={6} myLevel={myLevel} selectedLevel={1} purchase={handlePurchaseCharacterTicket} />
-          <CharacterTicket level={0} purchase={handlePurchaseCharacterTicket} />
+          {Array(6)
+            .fill(true)
+            .map((_, index) => (
+              <CharacterTicket
+                level={index + 1}
+                myLevel={myLevel}
+                selectedLevel={selectedLevel}
+                purchase={handlePurchaseCharacterTicket}
+                handleApply={handleApplyCharacter}
+                myCharacterType={myCharacterType}
+              />
+            ))}
+          <CharacterTicket
+            level={0}
+            purchase={handlePurchaseCharacterTicket}
+            handleApply={handleApplyCharacter}
+            myCharacterType={myCharacterType}
+          />
         </div>
       </div>
       <div className={css({ display: 'flex', flexDir: 'column', gap: 5 })}>

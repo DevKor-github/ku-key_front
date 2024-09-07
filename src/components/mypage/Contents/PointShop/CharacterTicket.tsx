@@ -3,6 +3,8 @@ import { shadow } from '@styled-stytem/recipes'
 
 import Sugar from '@/assets/Sugar_sm.png'
 import AlertModal from '@/components/ui/modal/AlertModal'
+import { characterConfig } from '@/components/ui/profile/CharacterConfig'
+import { CharacterType } from '@/types/community'
 import { useModal } from '@/util/useModal'
 
 const COST = [200, 0, 30, 100, 200, 300, 400]
@@ -35,8 +37,17 @@ interface CharacterTicketProps {
   myLevel?: number
   selectedLevel?: number
   purchase: (cost: number, type: 'CHARACTER_EVOLUTION' | 'CHARACTER_TYPE_CHANGE') => void
+  handleApply: (target: number) => void
+  myCharacterType: CharacterType
 }
-const CharacterTicket = ({ level, myLevel = 0, purchase, selectedLevel = 0 }: CharacterTicketProps) => {
+const CharacterTicket = ({
+  level,
+  myLevel = 0,
+  purchase,
+  selectedLevel = 0,
+  handleApply,
+  myCharacterType,
+}: CharacterTicketProps) => {
   const { modalRef, isOpen, handleOpen, handleLayoutClose, handleButtonClose } = useModal()
 
   const canBuy = level === myLevel + 1 || level === 0
@@ -67,10 +78,74 @@ const CharacterTicket = ({ level, myLevel = 0, purchase, selectedLevel = 0 }: Ch
               bgColor: 'white',
               rounded: 10,
               position: 'relative',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              overflow: 'hidden',
             }),
             shadow(),
           )}
         >
+          {/* 캐릭터 이미지 */}
+          {characterConfig[myCharacterType][level] && (
+            <img
+              src={characterConfig[myCharacterType][level]}
+              alt="character ticket"
+              className={css({ w: '150px', zIndex: 1 })}
+            />
+          )}
+          {/* 미구매 항목 블러 */}
+          {(myLevel < level || level === 0) && (
+            <div
+              className={cva({
+                base: {
+                  position: 'absolute',
+                  zIndex: 2,
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                },
+                variants: {
+                  isEvolution: {
+                    true: {
+                      bg: 'rgba(0, 0, 0, 0.30)',
+                      backdropFilter: 'blur(7.5px)',
+                    },
+                    false: {
+                      bgColor: '#c2abab',
+                    },
+                  },
+                },
+              })({ isEvolution: level !== 0 })}
+            />
+          )}
+          {/* 캐릭터 없는 애들 한 해 상품명 */}
+          {(level === 6 || level === 0) && (
+            <p
+              className={css({
+                fontFamily: 'SBAggroB',
+                zIndex: 3,
+                color: 'white',
+                textAlign: 'center',
+                fontSize: 20,
+                fontWeight: 400,
+                letterSpacing: '-0.4px',
+                lineHeight: 1.1,
+              })}
+            >
+              {level === 0 ? (
+                <>
+                  NEW
+                  <br />
+                  COOKIE
+                </>
+              ) : (
+                <>SPECIAL</>
+              )}
+            </p>
+          )}
+          {/* 레벨 태그 */}
           {level !== 0 && (
             <div
               className={css({
@@ -84,11 +159,13 @@ const CharacterTicket = ({ level, myLevel = 0, purchase, selectedLevel = 0 }: Ch
                 fontSize: 16,
                 fontWeight: 600,
                 color: 'white',
+                zIndex: 3,
               })}
             >
               Lv.{level}
             </div>
           )}
+          {/* 가격 태그 */}
           {(level === 0 || level > myLevel) && (
             <div
               className={css({
@@ -96,21 +173,29 @@ const CharacterTicket = ({ level, myLevel = 0, purchase, selectedLevel = 0 }: Ch
                 top: 2.5,
                 right: 2.5,
                 px: '6px',
-                color: 'black',
+                color: 'white',
                 display: 'flex',
                 alignItems: 'center',
                 gap: 1,
+                zIndex: 3,
               })}
             >
               <img src={Sugar} alt="sugar" />
               <span className={css({ fontSize: 18, fontWeight: 700, lineHeight: 1 })}>{COST[level]}</span>
             </div>
           )}
+          {/* 구매 버튼 */}
           {canBuy && (
             <button
               className={cx(
                 ButtonStyle(),
-                css({ position: 'absolute', bottom: '18px', left: '50%', transform: 'translate3d(-50%, 0, 0)' }),
+                css({
+                  position: 'absolute',
+                  bottom: '18px',
+                  left: '50%',
+                  transform: 'translate3d(-50%, 0, 0)',
+                  zIndex: 3,
+                }),
               )}
               onClick={handleClick}
             >
@@ -118,7 +203,12 @@ const CharacterTicket = ({ level, myLevel = 0, purchase, selectedLevel = 0 }: Ch
             </button>
           )}
         </div>
-        {<button className={ButtonStyle({ visible: selectedLevel !== level && level <= myLevel })}>Apply</button>}
+        <button
+          className={ButtonStyle({ visible: selectedLevel !== level && level <= myLevel })}
+          onClick={() => handleApply(level)}
+        >
+          Apply
+        </button>
       </div>
       <AlertModal
         modalRef={modalRef}

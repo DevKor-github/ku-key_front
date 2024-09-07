@@ -51,7 +51,8 @@ export const useGetMyProfile = () => {
       point: 0,
       languages: [],
       level: 0,
-      type: '',
+      type: 'character1',
+      selectedLevel: 0,
     },
   })
 }
@@ -97,6 +98,21 @@ export const usePatchExchangeDay = () => {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: patchExchangeDay,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['myProfile'] })
+    },
+  })
+}
+
+const patchLevel = async (selectedLevel: number) => {
+  const response = apiInterface.patch('/user/character-level', { selectedLevel })
+  return response
+}
+
+export const usePatchLevel = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: patchLevel,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['myProfile'] })
     },
