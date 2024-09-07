@@ -46,7 +46,6 @@ const MyPage = () => {
             point={myProfileData.point}
             languages={myProfileData.languages}
             homeUniversity={myProfileData.homeUniversity}
-            level={myProfileData.selectedLevel}
           />
           <img
             src={characterConfig[myProfileData.type][myProfileData.selectedLevel]}
