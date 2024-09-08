@@ -2,13 +2,11 @@ import { css } from '@styled-stytem/css'
 import { Link } from 'react-router-dom'
 
 import instagramIcon from '@/assets/instagram.svg'
-import kakaoIcon from '@/assets/kakaocorp.svg'
 import KUkeyLogo from '@/assets/KU-keyLogo.svg'
 import mailIcon from '@/assets/mail.svg'
 import notionIcon from '@/assets/notion.svg'
 
 const supportApps = [
-  { name: 'kakao-talk', src: kakaoIcon },
   { name: 'mail', src: mailIcon },
   { name: 'notion', src: notionIcon },
   { name: 'instagram', src: instagramIcon },
@@ -58,10 +56,9 @@ const Footer = () => {
             color: 'black.1',
             fontSize: '14.112px',
             fontWeight: '500',
-            cursor: 'pointer',
           })}
         >
-          문의
+          Contact
         </div>
         <div
           className={css({
@@ -96,9 +93,6 @@ const Footer = () => {
       >
         <Link to="/" className={tabs}>
           MY PAGE
-        </Link>
-        <Link to="/announcement" className={tabs}>
-          ANNOUNCEMENT
         </Link>
         <Link to="/timetable" className={tabs}>
           TIMETABLE
