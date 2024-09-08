@@ -1,6 +1,7 @@
 import { css } from '@styled-stytem/css'
 import { Link } from 'react-router-dom'
 
+// TODO: ADD Instagram & Notion Link
 // import instagramIcon from '@/assets/instagram.svg'
 import KUkeyLogo from '@/assets/KU-keyLogo.svg'
 import mailIcon from '@/assets/mail.svg'
