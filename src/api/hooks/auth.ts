@@ -65,5 +65,5 @@ const checkVerfied = async () => {
 }
 
 export const useCheckVerified = () => {
-  return useQuery({ queryKey: ['user-verified'], queryFn: checkVerfied })
+  return useQuery({ queryKey: ['user-verified'], queryFn: checkVerfied, retry: 0 })
 }

@@ -8,6 +8,7 @@ import KUkeyLogo from '@/assets/KU-keyLogo.svg'
 import { NavLinkButton } from '@/components/header/NavLinkButton'
 import NotifiWindow from '@/components/header/NotifiWindow'
 import NoticeModal from '@/components/ui/modal/NoticeModal'
+import { HEADER_MESSAGE } from '@/lib/messages/header'
 import { headerRouteConfig } from '@/lib/router/header-route'
 import { useAuth } from '@/util/auth/useAuth'
 import { useModal } from '@/util/useModal'
@@ -21,6 +22,7 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false)
   const { isAuthenticated, authState } = useAuth()
   const { isOpen: isModalOpen, handleOpen: handleModalOpen } = useModal(true)
+  const [modalContent, setModalContent] = useState(HEADER_MESSAGE.NOT_VERIFIED_USER)
   const navigate = useNavigate()
   const handleUserButton = useCallback(() => {
     isAuthenticated ? mutateSignOut() : navigate('/login')
@@ -38,18 +40,29 @@ const Header = () => {
       setIsOpen(prev => !prev)
     }
   }, [])
+
   const handleNavClick = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, navName: string) => {
       if (!isAuthenticated) return
       if (navName === 'Timetable') {
         e.preventDefault()
-        authState ? handleOpen() : handleModalOpen()
+        authState
+          ? handleOpen()
+          : (function () {
+              setModalContent(HEADER_MESSAGE.NOT_VERIFIED_USER)
+              handleModalOpen()
+            })()
       } else if (navName === 'Community' && !authState) {
         e.preventDefault()
+        setModalContent(HEADER_MESSAGE.NOT_VERIFIED_USER)
+        handleModalOpen()
+      } else if (navName === '1:1 Matching') {
+        e.preventDefault()
+        setModalContent(HEADER_MESSAGE.NOT_READY)
         handleModalOpen()
       }
     },
-    [authState, handleModalOpen, handleOpen],
+    [authState, handleModalOpen, handleOpen, isAuthenticated],
   )
 
   useEffect(() => {
@@ -125,7 +138,7 @@ const Header = () => {
           {isAuthenticated ? 'Log out' : 'Log in'}
         </button>
       </div>
-      <NoticeModal isOpen={isModalOpen} content="Waiting for confirm...We will let you know through your e-mail" />
+      <NoticeModal isOpen={isModalOpen} content={modalContent} />
     </header>
   )
 }
