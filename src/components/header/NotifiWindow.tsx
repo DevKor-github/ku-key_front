@@ -29,6 +29,7 @@ const NotifiWindow = () => {
               _closed: {
                 animation: 'animateOut 0.2s',
               },
+              zIndex: 500,
             }),
             shadow(),
           )}
