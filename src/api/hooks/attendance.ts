@@ -14,6 +14,7 @@ export const usePostAttendance = () => {
     mutationFn: postAttendance,
     onSuccess: () => {
       queryClient.setQueryData<boolean>(['attendance'], true)
+      queryClient.invalidateQueries({ queryKey: ['myProfile'] })
     },
   })
 }
