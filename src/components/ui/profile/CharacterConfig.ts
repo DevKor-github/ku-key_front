@@ -37,7 +37,10 @@ export const characterConfig: Record<CharacterType, Record<number, string>> = {
     4: Characters.Character5Lv4,
     5: Characters.Character5Lv5,
   },
-  default: {
+  anonymous: {
     1: Characters.CharacterDefault,
+  },
+  deleted: {
+    1: Characters.CharacterDeleted,
   },
 }
