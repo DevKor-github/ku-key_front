@@ -40,6 +40,7 @@ const Header = () => {
   }, [])
   const handleNavClick = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, navName: string) => {
+      if (!isAuthenticated) return
       if (navName === 'Timetable') {
         e.preventDefault()
         authState ? handleOpen() : handleModalOpen()
