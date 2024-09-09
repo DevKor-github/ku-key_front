@@ -11,25 +11,27 @@ import { Input } from '@/components/ui/input'
 
 export const ProfileFormWrapper = css({
   display: 'flex',
-  gap: 5,
+  flexDir: { mdDown: 'column' },
+  gap: { base: 5, mdDown: 2 },
   alignItems: 'stretch',
   '& input': {
-    w: '400px',
+    w: { base: '400px', mdDown: '200px' },
   },
 })
 export const ProfileFormTitle = css({
   flexShrink: 0,
-  w: '189px',
+  w: { base: '189px', mdDown: '80px' },
+  py: { mdDown: 1.5 },
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
   bgColor: 'lightGray.1',
-  fontSize: 20,
+  fontSize: { base: 20, mdDown: 12 },
   fontWeight: 700,
 })
 
 export interface PublicProfileForm {
-  name: string
+  username: string
   country: string
   homeUniversity: string
   major: string
@@ -37,14 +39,14 @@ export interface PublicProfileForm {
 interface PublicProfileProps {
   myProfileData: GetMyProfileResponse
 }
-const PublicProfile = ({ myProfileData: { name, country, homeUniversity, major } }: PublicProfileProps) => {
+const PublicProfile = ({ myProfileData: { username, country, homeUniversity, major } }: PublicProfileProps) => {
   const { register, handleSubmit, setValue, watch } = useForm<PublicProfileForm>()
   useEffect(() => {
-    setValue('name', name)
+    setValue('username', username)
     setValue('country', country)
     setValue('homeUniversity', homeUniversity)
     setValue('major', major)
-  }, [name, country, homeUniversity, major, setValue])
+  }, [username, country, homeUniversity, major, setValue])
 
   const { mutate: patchProfile } = usePatchMyProfile()
 
@@ -62,18 +64,18 @@ const PublicProfile = ({ myProfileData: { name, country, homeUniversity, major }
   )
 
   return (
-    <div className={css({ display: 'flex', flexDir: 'column', gap: 20 })}>
+    <div className={css({ display: 'flex', flexDir: 'column', gap: { base: 20, mdDown: 5 } })}>
       <ProfileChangeHeader type="public" />
       <form className={css({ display: 'flex', flexDir: 'column', gap: 25 })} onSubmit={handleSubmit(onSubmit)}>
         <section className={css({ display: 'flex', flexDir: 'column', gap: '50px' })}>
           <div className={css({ display: 'flex', flexDir: 'column', gap: 2.5 })}>
             <div className={ProfileFormWrapper}>
-              <span className={ProfileFormTitle}>Name</span>
-              <Input placeholder={name} {...register('name', { required: true })} />
+              <span className={ProfileFormTitle}>Username</span>
+              <Input placeholder={username} {...register('username', { required: true })} />
             </div>
             <div className={ProfileFormWrapper}>
               <span className={ProfileFormTitle}>Nation</span>
-              <span className={css({ w: '400px' })}>
+              <span className={css({ w: { base: '400px', mdDown: '200px' } })}>
                 <NationDropdown curNation={watch('country')} handleChange={handleNationSelect} />
               </span>
             </div>

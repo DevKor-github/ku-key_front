@@ -13,28 +13,28 @@ const HowToBox = css({
   display: 'flex',
   flexDir: 'column',
   gap: 5,
-  px: 10,
+  px: { base: 10, mdDown: 1 },
   py: 4,
   justifyContent: 'center',
 })
 const HowToTitle = css({
-  fontSize: 24,
+  fontSize: { base: 24, mdDown: 13 },
   fontWeight: 500,
   lineHeight: 1,
 })
 const HowToContent = css({
   display: 'flex',
-  w: '320px',
+  w: { base: '320px', mdDown: '120px' },
   justifyContent: 'space-between',
   alignItems: 'center',
   lineHeight: 1.2,
   '& > span': {
     color: 'black',
-    fontSize: 14,
+    fontSize: { base: 14, mdDown: 10 },
     fontWeight: 500,
   },
   '& > span:first-child': {
-    fontSize: 16,
+    fontSize: { base: 16, mdDown: 12 },
     fontWeight: 400,
     color: 'darkGray.1',
   },
@@ -45,7 +45,7 @@ const CostInterval = css({
   gap: 2,
   '& > span': {
     color: 'darkGray.2',
-    fontSize: 14,
+    fontSize: { base: 14, mdDown: 10 },
   },
 })
 
@@ -57,16 +57,26 @@ const SugarModal = (props: SugarModalProps) => {
   const { modalRef, isOpen, handleLayoutClose, handleButtonClose } = props
   return (
     <ModalPortal isOpen={isOpen} handleLayoutClose={handleLayoutClose}>
-      <ModalCard variant="alert" ref={modalRef} className={css({ px: '60px', py: '50px', gap: '30px' })}>
+      <ModalCard
+        variant="alert"
+        ref={modalRef}
+        className={css({
+          px: { base: '60px', mdDown: 5 },
+          py: { base: '50px', mdDown: 5 },
+          gap: { base: '30px', mdDown: 3 },
+        })}
+      >
         <div className={css({ display: 'flex', flexDir: 'column', gap: 6, alignItems: 'center' })}>
           <div className={css({ display: 'flex', alignItems: 'center', bgColor: 'white', gap: 1 })}>
             <CircleAlert size={58} className={css({ fill: 'red.3', color: 'white' })} />
-            <div className={css({ fontWeight: 700, color: 'red.3', fontSize: 36 })}>What is sugar?</div>
+            <div className={css({ fontWeight: 700, color: 'red.3', fontSize: { base: 36, mdDown: 18 } })}>
+              What is sugar?
+            </div>
           </div>
           <div
             className={css({
               fontWeight: 500,
-              fontSize: 20,
+              fontSize: { base: 20, mdDown: 12 },
               textAlign: 'center',
               color: 'darkGray.1',
             })}

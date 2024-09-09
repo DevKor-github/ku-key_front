@@ -43,11 +43,11 @@ const MyPageContents = ({ myProfileData }: MyPageContentsProps) => {
         width: 'full',
         pb: 33,
         maxW: '1200px',
-        px: '60px',
+        px: { base: '60px', lgDown: '30px', mdDown: '20px' },
       })}
     >
-      <div className={css({ display: 'flex', flexDir: 'column', gap: 10, w: 47, flexShrink: 0 })}>
-        <h1 className={css({ fontSize: 30, fontWeight: 700, color: 'black.1' })}>My page</h1>
+      <div className={css({ display: 'flex', flexDir: 'column', gap: 10, w: { base: 47, mdDown: 20 }, flexShrink: 0 })}>
+        <h1 className={css({ fontSize: { base: 30, mdDown: 15 }, fontWeight: 700, color: 'black.1' })}>My page</h1>
         <nav className={css({ display: 'flex', flexDir: 'column', gap: 7 })}>
           {PAGE_LIST.map((sectionData, index) => {
             return (
@@ -57,20 +57,38 @@ const MyPageContents = ({ myProfileData }: MyPageContentsProps) => {
                   display: 'flex',
                   flexDir: 'column',
                   gap: 6,
-                  '& h2': { color: 'black.1', fontSize: 24, fontWeight: 700 },
+                  '& h2': { color: 'black.1', fontSize: { base: 24, mdDown: 12 }, fontWeight: 700 },
                 })}
               >
                 <h2>{sectionData.title}</h2>
-                <ul className={css({ display: 'flex', gap: 5, flexDir: 'column' })}>
+                <ul className={css({ display: 'flex', gap: { base: 5, mdDown: 2.5 }, flexDir: 'column' })}>
                   {sectionData.children.map(({ title, handler }) => (
-                    <li key={handler} className={css({ display: 'flex', gap: 2.5, alignItems: 'center' })}>
+                    <li
+                      key={handler}
+                      className={css({
+                        display: 'flex',
+                        gap: 2.5,
+                        alignItems: { base: 'center', mdDown: 'flex-start' },
+                      })}
+                    >
                       <div
-                        className={css({ w: 1.5, h: 1.5, rounded: 'full', bgColor: 'red.2' })}
+                        className={css({
+                          w: 1.5,
+                          h: 1.5,
+                          rounded: 'full',
+                          bgColor: 'red.2',
+                          display: { mdDown: 'none' },
+                        })}
                         style={{ visibility: handler === curPage ? 'visible' : 'hidden' }}
                       />
                       <button
                         className={cva({
-                          base: { color: 'black.2', fontSize: 18, cursor: 'pointer' },
+                          base: {
+                            color: 'black.2',
+                            fontSize: { base: 18, mdDown: 12 },
+                            cursor: 'pointer',
+                            textAlign: 'left',
+                          },
                           variants: {
                             selected: {
                               true: {

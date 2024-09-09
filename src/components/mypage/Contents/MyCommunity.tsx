@@ -12,12 +12,12 @@ const ButtonStyle = cva({
     justifyContent: 'center',
     alignItems: 'center',
     bgColor: 'lightGray.2',
-    h: '44px',
+    h: { base: '44px', mdDown: '24px' },
     cursor: 'pointer',
     rounded: 'full',
     textStyle: 'heading4_M',
-    px: 6,
-    fontSize: 20,
+    px: { base: 6, mdDown: 2 },
+    fontSize: { base: 20, mdDown: 11 },
     fontWeight: 600,
     letterSpacing: '-0.4px',
     color: 'darkGray.1',
@@ -46,13 +46,13 @@ const currentViewConfig: Record<ViewType, React.FC> = {
 const MyCommunity = () => {
   const [curView, setCurView] = useState<ViewType>('myPost')
 
-  const ViewComonent = useMemo(() => currentViewConfig[curView], [curView])
+  const ViewComment = useMemo(() => currentViewConfig[curView], [curView])
 
   return (
-    <div className={css({ display: 'flex', flexDir: 'column', gap: 12 })}>
-      <h1 className={css({ fontSize: 30, fontWeight: 700 })}>Community Storage</h1>
-      <div className={css({ display: 'flex', flexDir: 'column', gap: '70px' })}>
-        <div className={css({ display: 'flex', alignItems: 'center', gap: 3.5 })}>
+    <div className={css({ display: 'flex', flexDir: 'column', gap: { base: 12, mdDown: 6 } })}>
+      <h1 className={css({ fontSize: { base: 30, mdDown: 15 }, fontWeight: 700 })}>Community Storage</h1>
+      <div className={css({ display: 'flex', flexDir: 'column', gap: { base: '70px', mdDown: '35px' } })}>
+        <div className={css({ display: 'flex', alignItems: 'center', gap: 3.5, flexWrap: 'wrap' })}>
           <button className={ButtonStyle({ selected: curView === 'myPost' })} onClick={() => setCurView('myPost')}>
             My post
           </button>
@@ -72,7 +72,7 @@ const MyCommunity = () => {
             My comment
           </button>
         </div>
-        <ViewComonent />
+        <ViewComment />
       </div>
     </div>
   )

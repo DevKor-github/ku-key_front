@@ -8,7 +8,7 @@ const ProfileChangeHeader = ({ type }: ProfileChangeHeaderProps) => {
     <div className={css({ display: 'flex', flexDir: 'column', gap: 2.5, p: 1 })}>
       <h1
         className={css({
-          fontSize: 30,
+          fontSize: { base: 30, mdDown: 15 },
           fontWeight: 700,
         })}
       >
@@ -17,7 +17,7 @@ const ProfileChangeHeader = ({ type }: ProfileChangeHeaderProps) => {
       <p
         className={css({
           color: 'darkGray.1',
-          fontSize: 18,
+          fontSize: { base: 18, mdDown: 12 },
           fontWeight: 500,
         })}
       >
