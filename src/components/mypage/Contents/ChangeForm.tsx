@@ -23,13 +23,14 @@ const ChangeForm = ({ type, register, formState }: ChangeFormProps) => {
     <div
       className={css({
         display: 'flex',
+        flexDir: { mdDown: 'column' },
         justifyContent: 'space-between',
         alignItems: 'baseline',
         alignSelf: 'stretch',
-        gap: 138,
+        gap: { base: 138, mdDown: 1 },
       })}
     >
-      <Label className={cx(css({ fontSize: 20, fontWeight: 700 }))}>{labelConfig[type]}</Label>
+      <Label className={cx(css({ fontSize: { base: 20, mdDown: 12 }, fontWeight: 700 }))}>{labelConfig[type]}</Label>
       <div className={css({ display: 'flex', flexDir: 'column', alignItems: 'flex-end' })}>
         <Input
           placeholder={
@@ -40,7 +41,7 @@ const ChangeForm = ({ type, register, formState }: ChangeFormProps) => {
                 : 'Please enter your new password again'
           }
           type="password"
-          style={{ width: '341px' }}
+          className={css({ w: { base: 341, mdDown: 200 } })}
           {...register(type)}
         />
         <div
@@ -50,12 +51,21 @@ const ChangeForm = ({ type, register, formState }: ChangeFormProps) => {
             py: 1,
             gap: 1,
             alignItems: 'center',
-            maxW: '341px',
+            maxW: { base: 341, mdDown: 200 },
           })}
         >
           {error && <ShieldAlert size={16} className={css({ color: 'red.2', flexShrink: 0 })} />}
           {error?.message && (
-            <p className={css({ fontSize: 14, fontWeight: 400, color: 'red.2', textAlign: 'left' })}>{error.message}</p>
+            <p
+              className={css({
+                fontSize: { base: 14, mdDown: 12 },
+                fontWeight: 400,
+                color: 'red.2',
+                textAlign: 'left',
+              })}
+            >
+              {error.message}
+            </p>
           )}
         </div>
       </div>

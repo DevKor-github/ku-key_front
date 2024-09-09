@@ -8,7 +8,16 @@ const MyComments = () => {
   const { data: comments } = useGetMyComments()
 
   return (
-    <section className={css({ display: 'flex', w: 800, flexDir: 'column', pb: 200, alignItems: 'flex-start', gap: 5 })}>
+    <section
+      className={css({
+        display: 'flex',
+        w: { base: 800, mdDown: 320 },
+        flexDir: 'column',
+        pb: 200,
+        alignItems: 'flex-start',
+        gap: 5,
+      })}
+    >
       {comments !== undefined &&
         comments.map((comment, index) => {
           return (

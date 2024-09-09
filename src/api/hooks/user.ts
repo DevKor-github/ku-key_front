@@ -42,7 +42,7 @@ export const useGetMyProfile = () => {
     queryKey: ['myProfile'],
     queryFn: getMyProfile,
     initialData: {
-      name: '',
+      username: '',
       country: '',
       homeUniversity: '',
       major: '',

@@ -9,7 +9,7 @@ export type GetPointHistroyResponse = {
 }[]
 
 export interface GetMyProfileResponse {
-  name: string
+  username: string
   country: string
   homeUniversity: string
   major: string
@@ -23,7 +23,7 @@ export interface GetMyProfileResponse {
 }
 
 export interface PatchMyProfileRequest {
-  name: string
+  username: string
   country: string
   homeUniversity: string
   major: string

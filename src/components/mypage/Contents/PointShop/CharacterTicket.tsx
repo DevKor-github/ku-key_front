@@ -11,7 +11,7 @@ const COST = [200, 0, 30, 100, 200, 300, 400]
 
 const ButtonStyle = cva({
   base: {
-    fontSize: 16,
+    fontSize: { base: 16, mdDown: 11 },
     fontWeight: 600,
     bgColor: 'red.2',
     py: '3px',
@@ -73,8 +73,8 @@ const CharacterTicket = ({
         <div
           className={cx(
             css({
-              w: '189px',
-              h: '189px',
+              w: { base: '189px', mdDown: '120px' },
+              h: { base: '189px', mdDown: '120px' },
               bgColor: 'white',
               rounded: 10,
               position: 'relative',
@@ -128,7 +128,7 @@ const CharacterTicket = ({
                 zIndex: 3,
                 color: 'white',
                 textAlign: 'center',
-                fontSize: 20,
+                fontSize: { base: 20, mdDown: 12 },
                 fontWeight: 400,
                 letterSpacing: '-0.4px',
                 lineHeight: 1.1,
@@ -150,13 +150,13 @@ const CharacterTicket = ({
             <div
               className={css({
                 position: 'absolute',
-                top: 2.5,
-                left: 2.5,
+                top: { base: 2.5, mdDown: 1 },
+                left: { base: 2.5, mdDown: 1 },
                 rounded: 6,
                 bgColor: 'darkGray.1',
                 px: '9px',
                 py: '2px',
-                fontSize: 16,
+                fontSize: { base: 16, mdDown: 11 },
                 fontWeight: 600,
                 color: 'white',
                 zIndex: 3,
@@ -170,18 +170,20 @@ const CharacterTicket = ({
             <div
               className={css({
                 position: 'absolute',
-                top: 2.5,
-                right: 2.5,
+                top: { base: 2.5, mdDown: 1 },
+                right: { base: 2.5, mdDown: 1 },
                 px: '6px',
                 color: 'white',
                 display: 'flex',
                 alignItems: 'center',
-                gap: 1,
+                gap: { base: 1, mdDown: 0.25 },
                 zIndex: 3,
               })}
             >
               <img src={Sugar} alt="sugar" />
-              <span className={css({ fontSize: 18, fontWeight: 700, lineHeight: 1 })}>{COST[level]}</span>
+              <span className={css({ fontSize: { base: 18, mdDown: 11 }, fontWeight: 700, lineHeight: 1 })}>
+                {COST[level]}
+              </span>
             </div>
           )}
           {/* 구매 버튼 */}
@@ -191,7 +193,7 @@ const CharacterTicket = ({
                 ButtonStyle(),
                 css({
                   position: 'absolute',
-                  bottom: '18px',
+                  bottom: { base: '18px', mdDown: 2 },
                   left: '50%',
                   transform: 'translate3d(-50%, 0, 0)',
                   zIndex: 3,

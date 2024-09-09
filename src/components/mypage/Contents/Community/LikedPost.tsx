@@ -13,7 +13,7 @@ const LikedPost = () => {
   })
 
   return (
-    <div className={css({ display: 'flex', flexDir: 'column', gap: '50px', mb: 25, w: 610 })}>
+    <div className={css({ display: 'flex', flexDir: 'column', gap: '50px', mb: 25, w: { base: 610, mdDown: 320 } })}>
       {posts?.map(post => (
         <PostPreview
           key={post.id}

@@ -8,7 +8,7 @@ import CourseReviewTicket from '@/components/mypage/Contents/PointShop/CourseRev
 import { CharacterType } from '@/types/community'
 
 const HeadingStyle = css({
-  fontSize: 26,
+  fontSize: { base: 26, mdDown: 18 },
   fontWeight: 600,
 })
 
@@ -80,8 +80,8 @@ const Showcase = ({ myLevel, selectedLevel, myCharacterType }: ShowcaseProps) =>
             display: 'flex',
             alignItems: 'center',
             flexWrap: 'wrap',
-            columnGap: 5,
-            rowGap: 10,
+            columnGap: { base: 5, mdDown: 1 },
+            rowGap: { base: 10, mdDown: 1 },
           })}
         >
           {Array(6)
@@ -109,8 +109,9 @@ const Showcase = ({ myLevel, selectedLevel, myCharacterType }: ShowcaseProps) =>
         <div
           className={css({
             display: 'flex',
+            flexDir: { mdDown: 'column' },
             justifyContent: 'space-between',
-            alignItems: 'center',
+            alignItems: { base: 'center', mdDown: 'flex-start' },
             gap: 2.5,
           })}
         >

@@ -10,7 +10,7 @@ const CellHeaderStyle = css({
   flexShrink: 0,
   display: 'flex',
   alignItems: 'center',
-  fontSize: 24,
+  fontSize: { base: 24, mdDown: 12 },
   fontWeight: 600,
   justifyContent: 'center',
 })
@@ -20,19 +20,21 @@ const PointHistory = () => {
   const { data } = useGetPointHistory()
 
   return (
-    <div className={css({ display: 'flex', flexDir: 'column', gap: 10, maxW: '818px' })}>
+    <div className={css({ display: 'flex', flexDir: 'column', gap: 10, maxW: { base: '818px', mdDown: '400px' } })}>
       <div className={css({ display: 'flex', alignItems: 'center', gap: 2.5 })}>
-        <h1 className={css({ fontSize: 30, fontWeight: 700 })}>Point history</h1>
+        <h1 className={css({ fontSize: { base: 30, mdDown: 15 }, fontWeight: 700 })}>Point history</h1>
         <button className={css({ cursor: 'pointer' })} onClick={handleOpen}>
-          <CircleAlert />
+          <CircleAlert className={css({ mdDown: { w: '15px', h: '15px' } })} />
         </button>
       </div>
       <div className={css({ display: 'flex', flexDir: 'column' })}>
-        <div className={css({ display: 'flex', alignItems: 'center', bgColor: 'lightGray.2', py: 5 })}>
-          <span className={cx(CellHeaderStyle, css({ w: 30 }))}>Category</span>
-          <span className={cx(CellHeaderStyle, css({ flexGrow: 1 }))}>Item</span>
-          <span className={cx(CellHeaderStyle, css({ w: 21 }))}>Point</span>
-          <span className={cx(CellHeaderStyle, css({ w: 47 }))}>Date</span>
+        <div
+          className={css({ display: 'flex', alignItems: 'center', bgColor: 'lightGray.2', py: { base: 5, mdDown: 1 } })}
+        >
+          <span className={cx(CellHeaderStyle, css({ w: { base: 30, mdDown: 15 } }))}>Category</span>
+          <span className={cx(CellHeaderStyle, css({ flexGrow: 1, mdDown: { display: 'none' } }))}>Item</span>
+          <span className={cx(CellHeaderStyle, css({ w: { base: 21, mdDown: 10 } }))}>Point</span>
+          <span className={cx(CellHeaderStyle, css({ w: { base: 47, mdDown: 23 } }))}>Date</span>
         </div>
         {data.map((historyData, ind) => (
           <PointHistoryRow key={`history-${ind}`} historyData={historyData} />

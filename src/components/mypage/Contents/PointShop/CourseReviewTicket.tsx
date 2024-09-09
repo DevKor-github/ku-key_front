@@ -22,8 +22,8 @@ const CourseReviewTicket = ({ days, purchase }: CourseReviewTicketProps) => {
       <button
         className={css({
           display: 'flex',
-          p: 5,
-          gap: 5,
+          p: { base: 5, mdDown: 2 },
+          gap: { base: 5, mdDown: 2 },
           bgColor: 'white',
           rounded: 10,
           border: '{colors.lightGray.1} 1px solid',
@@ -32,20 +32,30 @@ const CourseReviewTicket = ({ days, purchase }: CourseReviewTicketProps) => {
         })}
         onClick={handleOpen}
       >
-        <div className={css({ w: 20, h: 20, bgColor: 'red.3', rounded: 5, flexShrink: 0 })} />
+        <div
+          className={css({
+            w: { base: 20, mdDown: 13 },
+            h: { base: 20, mdDown: 13 },
+            bgColor: 'red.3',
+            rounded: 5,
+            flexShrink: 0,
+          })}
+        />
         <div
           className={css({
             display: 'flex',
             flexDir: 'column',
             justifyContent: 'space-between',
-            w: '110px',
+            w: { base: '110px', mdDown: '80px' },
             alignItems: 'flex-start',
           })}
         >
-          <h3 className={css({ fontSize: 24, fontWeight: 500 })}>{days} Days</h3>
+          <h3 className={css({ fontSize: { base: 24, mdDown: 16 }, fontWeight: 500 })}>{days} Days</h3>
           <div className={css({ my: 1, display: 'flex', gap: 2, alignItems: 'center' })}>
-            <img src={Sugar} alt="sugar" className={css({ w: 6 })} />
-            <div className={css({ color: 'black', fontSize: 20, fontWeight: 600 })}>{COST[days]}</div>
+            <img src={Sugar} alt="sugar" className={css({ w: { base: 6, mdDown: 3 } })} />
+            <div className={css({ color: 'black', fontSize: { base: 20, mdDown: 12 }, fontWeight: 600 })}>
+              {COST[days]}
+            </div>
           </div>
         </div>
       </button>

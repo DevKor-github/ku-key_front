@@ -41,7 +41,7 @@ const MyPage = () => {
           }}
         >
           <UserInfo
-            name={myProfileData.name}
+            name={myProfileData.username}
             country={myProfileData.country}
             point={myProfileData.point}
             languages={myProfileData.languages}
