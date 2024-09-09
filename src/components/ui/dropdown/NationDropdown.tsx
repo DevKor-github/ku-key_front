@@ -72,8 +72,8 @@ const NationDropdown = ({ handleChange, curNation }: NationDropdownProps) => {
         {...props}
         className={css({
           px: '14px',
-          h: '46px',
           color: 'lightGray.1',
+          lineHeight: 1,
           fontSize: 16,
           fontWeight: 600,
         })}

@@ -11,20 +11,20 @@ import { Input } from '@/components/ui/input'
 
 export const ProfileFormWrapper = css({
   display: 'flex',
-  gap: 5,
+  gap: { base: 5, mdDown: 2 },
   alignItems: 'stretch',
   '& input': {
-    w: '400px',
+    w: { base: '400px', mdDown: '200px' },
   },
 })
 export const ProfileFormTitle = css({
   flexShrink: 0,
-  w: '189px',
+  w: { base: '189px', mdDown: '80px' },
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
   bgColor: 'lightGray.1',
-  fontSize: 20,
+  fontSize: { base: 20, mdDown: 12 },
   fontWeight: 700,
 })
 
@@ -62,7 +62,7 @@ const PublicProfile = ({ myProfileData: { username, country, homeUniversity, maj
   )
 
   return (
-    <div className={css({ display: 'flex', flexDir: 'column', gap: 20 })}>
+    <div className={css({ display: 'flex', flexDir: 'column', gap: { base: 20, mdDown: 5 } })}>
       <ProfileChangeHeader type="public" />
       <form className={css({ display: 'flex', flexDir: 'column', gap: 25 })} onSubmit={handleSubmit(onSubmit)}>
         <section className={css({ display: 'flex', flexDir: 'column', gap: '50px' })}>
@@ -73,7 +73,7 @@ const PublicProfile = ({ myProfileData: { username, country, homeUniversity, maj
             </div>
             <div className={ProfileFormWrapper}>
               <span className={ProfileFormTitle}>Nation</span>
-              <span className={css({ w: '400px' })}>
+              <span className={css({ w: { base: '400px', mdDown: '200px' } })}>
                 <NationDropdown curNation={watch('country')} handleChange={handleNationSelect} />
               </span>
             </div>
