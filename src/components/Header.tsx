@@ -50,6 +50,11 @@ const Header = () => {
       }
       if (!isAuthenticated) return
 
+      if (navName === 'mypage' && !authState) {
+        e.preventDefault()
+        setModalContent(HEADER_MESSAGE.NOT_VERIFIED_USER)
+        handleModalOpen()
+      }
       if (navName === 'Timetable') {
         e.preventDefault()
         authState
@@ -128,7 +133,11 @@ const Header = () => {
             })}
           >
             <NotifiWindow />
-            <Link to="/mypage" className={css({ display: 'flex', alignItems: 'center' })}>
+            <Link
+              to="/mypage"
+              className={css({ display: 'flex', alignItems: 'center' })}
+              onClick={e => handleNavClick(e, 'mypage')}
+            >
               <CircleUser size={20} />
             </Link>
           </div>
