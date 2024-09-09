@@ -52,7 +52,7 @@ const MyCommunity = () => {
     <div className={css({ display: 'flex', flexDir: 'column', gap: { base: 12, mdDown: 6 } })}>
       <h1 className={css({ fontSize: { base: 30, mdDown: 15 }, fontWeight: 700 })}>Community Storage</h1>
       <div className={css({ display: 'flex', flexDir: 'column', gap: { base: '70px', mdDown: '35px' } })}>
-        <div className={css({ display: 'flex', alignItems: 'center', gap: 3.5 })}>
+        <div className={css({ display: 'flex', alignItems: 'center', gap: 3.5, flexWrap: 'wrap' })}>
           <button className={ButtonStyle({ selected: curView === 'myPost' })} onClick={() => setCurView('myPost')}>
             My post
           </button>

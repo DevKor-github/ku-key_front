@@ -11,6 +11,7 @@ import { Input } from '@/components/ui/input'
 
 export const ProfileFormWrapper = css({
   display: 'flex',
+  flexDir: { mdDown: 'column' },
   gap: { base: 5, mdDown: 2 },
   alignItems: 'stretch',
   '& input': {
@@ -20,6 +21,7 @@ export const ProfileFormWrapper = css({
 export const ProfileFormTitle = css({
   flexShrink: 0,
   w: { base: '189px', mdDown: '80px' },
+  py: { mdDown: 1.5 },
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',

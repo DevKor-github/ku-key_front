@@ -23,10 +23,11 @@ const ChangeForm = ({ type, register, formState }: ChangeFormProps) => {
     <div
       className={css({
         display: 'flex',
+        flexDir: { mdDown: 'column' },
         justifyContent: 'space-between',
         alignItems: 'baseline',
         alignSelf: 'stretch',
-        gap: { base: 138, mdDown: 5 },
+        gap: { base: 138, mdDown: 1 },
       })}
     >
       <Label className={cx(css({ fontSize: { base: 20, mdDown: 12 }, fontWeight: 700 }))}>{labelConfig[type]}</Label>

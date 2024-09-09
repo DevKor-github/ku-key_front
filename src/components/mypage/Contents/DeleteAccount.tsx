@@ -13,9 +13,9 @@ const SectionStyle = css({
   gap: { base: 5, mdDown: 2 },
   textAlign: 'center',
   color: 'darkGray.1',
-  fontSize: { base: 18, mdDown: 12 },
+  fontSize: { base: 18, mdDown: 10 },
   '& p': {
-    fontSize: { base: 20, mdDown: 12 },
+    fontSize: { base: 20, mdDown: 10 },
     fontWeight: 600,
     letterSpacing: '-0.4px',
     color: 'black.1',
@@ -33,20 +33,22 @@ const DeleteAccount = () => {
       <h1 className={css({ fontSize: { base: 30, mdDown: 15 }, fontWeight: 700 })}>Delete Account</h1>
       <div
         className={css({
-          width: { base: 608, mdDown: 300 },
-          py: { base: 10, mdDown: 5 },
+          width: { base: 608, mdDown: 200 },
+          py: { base: 10, mdDown: 3 },
           px: { mdDown: 1 },
           display: 'flex',
           alignItems: 'center',
           flexDir: 'column',
-          gap: { base: '30px', mdDown: 4 },
+          gap: { base: '30px', mdDown: 2 },
           bgColor: 'white',
           rounded: 10,
           border: '1px solid {colors.lightGray.1}',
         })}
       >
-        <div className={css({ color: 'red.2', fontSize: { base: 30, mdDown: 18 }, fontWeight: 700 })}>WARNING</div>
-        <div className={css({ gap: 10, display: 'flex', flexDir: 'column', alignItems: 'center' })}>
+        <div className={css({ color: 'red.2', fontSize: { base: 30, mdDown: 16 }, fontWeight: 700 })}>WARNING</div>
+        <div
+          className={css({ gap: { base: 10, mdDown: 5 }, display: 'flex', flexDir: 'column', alignItems: 'center' })}
+        >
           <section className={SectionStyle}>
             <p>
               All of the following information will be deleted

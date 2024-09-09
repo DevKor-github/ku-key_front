@@ -32,7 +32,7 @@ const PointHistory = () => {
           className={css({ display: 'flex', alignItems: 'center', bgColor: 'lightGray.2', py: { base: 5, mdDown: 1 } })}
         >
           <span className={cx(CellHeaderStyle, css({ w: { base: 30, mdDown: 15 } }))}>Category</span>
-          <span className={cx(CellHeaderStyle, css({ flexGrow: 1 }))}>Item</span>
+          <span className={cx(CellHeaderStyle, css({ flexGrow: 1, mdDown: { display: 'none' } }))}>Item</span>
           <span className={cx(CellHeaderStyle, css({ w: { base: 21, mdDown: 10 } }))}>Point</span>
           <span className={cx(CellHeaderStyle, css({ w: { base: 47, mdDown: 23 } }))}>Date</span>
         </div>
