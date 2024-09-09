@@ -15,10 +15,18 @@ const Review = ({ courseName, year, semester, rate, text }: ReviewProps) => {
     <div
       className={cx(
         shadow(),
-        css({ rounded: 10, display: 'flex', flexDir: 'column', gap: 5, p: 5, pb: 10, bgColor: 'white' }),
+        css({
+          rounded: 10,
+          display: 'flex',
+          flexDir: 'column',
+          gap: { base: 5, mdDown: 2.5 },
+          p: 5,
+          pb: { base: 10, mdDown: 5 },
+          bgColor: 'white',
+        }),
       )}
     >
-      <div className={css({ color: 'black.2', fontSize: 26, fontWeight: 600 })}>{courseName}</div>
+      <div className={css({ color: 'black.2', fontSize: { base: 26, mdDown: 16 }, fontWeight: 600 })}>{courseName}</div>
       <div className={css({ fontSize: 14, fontWeight: 700, color: 'lightGray.1' })}>
         {year} {semester} semester
       </div>
