@@ -8,14 +8,14 @@ const TypeChip = ({ type }: TypeChipProps) => {
     <div
       className={cva({
         base: {
-          w: '78px',
+          w: { base: '78px', mdDown: '39px' },
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          py: '5px',
+          py: { base: '5px', mdDown: 0.5 },
           rounded: 10,
           color: 'white',
-          fontSize: 14,
+          fontSize: { base: 14, mdDown: 11 },
           fontWeight: 700,
         },
         variants: {

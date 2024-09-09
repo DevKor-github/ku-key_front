@@ -14,9 +14,22 @@ interface PointHistoryRowProps {
 const PointHistoryRow = ({ historyData }: PointHistoryRowProps) => {
   return (
     <div
-      className={css({ display: 'flex', alignItems: 'center', py: 7, borderBottom: 'solid 1px {colors.lightGray.1}' })}
+      className={css({
+        display: 'flex',
+        alignItems: 'center',
+        py: { base: 7, mdDown: 3 },
+        borderBottom: 'solid 1px {colors.lightGray.1}',
+      })}
     >
-      <span className={css({ w: 30, flexShrink: 0, display: 'flex', justifyContent: 'center', alignItems: 'center' })}>
+      <span
+        className={css({
+          w: { base: 30, mdDown: 15 },
+          flexShrink: 0,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        })}
+      >
         <TypeChip type={historyData.changePoint > 0} />
       </span>
       <span
@@ -25,7 +38,7 @@ const PointHistoryRow = ({ historyData }: PointHistoryRowProps) => {
           flexGrow: 1,
           display: 'flex',
           alignItems: 'center',
-          fontSize: 20,
+          fontSize: { base: 20, mdDown: 10 },
           fontWeight: 500,
           pl: 1,
         })}
@@ -35,11 +48,11 @@ const PointHistoryRow = ({ historyData }: PointHistoryRowProps) => {
       <span
         className={css({
           flexShrink: 0,
-          w: 21,
+          w: { base: 21, mdDown: 10 },
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          fontSize: 24,
+          fontSize: { base: 24, mdDown: 12 },
           fontWeight: 500,
         })}
       >
@@ -48,11 +61,11 @@ const PointHistoryRow = ({ historyData }: PointHistoryRowProps) => {
       <span
         className={css({
           flexShrink: 0,
-          w: 47,
+          w: { base: 47, mdDown: 23 },
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          fontSize: 20,
+          fontSize: { base: 20, mdDown: 11 },
           fontWeight: 500,
           color: 'darkGray.1',
         })}
