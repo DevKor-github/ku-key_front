@@ -1,5 +1,6 @@
 import { css, cva } from '@styled-stytem/css'
 import { useCallback, useEffect } from 'react'
+import { match } from 'ts-pattern'
 
 import { GetMyProfileResponse } from '@/api/types/user'
 import ChangePassword from '@/components/mypage/Contents/ChangePassword'
@@ -40,8 +41,9 @@ const MyPageContents = ({ myProfileData }: MyPageContentsProps) => {
         flexDir: 'row',
         gap: 5,
         width: 'full',
-        px: 38,
         pb: 33,
+        maxW: '1200px',
+        px: '60px',
       })}
     >
       <div className={css({ display: 'flex', flexDir: 'column', gap: 10, w: 47, flexShrink: 0 })}>
@@ -94,26 +96,17 @@ const MyPageContents = ({ myProfileData }: MyPageContentsProps) => {
         </nav>
       </div>
       <div className={css({ flexGrow: 1 })}>
-        {(() => {
-          switch (curPage) {
-            case 'point-history':
-              return <PointHistory />
-            case 'community':
-              return <MyCommunity />
-            case 'course-review':
-              return <MyCourseReview />
-            case 'public-profile':
-              return <PublicProfile myProfileData={myProfileData} />
-            case 'exchange-profile':
-              return <ExchangeProfile myProfileData={myProfileData} />
-            case 'password':
-              return <ChangePassword />
-            case 'delete-account':
-              return <DeleteAccount />
-            default:
-              return <MyPoint myProfileData={myProfileData} />
-          }
-        })()}
+        {match(curPage)
+          .with('point-history', () => <PointHistory />)
+          .with('community', () => <MyCommunity />)
+          .with('course-review', () => <MyCourseReview />)
+          .with('public-profile', () => <PublicProfile myProfileData={myProfileData} />)
+          .with('exchange-profile', () => <ExchangeProfile myProfileData={myProfileData} />)
+          .with('password', () => <ChangePassword />)
+          .with('delete-account', () => <DeleteAccount />)
+          .otherwise(() => (
+            <MyPoint myProfileData={myProfileData} />
+          ))}
       </div>
     </div>
   )
