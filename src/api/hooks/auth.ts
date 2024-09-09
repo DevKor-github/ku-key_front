@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 
 import { LoginRequest, LoginResponse } from '@/api/types/auth'
@@ -57,4 +57,13 @@ export const useCheckPassword = () => {
   return useMutation({
     mutationFn: checkPassword,
   })
+}
+
+const checkVerfied = async () => {
+  const response = await apiInterface.get<boolean>('/auth/is-verified')
+  return response.data
+}
+
+export const useCheckVerified = (required: boolean) => {
+  return useQuery({ queryKey: ['user-verified'], queryFn: checkVerfied, retry: 0, enabled: required })
 }
