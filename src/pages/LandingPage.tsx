@@ -1,5 +1,15 @@
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+
 const LandingPage = () => {
-  return <div>랜딩 페이지입니다</div>
+  const navigate = useNavigate()
+
+  // todo: Landing Page 구현
+  useEffect(() => {
+    navigate('/home')
+  }, [navigate])
+
+  return <div></div>
 }
 
 export default LandingPage
