@@ -43,7 +43,13 @@ const Header = () => {
 
   const handleNavClick = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, navName: string) => {
+      if (navName === '1:1 Matching') {
+        e.preventDefault()
+        setModalContent(HEADER_MESSAGE.NOT_READY)
+        handleModalOpen()
+      }
       if (!isAuthenticated) return
+
       if (navName === 'Timetable') {
         e.preventDefault()
         authState
@@ -55,10 +61,6 @@ const Header = () => {
       } else if (navName === 'Community' && !authState) {
         e.preventDefault()
         setModalContent(HEADER_MESSAGE.NOT_VERIFIED_USER)
-        handleModalOpen()
-      } else if (navName === '1:1 Matching') {
-        e.preventDefault()
-        setModalContent(HEADER_MESSAGE.NOT_READY)
         handleModalOpen()
       }
     },
