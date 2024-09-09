@@ -10,12 +10,12 @@ const SectionStyle = css({
   display: 'flex',
   flexDir: 'column',
   alignItems: 'center',
-  gap: 5,
+  gap: { base: 5, mdDown: 2 },
   textAlign: 'center',
   color: 'darkGray.1',
-  fontSize: 18,
+  fontSize: { base: 18, mdDown: 12 },
   '& p': {
-    fontSize: 20,
+    fontSize: { base: 20, mdDown: 12 },
     fontWeight: 600,
     letterSpacing: '-0.4px',
     color: 'black.1',
@@ -29,22 +29,23 @@ const DeleteAccount = () => {
   const handleDelete = useCallback(() => deleteUser(), [deleteUser])
 
   return (
-    <div className={css({ display: 'flex', gap: 15, flexDir: 'column', alignItems: 'center' })}>
-      <h1 className={css({ fontSize: 30, fontWeight: 700 })}>Delete Account</h1>
+    <div className={css({ display: 'flex', gap: { base: 15, mdDown: 5 }, flexDir: 'column', alignItems: 'center' })}>
+      <h1 className={css({ fontSize: { base: 30, mdDown: 15 }, fontWeight: 700 })}>Delete Account</h1>
       <div
         className={css({
-          width: '608px',
-          py: 10,
+          width: { base: 608, mdDown: 300 },
+          py: { base: 10, mdDown: 5 },
+          px: { mdDown: 1 },
           display: 'flex',
           alignItems: 'center',
           flexDir: 'column',
-          gap: '30px',
+          gap: { base: '30px', mdDown: 4 },
           bgColor: 'white',
           rounded: 10,
           border: '1px solid {colors.lightGray.1}',
         })}
       >
-        <div className={css({ color: 'red.2', fontSize: 30, fontWeight: 700 })}>WARNING</div>
+        <div className={css({ color: 'red.2', fontSize: { base: 30, mdDown: 18 }, fontWeight: 700 })}>WARNING</div>
         <div className={css({ gap: 10, display: 'flex', flexDir: 'column', alignItems: 'center' })}>
           <section className={SectionStyle}>
             <p>
