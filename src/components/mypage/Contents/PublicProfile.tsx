@@ -29,7 +29,7 @@ export const ProfileFormTitle = css({
 })
 
 export interface PublicProfileForm {
-  name: string
+  username: string
   country: string
   homeUniversity: string
   major: string
@@ -37,14 +37,14 @@ export interface PublicProfileForm {
 interface PublicProfileProps {
   myProfileData: GetMyProfileResponse
 }
-const PublicProfile = ({ myProfileData: { name, country, homeUniversity, major } }: PublicProfileProps) => {
+const PublicProfile = ({ myProfileData: { username, country, homeUniversity, major } }: PublicProfileProps) => {
   const { register, handleSubmit, setValue, watch } = useForm<PublicProfileForm>()
   useEffect(() => {
-    setValue('name', name)
+    setValue('username', username)
     setValue('country', country)
     setValue('homeUniversity', homeUniversity)
     setValue('major', major)
-  }, [name, country, homeUniversity, major, setValue])
+  }, [username, country, homeUniversity, major, setValue])
 
   const { mutate: patchProfile } = usePatchMyProfile()
 
@@ -68,8 +68,8 @@ const PublicProfile = ({ myProfileData: { name, country, homeUniversity, major }
         <section className={css({ display: 'flex', flexDir: 'column', gap: '50px' })}>
           <div className={css({ display: 'flex', flexDir: 'column', gap: 2.5 })}>
             <div className={ProfileFormWrapper}>
-              <span className={ProfileFormTitle}>Name</span>
-              <Input placeholder={name} {...register('name', { required: true })} />
+              <span className={ProfileFormTitle}>Username</span>
+              <Input placeholder={username} {...register('username', { required: true })} />
             </div>
             <div className={ProfileFormWrapper}>
               <span className={ProfileFormTitle}>Nation</span>

@@ -10,7 +10,7 @@ interface MyPointProps {
 const MyPoint = ({ myProfileData }: MyPointProps) => {
   return (
     <div className={css({ display: 'flex', flexDir: 'column', gap: 25, maxW: '818px' })}>
-      <PointStatus name={myProfileData.name} point={myProfileData.point} />
+      <PointStatus name={myProfileData.username} point={myProfileData.point} />
       <Showcase
         myLevel={myProfileData.level}
         selectedLevel={myProfileData.selectedLevel}
