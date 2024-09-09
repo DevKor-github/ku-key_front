@@ -44,7 +44,7 @@ const DeleteAccount = () => {
           border: '1px solid {colors.lightGray.1}',
         })}
       >
-        <div className={css({ color: 'red.2', fontSize: 30, fontWeight: 700 })}>warning</div>
+        <div className={css({ color: 'red.2', fontSize: 30, fontWeight: 700 })}>WARNING</div>
         <div className={css({ gap: 10, display: 'flex', flexDir: 'column', alignItems: 'center' })}>
           <section className={SectionStyle}>
             <p>

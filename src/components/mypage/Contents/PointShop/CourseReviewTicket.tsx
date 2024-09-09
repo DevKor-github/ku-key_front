@@ -1,5 +1,6 @@
 import { css } from '@styled-stytem/css'
 
+import Sugar from '@/assets/Sugar_md.png'
 import AlertModal from '@/components/ui/modal/AlertModal'
 import { useModal } from '@/util/useModal'
 
@@ -27,6 +28,7 @@ const CourseReviewTicket = ({ days, purchase }: CourseReviewTicketProps) => {
           rounded: 10,
           border: '{colors.lightGray.1} 1px solid',
           cursor: 'pointer',
+          alignItems: 'stretch',
         })}
         onClick={handleOpen}
       >
@@ -41,9 +43,9 @@ const CourseReviewTicket = ({ days, purchase }: CourseReviewTicketProps) => {
           })}
         >
           <h3 className={css({ fontSize: 24, fontWeight: 500 })}>{days} Days</h3>
-          <div className={css({ my: 1, display: 'flex', gap: 3, alignItems: 'center' })}>
-            <div className={css({ w: 6, h: 6, bgColor: 'red.3', rounded: 'full' })} />
-            <div className={css({ color: 'red.1', fontSize: 20, fontWeight: 600 })}>{COST[days]}</div>
+          <div className={css({ my: 1, display: 'flex', gap: 2, alignItems: 'center' })}>
+            <img src={Sugar} alt="sugar" className={css({ w: 6 })} />
+            <div className={css({ color: 'black', fontSize: 20, fontWeight: 600 })}>{COST[days]}</div>
           </div>
         </div>
       </button>
