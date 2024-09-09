@@ -41,6 +41,9 @@ const PointHistoryRow = ({ historyData }: PointHistoryRowProps) => {
           fontSize: { base: 20, mdDown: 10 },
           fontWeight: 500,
           pl: 1,
+          mdDown: {
+            display: 'none',
+          },
         })}
       >
         {historyData.history}
