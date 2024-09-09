@@ -1,4 +1,5 @@
 import { css } from '@styled-stytem/css'
+import { useEffect } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { Outlet } from 'react-router-dom'
 
@@ -10,7 +11,9 @@ import { useAuth } from '@/util/auth/useAuth'
 const MainLayout = () => {
   const { isAuthenticated, authState, setVerified } = useAuth()
   const { data: verified } = useCheckVerified(isAuthenticated && !authState)
-  verified && setVerified()
+  useEffect(() => {
+    verified && setVerified()
+  }, [verified, setVerified])
   return (
     <div className={css({ display: 'flex', flexDir: 'column', h: '100vh' })}>
       <Helmet>
