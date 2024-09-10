@@ -84,7 +84,7 @@ const Footer = () => {
             fontWeight: '500',
           })}
         >
-          Copyright ⓒ 2024 KU-key RUN. All Rights Reserved.
+          dev 서버 테스트용
         </div>
       </div>
       <div
