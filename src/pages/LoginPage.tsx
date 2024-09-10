@@ -58,7 +58,7 @@ const Login = () => {
         <div
           className={css({ pos: 'absolute', w: 'full', h: '500px', top: 0, zIndex: 1 })}
           style={{
-            backgroundImage: `url(${import.meta.env.VITE_API_AWS_S3_BUCKET}/fe/loginPageBanner.webp)`,
+            backgroundImage: `url(${import.meta.env.VITE_API_AWS_S3_BUCKET}/fe/loginBanner.webp)`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
