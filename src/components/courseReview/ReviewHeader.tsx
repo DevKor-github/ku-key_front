@@ -1,5 +1,8 @@
-import { css } from '@styled-stytem/css'
+import { css, cva } from '@styled-stytem/css'
+import { useCallback } from 'react'
 import { Link } from 'react-router-dom'
+
+import { useGetCheckSubmission } from '@/api/hooks/courseReview'
 
 interface ReviewHeaderProps {
   courseCode: string
@@ -7,14 +10,27 @@ interface ReviewHeaderProps {
   prof: string
 }
 const ReviewHeader = ({ courseCode, courseName, prof }: ReviewHeaderProps) => {
+  const { data: isReviewed } = useGetCheckSubmission({ courseCode, professorName: prof })
+
+  const handleClick = useCallback(
+    (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+      if (isReviewed) {
+        event.preventDefault()
+      }
+    },
+    [isReviewed],
+  )
+
   return (
-    <div className={css({ display: 'flex', justifyContent: 'space-between', alignItems: 'center' })}>
+    <div className={css({ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 5 })}>
       <div
         className={css({
           display: 'flex',
           gap: 5,
           alignItems: 'center',
-          maxW: '75%',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
         })}
       >
         <span
@@ -42,20 +58,33 @@ const ReviewHeader = ({ courseCode, courseName, prof }: ReviewHeaderProps) => {
         </span>
       </div>
       <Link
-        // TODO: 이미 작성한 사람이면 막아놓기
         to={`/course-review/write/${courseCode}/${prof}`}
-        className={css({
-          bgColor: 'red.2',
-          color: 'white',
-          fontWeight: 700,
-          fontSize: 12,
-          px: 2.5,
-          py: 1,
-          rounded: 'full',
-          cursor: 'pointer',
-        })}
+        onClick={handleClick}
+        className={cva({
+          base: {
+            color: 'white',
+            fontWeight: 700,
+            fontSize: 12,
+            px: 2.5,
+            py: 1,
+            rounded: 'full',
+            flexShrink: 0,
+          },
+          variants: {
+            isReviewed: {
+              true: {
+                bgColor: 'darkGray.2',
+                cursor: 'default',
+              },
+              false: {
+                bgColor: 'red.2',
+                cursor: 'pointer',
+              },
+            },
+          },
+        })({ isReviewed })}
       >
-        Write your Review
+        {isReviewed ? 'Already wrote Review' : 'Write your Review'}
       </Link>
     </div>
   )

@@ -79,3 +79,16 @@ export const useGetMyReview = () => {
     initialData: [],
   })
 }
+
+const getCheckSubmission = async (props: GetReviewSummaryRequest) => {
+  const response = await apiInterface.get<boolean>('/course-review/check-submission', { params: props })
+  return response.data
+}
+
+export const useGetCheckSubmission = (props: GetReviewSummaryRequest) => {
+  return useQuery({
+    queryKey: ['reviewSubmission', props],
+    queryFn: () => getCheckSubmission(props),
+    initialData: false,
+  })
+}

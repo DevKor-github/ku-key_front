@@ -76,7 +76,7 @@ const ReviewPage = () => {
   }, [isError, error, isFetching, navigate])
 
   return (
-    <div className={css({ flexGrow: 1, display: 'flex', flexDir: 'column', gap: 12 })}>
+    <div className={css({ flexGrow: 1, display: 'flex', flexDir: 'column', gap: 12, maxW: '820px' })}>
       <div className={css({ display: 'flex', flexDir: 'column', gap: 2.5 })}>
         <div className={css({ display: 'flex', gap: 2.5, color: 'darkGray.2', alignItems: 'center' })}>
           <span className={css({ fontSize: 18 })}>{totalData.totalRate.toFixed(1)}</span>

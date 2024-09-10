@@ -13,7 +13,7 @@ const ReviewDetailPage = () => {
   const data = useLocation().state as ReviewType
   const infoData = useAtomValue(courseSummary)
   return (
-    <div className={css({ flexGrow: 1, display: 'flex', flexDir: 'column', gap: 12 })}>
+    <div className={css({ flexGrow: 1, display: 'flex', flexDir: 'column', gap: 12, maxW: '820px' })}>
       <Review
         courseName={infoData.courseName}
         year={data.year}
