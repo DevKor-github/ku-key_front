@@ -38,6 +38,8 @@ const Review = ({ courseName, year, semester, rate, text }: ReviewProps) => {
         className={css({
           color: 'darkGray.1',
           fontSize: 14,
+          wordBreak: 'keep-all',
+          overflowWrap: 'anywhere',
         })}
       >
         {text}
