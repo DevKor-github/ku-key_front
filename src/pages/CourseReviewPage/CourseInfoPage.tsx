@@ -10,7 +10,7 @@ const CourseInfoPage = () => {
   const data = useAtomValue(courseSummary)
 
   return (
-    <div className={css({ flexGrow: 1, display: 'flex', flexDir: 'column', gap: 10 })}>
+    <div className={css({ flexGrow: 1, display: 'flex', flexDir: 'column', gap: 10, maxW: '820px' })}>
       <ReviewHeader courseCode={data.courseCode} courseName={data.courseName} prof={data.prof} />
       <TotalRate
         totalRate={data.totalRate}

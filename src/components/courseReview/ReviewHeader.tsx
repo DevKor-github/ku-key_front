@@ -22,13 +22,15 @@ const ReviewHeader = ({ courseCode, courseName, prof }: ReviewHeaderProps) => {
   )
 
   return (
-    <div className={css({ display: 'flex', justifyContent: 'space-between', alignItems: 'center' })}>
+    <div className={css({ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 5 })}>
       <div
         className={css({
           display: 'flex',
           gap: 5,
           alignItems: 'center',
-          maxW: '75%',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
         })}
       >
         <span
@@ -66,6 +68,7 @@ const ReviewHeader = ({ courseCode, courseName, prof }: ReviewHeaderProps) => {
             px: 2.5,
             py: 1,
             rounded: 'full',
+            flexShrink: 0,
           },
           variants: {
             isReviewed: {
