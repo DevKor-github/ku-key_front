@@ -11,9 +11,9 @@ interface BoardBannerProps {
 }
 
 const BoardImgConfig: Record<string, string> = {
-  community: `${import.meta.env.VITE_API_AWS_S3_BUCKET}/fe/community/communityBanner.jpg`,
-  information: `${import.meta.env.VITE_API_AWS_S3_BUCKET}/fe/community/informationBanner.jpg`,
-  question: `${import.meta.env.VITE_API_AWS_S3_BUCKET}/fe/community/questionBanner.jpg`,
+  community: `${import.meta.env.VITE_API_AWS_S3_BUCKET}/fe/community/communityBanner.webp`,
+  information: `${import.meta.env.VITE_API_AWS_S3_BUCKET}/fe/community/informationBanner.webp`,
+  question: `${import.meta.env.VITE_API_AWS_S3_BUCKET}/fe/community/questionBanner.webp`,
 }
 const BoardBanner = ({ boardName, boardDescription }: BoardBannerProps) => {
   const navigate = useNavigate()
