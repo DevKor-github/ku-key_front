@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 
 import { useLogIn } from '@/api/hooks/auth'
-import LoginPageBg from '@/assets/LoginBanner.webp'
 import Button from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
@@ -58,7 +57,11 @@ const Login = () => {
         <title>Login Page</title>
         <div
           className={css({ pos: 'absolute', w: 'full', h: '500px', top: 0, zIndex: 1 })}
-          style={{ backgroundImage: `url(${LoginPageBg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+          style={{
+            backgroundImage: `url(${import.meta.env.VITE_API_AWS_S3_BUCKET}/fe/loginPageBanner.webp)`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
         />
         <Form {...loginForm}>
           <form

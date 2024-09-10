@@ -1,7 +1,6 @@
 import { css, cx } from '@styled-stytem/css'
 import { globalLayout } from '@styled-stytem/recipes'
 
-import BackgroundImage from '@/assets/CommunityBG.jpg'
 import HotBoard from '@/components/community/HotBoard'
 import HotBoardHorizontalPreview from '@/components/community/HotBoard/HotBoardHorizontalPreview'
 import RecentPreview from '@/components/community/RecentPreview'
@@ -25,12 +24,11 @@ const HotBoardPage = () => {
             globalLayout(),
             css({
               h: 400,
-              mt: '50px',
               mb: '50px',
             }),
           )}
           style={{
-            backgroundImage: `url(${BackgroundImage})`,
+            backgroundImage: `url(${import.meta.env.VITE_API_AWS_S3_BUCKET}/fe/community/hotBoardBanner.webp)`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}

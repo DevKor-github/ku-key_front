@@ -1,7 +1,6 @@
 import { css } from '@styled-stytem/css'
 
 import { useGetMyProfile } from '@/api/hooks/user'
-import MypageBG from '@/assets/MypageBG.png'
 import DueDateCard from '@/components/mypage/DueDateCard'
 import MyPageContents from '@/components/mypage/MyPageContents'
 import MypageWrapper from '@/components/mypage/MypageWrapper'
@@ -35,7 +34,7 @@ const MyPage = () => {
             position: 'relative',
           })}
           style={{
-            backgroundImage: `url(${MypageBG})`,
+            backgroundImage: `url(${import.meta.env.VITE_API_AWS_S3_BUCKET}/fe/myPageBanner.webp)`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
