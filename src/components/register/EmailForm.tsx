@@ -16,7 +16,7 @@ const EmailForm = memo(({ form, handleValidation, valid }: RegisterFormProps<'em
   const { mutate: mutateCheckEmailDuplication } = useCheckEmailDuplication()
 
   const { mutate: mutateSendEmail } = useSendEmail()
-  const { mutate: muatateVerifyEmail } = useVerifyEmail()
+  const { mutate: mutateVerifyEmail } = useVerifyEmail()
 
   const handleEmailDuplicationCheck = () => {
     mutateCheckEmailDuplication(form.getValues().email, {
@@ -30,8 +30,8 @@ const EmailForm = memo(({ form, handleValidation, valid }: RegisterFormProps<'em
     })
   }
 
-  const handleEamilVerification = () => {
-    muatateVerifyEmail(
+  const handleEmailVerification = () => {
+    mutateVerifyEmail(
       { email: form.getValues().email, verifyToken: parseInt(form.getValues().emailCode) },
       {
         onSuccess: () => {
@@ -45,7 +45,7 @@ const EmailForm = memo(({ form, handleValidation, valid }: RegisterFormProps<'em
 
   const guideMessage = () => {
     if (emailSent) return 'Email has been sent to your gmail account'
-    if (!form.getFieldState('email').invalid) return 'Type in your gmail account'
+    if (!form.getFieldState('email').invalid) return 'Type in your email'
   }
 
   return (
@@ -179,7 +179,7 @@ const EmailForm = memo(({ form, handleValidation, valid }: RegisterFormProps<'em
                     }
                     type="button"
                     variant="input"
-                    onClick={handleEamilVerification}
+                    onClick={handleEmailVerification}
                     disabled={
                       form.getValues('emailCode') === '' ||
                       form.getFieldState('emailCode').invalid ||

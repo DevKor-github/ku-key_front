@@ -5,7 +5,7 @@ export const PasswordSchema = z
   .min(10, { message: 'password must be at least 10 characters long.' })
   .max(20, { message: 'password must be at most 20 characters long.' })
   .regex(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]+$/, {
-    message: 'password must include alphabet, numbers, and special sysmbols (e.g., !@#$%^&*).',
+    message: 'password must include alphabet, numbers, and special symbols (e.g., !@#$%^&*).',
   })
   .refine(value => value !== '', { message: 'This field is required.' })
 
@@ -13,9 +13,8 @@ export const RegisterFormSchema = {
   step1: z.object({
     email: z
       .string()
-      .min(2, { message: 'This field is required' })
-      .refine(value => value !== '', { message: 'This field is required.' })
-      .refine(value => value.includes('@gmail.com'), { message: 'should type in gmail account' }),
+      .email({ message: 'wrong email form' })
+      .refine(value => value !== '', { message: 'This field is required.' }),
     emailCode: z.string().refine(value => value !== '', { message: 'This field is required.' }),
   }),
   step2: z.object({
