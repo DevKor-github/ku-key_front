@@ -4,15 +4,15 @@ import useEmblaCarousel, { UseEmblaCarouselType } from 'embla-carousel-react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 
-import BannerFive from '@/assets/BannerFive.png'
-import BannerFour from '@/assets/BannerFour.png'
-import BannerOne from '@/assets/BannerOne.png'
-import BannerSix from '@/assets/BannerSix.png'
-import BannerThree from '@/assets/BannerThree.png'
-import BannerTwo from '@/assets/BannerTwo.png'
 import PlayIcon from '@/assets/play.svg'
 // import CarouselCard from '@/components/home/Carousel/CarouselCard'
 import { usePrevNextButtons } from '@/util/carousel-button'
+
+const BannerOne = `${import.meta.env.VITE_API_AWS_S3_BUCKET}/fe/home/banner1.webp`
+const BannerTwo = `${import.meta.env.VITE_API_AWS_S3_BUCKET}/fe/home/banner2.webp`
+const BannerThree = `${import.meta.env.VITE_API_AWS_S3_BUCKET}/fe/home/banner3.webp`
+const BannerFour = `${import.meta.env.VITE_API_AWS_S3_BUCKET}/fe/home/banner4.webp`
+const BannerFive = `${import.meta.env.VITE_API_AWS_S3_BUCKET}/fe/home/banner5.webp`
 
 const HomeCarousel = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: 'center' }, [Autoplay()])
@@ -52,7 +52,7 @@ const HomeCarousel = () => {
           <img src={BannerThree} alt="banner-three" className={css({ w: '608px', ml: 5, flex: '0 0 20%' })} />
           <img src={BannerFour} alt="banner-four" className={css({ w: '608px', ml: 5, flex: '0 0 20%' })} />
           <img src={BannerFive} alt="banner-five" className={css({ w: '608px', ml: 5, flex: '0 0 20%' })} />
-          <img src={BannerSix} alt="banner-six" className={css({ w: '608px', ml: 5, flex: '0 0 20%' })} />
+          {/* <img src={BannerSix} alt="banner-six" className={css({ w: '608px', ml: 5, flex: '0 0 20%' })} /> */}
         </div>
       </div>
       <div
