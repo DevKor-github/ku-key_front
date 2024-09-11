@@ -30,6 +30,7 @@ export const ProfileFormTitle = css({
   bgColor: 'lightGray.1',
   fontSize: { base: 20, mdDown: 12 },
   fontWeight: 700,
+  h: '39px',
 })
 
 export interface PublicProfileForm {
@@ -111,7 +112,7 @@ const PublicProfile = ({
           </div>
           <div className={ProfileFormWrapper}>
             <span className={ProfileFormTitle}>Language</span>
-            <span className={css({ w: '400px' })}>
+            <span className={css({ w: { base: '400px', mdDown: '200px' } })}>
               <LanguageDropdown curLanguage={watch('languages')} handleChange={handleLanguageSelect} />
             </span>
           </div>

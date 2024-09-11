@@ -32,13 +32,13 @@ const DropdownStyle: StylesConfig<LanguageOption, false, GroupBase<LanguageOptio
     ...baseStyles,
     border: '1px solid #D9D9D9',
     borderRadius: '10px',
-    paddingLeft: '14px',
-    height: '39px',
+    height: 'fit-content',
+    minHeight: '39px',
   }),
   valueContainer: base => ({
     ...base,
-    overflowX: 'scroll',
-    flexWrap: 'unset',
+    // overflowX: 'scroll',
+    // flexWrap: 'unset',
     '::-webkit-scrollbar': { display: 'none' },
     paddingLeft: 0,
   }),
@@ -125,8 +125,7 @@ const LanguageDropdown = ({ handleChange, curLanguage }: LanguageDropdownProps) 
       <components.Control
         {...props}
         className={css({
-          pr: '14px',
-          h: '46px',
+          px: '14px',
           color: 'lightGray.1',
           fontSize: 16,
           fontWeight: 600,
