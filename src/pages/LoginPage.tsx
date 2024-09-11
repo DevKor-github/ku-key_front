@@ -54,6 +54,7 @@ const Login = () => {
           alignItems: 'center',
           bgColor: 'lightGray.2',
           // pt: 40,
+          py: 5,
         })}
       >
         <title>Login Page</title>
