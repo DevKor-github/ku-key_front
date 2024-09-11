@@ -11,7 +11,11 @@ import Select, {
 } from 'react-select'
 
 import { Language, LanguageLabel, LanguageMap } from '@/lib/constants/language'
-import getKeyByValue from '@/util/getKeyByValue'
+
+type ThemeType =
+  | { bgColor: '#E70000'; color: '#FFFFFF' }
+  | { bgColor: '#FFC2AF'; color: '#E70000' }
+  | { bgColor: '#F37979'; color: '#FFFFFF' }
 
 function isMultiValue<T>(arg: MultiValue<T> | SingleValue<T>): arg is MultiValue<T> {
   return Array.isArray(arg)
@@ -20,6 +24,7 @@ function isMultiValue<T>(arg: MultiValue<T> | SingleValue<T>): arg is MultiValue
 interface LanguageOption {
   readonly value: Language
   readonly label: LanguageLabel
+  theme?: ThemeType
 }
 
 const DropdownStyle: StylesConfig<LanguageOption, false, GroupBase<LanguageOption>> = {
@@ -27,15 +32,29 @@ const DropdownStyle: StylesConfig<LanguageOption, false, GroupBase<LanguageOptio
     ...baseStyles,
     border: '1px solid #D9D9D9',
     borderRadius: '10px',
+    paddingLeft: '14px',
+    height: '39px',
   }),
   valueContainer: base => ({
     ...base,
     overflowX: 'scroll',
     flexWrap: 'unset',
+    '::-webkit-scrollbar': { display: 'none' },
+    paddingLeft: 0,
   }),
-  multiValue: base => ({
+  multiValue: (base, { data }) => ({
     ...base,
     flex: '0 0 auto',
+    backgroundColor: data.theme?.bgColor,
+  }),
+  multiValueLabel: (styles, { data }) => ({
+    ...styles,
+    color: data.theme?.color,
+  }),
+  multiValueRemove: (styles, { data }) => ({
+    ...styles,
+    color: data.theme?.color,
+    ':hover': undefined,
   }),
   placeholder: baseStyles => ({
     ...baseStyles,
@@ -55,12 +74,19 @@ const DropdownStyle: StylesConfig<LanguageOption, false, GroupBase<LanguageOptio
   dropdownIndicator: baseStyles => ({
     ...baseStyles,
     color: '#D9D9D9',
+    display: 'none',
   }),
   indicatorSeparator: baseStyles => ({
     ...baseStyles,
     display: 'none',
   }),
 }
+
+const THEME_ARRAY: ThemeType[] = [
+  { bgColor: '#E70000', color: '#FFFFFF' },
+  { bgColor: '#FFC2AF', color: '#E70000' },
+  { bgColor: '#F37979', color: '#FFFFFF' },
+]
 
 interface LanguageDropdownProps {
   handleChange: (languages: Language[]) => void
@@ -135,8 +161,12 @@ const LanguageDropdown = ({ handleChange, curLanguage }: LanguageDropdownProps) 
     <Select
       value={
         curLanguage
-          ? curLanguage.map(lang => {
-              return { value: lang, label: getKeyByValue(LanguageMap, lang) } as LanguageOption
+          ? curLanguage.map((lang, index) => {
+              return {
+                value: lang,
+                label: lang.toUpperCase(),
+                theme: THEME_ARRAY[index % THEME_ARRAY.length],
+              } as LanguageOption
             })
           : undefined
       }

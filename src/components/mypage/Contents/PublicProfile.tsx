@@ -42,7 +42,9 @@ export interface PublicProfileForm {
 interface PublicProfileProps {
   myProfileData: GetMyProfileResponse
 }
-const PublicProfile = ({ myProfileData: { username, country, homeUniversity, major, languages } }: PublicProfileProps) => {
+const PublicProfile = ({
+  myProfileData: { username, country, homeUniversity, major, languages },
+}: PublicProfileProps) => {
   const { register, handleSubmit, setValue, watch } = useForm<PublicProfileForm>()
   useEffect(() => {
     setValue('username', username)
