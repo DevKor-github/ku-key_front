@@ -2,7 +2,6 @@ import { css } from '@styled-stytem/css'
 import { useCallback, useState } from 'react'
 
 import { useGetAcademicCalendar } from '@/api/hooks/home_sub'
-import AcademicBGImg from '@/assets/AcademicBGImg.png'
 import koreaUniv from '@/assets/koreaUniv.png'
 import AcademicCalendar from '@/components/home_sub/AcademicCalendar'
 import Dropdown from '@/components/timetable/Dropdown'
@@ -42,7 +41,7 @@ const SchedulePage = () => {
           alignItems: 'center',
           position: 'relative',
         })}
-        style={{ backgroundImage: `url(${AcademicBGImg})` }}
+        style={{ backgroundImage: `url(${import.meta.env.VITE_API_AWS_S3_BUCKET}/fe/home/scheduleBanner.webp)` }}
       >
         Academic Schedule
       </div>

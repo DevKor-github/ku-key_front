@@ -4,7 +4,6 @@ import { memo, useCallback, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useRegister } from '@/api/hooks/register'
-import LoginPageBg from '@/assets/LoginPageBG.jpg'
 import CredentialForm from '@/components/register/CredentialForm'
 import EmailForm from '@/components/register/EmailForm'
 import Progress from '@/components/register/Progress'
@@ -109,7 +108,11 @@ const RegisterPage = memo(() => {
       >
         <div
           className={css({ pos: 'absolute', w: 'full', h: '500px', top: 0, zIndex: 1 })}
-          style={{ backgroundImage: `url(${LoginPageBg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+          style={{
+            backgroundImage: `url(${import.meta.env.VITE_API_AWS_S3_BUCKET}/fe/signUpBanner.webp)`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
         />
         <title>Register Page</title>
         <section
