@@ -56,7 +56,7 @@ const LectureSticker = ({ timetableId, data, bgColor, isMine }: LectureStickerPr
   const { mutate: deleteSchedule } = useDeleteSchedule()
 
   const handleCoursePlanClick = useCallback(() => {
-    window.open(syllabus!, 'rel=noopener noreferrer')
+    window.open(syllabus!, '_blank', 'noopener,noreferrer')
     setIsModalOpen(false)
     setIsSheetOpend(true)
   }, [syllabus, setIsSheetOpend])

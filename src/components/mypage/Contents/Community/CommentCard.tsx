@@ -17,7 +17,7 @@ const CommentCard = ({ comment }: CommentCardProps) => {
   const { isOpen: modalOpen, handleOpen } = useModal(true)
 
   const handleNavigate = useCallback(() => {
-    window.open(`/community/community/post/${comment.postId}`, '_blank')
+    window.open(`/community/community/post/${comment.postId}`, '_blank', 'noopener,noreferrer')
   }, [comment.postId])
 
   return (
