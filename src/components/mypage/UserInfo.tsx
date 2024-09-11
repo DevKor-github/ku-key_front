@@ -1,5 +1,4 @@
 import { css } from '@styled-stytem/css'
-import { ConditionalValue } from '@styled-stytem/types'
 import { hasFlag } from 'country-flag-icons'
 import getUnicodeFlagIcon from 'country-flag-icons/unicode'
 import { findByAlpha2 } from 'iso-3166-1-ts'
@@ -16,7 +15,7 @@ interface UserInfoProps {
   homeUniversity: string
 }
 const UserInfo = ({ name, country, point, languages, homeUniversity }: UserInfoProps) => {
-  const variantsArray: ConditionalValue<'default' | 'red3' | 'red4'>[] = ['default', 'red3', 'red4']
+  const variantsArray: ('default' | 'red3' | 'red4')[] = ['default', 'red3', 'red4']
   return (
     <div
       className={css({
