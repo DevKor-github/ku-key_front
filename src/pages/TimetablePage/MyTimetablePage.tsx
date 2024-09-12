@@ -1,12 +1,17 @@
 import { css } from '@styled-stytem/css'
+import { useAtomValue } from 'jotai'
 import { useCallback, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
+import { match } from 'ts-pattern'
 
 import { useDeleteTimetable, useGetUserTimetableList } from '@/api/hooks/timetable'
 import Timetable from '@/components/timetable'
 import ShareBtn from '@/components/timetable/Button/ShareBtn'
 import Dropdown from '@/components/timetable/Dropdown'
+import LectureBottomSheet from '@/components/timetable/LectureBottomSheet'
 import NullTimetable from '@/components/timetable/NullTimetable'
 import StatusBar from '@/components/timetable/StatusBar'
+import { isBottomSheetVisible } from '@/lib/store/bottomSheet'
 import { convertHtmlToImage, makeSemesterDropdownList, timetablePreprocess } from '@/util/timetableUtil'
 
 const MyTimetablePage = () => {
@@ -16,6 +21,10 @@ const MyTimetablePage = () => {
   const imgRef = useRef<HTMLDivElement>(null)
   const [curSemester, setCurSemester] = useState(2)
   const [curIndex, setCurIndex] = useState(0)
+
+  const isSheetVisible = useAtomValue(isBottomSheetVisible)
+  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false)
+  const [sheetState, setSheetState] = useState<'class' | 'schedule' | null>(null)
 
   const semesterList = timetablePreprocess(timetableList)
 
@@ -42,6 +51,27 @@ const MyTimetablePage = () => {
     [setCurIndex, deleteTimetable, curIndex],
   )
 
+  const handleDrawer = useCallback(
+    (type: 'chevron' | 'class' | 'own') => {
+      match(type)
+        .with('chevron', () => {
+          setIsBottomSheetOpen(prev => !prev)
+          if (sheetState === null) {
+            setSheetState('class')
+          }
+        })
+        .with('class', () => {
+          setIsBottomSheetOpen(true)
+          setSheetState('class')
+        })
+        .with('own', () => {
+          setIsBottomSheetOpen(true)
+          setSheetState('schedule')
+        })
+    },
+    [sheetState],
+  )
+
   return (
     <>
       <div className={css({ display: 'flex', flexDir: 'row', justifyContent: 'space-between', my: 11 })}>
@@ -59,7 +89,12 @@ const MyTimetablePage = () => {
           <ShareBtn shareHandler={() => convertHtmlToImage(imgRef.current, 'my_timetable')} />
         </div>
       </div>
-      <StatusBar curSemester={semesterList[curSemester]} curIndex={curIndex} setCurIndex={setTimetableIndex} />
+      <StatusBar
+        curSemester={semesterList[curSemester]}
+        curIndex={curIndex}
+        setCurIndex={setTimetableIndex}
+        openBottomSheet={() => handleDrawer('chevron')}
+      />
       {semesterList[curSemester].timetables.length === 0 ? (
         <NullTimetable
           children={
@@ -69,11 +104,24 @@ const MyTimetablePage = () => {
           }
         />
       ) : (
-        <Timetable
-          ref={imgRef}
-          timetable={semesterList[curSemester].timetables[curIndex]}
-          deleteTimetableHandler={deleteTimetableHandler}
-        />
+        <>
+          <Timetable
+            ref={imgRef}
+            timetable={semesterList[curSemester].timetables[curIndex]}
+            deleteTimetableHandler={deleteTimetableHandler}
+          />
+          {createPortal(
+            <LectureBottomSheet
+              timetableId={semesterList[curSemester].timetables[curIndex].timetableId}
+              visible={isSheetVisible}
+              handleDrawer={handleDrawer}
+              isOpen={isBottomSheetOpen}
+              setIsOpen={setIsBottomSheetOpen}
+              sheetState={sheetState}
+            />,
+            document.body,
+          )}
+        </>
       )}
     </>
   )
