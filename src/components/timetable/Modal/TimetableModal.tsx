@@ -43,15 +43,15 @@ const NameChangeModal = ({
   curTimetableName: string
 }) => {
   const [nameInput, setNameInput] = useState('')
-  const { mutate: changetableName } = useUpdateTimetableName()
+  const { mutate: changeTableName } = useUpdateTimetableName()
 
   const handleSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
       closeModal()
-      changetableName({ timetableName: nameInput, timetableId })
+      changeTableName({ timetableName: nameInput, timetableId })
     },
-    [closeModal, changetableName, nameInput, timetableId],
+    [closeModal, changeTableName, nameInput, timetableId],
   )
 
   return (
