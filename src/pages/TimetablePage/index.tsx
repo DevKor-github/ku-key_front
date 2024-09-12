@@ -8,7 +8,7 @@ const TimetablePage = () => {
         className={css({
           display: 'flex',
           flexDir: 'column',
-          px: { base: 64, mdDown: 4 },
+          px: { base: 64, xlDown: 46, lgDown: 20, mdDown: 10 },
           mb: 40,
           alignItems: 'center',
         })}

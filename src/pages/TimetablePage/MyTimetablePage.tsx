@@ -45,7 +45,15 @@ const MyTimetablePage = () => {
   return (
     <>
       <div className={css({ display: 'flex', flexDir: 'row', justifyContent: 'space-between', my: 11 })}>
-        <div className={css({ display: 'flex', flexDir: { base: 'row', mdDown: 'column' }, gap: 5 })}>
+        <div
+          className={css({
+            display: 'flex',
+            flexDir: { base: 'row', smDown: 'column' },
+            gap: { base: 5, smDown: 1.5 },
+            justifyContent: { smOnly: 'space-between' },
+            w: 'full',
+          })}
+        >
           <div className={css({ color: 'black.2', fontSize: 32, fontWeight: '800', wordWrap: 'break-word' })}>
             My schedule
           </div>

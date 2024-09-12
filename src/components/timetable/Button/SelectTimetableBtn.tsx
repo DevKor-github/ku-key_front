@@ -11,7 +11,7 @@ const SelectTimetableBtnStyle = cva({
     bgColor: 'bg.gray',
     rounded: 10,
     color: 'lightGray.1',
-    fontSize: 18,
+    fontSize: { base: 18, mdDown: 14 },
     fontWeight: 500,
     wordWrap: 'break-word',
     border: '1px solid {colors.lightGray.1}',
@@ -46,7 +46,7 @@ const SelectTimetableBtn = ({
         onClick={() => setCurIndex(index)}
         className={css({
           cursor: 'pointer',
-          maxW: 50,
+          maxW: { base: 50, mdDown: 30 },
           overflow: 'hidden',
           whiteSpace: 'nowrap',
           textOverflow: 'ellipsis',

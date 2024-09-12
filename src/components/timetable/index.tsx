@@ -130,7 +130,7 @@ const Timetable = forwardRef<HTMLDivElement, TimetableProps>(
           </div>
           <div
             className={css({
-              display: { base: 'flex', mdDown: 'none' },
+              display: 'flex',
               flexDir: 'row',
               gap: 4,
               alignItems: 'center',

@@ -13,7 +13,7 @@ const CreateTimetableBtn = ({ createTimetable }: CreateTimetableBtnProps) => {
         w: 9,
         cursor: 'pointer',
         bgColor: 'red.2',
-        display: { base: 'flex', mdDown: 'none' },
+        display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         rounded: 10,
