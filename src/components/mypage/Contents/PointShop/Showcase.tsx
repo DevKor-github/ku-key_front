@@ -88,6 +88,7 @@ const Showcase = ({ myLevel, selectedLevel, myCharacterType }: ShowcaseProps) =>
             .fill(true)
             .map((_, index) => (
               <CharacterTicket
+                key={`${index}-level`}
                 level={index + 1}
                 myLevel={myLevel}
                 selectedLevel={selectedLevel}
