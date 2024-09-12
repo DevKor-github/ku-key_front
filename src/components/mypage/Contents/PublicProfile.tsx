@@ -2,12 +2,14 @@ import { css } from '@styled-stytem/css'
 import { useCallback, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { usePatchMyProfile } from '@/api/hooks/user'
+import { useDeleteLanguage, usePatchMyProfile, usePostLanguage } from '@/api/hooks/user'
 import { GetMyProfileResponse } from '@/api/types/user'
 import ProfileChangeHeader from '@/components/mypage/ProfileChangeHeader'
 import Button from '@/components/ui/button'
+import LanguageDropdown from '@/components/ui/dropdown/LanguageDropdown'
 import NationDropdown from '@/components/ui/dropdown/NationDropdown'
 import { Input } from '@/components/ui/input'
+import { Language } from '@/lib/constants/language'
 
 export const ProfileFormWrapper = css({
   display: 'flex',
@@ -28,6 +30,7 @@ export const ProfileFormTitle = css({
   bgColor: 'lightGray.1',
   fontSize: { base: 20, mdDown: 12 },
   fontWeight: 700,
+  h: '39px',
 })
 
 export interface PublicProfileForm {
@@ -35,30 +38,47 @@ export interface PublicProfileForm {
   country: string
   homeUniversity: string
   major: string
+  languages: Language[]
 }
 interface PublicProfileProps {
   myProfileData: GetMyProfileResponse
 }
-const PublicProfile = ({ myProfileData: { username, country, homeUniversity, major } }: PublicProfileProps) => {
+const PublicProfile = ({
+  myProfileData: { username, country, homeUniversity, major, languages },
+}: PublicProfileProps) => {
   const { register, handleSubmit, setValue, watch } = useForm<PublicProfileForm>()
   useEffect(() => {
     setValue('username', username)
     setValue('country', country)
     setValue('homeUniversity', homeUniversity)
     setValue('major', major)
-  }, [username, country, homeUniversity, major, setValue])
+    setValue('languages', languages)
+  }, [username, country, homeUniversity, major, languages, setValue])
 
   const { mutate: patchProfile } = usePatchMyProfile()
+  const { mutate: addLang } = usePostLanguage()
+  const { mutate: deleteLang } = useDeleteLanguage()
 
   const onSubmit: SubmitHandler<PublicProfileForm> = data => {
     patchProfile(data, {
       onSuccess: () => alert('Changed successfully!'),
     })
+    const add = data.languages.filter(lang => !languages.includes(lang))
+    const del = languages.filter(lang => !data.languages.includes(lang))
+    add.map(lang => addLang({ language: lang }))
+    del.map(lang => deleteLang({ language: lang }))
   }
 
   const handleNationSelect = useCallback(
     (nation: string) => {
       setValue('country', nation)
+    },
+    [setValue],
+  )
+
+  const handleLanguageSelect = useCallback(
+    (languageArr: Language[]) => {
+      setValue('languages', languageArr)
     },
     [setValue],
   )
@@ -89,6 +109,12 @@ const PublicProfile = ({ myProfileData: { username, country, homeUniversity, maj
               <span className={ProfileFormTitle}>Major</span>
               <Input placeholder={major} {...register('major', { required: true })} />
             </div>
+          </div>
+          <div className={ProfileFormWrapper}>
+            <span className={ProfileFormTitle}>Language</span>
+            <span className={css({ w: { base: '400px', mdDown: '200px' } })}>
+              <LanguageDropdown curLanguage={watch('languages')} handleChange={handleLanguageSelect} />
+            </span>
           </div>
         </section>
         <div className={css({ display: 'flex', justifyContent: 'center' })}>
