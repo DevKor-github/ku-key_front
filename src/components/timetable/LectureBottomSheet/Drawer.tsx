@@ -51,8 +51,6 @@ const Drawer = ({ isOpen, sheetState, handleDrawer, visible }: DrawerProps) => {
     <div
       className={cx(
         css({
-          position: 'absolute',
-          top: -23,
           bgColor: '#FFFFFF80',
           rounded: 'full',
           px: 5,
