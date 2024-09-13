@@ -5,6 +5,7 @@ import { z } from 'zod'
 
 import { useCheckStudentIdDuplication } from '@/api/hooks/register'
 import Button from '@/components/ui/button'
+import NationDropdown from '@/components/ui/dropdown/NationDropdown'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { RegisterFormSchema } from '@/lib/zod/register-schema'
@@ -103,7 +104,12 @@ const UserInfoForm = ({ form, handleFileChange, handleValidation, valid, fileNam
                   maxW: 418,
                 })}
               >
-                <Input type="text" placeholder="Country" {...field} className={css({ w: 'full' })} />
+                <NationDropdown
+                  curNation={form.watch('country')}
+                  handleChange={nation => form.setValue('country', nation)}
+                  onBlur={() => form.trigger('country')}
+                  className={css({ height: '39px' })}
+                />
                 <div className={css({ display: 'flex', px: 1.5, py: 1, gap: 1, alignItems: 'center' })}>
                   {form.getFieldState('country').invalid && (
                     <ShieldAlert size={16} className={css({ color: 'red.2' })} />
