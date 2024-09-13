@@ -39,5 +39,8 @@ export const useAuth = () => {
   }, [authStore])
   console.log('useAuth:', isAuthenticated, authState, new Date().toTimeString())
 
-  return useMemo(() => ({ isAuthenticated, authState, signIn, signOut, setVerified }), [isAuthenticated, authState, signIn, signOut])
+  return useMemo(
+    () => ({ isAuthenticated, authState, signIn, signOut, setVerified }),
+    [isAuthenticated, authState, signIn, signOut, setVerified],
+  )
 }
