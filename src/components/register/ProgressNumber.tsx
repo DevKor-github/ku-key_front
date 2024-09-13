@@ -21,6 +21,7 @@ const ProgressNumber = ({ currentStage, stageState }: ProgressNumberProps) => {
         fontSize: 24,
         fontWeight: 700,
         transition: 'background-color 0.3s ease-in-out',
+        smDown: { fontSize: 16 },
       })}
     >
       {currentStage}

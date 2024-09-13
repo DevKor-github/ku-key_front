@@ -20,7 +20,7 @@ const MainLayout = () => {
         <title>KU-key</title>
       </Helmet>
       <Header />
-      <div>
+      <div className={css({ flex: 1 })}>
         <Outlet />
       </div>
       <Footer />

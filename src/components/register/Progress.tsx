@@ -13,7 +13,8 @@ const Progress = ({ stageState }: ProgressProps) => {
       className={css({
         display: 'flex',
         pos: 'relative',
-        w: 378,
+        w: 'full',
+        maxW: 378,
         justifyContent: 'space-between',
         alignItems: 'center',
       })}

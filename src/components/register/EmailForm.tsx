@@ -16,7 +16,7 @@ const EmailForm = memo(({ form, handleValidation, valid }: RegisterFormProps<'em
   const { mutate: mutateCheckEmailDuplication } = useCheckEmailDuplication()
 
   const { mutate: mutateSendEmail } = useSendEmail()
-  const { mutate: muatateVerifyEmail } = useVerifyEmail()
+  const { mutate: mutateVerifyEmail } = useVerifyEmail()
 
   const handleEmailDuplicationCheck = () => {
     mutateCheckEmailDuplication(form.getValues().email, {
@@ -30,8 +30,8 @@ const EmailForm = memo(({ form, handleValidation, valid }: RegisterFormProps<'em
     })
   }
 
-  const handleEamilVerification = () => {
-    muatateVerifyEmail(
+  const handleEmailVerification = () => {
+    mutateVerifyEmail(
       { email: form.getValues().email, verifyToken: parseInt(form.getValues().emailCode) },
       {
         onSuccess: () => {
@@ -45,11 +45,21 @@ const EmailForm = memo(({ form, handleValidation, valid }: RegisterFormProps<'em
 
   const guideMessage = () => {
     if (emailSent) return 'Email has been sent to your gmail account'
-    if (!form.getFieldState('email').invalid) return 'Type in your gmail account'
+    if (!form.getFieldState('email').invalid) return 'Type in your email'
   }
 
   return (
-    <section className={css({ display: 'flex', flexDir: 'column', gap: '25px' })}>
+    <form
+      className={css({
+        display: 'flex',
+        flexDir: 'column',
+        gap: '25px',
+        w: 'full',
+        maxW: 608,
+        alignItems: 'center',
+        justifyContent: 'center',
+      })}
+    >
       <FormField
         control={form.control}
         name="email"
@@ -57,54 +67,65 @@ const EmailForm = memo(({ form, handleValidation, valid }: RegisterFormProps<'em
           <FormItem
             className={css({
               display: 'flex',
+              justifyContent: 'space-between',
               alignItems: 'baseline',
               alignSelf: 'stretch',
-              gap: 138,
+              flexWrap: 'wrap',
+              rowGap: 2.5,
             })}
           >
             <FormLabel>Email</FormLabel>
             <FormControl>
-              <div className={css({ display: 'flex', gap: 2, alignItems: 'flex-start' })}>
+              <div
+                className={css({
+                  display: 'flex',
+                  flexDir: 'column',
+                  alignItems: 'flex-start',
+                  w: 'full',
+                  maxW: 418,
+                })}
+              >
                 <div
                   className={css({
                     display: 'flex',
-                    flexDir: 'column',
-                    alignItems: 'flex-end',
+                    alignItems: 'flex-start',
+                    gap: 2.5,
+                    w: 'full',
                   })}
                 >
                   <Input
                     placeholder="Email"
                     {...field}
                     onFocus={() => emailSent && setEmailSent(false)}
-                    className={css({ alignSelf: 'stretch' })}
+                    className={css({ alignSelf: 'stretch', w: 'full', maxW: 333 })}
                     disabled={valid.email === 'valid' || isRunning}
                   />
-                  <div className={css({ display: 'flex', px: 1.5, py: 1, gap: 1, alignItems: 'center' })}>
-                    {form.formState.errors.email && <ShieldAlert size={16} className={css({ color: 'red.2' })} />}
-                    {!form.formState.errors.email && <CheckCircle2 size={14} />}
-                    <p className={css({ color: 'black', fontSize: 14, fontWeight: 400 })}>{guideMessage()} </p>
-                    <FormMessage />
-                  </div>
+                  <Button
+                    aria-checked={
+                      form.getFieldState('email').isTouched &&
+                      !form.getFieldState('email').invalid &&
+                      !isRunning &&
+                      !(valid.email === 'valid')
+                    }
+                    type="button"
+                    variant="input"
+                    onClick={handleEmailDuplicationCheck}
+                    disabled={
+                      isRunning ||
+                      !form.getFieldState('email').isTouched ||
+                      form.getFieldState('email').invalid ||
+                      valid.email === 'valid'
+                    }
+                  >
+                    <p className={css({ textStyle: 'body1_L', lineHeight: '100%', smDown: { fontSize: 10 } })}>Send</p>
+                  </Button>
                 </div>
-                <Button
-                  aria-checked={
-                    form.getFieldState('email').isTouched &&
-                    !form.getFieldState('email').invalid &&
-                    !isRunning &&
-                    !(valid.email === 'valid')
-                  }
-                  type="button"
-                  variant="input"
-                  onClick={handleEmailDuplicationCheck}
-                  disabled={
-                    isRunning ||
-                    !form.getFieldState('email').isTouched ||
-                    form.getFieldState('email').invalid ||
-                    valid.email === 'valid'
-                  }
-                >
-                  <p className={css({ textStyle: 'body1_L', lineHeight: '100%' })}>Send</p>
-                </Button>
+                <div className={css({ display: 'flex', px: 1.5, py: 1, gap: 1, alignItems: 'center' })}>
+                  {form.formState.errors.email && <ShieldAlert size={16} className={css({ color: 'red.2' })} />}
+                  {!form.formState.errors.email && <CheckCircle2 size={14} />}
+                  <p className={css({ color: 'black', fontSize: 14, fontWeight: 400 })}>{guideMessage()} </p>
+                  <FormMessage />
+                </div>
               </div>
             </FormControl>
           </FormItem>
@@ -117,67 +138,82 @@ const EmailForm = memo(({ form, handleValidation, valid }: RegisterFormProps<'em
           <FormItem
             className={css({
               display: 'flex',
+              justifyContent: 'space-between',
               alignItems: 'baseline',
               alignSelf: 'stretch',
-              gap: 138,
+              flexWrap: 'wrap',
+              rowGap: 2.5,
             })}
           >
             <FormLabel>Code</FormLabel>
             <FormControl>
-              <div className={css({ display: 'flex', gap: 2, alignItems: 'flex-start' })}>
+              <div
+                className={css({
+                  display: 'flex',
+                  flexDir: 'column',
+                  alignItems: 'flex-start',
+                  w: 'full',
+                  maxW: 418,
+                })}
+              >
                 <div
                   className={css({
                     display: 'flex',
-                    flexDir: 'column',
-                    alignItems: 'flex-end',
+                    alignItems: 'flex-start',
+                    gap: 2.5,
+                    w: 'full',
                   })}
                 >
                   <Input
                     type="text"
                     {...field}
                     placeholder="Code"
-                    className={css({ alignSelf: 'stretch' })}
+                    className={css({ alignSelf: 'stretch', w: 'full', maxW: 333 })}
                     disabled={!emailSent}
                   />
-                  <div className={css({ display: 'flex', px: 1.5, py: 1, gap: 1, alignItems: 'center' })}>
-                    {form.formState.errors.emailCode && <ShieldAlert size={16} className={css({ color: 'red.2' })} />}
-                    <FormMessage />
-                    {valid.email === 'valid' && <CheckCircle2 size={14} />}
-                    {valid.email === 'valid' && (
+                  <Button
+                    aria-checked={
+                      form.getFieldState('emailCode').isTouched &&
+                      !form.getFieldState('emailCode').invalid &&
+                      !(valid.email === 'valid')
+                    }
+                    type="button"
+                    variant="input"
+                    onClick={handleEmailVerification}
+                    disabled={
+                      form.getValues('emailCode') === '' ||
+                      form.getFieldState('emailCode').invalid ||
+                      valid.email === 'valid'
+                    }
+                  >
+                    <p className={css({ textStyle: 'body1_L', lineHeight: '100%', smDown: { fontSize: 10 } })}>
+                      Verify
+                    </p>
+                  </Button>
+                </div>
+                <div className={css({ display: 'flex', px: 1.5, py: 1, gap: 1, alignItems: 'center' })}>
+                  {form.formState.errors.emailCode && <ShieldAlert size={16} className={css({ color: 'red.2' })} />}
+                  <FormMessage />
+                  {valid.email === 'valid' && (
+                    <>
+                      <CheckCircle2 size={14} />
                       <p className={css({ color: 'black', fontSize: 14, fontWeight: 400 })}>
                         Your Email has been validated
                       </p>
-                    )}
-                    {valid.email !== 'valid' && emailSent && (
-                      <p>
-                        {Math.floor(time / 60)}:{(time % 60).toString().padStart(2, '0')}
-                      </p>
-                    )}
-                  </div>
+                    </>
+                  )}
+                  {valid.email !== 'valid' && emailSent && (
+                    <p>
+                      {Math.floor(time / 60)}:{(time % 60).toString().padStart(2, '0')}
+                    </p>
+                  )}
                 </div>
-                <Button
-                  aria-checked={
-                    form.getFieldState('emailCode').isTouched &&
-                    !form.getFieldState('emailCode').invalid &&
-                    !(valid.email === 'valid')
-                  }
-                  type="button"
-                  variant="input"
-                  onClick={handleEamilVerification}
-                  disabled={
-                    form.getValues('emailCode') === '' ||
-                    form.getFieldState('emailCode').invalid ||
-                    valid.email === 'valid'
-                  }
-                >
-                  <p className={css({ textStyle: 'body1_L', lineHeight: '100%' })}>Verify</p>
-                </Button>
               </div>
             </FormControl>
           </FormItem>
         )}
       />
-    </section>
+    </form>
   )
 })
 
