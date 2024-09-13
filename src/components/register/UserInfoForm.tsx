@@ -81,7 +81,7 @@ const UserInfoForm = ({ form, handleFileChange, handleValidation, valid, fileNam
       <FormField
         name="country"
         control={form.control}
-        render={({ field }) => (
+        render={() => (
           <FormItem
             className={css({
               display: 'flex',

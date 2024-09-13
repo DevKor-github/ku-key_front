@@ -106,7 +106,7 @@ const NationDropdown = ({ handleChange, curNation, className, onBlur }: NationDr
 
   return (
     <Select
-      value={defaultIndex ? options[defaultIndex] : undefined}
+      value={defaultIndex !== null ? options[defaultIndex] : undefined}
       components={{ Option: CustomOption, Control }}
       options={options}
       placeholder={'Country/Region Selection'}
