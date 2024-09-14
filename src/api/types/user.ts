@@ -43,3 +43,7 @@ export interface PatchExchangeDayRequest {
 export interface PostLanguageRequest {
   language: Language
 }
+
+export interface GetKeyExpirationResponse {
+  date: string
+}

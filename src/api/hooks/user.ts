@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import {
+  GetKeyExpirationResponse,
   GetMyProfileResponse,
   GetPointHistoryResponse,
   PatchExchangeDayRequest,
@@ -147,5 +148,19 @@ export const useDeleteLanguage = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['myProfile'] })
     },
+  })
+}
+
+const getKeyExpiration = async () => {
+  const response = await apiInterface.get<GetKeyExpirationResponse | null>('/user/course-review-reading-ticket')
+  return response.data
+}
+
+export const useGetKeyExpiration = () => {
+  return useQuery({
+    queryKey: ['keyExpiration'],
+    queryFn: getKeyExpiration,
+    retry: 0,
+    initialData: null,
   })
 }
