@@ -1,4 +1,4 @@
-import { css, cva } from '@styled-stytem/css'
+import { css, cva } from '@styled-system/css'
 import { Search } from 'lucide-react'
 import { CSSProperties, useState } from 'react'
 

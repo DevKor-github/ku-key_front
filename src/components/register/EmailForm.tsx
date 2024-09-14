@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import { CheckCircle2, ShieldAlert } from 'lucide-react'
 import { memo, useState } from 'react'
 

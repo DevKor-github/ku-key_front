@@ -1,5 +1,5 @@
 import { Label } from '@radix-ui/react-menubar'
-import { css, cx } from '@styled-stytem/css'
+import { css, cx } from '@styled-system/css'
 import { ShieldAlert } from 'lucide-react'
 import { FormState, UseFormRegister } from 'react-hook-form'
 

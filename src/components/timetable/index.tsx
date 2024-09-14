@@ -1,4 +1,4 @@
-import { css, cva } from '@styled-stytem/css'
+import { css, cva } from '@styled-system/css'
 import { useAtom } from 'jotai/react'
 import { Ellipsis } from 'lucide-react'
 import { forwardRef, useCallback, useEffect, useRef, useState } from 'react'

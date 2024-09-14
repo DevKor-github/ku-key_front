@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import getUnicodeFlagIcon from 'country-flag-icons/unicode'
 import { alpha2Codes, findByAlpha2 } from 'iso-3166-1-ts'
 import { MapPin } from 'lucide-react'

@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 import { memo, useCallback, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -15,7 +15,7 @@ import ModalPortal from '@/components/ui/modal/ModalPortal'
 import { REGISTER_MESSAGES } from '@/lib/messages/register'
 import AuthNavigate from '@/lib/router/AuthNavigate'
 import { RegisterFormSchema } from '@/lib/zod/register-schema'
-import { ProgressState, RegisterationKey, RegistrationState, ValidState } from '@/types/register'
+import { ProgressState, RegistrationKey, RegistrationState, ValidState } from '@/types/register'
 import { useModal } from '@/util/useModal'
 import { useRegisterForm } from '@/util/useRegisterForm'
 
@@ -51,7 +51,7 @@ const RegisterPage = memo(() => {
   const onSubmit = () => {
     if (!file) return
     for (const key in valid) {
-      if (valid[key as RegisterationKey] !== 'valid') return
+      if (valid[key as RegistrationKey] !== 'valid') return
     }
     mutateRegister(
       {
@@ -109,12 +109,11 @@ const RegisterPage = memo(() => {
         <div
           className={css({ pos: 'absolute', w: 'full', h: '500px', top: 0, zIndex: 1, smDown: { h: '300px' } })}
           style={{
-           
             backgroundImage: `url(${import.meta.env.VITE_API_AWS_S3_BUCKET}/fe/signUpBanner.webp)`,
-           
+
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
-           
+
             backgroundPosition: 'start',
           }}
         />

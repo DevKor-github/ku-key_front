@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 
 import ProgressIndicator from '@/components/register/ProgressIndicator'
 import ProgressNumber from '@/components/register/ProgressNumber'

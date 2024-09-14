@@ -1,5 +1,5 @@
-import { css, cx } from '@styled-stytem/css'
-import { shadow } from '@styled-stytem/recipes'
+import { css, cx } from '@styled-system/css'
+import { shadow } from '@styled-system/recipes'
 import { isAxiosError } from 'axios'
 import { useAtomValue } from 'jotai/react'
 import { useEffect, useState } from 'react'
@@ -14,7 +14,7 @@ import Dropdown from '@/components/timetable/Dropdown'
 import { courseSummary } from '@/lib/store/review'
 import { SemesterType } from '@/types/timetable'
 import {
-  attendaceArray,
+  attendanceArray,
   classLevelArray,
   learnAmountArray,
   teachingSkillsArray,
@@ -143,7 +143,7 @@ const WriteReviewPage = () => {
         <div className={css({ display: 'flex', flexDir: 'column', gap: 5, alignItems: 'flex-start' })}>
           <ReviewTotalRate />
           <div className={css({ display: 'flex', flexDir: 'column', gap: 2.5, alignItems: 'flex-start' })}>
-            <ReviewChoiceChips title="Attendance" options={attendaceArray} category="attendance" />
+            <ReviewChoiceChips title="Attendance" options={attendanceArray} category="attendance" />
             <ReviewChoiceChips title="Class Level" options={classLevelArray} category="classLevel" />
             <ReviewChoiceChips title="Difficulty of Team Project" options={teamProjectArray} category="teamProject" />
             <ReviewChoiceChips title="Amount Learned" options={learnAmountArray} category="amountLearned" />

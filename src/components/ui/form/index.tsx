@@ -1,6 +1,6 @@
 import * as LabelPrimitive from '@radix-ui/react-label'
 import { Slot } from '@radix-ui/react-slot'
-import { css, cx } from '@styled-stytem/css'
+import { css, cx } from '@styled-system/css'
 import { createContext, forwardRef, useContext, useId } from 'react'
 import { Controller, ControllerProps, FieldPath, FieldValues, FormProvider, useFormContext } from 'react-hook-form'
 

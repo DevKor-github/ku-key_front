@@ -1,4 +1,4 @@
-import { css, cva } from '@styled-stytem/css'
+import { css, cva } from '@styled-system/css'
 import { isAxiosError } from 'axios'
 import { motion } from 'framer-motion'
 import { useAtomValue } from 'jotai/react'
@@ -68,7 +68,7 @@ const ReviewPage = () => {
     if (!isFetching && isError) {
       if (isAxiosError(error)) {
         if (error.response?.data.error === 'Forbidden') {
-          alert('You must purchase a course evaluation access ticket!')
+          alert('You must purchase a Course Review Reading Key!')
           navigate(-1)
         }
       }

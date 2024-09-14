@@ -1,4 +1,4 @@
-import { cva } from '@styled-stytem/css'
+import { cva } from '@styled-system/css'
 
 interface TypeChipProps {
   type: boolean

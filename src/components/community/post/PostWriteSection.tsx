@@ -1,5 +1,5 @@
-import { css, cx } from '@styled-stytem/css'
-import { postCard } from '@styled-stytem/recipes'
+import { css, cx } from '@styled-system/css'
+import { postCard } from '@styled-system/recipes'
 import { useAtom } from 'jotai'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -10,7 +10,7 @@ import Dropdown from '@/components/timetable/Dropdown'
 import Button from '@/components/ui/button'
 import NoticeModal from '@/components/ui/modal/NoticeModal'
 import { MemoizedTextAreaAutosize } from '@/components/ui/textarea-autosize'
-import { POST_MEESSAGES } from '@/lib/messages/community'
+import { POST_MESSAGES } from '@/lib/messages/community'
 import { initialPostData, persistedPostData } from '@/lib/store/post'
 import { createFileFromUrl } from '@/util/create-file-from-url'
 import { useFile } from '@/util/useFile'
@@ -43,11 +43,11 @@ const PostWriteSection = () => {
   const handleClick = useCallback(() => {
     if (!titleRef.current || !bodyRef.current) return
     if (!currentIndex) {
-      setAlertMessage(POST_MEESSAGES.BOARD_REQUIRED)
+      setAlertMessage(POST_MESSAGES.BOARD_REQUIRED)
       return handleOpen()
     }
     if (!titleRef.current.value || !bodyRef.current.value) {
-      setAlertMessage(POST_MEESSAGES.CONTENT_REQUIRED)
+      setAlertMessage(POST_MESSAGES.CONTENT_REQUIRED)
       return handleOpen()
     }
     if (type === 'write') {

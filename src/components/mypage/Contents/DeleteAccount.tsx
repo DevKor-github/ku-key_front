@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import { useCallback } from 'react'
 
 import { useDeleteUser } from '@/api/hooks/user'

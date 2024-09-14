@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 
 import FriendsList from '@/components/timetable/Friend/FriendsList'
 import FriendsManage from '@/components/timetable/Friend/FriendsManage'

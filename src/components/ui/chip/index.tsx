@@ -1,4 +1,4 @@
-import { cva, cx } from '@styled-stytem/css'
+import { cva, cx } from '@styled-system/css'
 import { forwardRef } from 'react'
 
 const ChipStyle = cva({

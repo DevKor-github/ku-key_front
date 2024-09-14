@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 
 import { GetTimetableByTimetableIdResponse } from '@/api/types/timetable'
 import LectureSticker from '@/components/timetable/Grid/LectureSticker'

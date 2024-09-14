@@ -1,5 +1,5 @@
-import { css, cx } from '@styled-stytem/css'
-import { globalLayout } from '@styled-stytem/recipes'
+import { css, cx } from '@styled-system/css'
+import { globalLayout } from '@styled-system/recipes'
 
 import HotBoard from '@/components/community/HotBoard'
 import HotBoardHorizontalPreview from '@/components/community/HotBoard/HotBoardHorizontalPreview'

@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 
 import CircularProgress from '@/components/mypage/CircularProgress'
 import GenericDueDate from '@/components/mypage/GenericDueDate'
