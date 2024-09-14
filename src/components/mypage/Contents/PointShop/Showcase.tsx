@@ -35,7 +35,7 @@ const Showcase = ({ myLevel, selectedLevel, myCharacterType }: ShowcaseProps) =>
             if (isAxiosError(error)) {
               alert(error.response?.data.message)
             } else {
-              alert('Somthing is Wrong!')
+              alert('Something is Wrong!')
             }
           },
         },
@@ -56,7 +56,7 @@ const Showcase = ({ myLevel, selectedLevel, myCharacterType }: ShowcaseProps) =>
             if (isAxiosError(error)) {
               alert(error.response?.data.message)
             } else {
-              alert('Somthing is Wrong!')
+              alert('Something is Wrong!')
             }
           },
         },
@@ -74,7 +74,7 @@ const Showcase = ({ myLevel, selectedLevel, myCharacterType }: ShowcaseProps) =>
   return (
     <div className={css({ display: 'flex', flexDir: 'column', gap: 10 })}>
       <div className={css({ display: 'flex', flexDir: 'column', gap: 5 })}>
-        <h2 className={HeadingStyle}>Decorating characters</h2>
+        <h2 className={HeadingStyle}>Decorating Characters</h2>
         <div
           className={css({
             display: 'flex',
@@ -106,7 +106,7 @@ const Showcase = ({ myLevel, selectedLevel, myCharacterType }: ShowcaseProps) =>
         </div>
       </div>
       <div className={css({ display: 'flex', flexDir: 'column', gap: 5 })}>
-        <h2 className={HeadingStyle}>Course review reading ticket</h2>
+        <h2 className={HeadingStyle}>Course Review Reading Key</h2>
         <div
           className={css({
             display: 'flex',
