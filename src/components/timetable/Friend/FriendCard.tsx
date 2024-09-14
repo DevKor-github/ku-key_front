@@ -1,4 +1,4 @@
-import { css, cva } from '@styled-stytem/css'
+import { css, cva } from '@styled-system/css'
 import { findByAlpha2 } from 'iso-3166-1-ts'
 import { CircleX, Dot } from 'lucide-react'
 import { useCallback } from 'react'
@@ -54,7 +54,7 @@ const buttonStyle = cva({
 })
 
 interface FriendCardProp {
-  type: 'requested' | 'recieved' | 'search'
+  type: 'requested' | 'received' | 'search'
   data: {
     name: string
     username: string
@@ -93,7 +93,7 @@ const FriendCardBtn = ({ type, data }: FriendCardProp) => {
       })
   } else {
     isActive = true
-    if (type === 'recieved') {
+    if (type === 'received') {
       btnText = 'Friend accept'
       color = 'red1'
     } else {
@@ -104,7 +104,7 @@ const FriendCardBtn = ({ type, data }: FriendCardProp) => {
 
   const handleClick = useCallback(() => {
     if (data.status === undefined) {
-      const action = type === 'recieved' ? receiveFriendship : deleteSentRequest
+      const action = type === 'received' ? receiveFriendship : deleteSentRequest
       action({ friendshipId: data.friendshipId! })
     } else if (data.status === 'unknown') {
       addFriend({ toUsername: data.username })
@@ -129,7 +129,7 @@ const FriendCard = ({ data, type }: FriendCardProp) => {
     <div
       className={css({ display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'relative' })}
     >
-      {type === 'recieved' && (
+      {type === 'received' && (
         <button
           className={css({
             cursor: 'pointer',

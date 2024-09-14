@@ -4,9 +4,9 @@ import { z } from 'zod'
 import { RegisterFormSchema } from '@/lib/zod/register-schema'
 
 export type ValidState = 'valid' | 'invalid' | 'unknown'
-export type RegisterationKey = 'email' | 'username' | 'studentId' | 'screenshot'
+export type RegistrationKey = 'email' | 'username' | 'studentId' | 'screenshot'
 export type RegistrationState = {
-  [key in RegisterationKey]: ValidState
+  [key in RegistrationKey]: ValidState
 }
 
 export interface RegisterFormProps<T extends keyof RegistrationState> {

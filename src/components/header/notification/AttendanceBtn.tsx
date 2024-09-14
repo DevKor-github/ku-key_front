@@ -1,4 +1,4 @@
-import { cva } from '@styled-stytem/css'
+import { cva } from '@styled-system/css'
 import { Check } from 'lucide-react'
 import { useCallback } from 'react'
 

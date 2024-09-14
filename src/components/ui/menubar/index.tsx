@@ -1,8 +1,8 @@
 'use client'
 
 import * as MenubarPrimitive from '@radix-ui/react-menubar'
-import { css, cx } from '@styled-stytem/css'
-import { menubar } from '@styled-stytem/recipes'
+import { css, cx } from '@styled-system/css'
+import { menubar } from '@styled-system/recipes'
 import { forwardRef } from 'react'
 
 const MenubarMenu = MenubarPrimitive.Menu

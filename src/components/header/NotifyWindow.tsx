@@ -1,11 +1,11 @@
 import * as Popover from '@radix-ui/react-popover'
-import { css, cx } from '@styled-stytem/css'
-import { shadow } from '@styled-stytem/recipes'
+import { css, cx } from '@styled-system/css'
+import { shadow } from '@styled-system/recipes'
 import { Bell } from 'lucide-react'
 
 import AttendanceBtn from '@/components/header/notification/AttendanceBtn'
 
-const NotifiWindow = () => {
+const NotifyWindow = () => {
   return (
     <Popover.Root>
       <Popover.Trigger asChild>
@@ -56,4 +56,4 @@ const NotifiWindow = () => {
   )
 }
 
-export default NotifiWindow
+export default NotifyWindow

@@ -1,4 +1,4 @@
-import { css, cva } from '@styled-stytem/css'
+import { css, cva } from '@styled-system/css'
 import { useFormContext } from 'react-hook-form'
 
 import { REQUIRE_TEXT } from '@/components/courseReview/ReviewChoiceChips'

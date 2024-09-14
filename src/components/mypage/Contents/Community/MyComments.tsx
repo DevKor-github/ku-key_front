@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import { Fragment } from 'react/jsx-runtime'
 
 import { useGetMyComments } from '@/api/hooks/community'

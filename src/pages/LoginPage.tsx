@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import { AxiosError } from 'axios'
 import { ShieldAlert } from 'lucide-react'
 import { useState } from 'react'

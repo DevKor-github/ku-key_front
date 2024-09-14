@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import { Flame, ThumbsUp } from 'lucide-react'
 
 type iconType = 'flame' | 'like'

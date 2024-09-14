@@ -1,5 +1,5 @@
-import { css, cva, cx } from '@styled-stytem/css'
-import { shadow } from '@styled-stytem/recipes'
+import { css, cva, cx } from '@styled-system/css'
+import { shadow } from '@styled-system/recipes'
 
 import Sugar from '@/assets/Sugar_sm.png'
 import AlertModal from '@/components/ui/modal/AlertModal'

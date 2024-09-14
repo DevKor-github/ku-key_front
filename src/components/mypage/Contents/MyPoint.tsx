@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 
 import { GetMyProfileResponse } from '@/api/types/user'
 import PointStatus from '@/components/mypage/Contents/PointShop/PointStatus'

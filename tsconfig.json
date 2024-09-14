@@ -23,7 +23,7 @@
     /* Paths */
     "paths": {
       "@/*": ["./src/*"],
-      "@styled-stytem/*": ["./styled-system/*"]
+      "@styled-system/*": ["./styled-system/*"]
     }
   },
   "include": ["src"],

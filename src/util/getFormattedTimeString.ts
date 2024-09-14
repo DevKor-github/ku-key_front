@@ -1,5 +1,5 @@
 import { formatDistanceToNow } from 'date-fns'
 
-export const getFormatedTimeString = (date: Date) => {
+export const getFormattedTimeString = (date: Date) => {
   return formatDistanceToNow(date) + ' ago'
 }

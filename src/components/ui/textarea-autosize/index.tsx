@@ -1,4 +1,4 @@
-import { SystemStyleObject } from '@styled-stytem/types'
+import { SystemStyleObject } from '@styled-system/types'
 import { forwardRef, memo } from 'react'
 import { TextareaAutosizeProps } from 'react-textarea-autosize'
 import TextareaAutosize from 'react-textarea-autosize'

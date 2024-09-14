@@ -1,4 +1,4 @@
-import { css, cx } from '@styled-stytem/css'
+import { css, cx } from '@styled-system/css'
 import { useSetAtom } from 'jotai/react'
 import { ArrowLeft } from 'lucide-react'
 import { useEffect } from 'react'

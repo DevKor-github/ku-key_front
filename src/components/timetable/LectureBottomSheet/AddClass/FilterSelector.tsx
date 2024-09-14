@@ -1,4 +1,4 @@
-import { css, cva } from '@styled-stytem/css'
+import { css, cva } from '@styled-system/css'
 
 import { FilterType } from '@/types/timetable'
 import { filterTypeMap } from '@/util/timetableUtil'

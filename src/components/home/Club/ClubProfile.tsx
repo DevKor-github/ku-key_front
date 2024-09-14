@@ -1,5 +1,5 @@
-import { css } from '@styled-stytem/css'
-import { clubTag } from '@styled-stytem/recipes'
+import { css } from '@styled-system/css'
+import { clubTag } from '@styled-system/recipes'
 
 import Book from '@/assets/Book.svg'
 import Heart from '@/assets/Heart.svg'

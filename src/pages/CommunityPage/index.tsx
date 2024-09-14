@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 
 import MainCommunityContent from '@/components/community/CommunityContent'
 import CommunitySectionCard from '@/components/community/CommunitySectionCard'
