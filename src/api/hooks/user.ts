@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import {
   GetMyProfileResponse,
-  GetPointHistroyResponse,
+  GetPointHistoryResponse,
   PatchExchangeDayRequest,
   PatchMyProfileRequest,
   PostLanguageRequest,
@@ -12,7 +12,7 @@ import { useAuth } from '@/util/auth/useAuth'
 import { apiInterface } from '@/util/axios/custom-axios'
 
 const getPointHistory = async () => {
-  const response = await apiInterface.get<GetPointHistroyResponse>('/user/point-history')
+  const response = await apiInterface.get<GetPointHistoryResponse>('/user/point-history')
   return response.data
 }
 

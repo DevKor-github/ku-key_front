@@ -15,6 +15,7 @@ export const usePostAttendance = () => {
     onSuccess: () => {
       queryClient.setQueryData<boolean>(['attendance'], true)
       queryClient.invalidateQueries({ queryKey: ['myProfile'] })
+      queryClient.invalidateQueries({ queryKey: ['pointHistory'] })
     },
   })
 }
