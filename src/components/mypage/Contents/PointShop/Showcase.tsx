@@ -49,7 +49,6 @@ const Showcase = ({ myLevel, selectedLevel, myCharacterType }: ShowcaseProps) =>
         { itemCategory: type, requiredPoints: cost },
         {
           onSuccess: () => {
-            // TODO: 캐릭터 로직
             alert('Your purchase has been successful')
             window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
           },

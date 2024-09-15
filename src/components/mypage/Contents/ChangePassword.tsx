@@ -1,4 +1,5 @@
 import { css } from '@styled-system/css'
+import { isAxiosError } from 'axios'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -36,6 +37,13 @@ const ChangePassword = () => {
                   onSuccess: () => {
                     reset()
                     alert('Your password has been successfully changed')
+                  },
+                  onError: error => {
+                    if (isAxiosError(error)) {
+                      alert(error.response?.data.message)
+                    } else {
+                      alert('Something is Wrong!')
+                    }
                   },
                 })
               } catch (error) {
