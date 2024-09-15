@@ -18,7 +18,7 @@ const ReviewKeyExpirationCard = () => {
     return () => clearInterval(timer)
   }, [])
 
-  if (data === null) return <></>
+  if (!data) return <></>
 
   const expireDate = new Date(data.date)
 
