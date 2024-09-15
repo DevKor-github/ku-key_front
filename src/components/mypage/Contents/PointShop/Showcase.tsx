@@ -51,6 +51,7 @@ const Showcase = ({ myLevel, selectedLevel, myCharacterType }: ShowcaseProps) =>
           onSuccess: () => {
             // TODO: 캐릭터 로직
             alert('Your purchase has been successful')
+            window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
           },
           onError: error => {
             if (isAxiosError(error)) {
