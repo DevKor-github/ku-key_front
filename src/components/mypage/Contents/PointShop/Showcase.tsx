@@ -66,9 +66,13 @@ const Showcase = ({ myLevel, selectedLevel, myCharacterType }: ShowcaseProps) =>
   )
   const handleApplyCharacter = useCallback(
     (target: number) => {
-      selectLevel(target)
+      if (selectedLevel !== target) {
+        selectLevel(target)
+        // TODO: 스크롤 애니메이션 컨펌 받기
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+      }
     },
-    [selectLevel],
+    [selectLevel, selectedLevel],
   )
 
   return (
