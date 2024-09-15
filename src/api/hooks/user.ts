@@ -85,8 +85,8 @@ export const usePostPurchaseItem = () => {
   return useMutation({
     mutationFn: postPurchaseItem,
     onSuccess: () => {
-      // TODO: 아이템 & 포인트 관련 정보 업데이트 로직
       queryClient.invalidateQueries({ queryKey: ['myProfile'] })
+      queryClient.invalidateQueries({ queryKey: ['keyExpiration'] })
     },
   })
 }

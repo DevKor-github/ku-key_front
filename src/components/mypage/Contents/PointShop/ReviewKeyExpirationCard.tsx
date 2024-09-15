@@ -1,5 +1,6 @@
 import { css } from '@styled-system/css'
 import { History } from 'lucide-react'
+import { useEffect, useState } from 'react'
 
 import { useGetKeyExpiration } from '@/api/hooks/user'
 import PASS_IMG from '@/assets/pass.png'
@@ -7,10 +8,18 @@ import dateFormatter from '@/util/dateFormatter'
 
 const ReviewKeyExpirationCard = () => {
   const { data } = useGetKeyExpiration()
+  const [today, setToday] = useState(new Date())
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setToday(new Date())
+    }, 10000)
+
+    return () => clearInterval(timer)
+  }, [])
 
   if (data === null) return <></>
 
-  const today = new Date()
   const expireDate = new Date(data.date)
 
   const remain = Math.abs(expireDate.getTime() - today.getTime())
@@ -89,7 +98,8 @@ const ReviewKeyExpirationCard = () => {
             },
           })}
         >
-          <span>{days}</span> Days <span>{hours}</span>H : <span>{minutes}</span>M
+          <span>{days}</span> Days <span>{String(hours).padStart(2, '0')}</span>H :{' '}
+          <span>{String(minutes).padStart(2, '0')}</span>M
         </div>
       </div>
     </div>
