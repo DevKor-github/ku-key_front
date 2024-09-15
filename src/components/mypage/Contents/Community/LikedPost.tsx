@@ -1,4 +1,5 @@
 import { css } from '@styled-system/css'
+import { Fragment } from 'react/jsx-runtime'
 
 import { useGetMyReactPost } from '@/api/hooks/community'
 import PostPreview from '@/components/community/PostPreview'
@@ -15,7 +16,7 @@ const LikedPost = () => {
   return (
     <div className={css({ display: 'flex', flexDir: 'column', gap: '30px', mb: 25, w: { base: 610, mdDown: 320 } })}>
       {posts?.map((post, index) => (
-        <>
+        <Fragment key={post.id}>
           {index !== 0 && (
             <div
               className={css({
@@ -26,7 +27,6 @@ const LikedPost = () => {
             />
           )}
           <PostPreview
-            key={post.id}
             id={post.id}
             title={post.title}
             boardName={post.boardName}
@@ -35,7 +35,7 @@ const LikedPost = () => {
             content={post.content}
             thumbnailDir={null}
           />
-        </>
+        </Fragment>
       ))}
       <div ref={fetchNextRef} />
     </div>
