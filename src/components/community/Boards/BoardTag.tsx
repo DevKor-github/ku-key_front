@@ -1,4 +1,4 @@
-import { boardTag, BoardTagVariantProps } from '@styled-stytem/recipes'
+import { boardTag, BoardTagVariantProps } from '@styled-system/recipes'
 import { BookText, LucideProps, MessageCircleQuestion, Users } from 'lucide-react'
 
 import { BoardType } from '@/types/community'

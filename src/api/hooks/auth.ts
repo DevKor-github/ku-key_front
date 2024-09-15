@@ -59,11 +59,11 @@ export const useCheckPassword = () => {
   })
 }
 
-const checkVerfied = async () => {
+const checkVerified = async () => {
   const response = await apiInterface.get<boolean>('/auth/is-verified')
   return response.data
 }
 
 export const useCheckVerified = (required: boolean) => {
-  return useQuery({ queryKey: ['user-verified'], queryFn: checkVerfied, retry: 0, enabled: required })
+  return useQuery({ queryKey: ['user-verified'], queryFn: checkVerified, retry: 0, enabled: required })
 }

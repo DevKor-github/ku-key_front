@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import { CircleAlert, Globe } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 

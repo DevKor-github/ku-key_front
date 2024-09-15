@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import { useCallback, useState } from 'react'
 
 import { useGetAcademicCalendar } from '@/api/hooks/home_sub'

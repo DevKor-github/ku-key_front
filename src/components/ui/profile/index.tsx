@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 
 import { characterConfig } from '@/components/ui/profile/CharacterConfig'
 import * as Characters from '@/components/ui/profile/profile-img'

@@ -1,4 +1,4 @@
-export interface InsituteProfileProps {
+export interface InstituteProfileProps {
   img: string
   name: string
   url: string

@@ -1,5 +1,5 @@
-import { css } from '@styled-stytem/css'
-import { postCard } from '@styled-stytem/recipes'
+import { css } from '@styled-system/css'
+import { postCard } from '@styled-system/recipes'
 import { isAxiosError } from 'axios'
 import { formatDistanceToNow } from 'date-fns'
 import { useAtomValue, useSetAtom } from 'jotai'

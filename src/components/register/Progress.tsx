@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 
 import ProgressIndicator from '@/components/register/ProgressIndicator'
 import ProgressNumber from '@/components/register/ProgressNumber'
@@ -13,7 +13,8 @@ const Progress = ({ stageState }: ProgressProps) => {
       className={css({
         display: 'flex',
         pos: 'relative',
-        w: 378,
+        w: 'full',
+        maxW: 378,
         justifyContent: 'space-between',
         alignItems: 'center',
       })}

@@ -1,4 +1,4 @@
-import { css, cva } from '@styled-stytem/css'
+import { css, cva } from '@styled-system/css'
 
 import { GetCalendarYearlyResponse } from '@/api/types/home_sub'
 import EventRow from '@/components/home_sub/EventRow'

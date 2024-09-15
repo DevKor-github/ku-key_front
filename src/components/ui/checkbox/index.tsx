@@ -1,5 +1,5 @@
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
-import { css, cx } from '@styled-stytem/css'
+import { css, cx } from '@styled-system/css'
 import { Check } from 'lucide-react'
 import { forwardRef } from 'react'
 

@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 
 import CategoryButton from '@/components/club/CategoryButton'
 import { CATEGORY_LIST, CategoryType } from '@/components/club/constants'

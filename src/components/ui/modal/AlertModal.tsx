@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import { CircleAlert } from 'lucide-react'
 
 import Button from '@/components/ui/button'

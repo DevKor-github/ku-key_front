@@ -1,5 +1,5 @@
-import { css, cva, cx } from '@styled-stytem/css'
-import { shadow } from '@styled-stytem/recipes'
+import { css, cva, cx } from '@styled-system/css'
+import { shadow } from '@styled-system/recipes'
 import { CaseSensitive, CircleAlert, Palette } from 'lucide-react'
 import { useCallback, useState } from 'react'
 
@@ -43,15 +43,15 @@ const NameChangeModal = ({
   curTimetableName: string
 }) => {
   const [nameInput, setNameInput] = useState('')
-  const { mutate: changetableName } = useUpdateTimetableName()
+  const { mutate: changeTableName } = useUpdateTimetableName()
 
   const handleSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
       closeModal()
-      changetableName({ timetableName: nameInput, timetableId })
+      changeTableName({ timetableName: nameInput, timetableId })
     },
-    [closeModal, changetableName, nameInput, timetableId],
+    [closeModal, changeTableName, nameInput, timetableId],
   )
 
   return (

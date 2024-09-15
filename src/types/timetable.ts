@@ -48,7 +48,7 @@ export interface ScheduleType {
 }
 
 export interface GridType {
-  schedType: 'Course' | 'Schedule'
+  scheduleType: 'Course' | 'Schedule'
   scheduleId: number
   title: string
   startTime: string

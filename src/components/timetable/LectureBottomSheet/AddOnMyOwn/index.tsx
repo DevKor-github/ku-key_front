@@ -1,4 +1,4 @@
-import { css, cx } from '@styled-stytem/css'
+import { css, cx } from '@styled-system/css'
 import { ReactNode, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
