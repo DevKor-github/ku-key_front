@@ -2,7 +2,7 @@ import { css } from '@styled-system/css'
 import { AxiosError } from 'axios'
 import { ShieldAlert } from 'lucide-react'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 
 import { useLogIn } from '@/api/hooks/auth'
@@ -195,19 +195,33 @@ const Login = () => {
               className={css({
                 display: 'flex',
                 alignItems: 'center',
-                spaceX: 2.5,
-                px: 5,
+                justifyContent: 'space-between',
                 w: 'full',
                 maxW: 438,
               })}
             >
-              <Checkbox id="login" checked={maintain} onCheckedChange={() => setMaintain(m => !m)} />
-              <Label
-                htmlFor="login"
+              <div
+                className={css({
+                  display: 'flex',
+                  alignItems: 'center',
+                  spaceX: 2.5,
+                  px: 5,
+                })}
+              >
+                <Checkbox id="login" checked={maintain} onCheckedChange={() => setMaintain(m => !m)} />
+                <Label
+                  htmlFor="login"
+                  className={css({ fontSize: 20, fontWeight: 600, color: 'darkGray.1', smDown: { fontSize: 16 } })}
+                >
+                  Remember me
+                </Label>
+              </div>
+              <Link
+                to="/password-reset"
                 className={css({ fontSize: 20, fontWeight: 600, color: 'darkGray.1', smDown: { fontSize: 16 } })}
               >
-                Remember me
-              </Label>
+                Forgot password?
+              </Link>
             </div>
             <div className={css({ display: 'flex', gap: 5, smDown: { w: 'full', flexWrap: 'wrap' } })}>
               <Button
