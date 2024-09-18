@@ -9,6 +9,8 @@ import CommentHeader from '@/components/community/post/CommentHeader'
 import NoticeModal from '@/components/ui/modal/NoticeModal'
 import { POST_MESSAGES } from '@/lib/messages/community'
 import { postAtom } from '@/lib/store/post'
+import { getCommentUsername } from '@/util/getCommentUsername'
+import { isAuthorMatchingPostAnonymity } from '@/util/isAuthorMatchingPostAnonymity'
 import { useModal } from '@/util/useModal'
 
 interface CommentProps {
@@ -18,6 +20,7 @@ interface CommentProps {
 }
 const Comment = memo(({ isOpen, currentIndex, handleClick }: CommentProps) => {
   const post = useAtomValue(postAtom)
+  const isPostAuthorAnonymous = post.user.isAnonymous
   const comment = post.comments[currentIndex]
   const { isOpen: modalOpen, handleOpen } = useModal(true)
 
@@ -27,10 +30,10 @@ const Comment = memo(({ isOpen, currentIndex, handleClick }: CommentProps) => {
     mutateLike({ postId: post.id, commentId: comment.id, isReply: false })
   }, [comment.isMyComment, comment.id, handleOpen, mutateLike, post.id])
 
-  const username = useMemo(() => {
-    if (comment.isDeleted) return 'Unknown'
-    return comment.user.isAnonymous ? 'Anonymous' : comment.user.username
-  }, [comment.isDeleted, comment.user.isAnonymous, comment.user.username])
+  const username = useMemo(
+    () => getCommentUsername({ comment, isPostAuthorAnonymous }),
+    [comment, isPostAuthorAnonymous],
+  )
   return (
     <div
       className={css({
@@ -46,6 +49,11 @@ const Comment = memo(({ isOpen, currentIndex, handleClick }: CommentProps) => {
         date={comment.createdAt}
         isMyComment={comment.isMyComment}
         commentId={comment.id}
+        isAuthorMatchingPostAnonymity={isAuthorMatchingPostAnonymity({
+          isAuthor: comment.isAuthor,
+          isPostAuthorAnonymous,
+          isAnonymous: comment.user.isAnonymous,
+        })}
       />
       <p
         className={css({
@@ -57,7 +65,7 @@ const Comment = memo(({ isOpen, currentIndex, handleClick }: CommentProps) => {
           smDown: { fontSize: 14 },
         })}
       >
-        {comment.content}
+        {comment.content || 'This comment has been deleted.'}
       </p>
       <div className={css({ display: 'flex', alignItems: 'center', gap: 2.5 })}>
         <button aria-pressed={isOpen} className={reactionButton()} onClick={handleClick}>
