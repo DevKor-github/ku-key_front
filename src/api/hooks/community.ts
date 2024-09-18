@@ -186,9 +186,8 @@ const postComment = async ({ postId, parentCommentId, content, isAnonymous }: Po
     { content, isAnonymous },
     { params: { postId, parentCommentId } },
   )
-  const postIdString = postId.toString()
   console.log('comment sent...', new Date())
-  return { postId: postIdString, comment: response.data, parentCommentId }
+  return { postId, comment: response.data, parentCommentId }
 }
 
 export const usePostComment = () => {
@@ -196,11 +195,11 @@ export const usePostComment = () => {
   return useMutation({
     mutationFn: postComment,
     onSuccess: data => {
-      queryClient.setQueryData<PostViewProps>(['postById', parseInt(data.postId)], (oldData): PostViewProps => {
+      queryClient.setQueryData<PostViewProps>(['postById', Number(data.postId)], (oldData): PostViewProps => {
         if (!oldData) {
           return {} as PostViewProps
         }
-        return { ...oldData, comments: [...oldData.comments, { ...data.comment, reply: [] }] }
+        return { ...oldData, comments: [{ ...data.comment, reply: [] }, ...oldData.comments] }
       })
     },
   })
