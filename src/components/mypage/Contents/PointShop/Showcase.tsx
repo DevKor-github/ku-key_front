@@ -5,6 +5,7 @@ import { useCallback } from 'react'
 import { usePatchLevel, usePostPurchaseItem } from '@/api/hooks/user'
 import CharacterTicket from '@/components/mypage/Contents/PointShop/CharacterTicket'
 import CourseReviewTicket from '@/components/mypage/Contents/PointShop/CourseReviewTicket'
+import ReviewKeyExpirationCard from '@/components/mypage/Contents/PointShop/ReviewKeyExpirationCard'
 import { CharacterType } from '@/types/community'
 
 const HeadingStyle = css({
@@ -35,7 +36,7 @@ const Showcase = ({ myLevel, selectedLevel, myCharacterType }: ShowcaseProps) =>
             if (isAxiosError(error)) {
               alert(error.response?.data.message)
             } else {
-              alert('Somthing is Wrong!')
+              alert('Something is Wrong!')
             }
           },
         },
@@ -56,7 +57,7 @@ const Showcase = ({ myLevel, selectedLevel, myCharacterType }: ShowcaseProps) =>
             if (isAxiosError(error)) {
               alert(error.response?.data.message)
             } else {
-              alert('Somthing is Wrong!')
+              alert('Something is Wrong!')
             }
           },
         },
@@ -74,7 +75,7 @@ const Showcase = ({ myLevel, selectedLevel, myCharacterType }: ShowcaseProps) =>
   return (
     <div className={css({ display: 'flex', flexDir: 'column', gap: 10 })}>
       <div className={css({ display: 'flex', flexDir: 'column', gap: 5 })}>
-        <h2 className={HeadingStyle}>Decorating characters</h2>
+        <h2 className={HeadingStyle}>Decorating Characters</h2>
         <div
           className={css({
             display: 'flex',
@@ -106,7 +107,8 @@ const Showcase = ({ myLevel, selectedLevel, myCharacterType }: ShowcaseProps) =>
         </div>
       </div>
       <div className={css({ display: 'flex', flexDir: 'column', gap: 5 })}>
-        <h2 className={HeadingStyle}>Course review reading ticket</h2>
+        <h2 className={HeadingStyle}>Course Review Reading Key</h2>
+        <ReviewKeyExpirationCard />
         <div
           className={css({
             display: 'flex',
