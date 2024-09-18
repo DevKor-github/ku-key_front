@@ -1,10 +1,29 @@
 import { css } from '@styled-system/css'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
+import { usePostResetEmail } from '@/api/hooks/auth'
 import Button from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import AlertModal from '@/components/ui/modal/AlertModal'
 import AuthNavigate from '@/lib/router/AuthNavigate'
+import { useModal } from '@/util/useModal'
 
 const PasswordResetPage = () => {
+  const [email, setEmail] = useState('')
+  const navigate = useNavigate()
+  const { isOpen, handleButtonClose, modalRef, handleOpen } = useModal()
+  const { mutate: mutateResetPassword } = usePostResetEmail()
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    mutateResetPassword(email)
+    handleOpen()
+  }
+  const onConfirm = () => {
+    handleButtonClose()
+    navigate('/login')
+  }
   return (
     <AuthNavigate>
       <main
@@ -23,7 +42,7 @@ const PasswordResetPage = () => {
       >
         <title>Login Page</title>
         <div
-          className={css({ pos: 'absolute', w: 'full', h: '500px', top: 0, zIndex: 1, smDown: { h: '300px' } })}
+          className={css({ pos: 'absolute', w: 'full', h: '500px', top: 0, zIndex: 0, smDown: { h: '300px' } })}
           style={{
             backgroundImage: `url(${import.meta.env.VITE_API_AWS_S3_BUCKET}/fe/loginBanner.webp)`,
             backgroundSize: 'cover',
@@ -31,7 +50,7 @@ const PasswordResetPage = () => {
           }}
         />
         <form
-          onSubmit={() => {}}
+          onSubmit={handleSubmit}
           className={css({
             display: 'flex',
             flexDir: 'column',
@@ -65,7 +84,13 @@ const PasswordResetPage = () => {
               Enter your email to receive a temporary password
             </p>
           </div>
-          <Input type="email" placeholder="Email" className={css({ w: 'full', maxW: 438, textAlign: 'center' })} />
+          <Input
+            required
+            type="email"
+            placeholder="Email"
+            onChange={e => setEmail(e.target.value)}
+            className={css({ w: 'full', maxW: 438, textAlign: 'center' })}
+          />
           <Button
             type="submit"
             variant="loginColored"
@@ -80,6 +105,14 @@ const PasswordResetPage = () => {
             Submit
           </Button>
         </form>
+        <AlertModal
+          modalRef={modalRef}
+          title="Reset Password"
+          content="temporary password has been sent"
+          confirmText="OK"
+          isOpen={isOpen}
+          onConfirm={onConfirm}
+        />
       </main>
     </AuthNavigate>
   )

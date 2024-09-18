@@ -9,7 +9,7 @@ interface AlertModalProps extends Omit<ModalPortalProps, 'children'> {
   modalRef: React.RefObject<HTMLDivElement>
   title: string
   content: string
-  closeText: string
+  closeText?: string
   confirmText: string
   onConfirm: () => void
   handleButtonClose?: () => void
@@ -36,7 +36,7 @@ const AlertModal = (props: AlertModalProps) => {
           {content}
         </div>
         <div className={css({ display: 'flex', gap: 5 })}>
-          {handleButtonClose && (
+          {handleButtonClose && closeText && (
             <Button variant="cancel" onClick={handleButtonClose}>
               {closeText}
             </Button>
