@@ -5,6 +5,12 @@
     <link rel="icon" type="image/svg+xml" href="/src/assets/Logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + React + TS</title>
+    <script src="https://cdn.amplitude.com/libs/analytics-browser-2.11.1-min.js.gz"></script>
+    <script src="https://cdn.amplitude.com/libs/plugin-session-replay-browser-1.6.22-min.js.gz"></script>
+    <script>
+      window.amplitude.add(window.sessionReplay.plugin({ sampleRate: 1 }))
+      window.amplitude.init('138f10dc03f82e3c378179273a828049', { autocapture: { elementInteractions: true } })
+    </script>
   </head>
   <body>
     <div id="root"></div>
