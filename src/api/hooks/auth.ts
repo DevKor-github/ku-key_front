@@ -67,3 +67,16 @@ const checkVerified = async () => {
 export const useCheckVerified = (required: boolean) => {
   return useQuery({ queryKey: ['user-verified'], queryFn: checkVerified, retry: 0, enabled: required })
 }
+
+const postResetEmail = async (email: string) => {
+  const response = await apiInterface.post<{ sended: boolean }>('/auth/temporary-password', {
+    email,
+  })
+  return response.data
+}
+
+export const usePostResetEmail = () => {
+  return useMutation({
+    mutationFn: postResetEmail,
+  })
+}
