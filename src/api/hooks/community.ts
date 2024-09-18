@@ -210,7 +210,7 @@ export const usePostCommentReply = () => {
   return useMutation({
     mutationFn: postComment,
     onSuccess: data => {
-      queryClient.setQueryData<PostViewProps>(['postById', parseInt(data.postId)], (oldData): PostViewProps => {
+      queryClient.setQueryData<PostViewProps>(['postById', Number(data.postId)], (oldData): PostViewProps => {
         if (!oldData) {
           return {} as PostViewProps
         }
