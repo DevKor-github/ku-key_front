@@ -13,12 +13,12 @@ const ButtonStyle = cva({
   base: {
     fontSize: { base: 16, mdDown: 11 },
     fontWeight: 600,
-    bgColor: 'red.2',
     py: '3px',
     px: 3,
     rounded: 'full',
     color: 'white',
-    cursor: 'pointer',
+    border: '1px solid',
+    transition: 'all 0.2s',
   },
   variants: {
     visible: {
@@ -27,6 +27,17 @@ const ButtonStyle = cva({
       },
       false: {
         visibility: 'hidden',
+      },
+    },
+    available: {
+      true: {
+        bgColor: 'red.2',
+        borderColor: 'red.2',
+        cursor: 'pointer',
+      },
+      false: {
+        bgColor: 'lightGray.1',
+        borderColor: 'darkGray.2',
       },
     },
   },
@@ -190,7 +201,7 @@ const CharacterTicket = ({
           {canBuy && (
             <button
               className={cx(
-                ButtonStyle(),
+                ButtonStyle({ available: true }),
                 css({
                   position: 'absolute',
                   bottom: { base: '18px', mdDown: 2 },
@@ -206,7 +217,10 @@ const CharacterTicket = ({
           )}
         </div>
         <button
-          className={ButtonStyle({ visible: selectedLevel !== level && level <= myLevel })}
+          className={ButtonStyle({
+            visible: level !== 0 && level <= myLevel,
+            available: selectedLevel !== level,
+          })}
           onClick={() => handleApply(level)}
         >
           Apply

@@ -1,4 +1,5 @@
 import { css } from '@styled-system/css'
+import { Fragment } from 'react/jsx-runtime'
 
 import { useGetMyPost } from '@/api/hooks/community'
 import PostPreview from '@/components/community/PostPreview'
@@ -13,18 +14,28 @@ const MyPost = () => {
   })
 
   return (
-    <div className={css({ display: 'flex', flexDir: 'column', gap: '50px', mb: 25, w: { base: 610, mdDown: 320 } })}>
-      {posts?.map(post => (
-        <PostPreview
-          key={post.id}
-          id={post.id}
-          title={post.title}
-          boardName={post.boardName}
-          user={post.user}
-          createdAt={post.createdAt}
-          content={post.content}
-          thumbnailDir={post.thumbnailDir}
-        />
+    <div className={css({ display: 'flex', flexDir: 'column', gap: '30px', mb: 25, w: { base: 610, mdDown: 320 } })}>
+      {posts?.map((post, index) => (
+        <Fragment key={post.id}>
+          {index !== 0 && (
+            <div
+              className={css({
+                w: 'full',
+                h: 0.25,
+                bgColor: 'lightGray.1',
+              })}
+            />
+          )}
+          <PostPreview
+            id={post.id}
+            title={post.title}
+            boardName={post.boardName}
+            user={post.user}
+            createdAt={post.createdAt}
+            content={post.content}
+            thumbnailDir={null}
+          />
+        </Fragment>
       ))}
       <div ref={fetchNextRef} />
     </div>

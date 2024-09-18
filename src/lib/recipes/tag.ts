@@ -12,7 +12,7 @@ export const tagRecipe = defineRecipe({
     gap: 1.5,
     alignSelf: 'stretch',
     rounded: 'full',
-    bgCololr: 'white',
+    bgColor: 'white',
     boxShadow: '0px 0px 4px 0px rgba(0, 0, 0, 0.25)',
     color: 'darkGray.2',
   },
