@@ -1,6 +1,7 @@
 import { css } from '@styled-system/css'
 import { boardTag } from '@styled-system/recipes'
 import { isAxiosError } from 'axios'
+import { User, UserPen } from 'lucide-react'
 import { useCallback } from 'react'
 
 import { useReportComment } from '@/api/hooks/community'
@@ -15,8 +16,15 @@ interface CommentHeaderProps {
   date: Date
   isMyComment: boolean
   commentId: number
+  isAuthorMatchingPostAnonymity?: boolean
 }
-const CommentHeader = ({ isMyComment, username, date, commentId }: CommentHeaderProps) => {
+const CommentHeader = ({
+  isMyComment,
+  username,
+  date,
+  commentId,
+  isAuthorMatchingPostAnonymity,
+}: CommentHeaderProps) => {
   const { modalRef, isOpen, handleOpen, handleLayoutClose, handleButtonClose } = useModal()
   const { mutate: mutateReportComment } = useReportComment()
   const handleReportConfirm = useCallback(() => {
@@ -45,7 +53,14 @@ const CommentHeader = ({ isMyComment, username, date, commentId }: CommentHeader
       })}
     >
       <div className={css({ display: 'flex', alignItems: 'center', gap: 2.5 })}>
-        <div className={boardTag({ variant: isMyComment ? 'red' : 'small' })}>{isMyComment ? 'Author' : username}</div>
+        <div className={boardTag({ variant: isAuthorMatchingPostAnonymity ? 'red' : 'small' })}>
+          {isAuthorMatchingPostAnonymity ? (
+            <UserPen size={16} />
+          ) : (
+            isMyComment && !isAuthorMatchingPostAnonymity && <User size={16} />
+          )}
+          {username}
+        </div>
         <p className={css({ fontSize: 18, fontWeight: 500, color: 'darkGray.2' })}>{getFormattedTimeString(date)}</p>
       </div>
       <UtilButton isComment isMine={isMyComment} isEditable={false} handleReport={handleOpen} />

@@ -2,7 +2,7 @@ import { css } from '@styled-system/css'
 import { reactionButton } from '@styled-system/recipes'
 import { useAtomValue } from 'jotai'
 import { Cookie, Forward } from 'lucide-react'
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 
 import { usePostCommentLike } from '@/api/hooks/community'
 import CommentHeader from '@/components/community/post/CommentHeader'
@@ -10,6 +10,8 @@ import NoticeModal from '@/components/ui/modal/NoticeModal'
 import { POST_MESSAGES } from '@/lib/messages/community'
 import { postAtom } from '@/lib/store/post'
 import { CommentProps } from '@/types/community'
+import { getCommentUsername } from '@/util/getCommentUsername'
+import { isAuthorMatchingPostAnonymity } from '@/util/isAuthorMatchingPostAnonymity'
 import { useModal } from '@/util/useModal'
 
 interface CommentReplyProps {
@@ -18,12 +20,18 @@ interface CommentReplyProps {
 }
 const CommentReply = ({ reply, parentId }: CommentReplyProps) => {
   const post = useAtomValue(postAtom)
+  const isPostAuthorAnonymous = post.user.isAnonymous
   const { mutate: mutateLike } = usePostCommentLike()
   const { isOpen, handleOpen } = useModal(true)
   const handleLikeClick = useCallback(() => {
     if (reply.isMyComment) return handleOpen()
     mutateLike({ postId: post.id, commentId: reply.id, parentCommentId: parentId, isReply: true })
   }, [handleOpen, mutateLike, parentId, post.id, reply.id, reply.isMyComment])
+
+  const username = useMemo(
+    () => getCommentUsername({ comment: reply as CommentProps, isPostAuthorAnonymous }),
+    [reply, isPostAuthorAnonymous],
+  )
   return (
     <div className={css({ display: 'flex', w: 'full', maxW: 756, alignItems: 'flex-start', gap: 5 })}>
       <Forward className={css({ color: 'darkGray.2', transform: 'scale(1,-1)' })} size={24} />
@@ -38,10 +46,15 @@ const CommentReply = ({ reply, parentId }: CommentReplyProps) => {
         })}
       >
         <CommentHeader
-          username={reply.user.isAnonymous ? 'Anonymous' : reply.user.username}
+          username={username}
           date={reply.createdAt}
           isMyComment={reply.isMyComment}
           commentId={reply.id}
+          isAuthorMatchingPostAnonymity={isAuthorMatchingPostAnonymity({
+            isAuthor: reply.isAuthor,
+            isPostAuthorAnonymous,
+            isAnonymous: reply.user.isAnonymous,
+          })}
         />
         <p
           className={css({
