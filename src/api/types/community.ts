@@ -43,6 +43,7 @@ export interface PostCommentResponse {
   isDeleted: boolean
   createdAt: Date
   updatedAt: Date
+  isAuthor: boolean
   isMyComment: boolean
   content: string
   user: User
