@@ -55,6 +55,7 @@ const CommentReply = ({ reply, parentId }: CommentReplyProps) => {
             isPostAuthorAnonymous,
             isAnonymous: reply.user.isAnonymous,
           })}
+          isDeleted={reply.isDeleted}
         />
         <p
           className={css({
@@ -66,12 +67,14 @@ const CommentReply = ({ reply, parentId }: CommentReplyProps) => {
             smDown: { fontSize: 14 },
           })}
         >
-          {reply.content}
+          {reply.content || 'This comment has been deleted.'}
         </p>
-        <button aria-pressed={reply.myLike} className={reactionButton()} onClick={handleLikeClick}>
-          <Cookie size={22} />
-          <p>{reply.likeCount}</p>
-        </button>
+        {!reply.isDeleted && (
+          <button aria-pressed={reply.myLike} className={reactionButton()} onClick={handleLikeClick}>
+            <Cookie size={22} />
+            <p>{reply.likeCount}</p>
+          </button>
+        )}
       </div>
       <NoticeModal content={POST_MESSAGES.NO_LIKE_OWN_COMMENT} isOpen={isOpen} />
     </div>

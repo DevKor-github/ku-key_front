@@ -18,6 +18,7 @@ import {
 } from '@/api/types/community'
 import { CommentProps, PostPreviewByBoardMeta, PostPreviewProps, PostViewProps, ReactionType } from '@/types/community'
 import { apiInterface } from '@/util/axios/custom-axios'
+import { useGetPostQueryKey } from '@/util/useGetPostQueryKey'
 import { useSearch } from '@/util/useSearch'
 
 const getBoard = async () => {
@@ -394,5 +395,19 @@ export const useGetMyComments = () => {
     getNextPageParam: lastPage => (lastPage.meta.hasNextData ? lastPage.meta.nextCursor : undefined),
     initialPageParam: 0,
     select: data => (data.pages ?? []).flatMap(page => page.data),
+  })
+}
+
+const deleteComment = async (commentId: number) => {
+  const response = await apiInterface.delete(`/comment/${commentId}`)
+  return response.data
+}
+
+export const useDeleteComment = () => {
+  const queryClient = useQueryClient()
+  const queryKey = useGetPostQueryKey()
+  return useMutation({
+    mutationFn: deleteComment,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: queryKey }),
   })
 }

@@ -2,9 +2,10 @@ import { css } from '@styled-system/css'
 import { boardTag } from '@styled-system/recipes'
 import { isAxiosError } from 'axios'
 import { User, UserPen } from 'lucide-react'
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 
-import { useReportComment } from '@/api/hooks/community'
+import { useDeleteComment, useReportComment } from '@/api/hooks/community'
 import UtilButton from '@/components/community/post/UtilButton'
 import AlertModal from '@/components/ui/modal/AlertModal'
 import { REPORT_MESSAGES } from '@/lib/messages/community'
@@ -17,6 +18,7 @@ interface CommentHeaderProps {
   isMyComment: boolean
   commentId: number
   isAuthorMatchingPostAnonymity?: boolean
+  isDeleted: boolean
 }
 const CommentHeader = ({
   isMyComment,
@@ -24,9 +26,20 @@ const CommentHeader = ({
   date,
   commentId,
   isAuthorMatchingPostAnonymity,
+  isDeleted,
 }: CommentHeaderProps) => {
+  const [target, setTarget] = useState<'report' | 'delete'>()
   const { modalRef, isOpen, handleOpen, handleLayoutClose, handleButtonClose } = useModal()
   const { mutate: mutateReportComment } = useReportComment()
+  const { mutate: mutateDeleteComment } = useDeleteComment()
+  const boardName = useLocation().pathname.split('/')[2]
+  const handleTargetAndOpen = useCallback(
+    (target: 'report' | 'delete') => {
+      setTarget(target)
+      handleOpen()
+    },
+    [handleOpen],
+  )
   const handleReportConfirm = useCallback(() => {
     mutateReportComment(
       { commentId, reason: 'Inappropriate' },
@@ -43,6 +56,10 @@ const CommentHeader = ({
       },
     )
   }, [commentId, handleButtonClose, mutateReportComment])
+  const handleDelete = useCallback(
+    () => mutateDeleteComment(commentId, { onSuccess: handleButtonClose }),
+    [commentId, handleButtonClose, mutateDeleteComment],
+  )
   return (
     <div
       className={css({
@@ -63,14 +80,28 @@ const CommentHeader = ({
         </div>
         <p className={css({ fontSize: 18, fontWeight: 500, color: 'darkGray.2' })}>{getFormattedTimeString(date)}</p>
       </div>
-      <UtilButton isComment isMine={isMyComment} isEditable={false} handleReport={handleOpen} />
+      {!isDeleted && (
+        <UtilButton
+          isComment
+          isMine={isMyComment}
+          isEditable={false}
+          isDeletable={isMyComment && boardName !== 'question'}
+          handleReport={() => handleTargetAndOpen('report')}
+          handleDelete={() => handleTargetAndOpen('delete')}
+          disabled={isDeleted}
+        />
+      )}
       <AlertModal
         modalRef={modalRef}
         title="Are you sure?"
-        content={`Do you want to report this comment? ${'\n'} The report will not be processed ${'\n'}if the reason for reporting is inappropriate.`}
+        content={
+          target === 'delete'
+            ? 'Do you want to delete this comment?'
+            : `Do you want to report this comment? ${'\n'} The report will not be processed ${'\n'}if the reason for reporting is inappropriate.`
+        }
         closeText="Cancel"
         confirmText="Confirm"
-        onConfirm={handleReportConfirm}
+        onConfirm={target === 'delete' ? handleDelete : handleReportConfirm}
         isOpen={isOpen}
         handleLayoutClose={handleLayoutClose}
         handleButtonClose={handleButtonClose}
