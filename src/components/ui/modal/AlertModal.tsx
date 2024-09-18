@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import { CircleAlert } from 'lucide-react'
 
 import Button from '@/components/ui/button'
@@ -22,12 +22,12 @@ const AlertModal = (props: AlertModalProps) => {
       <ModalCard variant="alert" ref={modalRef}>
         <div className={css({ display: 'flex', flexDir: 'column', alignItems: 'center', bgColor: 'white' })}>
           <CircleAlert size={58} className={css({ fill: 'red.3', color: 'white' })} />
-          <div className={css({ fontWeight: 700, color: 'black.2', fontSize: 24 })}>{title}</div>
+          <div className={css({ fontWeight: 700, color: 'black.2', fontSize: { base: 24, mdDown: 18 } })}>{title}</div>
         </div>
         <div
           className={css({
             fontWeight: 500,
-            fontSize: 18,
+            fontSize: { base: 18, mdDown: 16 },
             textAlign: 'center',
             color: 'black.2',
             whiteSpace: 'pre-wrap',

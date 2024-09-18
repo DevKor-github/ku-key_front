@@ -1,11 +1,11 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 
 import { useGetMyProfile } from '@/api/hooks/user'
-import MypageBG from '@/assets/MypageBG.jpg'
 import DueDateCard from '@/components/mypage/DueDateCard'
 import MyPageContents from '@/components/mypage/MyPageContents'
 import MypageWrapper from '@/components/mypage/MypageWrapper'
 import UserInfo from '@/components/mypage/UserInfo'
+import { characterConfig } from '@/components/ui/profile/CharacterConfig'
 
 const MyPage = () => {
   const { data: myProfileData } = useGetMyProfile()
@@ -31,19 +31,30 @@ const MyPage = () => {
             zIndex: 0,
             bgSize: 'cover',
             bgPosition: 'center',
+            position: 'relative',
           })}
           style={{
-            backgroundImage: `url(${MypageBG})`,
+            backgroundImage: `url(${import.meta.env.VITE_API_AWS_S3_BUCKET}/fe/myPageBanner.webp)`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
         >
           <UserInfo
-            name={myProfileData.name}
+            name={myProfileData.username}
             country={myProfileData.country}
             point={myProfileData.point}
             languages={myProfileData.languages}
             homeUniversity={myProfileData.homeUniversity}
+          />
+          <img
+            src={characterConfig[myProfileData.type][myProfileData.selectedLevel]}
+            alt="My Character"
+            className={css({
+              w: { base: '450px', mdDown: '250px' },
+              position: 'absolute',
+              right: { base: '150px', mdDown: 0 },
+              top: { base: '20px', mdDown: 0 },
+            })}
           />
         </div>
         <DueDateCard startDay={myProfileData.startDay} endDay={myProfileData.endDay} />

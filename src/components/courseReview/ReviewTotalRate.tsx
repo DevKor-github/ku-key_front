@@ -1,6 +1,7 @@
-import { css, cva } from '@styled-stytem/css'
+import { css, cva } from '@styled-system/css'
 import { useFormContext } from 'react-hook-form'
 
+import RateCookie from '@/assets/RateCookie.png'
 import { REQUIRE_TEXT } from '@/components/courseReview/ReviewChoiceChips'
 
 const ReviewTotalRate = () => {
@@ -15,22 +16,18 @@ const ReviewTotalRate = () => {
         key={i}
         type="button"
         onClick={() => setValue('rate', i + 1)}
-        className={cva({
-          base: {
-            rounded: 'full',
-            w: '18px',
-            h: '18px',
-            bgColor: 'lightGray.1',
-            cursor: 'pointer',
-          },
-          variants: {
-            selected: {
-              true: {
-                bgColor: 'red.3',
-              },
-            },
-          },
-        })({ selected: i < watch('rate') })}
+        className={css({
+          rounded: 'full',
+          w: '18px',
+          h: '18px',
+          cursor: 'pointer',
+          bgSize: 'cover',
+          bgPosition: 'center',
+        })}
+        style={{
+          backgroundImage: i < watch('rate') ? `url(${RateCookie})` : 'none',
+          backgroundColor: i < watch('rate') ? 'transparent' : '#D9D9D9',
+        }}
       />,
     )
   }

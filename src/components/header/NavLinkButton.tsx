@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
 import { forwardRef } from 'react'
@@ -10,9 +10,10 @@ interface NavLinkProps {
   innerTab?: string[]
   isOpen: boolean
   handleOpen: () => void
+  handleNavClick: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, navName: string) => void
 }
 export const NavLinkButton = forwardRef<HTMLDivElement, NavLinkProps>(
-  ({ isSelected, targetRoute, navName, innerTab, isOpen, handleOpen }, ref) => {
+  ({ isSelected, targetRoute, navName, innerTab, isOpen, handleOpen, handleNavClick }, ref) => {
     return (
       <div
         className={css({
@@ -36,15 +37,7 @@ export const NavLinkButton = forwardRef<HTMLDivElement, NavLinkProps>(
             gap: 2.5,
           })}
         >
-          <Link
-            to={`/${targetRoute}`}
-            onClick={e => {
-              if (navName === 'Timetable') {
-                e.preventDefault()
-                handleOpen()
-              }
-            }}
-          >
+          <Link to={`/${targetRoute}`} onClick={e => handleNavClick(e, navName)}>
             {navName}
           </Link>
           {navName === 'Timetable' && (

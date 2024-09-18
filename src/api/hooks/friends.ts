@@ -26,7 +26,7 @@ const getFriendList = async ({ keyword }: GetFriendListRequest) => {
  */
 export const useGetFriendList = ({ keyword }: GetFriendListRequest) => {
   return useQuery({
-    queryKey: ['friendList'],
+    queryKey: ['friendList', keyword],
     queryFn: () => getFriendList({ keyword }),
     initialData: [],
   })

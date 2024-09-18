@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 
 import { ReactionType } from '@/types/community'
 import { getReactionImg } from '@/util/getReactionImg'

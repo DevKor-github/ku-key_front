@@ -3,7 +3,6 @@ import { defineConfig } from '@pandacss/dev'
 import {
   buttonRecipe,
   carouselButtonRecipe,
-  chipRecipe,
   globalLayoutRecipe,
   clubTagRecipe,
   inputRecipe,
@@ -33,7 +32,6 @@ export default defineConfig({
   theme: {
     extend: {
       recipes: {
-        chip: chipRecipe,
         label: labelRecipe,
         button: buttonRecipe,
         input: inputRecipe,

@@ -1,4 +1,5 @@
 import { Language } from '@/lib/constants/language'
+import { CharacterType } from '@/types/community'
 
 export type GetPointHistroyResponse = {
   date: string
@@ -8,7 +9,7 @@ export type GetPointHistroyResponse = {
 }[]
 
 export interface GetMyProfileResponse {
-  name: string
+  username: string
   country: string
   homeUniversity: string
   major: string
@@ -17,11 +18,12 @@ export interface GetMyProfileResponse {
   point: number
   languages: Language[]
   level: number
-  type: string
+  type: CharacterType
+  selectedLevel: number
 }
 
 export interface PatchMyProfileRequest {
-  name: string
+  username: string
   country: string
   homeUniversity: string
   major: string
@@ -36,4 +38,8 @@ export interface PostPurchaseItemRequest {
 export interface PatchExchangeDayRequest {
   startDay: string
   endDay: string
+}
+
+export interface PostLanguageRequest {
+  language: Language
 }

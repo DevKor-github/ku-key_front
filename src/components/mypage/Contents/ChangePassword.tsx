@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -61,8 +61,16 @@ const ChangePassword = () => {
   }
 
   return (
-    <div className={css({ display: 'flex', gap: 20, alignItems: 'center', flexDir: 'column', maxW: 818 })}>
-      <h1 className={css({ px: 1, py: 2.5, fontSize: 30, fontWeight: 700 })}>Change Password</h1>
+    <div
+      className={css({
+        display: 'flex',
+        gap: { base: 20, mdDown: 5 },
+        alignItems: 'center',
+        flexDir: 'column',
+        maxW: 818,
+      })}
+    >
+      <h1 className={css({ px: 1, py: 2.5, fontSize: { base: 30, mdDown: 15 }, fontWeight: 700 })}>Change Password</h1>
       <form className={css({ display: 'flex', flexDir: 'column', gap: 10 })} onSubmit={handleSubmit(onSubmit)}>
         <ChangeForm type="curPassword" register={register} formState={formState} />
         <section>

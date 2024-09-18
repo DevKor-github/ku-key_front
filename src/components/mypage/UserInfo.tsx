@@ -1,9 +1,9 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import { hasFlag } from 'country-flag-icons'
 import getUnicodeFlagIcon from 'country-flag-icons/unicode'
 import { findByAlpha2 } from 'iso-3166-1-ts'
 
-import Cookie from '@/assets/cookie.svg'
+import Sugar from '@/assets/Sugar_md.png'
 import { Chip } from '@/components/ui/chip'
 import { Language } from '@/lib/constants/language'
 
@@ -15,6 +15,7 @@ interface UserInfoProps {
   homeUniversity: string
 }
 const UserInfo = ({ name, country, point, languages, homeUniversity }: UserInfoProps) => {
+  const variantsArray: ('default' | 'red3' | 'red4')[] = ['default', 'red3', 'red4']
   return (
     <div
       className={css({
@@ -47,12 +48,12 @@ const UserInfo = ({ name, country, point, languages, homeUniversity }: UserInfoP
           gap: 2.5,
         })}
       >
-        <img src={Cookie} alt="cookie" className={css({ w: { base: 9, mdDown: 5 } })} />
-        <p>{point}p</p>
+        <img src={Sugar} alt="sugar" className={css({ w: { base: 10, mdDown: 5 } })} />
+        <p>{point}</p>
       </div>
       <div className={css({ display: 'flex', gap: 2, mt: 5 })}>
-        {languages.map(lan => (
-          <Chip variant="default" key={lan}>
+        {languages.map((lan, ind) => (
+          <Chip variant={variantsArray[ind % variantsArray.length]} key={lan}>
             {lan.toUpperCase()}
           </Chip>
         ))}

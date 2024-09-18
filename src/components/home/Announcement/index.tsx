@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 
 import CalendarSection from '@/components/home/Announcement/CalendarSection'
 import SchoolInstitutionSection from '@/components/home/Announcement/SchoolInstitutionSection'

@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import { ShieldAlert } from 'lucide-react'
 import { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -50,7 +50,7 @@ const ExchangeProfile = ({ myProfileData }: ExchangeProfileProps) => {
   }
 
   return (
-    <div className={css({ display: 'flex', flexDir: 'column', gap: 20 })}>
+    <div className={css({ display: 'flex', flexDir: 'column', gap: { base: 20, mdDown: 5 } })}>
       <ProfileChangeHeader type="exchange" />
       <form className={css({ display: 'flex', flexDir: 'column', gap: 25 })} onSubmit={handleSubmit(onSubmit)}>
         <section className={css({ display: 'flex', flexDir: 'column', gap: 2.5 })}>

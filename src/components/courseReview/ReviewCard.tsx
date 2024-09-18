@@ -1,5 +1,5 @@
-import { css, cx } from '@styled-stytem/css'
-import { shadow } from '@styled-stytem/recipes'
+import { css, cx } from '@styled-system/css'
+import { shadow } from '@styled-system/recipes'
 import { useAtomValue } from 'jotai/react'
 import { ChevronRight } from 'lucide-react'
 import { Link } from 'react-router-dom'

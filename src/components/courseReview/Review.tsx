@@ -1,5 +1,5 @@
-import { css, cx } from '@styled-stytem/css'
-import { shadow } from '@styled-stytem/recipes'
+import { css, cx } from '@styled-system/css'
+import { shadow } from '@styled-system/recipes'
 
 import CookiesRate from '@/components/courseReview/CookiesRate'
 
@@ -15,10 +15,18 @@ const Review = ({ courseName, year, semester, rate, text }: ReviewProps) => {
     <div
       className={cx(
         shadow(),
-        css({ rounded: 10, display: 'flex', flexDir: 'column', gap: 5, p: 5, pb: 10, bgColor: 'white' }),
+        css({
+          rounded: 10,
+          display: 'flex',
+          flexDir: 'column',
+          gap: { base: 5, mdDown: 2.5 },
+          p: 5,
+          pb: { base: 10, mdDown: 5 },
+          bgColor: 'white',
+        }),
       )}
     >
-      <div className={css({ color: 'black.2', fontSize: 26, fontWeight: 600 })}>{courseName}</div>
+      <div className={css({ color: 'black.2', fontSize: { base: 26, mdDown: 16 }, fontWeight: 600 })}>{courseName}</div>
       <div className={css({ fontSize: 14, fontWeight: 700, color: 'lightGray.1' })}>
         {year} {semester} semester
       </div>
@@ -30,6 +38,8 @@ const Review = ({ courseName, year, semester, rate, text }: ReviewProps) => {
         className={css({
           color: 'darkGray.1',
           fontSize: 14,
+          wordBreak: 'keep-all',
+          overflowWrap: 'anywhere',
         })}
       >
         {text}

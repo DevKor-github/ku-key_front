@@ -4,8 +4,9 @@ import KUpaper from '@/assets/KUpaper.jpg'
 import KUTV from '@/assets/KUTV.png'
 import SPKU from '@/assets/SPKU.jpg'
 import TGT from '@/assets/TGT.jpeg'
-import { InsituteProfileProps } from '@/types/school-insitute'
-export const BROADCASTS: InsituteProfileProps[] = [
+import { InstituteProfileProps } from '@/types/school-institute'
+
+export const BROADCASTS: InstituteProfileProps[] = [
   {
     img: KTN,
     name: 'KTN',

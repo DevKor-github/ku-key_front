@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import { useAtomValue } from 'jotai/react'
 
 import InfoDetail from '@/components/courseReview/InfoDetail'
@@ -10,7 +10,7 @@ const CourseInfoPage = () => {
   const data = useAtomValue(courseSummary)
 
   return (
-    <div className={css({ flexGrow: 1, display: 'flex', flexDir: 'column', gap: 10 })}>
+    <div className={css({ flexGrow: 1, display: 'flex', flexDir: 'column', gap: 10, maxW: '820px' })}>
       <ReviewHeader courseCode={data.courseCode} courseName={data.courseName} prof={data.prof} />
       <TotalRate
         totalRate={data.totalRate}

@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import { isAxiosError } from 'axios'
 import { memo } from 'react'
 

@@ -1,4 +1,4 @@
-import { cva } from '@styled-stytem/css'
+import { cva } from '@styled-system/css'
 
 interface TypeChipProps {
   type: boolean
@@ -8,15 +8,15 @@ const TypeChip = ({ type }: TypeChipProps) => {
     <div
       className={cva({
         base: {
-          w: '78px',
+          w: { base: '78px', mdDown: '48px' },
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          py: '5px',
+          py: { base: '5px', mdDown: 0.5 },
           rounded: 10,
           color: 'white',
-          fontSize: 14,
-          fontWeight: 700,
+          fontSize: { base: 14, mdDown: 10 },
+          fontWeight: { base: 700, mdDown: 500 },
         },
         variants: {
           type: {

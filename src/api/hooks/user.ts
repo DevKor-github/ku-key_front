@@ -5,6 +5,7 @@ import {
   GetPointHistroyResponse,
   PatchExchangeDayRequest,
   PatchMyProfileRequest,
+  PostLanguageRequest,
   PostPurchaseItemRequest,
 } from '@/api/types/user'
 import { useAuth } from '@/util/auth/useAuth'
@@ -42,7 +43,7 @@ export const useGetMyProfile = () => {
     queryKey: ['myProfile'],
     queryFn: getMyProfile,
     initialData: {
-      name: '',
+      username: '',
       country: '',
       homeUniversity: '',
       major: '',
@@ -51,7 +52,8 @@ export const useGetMyProfile = () => {
       point: 0,
       languages: [],
       level: 0,
-      type: '',
+      type: 'character1',
+      selectedLevel: 0,
     },
   })
 }
@@ -97,6 +99,51 @@ export const usePatchExchangeDay = () => {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: patchExchangeDay,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['myProfile'] })
+    },
+  })
+}
+
+const patchLevel = async (selectedLevel: number) => {
+  const response = apiInterface.patch('/user/character-level', { selectedLevel })
+  return response
+}
+
+export const usePatchLevel = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: patchLevel,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['myProfile'] })
+    },
+  })
+}
+
+const postLanguage = async (params: PostLanguageRequest) => {
+  const response = apiInterface.post('/user/language', params)
+  return response
+}
+
+export const usePostLanguage = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: postLanguage,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['myProfile'] })
+    },
+  })
+}
+
+const deleteLanguage = async (params: PostLanguageRequest) => {
+  const response = apiInterface.delete('/user/language', { data: params })
+  return response
+}
+
+export const useDeleteLanguage = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: deleteLanguage,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['myProfile'] })
     },

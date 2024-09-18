@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 
 import { GetMyProfileResponse } from '@/api/types/user'
 import PointStatus from '@/components/mypage/Contents/PointShop/PointStatus'
@@ -9,9 +9,20 @@ interface MyPointProps {
 }
 const MyPoint = ({ myProfileData }: MyPointProps) => {
   return (
-    <div className={css({ display: 'flex', flexDir: 'column', gap: 25, maxW: '818px' })}>
-      <PointStatus name={myProfileData.name} point={myProfileData.point} />
-      <Showcase myLevel={myProfileData.level} />
+    <div
+      className={css({
+        display: 'flex',
+        flexDir: 'column',
+        gap: { base: 25, mdDown: 10 },
+        maxW: { base: '818px', mdDown: '400px' },
+      })}
+    >
+      <PointStatus name={myProfileData.username} point={myProfileData.point} />
+      <Showcase
+        myLevel={myProfileData.level}
+        selectedLevel={myProfileData.selectedLevel}
+        myCharacterType={myProfileData.type}
+      />
     </div>
   )
 }

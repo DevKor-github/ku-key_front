@@ -1,5 +1,5 @@
-import { css } from '@styled-stytem/css'
-import { reactionButton } from '@styled-stytem/recipes'
+import { css } from '@styled-system/css'
+import { reactionButton } from '@styled-system/recipes'
 
 import { ReactionType } from '@/types/community'
 import { getReactionImg } from '@/util/getReactionImg'

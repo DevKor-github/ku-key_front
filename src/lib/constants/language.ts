@@ -184,4 +184,5 @@ export const LanguageMap = {
   Zulu: 'zul',
 } as const
 
+export type LanguageLabel = keyof typeof LanguageMap
 export type Language = (typeof LanguageMap)[keyof typeof LanguageMap]

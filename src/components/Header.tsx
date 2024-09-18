@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import { CircleUser } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
@@ -6,9 +6,12 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useLogOut } from '@/api/hooks/auth'
 import KUkeyLogo from '@/assets/KU-keyLogo.svg'
 import { NavLinkButton } from '@/components/header/NavLinkButton'
-import NotifiWindow from '@/components/header/NotifiWindow'
+import NotifyWindow from '@/components/header/NotifyWindow'
+import NoticeModal from '@/components/ui/modal/NoticeModal'
+import { HEADER_MESSAGE } from '@/lib/messages/header'
 import { headerRouteConfig } from '@/lib/router/header-route'
 import { useAuth } from '@/util/auth/useAuth'
+import { useModal } from '@/util/useModal'
 
 const Header = () => {
   const location = useLocation()
@@ -17,7 +20,9 @@ const Header = () => {
   const { mutate: mutateSignOut } = useLogOut()
   const innerTabRef = useRef<HTMLDivElement>(null)
   const [isOpen, setIsOpen] = useState(false)
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, authState } = useAuth()
+  const { isOpen: isModalOpen, handleOpen: handleModalOpen } = useModal(true)
+  const [modalContent, setModalContent] = useState(HEADER_MESSAGE.NOT_VERIFIED_USER)
   const navigate = useNavigate()
   const handleUserButton = useCallback(() => {
     isAuthenticated ? mutateSignOut() : navigate('/login')
@@ -35,6 +40,38 @@ const Header = () => {
       setIsOpen(prev => !prev)
     }
   }, [])
+
+  const handleNavClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, navName: string) => {
+      if (navName === '1:1 Matching') {
+        e.preventDefault()
+        setModalContent(HEADER_MESSAGE.NOT_READY)
+        handleModalOpen()
+      }
+      if (!isAuthenticated) return
+
+      if (navName === 'mypage' && !authState) {
+        e.preventDefault()
+        setModalContent(HEADER_MESSAGE.NOT_VERIFIED_USER)
+        handleModalOpen()
+      }
+      if (navName === 'Timetable') {
+        e.preventDefault()
+        authState
+          ? handleOpen()
+          : (function () {
+              setModalContent(HEADER_MESSAGE.NOT_VERIFIED_USER)
+              handleModalOpen()
+            })()
+      } else if (navName === 'Community' && !authState) {
+        e.preventDefault()
+        setModalContent(HEADER_MESSAGE.NOT_VERIFIED_USER)
+        handleModalOpen()
+      }
+    },
+    [authState, handleModalOpen, handleOpen, isAuthenticated],
+  )
+
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
@@ -46,7 +83,6 @@ const Header = () => {
         display: 'flex',
         h: 20,
         minH: 20,
-        // borderBottom: '1.5px solid {colors.lightGray.2}',
         bg: 'white',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -81,6 +117,7 @@ const Header = () => {
             innerTab={nav.innerTab}
             isOpen={isOpen}
             handleOpen={handleOpen}
+            handleNavClick={handleNavClick}
           />
         ))}
       </nav>
@@ -95,8 +132,12 @@ const Header = () => {
               color: 'darkGray.2',
             })}
           >
-            <NotifiWindow />
-            <Link to="/mypage" className={css({ display: 'flex', alignItems: 'center' })}>
+            <NotifyWindow />
+            <Link
+              to="/mypage"
+              className={css({ display: 'flex', alignItems: 'center' })}
+              onClick={e => handleNavClick(e, 'mypage')}
+            >
               <CircleUser size={20} />
             </Link>
           </div>
@@ -108,7 +149,7 @@ const Header = () => {
           {isAuthenticated ? 'Log out' : 'Log in'}
         </button>
       </div>
-      {/* <LanguageButton /> */}
+      <NoticeModal isOpen={isModalOpen} content={modalContent} />
     </header>
   )
 }

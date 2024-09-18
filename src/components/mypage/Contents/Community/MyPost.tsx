@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 
 import { useGetMyPost } from '@/api/hooks/community'
 import PostPreview from '@/components/community/PostPreview'
@@ -13,7 +13,7 @@ const MyPost = () => {
   })
 
   return (
-    <div className={css({ display: 'flex', flexDir: 'column', gap: '50px', mb: 25, w: 610 })}>
+    <div className={css({ display: 'flex', flexDir: 'column', gap: '50px', mb: 25, w: { base: 610, mdDown: 320 } })}>
       {posts?.map(post => (
         <PostPreview
           key={post.id}

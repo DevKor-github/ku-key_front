@@ -1,4 +1,4 @@
-import { css, cva } from '@styled-stytem/css'
+import { css, cva } from '@styled-system/css'
 import { CircleX } from 'lucide-react'
 import { useCallback, useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -82,7 +82,7 @@ const FriendBlock = cva({
     fontSize: 18,
     fontWeight: 500,
     rounded: 10,
-    transition: 'color 0.256s backround 0.256s',
+    transition: 'color 0.256s background 0.256s',
     '& span': {
       textOverflow: 'ellipsis',
       overflow: 'hidden',

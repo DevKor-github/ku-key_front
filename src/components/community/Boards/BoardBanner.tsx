@@ -1,11 +1,8 @@
-import { css, cx } from '@styled-stytem/css'
-import { globalLayout } from '@styled-stytem/recipes'
+import { css, cx } from '@styled-system/css'
+import { globalLayout } from '@styled-system/recipes'
 import { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import CommunityBG from '@/assets/CommunityBG.jpg'
-import InformationBG from '@/assets/InformationBG.jpg'
-import QuestionBG from '@/assets/QuestionBG.jpg'
 import Button from '@/components/ui/button'
 
 interface BoardBannerProps {
@@ -14,9 +11,9 @@ interface BoardBannerProps {
 }
 
 const BoardImgConfig: Record<string, string> = {
-  community: CommunityBG,
-  information: InformationBG,
-  question: QuestionBG,
+  community: `${import.meta.env.VITE_API_AWS_S3_BUCKET}/fe/community/communityBanner.webp`,
+  information: `${import.meta.env.VITE_API_AWS_S3_BUCKET}/fe/community/informationBanner.webp`,
+  question: `${import.meta.env.VITE_API_AWS_S3_BUCKET}/fe/community/questionBanner.webp`,
 }
 const BoardBanner = ({ boardName, boardDescription }: BoardBannerProps) => {
   const navigate = useNavigate()

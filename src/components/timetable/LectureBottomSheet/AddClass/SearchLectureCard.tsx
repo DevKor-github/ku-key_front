@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import { ChevronRight, Dot } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
@@ -58,6 +58,7 @@ const SearchLectureCard = ({ data, addCourse }: SearchLectureCardProps) => {
           </div>
           <Link
             className={css({ display: 'flex', gap: 2 })}
+            target="_blank"
             to={`/course-review/info/${data.courseCode.slice(0, 7)}/${data.professorName}`}
           >
             <CookiesRate rate={data.totalRate} size={8} gap={2} />

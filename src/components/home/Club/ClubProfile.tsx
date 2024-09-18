@@ -1,15 +1,16 @@
-import { css } from '@styled-stytem/css'
-import { clubTag } from '@styled-stytem/recipes'
+import { css } from '@styled-system/css'
+import { clubTag } from '@styled-system/recipes'
 
 import Book from '@/assets/Book.svg'
-import Four from '@/assets/Four.svg'
 import Heart from '@/assets/Heart.svg'
-import One from '@/assets/One.svg'
 import People from '@/assets/People.svg'
 import Tennis from '@/assets/Tennis.svg'
-import Three from '@/assets/Three.svg'
-import Two from '@/assets/Two.svg'
 import { ClubProfileProps } from '@/types/club'
+
+const One = `${import.meta.env.VITE_API_AWS_S3_BUCKET}/fe/home/One.webp`
+const Two = `${import.meta.env.VITE_API_AWS_S3_BUCKET}/fe/home/Two.webp`
+const Three = `${import.meta.env.VITE_API_AWS_S3_BUCKET}/fe/home/Three.webp`
+const Four = `${import.meta.env.VITE_API_AWS_S3_BUCKET}/fe/home/Four.webp`
 
 interface ClubPreviewProps extends ClubProfileProps {
   index: number

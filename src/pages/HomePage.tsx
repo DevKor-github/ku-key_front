@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 
 import Announcement from '@/components/home/Announcement'
 import HomeCarousel from '@/components/home/Carousel'

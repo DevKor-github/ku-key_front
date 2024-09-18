@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import { format, isEqual } from 'date-fns'
 import { useAtomValue } from 'jotai'
 import { useEffect, useRef } from 'react'

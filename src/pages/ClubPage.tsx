@@ -1,8 +1,7 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import { useCallback, useMemo } from 'react'
 
 import { useGetClubSearch, usePostClubLike } from '@/api/hooks/institution'
-import ClubBGImg from '@/assets/ClubBGImg.png'
 import CategorySelector from '@/components/club/CategorySelector'
 import ClubCard from '@/components/club/ClubCard'
 import { CategoryType } from '@/components/club/constants'
@@ -79,7 +78,7 @@ const ClubPage = () => {
           display: 'flex',
           alignItems: 'center',
         })}
-        style={{ backgroundImage: `url(${ClubBGImg})` }}
+        style={{ backgroundImage: `url(${import.meta.env.VITE_API_AWS_S3_BUCKET}/fe/home/clubBanner.webp)` }}
       >
         Club
       </div>

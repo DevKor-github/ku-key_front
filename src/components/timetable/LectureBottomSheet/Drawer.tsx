@@ -1,5 +1,5 @@
-import { css, cva, cx } from '@styled-stytem/css'
-import { shadow } from '@styled-stytem/recipes'
+import { css, cva, cx } from '@styled-system/css'
+import { shadow } from '@styled-system/recipes'
 import { motion } from 'framer-motion'
 import { ChevronUp } from 'lucide-react'
 

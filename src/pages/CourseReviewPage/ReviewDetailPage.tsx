@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import { useAtomValue } from 'jotai/react'
 import { useLocation } from 'react-router-dom'
 
@@ -13,7 +13,7 @@ const ReviewDetailPage = () => {
   const data = useLocation().state as ReviewType
   const infoData = useAtomValue(courseSummary)
   return (
-    <div className={css({ flexGrow: 1, display: 'flex', flexDir: 'column', gap: 12 })}>
+    <div className={css({ flexGrow: 1, display: 'flex', flexDir: 'column', gap: 12, maxW: '820px' })}>
       <Review
         courseName={infoData.courseName}
         year={data.year}

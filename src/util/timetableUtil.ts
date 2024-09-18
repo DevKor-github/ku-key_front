@@ -162,7 +162,7 @@ export const lectureDataPreprocess = (
   courseData.map(lecture => {
     const index = weekCnt * getStartCell(lecture.startTime) + dayToNumber[lecture.day]
     lecGrid[index - 1].push({
-      schedType: 'Course',
+      scheduleType: 'Course',
       scheduleId: lecture.courseId,
       title: lecture.courseName,
       location: lecture.classroom,
@@ -174,16 +174,16 @@ export const lectureDataPreprocess = (
       syllabus: lecture.syllabus,
     })
   })
-  scheduleData.map(sched => {
-    const index = weekCnt * getStartCell(sched.scheduleStartTime) + dayToNumber[sched.scheduleDay]
+  scheduleData.map(schedule => {
+    const index = weekCnt * getStartCell(schedule.scheduleStartTime) + dayToNumber[schedule.scheduleDay]
     lecGrid[index - 1].push({
-      schedType: 'Schedule',
-      scheduleId: sched.scheduleId,
-      title: sched.scheduleTitle,
-      location: sched.location,
-      day: sched.scheduleDay,
-      startTime: sched.scheduleStartTime,
-      endTime: sched.scheduleEndTime,
+      scheduleType: 'Schedule',
+      scheduleId: schedule.scheduleId,
+      title: schedule.scheduleTitle,
+      location: schedule.location,
+      day: schedule.scheduleDay,
+      startTime: schedule.scheduleStartTime,
+      endTime: schedule.scheduleEndTime,
     })
   })
 
@@ -204,10 +204,10 @@ export const getWeeknTimeList = (courseData: CourseType[], scheduleData: Schedul
       lastDay = dayToNumber[lec.day]
     }
   })
-  scheduleData.map(sched => {
-    lastTime = Math.max(lastTime, Number(sched.scheduleEndTime.slice(0, 2)))
-    if (dayToNumber[sched.scheduleDay] > lastDay) {
-      lastDay = dayToNumber[sched.scheduleDay]
+  scheduleData.map(schedule => {
+    lastTime = Math.max(lastTime, Number(schedule.scheduleEndTime.slice(0, 2)))
+    if (dayToNumber[schedule.scheduleDay] > lastDay) {
+      lastDay = dayToNumber[schedule.scheduleDay]
     }
   })
 

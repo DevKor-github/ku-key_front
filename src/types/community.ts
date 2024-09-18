@@ -55,7 +55,7 @@ export interface MyCommentProps {
   updatedAt: Date
   content: string
   likeCount: number
-  isAnonymouse: boolean
+  isAnonymous: boolean
   postId: number
   replyCount: number
 }
@@ -65,7 +65,14 @@ export interface ImageProps {
   imgDir: string
 }
 
-export type CharacterType = 'character1' | 'character2' | 'character3' | 'character4' | 'character5' | 'default'
+export type CharacterType =
+  | 'character1'
+  | 'character2'
+  | 'character3'
+  | 'character4'
+  | 'character5'
+  | 'anonymous'
+  | 'deleted'
 export interface User {
   username: string
   isAnonymous: boolean

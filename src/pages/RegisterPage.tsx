@@ -1,10 +1,9 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 import { memo, useCallback, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useRegister } from '@/api/hooks/register'
-import LoginPageBg from '@/assets/LoginPageBG.jpg'
 import CredentialForm from '@/components/register/CredentialForm'
 import EmailForm from '@/components/register/EmailForm'
 import Progress from '@/components/register/Progress'
@@ -16,7 +15,7 @@ import ModalPortal from '@/components/ui/modal/ModalPortal'
 import { REGISTER_MESSAGES } from '@/lib/messages/register'
 import AuthNavigate from '@/lib/router/AuthNavigate'
 import { RegisterFormSchema } from '@/lib/zod/register-schema'
-import { ProgressState, RegisterationKey, RegistrationState, ValidState } from '@/types/register'
+import { ProgressState, RegistrationKey, RegistrationState, ValidState } from '@/types/register'
 import { useModal } from '@/util/useModal'
 import { useRegisterForm } from '@/util/useRegisterForm'
 
@@ -52,7 +51,7 @@ const RegisterPage = memo(() => {
   const onSubmit = () => {
     if (!file) return
     for (const key in valid) {
-      if (valid[key as RegisterationKey] !== 'valid') return
+      if (valid[key as RegistrationKey] !== 'valid') return
     }
     mutateRegister(
       {
@@ -103,75 +102,109 @@ const RegisterPage = memo(() => {
           justifyContent: 'center',
           alignItems: 'center',
           gap: 5,
-          py: '142px',
-          bgColor: 'bg',
+          py: 5,
+          bgColor: 'bg.gray',
         })}
       >
         <div
-          className={css({ pos: 'absolute', w: 'full', h: '500px', top: 0, zIndex: 1 })}
-          style={{ backgroundImage: `url(${LoginPageBg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+          className={css({ pos: 'absolute', w: 'full', h: '500px', top: 0, zIndex: 1, smDown: { h: '300px' } })}
+          style={{
+            backgroundImage: `url(${import.meta.env.VITE_API_AWS_S3_BUCKET}/fe/signUpBanner.webp)`,
+
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+
+            backgroundPosition: 'start',
+          }}
         />
         <title>Register Page</title>
         <section
           className={css({
             display: 'flex',
+            w: 'full',
+            maxW: 818,
             flexDir: 'column',
             justifyContent: 'center',
             alignItems: 'center',
             gap: '50px',
             bgColor: 'white',
             py: 20,
+            smDown: { py: 10 },
             zIndex: 1,
             boxShadow: '0px 0px 4px 0px rgba(0, 0, 0, 0.25)',
             rounded: 30,
-            px: 105,
+            px: 5,
           })}
         >
           <div className={css({ display: 'flex', flexDir: 'column', justifyContent: 'center', alignItems: 'center' })}>
-            <h1 className={css({ fontSize: 40, fontWeight: 700 })}>Join</h1>
-            <h2 className={css({ fontSize: 20, fontWeight: 500, color: 'darkGray.2' })}>Welcome to KU-Key</h2>
+            <h1 className={css({ fontSize: 40, fontWeight: 700, smDown: { fontSize: 32 } })}>Join</h1>
+            <h2
+              className={css({
+                fontSize: 20,
+                fontWeight: 500,
+                color: 'darkGray.2',
+                smDown: { fontSize: 16 },
+              })}
+            >
+              Welcome to KU-Key
+            </h2>
           </div>
           <Progress stageState={page} />
           {page === 1 && (
             <Form {...emailForm}>
-              <form>
-                <EmailForm form={emailForm} valid={valid} handleValidation={handleValidation} />
-              </form>
+              <EmailForm form={emailForm} valid={valid} handleValidation={handleValidation} />
             </Form>
           )}
           {page === 2 && (
             <Form {...userInfoForm}>
-              <form>
-                <UserInfoForm
-                  form={userInfoForm}
-                  handleFileChange={handleFileChange}
-                  valid={valid}
-                  handleValidation={handleValidation}
-                  fileName={file?.name ?? ''}
-                />
-              </form>
+              <UserInfoForm
+                form={userInfoForm}
+                handleFileChange={handleFileChange}
+                valid={valid}
+                handleValidation={handleValidation}
+                fileName={file?.name ?? ''}
+              />
             </Form>
           )}
           {page === 3 && (
             <Form {...credentialForm}>
-              <form>
-                <CredentialForm form={credentialForm} valid={valid.username} handleValidation={handleValidation} />
-              </form>
+              <CredentialForm form={credentialForm} valid={valid.username} handleValidation={handleValidation} />
             </Form>
           )}
-          <div className={css({ display: 'flex', gap: 5 })}>
+          <div className={css({ display: 'flex', gap: 5, smDown: { w: 'full', flexWrap: 'wrap' } })}>
             <Button
               type="submit"
               variant="loginOutline"
               onClick={() => setPage(p => (p - 1) as ProgressState)}
               disabled={page === 1}
               hidden={page === 1}
+              className={css({
+                rounded: 10,
+                smDown: { w: 'full' },
+              })}
             >
               <ArrowLeft className={css({ w: 4, h: 4 })} />
-              <p className={css({ fontSize: 20, fontWeight: 500, lineHeight: 'none' })}>PREV</p>
+              <p className={css({ fontSize: 20, fontWeight: 500, lineHeight: '100%', smDown: { fontSize: 14 } })}>
+                PREV
+              </p>
             </Button>
-            <Button type="submit" variant={page === 3 ? 'loginColored' : 'loginOutline'} onClick={handleNextPage}>
-              <p className={css({ fontSize: 20, fontWeight: 500, lineHeight: 'none' })}>
+            <Button
+              type="submit"
+              variant={page === 3 ? 'loginColored' : 'loginOutline'}
+              onClick={handleNextPage}
+              className={css({
+                rounded: 10,
+                smDown: { w: 'full' },
+              })}
+            >
+              <p
+                className={css({
+                  fontSize: 20,
+                  fontWeight: 500,
+                  lineHeight: '100%',
+                  smDown: { fontSize: 14 },
+                })}
+              >
                 {page === 3 ? 'Submit' : 'NEXT'}
               </p>
               {page !== 3 && <ArrowRight className={css({ w: 4, h: 4 })} />}
