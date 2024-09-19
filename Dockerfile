@@ -18,4 +18,4 @@ RUN yarn build
 EXPOSE 3000
 
 # serve
-CMD ["serve", "-s". "dist"]
+CMD ["serve", "-s", "dist"]
