@@ -4,7 +4,7 @@ FROM node:18-alpine
 # 작업 디렉토리 설정
 WORKDIR /app
 
-COPY package.json yarn.lock panda.config.ts ./
+COPY . .
 
 # KU-key fe에 필요한 패키지 설치
 RUN yarn install
