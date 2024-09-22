@@ -1,4 +1,4 @@
-import { css } from '@styled-system/css'
+import { css, cx } from '@styled-system/css'
 import { reactionButton } from '@styled-system/recipes'
 import { useAtomValue } from 'jotai'
 import { Cookie, Forward } from 'lucide-react'
@@ -55,6 +55,7 @@ const CommentReply = ({ reply, parentId }: CommentReplyProps) => {
             isPostAuthorAnonymous,
             isAnonymous: reply.user.isAnonymous,
           })}
+          isDeleted={reply.isDeleted}
         />
         <p
           className={css({
@@ -66,9 +67,13 @@ const CommentReply = ({ reply, parentId }: CommentReplyProps) => {
             smDown: { fontSize: 14 },
           })}
         >
-          {reply.content}
+          {reply.content || 'This comment has been deleted.'}
         </p>
-        <button aria-pressed={reply.myLike} className={reactionButton()} onClick={handleLikeClick}>
+        <button
+          aria-pressed={reply.myLike}
+          className={cx(reactionButton(), css({ visibility: reply.isDeleted ? 'hidden' : 'visible' }))}
+          onClick={handleLikeClick}
+        >
           <Cookie size={22} />
           <p>{reply.likeCount}</p>
         </button>

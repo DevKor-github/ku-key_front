@@ -54,6 +54,7 @@ const Comment = memo(({ isOpen, currentIndex, handleClick }: CommentProps) => {
           isPostAuthorAnonymous,
           isAnonymous: comment.user.isAnonymous,
         })}
+        isDeleted={comment.isDeleted}
       />
       <p
         className={css({
@@ -67,7 +68,15 @@ const Comment = memo(({ isOpen, currentIndex, handleClick }: CommentProps) => {
       >
         {comment.content || 'This comment has been deleted.'}
       </p>
-      <div className={css({ display: 'flex', alignItems: 'center', gap: 2.5 })}>
+
+      <div
+        className={css({
+          display: 'flex',
+          alignItems: 'center',
+          gap: 2.5,
+          visibility: comment.isDeleted ? 'hidden' : 'visible',
+        })}
+      >
         <button aria-pressed={isOpen} className={reactionButton()} onClick={handleClick}>
           <MessageCircle size={22} />
           <p>{comment.reply.length}</p>

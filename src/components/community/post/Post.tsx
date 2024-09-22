@@ -89,6 +89,7 @@ const Post = memo(() => {
             isComment={false}
             isMine={postAtomData.isMyPost}
             isEditable={postAtomData.isMyPost && (boardName !== 'question' || postAtomData.comments.length < 0)}
+            isDeletable={postAtomData.isMyPost && (boardName !== 'question' || postAtomData.comments.length < 0)}
             handleNavigation={handleNavigation}
             handleDelete={handleOpen}
             handleReport={handleOpen}
