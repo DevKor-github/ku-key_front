@@ -30,6 +30,13 @@ export const useGetUserTimetableList = () => {
 }
 
 const getTimetableByID = async ({ timetableId }: GetTimetableByTimetableIdRequest) => {
+  if (timetableId === -1)
+    return {
+      courses: [],
+      schedules: [],
+      color: 'Red',
+    } as GetTimetableByTimetableIdResponse
+
   const response = await apiInterface.get<GetTimetableByTimetableIdResponse>(`/timetable/${timetableId}`)
   return response.data
 }
