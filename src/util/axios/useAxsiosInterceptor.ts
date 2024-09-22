@@ -10,7 +10,7 @@ import { apiInterface } from '@/util/axios/custom-axios'
 import { onRequest } from '@/util/axios/onRequest'
 import { onResponse } from '@/util/axios/onResponse'
 
-export const useAxsiosInterceptor = () => {
+export const useAxiosInterceptor = () => {
   const authStore = useStore()
 
   const handleSet = useCallback(

@@ -1,4 +1,4 @@
-import { css, cx } from '@styled-stytem/css'
+import { css, cx } from '@styled-system/css'
 import { isEqual } from 'date-fns'
 import { memo } from 'react'
 

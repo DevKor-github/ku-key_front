@@ -1,13 +1,42 @@
-import { cx } from '@styled-stytem/css'
-// import { input } from '@styled-stytem/recipes'
-import { chip } from '@styled-stytem/recipes'
-import { RecipeVariantProps } from '@styled-stytem/types'
+import { cva, cx } from '@styled-system/css'
 import { forwardRef } from 'react'
 
-type ChipProps = React.HTMLAttributes<HTMLDivElement> & RecipeVariantProps<typeof chip>
+const ChipStyle = cva({
+  base: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    px: { base: 2, mdDown: 1 },
+    py: { base: 1, mdDown: 0.5 },
+    rounded: 3.5,
+    fontSize: { base: 15, mdDown: 8 },
+    fontWeight: '500',
+    lineHeight: 'normal',
+  },
+  variants: {
+    variant: {
+      default: {
+        bgColor: 'white',
+        color: 'red.2',
+      },
+      red3: {
+        bgColor: 'red.3',
+        color: 'white',
+      },
+      red4: {
+        bgColor: 'red.4',
+        color: 'red.2',
+      },
+    },
+  },
+})
 
-const Chip = forwardRef<HTMLDivElement, ChipProps>(({ variant, className, ...props }, ref) => {
-  return <div ref={ref} className={cx(chip({ variant }), className)} {...props} />
+interface ChipProps extends React.HTMLAttributes<HTMLDivElement> {
+  variant?: 'default' | 'red3' | 'red4'
+}
+
+const Chip = forwardRef<HTMLDivElement, ChipProps>(({ variant = 'default', className, ...props }, ref) => {
+  return <div ref={ref} className={cx(ChipStyle({ variant }), className)} {...props} />
 })
 Chip.displayName = 'Chip'
 

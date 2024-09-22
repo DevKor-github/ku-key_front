@@ -1,11 +1,12 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 
 import BroadcastProfile from '@/assets/BroadcastProfile.png'
 import ETCProfile from '@/assets/ETCProfile.png'
-import InsituteProfile from '@/components/home/Announcement/InsituteProfile'
+import InstituteProfile from '@/components/home/Announcement/InsituteProfile'
 import SectionTitle from '@/components/home/Announcement/SectionTitle'
 import { BROADCASTS } from '@/lib/school-institute/broadcasts'
 import { ETC } from '@/lib/school-institute/etc'
+
 const ProfileContainer = css({
   display: 'flex',
   h: 'auto',
@@ -70,7 +71,7 @@ const SchoolInstitutionSection = () => {
           </div>
           <div className={ProfileContainer}>
             {BROADCASTS.map(broadcast => (
-              <InsituteProfile key={broadcast.name} name={broadcast.name} img={broadcast.img} url={broadcast.url} />
+              <InstituteProfile key={broadcast.name} name={broadcast.name} img={broadcast.img} url={broadcast.url} />
             ))}
           </div>
         </div>
@@ -113,7 +114,7 @@ const SchoolInstitutionSection = () => {
           </div>
           <div className={ProfileContainer}>
             {ETC.map(etc => (
-              <InsituteProfile key={etc.name} name={etc.name} img={etc.img} url={etc.url} />
+              <InstituteProfile key={etc.name} name={etc.name} img={etc.img} url={etc.url} />
             ))}
           </div>
         </div>

@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import { isEqual } from 'date-fns'
 
 import { CalendarResponse } from '@/api/types/calendar'

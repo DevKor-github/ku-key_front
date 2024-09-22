@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import { useAtomValue } from 'jotai'
 
 import { useGetCalendar } from '@/api/hooks/calendar'

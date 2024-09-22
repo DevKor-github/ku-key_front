@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import { Link } from 'react-router-dom'
 
 // TODO: ADD Instagram & Notion Link

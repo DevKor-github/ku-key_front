@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 
 const NullTimetable = ({ children }: { children: React.ReactNode }) => {
   return (

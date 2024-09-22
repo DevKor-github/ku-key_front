@@ -1,4 +1,4 @@
-import { css, cva } from '@styled-stytem/css'
+import { css, cva } from '@styled-system/css'
 import { useCallback } from 'react'
 import { Link } from 'react-router-dom'
 

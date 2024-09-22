@@ -1,5 +1,5 @@
-import { css } from '@styled-stytem/css'
-import { reactionButton } from '@styled-stytem/recipes'
+import { css } from '@styled-system/css'
+import { reactionButton } from '@styled-system/recipes'
 import { useAtomValue } from 'jotai'
 import { Bookmark, Cookie } from 'lucide-react'
 import { memo, useCallback } from 'react'
@@ -17,7 +17,7 @@ const ReactionSection = memo(() => {
   const { isOpen, handleOpen } = useModal(true)
   const { mutate: mutateReaction } = usePostReaction()
   const { mutate: mutateScrap } = usePostScrap()
-  const handleReacitonSet = useCallback(
+  const handleReactionSet = useCallback(
     (i: number) => {
       if (postAtomData.isMyPost) return handleOpen()
       mutateReaction({ postId: postAtomData.id, reaction: i })
@@ -50,7 +50,7 @@ const ReactionSection = memo(() => {
             key={reactionType}
             active={postAtomData.myReaction === i}
             reaction={reactionType as ReactionType}
-            handleReactionSet={() => handleReacitonSet(i)}
+            handleReactionSet={() => handleReactionSet(i)}
           />
         ))}
         <button className={reactionButton()} aria-pressed={postAtomData.myScrap} onClick={handleScrap}>

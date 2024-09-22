@@ -2,8 +2,9 @@ import KUBA from '@/assets/KUBA.jpeg'
 import KUCheerLeader from '@/assets/KUCheerLeader.jpeg'
 import KUWelfare from '@/assets/KUWelfare.jpeg'
 import StudentUnion from '@/assets/StudentUnion.jpg'
-import { InsituteProfileProps } from '@/types/school-insitute'
-export const ETC: InsituteProfileProps[] = [
+import { InstituteProfileProps } from '@/types/school-institute'
+
+export const ETC: InstituteProfileProps[] = [
   {
     img: KUCheerLeader,
     name: 'Cheer Leaders',

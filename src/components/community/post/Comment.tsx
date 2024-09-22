@@ -1,24 +1,27 @@
-import { css } from '@styled-stytem/css'
-import { reactionButton } from '@styled-stytem/recipes'
+import { css } from '@styled-system/css'
+import { reactionButton } from '@styled-system/recipes'
 import { useAtomValue } from 'jotai'
 import { Cookie, MessageCircle } from 'lucide-react'
-import { memo, useCallback } from 'react'
+import { memo, useCallback, useMemo } from 'react'
 
 import { usePostCommentLike } from '@/api/hooks/community'
 import CommentHeader from '@/components/community/post/CommentHeader'
 import NoticeModal from '@/components/ui/modal/NoticeModal'
-import { POST_MEESSAGES } from '@/lib/messages/community'
+import { POST_MESSAGES } from '@/lib/messages/community'
 import { postAtom } from '@/lib/store/post'
+import { getCommentUsername } from '@/util/getCommentUsername'
+import { isAuthorMatchingPostAnonymity } from '@/util/isAuthorMatchingPostAnonymity'
 import { useModal } from '@/util/useModal'
 
 interface CommentProps {
   isOpen: boolean
-  currnetIndex: number
+  currentIndex: number
   handleClick: () => void
 }
-const Comment = memo(({ isOpen, currnetIndex, handleClick }: CommentProps) => {
+const Comment = memo(({ isOpen, currentIndex, handleClick }: CommentProps) => {
   const post = useAtomValue(postAtom)
-  const comment = post.comments[currnetIndex]
+  const isPostAuthorAnonymous = post.user.isAnonymous
+  const comment = post.comments[currentIndex]
   const { isOpen: modalOpen, handleOpen } = useModal(true)
 
   const { mutate: mutateLike } = usePostCommentLike()
@@ -26,6 +29,11 @@ const Comment = memo(({ isOpen, currnetIndex, handleClick }: CommentProps) => {
     if (comment.isMyComment) return handleOpen()
     mutateLike({ postId: post.id, commentId: comment.id, isReply: false })
   }, [comment.isMyComment, comment.id, handleOpen, mutateLike, post.id])
+
+  const username = useMemo(
+    () => getCommentUsername({ comment, isPostAuthorAnonymous }),
+    [comment, isPostAuthorAnonymous],
+  )
   return (
     <div
       className={css({
@@ -37,10 +45,15 @@ const Comment = memo(({ isOpen, currnetIndex, handleClick }: CommentProps) => {
       })}
     >
       <CommentHeader
-        username={comment.user.isAnonymous ? 'Anonymous' : comment.user.username}
+        username={username}
         date={comment.createdAt}
         isMyComment={comment.isMyComment}
         commentId={comment.id}
+        isAuthorMatchingPostAnonymity={isAuthorMatchingPostAnonymity({
+          isAuthor: comment.isAuthor,
+          isPostAuthorAnonymous,
+          isAnonymous: comment.user.isAnonymous,
+        })}
       />
       <p
         className={css({
@@ -52,7 +65,7 @@ const Comment = memo(({ isOpen, currnetIndex, handleClick }: CommentProps) => {
           smDown: { fontSize: 14 },
         })}
       >
-        {comment.content}
+        {comment.content || 'This comment has been deleted.'}
       </p>
       <div className={css({ display: 'flex', alignItems: 'center', gap: 2.5 })}>
         <button aria-pressed={isOpen} className={reactionButton()} onClick={handleClick}>
@@ -64,7 +77,7 @@ const Comment = memo(({ isOpen, currnetIndex, handleClick }: CommentProps) => {
           <p>{comment.likeCount}</p>
         </button>
       </div>
-      <NoticeModal content={POST_MEESSAGES.NO_LIKE_OWN_COMMENT} isOpen={modalOpen} />
+      <NoticeModal content={POST_MESSAGES.NO_LIKE_OWN_COMMENT} isOpen={modalOpen} />
     </div>
   )
 })

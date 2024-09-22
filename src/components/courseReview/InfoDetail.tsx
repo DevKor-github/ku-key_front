@@ -1,9 +1,9 @@
-import { css, cx } from '@styled-stytem/css'
-import { shadow } from '@styled-stytem/recipes'
+import { css, cx } from '@styled-system/css'
+import { shadow } from '@styled-system/recipes'
 
 import RatePercentage from '@/components/courseReview/RatePercentage'
 import {
-  attendaceArray,
+  attendanceArray,
   classLevelArray,
   learnAmountArray,
   teachingSkillsArray,
@@ -54,7 +54,7 @@ const InfoDetail = ({ attendance, classLevel, teamProject, amountLearned, teachi
     >
       <div className={css({ display: 'flex', gap: 5, alignItems: 'center' })}>
         <span className={LabelStyle}>Attendance</span>
-        <span className={StateStyle}>{attendaceArray[attendance]}</span>
+        <span className={StateStyle}>{attendanceArray[attendance]}</span>
       </div>
       <div className={css({ display: 'flex', flexDir: 'column', gap: 10 })}>
         <div className={css({ display: 'flex' })}>

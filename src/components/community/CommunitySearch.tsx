@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 
 import { useGetPostsAll } from '@/api/hooks/community'
 import PostPreview from '@/components/community/PostPreview'

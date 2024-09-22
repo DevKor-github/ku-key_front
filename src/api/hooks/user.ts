@@ -1,17 +1,19 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import {
+  GetKeyExpirationResponse,
   GetMyProfileResponse,
-  GetPointHistroyResponse,
+  GetPointHistoryResponse,
   PatchExchangeDayRequest,
   PatchMyProfileRequest,
+  PostLanguageRequest,
   PostPurchaseItemRequest,
 } from '@/api/types/user'
 import { useAuth } from '@/util/auth/useAuth'
 import { apiInterface } from '@/util/axios/custom-axios'
 
 const getPointHistory = async () => {
-  const response = await apiInterface.get<GetPointHistroyResponse>('/user/point-history')
+  const response = await apiInterface.get<GetPointHistoryResponse>('/user/point-history')
   return response.data
 }
 
@@ -83,8 +85,8 @@ export const usePostPurchaseItem = () => {
   return useMutation({
     mutationFn: postPurchaseItem,
     onSuccess: () => {
-      // TODO: 아이템 & 포인트 관련 정보 업데이트 로직
       queryClient.invalidateQueries({ queryKey: ['myProfile'] })
+      queryClient.invalidateQueries({ queryKey: ['keyExpiration'] })
     },
   })
 }
@@ -116,5 +118,49 @@ export const usePatchLevel = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['myProfile'] })
     },
+  })
+}
+
+const postLanguage = async (params: PostLanguageRequest) => {
+  const response = apiInterface.post('/user/language', params)
+  return response
+}
+
+export const usePostLanguage = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: postLanguage,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['myProfile'] })
+    },
+  })
+}
+
+const deleteLanguage = async (params: PostLanguageRequest) => {
+  const response = apiInterface.delete('/user/language', { data: params })
+  return response
+}
+
+export const useDeleteLanguage = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: deleteLanguage,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['myProfile'] })
+    },
+  })
+}
+
+const getKeyExpiration = async () => {
+  const response = await apiInterface.get<GetKeyExpirationResponse | null>('/user/course-review-reading-ticket')
+  return response.data
+}
+
+export const useGetKeyExpiration = () => {
+  return useQuery({
+    queryKey: ['keyExpiration'],
+    queryFn: getKeyExpiration,
+    retry: 0,
+    initialData: null,
   })
 }

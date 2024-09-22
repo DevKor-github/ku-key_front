@@ -1,0 +1,20 @@
+name: Dev Docker Image CI
+
+on:
+  push:
+    branches: ['dev']
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      # --TODO: ECR로 할지, Docker Hub로 할지--
+      - name: Set up Docker
+        id: buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)

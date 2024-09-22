@@ -1,75 +1,68 @@
-import { css } from '@styled-stytem/css'
-import { boardTag, reactionButton } from '@styled-stytem/recipes'
-import { Cookie, MessageCircle } from 'lucide-react'
-import { useCallback } from 'react'
+import { css, cx } from '@styled-system/css'
+import { shadow } from '@styled-system/recipes'
+import { Link } from 'react-router-dom'
 
-import UtilButton from '@/components/community/post/UtilButton'
-import NoticeModal from '@/components/ui/modal/NoticeModal'
-import { POST_MEESSAGES } from '@/lib/messages/community'
 import { MyCommentProps } from '@/types/community'
-import { getFormatedTimeString } from '@/util/getFormatedTimeString'
-import { useModal } from '@/util/useModal'
+import { getFormattedTimeString } from '@/util/getFormattedTimeString'
 
 interface CommentCardProps {
   comment: MyCommentProps
 }
 const CommentCard = ({ comment }: CommentCardProps) => {
-  const { isOpen: modalOpen, handleOpen } = useModal(true)
-
-  const handleNavigate = useCallback(() => {
-    window.open(`/community/community/post/${comment.postId}`, '_blank', 'noopener,noreferrer')
-  }, [comment.postId])
-
   return (
-    <div
-      className={css({
-        display: 'flex',
-        flexDir: 'column',
-        alignItems: 'flex-end',
-        gap: 2.5,
-        alignSelf: 'stretch',
-      })}
-    >
+    <Link to={`/community/community/post/${comment.postId}`}>
       <div
         className={css({
           display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
+          flexDir: 'column',
+          alignItems: 'flex-end',
+          gap: '18px',
           alignSelf: 'stretch',
         })}
       >
-        <div className={css({ display: 'flex', alignItems: 'center', gap: 2.5 })}>
-          <div className={boardTag({ variant: 'red' })}>{comment.isAnonymouse ? 'Anonymouse' : 'Author'}</div>
+        <div
+          className={css({
+            display: 'flex',
+            alignItems: 'center',
+            alignSelf: 'stretch',
+            gap: 2.5,
+          })}
+        >
+          <div
+            className={cx(
+              css({
+                px: 2.5,
+                py: 1,
+                fontSize: 12,
+                fontWeight: 700,
+                lineHeight: 1.2,
+                color: 'darkGray.2',
+                rounded: 'full',
+                bgColor: 'white',
+              }),
+              shadow(),
+            )}
+          >
+            {comment.isAnonymous ? 'Anonymous' : 'Me'}
+          </div>
           <p className={css({ fontSize: 18, fontWeight: 500, color: 'darkGray.2' })}>
-            {getFormatedTimeString(comment.createdAt)}
+            {getFormattedTimeString(comment.createdAt)}
           </p>
         </div>
-        <UtilButton isComment isMine={true} isEditable={false} forMyPage handleNavigation={handleNavigate} />
+        <p
+          className={css({
+            display: 'flex',
+            alignSelf: 'stretch',
+            whiteSpace: 'pre-wrap',
+            textStyle: 'heading4_M',
+            color: 'darkGray.1',
+            smDown: { fontSize: 14 },
+          })}
+        >
+          {comment.content}
+        </p>
       </div>
-      <p
-        className={css({
-          display: 'flex',
-          alignSelf: 'stretch',
-          whiteSpace: 'pre-wrap',
-          textStyle: 'heading4_M',
-          color: 'darkGray.1',
-          smDown: { fontSize: 14 },
-        })}
-      >
-        {comment.content}
-      </p>
-      <div className={css({ display: 'flex', alignItems: 'center', gap: 2.5 })}>
-        <button className={reactionButton()} onClick={handleNavigate}>
-          <MessageCircle size={22} />
-          <p>{comment.replyCount}</p>
-        </button>
-        <button aria-pressed={false} className={reactionButton()} onClick={handleOpen}>
-          <Cookie size={22} />
-          <p>{comment.likeCount}</p>
-        </button>
-      </div>
-      <NoticeModal content={POST_MEESSAGES.NO_LIKE_OWN_COMMENT} isOpen={modalOpen} />
-    </div>
+    </Link>
   )
 }
 

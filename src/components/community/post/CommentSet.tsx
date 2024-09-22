@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import { useAtomValue } from 'jotai'
 import { useCallback, useState } from 'react'
 
@@ -33,7 +33,7 @@ const CommentSet = ({ index }: CommentSetProps) => {
           alignSelf: 'stretch',
         })}
       >
-        <Comment currnetIndex={index} isOpen={open} handleClick={handleClick} />
+        <Comment currentIndex={index} isOpen={open} handleClick={handleClick} />
         {comment.reply.map(reply => (
           <CommentReply key={reply.id} reply={reply} parentId={comment.id} />
         ))}

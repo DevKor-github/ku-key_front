@@ -1,10 +1,11 @@
-import { css, cva } from '@styled-stytem/css'
-import { useMemo, useState } from 'react'
+import { css, cva } from '@styled-system/css'
+import { useCallback, useMemo } from 'react'
 
 import LikedPost from '@/components/mypage/Contents/Community/LikedPost'
 import MyComments from '@/components/mypage/Contents/Community/MyComments'
 import MyPost from '@/components/mypage/Contents/Community/MyPost'
 import MyScrap from '@/components/mypage/Contents/Community/MyScrap'
+import { useSearch } from '@/util/useSearch'
 
 const ButtonStyle = cva({
   base: {
@@ -44,7 +45,16 @@ const currentViewConfig: Record<ViewType, React.FC> = {
 }
 
 const MyCommunity = () => {
-  const [curView, setCurView] = useState<ViewType>('myPost')
+  const { searchParam, handleSetParam } = useSearch()
+
+  const curView = (searchParam.get('view') ?? 'myPost') as ViewType
+
+  const setCurView = useCallback(
+    (target: ViewType) => {
+      handleSetParam('view', target)
+    },
+    [handleSetParam],
+  )
 
   const ViewComment = useMemo(() => currentViewConfig[curView], [curView])
 

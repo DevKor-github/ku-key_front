@@ -1,4 +1,4 @@
-import { css, cva } from '@styled-stytem/css'
+import { css, cva } from '@styled-system/css'
 import { motion } from 'framer-motion'
 
 import ClubIconBG from '@/assets/ClubIconBG.svg'
@@ -16,7 +16,7 @@ const CategoryButton = ({ text, onClick, icon, selected }: CategoryButtonProps) 
   >
     <div
       className={cva({
-        base: { position: 'relative', bgColor: 'white', rounded: 4, transition: 'backgroun 0.2s' },
+        base: { position: 'relative', bgColor: 'white', rounded: 4, transition: 'background 0.2s' },
         variants: { selected: { true: { bgColor: 'transparent' } } },
       })({ selected })}
     >

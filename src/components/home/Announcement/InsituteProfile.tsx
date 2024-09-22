@@ -1,9 +1,9 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import { useState } from 'react'
 
-import { InsituteProfileProps } from '@/types/school-insitute'
+import { InstituteProfileProps } from '@/types/school-institute'
 
-const InsituteProfile = ({ img, name, url }: InsituteProfileProps) => {
+const InstituteProfile = ({ img, name, url }: InstituteProfileProps) => {
   const [onMouse, setOnMouse] = useState(false)
 
   return (
@@ -59,4 +59,4 @@ const InsituteProfile = ({ img, name, url }: InsituteProfileProps) => {
   )
 }
 
-export default InsituteProfile
+export default InstituteProfile

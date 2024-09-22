@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import { AnimatePresence, motion } from 'framer-motion'
 import { CircleX, Paperclip, Plus } from 'lucide-react'
 

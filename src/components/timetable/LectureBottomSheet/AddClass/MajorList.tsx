@@ -1,4 +1,4 @@
-import { css, cva } from '@styled-stytem/css'
+import { css, cva } from '@styled-system/css'
 import { motion, Variants } from 'framer-motion'
 import { ChevronRight, Dot } from 'lucide-react'
 import { useState } from 'react'
