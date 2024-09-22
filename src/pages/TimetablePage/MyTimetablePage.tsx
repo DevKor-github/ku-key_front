@@ -1,10 +1,10 @@
 import { css } from '@styled-stytem/css'
 import { useAtomValue } from 'jotai'
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { match } from 'ts-pattern'
 
-import { useDeleteTimetable, useGetUserTimetableList } from '@/api/hooks/timetable'
+import { useDeleteTimetable, useGetUserTimetableList, usePostTimetable } from '@/api/hooks/timetable'
 import Timetable from '@/components/timetable'
 import ShareBtn from '@/components/timetable/Button/ShareBtn'
 import Dropdown from '@/components/timetable/Dropdown'
@@ -15,8 +15,10 @@ import { isBottomSheetVisible } from '@/lib/store/bottomSheet'
 import { convertHtmlToImage, makeSemesterDropdownList, timetablePreprocess } from '@/util/timetableUtil'
 
 const MyTimetablePage = () => {
-  const { data: timetableList } = useGetUserTimetableList()
+  const { data: timetableList, isLoading } = useGetUserTimetableList()
   const { mutate: deleteTimetable } = useDeleteTimetable()
+  const { mutate: createTimetable } = usePostTimetable()
+  const isCreating = useRef(false)
 
   const imgRef = useRef<HTMLDivElement>(null)
   const [curSemester, setCurSemester] = useState(2)
@@ -71,6 +73,20 @@ const MyTimetablePage = () => {
     },
     [sheetState],
   )
+
+  useEffect(() => {
+    if (!isLoading && semesterList[curSemester].timetables.length === 0 && !isCreating.current) {
+      isCreating.current = true
+      createTimetable({
+        timetableName: 'timetable 1',
+        semester: semesterList[curSemester].semester,
+        year: semesterList[curSemester].year,
+      })
+    }
+    if (semesterList[curSemester].timetables.length !== 0) {
+      isCreating.current = false
+    }
+  }, [isLoading, createTimetable, semesterList, curSemester])
 
   return (
     <>
