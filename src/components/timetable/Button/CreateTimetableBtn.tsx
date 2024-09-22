@@ -1,48 +1,30 @@
-import { css, cva } from '@styled-stytem/css'
+import { css } from '@styled-stytem/css'
 import { Plus } from 'lucide-react'
 
 interface CreateTimetableBtnProps {
-  type: 'timetable' | 'lecture'
   handleCreate: () => void
 }
-const CreateTimetableBtn = ({ type, handleCreate }: CreateTimetableBtnProps) => {
+const CreateTimetableBtn = ({ handleCreate }: CreateTimetableBtnProps) => {
   return (
     <button
       onClick={handleCreate}
-      className={cva({
-        base: {
-          cursor: 'pointer',
-          display: { base: 'flex', mdDown: 'none' },
-          justifyContent: 'center',
-          alignItems: 'center',
-          color: 'white',
-          overflow: 'hidden',
-          position: 'relative',
-          transition: 'box-shadow 0.2s',
+      className={css({
+        cursor: 'pointer',
+        display: { base: 'flex', mdDown: 'none' },
+        justifyContent: 'center',
+        alignItems: 'center',
+        color: 'white',
+        overflow: 'hidden',
+        position: 'relative',
+        transition: 'box-shadow 0.2s',
+        h: '30px',
+        w: '30px',
+        bgColor: 'lightGray.1',
+        rounded: 'full',
+        _hover: {
+          boxShadow: '0px 2px 6px 0px rgba(0, 0, 0, 0.25) inset',
         },
-        variants: {
-          type: {
-            timetable: {
-              h: '30px',
-              w: '30px',
-              bgColor: 'lightGray.1',
-              rounded: 'full',
-              _hover: {
-                boxShadow: '0px 2px 6px 0px rgba(0, 0, 0, 0.25) inset',
-              },
-            },
-            lecture: {
-              h: 9,
-              w: 9,
-              bgColor: 'red.2',
-              rounded: 10,
-              _hover: {
-                boxShadow: '0px 0px 4px rgba(231, 0, 0, 0.70)',
-              },
-            },
-          },
-        },
-      })({ type })}
+      })}
     >
       <div
         className={css({

@@ -12,15 +12,14 @@ interface StatusBarProps {
   curSemester: Semester
   curIndex: number
   setCurIndex: (toIndex: number) => void
-  openBottomSheet: () => void
 }
 
-const StatusBar = ({ curSemester, curIndex, setCurIndex, openBottomSheet }: StatusBarProps) => {
+const StatusBar = ({ curSemester, curIndex, setCurIndex }: StatusBarProps) => {
   const { mutate: createTimetable } = usePostTimetable()
 
   const curSemesterTimetableLen = curSemester.timetables.length
 
-  const handleCreateTimetableBtn = useCallback(() => {
+  const handleCreateTimetable = useCallback(() => {
     createTimetable(
       {
         timetableName: `timetable ${curSemesterTimetableLen + 1}`,
@@ -47,7 +46,6 @@ const StatusBar = ({ curSemester, curIndex, setCurIndex, openBottomSheet }: Stat
       })}
     >
       <div className={css({ display: 'flex', flexDir: 'row', gap: 5, alignItems: 'center' })}>
-        <CreateTimetableBtn type="lecture" handleCreate={openBottomSheet} />
         <div className={css({ display: 'flex', flexDir: 'row', gap: 2.5, alignItems: 'center' })}>
           {curSemester.timetables.map((timetable, index) => {
             return (
@@ -60,7 +58,7 @@ const StatusBar = ({ curSemester, curIndex, setCurIndex, openBottomSheet }: Stat
               />
             )
           })}
-          <CreateTimetableBtn type="timetable" handleCreate={handleCreateTimetableBtn} />
+          <CreateTimetableBtn handleCreate={handleCreateTimetable} />
         </div>
       </div>
       <MainPinBtn

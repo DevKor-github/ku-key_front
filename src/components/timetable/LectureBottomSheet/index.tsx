@@ -57,15 +57,13 @@ const LectureBottomSheet = ({
           position: 'fixed',
           w: '100vw',
           display: { base: 'flex', mdDown: 'none' },
-          flexDir: 'column',
-          alignItems: 'center',
-          gap: 2.5,
+          justifyContent: 'center',
           zIndex: 100,
           transform: 'translate3d(0, 100%, 0)',
         })}
         animate={isOpen ? 'open' : 'close'}
         initial={{ bottom: 0 }}
-        variants={{ open: { bottom: '475px' }, close: { bottom: 0 } }}
+        variants={{ open: { bottom: '400px' }, close: { bottom: 0 } }}
       >
         <Drawer isOpen={isOpen} sheetState={sheetState} handleDrawer={handleDrawer} visible={visible} />
         <div

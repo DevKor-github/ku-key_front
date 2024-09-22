@@ -89,12 +89,7 @@ const MyTimetablePage = () => {
           <ShareBtn shareHandler={() => convertHtmlToImage(imgRef.current, 'my_timetable')} />
         </div>
       </div>
-      <StatusBar
-        curSemester={semesterList[curSemester]}
-        curIndex={curIndex}
-        setCurIndex={setTimetableIndex}
-        openBottomSheet={() => handleDrawer('chevron')}
-      />
+      <StatusBar curSemester={semesterList[curSemester]} curIndex={curIndex} setCurIndex={setTimetableIndex} />
       {semesterList[curSemester].timetables.length === 0 ? (
         <NullTimetable
           children={
