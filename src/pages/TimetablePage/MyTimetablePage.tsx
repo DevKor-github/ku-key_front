@@ -2,7 +2,6 @@ import { css } from '@styled-system/css'
 import { useAtomValue } from 'jotai'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { match } from 'ts-pattern'
 
 import { useDeleteTimetable, useGetUserTimetableList, usePostTimetable } from '@/api/hooks/timetable'
 import Timetable from '@/components/timetable'
@@ -24,8 +23,6 @@ const MyTimetablePage = () => {
   const [curIndex, setCurIndex] = useState(0)
 
   const isSheetVisible = useAtomValue(isBottomSheetVisible)
-  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false)
-  const [sheetState, setSheetState] = useState<'class' | 'schedule' | null>(null)
 
   const semesterList = timetablePreprocess(timetableList)
 
@@ -50,27 +47,6 @@ const MyTimetablePage = () => {
       deleteTimetable({ timetableId })
     },
     [setCurIndex, deleteTimetable, curIndex],
-  )
-
-  const handleDrawer = useCallback(
-    (type: 'chevron' | 'class' | 'own') => {
-      match(type)
-        .with('chevron', () => {
-          setIsBottomSheetOpen(prev => !prev)
-          if (sheetState === null) {
-            setSheetState('class')
-          }
-        })
-        .with('class', () => {
-          setIsBottomSheetOpen(true)
-          setSheetState('class')
-        })
-        .with('own', () => {
-          setIsBottomSheetOpen(true)
-          setSheetState('schedule')
-        })
-    },
-    [sheetState],
   )
 
   useEffect(() => {
@@ -115,10 +91,6 @@ const MyTimetablePage = () => {
           <LectureBottomSheet
             timetableId={semesterList[curSemester].timetables[curIndex].timetableId}
             visible={isSheetVisible}
-            handleDrawer={handleDrawer}
-            isOpen={isBottomSheetOpen}
-            setIsOpen={setIsBottomSheetOpen}
-            sheetState={sheetState}
           />,
           document.body,
         )}

@@ -2,6 +2,8 @@ import { css, cx } from '@styled-system/css'
 import { shadow } from '@styled-system/recipes'
 import { isAxiosError } from 'axios'
 import { motion } from 'framer-motion'
+import { useCallback, useState } from 'react'
+import { match } from 'ts-pattern'
 
 import { usePostSchedule } from '@/api/hooks/schedule'
 import AddClass from '@/components/timetable/LectureBottomSheet/AddClass'
@@ -11,20 +13,33 @@ import Drawer from '@/components/timetable/LectureBottomSheet/Drawer'
 interface LectureBottomSheetProps {
   timetableId: number
   visible: boolean
-  isOpen: boolean
-  setIsOpen: (state: boolean) => void
-  sheetState: 'class' | 'schedule' | null
-  handleDrawer: (type: 'chevron' | 'class' | 'own') => void
 }
-const LectureBottomSheet = ({
-  timetableId,
-  visible,
-  isOpen,
-  sheetState,
-  setIsOpen,
-  handleDrawer,
-}: LectureBottomSheetProps) => {
+const LectureBottomSheet = ({ timetableId, visible }: LectureBottomSheetProps) => {
+  const [isOpen, setIsOpen] = useState(false)
+  const [sheetState, setSheetState] = useState<'class' | 'schedule' | null>(null)
+
   const { mutate: postSchedule } = usePostSchedule()
+
+  const handleDrawer = useCallback(
+    (type: 'chevron' | 'class' | 'own') => {
+      match(type)
+        .with('chevron', () => {
+          setIsOpen(prev => !prev)
+          if (sheetState === null) {
+            setSheetState('class')
+          }
+        })
+        .with('class', () => {
+          setIsOpen(true)
+          setSheetState('class')
+        })
+        .with('own', () => {
+          setIsOpen(true)
+          setSheetState('schedule')
+        })
+    },
+    [sheetState],
+  )
 
   const addOnMyOwnHandler = (data: AddOnMyOwnForm) => {
     postSchedule(
