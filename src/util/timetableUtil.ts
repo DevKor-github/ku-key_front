@@ -132,7 +132,25 @@ export const timetablePreprocess = (data: TimetableInfo[] | undefined) => {
     }
   })
 
-  return ret
+  return ret.map(semester => {
+    if (semester.timetables.length === 0) {
+      // Skeleton
+      return {
+        ...semester,
+        timetables: [
+          {
+            timetableId: -1,
+            semester: semester.semester,
+            year: semester.year,
+            mainTimetable: true,
+            timetableName: 'timetable 1',
+          },
+        ],
+        isSkeleton: true,
+      }
+    }
+    return { ...semester, isSkeleton: false }
+  })
 }
 
 /**

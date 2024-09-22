@@ -9,7 +9,6 @@ import Timetable from '@/components/timetable'
 import ShareBtn from '@/components/timetable/Button/ShareBtn'
 import Dropdown from '@/components/timetable/Dropdown'
 import LectureBottomSheet from '@/components/timetable/LectureBottomSheet'
-import NullTimetable from '@/components/timetable/NullTimetable'
 import StatusBar from '@/components/timetable/StatusBar'
 import { isBottomSheetVisible } from '@/lib/store/bottomSheet'
 import { convertHtmlToImage, makeSemesterDropdownList, timetablePreprocess } from '@/util/timetableUtil'
@@ -75,7 +74,7 @@ const MyTimetablePage = () => {
   )
 
   useEffect(() => {
-    if (!isLoading && semesterList[curSemester].timetables.length === 0 && !isCreating.current) {
+    if (!isLoading && semesterList[curSemester].isSkeleton && !isCreating.current) {
       isCreating.current = true
       createTimetable({
         timetableName: 'timetable 1',
@@ -83,7 +82,7 @@ const MyTimetablePage = () => {
         year: semesterList[curSemester].year,
       })
     }
-    if (semesterList[curSemester].timetables.length !== 0) {
+    if (!semesterList[curSemester].isSkeleton) {
       isCreating.current = false
     }
   }, [isLoading, createTimetable, semesterList, curSemester])
@@ -106,34 +105,24 @@ const MyTimetablePage = () => {
         </div>
       </div>
       <StatusBar curSemester={semesterList[curSemester]} curIndex={curIndex} setCurIndex={setTimetableIndex} />
-      {semesterList[curSemester].timetables.length === 0 ? (
-        <NullTimetable
-          children={
-            <>
-              There is no set timetable <br /> Press the plus button to create a timetable!
-            </>
-          }
+      <>
+        <Timetable
+          ref={imgRef}
+          timetable={semesterList[curSemester].timetables[curIndex]}
+          deleteTimetableHandler={deleteTimetableHandler}
         />
-      ) : (
-        <>
-          <Timetable
-            ref={imgRef}
-            timetable={semesterList[curSemester].timetables[curIndex]}
-            deleteTimetableHandler={deleteTimetableHandler}
-          />
-          {createPortal(
-            <LectureBottomSheet
-              timetableId={semesterList[curSemester].timetables[curIndex].timetableId}
-              visible={isSheetVisible}
-              handleDrawer={handleDrawer}
-              isOpen={isBottomSheetOpen}
-              setIsOpen={setIsBottomSheetOpen}
-              sheetState={sheetState}
-            />,
-            document.body,
-          )}
-        </>
-      )}
+        {createPortal(
+          <LectureBottomSheet
+            timetableId={semesterList[curSemester].timetables[curIndex].timetableId}
+            visible={isSheetVisible}
+            handleDrawer={handleDrawer}
+            isOpen={isBottomSheetOpen}
+            setIsOpen={setIsBottomSheetOpen}
+            sheetState={sheetState}
+          />,
+          document.body,
+        )}
+      </>
     </>
   )
 }
