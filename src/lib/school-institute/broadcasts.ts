@@ -1,6 +1,6 @@
 import KTN from '@/assets/KTN.jpeg'
 import KUBS from '@/assets/KUBS.jpeg'
-import KUpaper from '@/assets/KUpaper.jpg'
+import KUONAIR from '@/assets/KUONAIR.jpg'
 import KUTV from '@/assets/KUTV.png'
 import SPKU from '@/assets/SPKU.jpg'
 import TGT from '@/assets/TGT.jpeg'
@@ -10,17 +10,17 @@ export const BROADCASTS: InstituteProfileProps[] = [
   {
     img: KTN,
     name: 'KTN',
-    url: 'https://www.ktn.ac.kr/',
+    url: 'https://www.youtube.com/@koreaunivktn',
   },
   {
     img: KUBS,
     name: 'KUBS',
-    url: 'https://www.youtube.com/@KUBS1961_KU',
+    url: ' https://www.youtube.com/@KUBS1961_KU',
   },
   {
     img: KUTV,
     name: 'KUTV',
-    url: 'https://www.facebook.com/kutv1989',
+    url: ' https://www.youtube.com/@KUTV1989',
   },
   {
     img: TGT,
@@ -28,9 +28,9 @@ export const BROADCASTS: InstituteProfileProps[] = [
     url: 'https://www.thegranitetower.com/',
   },
   {
-    img: KUpaper,
-    name: 'Korean newspaper',
-    url: 'https://www.kunews.ac.kr/',
+    img: KUONAIR,
+    name: 'KU ON AIR',
+    url: 'https://www.youtube.com/@KUONAIR',
   },
   {
     img: SPKU,

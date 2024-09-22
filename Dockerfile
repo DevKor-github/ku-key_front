@@ -1,0 +1,20 @@
+# node 이미지 기반 Docker 이미지 생성
+FROM node:18-alpine
+
+# 작업 디렉토리 설정
+WORKDIR /app
+
+# 현재 디렉토리의 모든 파일을 도커 컨테이너의 작업 디렉토리에 복사
+COPY . .
+
+# KU-key fe에 필요한 패키지 설치
+RUN yarn install
+# serve 설치
+RUN yarn global add serve
+
+RUN yarn build
+
+EXPOSE 3000
+
+# serve
+CMD ["serve", "-s", "dist"]

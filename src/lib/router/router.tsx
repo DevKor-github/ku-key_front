@@ -17,6 +17,7 @@ import HomePage from '@/pages/HomePage'
 import LandingPage from '@/pages/LandingPage'
 import Login from '@/pages/LoginPage'
 import MyPage from '@/pages/MyPage'
+import PasswordResetPage from '@/pages/PasswordResetPage'
 import RegisterPage from '@/pages/RegisterPage'
 import SchedulePage from '@/pages/SchedulePage'
 import TimetablePage from '@/pages/TimetablePage'
@@ -86,6 +87,7 @@ const routes: RouteObject[] = [
       { path: 'calendar', element: <SchedulePage /> },
       { path: 'login', element: <Login /> },
       { path: 'register', element: <RegisterPage /> },
+      { path: 'password-reset', element: <PasswordResetPage /> },
       { path: 'club', element: <ClubPage /> },
     ],
   },
