@@ -1,4 +1,4 @@
-import { css } from '@styled-system/css'
+import { css, cx } from '@styled-system/css'
 import { reactionButton } from '@styled-system/recipes'
 import { useAtomValue } from 'jotai'
 import { Cookie, Forward } from 'lucide-react'
@@ -69,12 +69,14 @@ const CommentReply = ({ reply, parentId }: CommentReplyProps) => {
         >
           {reply.content || 'This comment has been deleted.'}
         </p>
-        {!reply.isDeleted && (
-          <button aria-pressed={reply.myLike} className={reactionButton()} onClick={handleLikeClick}>
-            <Cookie size={22} />
-            <p>{reply.likeCount}</p>
-          </button>
-        )}
+        <button
+          aria-pressed={reply.myLike}
+          className={cx(reactionButton(), css({ visibility: reply.isDeleted ? 'hidden' : 'visible' }))}
+          onClick={handleLikeClick}
+        >
+          <Cookie size={22} />
+          <p>{reply.likeCount}</p>
+        </button>
       </div>
       <NoticeModal content={POST_MESSAGES.NO_LIKE_OWN_COMMENT} isOpen={isOpen} />
     </div>

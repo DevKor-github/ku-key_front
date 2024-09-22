@@ -68,18 +68,24 @@ const Comment = memo(({ isOpen, currentIndex, handleClick }: CommentProps) => {
       >
         {comment.content || 'This comment has been deleted.'}
       </p>
-      {!comment.isDeleted && (
-        <div className={css({ display: 'flex', alignItems: 'center', gap: 2.5 })}>
-          <button aria-pressed={isOpen} className={reactionButton()} onClick={handleClick}>
-            <MessageCircle size={22} />
-            <p>{comment.reply.length}</p>
-          </button>
-          <button aria-pressed={comment.myLike} className={reactionButton()} onClick={handleLikeClick}>
-            <Cookie size={22} />
-            <p>{comment.likeCount}</p>
-          </button>
-        </div>
-      )}
+
+      <div
+        className={css({
+          display: 'flex',
+          alignItems: 'center',
+          gap: 2.5,
+          visibility: comment.isDeleted ? 'hidden' : 'visible',
+        })}
+      >
+        <button aria-pressed={isOpen} className={reactionButton()} onClick={handleClick}>
+          <MessageCircle size={22} />
+          <p>{comment.reply.length}</p>
+        </button>
+        <button aria-pressed={comment.myLike} className={reactionButton()} onClick={handleLikeClick}>
+          <Cookie size={22} />
+          <p>{comment.likeCount}</p>
+        </button>
+      </div>
       <NoticeModal content={POST_MESSAGES.NO_LIKE_OWN_COMMENT} isOpen={modalOpen} />
     </div>
   )
