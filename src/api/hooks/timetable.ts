@@ -29,13 +29,14 @@ export const useGetUserTimetableList = () => {
   })
 }
 
+const INITIAL_TIMETABLE: GetTimetableByTimetableIdResponse = {
+  courses: [],
+  schedules: [],
+  color: 'Red',
+}
+
 const getTimetableByID = async ({ timetableId }: GetTimetableByTimetableIdRequest) => {
-  if (timetableId === -1)
-    return {
-      courses: [],
-      schedules: [],
-      color: 'Red',
-    } as GetTimetableByTimetableIdResponse
+  if (timetableId === -1) return INITIAL_TIMETABLE
 
   const response = await apiInterface.get<GetTimetableByTimetableIdResponse>(`/timetable/${timetableId}`)
   return response.data
@@ -48,11 +49,7 @@ export const useGetTimetable = ({ timetableId }: GetTimetableByTimetableIdReques
   return useQuery({
     queryKey: ['timetable', timetableId],
     queryFn: () => getTimetableByID({ timetableId }),
-    initialData: {
-      courses: [],
-      schedules: [],
-      color: 'Red',
-    },
+    initialData: INITIAL_TIMETABLE,
   })
 }
 
