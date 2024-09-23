@@ -19,7 +19,7 @@ const StatusBar = ({ curSemester, curIndex, setCurIndex }: StatusBarProps) => {
 
   const curSemesterTimetableLen = curSemester.timetables.length
 
-  const handleCreateTimetableBtn = useCallback(() => {
+  const handleCreateTimetable = useCallback(() => {
     createTimetable(
       {
         timetableName: `timetable ${curSemesterTimetableLen + 1}`,
@@ -46,8 +46,7 @@ const StatusBar = ({ curSemester, curIndex, setCurIndex }: StatusBarProps) => {
       })}
     >
       <div className={css({ display: 'flex', flexDir: 'row', gap: 5, alignItems: 'center' })}>
-        <CreateTimetableBtn createTimetable={handleCreateTimetableBtn} />
-        <div className={css({ display: 'flex', flexDir: 'row', gap: 2.5 })}>
+        <div className={css({ display: 'flex', flexDir: 'row', gap: 2.5, alignItems: 'center' })}>
           {curSemester.timetables.map((timetable, index) => {
             return (
               <SelectTimetableBtn
@@ -59,6 +58,7 @@ const StatusBar = ({ curSemester, curIndex, setCurIndex }: StatusBarProps) => {
               />
             )
           })}
+          <CreateTimetableBtn handleCreate={handleCreateTimetable} />
         </div>
       </div>
       <MainPinBtn

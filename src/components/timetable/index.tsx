@@ -1,11 +1,9 @@
 import { css, cva } from '@styled-system/css'
-import { useAtom } from 'jotai/react'
+import { useSetAtom } from 'jotai/react'
 import { Ellipsis } from 'lucide-react'
 import { forwardRef, useCallback, useEffect, useRef, useState } from 'react'
-import { createPortal } from 'react-dom'
 
 import TimetableLayout from '@/components/timetable/Grid/TimetableLayout'
-import LectureBottomSheet from '@/components/timetable/LectureBottomSheet'
 import OptionModal from '@/components/timetable/Modal/OptionModal'
 import { isBottomSheetVisible } from '@/lib/store/bottomSheet'
 import { GlobalModalStateType, TimetableInfo } from '@/types/timetable'
@@ -38,7 +36,7 @@ interface TimetableProps {
 const Timetable = forwardRef<HTMLDivElement, TimetableProps>(
   ({ timetable: { timetableId, timetableName, year, semester }, deleteTimetableHandler }, ref) => {
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const [isSheetVisible, setIsSheetVisible] = useAtom(isBottomSheetVisible)
+    const setIsSheetVisible = useSetAtom(isBottomSheetVisible)
     const [globalModalState, setGlobalModalState] = useState<GlobalModalStateType>(null)
     const modalRef = useRef<HTMLDivElement>(null)
 
@@ -155,7 +153,6 @@ const Timetable = forwardRef<HTMLDivElement, TimetableProps>(
           deleteTimetableHandler={deleteTimetableHandler}
           timetableName={timetableName}
         />
-        {createPortal(<LectureBottomSheet timetableId={timetableId} visible={isSheetVisible} />, document.body)}
       </div>
     )
   },

@@ -2,27 +2,27 @@ import { css } from '@styled-system/css'
 import { Plus } from 'lucide-react'
 
 interface CreateTimetableBtnProps {
-  createTimetable: () => void
+  handleCreate: () => void
 }
-const CreateTimetableBtn = ({ createTimetable }: CreateTimetableBtnProps) => {
+const CreateTimetableBtn = ({ handleCreate }: CreateTimetableBtnProps) => {
   return (
     <button
-      onClick={createTimetable}
+      onClick={handleCreate}
       className={css({
-        h: 9,
-        w: 9,
         cursor: 'pointer',
-        bgColor: 'red.2',
         display: { base: 'flex', mdDown: 'none' },
         justifyContent: 'center',
         alignItems: 'center',
-        rounded: 10,
         color: 'white',
         overflow: 'hidden',
         position: 'relative',
-        transition: 'box-shadow 0.256s',
+        transition: 'box-shadow 0.2s',
+        h: '30px',
+        w: '30px',
+        bgColor: 'lightGray.1',
+        rounded: 'full',
         _hover: {
-          boxShadow: '0px 0px 4px rgba(231, 0, 0, 0.70)',
+          boxShadow: '0px 2px 6px 0px rgba(0, 0, 0, 0.25) inset',
         },
       })}
     >
@@ -36,7 +36,7 @@ const CreateTimetableBtn = ({ createTimetable }: CreateTimetableBtnProps) => {
           zIndex: 1,
         })}
       />
-      <Plus className={css({ zIndex: 2 })} />
+      <Plus className={css({ zIndex: 2 })} size={16} strokeWidth={3} />
     </button>
   )
 }
