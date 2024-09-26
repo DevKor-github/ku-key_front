@@ -1,4 +1,4 @@
-name: Main(Prod) Docker Image CI
+name: Deploy - PRD
 
 on:
   push:
