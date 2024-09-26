@@ -5,11 +5,19 @@ on:
     branches: ['dev'] # TODO: main으로 바꾸기
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
+
+      # Install AWS cli
+      - run:
+        name: Install aws cli
+        command: |
+          sudo apt-get install python-dev python-pip
+          sudo pip install awscli
+          aws --version
 
       - name: Install Dependencies
         run: yarn
