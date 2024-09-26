@@ -5,19 +5,11 @@ on:
     branches: ['dev'] # TODO: main으로 바꾸기
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
-
-      # Install AWS cli
-      - run:
-        name: Install aws cli
-        command: |
-          sudo apt-get install python-dev python-pip
-          sudo pip install awscli
-          aws --version
 
       - name: Install Dependencies
         run: yarn
@@ -36,4 +28,4 @@ jobs:
         run: aws s3 sync ./dist s3://${{ secrets.DEV_AWS_S3_BUCKET }} --delete
 
       - name: Invalidate CloudFront Cache
-        run: aws cloudfront create-invalidation \ --distribution-id ${{secrets.DEV_AWS_DISTRIBUTION_ID}} --paths "/*"
+        run: aws cloudfront create-invalidation --distribution-id ${{secrets.DEV_AWS_DISTRIBUTION_ID}} --paths "/*"
