@@ -2,7 +2,7 @@ name: Main(Prod) Docker Image CI
 
 on:
   push:
-    branches: ['main']
+    branches: ['dev'] # TODO: main으로 바꾸기
 
 jobs:
   build:
