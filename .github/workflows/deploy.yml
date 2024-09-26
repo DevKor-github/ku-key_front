@@ -2,7 +2,7 @@ name: Main(Prod) Docker Image CI
 
 on:
   push:
-    branches: ['main'] # TODO: main으로 바꾸기
+    branches: ['dev'] # TODO: main으로 바꾸기
 
 jobs:
   build:
@@ -13,6 +13,13 @@ jobs:
 
       - name: Install Dependencies
         run: yarn
+
+      - name: 'Create env file'
+        run: |
+          touch .env
+          echo VITE_API_URL=${{ secrets.VITE_API_URL }} >> .env
+          echo VITE_API_AWS_S3_BUCKET=${{ secrets.VITE_API_AWS_S3_BUCKET }} >> .env
+          echo VITE_API_AMPLITUDE_API_KEY=${{ secrets.VITE_API_AMPLITUDE_API_KEY }} >> .env
 
       - name: Build
         run: yarn build
