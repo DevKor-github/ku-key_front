@@ -9,7 +9,7 @@ import PlayIcon from '@/assets/play.svg'
 import { usePrevNextButtons } from '@/util/carousel-button'
 
 const BannerStyle = cva({
-  base: { w: '608px', ml: 5, flex: '0 0 20%', display: 'block' },
+  base: { w: '608px', ml: 5, flex: '0 0 auto', display: 'block' },
   variants: { display: { false: { display: 'none' } } },
 })
 const SkeletonBannerStyle = cx(BannerStyle(), css({ h: '300px' }))
