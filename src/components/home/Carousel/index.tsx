@@ -1,4 +1,4 @@
-import { css, cx } from '@styled-system/css'
+import { css, cva, cx } from '@styled-system/css'
 import Autoplay from 'embla-carousel-autoplay'
 import useEmblaCarousel, { UseEmblaCarouselType } from 'embla-carousel-react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
@@ -8,7 +8,29 @@ import { useGetBannerImages } from '@/api/hooks/calendar'
 import PlayIcon from '@/assets/play.svg'
 import { usePrevNextButtons } from '@/util/carousel-button'
 
-const BannerStyle = css({ w: '608px', ml: 5, flex: '0 0 20%' })
+const BannerStyle = cva({
+  base: { w: '608px', ml: 5, flex: '0 0 20%', display: 'block' },
+  variants: { display: { false: { display: 'none' } } },
+})
+const SkeletonBannerStyle = cx(BannerStyle(), css({ h: '300px' }))
+
+const SkeletonImg = ({ imageUrl, index }: { imageUrl: string; index: number }) => {
+  const [isImgLoading, setIsImgLoading] = useState(true)
+
+  return (
+    <>
+      {isImgLoading && <div className={SkeletonBannerStyle} />}
+      <img
+        src={imageUrl}
+        alt={`banner-${index}`}
+        className={BannerStyle({ display: !isImgLoading })}
+        onLoad={() => {
+          setIsImgLoading(false)
+        }}
+      />
+    </>
+  )
+}
 
 const HomeCarousel = () => {
   const { data: banners, isSuccess: isBannerLoadedSuccess } = useGetBannerImages()
@@ -47,10 +69,10 @@ const HomeCarousel = () => {
         <div className={css({ display: 'flex', backfaceVisibility: 'hidden' })}>
           {isBannerLoadedSuccess
             ? banners.map(({ imageUrl }, index) => (
-                <img key={`banner-img-${index}`} src={imageUrl} alt={`banner-${index}`} className={BannerStyle} />
+                <SkeletonImg key={`banner-img-${index}`} imageUrl={imageUrl} index={index} />
               ))
             : Array.from({ length: 5 }, (_, index) => (
-                <div key={`banner-img-${index}`} className={cx(BannerStyle, css({ h: '300px', bgColor: 'bg.gray' }))} />
+                <div key={`banner-img-${index}`} className={SkeletonBannerStyle} />
               ))}
         </div>
       </div>
