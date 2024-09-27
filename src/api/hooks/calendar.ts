@@ -29,3 +29,20 @@ export const useGetAcademicCalendar = ({ year, semester }: GetCalendarYearlyRequ
     initialData: getInitialAcademicCalendar(semester),
   })
 }
+
+const getBannerImages = async () => {
+  const response = await apiInterface.get<
+    {
+      imageUrl: string | null
+    }[]
+  >('/calendar/banner-image-urls')
+  return response.data
+}
+
+export const useGetBannerImages = () => {
+  return useQuery({
+    queryKey: ['banner-images'],
+    queryFn: getBannerImages,
+    initialData: Array.from({ length: 5 }, () => ({ imageUrl: null })),
+  })
+}
