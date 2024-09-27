@@ -1,10 +1,11 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import { isAxiosError } from 'axios'
 import { useCallback } from 'react'
 
 import { usePatchLevel, usePostPurchaseItem } from '@/api/hooks/user'
 import CharacterTicket from '@/components/mypage/Contents/PointShop/CharacterTicket'
 import CourseReviewTicket from '@/components/mypage/Contents/PointShop/CourseReviewTicket'
+import ReviewKeyExpirationCard from '@/components/mypage/Contents/PointShop/ReviewKeyExpirationCard'
 import { CharacterType } from '@/types/community'
 
 const HeadingStyle = css({
@@ -35,7 +36,7 @@ const Showcase = ({ myLevel, selectedLevel, myCharacterType }: ShowcaseProps) =>
             if (isAxiosError(error)) {
               alert(error.response?.data.message)
             } else {
-              alert('Somthing is Wrong!')
+              alert('Something is Wrong!')
             }
           },
         },
@@ -49,14 +50,14 @@ const Showcase = ({ myLevel, selectedLevel, myCharacterType }: ShowcaseProps) =>
         { itemCategory: type, requiredPoints: cost },
         {
           onSuccess: () => {
-            // TODO: 캐릭터 로직
             alert('Your purchase has been successful')
+            window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
           },
           onError: error => {
             if (isAxiosError(error)) {
               alert(error.response?.data.message)
             } else {
-              alert('Somthing is Wrong!')
+              alert('Something is Wrong!')
             }
           },
         },
@@ -66,15 +67,19 @@ const Showcase = ({ myLevel, selectedLevel, myCharacterType }: ShowcaseProps) =>
   )
   const handleApplyCharacter = useCallback(
     (target: number) => {
-      selectLevel(target)
+      if (selectedLevel !== target) {
+        selectLevel(target)
+        // TODO: 스크롤 애니메이션 컨펌 받기
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+      }
     },
-    [selectLevel],
+    [selectLevel, selectedLevel],
   )
 
   return (
     <div className={css({ display: 'flex', flexDir: 'column', gap: 10 })}>
       <div className={css({ display: 'flex', flexDir: 'column', gap: 5 })}>
-        <h2 className={HeadingStyle}>Decorating characters</h2>
+        <h2 className={HeadingStyle}>Decorating Characters</h2>
         <div
           className={css({
             display: 'flex',
@@ -106,7 +111,8 @@ const Showcase = ({ myLevel, selectedLevel, myCharacterType }: ShowcaseProps) =>
         </div>
       </div>
       <div className={css({ display: 'flex', flexDir: 'column', gap: 5 })}>
-        <h2 className={HeadingStyle}>Course review reading ticket</h2>
+        <h2 className={HeadingStyle}>Course Review Reading Key</h2>
+        <ReviewKeyExpirationCard />
         <div
           className={css({
             display: 'flex',

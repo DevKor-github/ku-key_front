@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import { CircleAlert } from 'lucide-react'
 
 import Button from '@/components/ui/button'
@@ -9,7 +9,7 @@ interface AlertModalProps extends Omit<ModalPortalProps, 'children'> {
   modalRef: React.RefObject<HTMLDivElement>
   title: string
   content: string
-  closeText: string
+  closeText?: string
   confirmText: string
   onConfirm: () => void
   handleButtonClose?: () => void
@@ -36,7 +36,7 @@ const AlertModal = (props: AlertModalProps) => {
           {content}
         </div>
         <div className={css({ display: 'flex', gap: 5 })}>
-          {handleButtonClose && (
+          {handleButtonClose && closeText && (
             <Button variant="cancel" onClick={handleButtonClose}>
               {closeText}
             </Button>

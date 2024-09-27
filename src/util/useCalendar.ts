@@ -44,6 +44,6 @@ export const useCalendar = () => {
     )
     const totalCalendar = [...prevMonth, ...currentMonth, ...nextMonth]
     setCalendar(Array.from({ length: 6 }, (_, i) => totalCalendar.slice(i * 7, (i + 1) * 7)))
-  }, [today])
+  }, [today, setCalendar])
   return { today, selectedDate, calendar, setToday, handleSetSelectedDate }
 }

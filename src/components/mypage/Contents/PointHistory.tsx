@@ -1,4 +1,4 @@
-import { css, cx } from '@styled-stytem/css'
+import { css, cx } from '@styled-system/css'
 import { CircleAlert } from 'lucide-react'
 
 import { useGetPointHistory } from '@/api/hooks/user'

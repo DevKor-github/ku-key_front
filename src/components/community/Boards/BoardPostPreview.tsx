@@ -1,11 +1,11 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import { Bookmark, Cookie, Eye, MessageCircle } from 'lucide-react'
 import { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import Profile from '@/components/ui/profile'
 import { BoardPostPreviewProps } from '@/types/community'
-import { getFormatedTimeString } from '@/util/getFormatedTimeString'
+import { getFormattedTimeString } from '@/util/getFormattedTimeString'
 
 const IconWrapper = css({
   display: 'flex',
@@ -69,7 +69,7 @@ const BoardPostPreview = ({
             color: 'darkGray.2',
           })}
         >
-          <p>{getFormatedTimeString(createdAt)}</p>
+          <p>{getFormattedTimeString(createdAt)}</p>
           <div className={css({ display: 'flex', alignItems: 'center', gap: 1 })}>
             <Eye size={16} />
             <p>{views}</p>

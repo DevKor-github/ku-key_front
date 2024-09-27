@@ -1,5 +1,5 @@
-import { css } from '@styled-stytem/css'
-import { carouselButton } from '@styled-stytem/recipes'
+import { css } from '@styled-system/css'
+import { carouselButton } from '@styled-system/recipes'
 import useEmblaCarousel from 'embla-carousel-react'
 import { useAtomValue } from 'jotai'
 import { ChevronLeft, ChevronRight } from 'lucide-react'

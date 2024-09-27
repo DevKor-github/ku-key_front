@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import { useAtomValue } from 'jotai'
 import { SendHorizonal } from 'lucide-react'
 import { memo, useCallback, useState } from 'react'

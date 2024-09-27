@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 
 import TypeChip from '@/components/mypage/Contents/PointHistory/TypeChip'
 import dateFormatter from '@/util/dateFormatter'

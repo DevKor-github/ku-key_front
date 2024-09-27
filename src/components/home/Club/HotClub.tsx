@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 
 import { useGetHotClub } from '@/api/hooks/institution'
 import ClubProfile from '@/components/home/Club/ClubProfile'

@@ -1,6 +1,6 @@
-import { css, cva } from '@styled-stytem/css'
+import { css, cva } from '@styled-system/css'
 import { motion, Variants } from 'framer-motion'
-import { ChevronRight } from 'lucide-react'
+import { ChevronRight, Dot } from 'lucide-react'
 import { useState } from 'react'
 
 const CollegeCategoryStyle = cva({
@@ -16,13 +16,24 @@ const CollegeCategoryStyle = cva({
     fontSize: 16,
     fontWeight: 500,
     cursor: 'pointer',
-    transition: 'background 0.256s, color 0.256s',
+    transition: 'background 0.2s, color 0.2s, border 0.2s',
   },
   variants: {
     isOpen: {
       true: {
-        bgColor: 'lightGray.1',
-        color: 'bg.gray',
+        bgColor: 'lightGray.2',
+      },
+    },
+    childCategory: {
+      true: {
+        bgColor: 'white',
+      },
+    },
+    isSelected: {
+      true: {
+        bgColor: 'darkGray.2',
+        borderColor: 'darkGray.2',
+        color: 'white',
       },
     },
   },
@@ -42,16 +53,17 @@ interface MajorListProps {
   majors: string[]
   handleMajorBtn: (classification: string) => void
   isAcademicFoundation: boolean
+  curClassification: string | null
 }
 
-const MajorList = ({ college, majors, handleMajorBtn, isAcademicFoundation }: MajorListProps) => {
+const MajorList = ({ college, majors, handleMajorBtn, isAcademicFoundation, curClassification }: MajorListProps) => {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
     <>
       <button
         key={college}
-        className={CollegeCategoryStyle({ isOpen })}
+        className={CollegeCategoryStyle({ isOpen, isSelected: isAcademicFoundation && curClassification === college })}
         onClick={event => {
           event.stopPropagation()
           if (isAcademicFoundation) {
@@ -84,7 +96,7 @@ const MajorList = ({ college, majors, handleMajorBtn, isAcademicFoundation }: Ma
               // 모션 좀 손보기
               <motion.button
                 key={ind}
-                className={CollegeCategoryStyle()}
+                className={CollegeCategoryStyle({ childCategory: true, isSelected: curClassification === major })}
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 onClick={event => {
@@ -99,6 +111,7 @@ const MajorList = ({ college, majors, handleMajorBtn, isAcademicFoundation }: Ma
                     overflow: 'hidden',
                   })}
                 >
+                  <Dot />
                   {major}
                 </span>
               </motion.button>

@@ -1,7 +1,7 @@
 import { Language } from '@/lib/constants/language'
 import { CharacterType } from '@/types/community'
 
-export type GetPointHistroyResponse = {
+export type GetPointHistoryResponse = {
   date: string
   history: string
   changePoint: number
@@ -42,4 +42,8 @@ export interface PatchExchangeDayRequest {
 
 export interface PostLanguageRequest {
   language: Language
+}
+
+export interface GetKeyExpirationResponse {
+  date: string
 }

@@ -1,4 +1,4 @@
-import { css, cva } from '@styled-stytem/css'
+import { css, cva } from '@styled-system/css'
 import { useCallback, useEffect } from 'react'
 import { match } from 'ts-pattern'
 

@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import getUnicodeFlagIcon from 'country-flag-icons/unicode'
 import { alpha2Codes, findByAlpha2 } from 'iso-3166-1-ts'
 import { MapPin } from 'lucide-react'
@@ -42,11 +42,12 @@ const DropdownStyle: StylesConfig<NationOption, false, GroupBase<NationOption>> 
   }),
 }
 
-interface NationDropdownProps {
+interface NationDropdownProps extends React.HTMLAttributes<HTMLDivElement> {
   handleChange: (nation: string) => void
+  onBlur?: () => void
   curNation?: string
 }
-const NationDropdown = ({ handleChange, curNation }: NationDropdownProps) => {
+const NationDropdown = ({ handleChange, curNation, className, onBlur }: NationDropdownProps) => {
   const [defaultIndex, setDefaultIndex] = useState<number | null>(null)
 
   const options = useMemo(() => {
@@ -105,13 +106,22 @@ const NationDropdown = ({ handleChange, curNation }: NationDropdownProps) => {
 
   return (
     <Select
-      value={defaultIndex ? options[defaultIndex] : undefined}
-      className={css({ w: 'full' })}
+      value={defaultIndex !== null ? options[defaultIndex] : undefined}
       components={{ Option: CustomOption, Control }}
       options={options}
       placeholder={'Country/Region Selection'}
       onChange={handleChangeNation}
-      styles={DropdownStyle}
+      onBlur={onBlur}
+      styles={{
+        ...DropdownStyle,
+        control: baseStyles => ({
+          ...baseStyles,
+          border: '1px solid #D9D9D9',
+          borderRadius: '10px',
+          height: className?.includes('h') ? '39px' : 'auto',
+        }),
+      }}
+      className={css({ w: 'full' })}
     />
   )
 }

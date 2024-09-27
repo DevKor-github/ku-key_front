@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import { Facebook, Instagram, Youtube } from 'lucide-react'
 
 interface ContactButtonProps {

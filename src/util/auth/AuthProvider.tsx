@@ -1,9 +1,9 @@
 import { memo } from 'react'
 
-import { useAxsiosInterceptor } from '@/util/axios/useAxsiosInterceptor'
+import { useAxiosInterceptor } from '@/util/axios/useAxsiosInterceptor'
 
 const AuthProvider = memo(() => {
-  useAxsiosInterceptor()
+  useAxiosInterceptor()
   return <></>
 })
 

@@ -1,6 +1,6 @@
-import { cx, type RecipeVariantProps } from '@styled-stytem/css'
-import { button } from '@styled-stytem/recipes'
-import { SystemStyleObject } from '@styled-stytem/types'
+import { cx, type RecipeVariantProps } from '@styled-system/css'
+import { button } from '@styled-system/recipes'
+import { SystemStyleObject } from '@styled-system/types'
 import { forwardRef } from 'react'
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &

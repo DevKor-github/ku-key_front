@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import { forwardRef } from 'react'
 
 import { useGetFriendTimetable } from '@/api/hooks/friends'

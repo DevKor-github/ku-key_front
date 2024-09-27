@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import { useParams } from 'react-router-dom'
 
 import { useGetPostsByBoard } from '@/api/hooks/community'

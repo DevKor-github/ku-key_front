@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 
 import HotClub from '@/components/home/Club/HotClub'
 import RecommendClub from '@/components/home/Club/RecommendClub'

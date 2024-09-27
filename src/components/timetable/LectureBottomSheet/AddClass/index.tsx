@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import { isAxiosError } from 'axios'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
@@ -81,12 +81,12 @@ const AddClass = ({ timetableId }: AddClassProps) => {
 
   const handleDropdown = useCallback(
     (toIndex: number) => {
-      setCurClassification(null)
       setCurCategory(toIndex)
       if (toIndex === 1 || toIndex === 3) {
         // Major or Academic Foundation
         setIsModalOpen(true)
       } else {
+        setCurClassification(null)
         setIsSearchAvailable(true)
         if (toIndex === 0) {
           // All
@@ -252,6 +252,7 @@ const AddClass = ({ timetableId }: AddClassProps) => {
             category={categoryList[curCategory]}
             handleMajorBtn={handleMajorBtn}
             handleQuitModal={handleQuitModal}
+            curClassification={curClassification}
           />,
           document.body,
         )}

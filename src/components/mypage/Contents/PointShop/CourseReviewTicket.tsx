@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 
 import PASS_30DAYS from '@/assets/pass_30days.png'
 import PASS_3DAYS from '@/assets/pass_3days.png'

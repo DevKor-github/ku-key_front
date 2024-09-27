@@ -1,4 +1,4 @@
-import { css, cva } from '@styled-stytem/css'
+import { css, cva } from '@styled-system/css'
 import { Fragment } from 'react'
 import { useFormContext } from 'react-hook-form'
 

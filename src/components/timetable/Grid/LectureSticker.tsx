@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import { useSetAtom } from 'jotai/react'
 import { CircleUser, MapPin } from 'lucide-react'
 import { useCallback, useState } from 'react'
@@ -39,39 +39,39 @@ interface LectureStickerProps {
 const LectureSticker = ({ timetableId, data, bgColor, isMine }: LectureStickerProps) => {
   const navigate = useNavigate()
 
-  const { title, startTime: start, endTime: end, professorName, location, schedType, scheduleId, syllabus } = data
+  const { title, startTime: start, endTime: end, professorName, location, scheduleType, scheduleId, syllabus } = data
   const startTime = getStartTime(start)
   const runningTime = getDuration(end, start)
 
   const [isModalOpened, setIsModalOpen] = useState(false)
   const [isScheduleEditOpened, setIsScheduleEditOpened] = useState(false)
-  const setIsSheetOpend = useSetAtom(isBottomSheetVisible)
+  const setIsSheetOpened = useSetAtom(isBottomSheetVisible)
 
   const closeScheduleModal = useCallback(() => {
     setIsScheduleEditOpened(false)
-    setIsSheetOpend(true)
-  }, [setIsScheduleEditOpened, setIsSheetOpend])
+    setIsSheetOpened(true)
+  }, [setIsScheduleEditOpened, setIsSheetOpened])
 
   const { mutate: deleteCourse } = useDeleteCourse()
   const { mutate: deleteSchedule } = useDeleteSchedule()
 
   const handleCoursePlanClick = useCallback(() => {
-    window.open(syllabus!, 'rel=noopener noreferrer')
+    window.open(syllabus!, '_blank', 'noopener,noreferrer')
     setIsModalOpen(false)
-    setIsSheetOpend(true)
-  }, [syllabus, setIsSheetOpend])
+    setIsSheetOpened(true)
+  }, [syllabus, setIsSheetOpened])
 
   const handleReviewClick = useCallback(() => {
     setIsModalOpen(false)
-    setIsSheetOpend(true)
+    setIsSheetOpened(true)
     navigate(`/course-review/info/${data.courseCode?.slice(0, 7)}/${data.professorName}`)
-  }, [navigate, setIsSheetOpend, data.courseCode, data.professorName])
+  }, [navigate, setIsSheetOpened, data.courseCode, data.professorName])
 
   const handleCourseDelete = useCallback(() => {
     setIsModalOpen(false)
     deleteCourse({ courseId: scheduleId, timetableId: timetableId! })
-    setIsSheetOpend(true)
-  }, [scheduleId, timetableId, deleteCourse, setIsSheetOpend])
+    setIsSheetOpened(true)
+  }, [scheduleId, timetableId, deleteCourse, setIsSheetOpened])
 
   const handleEditClick = useCallback(() => {
     setIsModalOpen(false)
@@ -81,8 +81,8 @@ const LectureSticker = ({ timetableId, data, bgColor, isMine }: LectureStickerPr
   const handleScheduleDelete = useCallback(() => {
     setIsModalOpen(false)
     deleteSchedule({ scheduleId })
-    setIsSheetOpend(true)
-  }, [setIsSheetOpend, deleteSchedule, scheduleId])
+    setIsSheetOpened(true)
+  }, [setIsSheetOpened, deleteSchedule, scheduleId])
 
   const courseOptions = [
     {
@@ -134,7 +134,7 @@ const LectureSticker = ({ timetableId, data, bgColor, isMine }: LectureStickerPr
         onClick={() => {
           if (isMine) {
             setIsModalOpen(true)
-            setIsSheetOpend(false)
+            setIsSheetOpened(false)
           }
         }}
       >
@@ -185,12 +185,12 @@ const LectureSticker = ({ timetableId, data, bgColor, isMine }: LectureStickerPr
               // 모달 안쪽을 눌렀을 때도 모달 state가 null 되는 것을 방지
               if (event.target === event.currentTarget) {
                 setIsModalOpen(false)
-                setIsSheetOpend(true)
+                setIsSheetOpened(true)
               }
             }}
           >
             <OptionModal
-              optionHandler={schedType === 'Course' ? courseOptions : scheduleOptions}
+              optionHandler={scheduleType === 'Course' ? courseOptions : scheduleOptions}
               modalTitle={title}
               p10
             />
@@ -219,7 +219,7 @@ const LectureSticker = ({ timetableId, data, bgColor, isMine }: LectureStickerPr
               // 모달 안쪽을 눌렀을 때도 모달 state가 null 되는 것을 방지
               if (event.target === event.currentTarget) {
                 setIsScheduleEditOpened(false)
-                setIsSheetOpend(true)
+                setIsSheetOpened(true)
               }
             }}
           >

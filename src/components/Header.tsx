@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import { CircleUser } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
@@ -6,7 +6,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useLogOut } from '@/api/hooks/auth'
 import KUkeyLogo from '@/assets/KU-keyLogo.svg'
 import { NavLinkButton } from '@/components/header/NavLinkButton'
-import NotifiWindow from '@/components/header/NotifiWindow'
+import NotifyWindow from '@/components/header/NotifyWindow'
 import NoticeModal from '@/components/ui/modal/NoticeModal'
 import { HEADER_MESSAGE } from '@/lib/messages/header'
 import { headerRouteConfig } from '@/lib/router/header-route'
@@ -132,7 +132,7 @@ const Header = () => {
               color: 'darkGray.2',
             })}
           >
-            <NotifiWindow />
+            <NotifyWindow />
             <Link
               to="/mypage"
               className={css({ display: 'flex', alignItems: 'center' })}

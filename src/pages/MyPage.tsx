@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 
 import { useGetMyProfile } from '@/api/hooks/user'
 import DueDateCard from '@/components/mypage/DueDateCard'

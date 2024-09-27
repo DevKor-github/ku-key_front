@@ -1,5 +1,5 @@
-import { css, cva, cx } from '@styled-stytem/css'
-import { shadow } from '@styled-stytem/recipes'
+import { css, cva, cx } from '@styled-system/css'
+import { shadow } from '@styled-system/recipes'
 import { useCallback } from 'react'
 
 import { useUpdateTimetableColor } from '@/api/hooks/timetable'

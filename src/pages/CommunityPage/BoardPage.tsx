@@ -1,5 +1,5 @@
-import { css, cx } from '@styled-stytem/css'
-import { globalLayout } from '@styled-stytem/recipes'
+import { css, cx } from '@styled-system/css'
+import { globalLayout } from '@styled-system/recipes'
 import { useParams } from 'react-router-dom'
 
 import BoardBanner from '@/components/community/Boards/BoardBanner'

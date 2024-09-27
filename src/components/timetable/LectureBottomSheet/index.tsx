@@ -1,5 +1,5 @@
-import { css, cx } from '@styled-stytem/css'
-import { shadow } from '@styled-stytem/recipes'
+import { css, cx } from '@styled-system/css'
+import { shadow } from '@styled-system/recipes'
 import { isAxiosError } from 'axios'
 import { motion } from 'framer-motion'
 import { useCallback, useState } from 'react'
@@ -17,6 +17,7 @@ interface LectureBottomSheetProps {
 const LectureBottomSheet = ({ timetableId, visible }: LectureBottomSheetProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const [sheetState, setSheetState] = useState<'class' | 'schedule' | null>(null)
+
   const { mutate: postSchedule } = usePostSchedule()
 
   const handleDrawer = useCallback(

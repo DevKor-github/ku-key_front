@@ -42,6 +42,7 @@ export interface CommentProps {
   createdAt: Date
   updatedAt: Date
   isMyComment: boolean
+  isAuthor: boolean
   content: string
   user: User
   likeCount: number
@@ -55,7 +56,7 @@ export interface MyCommentProps {
   updatedAt: Date
   content: string
   likeCount: number
-  isAnonymouse: boolean
+  isAnonymous: boolean
   postId: number
   replyCount: number
 }

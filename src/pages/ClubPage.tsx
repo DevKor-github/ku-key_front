@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import { useCallback, useMemo } from 'react'
 
 import { useGetClubSearch, usePostClubLike } from '@/api/hooks/institution'

@@ -1,6 +1,6 @@
 import * as LabelPrimitive from '@radix-ui/react-label'
-import { cx, RecipeVariantProps } from '@styled-stytem/css'
-import { label } from '@styled-stytem/recipes'
+import { cx, RecipeVariantProps } from '@styled-system/css'
+import { label } from '@styled-system/recipes'
 import { forwardRef } from 'react'
 
 const Label = forwardRef<

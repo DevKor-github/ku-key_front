@@ -1,5 +1,5 @@
-import { css } from '@styled-stytem/css'
-import { SystemStyleObject } from '@styled-stytem/types'
+import { css } from '@styled-system/css'
+import { SystemStyleObject } from '@styled-system/types'
 import { isEqual } from 'date-fns'
 
 import { DayProps } from '@/types/calendar'

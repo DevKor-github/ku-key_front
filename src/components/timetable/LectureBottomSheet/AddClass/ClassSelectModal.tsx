@@ -1,5 +1,5 @@
-import { css, cx } from '@styled-stytem/css'
-import { shadow } from '@styled-stytem/recipes'
+import { css, cx } from '@styled-system/css'
+import { shadow } from '@styled-system/recipes'
 
 import MajorList from '@/components/timetable/LectureBottomSheet/AddClass/MajorList'
 import { categoryObject } from '@/lib/constants/category'
@@ -8,8 +8,9 @@ interface ClassSelectModalProps {
   category: 'All Class' | 'Major' | 'General Studies' | 'Academic Foundations'
   handleMajorBtn: (classification: string) => void
   handleQuitModal: () => void
+  curClassification: string | null
 }
-const ClassSelectModal = ({ category, handleMajorBtn, handleQuitModal }: ClassSelectModalProps) => {
+const ClassSelectModal = ({ category, handleMajorBtn, handleQuitModal, curClassification }: ClassSelectModalProps) => {
   return (
     <div // eslint-disable-line
       className={css({
@@ -50,6 +51,7 @@ const ClassSelectModal = ({ category, handleMajorBtn, handleQuitModal }: ClassSe
               majors={majors}
               handleMajorBtn={handleMajorBtn}
               isAcademicFoundation={category === 'Academic Foundations'}
+              curClassification={curClassification}
             />
           ))}
         </ul>

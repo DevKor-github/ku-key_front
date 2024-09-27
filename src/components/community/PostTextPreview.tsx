@@ -1,5 +1,5 @@
-import { css } from '@styled-stytem/css'
-import { postTextPreview, PostTextPreviewVariant } from '@styled-stytem/recipes'
+import { css } from '@styled-system/css'
+import { postTextPreview, PostTextPreviewVariant } from '@styled-system/recipes'
 import { formatDistanceToNow } from 'date-fns'
 
 import Profile from '@/components/ui/profile'

@@ -1,4 +1,4 @@
-import { css } from '@styled-stytem/css'
+import { css } from '@styled-system/css'
 import { Fragment } from 'react/jsx-runtime'
 
 import { useGetMyComments } from '@/api/hooks/community'
@@ -14,7 +14,7 @@ const MyComments = () => {
         w: { base: 800, mdDown: 320 },
         flexDir: 'column',
         pb: 200,
-        alignItems: 'flex-start',
+        alignItems: 'stretch',
         gap: 5,
       })}
     >

@@ -1,5 +1,5 @@
-import { cx, RecipeVariantProps } from '@styled-stytem/css'
-import { modalCard } from '@styled-stytem/recipes'
+import { cx, RecipeVariantProps } from '@styled-system/css'
+import { modalCard } from '@styled-system/recipes'
 import { forwardRef } from 'react'
 
 type ModalCardProps = React.HTMLAttributes<HTMLDivElement> & RecipeVariantProps<typeof modalCard>
