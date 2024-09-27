@@ -1,9 +1,9 @@
 import { css } from '@styled-system/css'
 import { useCallback, useState } from 'react'
 
-import { useGetAcademicCalendar } from '@/api/hooks/home_sub'
+import { useGetAcademicCalendar } from '@/api/hooks/calendar'
 import koreaUniv from '@/assets/koreaUniv.png'
-import AcademicCalendar from '@/components/home_sub/AcademicCalendar'
+import AcademicCalendar from '@/components/calendar/AcademicCalendar'
 import Dropdown from '@/components/timetable/Dropdown'
 import { useAcademicSemester } from '@/util/academicCalendar'
 import { makeSemesterDropdownList } from '@/util/timetableUtil'

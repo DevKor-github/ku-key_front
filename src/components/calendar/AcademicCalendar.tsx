@@ -1,7 +1,7 @@
 import { css, cva } from '@styled-system/css'
 
-import { GetCalendarYearlyResponse } from '@/api/types/home_sub'
-import EventRow from '@/components/home_sub/EventRow'
+import { GetCalendarYearlyResponse } from '@/api/types/calendar'
+import EventRow from '@/components/calendar/EventRow'
 import { SemesterType } from '@/types/timetable'
 import { numberToMonthAbb } from '@/util/academicCalendar'
 
