@@ -10,7 +10,6 @@ const CreateTimetableBtn = ({ handleCreate }: CreateTimetableBtnProps) => {
       onClick={handleCreate}
       className={css({
         cursor: 'pointer',
-        bgColor: 'red.2',
         display: { base: 'flex', mdDown: 'none' },
         justifyContent: 'center',
         alignItems: 'center',
