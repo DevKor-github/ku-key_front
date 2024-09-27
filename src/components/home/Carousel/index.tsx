@@ -11,7 +11,7 @@ import { usePrevNextButtons } from '@/util/carousel-button'
 const BannerStyle = css({ w: '608px', ml: 5, flex: '0 0 20%' })
 
 const HomeCarousel = () => {
-  const { data: banners } = useGetBannerImages()
+  const { data: banners, isSuccess: isBannerLoadedSuccess } = useGetBannerImages()
 
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: 'center' }, [Autoplay()])
 
@@ -45,13 +45,13 @@ const HomeCarousel = () => {
     >
       <div ref={emblaRef} className={css({ overflow: 'hidden' })}>
         <div className={css({ display: 'flex', backfaceVisibility: 'hidden' })}>
-          {banners.map(({ imageUrl }, index) => {
-            return imageUrl === null ? (
-              <div key={`banner-img-${index}`} className={cx(BannerStyle, css({ h: '300px', bgColor: 'bg.gray' }))} />
-            ) : (
-              <img key={`banner-img-${index}`} src={imageUrl} alt={`banner-${index}`} className={BannerStyle} />
-            )
-          })}
+          {isBannerLoadedSuccess
+            ? banners.map(({ imageUrl }, index) => (
+                <img key={`banner-img-${index}`} src={imageUrl} alt={`banner-${index}`} className={BannerStyle} />
+              ))
+            : Array.from({ length: 5 }, (_, index) => (
+                <div key={`banner-img-${index}`} className={cx(BannerStyle, css({ h: '300px', bgColor: 'bg.gray' }))} />
+              ))}
         </div>
       </div>
       <div

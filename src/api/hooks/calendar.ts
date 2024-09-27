@@ -33,7 +33,7 @@ export const useGetAcademicCalendar = ({ year, semester }: GetCalendarYearlyRequ
 const getBannerImages = async () => {
   const response = await apiInterface.get<
     {
-      imageUrl: string | null
+      imageUrl: string
     }[]
   >('/calendar/banner-image-urls')
   return response.data
@@ -43,6 +43,5 @@ export const useGetBannerImages = () => {
   return useQuery({
     queryKey: ['banner-images'],
     queryFn: getBannerImages,
-    initialData: Array.from({ length: 5 }, () => ({ imageUrl: null })),
   })
 }
