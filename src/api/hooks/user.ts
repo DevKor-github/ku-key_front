@@ -1,8 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import {
+  GetKeyExpirationResponse,
   GetMyProfileResponse,
-  GetPointHistroyResponse,
+  GetPointHistoryResponse,
   PatchExchangeDayRequest,
   PatchMyProfileRequest,
   PostLanguageRequest,
@@ -12,7 +13,7 @@ import { useAuth } from '@/util/auth/useAuth'
 import { apiInterface } from '@/util/axios/custom-axios'
 
 const getPointHistory = async () => {
-  const response = await apiInterface.get<GetPointHistroyResponse>('/user/point-history')
+  const response = await apiInterface.get<GetPointHistoryResponse>('/user/point-history')
   return response.data
 }
 
@@ -84,8 +85,8 @@ export const usePostPurchaseItem = () => {
   return useMutation({
     mutationFn: postPurchaseItem,
     onSuccess: () => {
-      // TODO: 아이템 & 포인트 관련 정보 업데이트 로직
       queryClient.invalidateQueries({ queryKey: ['myProfile'] })
+      queryClient.invalidateQueries({ queryKey: ['keyExpiration'] })
     },
   })
 }
@@ -147,5 +148,19 @@ export const useDeleteLanguage = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['myProfile'] })
     },
+  })
+}
+
+const getKeyExpiration = async () => {
+  const response = await apiInterface.get<GetKeyExpirationResponse | null>('/user/course-review-reading-ticket')
+  return response.data
+}
+
+export const useGetKeyExpiration = () => {
+  return useQuery({
+    queryKey: ['keyExpiration'],
+    queryFn: getKeyExpiration,
+    retry: 0,
+    initialData: null,
   })
 }

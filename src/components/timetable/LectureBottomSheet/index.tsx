@@ -17,6 +17,7 @@ interface LectureBottomSheetProps {
 const LectureBottomSheet = ({ timetableId, visible }: LectureBottomSheetProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const [sheetState, setSheetState] = useState<'class' | 'schedule' | null>(null)
+
   const { mutate: postSchedule } = usePostSchedule()
 
   const handleDrawer = useCallback(

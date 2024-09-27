@@ -42,6 +42,7 @@ export interface CommentProps {
   createdAt: Date
   updatedAt: Date
   isMyComment: boolean
+  isAuthor: boolean
   content: string
   user: User
   likeCount: number

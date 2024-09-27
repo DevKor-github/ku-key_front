@@ -2,13 +2,15 @@ import { css } from '@styled-system/css'
 import { reactionButton } from '@styled-system/recipes'
 import { useAtomValue } from 'jotai'
 import { Cookie, MessageCircle } from 'lucide-react'
-import { memo, useCallback } from 'react'
+import { memo, useCallback, useMemo } from 'react'
 
 import { usePostCommentLike } from '@/api/hooks/community'
 import CommentHeader from '@/components/community/post/CommentHeader'
 import NoticeModal from '@/components/ui/modal/NoticeModal'
 import { POST_MESSAGES } from '@/lib/messages/community'
 import { postAtom } from '@/lib/store/post'
+import { getCommentUsername } from '@/util/getCommentUsername'
+import { isAuthorMatchingPostAnonymity } from '@/util/isAuthorMatchingPostAnonymity'
 import { useModal } from '@/util/useModal'
 
 interface CommentProps {
@@ -18,6 +20,7 @@ interface CommentProps {
 }
 const Comment = memo(({ isOpen, currentIndex, handleClick }: CommentProps) => {
   const post = useAtomValue(postAtom)
+  const isPostAuthorAnonymous = post.user.isAnonymous
   const comment = post.comments[currentIndex]
   const { isOpen: modalOpen, handleOpen } = useModal(true)
 
@@ -26,6 +29,11 @@ const Comment = memo(({ isOpen, currentIndex, handleClick }: CommentProps) => {
     if (comment.isMyComment) return handleOpen()
     mutateLike({ postId: post.id, commentId: comment.id, isReply: false })
   }, [comment.isMyComment, comment.id, handleOpen, mutateLike, post.id])
+
+  const username = useMemo(
+    () => getCommentUsername({ comment, isPostAuthorAnonymous }),
+    [comment, isPostAuthorAnonymous],
+  )
   return (
     <div
       className={css({
@@ -37,10 +45,16 @@ const Comment = memo(({ isOpen, currentIndex, handleClick }: CommentProps) => {
       })}
     >
       <CommentHeader
-        username={comment.user.isAnonymous ? 'Anonymous' : comment.user.username}
+        username={username}
         date={comment.createdAt}
         isMyComment={comment.isMyComment}
         commentId={comment.id}
+        isAuthorMatchingPostAnonymity={isAuthorMatchingPostAnonymity({
+          isAuthor: comment.isAuthor,
+          isPostAuthorAnonymous,
+          isAnonymous: comment.user.isAnonymous,
+        })}
+        isDeleted={comment.isDeleted}
       />
       <p
         className={css({
@@ -52,9 +66,17 @@ const Comment = memo(({ isOpen, currentIndex, handleClick }: CommentProps) => {
           smDown: { fontSize: 14 },
         })}
       >
-        {comment.content}
+        {comment.content || 'This comment has been deleted.'}
       </p>
-      <div className={css({ display: 'flex', alignItems: 'center', gap: 2.5 })}>
+
+      <div
+        className={css({
+          display: 'flex',
+          alignItems: 'center',
+          gap: 2.5,
+          visibility: comment.isDeleted ? 'hidden' : 'visible',
+        })}
+      >
         <button aria-pressed={isOpen} className={reactionButton()} onClick={handleClick}>
           <MessageCircle size={22} />
           <p>{comment.reply.length}</p>

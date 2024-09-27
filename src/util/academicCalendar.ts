@@ -1,6 +1,6 @@
 import { match } from 'ts-pattern'
 
-import { GetCalendarYearlyResponse } from '@/api/types/home_sub'
+import { GetCalendarYearlyResponse } from '@/api/types/calendar'
 import { Semester } from '@/types/timetable'
 import { numberToSemester } from '@/util/timetableUtil'
 

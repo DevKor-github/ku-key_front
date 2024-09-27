@@ -1,4 +1,5 @@
 import { css } from '@styled-system/css'
+import { isAxiosError } from 'axios'
 import { ShieldAlert } from 'lucide-react'
 import { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -40,6 +41,13 @@ const ExchangeProfile = ({ myProfileData }: ExchangeProfileProps) => {
         { startDay: data.startDay, endDay: data.endDay },
         {
           onSuccess: () => alert('Changed successfully!'),
+          onError: error => {
+            if (isAxiosError(error)) {
+              alert(error.response?.data.message)
+            } else {
+              alert('Something is Wrong!')
+            }
+          },
         },
       )
     } else {

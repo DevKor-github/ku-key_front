@@ -1,20 +1,40 @@
-import { css } from '@styled-system/css'
+import { css, cva, cx } from '@styled-system/css'
 import Autoplay from 'embla-carousel-autoplay'
 import useEmblaCarousel, { UseEmblaCarouselType } from 'embla-carousel-react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 
+import { useGetBannerImages } from '@/api/hooks/calendar'
 import PlayIcon from '@/assets/play.svg'
-// import CarouselCard from '@/components/home/Carousel/CarouselCard'
 import { usePrevNextButtons } from '@/util/carousel-button'
 
-const BannerOne = `${import.meta.env.VITE_API_AWS_S3_BUCKET}/fe/home/banner1.webp`
-const BannerTwo = `${import.meta.env.VITE_API_AWS_S3_BUCKET}/fe/home/banner2.webp`
-const BannerThree = `${import.meta.env.VITE_API_AWS_S3_BUCKET}/fe/home/banner3.webp`
-const BannerFour = `${import.meta.env.VITE_API_AWS_S3_BUCKET}/fe/home/banner4.webp`
-const BannerFive = `${import.meta.env.VITE_API_AWS_S3_BUCKET}/fe/home/banner5.webp`
+const BannerStyle = cva({
+  base: { w: '608px', ml: 5, flex: '0 0 auto', display: 'block' },
+  variants: { display: { false: { display: 'none' } } },
+})
+const SkeletonBannerStyle = cx(BannerStyle(), css({ h: '300px' }))
+
+const SkeletonImg = ({ imageUrl, index }: { imageUrl: string; index: number }) => {
+  const [isImgLoading, setIsImgLoading] = useState(true)
+
+  return (
+    <>
+      {isImgLoading && <div className={SkeletonBannerStyle} />}
+      <img
+        src={imageUrl}
+        alt={`banner-${index}`}
+        className={BannerStyle({ display: !isImgLoading })}
+        onLoad={() => {
+          setIsImgLoading(false)
+        }}
+      />
+    </>
+  )
+}
 
 const HomeCarousel = () => {
+  const { data: banners, isSuccess: isBannerLoadedSuccess } = useGetBannerImages()
+
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: 'center' }, [Autoplay()])
 
   const [currentSlide, setCurrentSlide] = useState(0)
@@ -47,12 +67,13 @@ const HomeCarousel = () => {
     >
       <div ref={emblaRef} className={css({ overflow: 'hidden' })}>
         <div className={css({ display: 'flex', backfaceVisibility: 'hidden' })}>
-          <img src={BannerOne} alt="banner-one" className={css({ w: '608px', ml: 5, flex: '0 0 20%' })} />
-          <img src={BannerTwo} alt="banner-two" className={css({ w: '608px', ml: 5, flex: '0 0 20%' })} />
-          <img src={BannerThree} alt="banner-three" className={css({ w: '608px', ml: 5, flex: '0 0 20%' })} />
-          <img src={BannerFour} alt="banner-four" className={css({ w: '608px', ml: 5, flex: '0 0 20%' })} />
-          <img src={BannerFive} alt="banner-five" className={css({ w: '608px', ml: 5, flex: '0 0 20%' })} />
-          {/* <img src={BannerSix} alt="banner-six" className={css({ w: '608px', ml: 5, flex: '0 0 20%' })} /> */}
+          {isBannerLoadedSuccess
+            ? banners.map(({ imageUrl }, index) => (
+                <SkeletonImg key={`banner-img-${index}`} imageUrl={imageUrl} index={index} />
+              ))
+            : Array.from({ length: 5 }, (_, index) => (
+                <div key={`banner-img-${index}`} className={SkeletonBannerStyle} />
+              ))}
         </div>
       </div>
       <div

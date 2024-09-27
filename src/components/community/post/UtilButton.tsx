@@ -13,7 +13,8 @@ interface UtilButtonProps {
   handleDelete?: () => void
   handleReport?: () => void
   isEditable: boolean
-  forMyPage?: boolean
+  isDeletable: boolean
+  disabled?: boolean
 }
 const UtilButton = ({
   isComment,
@@ -22,7 +23,8 @@ const UtilButton = ({
   isEditable,
   handleDelete,
   handleReport,
-  forMyPage = false,
+  isDeletable,
+  disabled,
 }: UtilButtonProps) => {
   const { isOpen, handleOpen } = useModal(true)
 
@@ -35,6 +37,7 @@ const UtilButton = ({
     <Menubar>
       <MenubarMenu>
         <MenubarTrigger
+          disabled={disabled}
           className={css({
             rounded: 'full',
             w: '30px',
@@ -46,20 +49,12 @@ const UtilButton = ({
           <Ellipsis className={css({ color: 'darkGray.1' })} />
         </MenubarTrigger>
         <MenubarContent>
-          {forMyPage ? (
-            <MenubarItem onClick={handleNavigation}>Go To Post</MenubarItem>
-          ) : (
-            <>
-              {isEditable && (
-                <>
-                  <MenubarItem onClick={handleNavigation}>Edit</MenubarItem>
-                  <MenubarItem onClick={handleDelete}>Delete</MenubarItem>
-                </>
-              )}
-              {!isMine && <MenubarItem onClick={handleReport}>Report</MenubarItem>}
-              {!isComment && <MenubarItem onClick={handleShare}>Share URL</MenubarItem>}
-            </>
-          )}
+          <>
+            {isEditable && <MenubarItem onClick={handleNavigation}>Edit</MenubarItem>}
+            {isDeletable && <MenubarItem onClick={handleDelete}>Delete</MenubarItem>}
+            {!isMine && <MenubarItem onClick={handleReport}>Report</MenubarItem>}
+            {!isComment && <MenubarItem onClick={handleShare}>Share URL</MenubarItem>}
+          </>
         </MenubarContent>
       </MenubarMenu>
       <ModalPortal isOpen={isOpen} handleLayoutClose={handleOpen}>

@@ -1,6 +1,6 @@
 import { css, cva } from '@styled-system/css'
 
-import { EventType } from '@/types/home_sub'
+import { EventType } from '@/types/calendar'
 
 interface EventRowProps {
   index: number

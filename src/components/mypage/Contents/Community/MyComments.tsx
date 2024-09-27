@@ -14,7 +14,7 @@ const MyComments = () => {
         w: { base: 800, mdDown: 320 },
         flexDir: 'column',
         pb: 200,
-        alignItems: 'flex-start',
+        alignItems: 'stretch',
         gap: 5,
       })}
     >

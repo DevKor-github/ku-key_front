@@ -21,7 +21,7 @@ const InstituteProfile = ({ img, name, url }: InstituteProfileProps) => {
         })}
         onMouseEnter={() => setOnMouse(true)}
         onMouseLeave={() => setOnMouse(false)}
-        onClick={() => window.open(url, '_blank')}
+        onClick={() => window.open(url, '_blank', 'noopener,noreferrer')}
       >
         <img
           src={img}
