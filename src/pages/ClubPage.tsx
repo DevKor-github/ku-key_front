@@ -68,7 +68,7 @@ const ClubPage = () => {
     <>
       <MetaTag
         title="Club"
-        description="We introduce you to various clubs at Korea University! Find out what clubs there are and what each club's characteristics are."
+        description="Meet the various clubs at Korea University! Find out what clubs there are and what each club's characteristics are."
         keywords="club, clubs"
       />
       <div
