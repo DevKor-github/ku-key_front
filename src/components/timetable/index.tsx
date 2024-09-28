@@ -103,7 +103,7 @@ const Timetable = forwardRef<HTMLDivElement, TimetableProps>(
             <OptionModal
               ref={modalRef}
               optionHandler={optionHandler}
-              customStyle={{ position: 'absolute', top: '68px', right: 0, zIndex: 50 }}
+              className={css({ position: 'absolute', top: { base: '68px', lgDown: '84px' }, right: 0, zIndex: 50 })}
             />
           )}
           <div
