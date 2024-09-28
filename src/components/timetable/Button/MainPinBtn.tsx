@@ -7,13 +7,13 @@ import { TimetableInfo } from '@/types/timetable'
 
 const MainPinBtnStyle = cva({
   base: {
-    fontSize: 18,
+    fontSize: { base: 18, mdDown: 14 },
     fontWeight: 500,
     rounded: 30,
     bgColor: 'bg.gray',
     px: 2.5,
     h: 9,
-    display: { base: 'flex', mdDown: 'none' },
+    display: 'flex',
     flexDir: 'row',
     gap: 1,
     alignItems: 'center',

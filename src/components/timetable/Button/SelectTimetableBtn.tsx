@@ -46,7 +46,7 @@ const SelectTimetableBtn = ({
         onClick={() => setCurIndex(index)}
         className={css({
           cursor: 'pointer',
-          maxW: { base: 50, mdDown: 30 },
+          maxW: { base: 50, lgDown: 30, mdDown: 20 },
           overflow: 'hidden',
           whiteSpace: 'nowrap',
           textOverflow: 'ellipsis',
