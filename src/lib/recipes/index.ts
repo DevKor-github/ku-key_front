@@ -10,6 +10,7 @@ import { postCardRecipe } from '@/lib/recipes/post-card'
 import { postTextPreviewRecipe } from '@/lib/recipes/post-text-preview'
 import { reactionTagRecipe } from '@/lib/recipes/reaction-tag'
 import { shadowRecipe } from '@/lib/recipes/shadow'
+import { sheetRecipe } from '@/lib/recipes/sheet'
 import { tagRecipe } from '@/lib/recipes/tag'
 import { textStyles } from '@/lib/recipes/textStyles'
 export {
@@ -27,4 +28,5 @@ export {
   postCardRecipe,
   menubar,
   clubTagRecipe,
+  sheetRecipe,
 }
