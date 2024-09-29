@@ -4,6 +4,7 @@ import { useCallback, useState } from 'react'
 import { useGetAcademicCalendar } from '@/api/hooks/calendar'
 import koreaUniv from '@/assets/koreaUniv.png'
 import AcademicCalendar from '@/components/calendar/AcademicCalendar'
+import MetaTag from '@/components/MetaTag'
 import Dropdown from '@/components/timetable/Dropdown'
 import { useAcademicSemester } from '@/util/academicCalendar'
 import { makeSemesterDropdownList } from '@/util/timetableUtil'
@@ -27,6 +28,11 @@ const SchedulePage = () => {
 
   return (
     <>
+      <MetaTag
+        title="Academic Schedule"
+        description="Check out Korea University's academic calendar at a glance."
+        keywords="schedule, academic, academic schedule, calendar, academic calendar"
+      />
       <div
         className={css({
           h: { base: '400px', mdDown: '200px' },
