@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 import SideTabLogInLink from '@/components/header/SideTabLoginLink'
 import SideTabProfile from '@/components/header/SideTabProfile'
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
+import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import { headerRouteConfig } from '@/lib/router/header-route'
 
 interface HeaderProps {
@@ -30,12 +30,14 @@ const HeaderMenu = ({ handleNavClick, curPath, handleUserButton, isAuthenticated
   return (
     <Sheet open={isSheetOpen} onOpenChange={() => setIsSheetOpen(p => !p)}>
       <SheetTrigger asChild>
-        <button className={css({ mediumDown: { display: 'flex' }, base: { display: 'none' } })}>
+        <button className={css({ mediumDown: { display: 'flex' }, base: { display: 'none' }, color: 'darkGray.2' })}>
           <Menu />
         </button>
       </SheetTrigger>
       <SheetContent className={css({ display: 'flex', flexDir: 'column', py: 15, gap: 10 })} closeButton={false}>
         {isAuthenticated ? <SideTabProfile /> : <SideTabLogInLink handleSheetNavClick={handleSheetNavClick} />}
+        <SheetTitle className={css({ srOnly: true })}>Navigation SideTab</SheetTitle>
+        <SheetDescription className={css({ srOnly: true })}>For Mobile or medium size screen</SheetDescription>
         <nav
           className={css({
             display: { base: 'flex' },

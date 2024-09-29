@@ -125,34 +125,37 @@ const Header = () => {
         ))}
       </nav>
       <div className={css({ display: 'flex', alignItems: 'center', gap: '30px' })}>
-        {isAuthenticated && (
-          <div
-            className={css({
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: 4,
-              color: 'darkGray.2',
-            })}
-          >
-            <NotifyWindow />
-            <Link
-              to="/mypage"
-              className={css({ display: 'flex', alignItems: 'center', mediumDown: { display: 'none' } })}
-              onClick={e => handleNavClick(e, 'mypage')}
-            >
-              <CircleUser size={20} />
-            </Link>
-          </div>
-        )}
-        {mediaQuery && (
-          <HeaderMenu
-            handleNavClick={handleNavClick}
-            curPath={curPath}
-            handleUserButton={handleUserButton}
-            isAuthenticated={isAuthenticated}
-          />
-        )}
+        <div
+          className={css({
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 4,
+            color: 'darkGray.2',
+          })}
+        >
+          {isAuthenticated && (
+            <>
+              <NotifyWindow />
+              <Link
+                to="/mypage"
+                className={css({ display: 'flex', alignItems: 'center', mediumDown: { display: 'none' } })}
+                onClick={e => handleNavClick(e, 'mypage')}
+              >
+                <CircleUser size={20} />
+              </Link>
+            </>
+          )}
+          {mediaQuery && (
+            <HeaderMenu
+              handleNavClick={handleNavClick}
+              curPath={curPath}
+              handleUserButton={handleUserButton}
+              isAuthenticated={isAuthenticated}
+            />
+          )}
+        </div>
+
         <button
           onClick={handleUserButton}
           className={css({
