@@ -3,7 +3,7 @@ import { Menu } from 'lucide-react'
 import { useCallback, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import SideTabLogInLink from '@/components/header/SideTabLoginLink'
+import SideTabLogInLink from '@/components/header/SideTabLogInLink'
 import SideTabProfile from '@/components/header/SideTabProfile'
 import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import { headerRouteConfig } from '@/lib/router/header-route'
