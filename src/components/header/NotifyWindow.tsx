@@ -3,7 +3,7 @@ import { css, cx } from '@styled-system/css'
 import { shadow } from '@styled-system/recipes'
 import { Bell } from 'lucide-react'
 
-import AttendanceBtn from '@/components/header/notification/AttendanceBtn'
+import NotifyContent from '@/components/header/notification/NotifyContent'
 
 const NotifyWindow = () => {
   return (
@@ -34,22 +34,7 @@ const NotifyWindow = () => {
             shadow(),
           )}
         >
-          <div className={css({ display: 'flex', flexDir: 'column', gap: 5 })}>
-            <div className={css({ display: 'flex', alignItems: 'center', justifyContent: 'space-between' })}>
-              <AttendanceBtn />
-              <h2
-                className={css({
-                  color: 'white',
-                  textAlign: 'center',
-                  fontSize: 24,
-                  fontWeight: 700,
-                  lineHeight: 1,
-                })}
-              >
-                Alarm
-              </h2>
-            </div>
-          </div>
+          <NotifyContent />
         </Popover.Content>
       </Popover.Portal>
     </Popover.Root>
