@@ -7,6 +7,7 @@ import { useLogOut } from '@/api/hooks/auth'
 import KUkeyLogo from '@/assets/KU-keyLogo.svg'
 import { NavLinkButton } from '@/components/header/NavLinkButton'
 import NotifyWindow from '@/components/header/NotifyWindow'
+import HeaderMenu from '@/components/HeaderMenu'
 import NoticeModal from '@/components/ui/modal/NoticeModal'
 import { HEADER_MESSAGE } from '@/lib/messages/header'
 import { headerRouteConfig } from '@/lib/router/header-route'
@@ -86,7 +87,7 @@ const Header = () => {
         bg: 'white',
         justifyContent: 'space-between',
         alignItems: 'center',
-        px: { base: '150px', mdDown: 5 },
+        px: { base: '150px', largeDown: '100px', mediumDown: '60px', smallDown: '20px' },
       })}
     >
       <nav
@@ -102,7 +103,7 @@ const Header = () => {
       </nav>
       <nav
         className={css({
-          display: { base: 'flex', mdDown: 'none' },
+          display: { base: 'flex', mediumDown: 'none' },
           gap: '50px',
           alignItems: 'center',
         })}
@@ -135,16 +136,27 @@ const Header = () => {
             <NotifyWindow />
             <Link
               to="/mypage"
-              className={css({ display: 'flex', alignItems: 'center' })}
+              className={css({ display: 'flex', alignItems: 'center', mediumDown: { display: 'none' } })}
               onClick={e => handleNavClick(e, 'mypage')}
             >
               <CircleUser size={20} />
             </Link>
           </div>
         )}
+        <HeaderMenu
+          handleNavClick={handleNavClick}
+          curPath={curPath}
+          handleUserButton={handleUserButton}
+          isAuthenticated={isAuthenticated}
+        />
         <button
           onClick={handleUserButton}
-          className={css({ cursor: 'pointer', textStyle: 'body1_L', color: 'lightGray.1' })}
+          className={css({
+            cursor: 'pointer',
+            textStyle: 'body1_L',
+            color: 'lightGray.1',
+            mediumDown: { display: 'none' },
+          })}
         >
           {isAuthenticated ? 'Log out' : 'Log in'}
         </button>

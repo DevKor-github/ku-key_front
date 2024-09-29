@@ -129,6 +129,12 @@ export default defineConfig({
           to: { transform: 'translateX(100%)' },
         },
       },
+      breakpoints: {
+        xs: '390px',
+        small: '580px',
+        medium: '900px',
+        large: '1200px',
+      },
     },
   },
   jsxFramework: 'react',

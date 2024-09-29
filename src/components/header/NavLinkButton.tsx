@@ -3,7 +3,8 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
 import { forwardRef } from 'react'
 import { Link } from 'react-router-dom'
-interface NavLinkProps {
+
+export interface NavLinkProps {
   isSelected: boolean
   targetRoute: string
   navName: string
