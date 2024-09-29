@@ -3,7 +3,8 @@ import { Menu } from 'lucide-react'
 import { useCallback, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { characterConfig } from '@/components/ui/profile/CharacterConfig'
+import SideTabLogInLink from '@/components/header/SideTabLoginLink'
+import SideTabProfile from '@/components/header/SideTabProfile'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { headerRouteConfig } from '@/lib/router/header-route'
 
@@ -23,6 +24,9 @@ const HeaderMenu = ({ handleNavClick, curPath, handleUserButton, isAuthenticated
     },
     [handleNavClick],
   )
+  const handleSheetCloseLogOut = useCallback(() => {
+    setIsSheetOpen(false), handleUserButton()
+  }, [handleUserButton])
   return (
     <Sheet open={isSheetOpen} onOpenChange={() => setIsSheetOpen(p => !p)}>
       <SheetTrigger asChild>
@@ -31,26 +35,7 @@ const HeaderMenu = ({ handleNavClick, curPath, handleUserButton, isAuthenticated
         </button>
       </SheetTrigger>
       <SheetContent className={css({ display: 'flex', flexDir: 'column', py: 15, gap: 10 })} closeButton={false}>
-        <Link
-          to="/login"
-          className={css({
-            display: 'flex',
-            bgColor: 'lightGray.2',
-            rounded: 10,
-            px: 4,
-            py: 5,
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          })}
-          onClick={e => handleSheetNavClick(e, 'login')}
-        >
-          <p className={css({ textStyle: 'heading3_M', color: 'darkGray.2', py: 2.5 })}>you need to login</p>
-          <img
-            src={characterConfig['anonymous'][1]}
-            alt="profile"
-            className={css({ w: 15, bgColor: '#D9D9D9', rounded: 'full' })}
-          />
-        </Link>
+        {isAuthenticated ? <SideTabProfile /> : <SideTabLogInLink handleSheetNavClick={handleSheetNavClick} />}
         <nav
           className={css({
             display: { base: 'flex' },
@@ -139,7 +124,7 @@ const HeaderMenu = ({ handleNavClick, curPath, handleUserButton, isAuthenticated
           </div>
           {isAuthenticated && (
             <button
-              onClick={handleUserButton}
+              onClick={handleSheetCloseLogOut}
               className={css({
                 cursor: 'pointer',
                 color: 'darkGray.1',

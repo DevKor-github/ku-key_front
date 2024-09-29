@@ -12,6 +12,7 @@ import NoticeModal from '@/components/ui/modal/NoticeModal'
 import { HEADER_MESSAGE } from '@/lib/messages/header'
 import { headerRouteConfig } from '@/lib/router/header-route'
 import { useAuth } from '@/util/auth/useAuth'
+import { useMediaQuery } from '@/util/useMediaQuery'
 import { useModal } from '@/util/useModal'
 
 const Header = () => {
@@ -25,6 +26,7 @@ const Header = () => {
   const { isOpen: isModalOpen, handleOpen: handleModalOpen } = useModal(true)
   const [modalContent, setModalContent] = useState(HEADER_MESSAGE.NOT_VERIFIED_USER)
   const navigate = useNavigate()
+  const mediaQuery = useMediaQuery('(max-width: 900px)')
   const handleUserButton = useCallback(() => {
     isAuthenticated ? mutateSignOut() : navigate('/login')
   }, [isAuthenticated, mutateSignOut, navigate])
@@ -143,12 +145,14 @@ const Header = () => {
             </Link>
           </div>
         )}
-        <HeaderMenu
-          handleNavClick={handleNavClick}
-          curPath={curPath}
-          handleUserButton={handleUserButton}
-          isAuthenticated={isAuthenticated}
-        />
+        {mediaQuery && (
+          <HeaderMenu
+            handleNavClick={handleNavClick}
+            curPath={curPath}
+            handleUserButton={handleUserButton}
+            isAuthenticated={isAuthenticated}
+          />
+        )}
         <button
           onClick={handleUserButton}
           className={css({
