@@ -71,6 +71,12 @@ const RegisterPage = memo(() => {
 
   const handleNextPage = () => {
     if (page === 1) {
+      if (valid.email === 'unknown') emailForm.trigger()
+      if (valid.email !== 'valid') {
+        setValid(v => ({ ...v, email: 'invalid' }))
+        emailForm.setError('emailCode', { message: 'Invalid code', type: 'validate' })
+        return
+      }
       emailForm.handleSubmit(() => setPage(2))()
     }
     if (page === 2) {
