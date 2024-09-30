@@ -7,10 +7,12 @@ import { useLogOut } from '@/api/hooks/auth'
 import KUkeyLogo from '@/assets/KU-keyLogo.svg'
 import { NavLinkButton } from '@/components/header/NavLinkButton'
 import NotifyWindow from '@/components/header/NotifyWindow'
+import HeaderMenu from '@/components/HeaderMenu'
 import NoticeModal from '@/components/ui/modal/NoticeModal'
 import { HEADER_MESSAGE } from '@/lib/messages/header'
 import { headerRouteConfig } from '@/lib/router/header-route'
 import { useAuth } from '@/util/auth/useAuth'
+import { useMediaQuery } from '@/util/useMediaQuery'
 import { useModal } from '@/util/useModal'
 
 const Header = () => {
@@ -24,6 +26,7 @@ const Header = () => {
   const { isOpen: isModalOpen, handleOpen: handleModalOpen } = useModal(true)
   const [modalContent, setModalContent] = useState(HEADER_MESSAGE.NOT_VERIFIED_USER)
   const navigate = useNavigate()
+  const mediaQuery = useMediaQuery('(max-width: 900px)')
   const handleUserButton = useCallback(() => {
     isAuthenticated ? mutateSignOut() : navigate('/login')
   }, [isAuthenticated, mutateSignOut, navigate])
@@ -86,7 +89,7 @@ const Header = () => {
         bg: 'white',
         justifyContent: 'space-between',
         alignItems: 'center',
-        px: { base: '150px', mdDown: 5 },
+        px: { base: '150px', lgDown: '100px', mdDown: '60px', smDown: '20px' },
       })}
     >
       <nav
@@ -122,29 +125,45 @@ const Header = () => {
         ))}
       </nav>
       <div className={css({ display: 'flex', alignItems: 'center', gap: '30px' })}>
-        {isAuthenticated && (
-          <div
-            className={css({
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: 4,
-              color: 'darkGray.2',
-            })}
-          >
-            <NotifyWindow />
-            <Link
-              to="/mypage"
-              className={css({ display: 'flex', alignItems: 'center' })}
-              onClick={e => handleNavClick(e, 'mypage')}
-            >
-              <CircleUser size={20} />
-            </Link>
-          </div>
-        )}
+        <div
+          className={css({
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 4,
+            color: 'darkGray.2',
+          })}
+        >
+          {isAuthenticated && (
+            <>
+              <NotifyWindow />
+              <Link
+                to="/mypage"
+                className={css({ display: 'flex', alignItems: 'center', mdDown: { display: 'none' } })}
+                onClick={e => handleNavClick(e, 'mypage')}
+              >
+                <CircleUser size={20} />
+              </Link>
+            </>
+          )}
+          {mediaQuery && (
+            <HeaderMenu
+              handleNavClick={handleNavClick}
+              curPath={curPath}
+              handleUserButton={handleUserButton}
+              isAuthenticated={isAuthenticated}
+            />
+          )}
+        </div>
+
         <button
           onClick={handleUserButton}
-          className={css({ cursor: 'pointer', textStyle: 'body1_L', color: 'lightGray.1' })}
+          className={css({
+            cursor: 'pointer',
+            textStyle: 'body1_L',
+            color: 'lightGray.1',
+            mdDown: { display: 'none' },
+          })}
         >
           {isAuthenticated ? 'Log out' : 'Log in'}
         </button>

@@ -1,6 +1,11 @@
 import * as Characters from '@/components/ui/profile/profile-img'
 import { CharacterType } from '@/types/community'
 
+/**
+ *
+ * @param characterType
+ * @param level: 1 ~ 5
+ */
 export const characterConfig: Record<CharacterType, Record<number, string>> = {
   character1: {
     1: Characters.Character1Lv1,
