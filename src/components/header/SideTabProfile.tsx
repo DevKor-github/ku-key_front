@@ -26,7 +26,18 @@ const SideTabProfile = () => {
     >
       <div className={css({ display: 'flex', flexDir: 'column', justifyContent: 'center', gap: 2.5 })}>
         <div className={css({ display: 'flex', gap: 1.5, alignItems: 'center' })}>
-          <p className={css({ textStyle: 'heading3_L', lineHeight: '100%' })}>{myProfileData.username}</p>
+          <p
+            className={css({
+              textStyle: 'heading3_L',
+              lineHeight: '100%',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              maxW: 136,
+            })}
+          >
+            {myProfileData.username}
+          </p>
           <p>
             {hasFlag(myProfileData.country.toUpperCase()) && getUnicodeFlagIcon(myProfileData.country.toUpperCase())}
           </p>

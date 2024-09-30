@@ -1,4 +1,4 @@
-import { css } from '@styled-system/css'
+import { css, cva, cx } from '@styled-system/css'
 import { Menu } from 'lucide-react'
 import { useCallback, useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -30,7 +30,7 @@ const HeaderMenu = ({ handleNavClick, curPath, handleUserButton, isAuthenticated
   return (
     <Sheet open={isSheetOpen} onOpenChange={() => setIsSheetOpen(p => !p)}>
       <SheetTrigger asChild>
-        <button className={css({ mediumDown: { display: 'flex' }, base: { display: 'none' }, color: 'darkGray.2' })}>
+        <button className={css({ mdDown: { display: 'flex' }, base: { display: 'none' }, color: 'darkGray.2' })}>
           <Menu />
         </button>
       </SheetTrigger>
@@ -49,77 +49,34 @@ const HeaderMenu = ({ handleNavClick, curPath, handleUserButton, isAuthenticated
           })}
         >
           {headerRouteConfig.map(nav => {
-            if (nav.navName === 'Timetable') {
+            if (nav.innerTab === undefined) {
               return (
-                <div
-                  key={nav.route}
-                  className={css({ display: 'flex', flexDir: 'column', alignItems: 'flex-start', gap: 2 })}
-                >
-                  <div
-                    className={css({
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: 'darkGray.1',
-                      _hover: { color: 'red.2' },
-                      transition: 'all 0.2s ease-out',
-                    })}
-                  >
+                <div key={nav.route} className={menuButton({ isSelected: curPathRoot === nav.route })}>
+                  <Link to={`/${nav.route}`} onClick={e => handleSheetNavClick(e, nav.navName)}>
                     {nav.navName}
-                  </div>
-                  <div className={css({ display: 'flex', flexDir: 'column', pl: 4, alignItems: 'flex-start', gap: 2 })}>
-                    {nav.innerTab?.map((innerTab, index) => (
-                      <div
-                        key={innerTab}
-                        className={css({
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          color: curPath === `/${innerTab}` ? 'red.2' : 'darkGray.1',
-                          _hover: { color: 'red.2' },
-                          transition: 'all 0.2s ease-out',
-                          gap: 2.5,
-                        })}
-                      >
-                        <Link to={`/${innerTab}`} onClick={e => handleSheetNavClick(e, innerTab)}>
-                          {index === 0 ? 'My schedule' : 'Friend list'}
-                        </Link>
-                      </div>
-                    ))}
-                  </div>
+                  </Link>
                 </div>
               )
             }
             return (
               <div
                 key={nav.route}
-                className={css({
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: curPathRoot === nav.route ? 'red.2' : 'darkGray.1',
-                  _hover: { color: 'red.2' },
-                  transition: 'all 0.2s ease-out',
-                  gap: 2.5,
-                })}
+                className={css({ display: 'flex', flexDir: 'column', alignItems: 'flex-start', gap: 2 })}
               >
-                <Link to={`/${nav.route}`} onClick={e => handleSheetNavClick(e, nav.navName)}>
-                  {nav.navName}
-                </Link>
+                <div className={cx(menuButton({ isSelected: false }), css({ gap: 0 }))}>{nav.navName}</div>
+                <div className={css({ display: 'flex', flexDir: 'column', pl: 4, alignItems: 'flex-start', gap: 2 })}>
+                  {nav.innerTab.map((innerTab, index) => (
+                    <div key={innerTab} className={menuButton({ isSelected: curPath === `/${innerTab}` })}>
+                      <Link to={`/${innerTab}`} onClick={e => handleSheetNavClick(e, innerTab)}>
+                        {index === 0 ? 'My schedule' : 'Friend list'}
+                      </Link>
+                    </div>
+                  ))}
+                </div>
               </div>
             )
           })}
-          <div
-            className={css({
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: curPathRoot === 'mypage' ? 'red.2' : 'darkGray.1',
-              _hover: { color: 'red.2' },
-              transition: 'all 0.2s ease-out',
-              gap: 2.5,
-            })}
-          >
+          <div className={menuButton({ isSelected: curPathRoot === 'mypage' })}>
             <Link to={`/mypage`} onClick={e => handleSheetNavClick(e, 'mypage')}>
               My Page
             </Link>
@@ -142,3 +99,19 @@ const HeaderMenu = ({ handleNavClick, curPath, handleUserButton, isAuthenticated
 }
 
 export default HeaderMenu
+
+const menuButton = cva({
+  base: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    transition: 'all 0.2s ease-out',
+    gap: 2.5,
+  },
+  variants: {
+    isSelected: {
+      true: { color: 'red.2' },
+      false: { color: 'darkGray.1' },
+    },
+  },
+})

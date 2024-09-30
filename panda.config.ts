@@ -131,9 +131,9 @@ export default defineConfig({
       },
       breakpoints: {
         xs: '390px',
-        small: '580px',
-        medium: '900px',
-        large: '1200px',
+        sm: '580px',
+        md: '900px',
+        lg: '1200px',
       },
     },
   },

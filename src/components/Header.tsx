@@ -89,7 +89,7 @@ const Header = () => {
         bg: 'white',
         justifyContent: 'space-between',
         alignItems: 'center',
-        px: { base: '150px', largeDown: '100px', mediumDown: '60px', smallDown: '20px' },
+        px: { base: '150px', lgDown: '100px', mdDown: '60px', smDown: '20px' },
       })}
     >
       <nav
@@ -105,7 +105,7 @@ const Header = () => {
       </nav>
       <nav
         className={css({
-          display: { base: 'flex', mediumDown: 'none' },
+          display: { base: 'flex', mdDown: 'none' },
           gap: '50px',
           alignItems: 'center',
         })}
@@ -139,7 +139,7 @@ const Header = () => {
               <NotifyWindow />
               <Link
                 to="/mypage"
-                className={css({ display: 'flex', alignItems: 'center', mediumDown: { display: 'none' } })}
+                className={css({ display: 'flex', alignItems: 'center', mdDown: { display: 'none' } })}
                 onClick={e => handleNavClick(e, 'mypage')}
               >
                 <CircleUser size={20} />
@@ -162,7 +162,7 @@ const Header = () => {
             cursor: 'pointer',
             textStyle: 'body1_L',
             color: 'lightGray.1',
-            mediumDown: { display: 'none' },
+            mdDown: { display: 'none' },
           })}
         >
           {isAuthenticated ? 'Log out' : 'Log in'}
