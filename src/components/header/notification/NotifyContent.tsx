@@ -2,6 +2,7 @@ import { css } from '@styled-system/css'
 
 import { useGetNotice } from '@/api/hooks/notice'
 import AttendanceBtn from '@/components/header/notification/AttendanceBtn'
+import getFormattedNotice from '@/util/getFormattedNotice'
 import useIntersect from '@/util/useIntersect'
 
 const NotifyContent = () => {
@@ -29,11 +30,39 @@ const NotifyContent = () => {
         </h2>
       </div>
       {noticeData && noticeData.length !== 0 && (
-        <div className={css({ display: 'flex', flexDir: 'column', maxH: '580px', overflow: 'scroll' })}>
-          {noticeData.map((notice, index) => {
-            return <div key={`notice-${index}`}>{notice.content}</div>
+        <div
+          className={css({
+            display: 'flex',
+            flexDir: 'column',
+            maxH: '580px',
+            overflow: 'scroll',
+            color: 'white',
+            gap: 2.5,
           })}
-          <div ref={fetchNextRef} className={css({ height: 1 })} />
+        >
+          {getFormattedNotice(noticeData).map(({ createDate, notices }) => {
+            return (
+              <div key={`notice-date-${createDate}`} className={css({ display: 'flex', flexDir: 'column', gap: 5 })}>
+                <div
+                  className={css({
+                    fontSize: 12,
+                    fontWeight: 700,
+                    lineHeight: 1.2,
+                  })}
+                >
+                  {createDate}
+                </div>
+                <div className={css({ display: 'flex', flexDir: 'column', gap: 2.5 })}>
+                  {notices.map(notice => (
+                    <div key={notice.id} className={css({ fontSize: 16, fontWeight: 400, lineHeight: 1.2 })}>
+                      {notice.content}
+                    </div>
+                  ))}
+                  <div ref={fetchNextRef} className={css({ height: 1 })} />
+                </div>
+              </div>
+            )
+          })}
         </div>
       )}
     </div>
