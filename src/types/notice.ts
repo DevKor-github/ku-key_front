@@ -7,4 +7,4 @@ export interface NoticeInterface {
   handler?: string
 }
 
-type NoticeType = 'ban' | 'friendRequest' | 'friendAccept' | 'commentOnPost' | 'commentOnComment' | 'hotPost'
+export type NoticeType = 'ban' | 'friendRequest' | 'friendAccept' | 'commentOnPost' | 'commentOnComment' | 'hotPost'

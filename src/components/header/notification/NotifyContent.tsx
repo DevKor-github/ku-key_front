@@ -2,6 +2,7 @@ import { css } from '@styled-system/css'
 
 import { useGetNotice } from '@/api/hooks/notice'
 import AttendanceBtn from '@/components/header/notification/AttendanceBtn'
+import NoticeCard from '@/components/header/notification/NoticeCard'
 import getFormattedNotice from '@/util/getFormattedNotice'
 import useIntersect from '@/util/useIntersect'
 
@@ -54,9 +55,7 @@ const NotifyContent = () => {
                 </div>
                 <div className={css({ display: 'flex', flexDir: 'column', gap: 2.5 })}>
                   {notices.map(notice => (
-                    <div key={notice.id} className={css({ fontSize: 16, fontWeight: 400, lineHeight: 1.2 })}>
-                      {notice.content}
-                    </div>
+                    <NoticeCard key={notice.id} noticeData={notice} />
                   ))}
                   <div ref={fetchNextRef} className={css({ height: 1 })} />
                 </div>
