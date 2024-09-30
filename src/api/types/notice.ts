@@ -1,7 +1,7 @@
-import { NoticeType } from '@/types/notice'
+import { NoticeInterface } from '@/types/notice'
 
 export interface GetNoticeResponse {
-  data: NoticeType[]
+  data: NoticeInterface[]
   meta: {
     hasNextData: boolean
     nextCursor: string

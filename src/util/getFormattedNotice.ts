@@ -1,7 +1,7 @@
-import { NoticeType } from '@/types/notice'
+import { NoticeInterface } from '@/types/notice'
 
-const getFormattedNotice = (data: NoticeType[]) => {
-  const dateRecord: Record<string, NoticeType[]> = {}
+const getFormattedNotice = (data: NoticeInterface[]) => {
+  const dateRecord: Record<string, NoticeInterface[]> = {}
   data.map(notice => {
     const createDate = notice.createdAt.slice(0, 10)
     if (dateRecord[createDate]) {
@@ -11,7 +11,7 @@ const getFormattedNotice = (data: NoticeType[]) => {
     }
   })
 
-  const ret: { createDate: string; notices: NoticeType[] }[] = []
+  const ret: { createDate: string; notices: NoticeInterface[] }[] = []
   Object.keys(dateRecord).map(createDate => {
     ret.push({
       createDate,
