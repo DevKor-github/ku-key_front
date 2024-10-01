@@ -92,7 +92,7 @@ const UserInfoForm = ({ form, handleFileChange, handleValidation, valid, fileNam
               rowGap: 2.5,
             })}
           >
-            <FormLabel>Country</FormLabel>
+            <FormLabel>Nation</FormLabel>
             <FormControl>
               <div
                 className={css({
@@ -135,7 +135,7 @@ const UserInfoForm = ({ form, handleFileChange, handleValidation, valid, fileNam
               rowGap: 2.5,
             })}
           >
-            <FormLabel>Home UNIV</FormLabel>
+            <FormLabel>Origin Univ</FormLabel>
             <FormControl>
               <div
                 className={css({
@@ -209,7 +209,7 @@ const UserInfoForm = ({ form, handleFileChange, handleValidation, valid, fileNam
               rowGap: 2.5,
             })}
           >
-            <FormLabel>Student ID</FormLabel>
+            <FormLabel>KU Student ID</FormLabel>
             <FormControl>
               <div
                 className={css({
