@@ -1,10 +1,16 @@
 import { css } from '@styled-system/css'
+import { useCallback, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 // TODO: ADD Instagram & Notion Link
 // import instagramIcon from '@/assets/instagram.svg'
 import KUkeyLogo from '@/assets/KU-keyLogo.svg'
 import mailIcon from '@/assets/mail.svg'
+import NoticeModal from '@/components/ui/modal/NoticeModal'
+import { HEADER_MESSAGE } from '@/lib/messages/header'
+import { footerRouteConfig } from '@/lib/router/footer-route'
+import { useAuth } from '@/util/auth/useAuth'
+import { useModal } from '@/util/useModal'
 // import notionIcon from '@/assets/notion.svg'
 
 const supportApps = [
@@ -26,8 +32,31 @@ const tabs = css({
 })
 
 const Footer = () => {
+  const { isAuthenticated, authState } = useAuth()
+  const { isOpen: isModalOpen, handleOpen: handleModalOpen } = useModal(true)
+  const [modalContent, setModalContent] = useState(HEADER_MESSAGE.NOT_VERIFIED_USER)
+
+  const handleNavClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, route: string) => {
+      if (route === 'matching') {
+        e.preventDefault()
+        setModalContent(HEADER_MESSAGE.NOT_READY)
+        handleModalOpen()
+        return
+      }
+      if (!isAuthenticated) return // 미로그인 유저
+      if (!authState) {
+        // 인증 안 된 유저
+        e.preventDefault()
+        setModalContent(HEADER_MESSAGE.NOT_VERIFIED_USER)
+        handleModalOpen()
+      }
+    },
+    [authState, handleModalOpen, isAuthenticated],
+  )
+
   return (
-    <div
+    <footer
       className={css({
         w: 'full',
         borderTop: '1.211px solid {colors.lightGray.2}',
@@ -96,20 +125,14 @@ const Footer = () => {
           h: 25,
         })}
       >
-        <Link to="/" className={tabs}>
-          MY PAGE
-        </Link>
-        <Link to="/timetable" className={tabs}>
-          TIMETABLE
-        </Link>
-        <Link to="/community" className={tabs}>
-          COMMUNITY
-        </Link>
-        <Link to="/matching" className={tabs}>
-          1:1 MATCHING
-        </Link>
+        {footerRouteConfig.map(nav => (
+          <Link to={`/${nav.route}`} className={tabs} onClick={e => handleNavClick(e, nav.route)}>
+            {nav.navName}
+          </Link>
+        ))}
       </div>
-    </div>
+      <NoticeModal isOpen={isModalOpen} content={modalContent} />
+    </footer>
   )
 }
 
