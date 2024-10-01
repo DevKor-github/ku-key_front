@@ -9,12 +9,9 @@ import SearchArea from '@/components/club/SearchArea'
 import MetaTag from '@/components/MetaTag'
 import { Checkbox } from '@/components/ui/checkbox'
 import { useAuth } from '@/util/auth/useAuth'
-import useScrollUp from '@/util/useScrollUp'
 import { useSearch } from '@/util/useSearch'
 
 const ClubPage = () => {
-  useScrollUp()
-
   const isLogin = useAuth().authState ?? false
 
   const { searchParam, handleSetParam, deleteParam } = useSearch()
