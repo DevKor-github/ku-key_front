@@ -67,7 +67,11 @@ const HeaderMenu = ({ handleNavClick, curPath, handleUserButton, isAuthenticated
                 <div className={css({ display: 'flex', flexDir: 'column', pl: 4, alignItems: 'flex-start', gap: 2 })}>
                   {nav.innerTab.map((innerTab, index) => (
                     <div key={innerTab} className={menuButton({ isSelected: curPath === `/${innerTab}` })}>
-                      <Link to={`/${innerTab}`} onClick={e => handleSheetNavClick(e, innerTab)}>
+                      <Link
+                        to={`/${innerTab}`}
+                        onClick={e => handleSheetNavClick(e, innerTab)}
+                        className={css({ fontSize: 15 })}
+                      >
                         {index === 0 ? 'My schedule' : 'Friend list'}
                       </Link>
                     </div>
@@ -81,17 +85,15 @@ const HeaderMenu = ({ handleNavClick, curPath, handleUserButton, isAuthenticated
               My Page
             </Link>
           </div>
-          {isAuthenticated && (
-            <button
-              onClick={handleSheetCloseLogOut}
-              className={css({
-                cursor: 'pointer',
-                color: 'darkGray.1',
-              })}
-            >
-              Logout
-            </button>
-          )}
+          <button
+            onClick={handleSheetCloseLogOut}
+            className={css({
+              cursor: 'pointer',
+              color: 'darkGray.1',
+            })}
+          >
+            {isAuthenticated ? 'Log Out' : 'Log In'}
+          </button>
         </nav>
       </SheetContent>
     </Sheet>
