@@ -126,7 +126,7 @@ const Footer = () => {
         })}
       >
         {footerRouteConfig.map(nav => (
-          <Link to={`/${nav.route}`} className={tabs} onClick={e => handleNavClick(e, nav.route)}>
+          <Link key={nav.route} to={`/${nav.route}`} className={tabs} onClick={e => handleNavClick(e, nav.route)}>
             {nav.navName}
           </Link>
         ))}
