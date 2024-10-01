@@ -15,6 +15,7 @@ import {
   shadowRecipe,
   tagRecipe,
   textStyles,
+  sheetRecipe,
 } from './src/lib/recipes/index'
 import { tokenToRem } from './src/lib/constants/tokenToRem'
 
@@ -44,6 +45,7 @@ export default defineConfig({
         reactionButton: reactionTagRecipe,
         carouselButton: carouselButtonRecipe,
         postCard: postCardRecipe,
+        sheet: sheetRecipe,
       },
       slotRecipes: {
         menubar: menubar,
@@ -94,6 +96,44 @@ export default defineConfig({
           from: { transform: 'scale(1)', opacity: 1 },
           to: { transform: 'scale(0.95)', opacity: 0 },
         },
+        slideInFromTop: {
+          from: { transform: 'translateY(-100%)' },
+          to: { transform: 'translateY(0)' },
+        },
+        slideOutToTop: {
+          from: { transform: 'translateY(0)' },
+          to: { transform: 'translateY(-100%)' },
+        },
+        slideInFromBottom: {
+          from: { transform: 'translateY(100%)' },
+          to: { transform: 'translateY(0)' },
+        },
+        slideOutToBottom: {
+          from: { transform: 'translateY(0)' },
+          to: { transform: 'translateY(100%)' },
+        },
+        slideInFromLeft: {
+          from: { transform: 'translateX(-100%)' },
+          to: { transform: 'translateX(0)' },
+        },
+        slideOutToLeft: {
+          from: { transform: 'translateX(0)' },
+          to: { transform: 'translateX(-100%)' },
+        },
+        slideInFromRight: {
+          from: { transform: 'translateX(100%)' },
+          to: { transform: 'translateX(0)' },
+        },
+        slideOutToRight: {
+          from: { transform: 'translateX(0)' },
+          to: { transform: 'translateX(100%)' },
+        },
+      },
+      breakpoints: {
+        xs: '390px',
+        sm: '580px',
+        md: '900px',
+        lg: '1200px',
       },
     },
   },

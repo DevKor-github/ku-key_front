@@ -6,14 +6,12 @@ import CategorySelector from '@/components/club/CategorySelector'
 import ClubCard from '@/components/club/ClubCard'
 import { CategoryType } from '@/components/club/constants'
 import SearchArea from '@/components/club/SearchArea'
+import MetaTag from '@/components/MetaTag'
 import { Checkbox } from '@/components/ui/checkbox'
 import { useAuth } from '@/util/auth/useAuth'
-import useScrollUp from '@/util/useScrollUp'
 import { useSearch } from '@/util/useSearch'
 
 const ClubPage = () => {
-  useScrollUp()
-
   const isLogin = useAuth().authState ?? false
 
   const { searchParam, handleSetParam, deleteParam } = useSearch()
@@ -65,6 +63,11 @@ const ClubPage = () => {
 
   return (
     <>
+      <MetaTag
+        title="Club"
+        description="Meet the various clubs at Korea University! Find out what clubs there are and what each club's characteristics are."
+        keywords="club, clubs"
+      />
       <div
         className={css({
           h: { base: '400px', mdDown: '200px' },

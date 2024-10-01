@@ -1,11 +1,11 @@
 import { css } from '@styled-system/css'
 import { useEffect } from 'react'
-import { Helmet } from 'react-helmet-async'
 import { Outlet } from 'react-router-dom'
 
 import { useCheckVerified } from '@/api/hooks/auth'
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
+import MetaTag from '@/components/MetaTag'
 import { useAuth } from '@/util/auth/useAuth'
 
 const MainLayout = () => {
@@ -16,9 +16,7 @@ const MainLayout = () => {
   }, [verified, setVerified])
   return (
     <div className={css({ display: 'flex', flexDir: 'column', h: '100vh' })}>
-      <Helmet>
-        <title>KU-key</title>
-      </Helmet>
+      <MetaTag title="KU-key" />
       <Header />
       <div className={css({ flex: 1 })}>
         <Outlet />
