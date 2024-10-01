@@ -2,10 +2,8 @@ import { css, cx } from '@styled-system/css'
 import { globalLayout } from '@styled-system/recipes'
 
 import PostView from '@/components/community/post/PostView'
-import useScrollUp from '@/util/useScrollUp'
 
 const PostViewPage = () => {
-  useScrollUp()
   return (
     <main className={css({ display: 'flex', flexDir: 'column' })}>
       <div
