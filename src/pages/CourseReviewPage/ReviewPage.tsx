@@ -96,12 +96,13 @@ const ReviewPage = () => {
               >
                 Latest
               </button>
-              <button
+              {/* TODO: 강의평 좋아요 기능 추가 & 좋아요 순으로 모아보기 */}
+              {/* <button
                 className={CriteriaBtnStyle({ selected: criteria === 'recommendCount' })}
                 onClick={() => setCriteria('recommendCount')}
               >
                 Like
-              </button>
+              </button> */}
               <button
                 className={CriteriaBtnStyle({ selected: criteria === 'rate' })}
                 onClick={() => setCriteria('rate')}
