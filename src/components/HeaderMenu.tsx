@@ -81,17 +81,15 @@ const HeaderMenu = ({ handleNavClick, curPath, handleUserButton, isAuthenticated
               My Page
             </Link>
           </div>
-          {isAuthenticated && (
-            <button
-              onClick={handleSheetCloseLogOut}
-              className={css({
-                cursor: 'pointer',
-                color: 'darkGray.1',
-              })}
-            >
-              Logout
-            </button>
-          )}
+          <button
+            onClick={handleSheetCloseLogOut}
+            className={css({
+              cursor: 'pointer',
+              color: 'darkGray.1',
+            })}
+          >
+            {isAuthenticated ? 'Log Out' : 'Log In'}
+          </button>
         </nav>
       </SheetContent>
     </Sheet>
