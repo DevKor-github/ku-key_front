@@ -138,7 +138,7 @@ const Header = () => {
             <>
               <NotifyWindow />
               <Link
-                to="/mypage?page=my-point"
+                to="/mypage"
                 className={css({ display: 'flex', alignItems: 'center', mdDown: { display: 'none' } })}
                 onClick={e => handleNavClick(e, 'mypage')}
               >

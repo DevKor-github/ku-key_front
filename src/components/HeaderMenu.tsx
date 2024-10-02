@@ -81,7 +81,7 @@ const HeaderMenu = ({ handleNavClick, curPath, handleUserButton, isAuthenticated
             )
           })}
           <div className={menuButton({ isSelected: curPathRoot === 'mypage' })}>
-            <Link to={`/mypage?page=my-point`} onClick={e => handleSheetNavClick(e, 'mypage')}>
+            <Link to={`/mypage`} onClick={e => handleSheetNavClick(e, 'mypage')}>
               My Page
             </Link>
           </div>

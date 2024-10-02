@@ -30,7 +30,7 @@ const MyPageContents = ({ myProfileData }: MyPageContentsProps) => {
 
   useEffect(() => {
     if (curPage === null) {
-      setPage('my-point')
+      history.replaceState(null, '', '/mypage/?page=my-point')
     }
   }, [curPage, setPage])
 

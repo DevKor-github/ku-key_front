@@ -1,5 +1,5 @@
 export const footerRouteConfig = [
-  { route: 'mypage?page=my-point', navName: 'MY PAGE' },
+  { route: 'mypage', navName: 'MY PAGE' },
   { route: 'timetable', navName: 'TIMETABLE' },
   { route: 'timetable/friend', navName: 'FRIENDS' },
   { route: 'community', navName: 'COMMUNITY' },
