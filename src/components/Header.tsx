@@ -99,7 +99,7 @@ const Header = () => {
           flexShrink: 0,
         })}
       >
-        <Link to="/home">
+        <Link to="/">
           <img src={KUkeyLogo} alt="KU-key" />
         </Link>
       </nav>

@@ -6,7 +6,7 @@ const LandingPage = () => {
 
   // todo: Landing Page 구현
   useEffect(() => {
-    navigate('/home')
+    navigate('/home', { replace: true })
   }, [navigate])
 
   return <div></div>
