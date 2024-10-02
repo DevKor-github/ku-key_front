@@ -124,8 +124,10 @@ const MyPageContents = ({ myProfileData }: MyPageContentsProps) => {
           .with('exchange-profile', () => <ExchangeProfile myProfileData={myProfileData} />)
           .with('password', () => <ChangePassword />)
           .with('delete-account', () => <DeleteAccount />)
+          .with('my-point', () => <MyPoint myProfileData={myProfileData} />)
           .otherwise(() => (
-            <MyPoint myProfileData={myProfileData} />
+            // 실제로는 바로 리다이렉션 됨
+            <></>
           ))}
       </div>
     </div>
