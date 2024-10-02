@@ -3,7 +3,14 @@ interface Props {
 }
 const SportsIcon = ({ color }: Props) => {
   return (
-    <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="100%"
+      height="100%"
+      viewBox="0 0 50 50"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      style={{ display: 'block' }}
+    >
       <path
         d="M35.8369 15.3427C35.7081 15.1985 35.4831 15.1792 35.3331 15.3004C32.4792 17.6004 30.6484 21.1216 30.6484 25.0639C30.6484 29.0062 32.4504 32.4716 35.2677 34.7716C35.4177 34.8946 35.6427 34.8773 35.7734 34.7331C38.1023 32.1581 39.5215 28.7466 39.5215 25.0023C39.5215 21.2581 38.1273 17.91 35.8388 15.3446L35.8369 15.3427Z"
         fill={color}
