@@ -25,7 +25,7 @@ const SkeletonImg = ({ imageUrl, index }: { imageUrl: string; index: number }) =
         className={BannerStyle({ display: !isImgLoading })}
         onError={e => {
           e.currentTarget.onerror = null
-          e.currentTarget.remove()
+          setIsImgLoading(false)
         }}
         onLoad={() => {
           setIsImgLoading(false)
