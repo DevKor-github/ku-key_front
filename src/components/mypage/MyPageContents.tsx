@@ -1,5 +1,6 @@
 import { css, cva } from '@styled-system/css'
 import { useCallback, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { match } from 'ts-pattern'
 
 import { GetMyProfileResponse } from '@/api/types/user'
@@ -20,6 +21,7 @@ interface MyPageContentsProps {
 const MyPageContents = ({ myProfileData }: MyPageContentsProps) => {
   const { searchParam, handleSetParam } = useSearch()
   const curPage = searchParam.get('page') as PageType
+  const navigate = useNavigate()
 
   const setPage = useCallback(
     (target: PageType) => {
@@ -30,9 +32,9 @@ const MyPageContents = ({ myProfileData }: MyPageContentsProps) => {
 
   useEffect(() => {
     if (curPage === null) {
-      history.replaceState(null, '', '/mypage/?page=my-point')
+      navigate(`${location.pathname}?page=my-point`, { replace: true })
     }
-  }, [curPage, setPage])
+  }, [curPage, navigate])
 
   return (
     <div
