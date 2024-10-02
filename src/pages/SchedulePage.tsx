@@ -35,14 +35,14 @@ const SchedulePage = () => {
       />
       <div
         className={css({
-          h: { base: '400px', mdDown: '200px' },
+          h: { base: '400px', lgDown: '300px', mdDown: '200px' },
           bgPosition: 'center',
           bgSize: 'cover',
           bgRepeat: 'no-repeat',
-          fontSize: { base: 64, mdDown: 32 },
+          fontSize: { base: 64, lgDown: 48, mdDown: 32 },
           fontWeight: 700,
           color: 'white',
-          px: { base: 64, mdDown: 5 },
+          px: { base: 58, lgDown: 20, mdDown: 5 },
           display: 'flex',
           alignItems: 'center',
           position: 'relative',
@@ -57,8 +57,8 @@ const SchedulePage = () => {
           flexDir: 'column',
           alignItems: 'center',
           bgColor: 'bg.gray',
-          px: { base: 64, mdDown: 5 },
-          py: 30,
+          px: { base: 58, lgDown: 20, mdDown: 5 },
+          py: { base: 30, lgDown: 20, mdDown: 5 },
         })}
       >
         <div
