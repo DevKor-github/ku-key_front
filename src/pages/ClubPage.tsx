@@ -70,14 +70,14 @@ const ClubPage = () => {
       />
       <div
         className={css({
-          h: { base: '400px', mdDown: '200px' },
+          h: { base: '400px', lgDown: '300px', mdDown: '200px' },
           bgPosition: 'center',
           bgSize: 'cover',
           bgRepeat: 'no-repeat',
-          fontSize: { base: 64, mdDown: 32 },
+          fontSize: { base: 64, lgDown: 48, mdDown: 32 },
           fontWeight: 700,
           color: 'white',
-          px: { base: 64, mdDown: 5 },
+          px: { base: 58, lgDown: 20, mdDown: 5 },
           display: 'flex',
           alignItems: 'center',
         })}
@@ -87,8 +87,8 @@ const ClubPage = () => {
       </div>
       <div
         className={css({
-          px: { base: 64, mdDown: 5 },
-          pt: 29,
+          px: { base: 58, lgDown: 20, mdDown: 5 },
+          pt: { base: 29, lgDown: 20, mdDown: 10 },
           display: 'flex',
           flexDir: 'column',
           alignItems: 'center',
@@ -99,20 +99,20 @@ const ClubPage = () => {
           className={css({
             display: 'flex',
             flexDir: 'column',
-            gap: 19,
+            gap: { base: 19, mdDown: 10 },
             width: 'full',
             maxW: '1300px',
           })}
         >
           <CategorySelector curCategory={query.category} setCategory={setCategory} />
-          <div className={css({ display: 'flex', flexDir: 'column', gap: 20, pb: 30 })}>
+          <div className={css({ display: 'flex', flexDir: 'column', gap: { base: 20, mdDown: 10 }, pb: 30 })}>
             <div className={css({ display: 'flex', justifyContent: 'center' })}>
               <div
                 className={css({
                   display: 'flex',
                   alignItems: 'center',
                   gap: 4,
-                  transform: 'translate3d(80px, 0, 0)',
+                  transform: { base: 'translate3d(80px, 0, 0)', mdDown: 'initial' },
                 })}
               >
                 <SearchArea onSubmit={handleSubmit} clearKeywordParam={clearKeyword} />
@@ -131,15 +131,23 @@ const ClubPage = () => {
             </div>
             <div className={css({ display: 'flex', flexDir: 'column', gap: 11 })}>
               {query.keyword && (
-                <div className={css({ fontSize: 30, fontWeight: 700, color: 'darkGray.1' })}>
+                <div
+                  className={css({
+                    fontSize: { base: 30, lgDown: 24, mdDown: 18 },
+                    fontWeight: 700,
+                    color: 'darkGray.1',
+                  })}
+                >
                   {`'${query.keyword}' Search Results`}
                 </div>
               )}
-              <div className={css({ display: 'flex', flexDir: 'column', gap: 15 })}>
+              <div className={css({ display: 'flex', flexDir: 'column', gap: { base: 15, mdDown: 10 } })}>
                 {data?.length ? (
                   data?.map(club => <ClubCard key={club.clubId} clubData={club} handleLikeClick={handleLikeClick} />)
                 ) : (
-                  <div className={css({ color: 'darkGray.1', fontSize: 20 })}>No search results</div>
+                  <div className={css({ color: 'darkGray.1', fontSize: { base: 20, mdDown: 16 } })}>
+                    No search results
+                  </div>
                 )}
               </div>
             </div>
