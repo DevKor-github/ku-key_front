@@ -1,4 +1,4 @@
-import { css, cva, cx } from '@styled-system/css'
+import { css, cva } from '@styled-system/css'
 import Autoplay from 'embla-carousel-autoplay'
 import useEmblaCarousel, { UseEmblaCarouselType } from 'embla-carousel-react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
@@ -9,21 +9,24 @@ import PlayIcon from '@/assets/play.svg'
 import { usePrevNextButtons } from '@/util/carousel-button'
 
 const BannerStyle = cva({
-  base: { w: '608px', ml: 5, flex: '0 0 auto', display: 'block' },
+  base: { w: '608px', h: '300px', ml: 5, flex: '0 0 auto', display: 'block' },
   variants: { display: { false: { display: 'none' } } },
 })
-const SkeletonBannerStyle = cx(BannerStyle(), css({ h: '300px' }))
 
 const SkeletonImg = ({ imageUrl, index }: { imageUrl: string; index: number }) => {
   const [isImgLoading, setIsImgLoading] = useState(true)
 
   return (
     <>
-      {isImgLoading && <div className={SkeletonBannerStyle} />}
+      {isImgLoading && <div className={BannerStyle()} />}
       <img
         src={imageUrl}
         alt={`banner-${index}`}
         className={BannerStyle({ display: !isImgLoading })}
+        onError={e => {
+          e.currentTarget.onerror = null
+          e.currentTarget.remove()
+        }}
         onLoad={() => {
           setIsImgLoading(false)
         }}
@@ -71,9 +74,7 @@ const HomeCarousel = () => {
             ? banners.map(({ imageUrl }, index) => (
                 <SkeletonImg key={`banner-img-${index}`} imageUrl={imageUrl} index={index} />
               ))
-            : Array.from({ length: 5 }, (_, index) => (
-                <div key={`banner-img-${index}`} className={SkeletonBannerStyle} />
-              ))}
+            : Array.from({ length: 5 }, (_, index) => <div key={`banner-img-${index}`} className={BannerStyle()} />)}
         </div>
       </div>
       <div
