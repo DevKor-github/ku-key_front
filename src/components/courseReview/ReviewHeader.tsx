@@ -22,19 +22,28 @@ const ReviewHeader = ({ courseCode, courseName, prof }: ReviewHeaderProps) => {
   )
 
   return (
-    <div className={css({ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 5 })}>
+    <div
+      className={css({
+        display: 'flex',
+        justifyContent: { base: 'space-between', mdDown: 'flex-start' },
+        alignItems: { base: 'center', mdDown: 'flex-start' },
+        gap: { base: 5, mdDown: 2 },
+        flexDir: { base: 'row', mdDown: 'column' },
+      })}
+    >
       <div
         className={css({
           display: 'flex',
           flexDir: 'column',
           gap: 1,
           overflow: 'hidden',
+          mdDown: { w: 'full' },
         })}
       >
         <span
           className={css({
             fontWeight: 600,
-            fontSize: 26,
+            fontSize: { base: 26, smDown: 20 },
             color: 'black.2',
             overflow: 'hidden',
             whiteSpace: 'nowrap',
@@ -45,7 +54,7 @@ const ReviewHeader = ({ courseCode, courseName, prof }: ReviewHeaderProps) => {
         </span>
         <span
           className={css({
-            fontSize: 18,
+            fontSize: { base: 18, smDown: 16 },
             color: 'darkGray.2',
             overflow: 'hidden',
             whiteSpace: 'nowrap',
