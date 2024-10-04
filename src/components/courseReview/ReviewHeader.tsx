@@ -26,11 +26,9 @@ const ReviewHeader = ({ courseCode, courseName, prof }: ReviewHeaderProps) => {
       <div
         className={css({
           display: 'flex',
-          gap: 5,
-          alignItems: 'center',
+          flexDir: 'column',
+          gap: 1,
           overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          whiteSpace: 'nowrap',
         })}
       >
         <span
