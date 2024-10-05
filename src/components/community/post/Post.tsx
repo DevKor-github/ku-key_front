@@ -119,18 +119,10 @@ const Post = memo(() => {
           alignSelf: 'stretch',
         })}
       >
-        <h1
-          className={css({
-            fontSize: 26,
-            fontWeight: 600,
-            color: 'black.2',
-            alignSelf: 'stretch',
-            whiteSpace: 'pre-wrap',
-          })}
-        >
+        <h1 className={css({ textStyle: 'title3', color: 'black.2', alignSelf: 'stretch', whiteSpace: 'pre-wrap' })}>
           {postAtomData.title}
         </h1>
-        <p className={css({ fontSize: 18, fontWeight: 500, color: 'darkGray.1', whiteSpace: 'pre-wrap' })}>
+        <p className={css({ textStyle: 'heading4_M', color: 'darkGray.1', maxW: '48.5rem', whiteSpace: 'pre-wrap' })}>
           {postAtomData.content}
         </p>
       </section>

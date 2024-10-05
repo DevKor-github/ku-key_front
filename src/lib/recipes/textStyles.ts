@@ -25,7 +25,7 @@ export const textStyles = defineTextStyles({
   heading4_M: {
     description: 'Heading 4 Medium',
     value: {
-      fontSize: 18,
+      fontSize: '1.125rem',
       fontWeight: 500,
     },
   },
@@ -82,7 +82,7 @@ export const textStyles = defineTextStyles({
   title3: {
     description: 'Title 3',
     value: {
-      fontSize: 26,
+      fontSize: '1.625rem',
       fontWeight: 600,
     },
   },
