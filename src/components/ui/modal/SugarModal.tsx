@@ -94,7 +94,7 @@ const SugarModal = (props: SugarModalProps) => {
                 <span>Attendance</span>
                 <span>
                   <img src={Sugar} alt="sugar" />
-                  30
+                  10
                 </span>
               </div>
               <div className={HowToContent}>
@@ -121,12 +121,12 @@ const SugarModal = (props: SugarModalProps) => {
                 <span className={CostInterval}>
                   <div>
                     <img src={Sugar} alt="sugar" />
-                    100
+                    30
                   </div>
                   <span>-</span>
                   <div>
                     <img src={Sugar} alt="sugar" />
-                    30
+                    100
                   </div>
                 </span>
               </div>
@@ -135,12 +135,12 @@ const SugarModal = (props: SugarModalProps) => {
                 <span className={CostInterval}>
                   <div>
                     <img src={Sugar} alt="sugar" />
-                    400
+                    30
                   </div>
                   <span>-</span>
                   <div>
                     <img src={Sugar} alt="sugar" />
-                    30
+                    400
                   </div>
                 </span>
               </div>
