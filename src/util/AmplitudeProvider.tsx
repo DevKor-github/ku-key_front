@@ -1,7 +1,10 @@
 import { init } from '@amplitude/analytics-browser'
 
 const AmplitudeProvider = () => {
-  init(import.meta.env.VITE_API_AMPLITUDE_API_KEY)
+  if (import.meta.env.VITE_API_AMPLITUDE_API_KEY) {
+    // TODO: defaultTracking is deprecated
+    init(import.meta.env.VITE_API_AMPLITUDE_API_KEY, { defaultTracking: true })
+  }
 
   return <></>
 }
