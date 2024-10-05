@@ -23,18 +23,18 @@ const AcademicCalendar = ({ data, semester }: AcademicCalendarProps) => {
           <div
             className={css({
               flexShrink: 0,
-              px: 10,
+              px: { base: 10, lgDown: 6, mdDown: 0 },
               color: 'black.1',
-              fontSize: 36,
+              fontSize: { base: 36, lgDown: 24, mdDown: 16, smDown: 14 },
               fontWeight: 600,
               bgColor: 'white',
-              w: 48,
+              w: { base: 48, lgDown: 36, mdDown: 20 },
               borderRight: '{colors.darkGray.2} solid 0.5px',
               display: 'flex',
               pt: '26px',
               lineHeight: '100%',
               minH: 22,
-              mdDown: { justifyContent: 'center', px: 0, w: 20, fontSize: 16 },
+              mdDown: { justifyContent: 'center' },
             })}
           >
             {numberToMonthAbb[month].toUpperCase()}

@@ -13,19 +13,14 @@ const EventRow = ({ index, event }: EventRowProps) => {
         className={cva({
           base: {
             flexShrink: 0,
-            w: 60,
-            px: 7,
+            w: { base: 60, lgDown: 54, mdDown: 22 },
+            px: { base: 7, lgDown: 5, mdDown: 3 },
             color: 'black.1',
-            fontSize: 20,
+            fontSize: { base: 20, lgDown: 18, mdDown: 14 },
             letterSpacing: '-0.4px',
             borderRight: '{colors.darkGray.2} solid 0.5px',
             display: 'flex',
             alignItems: 'center',
-            mdDown: {
-              fontSize: 14,
-              w: 22,
-              px: 3,
-            },
           },
           variants: {
             isStart: {
@@ -44,16 +39,12 @@ const EventRow = ({ index, event }: EventRowProps) => {
         className={cva({
           base: {
             flexGrow: 1,
-            pl: 10,
+            pl: { base: 10, lgDown: 6, mdDown: 3 },
             color: 'darkGray.1',
-            fontSize: 20,
+            fontSize: { base: 20, lgDown: 18, mdDown: 12 },
             letterSpacing: '-0.4px',
             display: 'flex',
             alignItems: 'center',
-            mdDown: {
-              fontSize: 12,
-              pl: 3,
-            },
           },
           variants: {
             isStart: {
