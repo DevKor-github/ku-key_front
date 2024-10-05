@@ -62,6 +62,7 @@ const CommentReply = ({ reply, parentId }: CommentReplyProps) => {
             display: 'flex',
             alignSelf: 'stretch',
             whiteSpace: 'pre-wrap',
+            wordBreak: 'break-word',
             textStyle: 'heading4_M',
             color: 'darkGray.1',
             smDown: { fontSize: 14 },

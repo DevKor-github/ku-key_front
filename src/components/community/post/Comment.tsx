@@ -64,11 +64,11 @@ const Comment = memo(({ isOpen, currentIndex, handleClick }: CommentProps) => {
           textStyle: 'heading4_M',
           color: 'darkGray.1',
           smDown: { fontSize: 14 },
+          wordBreak: 'break-word',
         })}
       >
         {comment.content || 'This comment has been deleted.'}
       </p>
-
       <div
         className={css({
           display: 'flex',
