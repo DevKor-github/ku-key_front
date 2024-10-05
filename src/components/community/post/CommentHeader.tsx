@@ -88,7 +88,7 @@ const CommentHeader = ({
           isDeletable={isMyComment && boardName !== 'question'}
           handleReport={() => handleTargetAndOpen('report')}
           handleDelete={() => handleTargetAndOpen('delete')}
-          disabled={isDeleted}
+          disabled={isDeleted || (isMyComment && boardName === 'question')}
         />
       )}
       <AlertModal
