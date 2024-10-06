@@ -42,6 +42,7 @@ const UtilButton = ({
             rounded: 'full',
             w: '30px',
             h: '30px',
+            visibility: disabled ? 'hidden' : 'visible',
             _hover: { bgColor: 'lightGray.1', transition: 'background-color 0.25s ease-in-out' },
             _open: { bgColor: 'lightGray.1', transition: 'background-color 0.25s ease-in-out' },
           })}
