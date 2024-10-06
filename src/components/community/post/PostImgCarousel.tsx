@@ -35,7 +35,12 @@ const PostImgCarousel = memo(() => {
     >
       <div className={css({ display: 'flex', backfaceVisibility: 'hidden', w: 'full' })}>
         {postAtomData.imageDirs.map((img, index) => (
-          <PostImgContainer key={img.id} img={img?.imgDir} width={images[index].naturalWidth} />
+          <PostImgContainer
+            key={img.id}
+            img={img?.imgDir}
+            width={images[index].naturalWidth}
+            height={images[index].naturalHeight}
+          />
         ))}
       </div>
       <div className={css({ display: 'flex', pos: 'absolute', px: 5, left: 0 })}>
