@@ -3,8 +3,10 @@ import { memo } from 'react'
 
 interface PostImgContainerProps {
   img: string
+  width: number
+  height: number
 }
-const PostImgContainer = memo(({ img }: PostImgContainerProps) => {
+const PostImgContainer = memo(({ img, width, height }: PostImgContainerProps) => {
   return (
     <div className={css({ display: 'flex', w: 'full', flex: '0 0 100%', pos: 'relative' })}>
       <div
@@ -39,8 +41,9 @@ const PostImgContainer = memo(({ img }: PostImgContainerProps) => {
           src={img}
           alt="post"
           className={css({
-            h: 437,
-            objectFit: 'obtain',
+            maxH: 437,
+            h: height < 437 && width < 437 ? 437 : 'auto',
+            objectFit: 'cover',
             backdropFilter: 'blur(25px)',
             backdropBlur: '25px',
             backgroundSize: 'cover',

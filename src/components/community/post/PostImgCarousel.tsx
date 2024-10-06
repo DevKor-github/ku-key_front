@@ -11,6 +11,11 @@ import { usePrevNextButtons } from '@/util/usePrevNextButtons'
 
 const PostImgCarousel = memo(() => {
   const postAtomData = useAtomValue(postAtom)
+  const images = postAtomData.imageDirs.map(({ imgDir }) => {
+    const img = new Image()
+    img.src = imgDir
+    return img
+  })
   const [emblaRef, emblaApi] = useEmblaCarousel({ active: postAtomData.imageDirs.length > 1 })
 
   const { onPrevButtonClick, onNextButtonClick, prevBtnDisabled, nextBtnDisabled, currentSlide } =
@@ -29,8 +34,13 @@ const PostImgCarousel = memo(() => {
       ref={emblaRef}
     >
       <div className={css({ display: 'flex', backfaceVisibility: 'hidden', w: 'full' })}>
-        {postAtomData.imageDirs.map(img => (
-          <PostImgContainer key={img.id} img={img?.imgDir} />
+        {postAtomData.imageDirs.map((img, index) => (
+          <PostImgContainer
+            key={img.id}
+            img={img?.imgDir}
+            width={images[index].naturalWidth}
+            height={images[index].naturalHeight}
+          />
         ))}
       </div>
       <div className={css({ display: 'flex', pos: 'absolute', px: 5, left: 0 })}>
