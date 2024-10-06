@@ -121,16 +121,23 @@ const Post = memo(() => {
       >
         <h1
           className={css({
-            fontSize: 26,
-            fontWeight: 600,
+            textStyle: 'title3',
             color: 'black.2',
             alignSelf: 'stretch',
             whiteSpace: 'pre-wrap',
+            wordBreak: 'break-word',
           })}
         >
           {postAtomData.title}
         </h1>
-        <p className={css({ fontSize: 18, fontWeight: 500, color: 'darkGray.1', whiteSpace: 'pre-wrap' })}>
+        <p
+          className={css({
+            textStyle: 'heading4_M',
+            color: 'darkGray.1',
+            whiteSpace: 'pre-wrap',
+            wordBreak: 'break-word',
+          })}
+        >
           {postAtomData.content}
         </p>
       </section>
