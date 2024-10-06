@@ -66,11 +66,6 @@ const PublicProfile = ({
   const { mutate: mutateCheckUsernameDuplication } = useCheckUsernameDuplication()
 
   const handleUsernameValidCheck = () => {
-    const inputUsername = getValues().username
-    if (username === inputUsername) {
-      setError('username', { message: 'It is the same nickname as your current nickname' })
-      return
-    }
     trigger('username', { shouldFocus: true })
     mutateCheckUsernameDuplication(getValues().username, {
       onSuccess: () => setUsernameValidation(true),
@@ -82,7 +77,7 @@ const PublicProfile = ({
   }
 
   const onSubmit: SubmitHandler<PublicProfileForm> = data => {
-    if (!usernameValidation) {
+    if (getValues().username !== username && !usernameValidation) {
       setError('username', { message: 'Please verify your nickname!' }, { shouldFocus: true })
       return
     }
@@ -143,9 +138,12 @@ const PublicProfile = ({
                   })}
                 />
                 <Button
+                  aria-checked={
+                    getValues('username') !== '' && getValues('username') !== username && !usernameValidation
+                  }
                   variant="input"
                   type="button"
-                  disabled={getValues('username') === '' || usernameValidation}
+                  disabled={getValues('username') === '' || getValues('username') === username || usernameValidation}
                   onClick={handleUsernameValidCheck}
                 >
                   <p className={css({ textStyle: 'body1_L', lineHeight: '100%', smDown: { fontSize: 12 } })}>Verify</p>
