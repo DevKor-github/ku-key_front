@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 // import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { useRoutes } from 'react-router-dom'
+import { Toaster } from 'sonner'
 
 import routes from '@/lib/router/router'
 import AmplitudeProvider from '@/util/AmplitudeProvider'
@@ -24,6 +25,7 @@ function App() {
       <AuthProvider />
       <AmplitudeProvider />
       <ScrollToTop />
+      <Toaster position="top-right" />
       {router}
     </QueryClientProvider>
   )
