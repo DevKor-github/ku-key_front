@@ -20,7 +20,7 @@ export const useFile = (fileType?: string, limit?: number, initialData?: File[])
 
       const resizedFiles: File[] = []
       if (limit && (files ? files.length : 0) + currentFiles.length > limit)
-        return alert(`You can upload up to ${limit} files`)
+        return toast.custom(() => <Toast message={`You can upload up to ${limit} files`} type="warning" />)
 
       for (const file of currentFiles) {
         if (file.type === 'image/heic' || file.type === 'image/HEIC') {
