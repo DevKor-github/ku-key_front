@@ -75,8 +75,8 @@ const PostWriteSection = () => {
         },
         {
           onSuccess: () => {
-            alert('Edit has been successful')
             setInitialData(initialPostData)
+            toast.custom(() => <Toast message={'Edit has been successful'} type="success" />)
             navigate(-1)
           },
         },
