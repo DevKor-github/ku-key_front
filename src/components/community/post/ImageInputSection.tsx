@@ -2,8 +2,10 @@ import { css } from '@styled-system/css'
 import { AnimatePresence, motion } from 'framer-motion'
 import { CircleX, Paperclip, Plus } from 'lucide-react'
 import { useParams } from 'react-router-dom'
+import { toast } from 'sonner'
 
 import { Checkbox } from '@/components/ui/checkbox'
+import Toast from '@/components/ui/toast'
 import { ActionType } from '@/types/post'
 
 interface ImageInputSectionProps {
@@ -21,6 +23,11 @@ const ImageInputSection = ({
   handleAnonymous,
 }: ImageInputSectionProps) => {
   const { type } = useParams() as { type: ActionType }
+  const handleInputClick = (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+    if (!files || (files && files.length < 5)) return
+    e.preventDefault()
+    toast.custom(() => <Toast message={'You can upload up to 5 files'} type="warning" />)
+  }
   return (
     <div className={css({ display: 'flex', w: 'full', flexDir: 'column', alignItems: 'flex-start', gap: '50px' })}>
       <div
@@ -50,7 +57,8 @@ const ImageInputSection = ({
             onChange={handleFilesChange}
             accept="image/*,image/heic"
             multiple
-            disabled={files ? files.length >= 5 : false}
+            // disabled={files ? files.length >= 5 : false}
+            onClick={handleInputClick}
           />
         </label>
         <div
