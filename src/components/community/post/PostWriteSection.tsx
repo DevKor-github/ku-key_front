@@ -3,18 +3,18 @@ import { postCard } from '@styled-system/recipes'
 import { useAtom } from 'jotai'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { toast } from 'sonner'
 
 import { usePatchEditPost, usePostCreate } from '@/api/hooks/community'
 import ImageInputSection from '@/components/community/post/ImageInputSection'
 import Dropdown from '@/components/timetable/Dropdown'
 import Button from '@/components/ui/button'
-import NoticeModal from '@/components/ui/modal/NoticeModal'
 import { MemoizedTextAreaAutosize } from '@/components/ui/textarea-autosize'
+import Toast from '@/components/ui/toast'
 import { POST_MESSAGES } from '@/lib/messages/community'
 import { initialPostData, persistedPostData } from '@/lib/store/post'
 import { createFileFromUrl } from '@/util/create-file-from-url'
 import { useFile } from '@/util/useFile'
-import { useModal } from '@/util/useModal'
 
 enum boardConfig {
   main = 0,
@@ -31,24 +31,21 @@ const PostWriteSection = () => {
   const [initialData, setInitialData] = useAtom(persistedPostData)
   const [initialImgFiles, setInitialImgFiles] = useState<File[]>()
   const [currentIndex, setCurIndex] = useState(boardConfig[boardName ?? 'main'])
-  const { isOpen, handleOpen } = useModal(true)
   const { files, isChanged, handleFilesChange, handleFileDelete } = useFile('image', 5, initialImgFiles)
   const titleRef = useRef<HTMLTextAreaElement>(null)
   const bodyRef = useRef<HTMLTextAreaElement>(null)
   const [anonymous, setAnonymous] = useState(initialData ? initialData.user.username === 'Anonymous' : false)
-  const [alertMessage, setAlertMessage] = useState('')
   const { mutate: mutatePost } = usePostCreate()
   const { mutate: mutateEditPost } = usePatchEditPost()
   const navigate = useNavigate()
+
   const handleClick = useCallback(() => {
     if (!titleRef.current || !bodyRef.current) return
     if (!currentIndex) {
-      setAlertMessage(POST_MESSAGES.BOARD_REQUIRED)
-      return handleOpen()
+      return toast.custom(() => <Toast message={POST_MESSAGES.BOARD_REQUIRED} type="warning" />)
     }
     if (!titleRef.current.value || !bodyRef.current.value) {
-      setAlertMessage(POST_MESSAGES.CONTENT_REQUIRED)
-      return handleOpen()
+      return toast.custom(() => <Toast message={POST_MESSAGES.CONTENT_REQUIRED} type="warning" />)
     }
     if (type === 'write') {
       mutatePost(
@@ -61,7 +58,7 @@ const PostWriteSection = () => {
         },
         {
           onSuccess: () => {
-            alert('Post has been successful')
+            toast.custom(() => <Toast message={'Post has been successful'} type="success" />)
             navigate(-1)
           },
         },
@@ -89,7 +86,6 @@ const PostWriteSection = () => {
     anonymous,
     currentIndex,
     files,
-    handleOpen,
     initialData,
     isChanged,
     mutateEditPost,
@@ -231,7 +227,6 @@ const PostWriteSection = () => {
           POST
         </Button>
       </div>
-      <NoticeModal content={alertMessage} isOpen={isOpen} />
     </section>
   )
 }

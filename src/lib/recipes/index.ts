@@ -13,6 +13,7 @@ import { shadowRecipe } from '@/lib/recipes/shadow'
 import { sheetRecipe } from '@/lib/recipes/sheet'
 import { tagRecipe } from '@/lib/recipes/tag'
 import { textStyles } from '@/lib/recipes/textStyles'
+import { toastRecipe } from '@/lib/recipes/toast'
 export {
   buttonRecipe,
   labelRecipe,
@@ -29,4 +30,5 @@ export {
   menubar,
   clubTagRecipe,
   sheetRecipe,
+  toastRecipe,
 }

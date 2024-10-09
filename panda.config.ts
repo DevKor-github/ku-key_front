@@ -16,6 +16,7 @@ import {
   tagRecipe,
   textStyles,
   sheetRecipe,
+  toastRecipe,
 } from './src/lib/recipes/index'
 import { tokenToRem } from './src/lib/constants/tokenToRem'
 
@@ -46,6 +47,7 @@ export default defineConfig({
         carouselButton: carouselButtonRecipe,
         postCard: postCardRecipe,
         sheet: sheetRecipe,
+        toast: toastRecipe,
       },
       slotRecipes: {
         menubar: menubar,
