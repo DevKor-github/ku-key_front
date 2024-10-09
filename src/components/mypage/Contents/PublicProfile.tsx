@@ -1,7 +1,9 @@
 import { css } from '@styled-system/css'
-import { useCallback, useEffect } from 'react'
+import { CheckCircle2, ShieldAlert } from 'lucide-react'
+import { useCallback, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
+import { useCheckUsernameDuplication } from '@/api/hooks/register'
 import { useDeleteLanguage, usePatchMyProfile, usePostLanguage } from '@/api/hooks/user'
 import { GetMyProfileResponse } from '@/api/types/user'
 import ProfileChangeHeader from '@/components/mypage/ProfileChangeHeader'
@@ -46,7 +48,9 @@ interface PublicProfileProps {
 const PublicProfile = ({
   myProfileData: { username, country, homeUniversity, major, languages },
 }: PublicProfileProps) => {
-  const { register, handleSubmit, setValue, watch } = useForm<PublicProfileForm>()
+  const { register, handleSubmit, setValue, watch, getValues, setError, formState, trigger, clearErrors } =
+    useForm<PublicProfileForm>()
+
   useEffect(() => {
     setValue('username', username)
     setValue('country', country)
@@ -54,14 +58,34 @@ const PublicProfile = ({
     setValue('major', major)
     setValue('languages', languages)
   }, [username, country, homeUniversity, major, languages, setValue])
+  const [usernameValidation, setUsernameValidation] = useState(false)
 
   const { mutate: patchProfile } = usePatchMyProfile()
   const { mutate: addLang } = usePostLanguage()
   const { mutate: deleteLang } = useDeleteLanguage()
+  const { mutate: mutateCheckUsernameDuplication } = useCheckUsernameDuplication()
+
+  const handleUsernameValidCheck = () => {
+    trigger('username', { shouldFocus: true })
+    mutateCheckUsernameDuplication(getValues().username, {
+      onSuccess: () => setUsernameValidation(true),
+      onError: () => {
+        setError('username', { message: 'This ID is a duplicate ID' })
+        return
+      },
+    })
+  }
 
   const onSubmit: SubmitHandler<PublicProfileForm> = data => {
+    if (getValues().username !== username && !usernameValidation) {
+      setError('username', { message: 'Please verify your nickname!' }, { shouldFocus: true })
+      return
+    }
     patchProfile(data, {
-      onSuccess: () => alert('Changed successfully!'),
+      onSuccess: () => {
+        alert('Changed successfully!')
+        setUsernameValidation(false)
+      },
     })
     const add = data.languages.filter(lang => !languages.includes(lang))
     const del = languages.filter(lang => !data.languages.includes(lang))
@@ -88,10 +112,70 @@ const PublicProfile = ({
       <ProfileChangeHeader type="public" />
       <form className={css({ display: 'flex', flexDir: 'column', gap: 25 })} onSubmit={handleSubmit(onSubmit)}>
         <section className={css({ display: 'flex', flexDir: 'column', gap: '50px' })}>
-          <div className={css({ display: 'flex', flexDir: 'column', gap: 2.5 })}>
+          <div
+            className={css({ display: 'flex', flexDir: 'column', gap: 2.5, maxW: { base: '609px', mdDown: '282px' } })}
+          >
             <div className={ProfileFormWrapper}>
               <span className={ProfileFormTitle}>Username</span>
-              <Input placeholder={username} {...register('username', { required: true })} />
+              <span
+                className={css({
+                  display: 'flex',
+                  alignItems: 'stretch',
+                  gap: 1,
+                  w: { base: '400px', mdDown: '200px' },
+                })}
+              >
+                <Input
+                  placeholder={username}
+                  {...register('username', {
+                    required: { value: true, message: 'This field is required' },
+                    maxLength: { value: 10, message: 'username must be at most 10 characters long' },
+                    minLength: { value: 5, message: 'username must be at least 5 characters long' },
+                    onChange: () => {
+                      clearErrors('username')
+                      setUsernameValidation(false)
+                    },
+                  })}
+                />
+                <Button
+                  aria-checked={
+                    getValues('username') !== '' && getValues('username') !== username && !usernameValidation
+                  }
+                  variant="input"
+                  type="button"
+                  disabled={getValues('username') === '' || getValues('username') === username || usernameValidation}
+                  onClick={handleUsernameValidCheck}
+                >
+                  <p className={css({ textStyle: 'body1_L', lineHeight: '100%', smDown: { fontSize: 12 } })}>Verify</p>
+                </Button>
+              </span>
+            </div>
+            <div
+              className={css({
+                display: 'flex',
+                px: 1.5,
+                py: 1,
+                gap: 1,
+                alignItems: 'center',
+                h: '29px',
+                justifyContent: 'flex-end',
+              })}
+            >
+              {formState.errors.username ? (
+                <>
+                  <ShieldAlert size={16} className={css({ color: 'red.2' })} />
+                  <p className={css({ fontSize: 14, fontWeight: 400, color: 'red.2' })}>
+                    {formState.errors.username.message}
+                  </p>
+                </>
+              ) : (
+                usernameValidation && (
+                  <>
+                    <CheckCircle2 size={14} />
+                    <p className={css({ fontSize: 14, fontWeight: 400 })}>available username</p>
+                  </>
+                )
+              )}
             </div>
             <div className={ProfileFormWrapper}>
               <span className={ProfileFormTitle}>Nation</span>
