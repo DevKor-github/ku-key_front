@@ -1,8 +1,10 @@
 import { css } from '@styled-system/css'
 import { AnimatePresence, motion } from 'framer-motion'
 import { CircleX, Paperclip, Plus } from 'lucide-react'
+import { useParams } from 'react-router-dom'
 
 import { Checkbox } from '@/components/ui/checkbox'
+import { ActionType } from '@/types/post'
 
 interface ImageInputSectionProps {
   files: File[] | null
@@ -18,6 +20,7 @@ const ImageInputSection = ({
   anonymous,
   handleAnonymous,
 }: ImageInputSectionProps) => {
+  const { type } = useParams() as { type: ActionType }
   return (
     <div className={css({ display: 'flex', w: 'full', flexDir: 'column', alignItems: 'flex-start', gap: '50px' })}>
       <div
@@ -50,8 +53,15 @@ const ImageInputSection = ({
             disabled={files ? files.length >= 5 : false}
           />
         </label>
-        <div className={css({ display: 'flex', alignItems: 'center', gap: 1.5 })}>
-          <Checkbox checked={anonymous} onCheckedChange={handleAnonymous} />
+        <div
+          className={css({
+            display: 'flex',
+            alignItems: 'center',
+            gap: 1.5,
+            visibility: type === 'edit' ? 'hidden' : 'unset',
+          })}
+        >
+          <Checkbox checked={anonymous} onCheckedChange={handleAnonymous} disabled={type === 'edit'} />
           <p className={css({ textStyle: 'heading4_M', color: 'darkGray.2' })}>Anonymous</p>
         </div>
       </div>

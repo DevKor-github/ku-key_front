@@ -13,6 +13,7 @@ import { MemoizedTextAreaAutosize } from '@/components/ui/textarea-autosize'
 import Toast from '@/components/ui/toast'
 import { POST_MESSAGES } from '@/lib/messages/community'
 import { initialPostData, persistedPostData } from '@/lib/store/post'
+import { ActionType } from '@/types/post'
 import { createFileFromUrl } from '@/util/create-file-from-url'
 import { useFile } from '@/util/useFile'
 
@@ -22,7 +23,6 @@ enum boardConfig {
   question = 2,
   information = 3,
 }
-type ActionType = 'write' | 'edit'
 const PostWriteSection = () => {
   const { boardName, type } = useParams() as {
     boardName: 'main' | 'community' | 'question' | 'information'
