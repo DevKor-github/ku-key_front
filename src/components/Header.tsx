@@ -22,13 +22,13 @@ const Header = () => {
   const { mutate: mutateSignOut } = useLogOut()
   const innerTabRef = useRef<HTMLDivElement>(null)
   const [isOpen, setIsOpen] = useState(false)
-  const { isAuthenticated, authState } = useAuth()
+  const { isAuthenticated, authState, deviceCode } = useAuth()
   const { isOpen: isModalOpen, handleOpen: handleModalOpen } = useModal(true)
   const [modalContent, setModalContent] = useState(HEADER_MESSAGE.NOT_VERIFIED_USER)
   const navigate = useNavigate()
   const mediaQuery = useMediaQuery('(max-width: 900px)')
   const handleUserButton = useCallback(() => {
-    isAuthenticated ? mutateSignOut() : navigate('/login')
+    isAuthenticated ? mutateSignOut({ deviceCode }) : navigate('/login')
   }, [isAuthenticated, mutateSignOut, navigate])
   const handleOpen = useCallback(() => {
     setIsOpen(prev => !prev)

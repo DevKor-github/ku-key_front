@@ -8,6 +8,7 @@ import { UserCredential } from '@/types/user'
 export const useAuth = () => {
   const authStore = useStore()
 
+  const [deviceCode, setDeviceCode] = useState<string>(authStore.get(userCredentialAtom)?.deviceCode ?? '')
   const [isAuthenticated, setIsAuthenticated] = useState(!!authStore.get(userCredentialAtom))
   const [authState, setAuthState] = useState(authStore.get(userCredentialAtom)?.verified ?? false)
 
@@ -15,6 +16,7 @@ export const useAuth = () => {
     const userState = authStore.get(userCredentialAtom)
     setIsAuthenticated(!!userState)
     setAuthState(userState?.verified ?? false)
+    setDeviceCode(userState?.deviceCode ?? '')
   }, [authStore])
 
   const unsubscribe = authStore.sub(userCredentialAtom, subscribe)
@@ -40,7 +42,7 @@ export const useAuth = () => {
   console.log('useAuth:', isAuthenticated, authState, new Date().toTimeString())
 
   return useMemo(
-    () => ({ isAuthenticated, authState, signIn, signOut, setVerified }),
-    [isAuthenticated, authState, signIn, signOut, setVerified],
+    () => ({ isAuthenticated, authState, signIn, signOut, setVerified, deviceCode }),
+    [isAuthenticated, authState, signIn, signOut, setVerified, deviceCode],
   )
 }

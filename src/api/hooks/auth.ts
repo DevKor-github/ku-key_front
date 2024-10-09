@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 
-import { LoginRequest, LoginResponse } from '@/api/types/auth'
+import { LoginRequest, LoginResponse, LogoutRequest } from '@/api/types/auth'
 import { useAuth } from '@/util/auth/useAuth'
 import { apiInterface } from '@/util/axios/custom-axios'
 
@@ -24,13 +24,14 @@ export const useLogIn = () => {
         accessToken: data.token.accessToken,
         refreshToken: data.token.refreshToken,
         verified: data.verified,
+        deviceCode: data.deviceCode,
       })
     },
   })
 }
 
-const logOut = async () => {
-  const response = await apiInterface.post<null>(`/auth/logout`)
+const logOut = async ({ deviceCode }: LogoutRequest) => {
+  const response = await apiInterface.post<null>(`/auth/logout`, { deviceCode })
   return response.data
 }
 
