@@ -14,9 +14,13 @@ export const useAxiosInterceptor = () => {
   const authStore = useStore()
 
   const handleSet = useCallback(
-    (value: Omit<UserCredential, 'verified'>) => {
+    (value: Omit<UserCredential, 'verified' | 'deviceCode'>) => {
       if (!authStore.get(userCredentialAtom)) return
-      authStore.set(userCredentialAtom, { verified: authStore.get(userCredentialAtom)!.verified, ...value })
+      authStore.set(userCredentialAtom, {
+        deviceCode: authStore.get(userCredentialAtom)!.deviceCode,
+        verified: authStore.get(userCredentialAtom)!.verified,
+        ...value,
+      })
     },
     [authStore],
   )

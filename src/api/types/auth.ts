@@ -4,10 +4,15 @@ export interface LoginResponse {
     refreshToken: string
   }
   verified: boolean
+  deviceCode: string
 }
 
 export interface LoginRequest {
   email: string
   password: string
   keepingLogin: boolean
+}
+
+export interface LogoutRequest {
+  deviceCode: string
 }
