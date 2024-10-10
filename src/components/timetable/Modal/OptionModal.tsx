@@ -1,16 +1,16 @@
 import { css, cva, cx } from '@styled-system/css'
 import { shadow } from '@styled-system/recipes'
 import { CaseSensitive, MessageSquare, Palette, Pencil, SquareGanttChart, Trash2 } from 'lucide-react'
-import { CSSProperties, forwardRef, ReactNode } from 'react'
+import { forwardRef, ReactNode } from 'react'
 
 import ModalCard from '@/components/ui/modal'
 
 const optBlock = css({
-  w: 56,
+  w: { base: 56, lgDown: 44 },
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  h: 12,
+  h: { base: 12, lgDown: 10 },
   cursor: 'pointer',
   rounded: 10,
   transition: 'background 0.256s',
@@ -24,7 +24,7 @@ const optBlockInfo = css({
   alignItems: 'center',
   gap: 2.5,
   color: 'lightGray.1',
-  fontSize: 18,
+  fontSize: { base: 18, lgDown: 14 },
   fontWeight: 700,
 })
 
@@ -40,14 +40,14 @@ const ICON_MAP: { [key in string]: ReactNode } = {
 interface OptionModalProps {
   optionHandler: { title: string; onClick: () => void }[]
   modalTitle?: string
-  customStyle?: CSSProperties
+  className?: string
   p10?: boolean
 }
 
 const OptionModal = forwardRef<HTMLDivElement, OptionModalProps>(
-  ({ optionHandler, customStyle = {}, modalTitle, p10 = false }, ref) => {
+  ({ optionHandler, className, modalTitle, p10 = false }, ref) => {
     return (
-      <div style={customStyle}>
+      <div className={className}>
         <ModalCard
           ref={ref}
           className={cx(
