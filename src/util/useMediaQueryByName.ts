@@ -1,18 +1,22 @@
 import { useState } from 'react'
 
 import { useIsomorphicLayoutEffect } from '@/util/useIsomorphicLayoutEffect'
-
-export type UseMediaQueryOptions = {
-  defaultValue?: boolean
-  initializeWithValue?: boolean
-}
+import { UseMediaQueryOptions } from '@/util/useMediaQuery'
 
 const IS_SERVER = typeof window === 'undefined'
 
-export const useMediaQuery = (
-  query: string,
+const QUERY_MAP = {
+  xsDown: '(max-width: 390px)',
+  smDown: '(max-width: 580px)',
+  mdDown: '(max-width: 900px)',
+  lgDown: '(max-width: 1200px)',
+} as const
+
+export const useMediaQueryByName = (
+  queryName: keyof typeof QUERY_MAP,
   { defaultValue = false, initializeWithValue = true }: UseMediaQueryOptions = {},
 ) => {
+  const query = QUERY_MAP[queryName]
   const getMatches = (query: string): boolean => {
     if (IS_SERVER) {
       return defaultValue
