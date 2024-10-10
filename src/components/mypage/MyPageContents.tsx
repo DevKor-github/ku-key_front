@@ -1,6 +1,4 @@
 import { css, cva } from '@styled-system/css'
-import { useCallback, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { match } from 'ts-pattern'
 
 import { GetMyProfileResponse } from '@/api/types/user'
@@ -13,29 +11,13 @@ import MyPoint from '@/components/mypage/Contents/MyPoint'
 import PointHistory from '@/components/mypage/Contents/PointHistory'
 import PublicProfile from '@/components/mypage/Contents/PublicProfile'
 import { PAGE_LIST, PageType } from '@/types/myPage'
-import { useSearch } from '@/util/hooks/useSearch'
 
 interface MyPageContentsProps {
   myProfileData: GetMyProfileResponse
+  setPage: (target: PageType) => void
+  curPage: PageType
 }
-const MyPageContents = ({ myProfileData }: MyPageContentsProps) => {
-  const { searchParam, handleSetParam } = useSearch()
-  const curPage = searchParam.get('page') as PageType
-  const navigate = useNavigate()
-
-  const setPage = useCallback(
-    (target: PageType) => {
-      handleSetParam('page', target)
-    },
-    [handleSetParam],
-  )
-
-  useEffect(() => {
-    if (curPage === null) {
-      navigate(`${location.pathname}?page=my-point`, { replace: true })
-    }
-  }, [curPage, navigate])
-
+const MyPageContents = ({ myProfileData, setPage, curPage }: MyPageContentsProps) => {
   return (
     <div
       className={css({
