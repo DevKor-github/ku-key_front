@@ -2,14 +2,14 @@
 
 import { css } from '@styled-system/css'
 
-import { useMediaQuery } from '@/util/hooks/useMediaQuery'
+import { useMediaQueryByName } from '@/util/useMediaQueryByName'
 
 interface CircularProgressProps {
   progress: number
 }
 
 const CircularProgress = ({ progress }: CircularProgressProps) => {
-  const matchesMdDown = useMediaQuery('(max-width: 768px)')
+  const matchesMdDown = useMediaQueryByName('mdDown')
   const size = matchesMdDown ? 60 : 120
   const center = size / 2
   const radius = center - 15 / 2

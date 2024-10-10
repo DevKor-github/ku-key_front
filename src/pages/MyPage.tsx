@@ -1,4 +1,6 @@
 import { css } from '@styled-system/css'
+import { useCallback, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { useGetMyProfile } from '@/api/hooks/user'
 import DueDateCard from '@/components/mypage/DueDateCard'
@@ -6,9 +8,30 @@ import MyPageContents from '@/components/mypage/MyPageContents'
 import MypageWrapper from '@/components/mypage/MypageWrapper'
 import UserInfo from '@/components/mypage/UserInfo'
 import { characterConfig } from '@/components/ui/profile/CharacterConfig'
+import { PageType } from '@/types/myPage'
+import { useMediaQueryByName } from '@/util/useMediaQueryByName'
+import { useSearch } from '@/util/useSearch'
 
 const MyPage = () => {
+  const navigate = useNavigate()
+  const { searchParam, handleSetParam } = useSearch()
+  const curPage = searchParam.get('page') as PageType
   const { data: myProfileData } = useGetMyProfile()
+  const isMdDown = useMediaQueryByName('mdDown')
+
+  useEffect(() => {
+    if (curPage === null && !isMdDown) {
+      navigate(`${location.pathname}?page=my-point`, { replace: true })
+    }
+  }, [curPage, navigate, isMdDown])
+
+  const setPage = useCallback(
+    (target: PageType) => {
+      handleSetParam('page', target)
+    },
+    [handleSetParam],
+  )
+
   return (
     <MypageWrapper>
       <div
@@ -24,8 +47,8 @@ const MyPage = () => {
         <div
           className={css({
             display: 'flex',
-            px: { base: 56, mdDown: 5 },
-            h: { base: 500, mdDown: 250 },
+            px: { base: 56, lgDown: 20, mdDown: 5 },
+            h: { base: '31rem', lgDown: '25rem', mdDown: 250 },
             w: 'full',
             alignItems: 'center',
             zIndex: 0,
@@ -50,16 +73,16 @@ const MyPage = () => {
             src={characterConfig[myProfileData.type][myProfileData.selectedLevel]}
             alt="My Character"
             className={css({
-              w: { base: '450px', mdDown: '250px' },
+              w: { base: '28.125rem', lgDown: '22.5rem', mdDown: '250px' },
               position: 'absolute',
-              right: { base: '150px', mdDown: 0 },
-              top: { base: '20px', mdDown: 0 },
+              right: { base: '9.375rem', lgDown: '6rem', mdDown: 0 },
+              top: { base: 5, lgDown: 0 },
             })}
           />
         </div>
         <DueDateCard startDay={myProfileData.startDay} endDay={myProfileData.endDay} />
       </div>
-      <MyPageContents myProfileData={myProfileData} />
+      <MyPageContents myProfileData={myProfileData} curPage={curPage} setPage={setPage} />
     </MypageWrapper>
   )
 }
