@@ -23,15 +23,15 @@ const UserInfo = ({ name, country, point, languages, homeUniversity }: UserInfoP
         flex: 1,
         display: 'flex',
         flexDir: 'column',
-        gap: { base: 3, mdDown: 1 },
+        gap: { base: 3, lgDown: 1 },
       })}
     >
       <div
         className={css({
           display: 'flex',
-          gap: { base: 6, mdDown: 1 },
+          gap: { base: 6, lgDown: 3, mdDown: 1 },
           fontWeight: 'bold',
-          fontSize: { base: 48, mdDown: 20 },
+          fontSize: { base: 48, lgDown: 32, mdDown: 20 },
           alignItems: 'flex-end',
         })}
       >
@@ -42,16 +42,16 @@ const UserInfo = ({ name, country, point, languages, homeUniversity }: UserInfoP
         className={css({
           display: 'flex',
           alignItems: 'center',
-          fontSize: { base: 30, mdDown: 18 },
+          fontSize: { base: 30, lgDown: 22, mdDown: 18 },
           fontWeight: 'bold',
           color: 'white',
-          gap: 2.5,
+          gap: { base: 2.5, lgDown: 1 },
         })}
       >
-        <img src={Sugar} alt="sugar" className={css({ w: { base: 10, mdDown: 5 } })} />
+        <img src={Sugar} alt="sugar" className={css({ w: { base: 10, lgDown: 6, mdDown: 5 } })} />
         <p>{point}</p>
       </div>
-      <div className={css({ display: 'flex', gap: 2, mt: 5 })}>
+      <div className={css({ display: 'flex', gap: { base: 2, lgDown: 1 }, mt: { base: 5, lgDown: 2 } })}>
         {languages.map((lan, ind) => (
           <Chip variant={variantsArray[ind % variantsArray.length]} key={lan}>
             {lan.toUpperCase()}
@@ -62,14 +62,14 @@ const UserInfo = ({ name, country, point, languages, homeUniversity }: UserInfoP
         className={css({
           display: 'flex',
           flexDir: 'column',
-          gap: { base: 2, mdDown: 1 },
-          mt: { base: 12, mdDown: 4 },
+          gap: { base: 2, lgDown: 1 },
+          mt: { base: 12, lgDown: 6, mdDown: 4 },
         })}
       >
-        <p className={css({ fontSize: { base: 20, mdDown: 11 }, fontWeight: 600, lineHeight: 'normal' })}>
+        <p className={css({ fontSize: { base: 20, lgDown: 16, mdDown: 11 }, fontWeight: 600, lineHeight: 'normal' })}>
           {findByAlpha2(country)?.name}
         </p>
-        <p className={css({ fontSize: { base: 24, mdDown: 13 }, fontWeight: 700, lineHeight: 'normal' })}>
+        <p className={css({ fontSize: { base: 24, lgDown: 18, mdDown: 13 }, fontWeight: 700, lineHeight: 'normal' })}>
           {homeUniversity}
         </p>
       </div>
