@@ -67,6 +67,7 @@ const ReviewPage = () => {
   useEffect(() => {
     if (!isFetching && isError) {
       if (isAxiosError(error)) {
+        // TODO: 열람권 없을 때 에러 대응 (바뀐 API에 대해)
         if (error.response?.data.error === 'Forbidden') {
           alert('You must purchase a Course Review Reading Key!')
           navigate(-1)
@@ -76,7 +77,16 @@ const ReviewPage = () => {
   }, [isError, error, isFetching, navigate])
 
   return (
-    <div className={css({ flexGrow: 1, display: 'flex', flexDir: 'column', gap: 12, maxW: '820px' })}>
+    <div
+      className={css({
+        flexGrow: 1,
+        display: 'flex',
+        flexDir: 'column',
+        minW: 0,
+        gap: 12,
+        maxW: '820px',
+      })}
+    >
       <div className={css({ display: 'flex', flexDir: 'column', gap: 2.5 })}>
         <div className={css({ display: 'flex', gap: 2.5, color: 'darkGray.2', alignItems: 'center' })}>
           <span className={css({ fontSize: 18 })}>{totalData.totalRate.toFixed(1)}</span>
@@ -88,7 +98,7 @@ const ReviewPage = () => {
       <div className={css({ display: 'flex', flexDir: 'column', gap: 5 })}>
         <div className={css({ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 7 })}>
           <span className={css({ display: 'flex', gap: 4, color: 'darkGray.2', fontSize: 18, alignItems: 'center' })}>
-            Filtering
+            <span className={css({ smDown: { display: 'none' } })}>Filtering</span>
             <span className={css({ display: 'flex', gap: 2.5 })}>
               <button
                 className={CriteriaBtnStyle({ selected: criteria === 'createdAt' })}
