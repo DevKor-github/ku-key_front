@@ -14,6 +14,7 @@ export type PageType =
   | 'exchange-profile'
   | 'password'
   | 'delete-account'
+  | null
 
 export const PAGE_LIST: { title: string; children: { title: string; handler: PageType; icon: string }[] }[] = [
   {
