@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useState } from 'react'
+import { toast } from 'sonner'
 
+import Toast from '@/components/ui/toast'
 import { convertHeic } from '@/util/convert-heic'
 import { resizeFile } from '@/util/resizeFile'
-
 export const useFile = (fileType?: string, limit?: number, initialData?: File[]) => {
   const [files, setFiles] = useState<File[] | null>(null)
   const [isChanged, setIsChanged] = useState(false)
@@ -13,14 +14,13 @@ export const useFile = (fileType?: string, limit?: number, initialData?: File[])
       if (fileType) {
         const isInvalidFileType = Array.from(currentFiles).some(file => !file.type.includes(fileType))
         if (isInvalidFileType) {
-          alert('Please upload image files only')
-          return
+          return toast.custom(() => <Toast message={'Please upload image files only'} type="warning" />)
         }
       }
 
       const resizedFiles: File[] = []
       if (limit && (files ? files.length : 0) + currentFiles.length > limit)
-        return alert(`You can upload up to ${limit} files`)
+        return toast.custom(() => <Toast message={`You can upload up to ${limit} files`} type="warning" />)
 
       for (const file of currentFiles) {
         if (file.type === 'image/heic' || file.type === 'image/HEIC') {
