@@ -10,6 +10,7 @@ import MyCourseReview from '@/components/mypage/Contents/MyCourseReview'
 import MyPoint from '@/components/mypage/Contents/MyPoint'
 import PointHistory from '@/components/mypage/Contents/PointHistory'
 import PublicProfile from '@/components/mypage/Contents/PublicProfile'
+import MobileContentHeader from '@/components/mypage/MobileContentHeader'
 import MobileMyPageSelector from '@/components/mypage/MobileMyPageSelector'
 import { PAGE_LIST, PageType } from '@/types/myPage'
 import { useMediaQueryByName } from '@/util/useMediaQueryByName'
@@ -27,7 +28,7 @@ const MyPageContents = ({ myProfileData, setPage, curPage }: MyPageContentsProps
       className={css({
         display: 'flex',
         flexDir: { base: 'row', smDown: 'column' },
-        gap: 5,
+        gap: { base: 5, smDown: 0 },
         width: 'full',
         pb: { base: 33, smDown: 0 },
         maxW: '1200px',
@@ -105,6 +106,7 @@ const MyPageContents = ({ myProfileData, setPage, curPage }: MyPageContentsProps
           </nav>
         </div>
       )}
+      {isMobile && curPage !== null && <MobileContentHeader title="Point History" />}
       <div className={css({ flexGrow: 1 })}>
         {match(curPage)
           .with('point-history', () => <PointHistory />)

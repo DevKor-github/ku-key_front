@@ -14,7 +14,7 @@ import { useSearch } from '@/util/useSearch'
 
 const MyPage = () => {
   const navigate = useNavigate()
-  const { searchParam, handleSetParam } = useSearch()
+  const { searchParam, handleSetParam, deleteParam } = useSearch()
   const curPage = searchParam.get('page') as PageType
   const { data: myProfileData } = useGetMyProfile()
   const isMdDown = useMediaQueryByName('mdDown')
@@ -31,9 +31,10 @@ const MyPage = () => {
 
   const setPage = useCallback(
     (target: PageType) => {
-      handleSetParam('page', target)
+      if (target) handleSetParam('page', target)
+      else deleteParam('page')
     },
-    [handleSetParam],
+    [handleSetParam, deleteParam],
   )
 
   return (
