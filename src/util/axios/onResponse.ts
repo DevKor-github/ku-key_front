@@ -9,7 +9,7 @@ const pendingRequests: ((arg: string) => void)[] = []
 export const onResponse = async (
   error: AxiosError,
   refreshToken: string,
-  handleSet: (value: Omit<UserCredential, 'verified'>) => void,
+  handleSet: (value: Omit<UserCredential, 'verified' | 'deviceCode'>) => void,
   handleError: (error: Error) => void,
 ) => {
   const { config, response } = error
