@@ -9,8 +9,8 @@ interface CircularProgressProps {
 }
 
 const CircularProgress = ({ progress }: CircularProgressProps) => {
-  const matchesMdDown = useMediaQueryByName('mdDown')
-  const size = matchesMdDown ? 60 : 120
+  const matchesSmDown = useMediaQueryByName('smDown')
+  const size = matchesSmDown ? 60 : 120
   const center = size / 2
   const radius = center - 15 / 2
   const circumference = 2 * Math.PI * radius
@@ -26,7 +26,7 @@ const CircularProgress = ({ progress }: CircularProgressProps) => {
         r={radius}
         className={css({
           stroke: 'lightGray.2',
-          strokeWidth: { base: 15, mdDown: 6 },
+          strokeWidth: { base: 15, smDown: 6 },
           fill: 'none',
         })}
       />
@@ -38,14 +38,14 @@ const CircularProgress = ({ progress }: CircularProgressProps) => {
         transform={`rotate(-90 ${center} ${center})`}
         strokeDasharray={circumference}
         strokeDashoffset={progressOffset}
-        className={css({ stroke: 'red.2', strokeWidth: { base: 15, mdDown: 6 }, strokeLinecap: 'round' })}
+        className={css({ stroke: 'red.2', strokeWidth: { base: 15, smDown: 6 }, strokeLinecap: 'round' })}
       />
       <text
         x={center}
         y={center}
         textAnchor="middle"
         dominantBaseline="middle"
-        className={css({ fontSize: { base: 24, mdDown: 12 }, fontWeight: 600, fill: 'red.2' })} // 텍스트 크기를 조절합니다. 원의 크기에 따라 조정할 수 있습니다.
+        className={css({ fontSize: { base: 24, smDown: 12 }, fontWeight: 600, fill: 'red.2' })} // 텍스트 크기를 조절합니다. 원의 크기에 따라 조정할 수 있습니다.
       >
         {progress}%
       </text>

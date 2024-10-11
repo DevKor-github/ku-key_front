@@ -84,12 +84,12 @@ const Header = () => {
     <header
       className={css({
         display: 'flex',
-        h: 20,
-        minH: 20,
+        h: { base: 20, smDown: 10 },
+        minH: { base: 20, smDown: 10 },
         bg: 'white',
         justifyContent: 'space-between',
         alignItems: 'center',
-        px: { base: '150px', lgDown: '100px', mdDown: '60px', smDown: '20px' },
+        px: { base: '150px', lgDown: '80px', smDown: '20px' },
       })}
     >
       <nav
@@ -100,7 +100,7 @@ const Header = () => {
         })}
       >
         <Link to="/">
-          <img src={KUkeyLogo} alt="KU-key" />
+          <img src={KUkeyLogo} alt="KU-key" className={css({ smDown: { h: '1rem' } })} />
         </Link>
       </nav>
       <nav
