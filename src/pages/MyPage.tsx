@@ -47,13 +47,14 @@ const MyPage = () => {
             alignItems: 'flex-start',
             color: 'white',
             bgColor: 'bg.gray',
+            position: 'relative',
           })}
         >
           <div
             className={css({
               display: 'flex',
-              px: { base: 56, lgDown: 20, mdDown: 5 },
-              h: { base: '31rem', lgDown: '25rem', mdDown: 250 },
+              px: { base: 56, lgDown: 20, mdDown: 18, smDown: 7 },
+              h: { base: '31rem', lgDown: '25rem', mdDown: 80, smDown: 60 },
               w: 'full',
               alignItems: 'center',
               zIndex: 0,
@@ -78,9 +79,9 @@ const MyPage = () => {
               src={characterConfig[myProfileData.type][myProfileData.selectedLevel]}
               alt="My Character"
               className={css({
-                w: { base: '28.125rem', lgDown: '22.5rem', mdDown: '250px' },
+                w: { base: '28.125rem', lgDown: '22.5rem', mdDown: '18rem', smDown: '11rem' },
                 position: 'absolute',
-                right: { base: '9.375rem', lgDown: '6rem', mdDown: 0 },
+                right: { base: '9.375rem', lgDown: '6rem', mdDown: '2rem', smDown: 0 },
                 top: { base: 5, lgDown: 0 },
               })}
             />
