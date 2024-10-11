@@ -10,7 +10,9 @@ import MyCourseReview from '@/components/mypage/Contents/MyCourseReview'
 import MyPoint from '@/components/mypage/Contents/MyPoint'
 import PointHistory from '@/components/mypage/Contents/PointHistory'
 import PublicProfile from '@/components/mypage/Contents/PublicProfile'
+import MobileMyPageSelector from '@/components/mypage/MobileMyPageSelector'
 import { PAGE_LIST, PageType } from '@/types/myPage'
+import { useMediaQueryByName } from '@/util/useMediaQueryByName'
 
 interface MyPageContentsProps {
   myProfileData: GetMyProfileResponse
@@ -18,85 +20,91 @@ interface MyPageContentsProps {
   curPage: PageType
 }
 const MyPageContents = ({ myProfileData, setPage, curPage }: MyPageContentsProps) => {
+  const isMobile = useMediaQueryByName('smDown')
+
   return (
     <div
       className={css({
         display: 'flex',
-        flexDir: 'row',
+        flexDir: { base: 'row', smDown: 'column' },
         gap: 5,
         width: 'full',
-        pb: 33,
+        pb: { base: 33, smDown: 0 },
         maxW: '1200px',
-        px: { base: '60px', lgDown: '30px', mdDown: '20px' },
+        px: { base: '60px', lgDown: '30px', mdDown: '20px', smDown: 0 },
       })}
     >
-      <div className={css({ display: 'flex', flexDir: 'column', gap: 10, w: { base: 47, mdDown: 20 }, flexShrink: 0 })}>
-        <h1 className={css({ fontSize: { base: 30, mdDown: 15 }, fontWeight: 700, color: 'black.1' })}>My page</h1>
-        <nav className={css({ display: 'flex', flexDir: 'column', gap: 7 })}>
-          {PAGE_LIST.map((sectionData, index) => {
-            return (
-              <section
-                key={index}
-                className={css({
-                  display: 'flex',
-                  flexDir: 'column',
-                  gap: 6,
-                  '& h2': { color: 'black.1', fontSize: { base: 24, mdDown: 12 }, fontWeight: 700 },
-                })}
-              >
-                <h2>{sectionData.title}</h2>
-                <ul className={css({ display: 'flex', gap: { base: 5, mdDown: 2.5 }, flexDir: 'column' })}>
-                  {sectionData.children.map(({ title, handler }) => (
-                    <li
-                      key={handler}
-                      className={css({
-                        display: 'flex',
-                        gap: 2.5,
-                        alignItems: { base: 'center', mdDown: 'flex-start' },
-                      })}
-                    >
-                      <div
+      {!isMobile && (
+        <div
+          className={css({ display: 'flex', flexDir: 'column', gap: 10, w: { base: 47, mdDown: 20 }, flexShrink: 0 })}
+        >
+          <h1 className={css({ fontSize: { base: 30, mdDown: 15 }, fontWeight: 700, color: 'black.1' })}>My page</h1>
+          <nav className={css({ display: 'flex', flexDir: 'column', gap: 7 })}>
+            {PAGE_LIST.map((sectionData, index) => {
+              return (
+                <section
+                  key={index}
+                  className={css({
+                    display: 'flex',
+                    flexDir: 'column',
+                    gap: 6,
+                    '& h2': { color: 'black.1', fontSize: { base: 24, mdDown: 12 }, fontWeight: 700 },
+                  })}
+                >
+                  <h2>{sectionData.title}</h2>
+                  <ul className={css({ display: 'flex', gap: { base: 5, mdDown: 2.5 }, flexDir: 'column' })}>
+                    {sectionData.children.map(({ title, handler }) => (
+                      <li
+                        key={handler}
                         className={css({
-                          w: 1.5,
-                          h: 1.5,
-                          rounded: 'full',
-                          bgColor: 'red.2',
-                          display: { mdDown: 'none' },
+                          display: 'flex',
+                          gap: 2.5,
+                          alignItems: { base: 'center', mdDown: 'flex-start' },
                         })}
-                        style={{ visibility: handler === curPage ? 'visible' : 'hidden' }}
-                      />
-                      <button
-                        className={cva({
-                          base: {
-                            color: 'black.2',
-                            fontSize: { base: 18, mdDown: 12 },
-                            cursor: 'pointer',
-                            textAlign: 'left',
-                          },
-                          variants: {
-                            selected: {
-                              true: {
-                                color: 'red.2',
+                      >
+                        <div
+                          className={css({
+                            w: 1.5,
+                            h: 1.5,
+                            rounded: 'full',
+                            bgColor: 'red.2',
+                            display: { mdDown: 'none' },
+                          })}
+                          style={{ visibility: handler === curPage ? 'visible' : 'hidden' }}
+                        />
+                        <button
+                          className={cva({
+                            base: {
+                              color: 'black.2',
+                              fontSize: { base: 18, mdDown: 12 },
+                              cursor: 'pointer',
+                              textAlign: 'left',
+                            },
+                            variants: {
+                              selected: {
+                                true: {
+                                  color: 'red.2',
+                                },
                               },
                             },
-                          },
-                        })({
-                          selected: handler === curPage,
-                        })}
-                        onClick={() => {
-                          if (handler) setPage(handler)
-                        }}
-                      >
-                        {title}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            )
-          })}
-        </nav>
-      </div>
+                          })({
+                            selected: handler === curPage,
+                          })}
+                          onClick={() => {
+                            if (handler) setPage(handler)
+                          }}
+                        >
+                          {title}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              )
+            })}
+          </nav>
+        </div>
+      )}
       <div className={css({ flexGrow: 1 })}>
         {match(curPage)
           .with('point-history', () => <PointHistory />)
@@ -108,8 +116,7 @@ const MyPageContents = ({ myProfileData, setPage, curPage }: MyPageContentsProps
           .with('delete-account', () => <DeleteAccount />)
           .with('my-point', () => <MyPoint myProfileData={myProfileData} />)
           .otherwise(() => (
-            // 실제로는 바로 리다이렉션 됨
-            <></>
+            <MobileMyPageSelector setPage={setPage} />
           ))}
       </div>
     </div>
