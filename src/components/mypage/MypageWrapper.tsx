@@ -10,7 +10,7 @@ const MypageWrapper = ({ children }: { children: ReactNode }) => {
         alignItems: 'center',
         w: 'full',
         bg: 'bg.gray',
-        gap: 20,
+        gap: { base: 20, smDown: 0 },
       })}
     >
       {children}
