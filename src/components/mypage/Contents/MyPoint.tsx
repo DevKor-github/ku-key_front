@@ -13,8 +13,13 @@ const MyPoint = ({ myProfileData }: MyPointProps) => {
       className={css({
         display: 'flex',
         flexDir: 'column',
-        gap: { base: 25, mdDown: 10 },
-        maxW: { base: '818px', mdDown: '400px' },
+        gap: { base: 25, mdDown: 10, smDown: '1.875rem' },
+        maxW: { base: '818px', mdDown: '400px', smDown: 'fit-content' },
+        smDown: {
+          px: 5,
+          py: 4,
+          bgColor: 'white',
+        },
       })}
     >
       <PointStatus name={myProfileData.username} point={myProfileData.point} />

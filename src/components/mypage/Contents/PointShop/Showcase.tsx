@@ -10,7 +10,7 @@ import Toast from '@/components/ui/toast'
 import { CharacterType } from '@/types/community'
 
 const HeadingStyle = css({
-  fontSize: { base: 26, mdDown: 18 },
+  fontSize: { base: 26, mdDown: 18, smDown: 16 },
   fontWeight: 600,
 })
 
@@ -64,16 +64,19 @@ const Showcase = ({ myLevel, selectedLevel, myCharacterType }: ShowcaseProps) =>
   )
 
   return (
-    <div className={css({ display: 'flex', flexDir: 'column', gap: 10 })}>
-      <div className={css({ display: 'flex', flexDir: 'column', gap: 5 })}>
+    <div className={css({ display: 'flex', flexDir: 'column', gap: { base: 10, smDown: '1.875rem' } })}>
+      <div className={css({ display: 'flex', flexDir: 'column', gap: { base: 5, smDown: 3.5 } })}>
         <h2 className={HeadingStyle}>Decorating Characters</h2>
         <div
           className={css({
             display: 'flex',
             alignItems: 'center',
             flexWrap: 'wrap',
-            columnGap: { base: 5, mdDown: 1 },
-            rowGap: { base: 10, mdDown: 1 },
+            columnGap: { base: 5, mdDown: 1, smDown: 0 },
+            rowGap: { base: 10, mdDown: 1, smDown: 5 },
+            smDown: {
+              justifyContent: 'space-between',
+            },
           })}
         >
           {Array(6)
