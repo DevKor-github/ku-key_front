@@ -23,6 +23,7 @@ const Showcase = ({ myLevel, selectedLevel, myCharacterType }: ShowcaseProps) =>
   const { mutate: purchase } = usePostPurchaseItem()
   const { mutate: selectLevel } = usePatchLevel()
 
+  // TODO: 모바일용 모달 제작
   const handlePurchaseReviewTicket = useCallback(
     (days: number, cost: number) => {
       purchase(
@@ -56,7 +57,6 @@ const Showcase = ({ myLevel, selectedLevel, myCharacterType }: ShowcaseProps) =>
     (target: number) => {
       if (selectedLevel !== target) {
         selectLevel(target)
-        // TODO: 스크롤 애니메이션 컨펌 받기
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
       }
     },

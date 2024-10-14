@@ -11,6 +11,10 @@ const MypageWrapper = ({ children }: { children: ReactNode }) => {
         w: 'full',
         bg: 'bg.gray',
         gap: { base: 20, smDown: 0 },
+        smDown: {
+          h: 'calc(100vh - 40px)',
+          overflow: 'hidden',
+        },
       })}
     >
       {children}
