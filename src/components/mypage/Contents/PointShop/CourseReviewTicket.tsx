@@ -37,6 +37,9 @@ const CourseReviewTicket = ({ days, purchase }: CourseReviewTicketProps) => {
           border: '{colors.lightGray.1} 1px solid',
           cursor: 'pointer',
           alignItems: 'stretch',
+          smDown: {
+            w: '33%',
+          },
         })}
         onClick={handleOpen}
       >
@@ -44,9 +47,9 @@ const CourseReviewTicket = ({ days, purchase }: CourseReviewTicketProps) => {
           src={IMAGE_SRC[days]}
           alt={`${days} days course review ticket`}
           className={css({
-            w: { base: 20, mdDown: 13 },
-            h: { base: 20, mdDown: 13 },
-            rounded: 5,
+            w: { base: 20, mdDown: 13, smDown: 9 },
+            h: { base: 20, mdDown: 13, smDown: 9 },
+            rounded: { base: 5, smDown: 1 },
             flexShrink: 0,
           })}
         />
@@ -59,10 +62,26 @@ const CourseReviewTicket = ({ days, purchase }: CourseReviewTicketProps) => {
             alignItems: 'flex-start',
           })}
         >
-          <h3 className={css({ fontSize: { base: 24, mdDown: 16 }, fontWeight: 500 })}>{days} Days</h3>
-          <div className={css({ my: 1, display: 'flex', gap: 2, alignItems: 'center' })}>
-            <img src={Sugar} alt="sugar" className={css({ w: { base: 6, mdDown: 3 } })} />
-            <div className={css({ color: 'black', fontSize: { base: 20, mdDown: 12 }, fontWeight: 600 })}>
+          <h3 className={css({ fontSize: { base: 24, mdDown: 16, smDown: 10 }, fontWeight: 500, lineHeight: 1.2 })}>
+            {days} Days
+          </h3>
+          <div
+            className={css({
+              my: { base: 1, smDown: '1.7px' },
+              display: 'flex',
+              gap: { base: 2, smDown: 1 },
+              alignItems: 'center',
+            })}
+          >
+            <img src={Sugar} alt="sugar" className={css({ w: { base: 6, mdDown: 3, smDown: '8.5px' } })} />
+            <div
+              className={css({
+                color: 'black',
+                fontSize: { base: 20, mdDown: 12, smDown: 8.5 },
+                fontWeight: 600,
+                lineHeight: 1.2,
+              })}
+            >
               {COST[days]}
             </div>
           </div>
