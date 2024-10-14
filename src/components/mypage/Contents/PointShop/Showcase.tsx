@@ -106,7 +106,7 @@ const Showcase = ({ myLevel, selectedLevel, myCharacterType }: ShowcaseProps) =>
         <div
           className={css({
             display: 'flex',
-            flexDir: { mdDown: 'column' },
+            flexDir: { mdDown: 'column', smDown: 'row' },
             justifyContent: 'space-between',
             alignItems: { base: 'center', mdDown: 'flex-start' },
             gap: 2.5,
