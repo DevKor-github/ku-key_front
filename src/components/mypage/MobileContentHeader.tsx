@@ -12,6 +12,7 @@ const MobileContentHeader = ({ title }: MobileContentHeaderProps) => {
       className={css({
         position: 'relative',
         h: '61px',
+        flexShrink: 0,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
