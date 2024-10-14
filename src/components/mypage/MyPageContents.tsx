@@ -33,6 +33,9 @@ const MyPageContents = ({ myProfileData, setPage, curPage }: MyPageContentsProps
         pb: { base: 33, smDown: 0 },
         maxW: '1200px',
         px: { base: '60px', lgDown: '30px', mdDown: '20px', smDown: 0 },
+        smDown: {
+          overflow: 'hidden',
+        },
       })}
     >
       {!isMobile && (
@@ -107,7 +110,7 @@ const MyPageContents = ({ myProfileData, setPage, curPage }: MyPageContentsProps
         </div>
       )}
       {isMobile && curPage !== null && <MobileContentHeader title="Point History" />}
-      <div className={css({ flexGrow: 1 })}>
+      <div className={css({ flexGrow: 1, smDown: { overflowY: 'auto' } })}>
         {match(curPage)
           .with('point-history', () => <PointHistory />)
           .with('community', () => <MyCommunity />)
