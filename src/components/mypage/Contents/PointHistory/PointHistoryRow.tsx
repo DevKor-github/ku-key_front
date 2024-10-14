@@ -2,6 +2,7 @@ import { css } from '@styled-system/css'
 
 import TypeChip from '@/components/mypage/Contents/PointHistory/TypeChip'
 import dateFormatter from '@/util/dateFormatter'
+import { useMediaQueryByName } from '@/util/useMediaQueryByName'
 
 interface PointHistoryRowProps {
   historyData: {
@@ -12,6 +13,45 @@ interface PointHistoryRowProps {
   }
 }
 const PointHistoryRow = ({ historyData }: PointHistoryRowProps) => {
+  const formattedDate = dateFormatter({ date: new Date(historyData.date) })
+
+  if (useMediaQueryByName('smDown'))
+    return (
+      <div
+        className={css({
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: 2,
+          bgColor: 'white',
+          h: 15,
+          rounded: 10,
+          w: 'full',
+          px: '14px',
+        })}
+      >
+        <span className={css({ fontSize: 14, fontWeight: 500, lineHeight: 1.2 })}>{historyData.history}</span>
+        <span className={css({ display: 'flex', alignItems: 'center', gap: 2 })}>
+          <span
+            className={css({
+              w: 9,
+              fontSize: 14,
+              fontWeight: 700,
+              lineHeight: 1.2,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            })}
+          >
+            {historyData.changePoint}p
+          </span>
+          <span className={css({ fontSize: 12, fontWeight: 400, lineHeight: 1.2, color: 'darkGray.1' })}>
+            {formattedDate}
+          </span>
+        </span>
+      </div>
+    )
+
   return (
     <div
       className={css({
@@ -73,7 +113,7 @@ const PointHistoryRow = ({ historyData }: PointHistoryRowProps) => {
           color: 'darkGray.1',
         })}
       >
-        {dateFormatter({ date: new Date(historyData.date) })}
+        {formattedDate}
       </span>
     </div>
   )
