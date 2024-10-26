@@ -12,7 +12,8 @@ import PointHistory from '@/components/mypage/Contents/PointHistory'
 import PublicProfile from '@/components/mypage/Contents/PublicProfile'
 import MobileContentHeader from '@/components/mypage/MobileContentHeader'
 import MobileMyPageSelector from '@/components/mypage/MobileMyPageSelector'
-import { PAGE_LIST, PageType } from '@/types/myPage'
+import { PAGE_LIST, PAGE_TITLE } from '@/lib/constants/myPage'
+import { PageType } from '@/types/myPage'
 import { useMediaQueryByName } from '@/util/useMediaQueryByName'
 
 interface MyPageContentsProps {
@@ -109,7 +110,7 @@ const MyPageContents = ({ myProfileData, setPage, curPage }: MyPageContentsProps
           </nav>
         </div>
       )}
-      {isMobile && curPage !== null && <MobileContentHeader title="Point History" />}
+      {isMobile && curPage !== null && <MobileContentHeader title={PAGE_TITLE[curPage]} />}
       <div className={css({ flexGrow: 1, smDown: { overflowY: 'auto' } })}>
         {match(curPage)
           .with('point-history', () => <PointHistory />)
