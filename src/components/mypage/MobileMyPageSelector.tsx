@@ -1,6 +1,7 @@
 import { css, cva } from '@styled-system/css'
 
-import { PAGE_LIST, PageType } from '@/types/myPage'
+import { PAGE_LIST } from '@/lib/constants/myPage'
+import { PageType } from '@/types/myPage'
 
 const SectionStyle = css({
   display: 'flex',
