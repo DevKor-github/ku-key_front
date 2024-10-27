@@ -14,7 +14,15 @@ const LikedPost = () => {
   })
 
   return (
-    <div className={css({ display: 'flex', flexDir: 'column', gap: '30px', mb: 25, w: { base: 610, mdDown: 320 } })}>
+    <div
+      className={css({
+        display: 'flex',
+        flexDir: 'column',
+        gap: '30px',
+        mb: 25,
+        w: { base: 610, mdDown: 320, smDown: 'full' },
+      })}
+    >
       {posts?.map((post, index) => (
         <Fragment key={post.id}>
           {index !== 0 && (
@@ -23,6 +31,9 @@ const LikedPost = () => {
                 w: 'full',
                 h: 0.25,
                 bgColor: 'lightGray.1',
+                smDown: {
+                  display: 'none',
+                },
               })}
             />
           )}
