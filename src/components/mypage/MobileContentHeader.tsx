@@ -1,12 +1,11 @@
 import { css } from '@styled-system/css'
 import { ArrowLeft } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 interface MobileContentHeaderProps {
   title: string
 }
 const MobileContentHeader = ({ title }: MobileContentHeaderProps) => {
-  const navigate = useNavigate()
   return (
     <div
       className={css({
@@ -19,7 +18,8 @@ const MobileContentHeader = ({ title }: MobileContentHeaderProps) => {
         bgColor: 'white',
       })}
     >
-      <button
+      <Link
+        to={'/mypage'}
         className={css({
           position: 'absolute',
           left: '1.625rem',
@@ -27,10 +27,9 @@ const MobileContentHeader = ({ title }: MobileContentHeaderProps) => {
           transform: 'translate3d(0, -50%, 0)',
           cursor: 'pointer',
         })}
-        onClick={() => navigate(-1)}
       >
         <ArrowLeft />
-      </button>
+      </Link>
       <h1
         className={css({
           fontSize: 16,
