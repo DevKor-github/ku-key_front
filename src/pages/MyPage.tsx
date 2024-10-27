@@ -17,17 +17,17 @@ const MyPage = () => {
   const { searchParam, handleSetParam, deleteParam } = useSearch()
   const curPage = searchParam.get('page') as PageType
   const { data: myProfileData } = useGetMyProfile()
-  const isMdDown = useMediaQueryByName('mdDown')
+  const isSmDown = useMediaQueryByName('smDown')
 
   const headerVisibility =
-    !isMdDown ||
+    !isSmDown ||
     !(curPage === 'community' || curPage === 'course-review' || curPage === 'delete-account' || curPage === 'password')
 
   useEffect(() => {
-    if (curPage === null && !isMdDown) {
+    if (curPage === null && !isSmDown) {
       navigate(`${location.pathname}?page=my-point`, { replace: true })
     }
-  }, [curPage, navigate, isMdDown])
+  }, [curPage, navigate, isSmDown])
 
   const setPage = useCallback(
     (target: PageType) => {
