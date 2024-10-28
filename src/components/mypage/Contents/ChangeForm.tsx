@@ -27,11 +27,15 @@ const ChangeForm = ({ type, register, formState }: ChangeFormProps) => {
         justifyContent: 'space-between',
         alignItems: 'baseline',
         alignSelf: 'stretch',
-        gap: { base: 138, mdDown: 1 },
+        gap: { base: 138, mdDown: 1, smDown: 2.5 },
       })}
     >
-      <Label className={cx(css({ fontSize: { base: 20, mdDown: 12 }, fontWeight: 700 }))}>{labelConfig[type]}</Label>
-      <div className={css({ display: 'flex', flexDir: 'column', alignItems: 'flex-end' })}>
+      <Label
+        className={cx(css({ fontSize: { base: 20, mdDown: 12, smDown: 16 }, fontWeight: { base: 700, smDown: 600 } }))}
+      >
+        {labelConfig[type]}
+      </Label>
+      <div className={css({ display: 'flex', flexDir: 'column', alignItems: 'flex-end', smDown: { w: 'full' } })}>
         <Input
           placeholder={
             type === 'curPassword'
@@ -41,7 +45,7 @@ const ChangeForm = ({ type, register, formState }: ChangeFormProps) => {
                 : 'Please enter your new password again'
           }
           type="password"
-          className={css({ w: { base: 341, mdDown: 200 } })}
+          className={css({ w: { base: 341, mdDown: 200, smDown: 'full' } })}
           {...register(type)}
         />
         <div
@@ -51,7 +55,7 @@ const ChangeForm = ({ type, register, formState }: ChangeFormProps) => {
             py: 1,
             gap: 1,
             alignItems: 'center',
-            maxW: { base: 341, mdDown: 200 },
+            maxW: { base: 341, mdDown: 200, smDown: 'full' },
           })}
         >
           {error && <ShieldAlert size={16} className={css({ color: 'red.2', flexShrink: 0 })} />}
