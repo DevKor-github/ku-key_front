@@ -16,23 +16,28 @@ import { Language } from '@/lib/constants/language'
 export const ProfileFormWrapper = css({
   display: 'flex',
   flexDir: { mdDown: 'column' },
-  gap: { base: 5, mdDown: 2 },
+  gap: { base: 5, mdDown: 2.5 },
   alignItems: 'stretch',
+  w: 'full',
   '& input': {
-    w: { base: '400px', mdDown: '200px' },
+    w: { base: '400px', mdDown: '200px', smDown: 'full' },
   },
 })
 export const ProfileFormTitle = css({
   flexShrink: 0,
-  w: { base: '189px', mdDown: '80px' },
-  py: { mdDown: 1.5 },
+  w: { base: '189px', mdDown: '80px', smDown: 'fit-content' },
+  py: { mdDown: 1.5, smDown: 0 },
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  bgColor: 'lightGray.1',
-  fontSize: { base: 20, mdDown: 12 },
-  fontWeight: 700,
-  h: '39px',
+  bgColor: { base: 'lightGray.1', smDown: 'transparent' },
+  fontSize: { base: 20, mdDown: 12, smDown: 16 },
+  fontWeight: { base: 700, smDown: 400 },
+  h: { base: '39px', smDown: 'fit-content' },
+  lineHeight: 1.2,
+  smDown: {
+    pl: 1.5,
+  },
 })
 
 export interface PublicProfileForm {
@@ -108,78 +113,99 @@ const PublicProfile = ({
   )
 
   return (
-    <div className={css({ display: 'flex', flexDir: 'column', gap: { base: 20, mdDown: 5 } })}>
+    <div
+      className={css({
+        display: 'flex',
+        flexDir: 'column',
+        gap: { base: 20, mdDown: 5, smDown: 10 },
+        smDown: { px: 5, py: 4 },
+      })}
+    >
       <ProfileChangeHeader type="public" />
-      <form className={css({ display: 'flex', flexDir: 'column', gap: 25 })} onSubmit={handleSubmit(onSubmit)}>
-        <section className={css({ display: 'flex', flexDir: 'column', gap: '50px' })}>
+      <form
+        className={css({ display: 'flex', flexDir: 'column', gap: { base: 25, smDown: 15 } })}
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <section className={css({ display: 'flex', flexDir: 'column', gap: { base: '50px', smDown: '30px' } })}>
           <div
-            className={css({ display: 'flex', flexDir: 'column', gap: 2.5, maxW: { base: '609px', mdDown: '282px' } })}
+            className={css({
+              display: 'flex',
+              flexDir: 'column',
+              gap: 2.5,
+              maxW: { base: '609px', mdDown: '282px', smDown: 'unset' },
+            })}
           >
-            <div className={ProfileFormWrapper}>
-              <span className={ProfileFormTitle}>Username</span>
-              <span
+            <div className={css({ display: 'flex', flexDir: 'column' })}>
+              <div className={ProfileFormWrapper}>
+                <span className={ProfileFormTitle}>Username</span>
+                <span
+                  className={css({
+                    display: 'flex',
+                    alignItems: 'stretch',
+                    gap: 1,
+                    w: { base: '400px', mdDown: '200px', smDown: 'full' },
+                  })}
+                >
+                  <Input
+                    placeholder={username}
+                    className={css({ smDown: { flexGrow: 1 } })}
+                    {...register('username', {
+                      required: { value: true, message: 'This field is required' },
+                      maxLength: { value: 10, message: 'username must be at most 10 characters long' },
+                      minLength: { value: 5, message: 'username must be at least 5 characters long' },
+                      onChange: () => {
+                        clearErrors('username')
+                        setUsernameValidation(false)
+                      },
+                    })}
+                  />
+                  <Button
+                    aria-checked={
+                      getValues('username') !== '' && getValues('username') !== username && !usernameValidation
+                    }
+                    variant="input"
+                    type="button"
+                    disabled={getValues('username') === '' || getValues('username') === username || usernameValidation}
+                    onClick={handleUsernameValidCheck}
+                    className={css({ flexShrink: 0 })}
+                  >
+                    <p className={css({ textStyle: 'body1_L', lineHeight: '100%', smDown: { fontSize: 12 } })}>
+                      Verify
+                    </p>
+                  </Button>
+                </span>
+              </div>
+              <div
                 className={css({
                   display: 'flex',
-                  alignItems: 'stretch',
+                  px: 1.5,
+                  py: 1,
                   gap: 1,
-                  w: { base: '400px', mdDown: '200px' },
+                  alignItems: 'center',
+                  h: '29px',
+                  justifyContent: 'flex-end',
                 })}
               >
-                <Input
-                  placeholder={username}
-                  {...register('username', {
-                    required: { value: true, message: 'This field is required' },
-                    maxLength: { value: 10, message: 'username must be at most 10 characters long' },
-                    minLength: { value: 5, message: 'username must be at least 5 characters long' },
-                    onChange: () => {
-                      clearErrors('username')
-                      setUsernameValidation(false)
-                    },
-                  })}
-                />
-                <Button
-                  aria-checked={
-                    getValues('username') !== '' && getValues('username') !== username && !usernameValidation
-                  }
-                  variant="input"
-                  type="button"
-                  disabled={getValues('username') === '' || getValues('username') === username || usernameValidation}
-                  onClick={handleUsernameValidCheck}
-                >
-                  <p className={css({ textStyle: 'body1_L', lineHeight: '100%', smDown: { fontSize: 12 } })}>Verify</p>
-                </Button>
-              </span>
-            </div>
-            <div
-              className={css({
-                display: 'flex',
-                px: 1.5,
-                py: 1,
-                gap: 1,
-                alignItems: 'center',
-                h: '29px',
-                justifyContent: 'flex-end',
-              })}
-            >
-              {formState.errors.username ? (
-                <>
-                  <ShieldAlert size={16} className={css({ color: 'red.2' })} />
-                  <p className={css({ fontSize: 14, fontWeight: 400, color: 'red.2' })}>
-                    {formState.errors.username.message}
-                  </p>
-                </>
-              ) : (
-                usernameValidation && (
+                {formState.errors.username ? (
                   <>
-                    <CheckCircle2 size={14} />
-                    <p className={css({ fontSize: 14, fontWeight: 400 })}>available username</p>
+                    <ShieldAlert size={16} className={css({ color: 'red.2' })} />
+                    <p className={css({ fontSize: 14, fontWeight: 400, color: 'red.2' })}>
+                      {formState.errors.username.message}
+                    </p>
                   </>
-                )
-              )}
+                ) : (
+                  usernameValidation && (
+                    <>
+                      <CheckCircle2 size={14} />
+                      <p className={css({ fontSize: 14, fontWeight: 400 })}>available username</p>
+                    </>
+                  )
+                )}
+              </div>
             </div>
             <div className={ProfileFormWrapper}>
               <span className={ProfileFormTitle}>Nation</span>
-              <span className={css({ w: { base: '400px', mdDown: '200px' } })}>
+              <span className={css({ w: { base: '400px', mdDown: '200px', smDown: 'full' } })}>
                 <NationDropdown curNation={watch('country')} handleChange={handleNationSelect} />
               </span>
             </div>
@@ -196,7 +222,7 @@ const PublicProfile = ({
           </div>
           <div className={ProfileFormWrapper}>
             <span className={ProfileFormTitle}>Language</span>
-            <span className={css({ w: { base: '400px', mdDown: '200px' } })}>
+            <span className={css({ w: { base: '400px', mdDown: '200px', smDown: 'full' } })}>
               <LanguageDropdown curLanguage={watch('languages')} handleChange={handleLanguageSelect} />
             </span>
           </div>
