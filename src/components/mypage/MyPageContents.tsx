@@ -36,6 +36,7 @@ const MyPageContents = ({ myProfileData, setPage, curPage }: MyPageContentsProps
         px: { base: '60px', lgDown: '30px', mdDown: '20px', smDown: 0 },
         smDown: {
           overflow: 'hidden',
+          flexGrow: 1,
         },
       })}
     >
@@ -111,7 +112,22 @@ const MyPageContents = ({ myProfileData, setPage, curPage }: MyPageContentsProps
         </div>
       )}
       {isMobile && curPage !== null && <MobileContentHeader title={PAGE_TITLE[curPage]} />}
-      <div className={css({ flexGrow: 1, smDown: { overflowY: 'auto' } })}>
+      <div
+        className={cva({
+          base: { flexGrow: 1, smDown: { overflowY: 'auto' } },
+          variants: {
+            bg: {
+              white: {
+                bgColor: 'white',
+              },
+              gray: {
+                bgColor: 'rgba(0, 0, 0, 0.24)',
+                backdropFilter: 'blur(2px)',
+              },
+            },
+          },
+        })({ bg: isMobile ? (curPage === 'delete-account' ? 'gray' : 'white') : undefined })}
+      >
         {match(curPage)
           .with('point-history', () => <PointHistory />)
           .with('community', () => <MyCommunity />)
