@@ -76,17 +76,39 @@ const ChangePassword = () => {
         alignItems: 'center',
         flexDir: 'column',
         maxW: 818,
+        smDown: {
+          pt: 23,
+          w: 'full',
+          px: 5,
+        },
       })}
     >
-      <h1 className={css({ px: 1, py: 2.5, fontSize: { base: 30, mdDown: 15 }, fontWeight: 700 })}>Change Password</h1>
-      <form className={css({ display: 'flex', flexDir: 'column', gap: 10 })} onSubmit={handleSubmit(onSubmit)}>
+      <h1
+        className={css({
+          px: 1,
+          py: 2.5,
+          fontSize: { base: 30, mdDown: 15 },
+          fontWeight: 700,
+          smDown: { display: 'none' },
+        })}
+      >
+        Change Password
+      </h1>
+      <form
+        className={css({ display: 'flex', flexDir: 'column', gap: 10, smDown: { w: 'full' } })}
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <ChangeForm type="curPassword" register={register} formState={formState} />
-        <section>
+        <section className={css({ display: 'flex', flexDir: 'column', gap: 2.5 })}>
           <ChangeForm type="newPassword" register={register} formState={formState} />
           <ChangeForm type="confirmPassword" register={register} formState={formState} />
         </section>
         <div className={css({ display: 'flex', justifyContent: 'center', mt: 5 })}>
-          <Button variant={'loginColored'} type="submit">
+          <Button
+            variant={'loginColored'}
+            type="submit"
+            className={css({ w: '137px', rounded: 5, py: '7.87px', fontSize: 12, fontWeight: 500, lineHeight: 1.2 })}
+          >
             SAVE
           </Button>
         </div>
