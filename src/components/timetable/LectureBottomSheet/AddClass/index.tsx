@@ -1,6 +1,6 @@
 import { css } from '@styled-system/css'
 import { isAxiosError } from 'axios'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { match } from 'ts-pattern'
 
@@ -10,7 +10,7 @@ import ClassSelectModal from '@/components/timetable/LectureBottomSheet/AddClass
 import FilterSelector from '@/components/timetable/LectureBottomSheet/AddClass/FilterSelector'
 import SearchLectureCard from '@/components/timetable/LectureBottomSheet/AddClass/SearchLectureCard'
 import SearchBox from '@/components/timetable/SearchBox'
-import { FilterType } from '@/types/timetable'
+import { FilterType, SemesterType } from '@/types/timetable'
 import { filterTypeMap } from '@/util/timetableUtil'
 import { useCourseSearch, useCourseSearchProps } from '@/util/useCourseSearch'
 import useIntersect from '@/util/useIntersect'
@@ -26,18 +26,24 @@ const SearchMessageStyle = css({
   fontWeight: 600,
 })
 
-const initialQuery: useCourseSearchProps = {
-  category: 'All Class',
-  filter: 'code',
-  queryKeyword: '',
-  classification: null,
-}
-
 interface AddClassProps {
   timetableId: number
+  year: string
+  semester: SemesterType
 }
-const AddClass = ({ timetableId }: AddClassProps) => {
+const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
   const scrollSectionRef = useRef<HTMLDivElement>(null)
+  const initialQuery: useCourseSearchProps = useMemo(
+    () => ({
+      category: 'All Class',
+      filter: 'code',
+      queryKeyword: '',
+      classification: null,
+      year,
+      semester,
+    }),
+    [year, semester],
+  )
 
   const [isSearchAvailable, setIsSearchAvailable] = useState(true)
   // 검색 Filter
@@ -99,7 +105,7 @@ const AddClass = ({ timetableId }: AddClassProps) => {
         }
       }
     },
-    [setCurCategory, setCurClassification, setIsModalOpen],
+    [setCurCategory, setCurClassification, setIsModalOpen, initialQuery],
   )
 
   const handleMajorBtn = useCallback(
@@ -115,6 +121,8 @@ const AddClass = ({ timetableId }: AddClassProps) => {
           filter: 'course',
           category: 'Academic Foundations',
           classification,
+          year,
+          semester,
         })
       } else {
         setQuery({
@@ -122,12 +130,14 @@ const AddClass = ({ timetableId }: AddClassProps) => {
           filter: 'course',
           category: 'Major',
           classification,
+          year,
+          semester,
         })
         setIsSearchAvailable(true)
         setCurFilter('course')
       }
     },
-    [curCategory],
+    [curCategory, year, semester],
   )
 
   const handleFilterSelector = useCallback(
@@ -150,11 +160,13 @@ const AddClass = ({ timetableId }: AddClassProps) => {
               filter: targetFilter,
               category: categoryList[curCategory],
               classification: curClassification,
+              year,
+              semester,
             })
           }
         })
     },
-    [curCategory, curClassification],
+    [curCategory, curClassification, year, semester, initialQuery],
   )
 
   const handleSearchBoxOnSubmit = useCallback(
@@ -164,9 +176,11 @@ const AddClass = ({ timetableId }: AddClassProps) => {
         filter: curFilter,
         category: categoryList[curCategory],
         classification: curClassification,
+        year,
+        semester,
       })
     },
-    [curFilter, curCategory, curClassification],
+    [curFilter, curCategory, curClassification, year, semester],
   )
 
   const handleQuitModal = useCallback(() => {

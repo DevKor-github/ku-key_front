@@ -15,6 +15,13 @@ const dayToNumber: { [key in DayType]: number } = { Mon: 1, Tue: 2, Wed: 3, Thu:
 
 export const numberToSemester: SemesterType[] = ['Spring', 'Summer', 'Fall', 'Winter']
 
+export const semesterToNumber: { [key in SemesterType]: number } = {
+  Spring: 1,
+  Summer: 2,
+  Fall: 3,
+  Winter: 4,
+}
+
 export const ColorTypeArr: ColorType[] = ['Red', 'Blue', 'Green', 'Gray', 'Purple']
 
 export const filterTypeMap = {
