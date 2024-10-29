@@ -46,7 +46,7 @@ const ReviewHeader = ({ courseCode, courseName, prof }: ReviewHeaderProps) => {
             fontSize: { base: 26, smDown: 20 },
             color: 'black.2',
             overflow: 'hidden',
-            whiteSpace: 'nowrap',
+            lineClamp: 2,
             textOverflow: 'ellipsis',
           })}
         >
