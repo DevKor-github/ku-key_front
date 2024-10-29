@@ -107,6 +107,17 @@ export const buttonRecipe = defineRecipe({
         _hover: { bgColor: 'transparent', color: 'red.3', border: '1px solid {colors.red.3}' },
         _active: { bgColor: 'transparent', color: 'red.3', border: '1px solid {colors.red.3}' },
       },
+      mobile: {
+        h: 'fit-content',
+        bgColor: 'red.2',
+        color: 'white',
+        w: '137px',
+        rounded: 5,
+        py: '7.87px',
+        fontSize: 12,
+        fontWeight: 500,
+        lineHeight: 1.2,
+      },
     },
     size: {
       default: { h: 10, px: 4, py: 2 },
