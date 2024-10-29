@@ -8,6 +8,7 @@ import { usePatchPassword } from '@/api/hooks/register'
 import ChangeForm from '@/components/mypage/Contents/ChangeForm'
 import Button from '@/components/ui/button'
 import { PasswordSchema } from '@/lib/zod/register-schema'
+import { useMediaQueryByName } from '@/util/useMediaQueryByName'
 
 export interface ChangePasswordForm {
   curPassword: string
@@ -20,6 +21,8 @@ const ChangePassword = () => {
   const { mutate: checkPassword } = useCheckPassword()
 
   const { register, handleSubmit, setError, formState, reset } = useForm<ChangePasswordForm>()
+
+  const isMobile = useMediaQueryByName('smDown')
 
   const onSubmit = (data: ChangePasswordForm) => {
     checkPassword(data.curPassword, {
@@ -104,11 +107,7 @@ const ChangePassword = () => {
           <ChangeForm type="confirmPassword" register={register} formState={formState} />
         </section>
         <div className={css({ display: 'flex', justifyContent: 'center', mt: 5 })}>
-          <Button
-            variant={'loginColored'}
-            type="submit"
-            className={css({ w: '137px', rounded: 5, py: '7.87px', fontSize: 12, fontWeight: 500, lineHeight: 1.2 })}
-          >
+          <Button variant={isMobile ? 'mobile' : 'loginColored'} type="submit">
             SAVE
           </Button>
         </div>

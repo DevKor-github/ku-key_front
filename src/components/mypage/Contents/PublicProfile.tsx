@@ -12,6 +12,7 @@ import LanguageDropdown from '@/components/ui/dropdown/LanguageDropdown'
 import NationDropdown from '@/components/ui/dropdown/NationDropdown'
 import { Input } from '@/components/ui/input'
 import { Language } from '@/lib/constants/language'
+import { useMediaQueryByName } from '@/util/useMediaQueryByName'
 
 export const ProfileFormWrapper = css({
   display: 'flex',
@@ -73,6 +74,8 @@ const PublicProfile = ({
       setError('username', { message: 'This ID is a duplicate ID' })
     },
   })
+
+  const isMobile = useMediaQueryByName('smDown')
 
   const handleUsernameValidCheck = () => {
     trigger('username', { shouldFocus: true })
@@ -228,7 +231,7 @@ const PublicProfile = ({
           </div>
         </section>
         <div className={css({ display: 'flex', justifyContent: 'center' })}>
-          <Button variant={'loginColored'} type="submit">
+          <Button variant={isMobile ? 'mobile' : 'loginColored'} type="submit">
             SAVE
           </Button>
         </div>
