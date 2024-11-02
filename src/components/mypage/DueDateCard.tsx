@@ -37,7 +37,8 @@ const DueDateCard = ({ startDay, endDay }: DueDateCardProps) => {
         smDown: {
           pos: 'absolute',
           bottom: 2.5,
-          w: '300px',
+          w: '340px',
+          justifyContent: 'space-between',
         },
       })}
     >

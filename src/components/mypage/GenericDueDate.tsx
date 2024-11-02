@@ -9,7 +9,15 @@ const GenericDueDate = ({ type, due, date }: GenericDueDateProps) => {
   const dueDate = type === 'start' ? `D + ${due}` : `D - ${due}`
   const dueTitle = type === 'start' ? 'Start' : 'End'
   return (
-    <div className={css({ display: 'flex', flexDir: 'column', gap: { base: 3, smDown: '6.85px' }, smDown: { mr: 4 } })}>
+    <div
+      className={css({
+        display: 'flex',
+        flexDir: 'column',
+        gap: { base: 3, smDown: '6.85px' },
+        w: { base: '210px', mdDown: '165px', smDown: '100px' },
+        smDown: { mr: 4 },
+      })}
+    >
       <p className={css({ fontSize: { base: 26, mdDown: 20, smDown: 16 }, fontWeight: 'semibold', lineHeight: 1.2 })}>
         {dueTitle}
       </p>
@@ -22,6 +30,7 @@ const GenericDueDate = ({ type, due, date }: GenericDueDateProps) => {
           fontSize: { base: 26, mdDown: 20, smDown: 12 },
           lineHeight: 1.2,
           fontWeight: 700,
+          justifyContent: 'space-between',
         })}
       >
         {dueDate}

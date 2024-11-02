@@ -26,7 +26,7 @@ const PointHistory = () => {
         flexDir: 'column',
         gap: 10,
         maxW: { base: '818px', mdDown: '400px', smDown: 'full' },
-        smDown: { w: 'full' },
+        smDown: { w: 'full', bgColor: 'lightGray.2' },
       })}
     >
       <div className={css({ display: { base: 'flex', smDown: 'none' }, alignItems: 'center', gap: 2.5 })}>
