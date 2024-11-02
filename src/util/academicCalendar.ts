@@ -2,7 +2,6 @@ import { match } from 'ts-pattern'
 
 import { GetCalendarYearlyResponse } from '@/api/types/calendar'
 import { Semester } from '@/types/timetable'
-import { numberToSemester } from '@/util/timetableUtil'
 
 /**
  * Semester에 해당하는 빈 학기 배열을 전달합니다
@@ -54,18 +53,18 @@ export const useAcademicSemester = () => {
 
   if (1 < month && month <= 7) {
     // 1학기
-    academicSemester.push({ year: `${year - 2}`, semester: numberToSemester[2], timetables: [] })
-    for (let i = 0; i < 4; i += 2) {
-      academicSemester.push({ year: `${year - 1}`, semester: numberToSemester[i], timetables: [] })
+    academicSemester.push({ year: `${year - 2}`, semester: 3, timetables: [] })
+    for (let i = 1; i <= 4; i += 2) {
+      academicSemester.push({ year: `${year - 1}`, semester: i, timetables: [] })
     }
-    academicSemester.push({ year: `${year}`, semester: numberToSemester[0], timetables: [] })
+    academicSemester.push({ year: `${year}`, semester: 1, timetables: [] })
   } else {
     // 2학기
-    for (let i = 0; i < 4; i += 2) {
-      academicSemester.push({ year: `${year - 1}`, semester: numberToSemester[i], timetables: [] })
+    for (let i = 1; i <= 4; i += 2) {
+      academicSemester.push({ year: `${year - 1}`, semester: i, timetables: [] })
     }
-    for (let i = 0; i < 4; i += 2) {
-      academicSemester.push({ year: `${year}`, semester: numberToSemester[i], timetables: [] })
+    for (let i = 1; i <= 4; i += 2) {
+      academicSemester.push({ year: `${year}`, semester: i, timetables: [] })
     }
   }
 

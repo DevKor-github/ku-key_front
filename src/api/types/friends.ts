@@ -1,5 +1,6 @@
 import { CharacterType } from '@/types/community'
 import { FriendInterface, friendStatusType } from '@/types/friends'
+import { SemesterType } from '@/types/timetable'
 
 export interface GetFriendListRequest {
   keyword: string | null
@@ -38,5 +39,5 @@ export interface PatchFriendshipRequestRequest {
 export interface GetFriendTimetableRequest {
   username: string
   year: string
-  semester: string
+  semester: SemesterType
 }

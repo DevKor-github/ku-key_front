@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 import CookiesRate from '@/components/courseReview/CookiesRate'
 import { courseSummary } from '@/lib/store/review'
 import { ReviewType } from '@/types/review'
+import { numberToSemester } from '@/util/timetableUtil'
 
 interface ReviewCardProps {
   data: ReviewType
@@ -16,7 +17,7 @@ const ReviewCard = ({ data }: ReviewCardProps) => {
   return (
     <div className={cx(shadow(), css({ display: 'flex', gap: 5, flexDir: 'column', rounded: 10, p: 5 }))}>
       <div className={css({ fontSize: 14, fontWeight: 700, color: 'lightGray.1' })}>
-        {data.year} {data.semester} semester
+        {data.year} {numberToSemester[data.semester]} semester
       </div>
       <div className={css({ display: 'flex', alignItems: 'center', justifyContent: 'space-between' })}>
         <div className={css({ display: 'flex', gap: 2.5, color: 'darkGray.2', alignItems: 'center' })}>

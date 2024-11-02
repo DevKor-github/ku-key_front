@@ -16,7 +16,7 @@ const SchedulePage = () => {
   const curSemester = academicSemester[dropdownIndex]
   const { data } = useGetAcademicCalendar({
     year: Number(curSemester.year),
-    semester: curSemester.semester === 'Spring' ? 1 : 2,
+    semester: curSemester.semester === 1 ? 1 : 2,
   })
 
   const setSemesterIndex = useCallback(

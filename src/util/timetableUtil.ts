@@ -1,26 +1,10 @@
 import html2canvas from 'html2canvas'
 
-import {
-  ColorType,
-  CourseType,
-  DayType,
-  GridType,
-  ScheduleType,
-  Semester,
-  SemesterType,
-  TimetableInfo,
-} from '@/types/timetable'
+import { ColorType, CourseType, DayType, GridType, ScheduleType, Semester, TimetableInfo } from '@/types/timetable'
 
 const dayToNumber: { [key in DayType]: number } = { Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6, Sun: 7 }
 
-export const numberToSemester: SemesterType[] = ['Spring', 'Summer', 'Fall', 'Winter']
-
-export const semesterToNumber: { [key in SemesterType]: number } = {
-  Spring: 1,
-  Summer: 2,
-  Fall: 3,
-  Winter: 4,
-}
+export const numberToSemester: string[] = ['_', 'Spring', 'Summer', 'Fall', 'Winter']
 
 export const ColorTypeArr: ColorType[] = ['Red', 'Blue', 'Green', 'Gray', 'Purple']
 
@@ -53,22 +37,22 @@ export const getCurSemester = () => {
   const year = KSTtoday.getFullYear()
   const month = KSTtoday.getMonth() + 1
 
-  let curSemester = 0
+  let semester = 0
 
   if (1 < month && month <= 6) {
     // 1학기
-    curSemester = 0
+    semester = 1
   } else if (6 < month && month <= 7) {
     // 여름학기
-    curSemester = 1
+    semester = 2
   } else if (7 < month && month <= 12) {
     // 2학기
-    curSemester = 2
+    semester = 3
   } else {
     // 겨울학기
-    curSemester = 3
+    semester = 4
   }
-  return { year, semester: numberToSemester[curSemester] }
+  return { year, semester }
 }
 
 /**
@@ -83,34 +67,34 @@ const calcSemester = (): Semester[] => {
 
   if (1 < month && month <= 6) {
     // 1학기
-    for (let i = 2; i < 4; i++) {
-      ret.push({ year: `${year - 1}`, semester: numberToSemester[i], timetables: [] })
+    for (let semester = 3; semester <= 4; semester++) {
+      ret.push({ year: `${year - 1}`, semester, timetables: [] })
     }
-    for (let i = 0; i < 4; i++) {
-      ret.push({ year: `${year}`, semester: numberToSemester[i], timetables: [] })
+    for (let semester = 1; semester <= 4; semester++) {
+      ret.push({ year: `${year}`, semester, timetables: [] })
     }
   } else if (6 < month && month <= 7) {
     // 여름학기
-    ret.push({ year: `${year - 1}`, semester: 'Winter', timetables: [] })
-    for (let i = 0; i < 4; i++) {
-      ret.push({ year: `${year}`, semester: numberToSemester[i], timetables: [] })
+    ret.push({ year: `${year - 1}`, semester: 4, timetables: [] })
+    for (let semester = 1; semester <= 4; semester++) {
+      ret.push({ year: `${year}`, semester, timetables: [] })
     }
-    ret.push({ year: `${year + 1}`, semester: 'Spring', timetables: [] })
+    ret.push({ year: `${year + 1}`, semester: 1, timetables: [] })
   } else if (7 < month && month <= 12) {
     // 2학기
-    for (let i = 0; i < 4; i++) {
-      ret.push({ year: `${year}`, semester: numberToSemester[i], timetables: [] })
+    for (let semester = 1; semester <= 4; semester++) {
+      ret.push({ year: `${year}`, semester, timetables: [] })
     }
-    for (let i = 0; i < 2; i++) {
-      ret.push({ year: `${year + 1}`, semester: numberToSemester[i], timetables: [] })
+    for (let semester = 1; semester <= 2; semester++) {
+      ret.push({ year: `${year + 1}`, semester, timetables: [] })
     }
   } else {
     // 겨울학기
-    for (let i = 1; i < 4; i++) {
-      ret.push({ year: `${year}`, semester: numberToSemester[i], timetables: [] })
+    for (let semester = 2; semester <= 4; semester++) {
+      ret.push({ year: `${year}`, semester, timetables: [] })
     }
-    for (let i = 0; i < 3; i++) {
-      ret.push({ year: `${year + 1}`, semester: numberToSemester[i], timetables: [] })
+    for (let semester = 1; semester <= 3; semester++) {
+      ret.push({ year: `${year + 1}`, semester, timetables: [] })
     }
   }
   return ret
@@ -270,5 +254,5 @@ export const convertHtmlToImage = (ref: HTMLDivElement | null, fileName: string)
 }
 
 export const makeSemesterDropdownList = (semesterList: Semester[]) => {
-  return semesterList.map(semester => `${semester.year} ${semester.semester} semester`)
+  return semesterList.map(semester => `${semester.year} ${numberToSemester[semester.semester]} semester`)
 }

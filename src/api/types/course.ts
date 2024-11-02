@@ -1,10 +1,11 @@
 import { SearchedCourse } from '@/types/course'
+import { SemesterType } from '@/types/timetable'
 
 export interface GetByCourseCodeRequest {
   courseCode: string
   cursorId?: number
   year: string
-  semester: number
+  semester: SemesterType
 }
 
 export interface GetCourseResponse {
@@ -18,14 +19,14 @@ export interface GetByCourseNameInMajorRequest {
   courseName: string
   cursorId?: number
   year: string
-  semester: number
+  semester: SemesterType
 }
 
 export interface GetByCourseNameInGeneralRequest {
   courseName: string
   cursorId?: number
   year: string
-  semester: number
+  semester: SemesterType
 }
 
 export interface GetByProfInMajorRequest {
@@ -33,17 +34,17 @@ export interface GetByProfInMajorRequest {
   professorName: string
   cursorId?: number
   year: string
-  semester: number
+  semester: SemesterType
 }
 export interface GetByProfInGeneralRequest {
   professorName: string
   cursorId?: number
   year: string
-  semester: number
+  semester: SemesterType
 }
 export interface GetInAcademicFoundationRequest {
   college: string
   cursorId?: number
   year: string
-  semester: number
+  semester: SemesterType
 }

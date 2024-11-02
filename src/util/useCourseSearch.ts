@@ -12,7 +12,6 @@ import {
 } from '@/api/hooks/course'
 import { GetCourseResponse } from '@/api/types/course'
 import { SemesterType } from '@/types/timetable'
-import { semesterToNumber } from '@/util/timetableUtil'
 
 export interface useCourseSearchProps {
   queryKeyword: string
@@ -29,9 +28,8 @@ export const useCourseSearch = ({
   classification,
   filter,
   year,
-  semester: semesterString,
+  semester,
 }: useCourseSearchProps) => {
-  const semester = semesterToNumber[semesterString]
   return useInfiniteQuery({
     queryKey: ['courseSearchResult', queryKeyword, category, classification, filter, year, semester],
     queryFn: ({ pageParam: cursorId }) => {
