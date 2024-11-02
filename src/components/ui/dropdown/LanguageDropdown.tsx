@@ -11,6 +11,7 @@ import Select, {
 } from 'react-select'
 
 import { Language, LanguageLabel, LanguageMap } from '@/lib/constants/language'
+import getKeys from '@/util/getKeys'
 
 type ThemeType =
   | { bgColor: '#E70000'; color: '#FFFFFF' }
@@ -94,8 +95,7 @@ interface LanguageDropdownProps {
 }
 const LanguageDropdown = ({ handleChange, curLanguage }: LanguageDropdownProps) => {
   const options = useMemo(() => {
-    const LanguageMapKeys = Object.keys(LanguageMap) as Array<LanguageLabel>
-    return LanguageMapKeys.map(key => {
+    return getKeys(LanguageMap).map(key => {
       return {
         value: LanguageMap[key],
         label: key,
@@ -125,7 +125,7 @@ const LanguageDropdown = ({ handleChange, curLanguage }: LanguageDropdownProps) 
       <components.Control
         {...props}
         className={css({
-          px: '14px',
+          px: { base: '14px', smDown: 2.5 },
           color: 'lightGray.1',
           fontSize: 16,
           fontWeight: 600,
