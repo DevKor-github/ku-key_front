@@ -21,7 +21,6 @@ const MyPost = () => {
         gap: '30px',
         mb: 25,
         w: { base: 610, mdDown: 320, smDown: 'full' },
-        overflowX: 'hidden',
       })}
     >
       {posts?.map((post, index) => (
