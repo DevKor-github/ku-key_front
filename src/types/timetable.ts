@@ -2,7 +2,7 @@ export const DayArray = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] as con
 
 export type DayType = (typeof DayArray)[number]
 
-export type SemesterType = 'Spring' | 'Summer' | 'Fall' | 'Winter'
+export type SemesterType = number
 
 export type ColorType = 'Red' | 'Blue' | 'Green' | 'Purple' | 'Gray'
 

@@ -1,4 +1,4 @@
-import { DayType } from '@/types/timetable'
+import { DayType, SemesterType } from '@/types/timetable'
 
 export interface SearchedCourse {
   id: number
@@ -11,7 +11,7 @@ export interface SearchedCourse {
   major: string
   hasExchangeSeat: true
   year: string
-  semester: string
+  semester: SemesterType
   syllabus: string
   totalRate: 0
   details?: courseDetail[]

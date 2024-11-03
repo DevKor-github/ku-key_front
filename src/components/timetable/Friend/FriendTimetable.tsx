@@ -5,12 +5,13 @@ import { useGetFriendTimetable } from '@/api/hooks/friends'
 import LectureGrid from '@/components/timetable/Grid/LectureGrid'
 import { TimeCell } from '@/components/timetable/Grid/TimetableLayout'
 import NullTimetable from '@/components/timetable/NullTimetable'
-import { getWeeknTimeList } from '@/util/timetableUtil'
+import { SemesterType } from '@/types/timetable'
+import { getWeeknTimeList, numberToSemester } from '@/util/timetableUtil'
 
 interface TimetableProps {
   user: string
   year: string
-  semester: string
+  semester: SemesterType
 }
 
 const FriendTimetable = forwardRef<HTMLDivElement, TimetableProps>(({ user, year, semester }, ref) => {
@@ -38,7 +39,7 @@ const FriendTimetable = forwardRef<HTMLDivElement, TimetableProps>(({ user, year
       >
         <div className={css({ display: 'flex', flexDir: 'row', gap: 2.5, alignItems: 'center' })}>
           <div className={css({ color: 'darkGray.1', fontSize: 20, fontWeight: 700, whiteSpace: 'nowrap' })}>
-            {`${year} ${semester} semester`}
+            {`${year} ${numberToSemester[semester]} semester`}
           </div>
           <div
             className={css({

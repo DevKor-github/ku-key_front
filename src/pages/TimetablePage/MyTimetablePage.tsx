@@ -90,6 +90,8 @@ const MyTimetablePage = () => {
         {createPortal(
           <LectureBottomSheet
             timetableId={semesterList[curSemester].timetables[curIndex].timetableId}
+            year={semesterList[curSemester].year}
+            semester={semesterList[curSemester].semester}
             visible={isSheetVisible}
           />,
           document.body,

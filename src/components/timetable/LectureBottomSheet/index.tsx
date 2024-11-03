@@ -9,12 +9,15 @@ import { usePostSchedule } from '@/api/hooks/schedule'
 import AddClass from '@/components/timetable/LectureBottomSheet/AddClass'
 import AddOnMyOwn, { AddOnMyOwnForm } from '@/components/timetable/LectureBottomSheet/AddOnMyOwn'
 import Drawer from '@/components/timetable/LectureBottomSheet/Drawer'
+import { SemesterType } from '@/types/timetable'
 
 interface LectureBottomSheetProps {
   timetableId: number
+  year: string
+  semester: SemesterType
   visible: boolean
 }
-const LectureBottomSheet = ({ timetableId, visible }: LectureBottomSheetProps) => {
+const LectureBottomSheet = ({ timetableId, visible, year, semester }: LectureBottomSheetProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const [sheetState, setSheetState] = useState<'class' | 'schedule' | null>(null)
 
@@ -99,7 +102,7 @@ const LectureBottomSheet = ({ timetableId, visible }: LectureBottomSheetProps) =
           {sheetState === 'schedule' ? (
             <AddOnMyOwn submitHandler={addOnMyOwnHandler} />
           ) : (
-            <AddClass timetableId={timetableId} />
+            <AddClass timetableId={timetableId} year={year} semester={semester} />
           )}
         </div>
       </motion.div>

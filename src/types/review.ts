@@ -1,4 +1,5 @@
 import { GetReviewSummaryResponse } from '@/api/types/courseReview'
+import { SemesterType } from '@/types/timetable'
 
 export interface ReviewType {
   id: number
@@ -6,7 +7,7 @@ export interface ReviewType {
   createdAt: string
   reviewer: string
   year: string
-  semester: string
+  semester: SemesterType
   myRecommend: boolean
   recommendCount: number
   text: string

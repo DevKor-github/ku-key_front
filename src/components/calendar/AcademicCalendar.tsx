@@ -18,7 +18,7 @@ const AcademicCalendar = ({ data, semester }: AcademicCalendarProps) => {
           className={cva({
             base: { display: 'flex', borderBottom: '2px solid {colors.darkGray.2}' },
             variants: { isStart: { true: { borderTop: '2px solid {colors.darkGray.2}' } } },
-          })({ isStart: (semester === 'Spring' && month === 2) || (semester === 'Fall' && month === 8) })}
+          })({ isStart: (semester === 1 && month === 2) || (semester === 3 && month === 8) })}
         >
           <div
             className={css({

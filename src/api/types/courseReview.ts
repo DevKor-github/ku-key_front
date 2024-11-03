@@ -58,7 +58,7 @@ export type GetMyReviewResponse = {
   textReview: string
   professorName: string
   year: string
-  semester: string
+  semester: SemesterType
   courseCode: string
   userId: number
 }[]

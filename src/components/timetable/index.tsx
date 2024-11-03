@@ -7,6 +7,7 @@ import TimetableLayout from '@/components/timetable/Grid/TimetableLayout'
 import OptionModal from '@/components/timetable/Modal/OptionModal'
 import { isBottomSheetVisible } from '@/lib/store/bottomSheet'
 import { GlobalModalStateType, TimetableInfo } from '@/types/timetable'
+import { numberToSemester } from '@/util/timetableUtil'
 
 const optBtn = cva({
   base: {
@@ -108,7 +109,7 @@ const Timetable = forwardRef<HTMLDivElement, TimetableProps>(
           )}
           <div className={css({ display: 'flex', flexDir: 'row', gap: 2.5, alignItems: 'center' })}>
             <div className={css({ color: 'darkGray.1', fontSize: 20, fontWeight: 700, whiteSpace: 'nowrap' })}>
-              {`${year} ${semester} semester`}
+              {`${year} ${numberToSemester[semester]} semester`}
             </div>
             <div
               className={css({

@@ -2,11 +2,13 @@ import { css, cx } from '@styled-system/css'
 import { shadow } from '@styled-system/recipes'
 
 import CookiesRate from '@/components/courseReview/CookiesRate'
+import { SemesterType } from '@/types/timetable'
+import { numberToSemester } from '@/util/timetableUtil'
 
 interface ReviewProps {
   courseName: string
   year: string
-  semester: string
+  semester: SemesterType
   rate: number
   text: string
 }
@@ -28,7 +30,7 @@ const Review = ({ courseName, year, semester, rate, text }: ReviewProps) => {
     >
       <div className={css({ color: 'black.2', fontSize: { base: 26, mdDown: 16 }, fontWeight: 600 })}>{courseName}</div>
       <div className={css({ fontSize: 14, fontWeight: 700, color: 'lightGray.1' })}>
-        {year} {semester} semester
+        {year} {numberToSemester[semester]} semester
       </div>
       <div className={css({ display: 'flex', gap: 2.5, color: 'darkGray.2', alignItems: 'center' })}>
         <span className={css({ fontSize: 18 })}>{rate.toFixed(1)}</span>
