@@ -3,7 +3,7 @@ import { createContext, PropsWithChildren, useContext, useMemo } from 'react'
 
 import { GetMyProfileResponse } from '@/api/types/user'
 
-type UserInfo = {
+export type UserInfo = {
   id: string
 } & GetMyProfileResponse
 
