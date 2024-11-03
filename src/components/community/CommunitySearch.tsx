@@ -12,7 +12,7 @@ import useIntersect from '@/util/useIntersect'
 import { useModal } from '@/util/useModal'
 
 type SearchParams = {
-  keyword: string
+  keyword?: string
 }
 const CommunitySearch = () => {
   const { data: posts, fetchNextPage, hasNextPage, isFetching } = useGetPostsAll()
@@ -21,8 +21,7 @@ const CommunitySearch = () => {
   const { isOpen, handleOpen } = useModal(true)
   const onSubmit = (searchParam: string) => {
     if (searchParam.length < 2 && searchParam.length > 0) return handleOpen()
-    const keyword = !searchParam.length ? { keyword: undefined } : { keyword: searchParam }
-    setQueryParams(keyword as SearchParams)
+    setQueryParams({ keyword: searchParam.length ? searchParam : undefined })
   }
 
   const keyword = queryParams.keyword ?? ''

@@ -17,7 +17,7 @@ const boardConfig: { [key: string]: number } = {
   information: 3,
 }
 type SearchParams = {
-  keyword: string
+  keyword?: string
 }
 const BoardSearch = () => {
   const { boardName } = useParams()
@@ -28,8 +28,7 @@ const BoardSearch = () => {
 
   const onSubmit = (searchParam: string) => {
     if (searchParam.length < 2 && searchParam.length > 0) return handleOpen()
-    const keyword = !searchParam.length ? { keyword: undefined } : { keyword: searchParam }
-    setQueryParams(keyword as SearchParams)
+    setQueryParams({ keyword: searchParam.length ? searchParam : undefined })
   }
 
   const keyword = queryParams.keyword ?? ''
