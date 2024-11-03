@@ -1,4 +1,5 @@
 import { css } from '@styled-system/css'
+import { match, P } from 'ts-pattern'
 
 import { useGetPostsAll } from '@/api/hooks/community'
 import PostPreview from '@/components/community/PostPreview'
@@ -6,28 +7,31 @@ import SectionTitle from '@/components/community/SectionTitle'
 import SearchBox from '@/components/timetable/SearchBox'
 import NoticeModal from '@/components/ui/modal/NoticeModal'
 import { COMMUNITY_SEARCH_MESSAGES } from '@/lib/messages/community'
+import { useQueryParams } from '@/util/hooks/useQueryParams'
 import useIntersect from '@/util/useIntersect'
 import { useModal } from '@/util/useModal'
-import { useSearch } from '@/util/useSearch'
 
+type SearchParams = {
+  keyword: string
+}
 const CommunitySearch = () => {
   const { data: posts, fetchNextPage, hasNextPage, isFetching } = useGetPostsAll()
-  const { searchParam, handleSetParam, deleteParam } = useSearch()
+
+  const [queryParams, setQueryParams] = useQueryParams<SearchParams>()
   const { isOpen, handleOpen } = useModal(true)
   const onSubmit = (searchParam: string) => {
-    if (searchParam === '') {
-      return deleteParam('keyword')
-    }
-    if (searchParam.length < 2) return handleOpen()
-    handleSetParam('keyword', searchParam)
+    if (searchParam.length < 2 && searchParam.length > 0) return handleOpen()
+    const keyword = !searchParam.length ? { keyword: undefined } : { keyword: searchParam }
+    setQueryParams(keyword as SearchParams)
   }
 
-  const keyword = searchParam.get('keyword')
+  const keyword = queryParams.keyword ?? ''
 
-  const handleTitle = () => {
-    if (!posts?.length) return `No search results for "${keyword}"`
-    return `"${keyword}" Search Results`
-  }
+  const handleTitle = () =>
+    match({ posts, keyword })
+      .with({ keyword: '' }, () => 'View recent posts')
+      .with({ posts: P.when(posts => !posts?.length) }, () => `No search results for "${keyword}"`)
+      .otherwise(() => `"${keyword}" Search Results`)
 
   const fetchNextRef = useIntersect(async (entry, observer) => {
     observer.unobserve(entry.target)
@@ -37,16 +41,12 @@ const CommunitySearch = () => {
   return (
     <div className={css({ display: 'flex', flexDir: 'column', maxW: 608 })}>
       <SearchBox
-        initialKeyword={keyword ?? ''}
+        initialKeyword={keyword}
         placeholder={keyword ?? 'Search posts from entire board'}
         onSubmit={onSubmit}
         cssProps={{ width: 608, borderRadius: '50px' }}
       />
-      {keyword ? (
-        <SectionTitle title={handleTitle()} />
-      ) : (
-        <SectionTitle title="View recent posts" description="Check out our recent posts" />
-      )}
+      <SectionTitle title={handleTitle()} description={keyword ? undefined : 'Check out our recent posts'} />
       <div className={css({ display: 'flex', mt: 20, flexDir: 'column', gap: '50px', mb: 25 })}>
         {posts?.map(post => (
           <div ref={fetchNextRef} key={post.id}>

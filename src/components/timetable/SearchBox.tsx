@@ -42,7 +42,7 @@ const SearchBox = ({ initialKeyword, placeholder, onSubmit, cssProps = {} }: Sea
       onSubmit={e => {
         e.preventDefault()
         onSubmit(inputKeyword)
-        setInputKeyword('')
+        // setInputKeyword('')
       }}
     >
       <input
