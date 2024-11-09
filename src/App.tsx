@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-// import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { Suspense } from 'react'
 import { useRoutes } from 'react-router-dom'
 import { Toaster } from 'sonner'
 
@@ -12,7 +12,11 @@ import ScrollToTop from '@/util/ScrollToTop'
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      refetchOnWindowFocus: false,
+      retry: false,
+      refetchOnMount: 'always',
+      refetchOnReconnect: true,
+      refetchOnWindowFocus: true,
+      staleTime: 1000 * 10, // 10 seconds
     },
   },
 })
@@ -25,12 +29,14 @@ function App() {
   }
   return (
     <QueryClientProvider client={queryClient}>
+      <AuthProvider />
       <UserProvider>
-        <AuthProvider />
-        <AmplitudeProvider />
-        <ScrollToTop />
         <Toaster position="top-right" />
         {router}
+        <ScrollToTop />
+        <Suspense fallback={null}>
+          <AmplitudeProvider />
+        </Suspense>
       </UserProvider>
     </QueryClientProvider>
   )

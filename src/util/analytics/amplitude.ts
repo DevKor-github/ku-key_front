@@ -7,9 +7,9 @@ export const initAmplitude = async (userId: string, apiKey: string, callback?: (
     userId,
     defaultTracking: {
       attribution: true,
-      pageViews: false,
+      pageViews: true,
       sessions: true,
-      formInteractions: false,
+      formInteractions: true,
     },
   })
     .promise.then(() => {

@@ -1,7 +1,9 @@
-import { useQueryClient } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { createContext, PropsWithChildren, useContext, useMemo } from 'react'
 
+import { getMyProfile } from '@/api/hooks/user'
 import { GetMyProfileResponse } from '@/api/types/user'
+import { useAuth } from '@/util/auth/useAuth'
 
 export type UserInfo = {
   id: string
@@ -10,20 +12,27 @@ export type UserInfo = {
 const UserContext = createContext<UserInfo | null>(null)
 
 export const UserProvider = ({ children }: PropsWithChildren) => {
-  const queryClient = useQueryClient()
+  const { authState } = useAuth()
+
+  const { data: userProfile } = useQuery({
+    queryKey: ['myProfile'],
+    queryFn: getMyProfile,
+    enabled: !!authState,
+  })
 
   const user = useMemo(() => {
-    const userProfile = queryClient.getQueryData<GetMyProfileResponse>(['myProfile'])
-    const userId = queryClient.getQueryData<string>(['userId'])
-    if (!userProfile || !userId) return null
+    if (!authState || !userProfile) return null
+    const userId = localStorage.getItem('userId')
+    if (!userId) return null
     return { ...userProfile, id: userId }
-  }, [])
+  }, [authState, userProfile])
 
   return <UserContext.Provider value={user}>{children}</UserContext.Provider>
 }
 
 export const useUserData = () => {
   const userContext = useContext(UserContext)
-  if (!userContext) throw new Error('Cannot find UserProvider')
+  const auth = useAuth()
+  if (!userContext && auth.authState) throw new Error('Cannot find UserProvider')
   return userContext
 }
