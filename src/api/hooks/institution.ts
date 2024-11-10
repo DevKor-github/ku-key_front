@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
 
 import {
   ClubProfileProps,
@@ -16,7 +16,7 @@ const getHotClub = async () => {
 }
 
 export const useGetHotClub = () => {
-  return useQuery({ queryKey: ['hotClub'], queryFn: getHotClub, initialData: [] as ClubProfileProps[] })
+  return useSuspenseQuery({ queryKey: ['hotClub'], queryFn: getHotClub })
 }
 
 const getClubRecommended = async (isLogin: boolean) => {
@@ -26,10 +26,9 @@ const getClubRecommended = async (isLogin: boolean) => {
 
 export const useGetClubRecommended = () => {
   const isLogin = useAuth().authState ?? false
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ['clubRecommended', isLogin],
     queryFn: () => getClubRecommended(isLogin),
-    initialData: [] as ClubProfileProps[],
   })
 }
 

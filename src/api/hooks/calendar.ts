@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query'
 
 import { CalendarResponse, GetCalendarYearlyRequest, GetCalendarYearlyResponse } from '@/api/types/calendar'
 import { getInitialAcademicCalendar } from '@/util/academicCalendar'
@@ -10,10 +10,10 @@ const getCalendar = async (year: number, month: number) => {
 }
 
 export const useGetCalendar = (year: number, month: number) => {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ['calendar', year, month],
     queryFn: () => getCalendar(year, month),
-    initialData: [{ date: new Date(), event: [], eventCount: 0 }] as CalendarResponse[],
+    // initialData: [{ date: new Date(), event: [], eventCount: 0 }] as CalendarResponse[],
   })
 }
 
@@ -40,7 +40,7 @@ const getBannerImages = async () => {
 }
 
 export const useGetBannerImages = () => {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ['banner-images'],
     queryFn: getBannerImages,
   })
