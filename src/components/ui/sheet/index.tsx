@@ -1,5 +1,3 @@
-'use client'
-
 import * as SheetPrimitive from '@radix-ui/react-dialog'
 import { css, cx, RecipeVariantProps } from '@styled-system/css'
 import { sheet } from '@styled-system/recipes'

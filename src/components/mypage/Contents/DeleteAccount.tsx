@@ -5,7 +5,7 @@ import { useCallback } from 'react'
 import { useDeleteUser } from '@/api/hooks/user'
 import Button from '@/components/ui/button'
 import AlertModal from '@/components/ui/modal/AlertModal'
-import { useModal } from '@/util/useModal'
+import { useModal } from '@/util/hooks/useModal'
 
 const SectionStyle = css({
   display: 'flex',

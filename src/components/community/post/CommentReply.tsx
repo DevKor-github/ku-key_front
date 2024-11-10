@@ -12,7 +12,7 @@ import { postAtom } from '@/lib/store/post'
 import { CommentProps } from '@/types/community'
 import { getCommentUsername } from '@/util/getCommentUsername'
 import { isAuthorMatchingPostAnonymity } from '@/util/isAuthorMatchingPostAnonymity'
-import { useModal } from '@/util/useModal'
+import { useModal } from '@/util/hooks/useModal'
 
 interface CommentReplyProps {
   reply: Omit<CommentProps, 'reply'>

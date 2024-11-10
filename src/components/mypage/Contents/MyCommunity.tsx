@@ -5,7 +5,7 @@ import LikedPost from '@/components/mypage/Contents/Community/LikedPost'
 import MyComments from '@/components/mypage/Contents/Community/MyComments'
 import MyPost from '@/components/mypage/Contents/Community/MyPost'
 import MyScrap from '@/components/mypage/Contents/Community/MyScrap'
-import { useSearch } from '@/util/useSearch'
+import { useSearch } from '@/util/hooks/useSearch'
 
 const ButtonStyle = cva({
   base: {

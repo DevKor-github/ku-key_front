@@ -16,7 +16,7 @@ import AlertModal from '@/components/ui/modal/AlertModal'
 import { REPORT_MESSAGES } from '@/lib/messages/community'
 import { persistedPostData, postAtom } from '@/lib/store/post'
 import { BoardType } from '@/types/community'
-import { useModal } from '@/util/useModal'
+import { useModal } from '@/util/hooks/useModal'
 
 const Post = memo(() => {
   const postAtomData = useAtomValue(postAtom)

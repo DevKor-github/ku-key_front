@@ -13,7 +13,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import AuthNavigate from '@/lib/router/AuthNavigate'
 import { LoginSchema } from '@/lib/zod/login-schema'
-import { useRegisterForm } from '@/util/useRegisterForm'
+import { useRegisterForm } from '@/util/hooks/useRegisterForm'
 const Login = () => {
   const [maintain, setMaintain] = useState(false)
   const { mutate: mutateLogin } = useLogIn()

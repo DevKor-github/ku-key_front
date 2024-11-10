@@ -5,7 +5,7 @@ import PASS_3DAYS from '@/assets/pass_3days.png'
 import PASS_7DAYS from '@/assets/pass_7days.png'
 import Sugar from '@/assets/Sugar_md.png'
 import AlertModal from '@/components/ui/modal/AlertModal'
-import { useModal } from '@/util/useModal'
+import { useModal } from '@/util/hooks/useModal'
 
 const COST = {
   3: 30,

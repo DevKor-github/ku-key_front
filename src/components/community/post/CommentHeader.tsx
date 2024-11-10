@@ -10,7 +10,7 @@ import UtilButton from '@/components/community/post/UtilButton'
 import AlertModal from '@/components/ui/modal/AlertModal'
 import { REPORT_MESSAGES } from '@/lib/messages/community'
 import { getFormattedTimeString } from '@/util/getFormattedTimeString'
-import { useModal } from '@/util/useModal'
+import { useModal } from '@/util/hooks/useModal'
 
 interface CommentHeaderProps {
   username: string

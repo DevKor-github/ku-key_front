@@ -2,7 +2,7 @@ import { css, cva } from '@styled-system/css'
 import { Search, X } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-import { useSearch } from '@/util/useSearch'
+import { useSearch } from '@/util/hooks/useSearch'
 
 interface SearchAreaProps {
   onSubmit: (inputKeyword: string) => void

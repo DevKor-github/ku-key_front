@@ -3,7 +3,7 @@ import { Fragment } from 'react/jsx-runtime'
 
 import { useGetMyReactPost } from '@/api/hooks/community'
 import PostPreview from '@/components/community/PostPreview'
-import useIntersect from '@/util/useIntersect'
+import useIntersect from '@/util/hooks/useIntersect'
 
 const LikedPost = () => {
   const { data: posts, fetchNextPage, hasNextPage, isFetching } = useGetMyReactPost()

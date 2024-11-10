@@ -3,7 +3,7 @@ import { Fragment } from 'react/jsx-runtime'
 
 import { useGetMyScrap } from '@/api/hooks/community'
 import PostPreview from '@/components/community/PostPreview'
-import useIntersect from '@/util/useIntersect'
+import useIntersect from '@/util/hooks/useIntersect'
 
 const MyScrap = () => {
   const { data: posts, fetchNextPage, hasNextPage, isFetching } = useGetMyScrap()

@@ -18,8 +18,8 @@ import {
 } from '@/api/types/community'
 import { CommentProps, PostPreviewByBoardMeta, PostPreviewProps, PostViewProps, ReactionType } from '@/types/community'
 import { apiInterface } from '@/util/axios/custom-axios'
-import { useGetPostQueryKey } from '@/util/useGetPostQueryKey'
-import { useSearch } from '@/util/useSearch'
+import { useGetPostQueryKey } from '@/util/hooks/useGetPostQueryKey'
+import { useSearch } from '@/util/hooks/useSearch'
 
 const getBoard = async () => {
   const response = await apiInterface.get('board')

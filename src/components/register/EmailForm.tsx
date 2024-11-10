@@ -7,7 +7,7 @@ import Button from '@/components/ui/button'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { RegisterFormProps } from '@/types/register'
-import { useTimer } from '@/util/useTimer'
+import { useTimer } from '@/util/hooks/useTimer'
 
 const EmailForm = memo(({ form, handleValidation, valid }: RegisterFormProps<'email'>) => {
   const [emailSent, setEmailSent] = useState(false)

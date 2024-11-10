@@ -4,7 +4,7 @@ import { isEqual } from 'date-fns'
 import { CalendarResponse } from '@/api/types/calendar'
 import Day from '@/components/calendar/Day'
 import WeekHeader from '@/components/calendar/WeekHeader'
-import { useCalendar } from '@/util/useCalendar'
+import { useCalendar } from '@/util/hooks/useCalendar'
 
 interface CalendarContainerProps {
   calendarEvent: CalendarResponse[]

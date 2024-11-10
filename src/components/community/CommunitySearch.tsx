@@ -7,9 +7,9 @@ import SectionTitle from '@/components/community/SectionTitle'
 import SearchBox from '@/components/timetable/SearchBox'
 import NoticeModal from '@/components/ui/modal/NoticeModal'
 import { COMMUNITY_SEARCH_MESSAGES } from '@/lib/messages/community'
+import useIntersect from '@/util/hooks/useIntersect'
+import { useModal } from '@/util/hooks/useModal'
 import { useQueryParams } from '@/util/hooks/useQueryParams'
-import useIntersect from '@/util/useIntersect'
-import { useModal } from '@/util/useModal'
 
 type SearchParams = {
   keyword?: string

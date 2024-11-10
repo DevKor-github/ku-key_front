@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
-import { useIsomorphicLayoutEffect } from '@/util/useIsomorphicLayoutEffect'
-import { UseMediaQueryOptions } from '@/util/useMediaQuery'
+import { useIsomorphicLayoutEffect } from '@/util/hooks/useIsomorphicLayoutEffect'
+import { UseMediaQueryOptions } from '@/util/hooks/useMediaQuery'
 
 const IS_SERVER = typeof window === 'undefined'
 
