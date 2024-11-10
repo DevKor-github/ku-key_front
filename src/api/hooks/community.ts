@@ -119,11 +119,9 @@ const getPostById = async (postId: number) => {
 }
 
 export const useGetPostById = (postId: number) => {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ['postById', postId],
     queryFn: () => getPostById(postId),
-    initialData: {} as PostViewProps,
-    enabled: !isNaN(postId),
   })
 }
 

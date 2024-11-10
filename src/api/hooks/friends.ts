@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 
 import {
@@ -25,7 +25,7 @@ const getFriendList = async ({ keyword }: GetFriendListRequest) => {
  * 전체 친구 목록을 조회하거나, keyword를 query로 받아 친구 목록을 필터링하여 조회합니다.
  */
 export const useGetFriendList = ({ keyword }: GetFriendListRequest) => {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ['friendList', keyword],
     queryFn: () => getFriendList({ keyword }),
     initialData: [],
