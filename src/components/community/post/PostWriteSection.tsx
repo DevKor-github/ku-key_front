@@ -15,7 +15,7 @@ import { POST_MESSAGES } from '@/lib/messages/community'
 import { initialPostData, persistedPostData } from '@/lib/store/post'
 import { ActionType } from '@/types/post'
 import { createFileFromUrl } from '@/util/create-file-from-url'
-import { useFile } from '@/util/useFile'
+import { useFile } from '@/util/hooks/useFile'
 
 enum boardConfig {
   main = 0,

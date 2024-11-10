@@ -1,5 +1,3 @@
-'use client'
-
 import * as MenubarPrimitive from '@radix-ui/react-menubar'
 import { css, cx } from '@styled-system/css'
 import { menubar } from '@styled-system/recipes'

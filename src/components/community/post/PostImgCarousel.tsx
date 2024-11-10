@@ -7,7 +7,7 @@ import { memo } from 'react'
 
 import PostImgContainer from '@/components/community/post/PostImgContainer'
 import { postAtom } from '@/lib/store/post'
-import { usePrevNextButtons } from '@/util/usePrevNextButtons'
+import { usePrevNextButtons } from '@/util/hooks/usePrevNextButtons'
 
 const PostImgCarousel = memo(() => {
   const postAtomData = useAtomValue(postAtom)
