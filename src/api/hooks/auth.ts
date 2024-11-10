@@ -26,6 +26,7 @@ export const useLogIn = () => {
         verified: data.verified,
         deviceCode: data.deviceCode,
       })
+      localStorage.setItem('userId', data.userId)
     },
   })
 }

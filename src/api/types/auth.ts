@@ -5,6 +5,7 @@ export interface LoginResponse {
   }
   verified: boolean
   deviceCode: string
+  userId: string
 }
 
 export interface LoginRequest {

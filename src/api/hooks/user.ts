@@ -34,7 +34,7 @@ export const useDeleteUser = () => {
   })
 }
 
-const getMyProfile = async () => {
+export const getMyProfile = async () => {
   const response = await apiInterface.get<GetMyProfileResponse>('/user/profile')
   return response.data
 }

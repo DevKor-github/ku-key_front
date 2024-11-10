@@ -8,7 +8,6 @@ import App from '@/App'
 import { authStore } from '@/lib/store/auth'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  // <React.StrictMode>
   <Provider store={authStore}>
     <HelmetProvider>
       <BrowserRouter>
@@ -16,5 +15,4 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       </BrowserRouter>
     </HelmetProvider>
   </Provider>,
-  // </React.StrictMode>
 )
