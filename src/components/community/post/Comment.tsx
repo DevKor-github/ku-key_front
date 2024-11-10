@@ -11,7 +11,7 @@ import { POST_MESSAGES } from '@/lib/messages/community'
 import { postAtom } from '@/lib/store/post'
 import { getCommentUsername } from '@/util/getCommentUsername'
 import { isAuthorMatchingPostAnonymity } from '@/util/isAuthorMatchingPostAnonymity'
-import { useModal } from '@/util/useModal'
+import { useModal } from '@/util/hooks/useModal'
 
 interface CommentProps {
   isOpen: boolean

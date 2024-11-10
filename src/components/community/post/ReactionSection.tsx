@@ -10,7 +10,7 @@ import ReactionView from '@/components/community/post/ReactionView'
 import NoticeModal from '@/components/ui/modal/NoticeModal'
 import { postAtom } from '@/lib/store/post'
 import { ReactionType } from '@/types/community'
-import { useModal } from '@/util/useModal'
+import { useModal } from '@/util/hooks/useModal'
 
 const ReactionSection = memo(() => {
   const postAtomData = useAtomValue(postAtom)

@@ -12,8 +12,8 @@ import NoticeModal from '@/components/ui/modal/NoticeModal'
 import { HEADER_MESSAGE } from '@/lib/messages/header'
 import { headerRouteConfig } from '@/lib/router/header-route'
 import { useAuth } from '@/util/auth/useAuth'
-import { useMediaQuery } from '@/util/useMediaQuery'
-import { useModal } from '@/util/useModal'
+import { useMediaQuery } from '@/util/hooks/useMediaQuery'
+import { useModal } from '@/util/hooks/useModal'
 
 const Header = () => {
   const location = useLocation()

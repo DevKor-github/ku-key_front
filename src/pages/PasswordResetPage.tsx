@@ -7,7 +7,7 @@ import Button from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import AlertModal from '@/components/ui/modal/AlertModal'
 import AuthNavigate from '@/lib/router/AuthNavigate'
-import { useModal } from '@/util/useModal'
+import { useModal } from '@/util/hooks/useModal'
 
 const PasswordResetPage = () => {
   const [email, setEmail] = useState('')

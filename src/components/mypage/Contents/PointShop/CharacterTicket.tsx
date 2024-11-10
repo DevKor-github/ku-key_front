@@ -5,7 +5,7 @@ import Sugar from '@/assets/Sugar_sm.png'
 import AlertModal from '@/components/ui/modal/AlertModal'
 import { characterConfig } from '@/components/ui/profile/CharacterConfig'
 import { CharacterType } from '@/types/community'
-import { useModal } from '@/util/useModal'
+import { useModal } from '@/util/hooks/useModal'
 
 const COST = [200, 0, 30, 100, 200, 300, 400]
 

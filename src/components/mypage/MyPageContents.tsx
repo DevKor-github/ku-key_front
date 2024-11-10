@@ -13,7 +13,7 @@ import MyPoint from '@/components/mypage/Contents/MyPoint'
 import PointHistory from '@/components/mypage/Contents/PointHistory'
 import PublicProfile from '@/components/mypage/Contents/PublicProfile'
 import { PAGE_LIST, PageType } from '@/types/myPage'
-import { useSearch } from '@/util/useSearch'
+import { useSearch } from '@/util/hooks/useSearch'
 
 interface MyPageContentsProps {
   myProfileData: GetMyProfileResponse

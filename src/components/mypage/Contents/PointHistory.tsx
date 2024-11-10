@@ -4,7 +4,7 @@ import { CircleAlert } from 'lucide-react'
 import { useGetPointHistory } from '@/api/hooks/user'
 import PointHistoryRow from '@/components/mypage/Contents/PointHistory/PointHistoryRow'
 import SugarModal from '@/components/ui/modal/SugarModal'
-import { useModal } from '@/util/useModal'
+import { useModal } from '@/util/hooks/useModal'
 
 const CellHeaderStyle = css({
   flexShrink: 0,

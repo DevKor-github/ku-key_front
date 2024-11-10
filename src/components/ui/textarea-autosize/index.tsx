@@ -3,7 +3,7 @@ import { forwardRef, memo } from 'react'
 import { TextareaAutosizeProps } from 'react-textarea-autosize'
 import TextareaAutosize from 'react-textarea-autosize'
 
-import { useTextArea } from '@/util/useTextArea'
+import { useTextArea } from '@/util/hooks/useTextArea'
 
 type MemoizedTextAreaAutosizeProps = TextareaAutosizeProps & { css?: SystemStyleObject }
 export const MemoizedTextAreaAutosize = memo(

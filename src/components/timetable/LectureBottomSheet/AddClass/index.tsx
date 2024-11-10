@@ -11,9 +11,9 @@ import FilterSelector from '@/components/timetable/LectureBottomSheet/AddClass/F
 import SearchLectureCard from '@/components/timetable/LectureBottomSheet/AddClass/SearchLectureCard'
 import SearchBox from '@/components/timetable/SearchBox'
 import { FilterType, SemesterType } from '@/types/timetable'
+import { useCourseSearch, useCourseSearchProps } from '@/util/hooks/useCourseSearch'
+import useIntersect from '@/util/hooks/useIntersect'
 import { filterTypeMap } from '@/util/timetableUtil'
-import { useCourseSearch, useCourseSearchProps } from '@/util/useCourseSearch'
-import useIntersect from '@/util/useIntersect'
 
 const categoryList = ['All Class', 'Major', 'General Studies', 'Academic Foundations'] as const
 

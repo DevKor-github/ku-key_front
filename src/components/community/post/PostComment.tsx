@@ -7,7 +7,7 @@ import { usePostComment } from '@/api/hooks/community'
 import { Checkbox } from '@/components/ui/checkbox'
 import { MemoizedTextAreaAutosize } from '@/components/ui/textarea-autosize'
 import { postAtom } from '@/lib/store/post'
-import { useTextArea } from '@/util/useTextArea'
+import { useTextArea } from '@/util/hooks/useTextArea'
 
 const PostComment = memo(() => {
   const { value, onChange, clear } = useTextArea('')

@@ -8,7 +8,7 @@ import AttendanceBtn from '@/components/header/notification/AttendanceBtn'
 import NoticeModal from '@/components/ui/modal/NoticeModal'
 import { HEADER_MESSAGE } from '@/lib/messages/header'
 import { useAuth } from '@/util/auth/useAuth'
-import { useModal } from '@/util/useModal'
+import { useModal } from '@/util/hooks/useModal'
 
 const NotifyWindow = () => {
   const { isOpen, handleOpen } = useModal(true)

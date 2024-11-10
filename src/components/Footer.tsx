@@ -10,7 +10,7 @@ import NoticeModal from '@/components/ui/modal/NoticeModal'
 import { HEADER_MESSAGE } from '@/lib/messages/header'
 import { footerRouteConfig } from '@/lib/router/footer-route'
 import { useAuth } from '@/util/auth/useAuth'
-import { useModal } from '@/util/useModal'
+import { useModal } from '@/util/hooks/useModal'
 // import notionIcon from '@/assets/notion.svg'
 
 const supportApps = [

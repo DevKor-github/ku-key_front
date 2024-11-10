@@ -16,8 +16,8 @@ import { REGISTER_MESSAGES } from '@/lib/messages/register'
 import AuthNavigate from '@/lib/router/AuthNavigate'
 import { RegisterFormSchema } from '@/lib/zod/register-schema'
 import { ProgressState, RegistrationKey, RegistrationState, ValidState } from '@/types/register'
-import { useModal } from '@/util/useModal'
-import { useRegisterForm } from '@/util/useRegisterForm'
+import { useModal } from '@/util/hooks/useModal'
+import { useRegisterForm } from '@/util/hooks/useRegisterForm'
 
 const RegisterPage = memo(() => {
   const navigate = useNavigate()

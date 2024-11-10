@@ -4,7 +4,7 @@ import { useCallback } from 'react'
 
 import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger } from '@/components/ui/menubar'
 import ModalPortal from '@/components/ui/modal/ModalPortal'
-import { useModal } from '@/util/useModal'
+import { useModal } from '@/util/hooks/useModal'
 
 interface UtilButtonProps {
   isComment: boolean

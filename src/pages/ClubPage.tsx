@@ -9,7 +9,7 @@ import SearchArea from '@/components/club/SearchArea'
 import MetaTag from '@/components/MetaTag'
 import { Checkbox } from '@/components/ui/checkbox'
 import { useAuth } from '@/util/auth/useAuth'
-import { useSearch } from '@/util/useSearch'
+import { useSearch } from '@/util/hooks/useSearch'
 
 const ClubPage = () => {
   const isLogin = useAuth().authState ?? false

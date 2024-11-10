@@ -3,7 +3,7 @@ import { css } from '@styled-system/css'
 import { useGetHotPosts } from '@/api/hooks/community'
 import BoardPostPreview from '@/components/community/Boards/BoardPostPreview'
 import SectionTitle from '@/components/community/SectionTitle'
-import useIntersect from '@/util/useIntersect'
+import useIntersect from '@/util/hooks/useIntersect'
 
 const HotBoard = () => {
   const { data, fetchNextPage, hasNextPage, isFetching } = useGetHotPosts()
