@@ -1,5 +1,4 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { Suspense } from 'react'
 import { useRoutes } from 'react-router-dom'
 import { Toaster } from 'sonner'
 
@@ -25,7 +24,7 @@ function App() {
   const router = useRoutes(routes)
 
   if (process.env.NODE_ENV === 'development') {
-    window.__REACT_QUERY_STATE__ = queryClient
+    window.__REACT_QUERY_STATE__ = queryClient.getQueryCache().findAll()
   }
   return (
     <QueryClientProvider client={queryClient}>
@@ -34,9 +33,7 @@ function App() {
         <Toaster position="top-right" />
         {router}
         <ScrollToTop />
-        <Suspense fallback={null}>
-          <AmplitudeProvider />
-        </Suspense>
+        <AmplitudeProvider />
       </UserProvider>
     </QueryClientProvider>
   )

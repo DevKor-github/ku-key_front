@@ -1,16 +1,11 @@
-import { Identify, init, setUserId } from '@amplitude/analytics-browser'
+import { identify, Identify, init, setUserId } from '@amplitude/analytics-browser'
 
 import { UserInfo } from '@/providers/UserProvider'
 
-export const initAmplitude = async (userId: string, apiKey: string, callback?: () => void) => {
-  init(apiKey, {
+export const initAmplitude = async (userId: string, callback?: () => void) => {
+  init(import.meta.env.VITE_API_AMPLITUDE_API_KEY, {
     userId,
-    defaultTracking: {
-      attribution: true,
-      pageViews: true,
-      sessions: true,
-      formInteractions: true,
-    },
+    defaultTracking: true,
   })
     .promise.then(() => {
       console.log('[[[[[Amplitude Initiated]]]]]')
@@ -34,4 +29,5 @@ export const setInitialUserProperties = (user: UserInfo) => {
   identifyObj.set('exchange_period', exchangePeriod)
   identifyObj.set('level', user.level)
   identifyObj.set('point', user.point)
+  identify(identifyObj)
 }

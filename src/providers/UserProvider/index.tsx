@@ -14,7 +14,7 @@ const UserContext = createContext<UserInfo | null>(null)
 export const UserProvider = ({ children }: PropsWithChildren) => {
   const { authState } = useAuth()
 
-  const { data: userProfile } = useQuery({
+  const { data: userProfile, isLoading } = useQuery({
     queryKey: ['myProfile'],
     queryFn: getMyProfile,
     enabled: !!authState,
@@ -27,6 +27,7 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
     return { ...userProfile, id: userId }
   }, [authState, userProfile])
 
+  if (isLoading) return null
   return <UserContext.Provider value={user}>{children}</UserContext.Provider>
 }
 
