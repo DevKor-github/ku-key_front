@@ -70,14 +70,14 @@ const ClubPage = () => {
       />
       <div
         className={css({
-          h: { base: '400px', lgDown: '300px', mdDown: '200px' },
+          h: { base: '400px', lgDown: '300px', mdDown: '200px', smDown: '150px' },
           bgPosition: 'center',
           bgSize: 'cover',
           bgRepeat: 'no-repeat',
-          fontSize: { base: 64, lgDown: 48, mdDown: 32 },
+          fontSize: { base: 64, lgDown: 48, mdDown: 32, smDown: 24 },
           fontWeight: 700,
           color: 'white',
-          px: { base: 58, lgDown: 20, mdDown: 5 },
+          px: { base: 58, lgDown: 20, mdDown: 5, smDown: '30px' },
           display: 'flex',
           alignItems: 'center',
         })}
@@ -88,7 +88,7 @@ const ClubPage = () => {
       <div
         className={css({
           px: { base: 58, lgDown: 20, mdDown: 5 },
-          pt: { base: 29, lgDown: 20, mdDown: 10 },
+          pt: { base: 29, lgDown: 20, mdDown: 10, smDown: 2.5 },
           display: 'flex',
           flexDir: 'column',
           alignItems: 'center',
@@ -113,6 +113,7 @@ const ClubPage = () => {
                   alignItems: 'center',
                   gap: 4,
                   transform: { base: 'translate3d(80px, 0, 0)', mdDown: 'initial' },
+                  smDown: { w: 'full' },
                 })}
               >
                 <SearchArea onSubmit={handleSubmit} clearKeywordParam={clearKeyword} />
@@ -136,12 +137,13 @@ const ClubPage = () => {
                     fontSize: { base: 30, lgDown: 24, mdDown: 18 },
                     fontWeight: 700,
                     color: 'darkGray.1',
+                    smDown: { display: 'none' },
                   })}
                 >
                   {`'${query.keyword}' Search Results`}
                 </div>
               )}
-              <div className={css({ display: 'flex', flexDir: 'column', gap: { base: 15, mdDown: 10 } })}>
+              <div className={css({ display: 'flex', flexDir: 'column', gap: { base: 15, mdDown: 10, smDown: 2.5 } })}>
                 {data?.length ? (
                   data?.map(club => <ClubCard key={club.clubId} clubData={club} handleLikeClick={handleLikeClick} />)
                 ) : (

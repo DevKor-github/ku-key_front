@@ -43,7 +43,7 @@ const SearchArea = ({ onSubmit, clearKeywordParam }: SearchAreaProps) => {
       className={cva({
         base: {
           position: 'relative',
-          width: { base: '450px', smDown: '380px', xsDown: '340px' },
+          width: { base: '450px', smDown: 'full' },
           h: 12,
           display: 'flex',
           alignItems: 'center',
