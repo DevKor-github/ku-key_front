@@ -9,6 +9,7 @@ import SearchArea from '@/components/club/SearchArea'
 import MetaTag from '@/components/MetaTag'
 import { Checkbox } from '@/components/ui/checkbox'
 import { useAuth } from '@/util/auth/useAuth'
+import useDrawer from '@/util/hooks/useDrawer'
 import { useSearch } from '@/util/hooks/useSearch'
 
 const ClubPage = () => {
@@ -61,8 +62,12 @@ const ClubPage = () => {
     else alert('Please sign in to use!')
   }, [handleSetParam, query.wishList, isLogin])
 
+  // 이런 식으로 써도 되나요
+  const { Drawer, open: openDrawer } = useDrawer()
+
   return (
     <>
+      <Drawer />
       <MetaTag
         title="Club"
         description="Meet the various clubs at Korea University! Find out what clubs there are and what each club's characteristics are."
@@ -130,6 +135,9 @@ const ClubPage = () => {
                 </div>
               </div>
             </div>
+            <button className={css({ display: { base: 'none', smDown: 'initial' } })} onClick={openDrawer}>
+              열기
+            </button>
             <div className={css({ display: 'flex', flexDir: 'column', gap: 11 })}>
               {query.keyword && (
                 <div
