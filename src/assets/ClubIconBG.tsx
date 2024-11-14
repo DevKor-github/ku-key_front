@@ -41,9 +41,9 @@ const ClubIconBG = () => (
         width="85.8224"
         height="118.082"
         filterUnits="userSpaceOnUse"
-        color-interpolation-filters="sRGB"
+        colorInterpolationFilters="sRGB"
       >
-        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
         <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
         <feGaussianBlur stdDeviation="12.5928" result="effect1_foregroundBlur_6298_6674" />
       </filter>
@@ -54,9 +54,9 @@ const ClubIconBG = () => (
         width="80.3146"
         height="107.562"
         filterUnits="userSpaceOnUse"
-        color-interpolation-filters="sRGB"
+        colorInterpolationFilters="sRGB"
       >
-        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
         <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
         <feGaussianBlur stdDeviation="12.5928" result="effect1_foregroundBlur_6298_6674" />
       </filter>
@@ -67,9 +67,9 @@ const ClubIconBG = () => (
         width="85.8224"
         height="118.082"
         filterUnits="userSpaceOnUse"
-        color-interpolation-filters="sRGB"
+        colorInterpolationFilters="sRGB"
       >
-        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
         <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
         <feGaussianBlur stdDeviation="12.5928" result="effect1_foregroundBlur_6298_6674" />
       </filter>
@@ -80,9 +80,9 @@ const ClubIconBG = () => (
         width="97.9709"
         height="141.282"
         filterUnits="userSpaceOnUse"
-        color-interpolation-filters="sRGB"
+        colorInterpolationFilters="sRGB"
       >
-        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
         <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
         <feGaussianBlur stdDeviation="12.5928" result="effect1_foregroundBlur_6298_6674" />
       </filter>
