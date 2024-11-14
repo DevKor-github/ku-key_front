@@ -7,7 +7,6 @@ const useScrollLock = () => {
   const lockScroll = () => {
     scrollPosition.current = window.pageYOffset
     body.style.overflow = 'hidden'
-    body.style.pointerEvents = 'none'
     body.style.position = 'fixed'
     body.style.top = `-${scrollPosition.current}px`
     body.style.left = '0'
@@ -16,7 +15,6 @@ const useScrollLock = () => {
 
   const unlockScroll = () => {
     body.style.removeProperty('overflow')
-    body.style.removeProperty('pointer-events')
     body.style.removeProperty('position')
     body.style.removeProperty('top')
     body.style.removeProperty('left')
