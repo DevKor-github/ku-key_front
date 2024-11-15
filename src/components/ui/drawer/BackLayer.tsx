@@ -2,10 +2,9 @@ import { css } from '@styled-system/css'
 import { motion } from 'framer-motion'
 
 interface BackLayerProps {
-  isOpen: boolean
   close: () => void
 }
-const BackLayer = ({ isOpen, close }: BackLayerProps) => {
+const BackLayer = ({ close }: BackLayerProps) => {
   return (
     <motion.div
       className={css({
@@ -16,10 +15,11 @@ const BackLayer = ({ isOpen, close }: BackLayerProps) => {
         h: '100dvh',
         bgColor: 'black',
         opacity: 0,
-        pointerEvents: 'none',
       })}
-      variants={{ opened: { opacity: 0.24, pointerEvents: 'all' }, closed: { opacity: 0, pointerEvents: 'none' } }}
-      animate={isOpen ? 'opened' : 'closed'}
+      variants={{ opened: { opacity: 0.24 }, closed: { opacity: 0 } }}
+      initial={'closed'}
+      animate={'opened'}
+      exit={'closed'}
       onClick={close}
     />
   )

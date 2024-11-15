@@ -1,4 +1,5 @@
 import { css } from '@styled-system/css'
+import { ChevronDown } from 'lucide-react'
 import { useCallback, useMemo } from 'react'
 
 import { useGetClubSearch, usePostClubLike } from '@/api/hooks/institution'
@@ -67,7 +68,9 @@ const ClubPage = () => {
 
   return (
     <>
-      <Drawer />
+      <Drawer openHeight={200}>
+        <h3>choose the club field</h3>
+      </Drawer>
       <MetaTag
         title="Club"
         description="Meet the various clubs at Korea University! Find out what clubs there are and what each club's characteristics are."
@@ -97,7 +100,7 @@ const ClubPage = () => {
           display: 'flex',
           flexDir: 'column',
           alignItems: 'center',
-          bgColor: 'bg.gray',
+          bgColor: { base: 'bg.gray', smDown: 'white' },
         })}
       >
         <div
@@ -110,34 +113,64 @@ const ClubPage = () => {
           })}
         >
           <CategorySelector curCategory={query.category} setCategory={setCategory} />
-          <div className={css({ display: 'flex', flexDir: 'column', gap: { base: 20, mdDown: 10 }, pb: 30 })}>
-            <div className={css({ display: 'flex', justifyContent: 'center' })}>
-              <div
-                className={css({
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 4,
-                  transform: { base: 'translate3d(80px, 0, 0)', mdDown: 'initial' },
-                  smDown: { w: 'full' },
-                })}
-              >
-                <SearchArea onSubmit={handleSubmit} clearKeywordParam={clearKeyword} />
+          <div
+            className={css({ display: 'flex', flexDir: 'column', gap: { base: 20, mdDown: 10, smDown: 4 }, pb: 30 })}
+          >
+            <div
+              className={css({
+                display: 'flex',
+                flexDir: 'column',
+                alignItems: 'flex-end',
+                gap: 2.5,
+                mb: 2.5,
+              })}
+            >
+              <div className={css({ display: 'flex', justifyContent: 'center', w: 'full' })}>
                 <div
                   className={css({
-                    display: { base: 'flex', mdDown: 'none' },
+                    display: 'flex',
                     alignItems: 'center',
-                    gap: 2.5,
-                    px: 2.5,
+                    gap: 4,
+                    transform: { base: 'translate3d(80px, 0, 0)', mdDown: 'initial' },
+                    smDown: { w: 'full' },
                   })}
                 >
-                  <Checkbox checked={query.wishList} onCheckedChange={handleWishList} />
-                  <p className={css({ textStyle: 'heading4_M', color: 'darkGray.2' })}>View only I like</p>
+                  <SearchArea onSubmit={handleSubmit} clearKeywordParam={clearKeyword} />
+                  <div
+                    className={css({
+                      display: { base: 'flex', mdDown: 'none' },
+                      alignItems: 'center',
+                      gap: 2.5,
+                      px: 2.5,
+                    })}
+                  >
+                    <Checkbox checked={query.wishList} onCheckedChange={handleWishList} />
+                    <p className={css({ textStyle: 'heading4_M', color: 'darkGray.2' })}>View only I like</p>
+                  </div>
                 </div>
               </div>
+              <button
+                className={css({
+                  display: { base: 'none', smDown: 'flex' },
+                  gap: 1,
+                  border: '1px solid {colors.lightGray.1}',
+                  rounded: '6px',
+                  px: 2.5,
+                  py: 1,
+                  alignItems: 'center',
+                  color: 'darkGray.2',
+                  fontSize: 14,
+                  lineHeight: 1.2,
+                  fontWeight: 400,
+                })}
+                onClick={() => {
+                  openDrawer()
+                }}
+              >
+                <p>club field</p>
+                <ChevronDown size={14} />
+              </button>
             </div>
-            <button className={css({ display: { base: 'none', smDown: 'initial' } })} onClick={openDrawer}>
-              열기
-            </button>
             <div className={css({ display: 'flex', flexDir: 'column', gap: 11 })}>
               {query.keyword && (
                 <div
@@ -153,7 +186,9 @@ const ClubPage = () => {
               )}
               <div className={css({ display: 'flex', flexDir: 'column', gap: { base: 15, mdDown: 10, smDown: 2.5 } })}>
                 {data?.length ? (
-                  data?.map(club => <ClubCard key={club.clubId} clubData={club} handleLikeClick={handleLikeClick} />)
+                  data?.map(club => (
+                    <ClubCard key={`clubId-${club.clubId}`} clubData={club} handleLikeClick={handleLikeClick} />
+                  ))
                 ) : (
                   <div className={css({ color: 'darkGray.1', fontSize: { base: 20, mdDown: 16 } })}>
                     No search results

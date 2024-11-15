@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { ReactNode, useState } from 'react'
 
 import Drawer from '@/components/ui/drawer'
 import useScrollLock from '@/util/hooks/useScrollLock'
@@ -16,7 +16,11 @@ const useDrawer = () => {
     unlockScroll()
   }
 
-  const drawer = () => <Drawer isOpen={isOpen} openHeight={100} close={close} />
+  const drawer = ({ children, openHeight }: { children: ReactNode; openHeight: number }) => (
+    <Drawer isOpen={isOpen} openHeight={openHeight} open={open} close={close}>
+      {children}
+    </Drawer>
+  )
 
   return { Drawer: drawer, open, close }
 }
