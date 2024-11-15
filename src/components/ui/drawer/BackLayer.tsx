@@ -15,8 +15,12 @@ const BackLayer = ({ close }: BackLayerProps) => {
         h: '100dvh',
         bgColor: 'black',
         opacity: 0,
+        zIndex: 100,
       })}
-      variants={{ opened: { opacity: 0.24 }, closed: { opacity: 0 } }}
+      variants={{
+        opened: { opacity: 0.24 },
+        closed: { opacity: 0 },
+      }}
       initial={'closed'}
       animate={'opened'}
       exit={'closed'}

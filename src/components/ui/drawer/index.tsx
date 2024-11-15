@@ -51,8 +51,8 @@ const Drawer = ({ isOpen, openHeight, close, children }: DrawerProps) => {
           bgColor: 'white',
           rounded: '20px 20px 0 0',
           willChange: 'transform',
-          p: '15px 20px 40px 20px',
-          zIndex: 10,
+          pt: '15px',
+          zIndex: 101,
           display: 'flex',
           flexDir: 'column',
         })}

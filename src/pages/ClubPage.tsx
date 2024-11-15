@@ -3,6 +3,7 @@ import { ChevronDown } from 'lucide-react'
 import { useCallback, useMemo } from 'react'
 
 import { useGetClubSearch, usePostClubLike } from '@/api/hooks/institution'
+import CategoryDrawer from '@/components/club/CategoryDrawer'
 import CategorySelector from '@/components/club/CategorySelector'
 import ClubCard from '@/components/club/ClubCard'
 import { CategoryType } from '@/components/club/constants'
@@ -68,8 +69,8 @@ const ClubPage = () => {
 
   return (
     <>
-      <Drawer isOpen={isDrawerOpen} openHeight={200} close={closeDrawer}>
-        <h3>choose the club field</h3>
+      <Drawer isOpen={isDrawerOpen} openHeight={390} close={closeDrawer}>
+        <CategoryDrawer setCategory={setCategory} close={closeDrawer} resultCount={data?.length ?? 0} />
       </Drawer>
       <MetaTag
         title="Club"
