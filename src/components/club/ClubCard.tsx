@@ -26,7 +26,7 @@ const ClubCard = memo(({ clubData, handleLikeClick }: ClubCardProps) => {
       <div className={css({ display: 'flex', gap: { base: 5, smDown: 2.5 }, smDown: { h: '100px' } })}>
         <img
           className={css({
-            w: { base: '294px', mdDown: '80px', smDown: 'fit-content' },
+            w: { base: '294px', mdDown: '80px', smDown: '100px' },
             h: '100%',
             objectFit: 'cover',
             rounded: { base: 10, smDown: 4 },

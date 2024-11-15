@@ -1,4 +1,4 @@
-import { css } from '@styled-system/css'
+import { css, cva } from '@styled-system/css'
 import { ChevronDown } from 'lucide-react'
 import { useCallback, useMemo } from 'react'
 
@@ -6,7 +6,7 @@ import { useGetClubSearch, usePostClubLike } from '@/api/hooks/institution'
 import CategoryDrawer from '@/components/club/CategoryDrawer'
 import CategorySelector from '@/components/club/CategorySelector'
 import ClubCard from '@/components/club/ClubCard'
-import { CategoryType } from '@/components/club/constants'
+import { CATEGORY_LIST, CategoryType } from '@/components/club/constants'
 import SearchArea from '@/components/club/SearchArea'
 import MetaTag from '@/components/MetaTag'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -151,24 +151,40 @@ const ClubPage = () => {
                 </div>
               </div>
               <button
-                className={css({
-                  display: { base: 'none', smDown: 'flex' },
-                  gap: 1,
-                  border: '1px solid {colors.lightGray.1}',
-                  rounded: '6px',
-                  px: 2.5,
-                  py: 1,
-                  alignItems: 'center',
-                  color: 'darkGray.2',
-                  fontSize: 14,
-                  lineHeight: 1.2,
-                  fontWeight: 400,
-                })}
+                className={cva({
+                  base: {
+                    display: { base: 'none', smDown: 'flex' },
+                    gap: 1,
+                    border: '1px solid {colors.lightGray.1}',
+                    rounded: '6px',
+                    px: 2.5,
+                    py: 1,
+                    alignItems: 'center',
+                    color: 'darkGray.2',
+                    fontSize: 14,
+                    lineHeight: 1.2,
+                    fontWeight: 400,
+                  },
+                  variants: {
+                    selected: {
+                      true: {
+                        borderColor: 'red.2',
+                        color: 'red.2',
+                        gap: '3px',
+                      },
+                    },
+                  },
+                })({ selected: query.category !== null })}
                 onClick={() => {
                   openDrawer()
                 }}
               >
                 <p>club field</p>
+                {query.category !== null && (
+                  <div className={css({ w: '18px', h: '18px' })}>
+                    {CATEGORY_LIST.find(category => category.type === query.category)?.icon({ color: '#E70000' })}
+                  </div>
+                )}
                 <ChevronDown size={14} />
               </button>
             </div>
