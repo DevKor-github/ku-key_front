@@ -8,7 +8,6 @@ import BackLayer from '@/components/ui/drawer/BackLayer'
 interface DrawerProps {
   isOpen: boolean
   openHeight: number
-  open: () => void
   close: () => void
   children: ReactNode
 }
@@ -18,7 +17,7 @@ interface DrawerProps {
  * 이미 Timetable에서 사용하는 고유한 UI 이름을 BottomSheet으로 명명하여
  * Drawer로 사용
  */
-const Drawer = ({ isOpen, openHeight, open, close, children }: DrawerProps) => {
+const Drawer = ({ isOpen, openHeight, close, children }: DrawerProps) => {
   const expandedHeight = useMemo(() => Math.min(openHeight, window.innerHeight), [openHeight])
 
   const onDragEnd = useCallback(
@@ -33,14 +32,14 @@ const Drawer = ({ isOpen, openHeight, open, close, children }: DrawerProps) => {
 
       if (!isOverThreshold) return
 
-      info.offset.y < 0 ? open() : close()
+      info.offset.y >= 0 && close()
     },
-    [open, close],
+    [close],
   )
 
   return createPortal(
     <AnimatePresence>
-      {isOpen && <BackLayer key="back_layer" close={close} />}
+      {isOpen && <BackLayer close={close} />}
       <motion.div
         key="drawer_body"
         className={css({

@@ -9,6 +9,7 @@ import { CategoryType } from '@/components/club/constants'
 import SearchArea from '@/components/club/SearchArea'
 import MetaTag from '@/components/MetaTag'
 import { Checkbox } from '@/components/ui/checkbox'
+import Drawer from '@/components/ui/drawer'
 import { useAuth } from '@/util/auth/useAuth'
 import useDrawer from '@/util/hooks/useDrawer'
 import { useSearch } from '@/util/hooks/useSearch'
@@ -63,12 +64,11 @@ const ClubPage = () => {
     else alert('Please sign in to use!')
   }, [handleSetParam, query.wishList, isLogin])
 
-  // 이런 식으로 써도 되나요
-  const { Drawer, open: openDrawer } = useDrawer()
+  const { isOpen: isDrawerOpen, open: openDrawer, close: closeDrawer } = useDrawer()
 
   return (
     <>
-      <Drawer openHeight={200}>
+      <Drawer isOpen={isDrawerOpen} openHeight={200} close={closeDrawer}>
         <h3>choose the club field</h3>
       </Drawer>
       <MetaTag
