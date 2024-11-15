@@ -36,56 +36,63 @@ const ClubCard = memo(({ clubData, handleLikeClick }: ClubCardProps) => {
           src={clubData.imageUrl}
           alt={clubData.name}
         />
-        <div
-          className={css({
-            display: 'flex',
-            flexDir: 'column',
-            justifyContent: 'space-between',
-            gap: { base: 3, smDown: 1 },
-            smDown: { py: 1 },
-          })}
-        >
-          {isMobile ? (
-            <>
-              <div className={css({ display: 'flex', flexDir: 'column', gap: 1.5 })}>
-                <div className={css({ display: 'flex', flexDir: 'column' })}>
-                  <h2 className={css({ fontSize: 15, lineHeight: 1.2, fontWeight: 500, color: 'black' })}>
-                    {clubData.name}
-                  </h2>
-                  <p className={css({ fontSize: 10, fontWeight: 400, lineHeight: 1.2, color: 'darkGray.1' })}>
-                    {clubData.summary}
-                  </p>
-                </div>
-                <div
-                  className={css({
-                    display: 'flex',
-                    flexDir: 'column',
-                    gap: 0.5,
-                    fontSize: 9,
-                    fontWeight: 400,
-                    lineHeight: 1.2,
-                    '& p': {
-                      lineClamp: 1,
-                    },
-                  })}
-                >
-                  <p>Regular Meeting | {upperCaseHighlight(clubData.regularMeeting)}</p>
-                  <p>Recruitment Period | {upperCaseHighlight(clubData.recruitmentPeriod)}</p>
-                </div>
+        {isMobile ? (
+          <div
+            className={css({
+              display: 'flex',
+              flexDir: 'column',
+              justifyContent: 'space-between',
+              gap: 1,
+              py: 1,
+            })}
+          >
+            <div className={css({ display: 'flex', flexDir: 'column', gap: 1.5 })}>
+              <div className={css({ display: 'flex', flexDir: 'column' })}>
+                <h2 className={css({ fontSize: 15, lineHeight: 1.2, fontWeight: 500, color: 'black' })}>
+                  {clubData.name}
+                </h2>
+                <p className={css({ fontSize: 10, fontWeight: 400, lineHeight: 1.2, color: 'darkGray.1' })}>
+                  {clubData.summary}
+                </p>
               </div>
-              <p
+              <div
                 className={css({
-                  fontWeight: 400,
-                  color: 'darkGray.1',
+                  display: 'flex',
+                  flexDir: 'column',
+                  gap: 0.5,
                   fontSize: 9,
-                  lineClamp: 2,
+                  fontWeight: 400,
                   lineHeight: 1.2,
+                  '& p': {
+                    lineClamp: 1,
+                  },
                 })}
               >
-                {clubData.description}
-              </p>
-            </>
-          ) : (
+                <p>Regular Meeting | {upperCaseHighlight(clubData.regularMeeting)}</p>
+                <p>Recruitment Period | {upperCaseHighlight(clubData.recruitmentPeriod)}</p>
+              </div>
+            </div>
+            <p
+              className={css({
+                fontWeight: 400,
+                color: 'darkGray.1',
+                fontSize: 9,
+                lineClamp: 2,
+                lineHeight: 1.2,
+              })}
+            >
+              {clubData.description}
+            </p>
+          </div>
+        ) : (
+          <div
+            className={css({
+              display: 'flex',
+              flexDir: 'column',
+              justifyContent: 'space-between',
+              gap: 3,
+            })}
+          >
             <div className={css({ display: 'flex', flexDir: 'column', gap: { base: 4, mdDown: 2 } })}>
               <div className={css({ display: 'flex', flexDir: 'column', gap: 1.5 })}>
                 <p className={css({ fontSize: { base: 18, mdDown: 12 } })}>{clubData.summary}</p>
@@ -115,12 +122,12 @@ const ClubCard = memo(({ clubData, handleLikeClick }: ClubCardProps) => {
                 {clubData.description}
               </p>
             </div>
-          )}
-          <div className={css({ display: { base: 'flex', smDown: 'none' }, gap: 2 })}>
-            {clubData.instagramLink && <ContactButton type="instagram" url={clubData.instagramLink} />}
-            {clubData.youtubeLink && <ContactButton type="youtube" url={clubData.youtubeLink} />}
+            <div className={css({ display: 'flex', gap: 2 })}>
+              {clubData.instagramLink && <ContactButton type="instagram" url={clubData.instagramLink} />}
+              {clubData.youtubeLink && <ContactButton type="youtube" url={clubData.youtubeLink} />}
+            </div>
           </div>
-        </div>
+        )}
       </div>
       <button
         className={cva({
