@@ -71,7 +71,7 @@ const CategoryDrawer = ({ setCategory, close, resultCount }: CategoryDrawerProps
           })}
           onClick={close}
         >
-          <strong className={css({ fontWeight: 700 })}>{resultCount}</strong>개의 결과보기
+          Found&nbsp;<strong className={css({ fontWeight: 700 })}>{resultCount}</strong>&nbsp;Results
         </button>
       </div>
     </div>
