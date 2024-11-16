@@ -4,7 +4,7 @@ import { isAxiosError } from 'axios'
 import { formatDistanceToNow } from 'date-fns'
 import { useAtomValue, useSetAtom } from 'jotai'
 import { Eye } from 'lucide-react'
-import { memo, useCallback } from 'react'
+import { memo, useCallback, useMemo } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { useDeletePost, useReportPost } from '@/api/hooks/community'
@@ -59,6 +59,12 @@ const Post = memo(() => {
     )
   }, [handleButtonClose, mutateReportPost, postAtomData.id])
 
+  const isPostEditable = useMemo(() => {
+    if (!postAtomData.isMyPost) return false
+    if (boardName !== 'question') return true
+    return postAtomData.comments.length <= 0
+  }, [boardName, postAtomData])
+
   return (
     <div className={postCard()}>
       <section
@@ -88,8 +94,8 @@ const Post = memo(() => {
           <UtilButton
             isComment={false}
             isMine={postAtomData.isMyPost}
-            isEditable={postAtomData.isMyPost && (boardName !== 'question' || postAtomData.comments.length < 0)}
-            isDeletable={postAtomData.isMyPost && (boardName !== 'question' || postAtomData.comments.length < 0)}
+            isEditable={isPostEditable}
+            isDeletable={isPostEditable}
             handleNavigation={handleNavigation}
             handleDelete={handleOpen}
             handleReport={handleOpen}
