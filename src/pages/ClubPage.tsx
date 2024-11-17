@@ -1,6 +1,6 @@
 import { css, cva } from '@styled-system/css'
 import { ChevronDown } from 'lucide-react'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 
 import { useGetClubSearch, usePostClubLike } from '@/api/hooks/institution'
 import CategoryDrawer from '@/components/club/CategoryDrawer'
@@ -11,12 +11,16 @@ import SearchArea from '@/components/club/SearchArea'
 import MetaTag from '@/components/MetaTag'
 import { Checkbox } from '@/components/ui/checkbox'
 import Drawer from '@/components/ui/drawer'
+import ClubModal from '@/components/ui/modal/ClubModal'
+import { ClubInterface } from '@/types/club'
 import { useAuth } from '@/util/auth/useAuth'
 import useDrawer from '@/util/hooks/useDrawer'
+import { useMediaQueryByName } from '@/util/hooks/useMediaQueryByName'
 import { useSearch } from '@/util/hooks/useSearch'
 
 const ClubPage = () => {
   const isLogin = useAuth().authState ?? false
+  const isMobile = useMediaQueryByName('smDown')
 
   const { searchParam, handleSetParam, deleteParam } = useSearch()
   const query = useMemo(
@@ -66,12 +70,18 @@ const ClubPage = () => {
   }, [handleSetParam, query.wishList, isLogin])
 
   const { isOpen: isDrawerOpen, open: openDrawer, close: closeDrawer } = useDrawer()
+  const [selectedClub, setSelectedClub] = useState<ClubInterface | null>(null)
+
+  const handleModalLayoutClose = useCallback(() => {
+    setSelectedClub(null)
+  }, [])
 
   return (
     <>
       <Drawer isOpen={isDrawerOpen} openHeight={390} close={closeDrawer}>
         <CategoryDrawer setCategory={setCategory} close={closeDrawer} resultCount={data?.length ?? 0} />
       </Drawer>
+      <ClubModal clubData={selectedClub} handleModalLayoutClose={handleModalLayoutClose} />
       <MetaTag
         title="Club"
         description="Meet the various clubs at Korea University! Find out what clubs there are and what each club's characteristics are."
@@ -217,7 +227,14 @@ const ClubPage = () => {
               <div className={css({ display: 'flex', flexDir: 'column', gap: { base: 15, mdDown: 10, smDown: 2.5 } })}>
                 {data?.length ? (
                   data?.map(club => (
-                    <ClubCard key={`clubId-${club.clubId}`} clubData={club} handleLikeClick={handleLikeClick} />
+                    <button
+                      className={css({ w: 'full', textAlign: 'left' })}
+                      onClick={() => {
+                        isMobile && setSelectedClub(club)
+                      }}
+                    >
+                      <ClubCard key={`clubId-${club.clubId}`} clubData={club} handleLikeClick={handleLikeClick} />
+                    </button>
                   ))
                 ) : (
                   <div className={css({ color: 'darkGray.1', fontSize: { base: 20, mdDown: 16 } })}>

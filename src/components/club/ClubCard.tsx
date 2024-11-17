@@ -2,7 +2,7 @@ import { css, cva } from '@styled-system/css'
 import { Heart } from 'lucide-react'
 import { memo } from 'react'
 
-import ContactButton from '@/components/club/\bContactButton'
+import ContactButton from '@/components/club/ContactButton'
 import { ClubInterface } from '@/types/club'
 import { useMediaQueryByName } from '@/util/hooks/useMediaQueryByName'
 import upperCaseHighlight from '@/util/upperCaseHighlight'
