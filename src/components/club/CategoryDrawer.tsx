@@ -8,8 +8,9 @@ interface CategoryDrawerProps {
   close: () => void
   setCategory: (target: CategoryType) => void
   resultCount: number
+  selectedCategory: CategoryType | null
 }
-const CategoryDrawer = ({ setCategory, close, resultCount }: CategoryDrawerProps) => {
+const CategoryDrawer = ({ setCategory, close, resultCount, selectedCategory }: CategoryDrawerProps) => {
   return (
     <div className={css({ pt: '15px', position: 'relative', h: '390px', px: '20px' })}>
       <h3 className={css({ fontWeight: 600, fontSize: 16, mb: '14px' })}>choose the club field</h3>
@@ -21,6 +22,7 @@ const CategoryDrawer = ({ setCategory, close, resultCount }: CategoryDrawerProps
                 key={category.type}
                 icon={category.icon}
                 text={category.text}
+                selected={category.type === selectedCategory}
                 onClick={() => setCategory(category.type)}
               />
             ),

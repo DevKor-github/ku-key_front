@@ -79,7 +79,12 @@ const ClubPage = () => {
   return (
     <>
       <Drawer isOpen={isDrawerOpen} openHeight={390} close={closeDrawer}>
-        <CategoryDrawer setCategory={setCategory} close={closeDrawer} resultCount={data?.length ?? 0} />
+        <CategoryDrawer
+          setCategory={setCategory}
+          close={closeDrawer}
+          resultCount={data?.length ?? 0}
+          selectedCategory={query.category}
+        />
       </Drawer>
       <ClubModal clubData={selectedClub} handleModalLayoutClose={handleModalLayoutClose} />
       <MetaTag
