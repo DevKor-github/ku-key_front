@@ -96,7 +96,7 @@ const ClubPage = () => {
       </div>
       <div
         className={css({
-          px: { base: 58, lgDown: 20, mdDown: 5 },
+          px: { base: 58, lgDown: 20, mdDown: 5, smDown: 0 },
           pt: { base: 29, lgDown: 20, mdDown: 10, smDown: 2.5 },
           display: 'flex',
           flexDir: 'column',
@@ -115,7 +115,12 @@ const ClubPage = () => {
         >
           <CategorySelector curCategory={query.category} setCategory={setCategory} />
           <div
-            className={css({ display: 'flex', flexDir: 'column', gap: { base: 20, mdDown: 10, smDown: 4 }, pb: 30 })}
+            className={css({
+              display: 'flex',
+              flexDir: 'column',
+              gap: { base: 20, mdDown: 10, smDown: 0 },
+              pb: { base: 30, smDown: 0 },
+            })}
           >
             <div
               className={css({
@@ -124,6 +129,7 @@ const ClubPage = () => {
                 alignItems: 'flex-end',
                 gap: 2.5,
                 mb: 2.5,
+                smDown: { px: 5 },
               })}
             >
               <div className={css({ display: 'flex', justifyContent: 'center', w: 'full' })}>
@@ -188,7 +194,14 @@ const ClubPage = () => {
                 <ChevronDown size={14} />
               </button>
             </div>
-            <div className={css({ display: 'flex', flexDir: 'column', gap: 11 })}>
+            <div
+              className={css({
+                display: 'flex',
+                flexDir: 'column',
+                gap: 11,
+                smDown: { px: 5, bgColor: 'bg.gray', py: 4 },
+              })}
+            >
               {query.keyword && (
                 <div
                   className={css({

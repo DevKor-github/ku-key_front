@@ -16,6 +16,9 @@ interface DrawerProps {
  *
  * 이미 Timetable에서 사용하는 고유한 UI 이름을 BottomSheet으로 명명하여
  * Drawer로 사용
+ *
+ * useDrawer hook에서 제공하는 isOpen과 close 이용,
+ * openHeight는 열릴 때의 높이를 의미
  */
 const Drawer = ({ isOpen, openHeight, close, children }: DrawerProps) => {
   const expandedHeight = useMemo(() => Math.min(openHeight, window.innerHeight), [openHeight])
