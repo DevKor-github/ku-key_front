@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 
+import { useErrorHandledMutation, UseErrorHandledMutationOption } from '@/api/hooks/useErrorHandledMutation'
 import { LoginRequest, LoginResponse, LogoutRequest } from '@/api/types/auth'
 import { useAuth } from '@/util/auth/useAuth'
 import { apiInterface } from '@/util/axios/custom-axios'
@@ -14,9 +15,9 @@ const logIn = async ({ email, password, keepingLogin }: LoginRequest) => {
   return response.data
 }
 
-export const useLogIn = () => {
+export const useLogIn = (props: UseErrorHandledMutationOption) => {
   const { signIn } = useAuth()
-  return useMutation({
+  return useErrorHandledMutation({
     mutationFn: logIn,
     onSuccess: data => {
       console.log('logged:', new Date().toTimeString())
@@ -28,6 +29,7 @@ export const useLogIn = () => {
       })
       localStorage.setItem('userId', data.userId)
     },
+    ...props,
   })
 }
 
@@ -39,7 +41,7 @@ const logOut = async ({ deviceCode }: LogoutRequest) => {
 export const useLogOut = () => {
   const { signOut } = useAuth()
   const navigate = useNavigate()
-  return useMutation({
+  return useErrorHandledMutation({
     mutationFn: logOut,
     onSuccess: () => {
       signOut()
@@ -78,7 +80,7 @@ const postResetEmail = async (email: string) => {
 }
 
 export const usePostResetEmail = () => {
-  return useMutation({
+  return useErrorHandledMutation({
     mutationFn: postResetEmail,
   })
 }

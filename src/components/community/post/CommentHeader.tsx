@@ -1,6 +1,5 @@
 import { css } from '@styled-system/css'
 import { boardTag } from '@styled-system/recipes'
-import { isAxiosError } from 'axios'
 import { User, UserPen } from 'lucide-react'
 import { useCallback, useState } from 'react'
 import { useLocation } from 'react-router-dom'
@@ -8,7 +7,6 @@ import { useLocation } from 'react-router-dom'
 import { useDeleteComment, useReportComment } from '@/api/hooks/community'
 import UtilButton from '@/components/community/post/UtilButton'
 import AlertModal from '@/components/ui/modal/AlertModal'
-import { REPORT_MESSAGES } from '@/lib/messages/community'
 import { getFormattedTimeString } from '@/util/getFormattedTimeString'
 import { useModal } from '@/util/hooks/useModal'
 
@@ -44,15 +42,7 @@ const CommentHeader = ({
     mutateReportComment(
       { commentId, reason: 'Inappropriate' },
       {
-        onSuccess: () => {
-          handleButtonClose()
-        },
-        onError: error => {
-          if (isAxiosError(error) && error.response?.data.message === REPORT_MESSAGES.REPORT_ERROR) {
-            handleButtonClose()
-            alert(REPORT_MESSAGES.REPORT_ERROR)
-          }
-        },
+        onSettled: () => handleButtonClose(),
       },
     )
   }, [commentId, handleButtonClose, mutateReportComment])

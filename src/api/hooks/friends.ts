@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 
+import { useErrorHandledMutation } from '@/api/hooks/useErrorHandledMutation'
 import {
   GetFriendListRequest,
   GetFriendListResponse,
@@ -61,7 +62,7 @@ const postFriendship = async ({ toUsername }: PostFriendshipRequest) => {
  */
 export const useAddFriendship = () => {
   const queryClient = useQueryClient()
-  return useMutation({
+  return useErrorHandledMutation({
     mutationFn: postFriendship,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['searchResult'] })
@@ -96,7 +97,7 @@ const patchFriendshipRequest = async ({ friendshipId }: PatchFriendshipRequestRe
  */
 export const useReceiveFriendship = () => {
   const queryClient = useQueryClient()
-  return useMutation({
+  return useErrorHandledMutation({
     mutationFn: patchFriendshipRequest,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['receivedFriends'] })
@@ -116,7 +117,7 @@ const deleteFriendshipRequest = async ({ friendshipId }: PatchFriendshipRequestR
  */
 export const useDeleteFriendshipRequest = () => {
   const queryClient = useQueryClient()
-  return useMutation({
+  return useErrorHandledMutation({
     mutationFn: deleteFriendshipRequest,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['receivedFriends'] })
@@ -135,7 +136,7 @@ const deleteFriendship = async ({ friendshipId }: PatchFriendshipRequestRequest)
  */
 export const useDeleteFriendship = () => {
   const queryClient = useQueryClient()
-  return useMutation({
+  return useErrorHandledMutation({
     mutationFn: deleteFriendship,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['friendList'] })
@@ -178,7 +179,7 @@ const deleteSentRequest = async ({ friendshipId }: PatchFriendshipRequestRequest
  */
 export const useDeleteSentRequest = () => {
   const queryClient = useQueryClient()
-  return useMutation({
+  return useErrorHandledMutation({
     mutationFn: deleteSentRequest,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['requestedFriends'] })

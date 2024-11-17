@@ -1,8 +1,8 @@
 import { css } from '@styled-system/css'
-import { isAxiosError } from 'axios'
 import { ShieldAlert } from 'lucide-react'
 import { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 
 import { usePatchExchangeDay } from '@/api/hooks/user'
 import { GetMyProfileResponse } from '@/api/types/user'
@@ -10,6 +10,7 @@ import { ProfileFormTitle, ProfileFormWrapper } from '@/components/mypage/Conten
 import ProfileChangeHeader from '@/components/mypage/ProfileChangeHeader'
 import Button from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import Toast from '@/components/ui/toast'
 import dateFormatter from '@/util/dateFormatter'
 
 interface ExchangeDayForm {
@@ -40,14 +41,7 @@ const ExchangeProfile = ({ myProfileData }: ExchangeProfileProps) => {
       patchDate(
         { startDay: data.startDay, endDay: data.endDay },
         {
-          onSuccess: () => alert('Changed successfully!'),
-          onError: error => {
-            if (isAxiosError(error)) {
-              alert(error.response?.data.message)
-            } else {
-              alert('Something is Wrong!')
-            }
-          },
+          onSuccess: () => toast.custom(() => <Toast message="Changed successfully!" type="success" />),
         },
       )
     } else {

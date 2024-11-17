@@ -1,5 +1,6 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useQueryClient } from '@tanstack/react-query'
 
+import { useErrorHandledMutation } from '@/api/hooks/useErrorHandledMutation'
 import {
   DeleteScheduleRequest,
   PatchScheduleRequest,
@@ -23,7 +24,7 @@ const postSchedule = async ({ timetableId, title, day, startTime, endTime, locat
 
 export const usePostSchedule = () => {
   const queryClient = useQueryClient()
-  return useMutation({
+  return useErrorHandledMutation({
     mutationFn: postSchedule,
     onSuccess: response => {
       queryClient.setQueryData<GetTimetableByTimetableIdResponse>(
@@ -60,7 +61,7 @@ const deleteSchedule = async ({ scheduleId }: DeleteScheduleRequest) => {
  */
 export const useDeleteSchedule = () => {
   const queryClient = useQueryClient()
-  return useMutation({
+  return useErrorHandledMutation({
     mutationFn: deleteSchedule,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['timetable'] })
@@ -93,7 +94,7 @@ const patchSchedule = async ({
  */
 export const usePatchSchedule = () => {
   const queryClient = useQueryClient()
-  return useMutation({
+  return useErrorHandledMutation({
     mutationFn: patchSchedule,
     onSuccess: response => {
       queryClient.setQueryData<GetTimetableByTimetableIdResponse>(

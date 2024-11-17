@@ -5,11 +5,14 @@ import { useAtomValue } from 'jotai/react'
 import { ChevronDown } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { toast } from 'sonner'
 
 import { useGetReviews } from '@/api/hooks/courseReview'
 import CookiesRate from '@/components/courseReview/CookiesRate'
 import ReviewCard from '@/components/courseReview/ReviewCard'
 import ReviewHeader from '@/components/courseReview/ReviewHeader'
+import Toast from '@/components/ui/toast'
+import { KU_KEY_ERROR_LOG } from '@/lib/error'
 import { courseSummary } from '@/lib/store/review'
 import { CriteriaType, DirectionType } from '@/types/review'
 
@@ -67,8 +70,8 @@ const ReviewPage = () => {
   useEffect(() => {
     if (!isFetching && isError) {
       if (isAxiosError(error)) {
-        if (error.response?.data.error === 'Forbidden') {
-          alert('You must purchase a Course Review Reading Key!')
+        if (error.response?.data.name === KU_KEY_ERROR_LOG.COURSE_REVIEW_NOT_VIEWABLE.name) {
+          toast.custom(() => <Toast message={KU_KEY_ERROR_LOG.COURSE_REVIEW_NOT_VIEWABLE.message} type="warning" />)
           navigate(-1)
         }
       }

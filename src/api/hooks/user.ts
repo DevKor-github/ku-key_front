@@ -1,5 +1,6 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 
+import { useErrorHandledMutation } from '@/api/hooks/useErrorHandledMutation'
 import {
   GetKeyExpirationResponse,
   GetMyProfileResponse,
@@ -28,7 +29,7 @@ const deleteUser = async () => {
 
 export const useDeleteUser = () => {
   const { signOut } = useAuth()
-  return useMutation({
+  return useErrorHandledMutation({
     mutationFn: deleteUser,
     onSuccess: signOut,
   })
@@ -67,7 +68,7 @@ const patchMyProfile = async (props: PatchMyProfileRequest) => {
 export const usePatchMyProfile = () => {
   const queryClient = useQueryClient()
 
-  return useMutation({
+  return useErrorHandledMutation({
     mutationFn: patchMyProfile,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['myProfile'] })
@@ -82,7 +83,7 @@ const postPurchaseItem = async (props: PostPurchaseItemRequest) => {
 
 export const usePostPurchaseItem = () => {
   const queryClient = useQueryClient()
-  return useMutation({
+  return useErrorHandledMutation({
     mutationFn: postPurchaseItem,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['myProfile'] })
@@ -98,7 +99,7 @@ const patchExchangeDay = async (params: PatchExchangeDayRequest) => {
 
 export const usePatchExchangeDay = () => {
   const queryClient = useQueryClient()
-  return useMutation({
+  return useErrorHandledMutation({
     mutationFn: patchExchangeDay,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['myProfile'] })
@@ -113,7 +114,7 @@ const patchLevel = async (selectedLevel: number) => {
 
 export const usePatchLevel = () => {
   const queryClient = useQueryClient()
-  return useMutation({
+  return useErrorHandledMutation({
     mutationFn: patchLevel,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['myProfile'] })
@@ -128,7 +129,7 @@ const postLanguage = async (params: PostLanguageRequest) => {
 
 export const usePostLanguage = () => {
   const queryClient = useQueryClient()
-  return useMutation({
+  return useErrorHandledMutation({
     mutationFn: postLanguage,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['myProfile'] })
@@ -143,7 +144,7 @@ const deleteLanguage = async (params: PostLanguageRequest) => {
 
 export const useDeleteLanguage = () => {
   const queryClient = useQueryClient()
-  return useMutation({
+  return useErrorHandledMutation({
     mutationFn: deleteLanguage,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['myProfile'] })

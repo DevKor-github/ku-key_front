@@ -1,5 +1,4 @@
-import { useMutation } from '@tanstack/react-query'
-
+import { useErrorHandledMutation, UseErrorHandledMutationOption } from '@/api/hooks/useErrorHandledMutation'
 import {
   CheckEmailDuplicationResProps,
   RegisterKeys,
@@ -13,8 +12,8 @@ const checkEmailDuplication = async (email: string) => {
   return response.data
 }
 
-export const useCheckEmailDuplication = () => {
-  return useMutation({ mutationFn: checkEmailDuplication })
+export const useCheckEmailDuplication = (props: UseErrorHandledMutationOption) => {
+  return useErrorHandledMutation({ mutationFn: checkEmailDuplication, ...props })
 }
 
 const sendEmail = async (email: string) => {
@@ -25,7 +24,7 @@ const sendEmail = async (email: string) => {
 }
 
 export const useSendEmail = () => {
-  return useMutation({ mutationFn: sendEmail })
+  return useErrorHandledMutation({ mutationFn: sendEmail })
 }
 
 const verifyEmail = async ({ email, verifyToken }: VerifyEmailReqProps) => {
@@ -36,8 +35,8 @@ const verifyEmail = async ({ email, verifyToken }: VerifyEmailReqProps) => {
   return response.data
 }
 
-export const useVerifyEmail = () => {
-  return useMutation({ mutationFn: verifyEmail })
+export const useVerifyEmail = (props: UseErrorHandledMutationOption) => {
+  return useErrorHandledMutation({ mutationFn: verifyEmail, ...props })
 }
 
 const checkUsernameDuplicate = async (username: string) => {
@@ -45,8 +44,8 @@ const checkUsernameDuplicate = async (username: string) => {
   return response.data
 }
 
-export const useCheckUsernameDuplication = () => {
-  return useMutation({ mutationFn: checkUsernameDuplicate })
+export const useCheckUsernameDuplication = (props: UseErrorHandledMutationOption) => {
+  return useErrorHandledMutation({ mutationFn: checkUsernameDuplicate, ...props })
 }
 
 const checkStudentIdDuplicate = async (studentId: string) => {
@@ -55,8 +54,8 @@ const checkStudentIdDuplicate = async (studentId: string) => {
   return response.data
 }
 
-export const useCheckStudentIdDuplication = () => {
-  return useMutation({ mutationFn: checkStudentIdDuplicate })
+export const useCheckStudentIdDuplication = (props: UseErrorHandledMutationOption) => {
+  return useErrorHandledMutation({ mutationFn: checkStudentIdDuplicate, ...props })
 }
 
 const register = async (data: RegisterReqProps) => {
@@ -69,7 +68,7 @@ const register = async (data: RegisterReqProps) => {
 }
 
 export const useRegister = () => {
-  return useMutation({ mutationFn: register })
+  return useErrorHandledMutation({ mutationFn: register })
 }
 
 const patchPassword = async (newPassword: string) => {
@@ -80,7 +79,7 @@ const patchPassword = async (newPassword: string) => {
 }
 
 export const usePatchPassword = () => {
-  return useMutation({
+  return useErrorHandledMutation({
     mutationFn: patchPassword,
   })
 }

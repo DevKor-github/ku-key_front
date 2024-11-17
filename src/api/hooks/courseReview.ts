@@ -1,5 +1,6 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 
+import { useErrorHandledMutation } from '@/api/hooks/useErrorHandledMutation'
 import {
   GetMyReviewResponse,
   GetReviewsRequest,
@@ -59,7 +60,7 @@ const postReview = async (props: PostReviewRequest) => {
 
 export const usePostReview = () => {
   const queryClient = useQueryClient()
-  return useMutation({
+  return useErrorHandledMutation({
     mutationFn: postReview,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['summary'] })

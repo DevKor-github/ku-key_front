@@ -13,10 +13,14 @@ const EmailForm = memo(({ form, handleValidation, valid }: RegisterFormProps<'em
   const [emailSent, setEmailSent] = useState(false)
   const { time, start, pause, isRunning } = useTimer(300)
 
-  const { mutate: mutateCheckEmailDuplication } = useCheckEmailDuplication()
+  const { mutate: mutateCheckEmailDuplication } = useCheckEmailDuplication({
+    onError: () => form.setError('email', { message: 'This email is already in use', type: 'validate' }),
+  })
 
   const { mutate: mutateSendEmail } = useSendEmail()
-  const { mutate: mutateVerifyEmail } = useVerifyEmail()
+  const { mutate: mutateVerifyEmail } = useVerifyEmail({
+    onError: () => form.setError('emailCode', { message: 'Invalid code', type: 'validate' }),
+  })
 
   const handleEmailDuplicationCheck = () => {
     mutateCheckEmailDuplication(form.getValues().email, {
@@ -26,7 +30,6 @@ const EmailForm = memo(({ form, handleValidation, valid }: RegisterFormProps<'em
         setEmailSent(true)
         start()
       },
-      onError: () => form.setError('email', { message: 'This email is already in use', type: 'validate' }),
     })
   }
 
@@ -38,7 +41,6 @@ const EmailForm = memo(({ form, handleValidation, valid }: RegisterFormProps<'em
           handleValidation('email', 'valid')
           pause()
         },
-        onError: () => form.setError('emailCode', { message: 'Invalid code', type: 'validate' }),
       },
     )
   }

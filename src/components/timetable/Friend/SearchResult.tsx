@@ -4,6 +4,7 @@ import { memo } from 'react'
 
 import { GetSearchUserResponse } from '@/api/types/friends'
 import FriendCard from '@/components/timetable/Friend/FriendCard'
+import { KU_KEY_ERROR_LOG } from '@/lib/error'
 
 interface SearchResultProps {
   data: GetSearchUserResponse | undefined
@@ -22,7 +23,7 @@ const SearchResult = memo(({ data, error }: SearchResultProps) => {
       })}
     >
       <h2 className={css({ fontWeight: 700, fontSize: 20, color: 'darkGray.1' })}>Search results</h2>
-      {isAxiosError(error) && error.response?.data.message === '올바르지 않은 상대입니다.' && (
+      {isAxiosError(error) && error.response?.data.name === KU_KEY_ERROR_LOG.USER_NOT_FOUND.name && (
         <div
           className={css({
             fontWeight: 600,

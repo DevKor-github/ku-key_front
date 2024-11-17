@@ -1,6 +1,5 @@
 import { css, cx } from '@styled-system/css'
 import { shadow } from '@styled-system/recipes'
-import { isAxiosError } from 'axios'
 import { useAtomValue } from 'jotai/react'
 import { useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
@@ -72,15 +71,6 @@ const WriteReviewPage = () => {
   const onSubmit = (formData: WriteReviewForm) => {
     postReview(formData, {
       onSuccess: () => navigate(`/course-review/info/${courseCode}/${prof}`),
-      onError: error => {
-        if (isAxiosError(error)) {
-          alert(
-            error.response?.data.error === 'Conflict'
-              ? 'Already registered a course review for this course.'
-              : error.response?.data.message,
-          )
-        }
-      },
     })
   }
 
