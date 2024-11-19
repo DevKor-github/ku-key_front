@@ -130,6 +130,10 @@ export default defineConfig({
           from: { transform: 'translateX(0)' },
           to: { transform: 'translateX(100%)' },
         },
+        spin: {
+          from: { transform: 'rotate(0deg)' },
+          to: { transform: 'rotate(360deg)' },
+        },
       },
       breakpoints: {
         xs: '390px',

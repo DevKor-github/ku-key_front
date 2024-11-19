@@ -1,4 +1,11 @@
-import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+  useSuspenseInfiniteQuery,
+  useSuspenseQuery,
+} from '@tanstack/react-query'
 import { useSearchParams } from 'react-router-dom'
 
 import {
@@ -39,7 +46,7 @@ const getPostsAll = async (take: number, keyword?: string | null, cursor?: strin
 export const useGetPostsAll = () => {
   const [searchParam] = useSearchParams()
   const keyword = searchParam.get('keyword')
-  return useInfiniteQuery({
+  return useSuspenseInfiniteQuery({
     queryKey: ['postsAll', keyword],
     queryFn: ({ pageParam: cursor }) => getPostsAll(10, keyword, cursor.toString()),
     getNextPageParam: lastPage => (lastPage.meta.hasNextData ? lastPage.meta.nextCursor : undefined),
@@ -49,7 +56,7 @@ export const useGetPostsAll = () => {
 }
 
 export const useGetRecentPostsPreview = () => {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ['recentPosts'],
     queryFn: () => getPostsAll(5),
     initialData: {
@@ -67,7 +74,7 @@ const getHotPosts = async (take: number, cursor?: string) => {
 }
 
 export const useGetHotPosts = () => {
-  return useInfiniteQuery({
+  return useSuspenseInfiniteQuery({
     queryKey: ['hotPosts'],
     queryFn: ({ pageParam: cursor }) => getHotPosts(10, cursor.toString()),
     getNextPageParam: lastPage => (lastPage.meta.hasNextData ? lastPage.meta.nextCursor : undefined),
@@ -77,13 +84,13 @@ export const useGetHotPosts = () => {
 }
 
 export const useGetHotPostPreview = () => {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ['hotPostsPreview'],
     queryFn: () => getHotPosts(5),
-    initialData: {
-      data: [] as PostPreviewProps[],
-      meta: { hasNextData: false, nextCursor: 0 } as PostPreviewByBoardMeta,
-    },
+    // placeholderData: {
+    //   data: [] as PostPreviewProps[],
+    //   meta: { hasNextData: false, nextCursor: 0 } as PostPreviewByBoardMeta,
+    // },
   })
 }
 
@@ -112,11 +119,9 @@ const getPostById = async (postId: number) => {
 }
 
 export const useGetPostById = (postId: number) => {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ['postById', postId],
     queryFn: () => getPostById(postId),
-    initialData: {} as PostViewProps,
-    enabled: !isNaN(postId),
   })
 }
 

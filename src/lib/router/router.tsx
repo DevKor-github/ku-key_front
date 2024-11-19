@@ -1,29 +1,31 @@
 import { RouteObject } from 'react-router-dom'
 
 import MainLayout from '@/components/MainLayout'
+import {
+  BoardPage,
+  ClubPage,
+  CourseInfoPage,
+  CourseReviewPage,
+  FriendPage,
+  FriendTimetablePage,
+  HotBoardPage,
+  MainCommunityPage,
+  MyPage,
+  MyTimetablePage,
+  PostViewPage,
+  ReviewDetailPage,
+  ReviewPage,
+  SchedulePage,
+  TimetablePage,
+  WritePostPage,
+  WriteReviewPage,
+} from '@/lib/router/lazy-route'
 import ProtectedRoutes from '@/lib/router/ProtectedRoutes'
-import ClubPage from '@/pages/ClubPage'
-import MainCommunityPage from '@/pages/CommunityPage'
-import BoardPage from '@/pages/CommunityPage/BoardPage'
-import HotBoardPage from '@/pages/CommunityPage/HotBoardPage'
-import PostViewPage from '@/pages/CommunityPage/PostViewPage'
-import WritePostPage from '@/pages/CommunityPage/WritePostPage'
-import CourseReviewPage from '@/pages/CourseReviewPage'
-import CourseInfoPage from '@/pages/CourseReviewPage/CourseInfoPage'
-import ReviewDetailPage from '@/pages/CourseReviewPage/ReviewDetailPage'
-import ReviewPage from '@/pages/CourseReviewPage/ReviewPage'
-import WriteReviewPage from '@/pages/CourseReviewPage/WriteReviewPage'
 import HomePage from '@/pages/HomePage'
 import LandingPage from '@/pages/LandingPage'
 import Login from '@/pages/LoginPage'
-import MyPage from '@/pages/MyPage'
 import PasswordResetPage from '@/pages/PasswordResetPage'
 import RegisterPage from '@/pages/RegisterPage'
-import SchedulePage from '@/pages/SchedulePage'
-import TimetablePage from '@/pages/TimetablePage'
-import FriendPage from '@/pages/TimetablePage/FriendPage'
-import FriendTimetablePage from '@/pages/TimetablePage/FriendTimetablePage'
-import MyTimetablePage from '@/pages/TimetablePage/MyTimetablePage'
 
 const routes: RouteObject[] = [
   {

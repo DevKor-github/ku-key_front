@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
 
 import {
   CreateTimetableRequest,
@@ -23,7 +23,7 @@ const getTimetableByUser = async () => {
  * 해당 유저가 가지고 있는 시간표의 ID 리스트, 각각의 학기, 대표 시간표 여부, 시간표 이름을 반환합니다.
  */
 export const useGetUserTimetableList = () => {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ['timetableList'],
     queryFn: getTimetableByUser,
   })
@@ -46,7 +46,7 @@ const getTimetableByID = async ({ timetableId }: GetTimetableByTimetableIdReques
  * 시간표 ID로 해당 시간표와 관련된 강의 정보를 반환합니다.
  */
 export const useGetTimetable = ({ timetableId }: GetTimetableByTimetableIdRequest) => {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ['timetable', timetableId],
     queryFn: () => getTimetableByID({ timetableId }),
     initialData: INITIAL_TIMETABLE,
