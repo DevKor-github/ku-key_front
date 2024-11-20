@@ -9,14 +9,14 @@ import ShareBtn from '@/components/timetable/Button/ShareBtn'
 import Dropdown from '@/components/timetable/Dropdown'
 import LectureBottomSheet from '@/components/timetable/LectureBottomSheet'
 import StatusBar from '@/components/timetable/StatusBar'
+import LoadingSpinner from '@/components/ui/spinner/inde'
 import { isBottomSheetVisible } from '@/lib/store/bottomSheet'
 import { convertHtmlToImage, makeSemesterDropdownList, timetablePreprocess } from '@/util/timetableUtil'
 
 const MyTimetablePage = () => {
-  const { data: timetableList, isLoading } = useGetUserTimetableList()
+  const { data: timetableList } = useGetUserTimetableList()
   const { mutate: deleteTimetable } = useDeleteTimetable()
   const { mutate: createTimetable } = usePostTimetable()
-  const isCreating = useRef(false)
 
   const imgRef = useRef<HTMLDivElement>(null)
   const [curSemester, setCurSemester] = useState(2)
@@ -25,6 +25,9 @@ const MyTimetablePage = () => {
   const isSheetVisible = useAtomValue(isBottomSheetVisible)
 
   const semesterList = timetablePreprocess(timetableList)
+
+  const isCreating = useRef(false) // 시간표가 비어 있어 생성 중인 경우
+  const isEmptyTimetable = semesterList[curSemester].timetables.length === 0 // 현재 선택한 학기의 시간표가 없는 경우
 
   const setSemesterIndex = useCallback(
     (toIndex: number) => {
@@ -50,7 +53,7 @@ const MyTimetablePage = () => {
   )
 
   useEffect(() => {
-    if (!isLoading && semesterList[curSemester].isSkeleton && !isCreating.current) {
+    if (isEmptyTimetable && !isCreating.current) {
       isCreating.current = true
       createTimetable({
         timetableName: 'timetable 1',
@@ -58,10 +61,10 @@ const MyTimetablePage = () => {
         year: semesterList[curSemester].year,
       })
     }
-    if (!semesterList[curSemester].isSkeleton) {
+    if (!isEmptyTimetable) {
       isCreating.current = false
     }
-  }, [isLoading, createTimetable, semesterList, curSemester])
+  }, [createTimetable, semesterList, curSemester, isEmptyTimetable])
 
   return (
     <>
@@ -81,22 +84,26 @@ const MyTimetablePage = () => {
         </div>
       </div>
       <StatusBar curSemester={semesterList[curSemester]} curIndex={curIndex} setCurIndex={setTimetableIndex} />
-      <>
-        <Timetable
-          ref={imgRef}
-          timetable={semesterList[curSemester].timetables[curIndex]}
-          deleteTimetableHandler={deleteTimetableHandler}
-        />
-        {createPortal(
-          <LectureBottomSheet
-            timetableId={semesterList[curSemester].timetables[curIndex].timetableId}
-            year={semesterList[curSemester].year}
-            semester={semesterList[curSemester].semester}
-            visible={isSheetVisible}
-          />,
-          document.body,
-        )}
-      </>
+      {isEmptyTimetable ? (
+        <LoadingSpinner />
+      ) : (
+        <>
+          <Timetable
+            ref={imgRef}
+            timetable={semesterList[curSemester].timetables[curIndex]}
+            deleteTimetableHandler={deleteTimetableHandler}
+          />
+          {createPortal(
+            <LectureBottomSheet
+              timetableId={semesterList[curSemester].timetables[curIndex].timetableId}
+              year={semesterList[curSemester].year}
+              semester={semesterList[curSemester].semester}
+              visible={isSheetVisible}
+            />,
+            document.body,
+          )}
+        </>
+      )}
     </>
   )
 }

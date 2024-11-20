@@ -104,9 +104,7 @@ const calcSemester = (): Semester[] => {
  * 시간표 리스트를 받으면
  * 각 학기의 배열로 되어 있는 리스트로 변환
  */
-export const timetablePreprocess = (data: TimetableInfo[] | undefined) => {
-  if (data === undefined) data = []
-
+export const timetablePreprocess = (data: TimetableInfo[]) => {
   const ret = calcSemester()
 
   data.map(timetable => {
@@ -123,25 +121,7 @@ export const timetablePreprocess = (data: TimetableInfo[] | undefined) => {
     }
   })
 
-  return ret.map(semester => {
-    if (semester.timetables.length === 0) {
-      // Skeleton
-      return {
-        ...semester,
-        timetables: [
-          {
-            timetableId: -1,
-            semester: semester.semester,
-            year: semester.year,
-            mainTimetable: true,
-            timetableName: 'timetable 1',
-          },
-        ],
-        isSkeleton: true,
-      }
-    }
-    return { ...semester, isSkeleton: false }
-  })
+  return ret
 }
 
 /**
