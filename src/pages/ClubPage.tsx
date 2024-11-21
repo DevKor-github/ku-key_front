@@ -1,6 +1,6 @@
 import { css, cva } from '@styled-system/css'
 import { ChevronDown } from 'lucide-react'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useState } from 'react'
 
 import { useGetClubSearch, usePostClubLike } from '@/api/hooks/institution'
 import CategoryDrawer from '@/components/club/CategoryDrawer'
@@ -15,57 +15,53 @@ import { ClubInterface } from '@/types/club'
 import { useAuth } from '@/util/auth/useAuth'
 import useDrawer from '@/util/hooks/useDrawer'
 import { useMediaQueryByName } from '@/util/hooks/useMediaQueryByName'
-import { useSearch } from '@/util/hooks/useSearch'
+import { useQueryParams } from '@/util/hooks/useQueryParams'
+
 const ClubPage = () => {
   const isLogin = useAuth().authState ?? false
   const isMobile = useMediaQueryByName('smDown')
 
-  const { searchParam, handleSetParam, deleteParam } = useSearch()
-  const query = useMemo(
-    () => ({
-      category: searchParam.get('category') as CategoryType,
-      keyword: searchParam.get('keyword'),
-      sortBy: searchParam.get('like') as 'like' | null,
-      wishList: searchParam.get('wishlist') === 'true',
-      isLogin,
-    }),
-    [searchParam, isLogin],
-  )
-  const { data } = useGetClubSearch(query)
+  const [query, setQuery] = useQueryParams<{
+    category: CategoryType
+    keyword: string
+    sortBy: 'like' | null
+    wishList: boolean
+  }>()
+
+  const { data } = useGetClubSearch({ ...query, isLogin })
   const { mutate: likeClub } = usePostClubLike()
 
   const setCategory = useCallback(
     (target: CategoryType) => {
-      if (target === null) deleteParam('category')
-      else handleSetParam('category', target)
+      setQuery({ ...query, category: target })
     },
-    [deleteParam, handleSetParam],
+    [setQuery, query],
   )
 
   const handleSubmit = useCallback(
     (inputKeyword: string) => {
-      if (inputKeyword === '') deleteParam('keyword')
-      else handleSetParam('keyword', inputKeyword)
+      if (inputKeyword === '') setQuery({ ...query, keyword: '' })
+      else setQuery({ ...query, keyword: inputKeyword })
     },
-    [deleteParam, handleSetParam],
+    [setQuery, query],
   )
 
   const clearKeyword = useCallback(() => {
-    deleteParam('keyword')
-  }, [deleteParam])
+    setQuery({ ...query, keyword: '' })
+  }, [setQuery, query])
 
   const handleLikeClick = useCallback(
     (clubId: number) => {
-      if (isLogin) likeClub({ clubId, queryParams: query })
+      if (isLogin) likeClub({ clubId, queryParams: { ...query, isLogin } })
       else alert('Please sign in to use!')
     },
     [likeClub, query, isLogin],
   )
 
   const handleWishList = useCallback(() => {
-    if (isLogin) handleSetParam('wishlist', `${!query.wishList}`)
+    if (isLogin) setQuery({ ...query, wishList: !query.wishList })
     else alert('Please sign in to use!')
-  }, [handleSetParam, query.wishList, isLogin])
+  }, [setQuery, isLogin, query])
 
   const [selectedClub, setSelectedClub] = useState<ClubInterface | null>(null)
 
