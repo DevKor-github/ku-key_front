@@ -238,7 +238,7 @@ const ClubPage = () => {
                         isMobile && setSelectedClub(club)
                       }}
                     >
-                      <ClubCard key={`clubId-${club.clubId}`} clubData={club} handleLikeClick={handleLikeClick} />
+                      <ClubCard clubData={club} handleLikeClick={handleLikeClick} />
                     </button>
                   ))
                 ) : (
