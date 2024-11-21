@@ -1,7 +1,6 @@
 import { css } from '@styled-system/css'
 import { AnimatePresence, motion, PanInfo } from 'framer-motion'
 import { ReactNode, useCallback, useMemo } from 'react'
-import { createPortal } from 'react-dom'
 
 import BackLayer from '@/components/ui/drawer/BackLayer'
 
@@ -40,7 +39,7 @@ const Drawer = ({ isOpen, openHeight, close, children }: DrawerProps) => {
     [close],
   )
 
-  return createPortal(
+  return (
     <AnimatePresence>
       {isOpen && <BackLayer close={close} />}
       <motion.div
@@ -70,8 +69,7 @@ const Drawer = ({ isOpen, openHeight, close, children }: DrawerProps) => {
         />
         {children}
       </motion.div>
-    </AnimatePresence>,
-    document.body,
+    </AnimatePresence>
   )
 }
 

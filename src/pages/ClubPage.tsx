@@ -10,14 +10,12 @@ import { CATEGORY_LIST, CategoryType } from '@/components/club/constants'
 import SearchArea from '@/components/club/SearchArea'
 import MetaTag from '@/components/MetaTag'
 import { Checkbox } from '@/components/ui/checkbox'
-import Drawer from '@/components/ui/drawer'
 import ClubModal from '@/components/ui/modal/ClubModal'
 import { ClubInterface } from '@/types/club'
 import { useAuth } from '@/util/auth/useAuth'
 import useDrawer from '@/util/hooks/useDrawer'
 import { useMediaQueryByName } from '@/util/hooks/useMediaQueryByName'
 import { useSearch } from '@/util/hooks/useSearch'
-
 const ClubPage = () => {
   const isLogin = useAuth().authState ?? false
   const isMobile = useMediaQueryByName('smDown')
@@ -69,23 +67,27 @@ const ClubPage = () => {
     else alert('Please sign in to use!')
   }, [handleSetParam, query.wishList, isLogin])
 
-  const { isOpen: isDrawerOpen, open: openDrawer, close: closeDrawer } = useDrawer()
   const [selectedClub, setSelectedClub] = useState<ClubInterface | null>(null)
 
   const handleModalLayoutClose = useCallback(() => {
     setSelectedClub(null)
   }, [])
 
+  const { open: openDrawer, close: closeDrawer } = useDrawer()
+
+  const handleCategoryDrawerOpen = useCallback(() => {
+    openDrawer(
+      <CategoryDrawer
+        setCategory={setCategory}
+        close={closeDrawer}
+        resultCount={data?.length ?? 0}
+        selectedCategory={query.category}
+      />,
+    )
+  }, [openDrawer, setCategory, closeDrawer, data?.length, query.category])
+
   return (
     <>
-      <Drawer isOpen={isDrawerOpen} openHeight={390} close={closeDrawer}>
-        <CategoryDrawer
-          setCategory={setCategory}
-          close={closeDrawer}
-          resultCount={data?.length ?? 0}
-          selectedCategory={query.category}
-        />
-      </Drawer>
       <ClubModal clubData={selectedClub} handleModalLayoutClose={handleModalLayoutClose} />
       <MetaTag
         title="Club"
@@ -196,9 +198,7 @@ const ClubPage = () => {
                     },
                   },
                 })({ selected: query.category !== null })}
-                onClick={() => {
-                  openDrawer()
-                }}
+                onClick={handleCategoryDrawerOpen}
               >
                 <p>club field</p>
                 {query.category !== null && (
@@ -233,6 +233,7 @@ const ClubPage = () => {
                 {data?.length ? (
                   data?.map(club => (
                     <button
+                      key={`clubId-${club.clubId}`}
                       className={css({ w: 'full', textAlign: 'left' })}
                       onClick={() => {
                         isMobile && setSelectedClub(club)

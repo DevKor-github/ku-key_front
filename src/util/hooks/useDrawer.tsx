@@ -1,21 +1,13 @@
-import { useState } from 'react'
+import { useContext } from 'react'
 
-import useScrollLock from '@/util/hooks/useScrollLock'
+import { DrawerContext } from '@/util/DrawerProvider'
 
 const useDrawer = () => {
-  const [isOpen, setIsOpen] = useState(false)
-  const { lockScroll, unlockScroll } = useScrollLock()
+  const context = useContext(DrawerContext)
 
-  const open = () => {
-    setIsOpen(true)
-    lockScroll()
-  }
-  const close = () => {
-    setIsOpen(false)
-    unlockScroll()
-  }
+  if (!context) throw new Error('DrawerProvider not found')
 
-  return { isOpen, open, close }
+  return context
 }
 
 export default useDrawer
