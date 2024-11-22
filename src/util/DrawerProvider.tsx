@@ -34,8 +34,7 @@ export const DrawerProvider = ({ children }: PropsWithChildren) => {
   return (
     <DrawerContext.Provider value={{ open, close }}>
       {children}
-      {/* TODO: 임의 높이 제거 */}
-      <Drawer isOpen={isOpen} close={close} openHeight={390}>
+      <Drawer isOpen={isOpen} close={close}>
         {drawer}
       </Drawer>
     </DrawerContext.Provider>

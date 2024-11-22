@@ -151,7 +151,6 @@ const FriendCard = ({ data, type }: FriendCardProp) => {
         </button>
       )}
       <div className={css({ display: 'flex', gap: 5, alignItems: 'center' })}>
-        {/* todo: 프로필 사진 등록 */}
         <Profile isAnonymous={false} isDeleted={false} character={data.character} onlyTitle={true} />
         <div className={css({ display: 'flex', flexDir: 'column', justifyContent: 'space-between' })}>
           <div className={css({ fontWeight: 600, fontSize: 16 })}>{data.username}</div>
