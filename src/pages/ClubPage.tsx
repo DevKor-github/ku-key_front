@@ -11,7 +11,7 @@ import SearchArea from '@/components/club/SearchArea'
 import MetaTag from '@/components/MetaTag'
 import { Checkbox } from '@/components/ui/checkbox'
 import ClubModal from '@/components/ui/modal/ClubModal'
-import { ClubInterface } from '@/types/club'
+import { ClubInterface, ClubSearchParams } from '@/types/club'
 import { useAuth } from '@/util/auth/useAuth'
 import useDrawer from '@/util/hooks/useDrawer'
 import { useMediaQueryByName } from '@/util/hooks/useMediaQueryByName'
@@ -21,12 +21,7 @@ const ClubPage = () => {
   const isLogin = useAuth().authState ?? false
   const isMobile = useMediaQueryByName('smDown')
 
-  const [query, setQuery] = useQueryParams<{
-    category: CategoryType
-    keyword: string
-    sortBy: 'like' | null
-    wishList: boolean
-  }>()
+  const [query, setQuery] = useQueryParams<ClubSearchParams>()
 
   const { data } = useGetClubSearch({ ...query, isLogin })
   const { mutate: likeClub } = usePostClubLike()
@@ -71,16 +66,11 @@ const ClubPage = () => {
 
   const { open: openDrawer, close: closeDrawer } = useDrawer()
 
-  const handleCategoryDrawerOpen = useCallback(() => {
-    openDrawer(
-      <CategoryDrawer
-        setCategory={setCategory}
-        close={closeDrawer}
-        resultCount={data?.length ?? 0}
-        selectedCategory={query.category}
-      />,
-    )
-  }, [openDrawer, setCategory, closeDrawer, data?.length, query.category])
+  const handleDrawerOpenBtn = useCallback(() => {
+    openDrawer(<CategoryDrawer setCategory={setCategory} close={closeDrawer} />)
+  }, [openDrawer, setCategory, closeDrawer])
+
+  console.log(!query.category)
 
   return (
     <>
@@ -193,11 +183,11 @@ const ClubPage = () => {
                       },
                     },
                   },
-                })({ selected: query.category !== null })}
-                onClick={handleCategoryDrawerOpen}
+                })({ selected: query.category != null })}
+                onClick={handleDrawerOpenBtn}
               >
                 <p>club field</p>
-                {query.category !== null && (
+                {query.category != null && (
                   <div className={css({ w: '18px', h: '18px' })}>
                     {CATEGORY_LIST.find(category => category.type === query.category)?.icon({ color: '#E70000' })}
                   </div>

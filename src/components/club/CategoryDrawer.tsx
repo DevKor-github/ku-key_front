@@ -1,16 +1,36 @@
 import { css } from '@styled-system/css'
 import { RotateCw } from 'lucide-react'
+import { useEffect, useState } from 'react'
 
+import { useGetCachedClubSearchResult } from '@/api/hooks/institution'
 import { CATEGORY_LIST, CategoryType } from '@/components/club/constants'
 import MobileCategoryChip from '@/components/club/MobileCategoryChip'
+import { useQueryParams } from '@/util/hooks/useQueryParams'
 
 interface CategoryDrawerProps {
   close: () => void
   setCategory: (target: CategoryType) => void
-  resultCount: number
-  selectedCategory: CategoryType | null
 }
-const CategoryDrawer = ({ setCategory, close, resultCount, selectedCategory }: CategoryDrawerProps) => {
+
+const CategoryDrawer = ({ setCategory, close }: CategoryDrawerProps) => {
+  const [searchParam] = useQueryParams<{
+    category: CategoryType
+    keyword: string
+    sortBy: 'like' | null
+    wishList: boolean
+  }>()
+
+  const getClubSearchResult = useGetCachedClubSearchResult()
+  const selectedCategory = searchParam.category
+  const [resultCount, setResultCount] = useState(0)
+
+  useEffect(() => {
+    ;(async () => {
+      const searchResult = await getClubSearchResult(searchParam)
+      setResultCount(searchResult.length || 0)
+    })()
+  }, [getClubSearchResult, searchParam])
+
   return (
     <div className={css({ pt: '15px', position: 'relative', h: '390px', px: '20px' })}>
       <h3 className={css({ fontWeight: 600, fontSize: 16, mb: '14px' })}>choose the club field</h3>
