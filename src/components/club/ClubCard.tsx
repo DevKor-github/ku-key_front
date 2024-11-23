@@ -9,9 +9,10 @@ import upperCaseHighlight from '@/util/upperCaseHighlight'
 
 interface ClubCardProps {
   clubData: ClubInterface
+  handleClubClick: (club: ClubInterface) => void
   handleLikeClick: (clubId: number) => void
 }
-const ClubCard = memo(({ clubData, handleLikeClick }: ClubCardProps) => {
+const ClubCard = memo(({ clubData, handleLikeClick, handleClubClick }: ClubCardProps) => {
   const isMobile = useMediaQueryByName('smDown')
 
   return (
@@ -23,7 +24,16 @@ const ClubCard = memo(({ clubData, handleLikeClick }: ClubCardProps) => {
         smDown: { p: 2.5, bgColor: 'white', rounded: 10, pr: 1 },
       })}
     >
-      <div className={css({ display: 'flex', gap: { base: 5, smDown: 2.5 }, smDown: { h: '100px' } })}>
+      <button
+        className={css({
+          display: 'flex',
+          textAlign: 'left',
+          alignItems: 'stretch',
+          gap: { base: 5, smDown: 2.5 },
+          smDown: { h: '100px' },
+        })}
+        onClick={() => handleClubClick(clubData)}
+      >
         <img
           className={css({
             w: { base: '294px', mdDown: '80px', smDown: '100px' },
@@ -128,7 +138,7 @@ const ClubCard = memo(({ clubData, handleLikeClick }: ClubCardProps) => {
             </div>
           </div>
         )}
-      </div>
+      </button>
       <button
         className={cva({
           base: {

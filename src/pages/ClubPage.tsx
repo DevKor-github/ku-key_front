@@ -60,6 +60,12 @@ const ClubPage = () => {
 
   const [selectedClub, setSelectedClub] = useState<ClubInterface | null>(null)
 
+  const handleClubClick = useCallback(
+    (club: ClubInterface) => {
+      isMobile && setSelectedClub(club)
+    },
+    [isMobile],
+  )
   const handleModalLayoutClose = useCallback(() => {
     setSelectedClub(null)
   }, [])
@@ -216,15 +222,12 @@ const ClubPage = () => {
               <div className={css({ display: 'flex', flexDir: 'column', gap: { base: 15, mdDown: 10, smDown: 2.5 } })}>
                 {data?.length ? (
                   data?.map(club => (
-                    <button
+                    <ClubCard
                       key={`clubId-${club.clubId}`}
-                      className={css({ w: 'full', textAlign: 'left' })}
-                      onClick={() => {
-                        isMobile && setSelectedClub(club)
-                      }}
-                    >
-                      <ClubCard clubData={club} handleLikeClick={handleLikeClick} />
-                    </button>
+                      clubData={club}
+                      handleLikeClick={handleLikeClick}
+                      handleClubClick={handleClubClick}
+                    />
                   ))
                 ) : (
                   <div className={css({ color: 'darkGray.1', fontSize: { base: 20, mdDown: 16 } })}>
