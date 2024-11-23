@@ -14,20 +14,19 @@ interface DrawerOpenOption {
 }
 
 export const DrawerProvider = ({ children }: PropsWithChildren) => {
-  const [drawer, setDrawer] = useState<ReactNode | null>(null)
-  const isOpen = drawer !== null
+  const [contents, setContents] = useState<ReactNode | null>(null)
+  const isOpen = contents !== null
 
   const { lockScroll: lock, unlockScroll: unlock } = useScrollLock()
 
-  // TODO: Add async open & async close
   const open = (element: ReactNode, option?: DrawerOpenOption) => {
     const { lockScroll = true } = option ?? {}
-    setDrawer(element)
+    setContents(element)
     if (lockScroll) lock()
   }
 
   const close = () => {
-    setDrawer(null)
+    setContents(null)
     unlock()
   }
 
@@ -35,7 +34,7 @@ export const DrawerProvider = ({ children }: PropsWithChildren) => {
     <DrawerContext.Provider value={{ open, close }}>
       {children}
       <Drawer isOpen={isOpen} close={close}>
-        {drawer}
+        {contents}
       </Drawer>
     </DrawerContext.Provider>
   )

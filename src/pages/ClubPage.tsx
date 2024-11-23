@@ -70,8 +70,6 @@ const ClubPage = () => {
     openDrawer(<CategoryDrawer setCategory={setCategory} close={closeDrawer} />)
   }, [openDrawer, setCategory, closeDrawer])
 
-  console.log(!query.category)
-
   return (
     <>
       <ClubModal clubData={selectedClub} handleModalLayoutClose={handleModalLayoutClose} />
