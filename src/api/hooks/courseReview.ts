@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
+import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
 
 import { useErrorHandledMutation } from '@/api/hooks/useErrorHandledMutation'
 import {
@@ -75,9 +75,8 @@ const getCheckSubmission = async (props: GetReviewSummaryRequest) => {
 }
 
 export const useGetCheckSubmission = (props: GetReviewSummaryRequest) => {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ['reviewSubmission', props],
     queryFn: () => getCheckSubmission(props),
-    placeholderData: false,
   })
 }
