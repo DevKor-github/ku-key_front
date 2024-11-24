@@ -2,9 +2,10 @@ import { css } from '@styled-system/css'
 import { RotateCw } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
-import { useGetCachedClubSearchResult } from '@/api/hooks/institution'
+import { useGetCachedClubSearchResult } from '@/api/hooks/club'
 import { CATEGORY_LIST, CategoryType } from '@/components/club/constants'
 import MobileCategoryChip from '@/components/club/MobileCategoryChip'
+import { ClubSearchParams } from '@/types/club'
 import { useQueryParams } from '@/util/hooks/useQueryParams'
 
 interface CategoryDrawerProps {
@@ -13,20 +14,15 @@ interface CategoryDrawerProps {
 }
 
 const CategoryDrawer = ({ setCategory, close }: CategoryDrawerProps) => {
-  const [searchParam] = useQueryParams<{
-    category: CategoryType
-    keyword: string
-    sortBy: 'like' | null
-    wishList: boolean
-  }>()
+  const [searchParam] = useQueryParams<ClubSearchParams>()
 
-  const getClubSearchResult = useGetCachedClubSearchResult()
+  const getClubSearchResult = useGetCachedClubSearchResult(searchParam)
   const selectedCategory = searchParam.category
   const [resultCount, setResultCount] = useState(0)
 
   useEffect(() => {
     ;(async () => {
-      const searchResult = await getClubSearchResult(searchParam)
+      const searchResult = await getClubSearchResult()
       setResultCount(searchResult.length || 0)
     })()
   }, [getClubSearchResult, searchParam])

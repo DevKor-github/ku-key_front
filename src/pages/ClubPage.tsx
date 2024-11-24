@@ -2,10 +2,10 @@ import { css, cva } from '@styled-system/css'
 import { ChevronDown } from 'lucide-react'
 import { useCallback, useState } from 'react'
 
-import { useGetClubSearch, usePostClubLike } from '@/api/hooks/institution'
+import { useGetClubSearch, usePostClubLike } from '@/api/hooks/club'
 import CategoryDrawer from '@/components/club/CategoryDrawer'
 import CategorySelector from '@/components/club/CategorySelector'
-import ClubCard from '@/components/club/ClubCard'
+import ClubCard from '@/components/club/clubCard'
 import { CATEGORY_LIST, CategoryType } from '@/components/club/constants'
 import SearchArea from '@/components/club/SearchArea'
 import MetaTag from '@/components/MetaTag'
@@ -73,7 +73,7 @@ const ClubPage = () => {
   const { open: openDrawer, close: closeDrawer } = useDrawer()
 
   const handleDrawerOpenBtn = useCallback(() => {
-    openDrawer(<CategoryDrawer setCategory={setCategory} close={closeDrawer} />)
+    openDrawer({ element: <CategoryDrawer setCategory={setCategory} close={closeDrawer} /> })
   }, [openDrawer, setCategory, closeDrawer])
 
   return (
