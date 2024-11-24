@@ -4,7 +4,7 @@ import { useAtomValue } from 'jotai'
 import { useEffect, useRef } from 'react'
 
 import { CalendarResponse } from '@/api/types/calendar'
-import Event from '@/components/calendar/Event'
+import CalendarEventItem from '@/features/HomeCalendar/components/CalendarEventItem'
 import { selectedDateAtom } from '@/lib/store/calendar'
 
 interface CalendarEventProps {
@@ -28,7 +28,6 @@ const CalendarEvent = ({ calendarEvent }: CalendarEventProps) => {
           scrollRef.current.getBoundingClientRect().top +
           scrollRef.current.scrollTop
         scrollRef.current.scrollTo({ top: elementPosition, behavior: 'smooth' })
-        // selectedEventElement.scrollIntoView({ behavior: 'smooth', block: 'center' })
       }
     }
   }, [selectedDate, calendarEvent])
@@ -65,7 +64,7 @@ const CalendarEvent = ({ calendarEvent }: CalendarEventProps) => {
         {calendarEvent?.map(
           (event, index) =>
             event.eventCount > 0 && (
-              <Event
+              <CalendarEventItem
                 key={`${new Date(event.date).toTimeString()}-${index}`}
                 date={new Date(event.date)}
                 isSelected={isEqual(selectedDate.toLocaleDateString(), new Date(event.date).toLocaleDateString())}

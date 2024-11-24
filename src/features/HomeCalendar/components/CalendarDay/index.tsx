@@ -11,7 +11,7 @@ interface CalendarDayProps {
   eventCount: number
 }
 
-const Day = memo(({ isToday, day, selectedDate, eventCount }: CalendarDayProps) => {
+const CalendarDay = memo(({ isToday, day, selectedDate, eventCount }: CalendarDayProps) => {
   const getColor = () => {
     if (day.status !== 'THIS_MONTH') return 'lightGray.1'
     if (isToday) return 'white'
@@ -27,6 +27,7 @@ const Day = memo(({ isToday, day, selectedDate, eventCount }: CalendarDayProps) 
         flexDir: 'column',
         justifyContent: 'center',
         alignItems: 'center',
+        smDown: { w: 'full', h: 'auto' },
       })}
     >
       <div
@@ -43,8 +44,8 @@ const Day = memo(({ isToday, day, selectedDate, eventCount }: CalendarDayProps) 
           className={cx(
             css({
               display: 'flex',
-              w: '50px',
-              h: '50px',
+              w: '3.125rem',
+              aspectRatio: '1/1',
               justifyContent: 'center',
               alignItems: 'center',
               textStyle: 'heading3_L',
@@ -54,6 +55,14 @@ const Day = memo(({ isToday, day, selectedDate, eventCount }: CalendarDayProps) 
               color: getColor(),
               bgColor: isToday ? 'red.2' : 'transparent',
               transition: 'all 0.25s ease',
+              smDown: {
+                w: '2rem',
+                aspectRatio: '1/1',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '0.75rem',
+              },
             }),
           )}
         >
@@ -76,4 +85,4 @@ const Day = memo(({ isToday, day, selectedDate, eventCount }: CalendarDayProps) 
   )
 })
 
-export default Day
+export default CalendarDay

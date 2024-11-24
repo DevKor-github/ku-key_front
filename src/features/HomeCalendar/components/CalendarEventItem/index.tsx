@@ -8,7 +8,7 @@ interface EventProps {
   content: string
   isSelected: boolean
 }
-const Event = ({ date, content, isSelected }: EventProps) => {
+const CalendarEventItem = ({ date, content, isSelected }: EventProps) => {
   return (
     <div
       aria-label={date.toLocaleDateString()}
@@ -69,4 +69,4 @@ const Event = ({ date, content, isSelected }: EventProps) => {
   )
 }
 
-export default Event
+export default CalendarEventItem
