@@ -10,9 +10,9 @@ const HomePage = () => {
   return (
     <Suspense fallback={<LoadingSpinner />}>
       <main className={css({ display: 'flex', flexDir: 'column' })}>
-        <HomeCarousel />
+        {/* <HomeCarousel /> */}
         <Announcement />
-        <Club />
+        {/* <Club /> */}
       </main>
     </Suspense>
   )

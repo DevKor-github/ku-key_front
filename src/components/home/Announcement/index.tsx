@@ -16,7 +16,7 @@ const Announcement = () => {
       })}
     >
       <CalendarSection />
-      <SchoolInstitutionSection />
+      {/* <SchoolInstitutionSection /> */}
     </section>
   )
 }

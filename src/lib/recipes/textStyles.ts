@@ -1,17 +1,24 @@
 import { defineTextStyles } from '@pandacss/dev'
 
 export const textStyles = defineTextStyles({
+  display2: {
+    description: 'Display 2',
+    value: {
+      fontSize: '2.25rem',
+      fontWeight: 700,
+    },
+  },
   heading1_L: {
     description: 'Heading 1 Large',
     value: {
-      fontSize: 24,
+      fontSize: '1.5rem',
       fontWeight: 700,
     },
   },
   heading3_L: {
     description: 'Heading 3 Large',
     value: {
-      fontSize: 20,
+      fontSize: '1.25rem',
       fontWeight: 700,
     },
   },
@@ -47,15 +54,22 @@ export const textStyles = defineTextStyles({
   body1_M: {
     description: 'Body 1 Medium',
     value: {
-      fontSize: 16,
+      fontSize: '1rem',
       fontWeight: 500,
     },
   },
   body2_M: {
     description: 'Body 2 Medium',
     value: {
-      fontSize: 14,
+      fontSize: '0.875rem',
       fontWeight: 500,
+    },
+  },
+  body2_S: {
+    description: 'Body 2 Small',
+    value: {
+      fontSize: '0.875rem',
+      fontWeight: 400,
     },
   },
   body3_M: {
