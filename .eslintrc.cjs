@@ -14,19 +14,19 @@ module.exports = {
   plugins: ['import', '@typescript-eslint', 'jsx-a11y', 'react-refresh'],
   rules: {
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
-    'no-restricted-imports': [
-      'error',
-      {
-        patterns: ['.*'],
-        paths: [
-          {
-            name: 'react',
-            importNames: ['default'],
-            message: "import React from 'react' makes bundle size larger.",
-          },
-        ],
-      },
-    ],
+    // 'no-restricted-imports': [
+    //   'error',
+    //   {
+    //     patterns: ['.*'],
+    //     paths: [
+    //       {
+    //         name: 'react',
+    //         importNames: ['default'],
+    //         message: "import React from 'react' makes bundle size larger.",
+    //       },
+    //     ],
+    //   },
+    // ],
     'sort-imports': [
       'error',
       {

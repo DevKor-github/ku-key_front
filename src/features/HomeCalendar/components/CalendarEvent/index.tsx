@@ -3,10 +3,11 @@ import { format, isEqual } from 'date-fns'
 import { useAtomValue } from 'jotai'
 import { useEffect, useRef } from 'react'
 
+import * as s from './style.css'
+
 import { CalendarResponse } from '@/api/types/calendar'
 import CalendarEventItem from '@/features/HomeCalendar/components/CalendarEventItem'
 import { selectedDateAtom } from '@/lib/store/calendar'
-
 interface CalendarEventProps {
   calendarEvent: CalendarResponse[]
 }
@@ -33,34 +34,11 @@ const CalendarEvent = ({ calendarEvent }: CalendarEventProps) => {
   }, [selectedDate, calendarEvent])
 
   return (
-    <div
-      className={css({
-        display: 'flex',
-        w: 'full',
-        maxW: 398,
-        maxH: '493px',
-        flexDir: 'column',
-        alignItems: 'flex-start',
-        alignSelf: 'stretch',
-      })}
-    >
-      <div className={css({ display: 'flex', p: 5, alignItems: 'center' })}>
+    <div className={s.Wrapper}>
+      <div className={s.Month}>
         <p className={css({ fontSize: 26, fontWeight: 600 })}>{format(selectedDate, 'MMMM')} Events</p>
       </div>
-      <div
-        ref={scrollRef}
-        className={css({
-          display: 'flex',
-          flexDir: 'column',
-          alignItems: 'flex-start',
-          gap: 5,
-          w: 'full',
-          maxH: 422,
-          overflowY: 'scroll',
-          p: 1,
-          // mr: 5,
-        })}
-      >
+      <div ref={scrollRef} className={s.ScrollableBox}>
         {calendarEvent?.map(
           (event, index) =>
             event.eventCount > 0 && (
