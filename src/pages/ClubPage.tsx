@@ -1,6 +1,7 @@
 import { css, cva } from '@styled-system/css'
 import { ChevronDown } from 'lucide-react'
 import { useCallback, useState } from 'react'
+import { useDeepCompareCallback } from 'use-deep-compare'
 
 import { useGetClubSearch, usePostClubLike } from '@/api/hooks/club'
 import CategoryDrawer from '@/components/club/CategoryDrawer'
@@ -26,26 +27,26 @@ const ClubPage = () => {
   const { data } = useGetClubSearch({ ...query, isLogin })
   const { mutate: likeClub } = usePostClubLike()
 
-  const setCategory = useCallback(
+  const setCategory = useDeepCompareCallback(
     (target: CategoryType) => {
       setQuery({ ...query, category: target ?? undefined })
     },
-    [setQuery, query],
+    [query],
   )
 
-  const handleSubmit = useCallback(
+  const handleSubmit = useDeepCompareCallback(
     (inputKeyword: string) => {
       if (inputKeyword === '') setQuery({ ...query, keyword: '' })
-      else setQuery({ ...query, keyword: inputKeyword })
+      else setQuery({ ...query, keyword: inputKeyword.length ? inputKeyword : undefined })
     },
-    [setQuery, query],
+    [query],
   )
 
-  const clearKeyword = useCallback(() => {
-    setQuery({ ...query, keyword: '' })
-  }, [setQuery, query])
+  const clearKeyword = useDeepCompareCallback(() => {
+    setQuery({ ...query, keyword: undefined })
+  }, [query])
 
-  const handleLikeClick = useCallback(
+  const handleLikeClick = useDeepCompareCallback(
     (clubId: number) => {
       if (isLogin) likeClub({ clubId, queryParams: { ...query, isLogin } })
       else alert('Please sign in to use!')
@@ -53,10 +54,10 @@ const ClubPage = () => {
     [likeClub, query, isLogin],
   )
 
-  const handleWishList = useCallback(() => {
+  const handleWishList = useDeepCompareCallback(() => {
     if (isLogin) setQuery({ ...query, wishList: !query.wishList })
     else alert('Please sign in to use!')
-  }, [setQuery, isLogin, query])
+  }, [query, isLogin])
 
   const [selectedClub, setSelectedClub] = useState<ClubInterface | null>(null)
 
