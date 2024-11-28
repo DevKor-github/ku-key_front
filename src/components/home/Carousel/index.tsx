@@ -6,10 +6,12 @@ import { useCallback, useEffect, useState } from 'react'
 
 import { useGetBannerImages } from '@/api/hooks/calendar'
 import PlayIcon from '@/assets/play.svg'
+import * as s from '@/components/home/Carousel/style.css'
 import { usePrevNextButtons } from '@/util/carousel-button'
+import { useMediaQueryByName } from '@/util/hooks/useMediaQueryByName'
 
 const BannerStyle = cva({
-  base: { w: '608px', ml: 5, flex: '0 0 auto', display: 'block' },
+  base: { w: '608px', ml: 5, flex: '0 0 auto', display: 'block', rounded: { base: 20, smDown: 0 } },
   variants: { display: { false: { display: 'none' } } },
 })
 const SkeletonBannerStyle = cx(BannerStyle(), css({ h: '300px' }))
@@ -35,6 +37,7 @@ const SkeletonImg = ({ imageUrl, index }: { imageUrl: string; index: number }) =
 const HomeCarousel = () => {
   const { data: banners, isSuccess: isBannerLoadedSuccess } = useGetBannerImages()
 
+  const isMobile = useMediaQueryByName('smDown')
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: 'center' }, [Autoplay()])
 
   const [currentSlide, setCurrentSlide] = useState(0)
@@ -53,18 +56,7 @@ const HomeCarousel = () => {
   }, [emblaApi, logSlidesInView])
 
   return (
-    <div
-      className={css({
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        bgColor: 'bg.gray',
-        w: 'full',
-        // maxW: 'auto',
-        pt: '50px',
-        pb: 25,
-      })}
-    >
+    <div className={s.Wrapper}>
       <div ref={emblaRef} className={css({ overflow: 'hidden' })}>
         <div className={css({ display: 'flex', backfaceVisibility: 'hidden' })}>
           {isBannerLoadedSuccess
@@ -76,100 +68,29 @@ const HomeCarousel = () => {
               ))}
         </div>
       </div>
-      <div
-        className={css({
-          display: 'flex',
-          w: '608px',
-          pos: 'absolute',
-          h: 75,
-          rounded: 20,
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          minW: 0,
-          px: '61px',
-        })}
-      >
-        <button
-          className={css({
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            top: 200,
-            left: 630,
-            rounded: 'full',
-            w: 10,
-            h: 10,
-            zIndex: 50,
-            bgColor: 'lightGray.1',
-            opacity: 0.7,
-            cursor: 'pointer',
-          })}
-          onClick={() => onButtonAutoplayClick(onPrevButtonClick)}
-        >
-          <ChevronLeft className={css({ w: 6, h: 6 })} />
-        </button>
-        <button
-          className={css({
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            top: 200,
-            right: 630,
-            rounded: 'full',
-            w: 10,
-            h: 10,
-            zIndex: 50,
-            bgColor: 'lightGray.1',
-            opacity: 0.7,
-            cursor: 'pointer',
-          })}
-          onClick={() => onButtonAutoplayClick(onNextButtonClick)}
-        >
-          <ChevronRight className={css({ w: 6, h: 6 })} />
-        </button>
-      </div>
-      <div
-        className={css({
-          display: 'flex',
-          w: '608px',
-          pos: 'absolute',
-          h: 75,
-          rounded: 20,
-          flexDir: 'row',
-          alignItems: 'flex-end',
-          justifyContent: 'flex-end',
-          minW: 0,
-          pr: '89px',
-          pb: '22px',
-        })}
-      >
-        <button
-          className={css({
-            display: 'inline-flex',
-            pl: 3.5,
-            pr: 3,
-            py: 1,
-            alignItems: 'center',
-            gap: 2.5,
-            rounded: 48,
-            bgColor: 'rgba(0,0,0,0.20)',
-            cursor: 'pointer',
-          })}
-          onClick={onToggleAutoplay}
-        >
-          <img src={PlayIcon} alt="play icon" />
-          <div
-            className={css({
-              display: 'flex',
-              pt: '1px',
-              gap: '3px',
-              color: 'white',
-              fontSize: '14px',
-              fontWeight: 700,
-            })}
+      {!isMobile && (
+        <div className={s.CarouselButtonWrapper}>
+          <button
+            className={s.CarouselButton({ position: 'left' })}
+            onClick={() => onButtonAutoplayClick(onPrevButtonClick)}
           >
-            <p>{currentSlide + 1}</p>
-            <p>/ {emblaApi?.internalEngine().slideIndexes.length}</p>
+            <ChevronLeft className={css({ w: 6, h: 6 })} />
+          </button>
+          <button
+            className={s.CarouselButton({ position: 'right' })}
+            onClick={() => onButtonAutoplayClick(onNextButtonClick)}
+          >
+            <ChevronRight className={css({ w: 6, h: 6 })} />
+          </button>
+        </div>
+      )}
+      <div className={s.CarouselPlayButtonWrapper}>
+        <button className={s.CarouselPlayButton} onClick={onToggleAutoplay} disabled={isMobile}>
+          {!isMobile && <img src={PlayIcon} alt="play icon" />}
+          <div className={s.CarouselPlayText}>
+            <p>
+              {currentSlide + 1} / {emblaApi?.internalEngine().slideIndexes.length}
+            </p>
           </div>
         </button>
       </div>
