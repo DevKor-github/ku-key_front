@@ -21,8 +21,8 @@ export interface ClubInterface {
 }
 
 export interface ClubSearchParams {
-  category: CategoryType
-  keyword: string
-  sortBy: 'like' | null
-  wishList: boolean
+  category?: CategoryType
+  keyword?: string
+  sortBy?: 'like' | null
+  wishList?: boolean
 }

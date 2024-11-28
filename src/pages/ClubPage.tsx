@@ -28,7 +28,7 @@ const ClubPage = () => {
 
   const setCategory = useCallback(
     (target: CategoryType) => {
-      setQuery({ ...query, category: target })
+      setQuery({ ...query, category: target ?? undefined })
     },
     [setQuery, query],
   )
@@ -120,7 +120,7 @@ const ClubPage = () => {
             maxW: '1300px',
           })}
         >
-          <CategorySelector curCategory={query.category} setCategory={setCategory} />
+          <CategorySelector curCategory={query.category ?? null} setCategory={setCategory} />
           <div
             className={css({
               display: 'flex',

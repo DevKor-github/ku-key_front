@@ -10,10 +10,10 @@ export interface ClubProfileProps {
 }
 
 export interface GetClubRequest {
-  sortBy: 'like' | null
-  wishList: boolean
-  category: CategoryType
-  keyword: string | null
+  sortBy?: 'like' | null
+  wishList?: boolean
+  category?: CategoryType
+  keyword?: string | null
   isLogin: boolean
 }
 
