@@ -1,6 +1,6 @@
 import { css, RecipeVariant } from '@styled-system/css'
 import { toast } from '@styled-system/recipes'
-import { AlertCircle, Check, CheckCircle } from 'lucide-react'
+import { AlertCircle, Check } from 'lucide-react'
 import { match, P } from 'ts-pattern'
 
 type ToastProps = {

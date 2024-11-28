@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 
 import { useErrorHandledMutation } from '@/api/hooks/useErrorHandledMutation'
