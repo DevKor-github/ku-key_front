@@ -5,9 +5,10 @@ export const toastRecipe = defineRecipe({
   description: 'Toast',
   base: {
     display: 'flex',
+    flexDir: 'row',
+    alignItems: 'center',
     p: { base: 5, smDown: 3 },
-    flexDir: 'column',
-    rounded: '1.25rem',
+    rounded: '0.5rem',
     border: '1px solid white',
     bgColor: '#F0F0F0',
     gap: 2.5,
