@@ -11,7 +11,7 @@ import { usePrevNextButtons } from '@/util/carousel-button'
 import { useMediaQueryByName } from '@/util/hooks/useMediaQueryByName'
 
 const BannerStyle = cva({
-  base: { w: '608px', ml: 5, flex: '0 0 auto', display: 'block' },
+  base: { w: '608px', ml: 5, flex: '0 0 auto', display: 'block', rounded: { base: 20, smDown: 0 } },
   variants: { display: { false: { display: 'none' } } },
 })
 const SkeletonBannerStyle = cx(BannerStyle(), css({ h: '300px' }))
