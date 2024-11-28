@@ -9,8 +9,8 @@ const WeekHeader = () => {
   const weekText = isMobile ? daysOfWeekShort : daysOfWeek
   return (
     <div className={s.Wrapper}>
-      {weekText.map(day => (
-        <div key={day} className={s.DayWrapper}>
+      {weekText.map((day, index) => (
+        <div key={`${day}-${index}`} className={s.DayWrapper}>
           <p className={css({ textStyle: 'body3_M', color: 'darkGray.2' })}>{day}</p>
         </div>
       ))}

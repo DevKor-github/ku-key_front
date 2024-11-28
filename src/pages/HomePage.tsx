@@ -11,7 +11,7 @@ const HomePage = () => {
   return (
     <Suspense fallback={<LoadingSpinner />}>
       <main className={css({ display: 'flex', flexDir: 'column', alignItems: 'center', bgColor: 'bg.gray' })}>
-        {/* <HomeCarousel /> */}
+        <HomeCarousel />
         <HomeCalendar />
         {/* <SchoolInstitutionSection />
         <Club /> */}
