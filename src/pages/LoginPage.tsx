@@ -1,5 +1,4 @@
 import { css } from '@styled-system/css'
-import { AxiosError } from 'axios'
 import { ShieldAlert } from 'lucide-react'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
@@ -13,31 +12,28 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import AuthNavigate from '@/lib/router/AuthNavigate'
 import { LoginSchema } from '@/lib/zod/login-schema'
+import { handleAxiosError } from '@/util/handleAxiosError'
 import { useRegisterForm } from '@/util/hooks/useRegisterForm'
+
 const Login = () => {
   const [maintain, setMaintain] = useState(false)
-  const { mutate: mutateLogin } = useLogIn()
+  const { mutate: mutateLogin } = useLogIn({
+    onError: error => {
+      const { data: errorData } = handleAxiosError(error)
+      const errorMessage = errorData?.message ?? 'An error occurred'
+      if (errorMessage === '이메일이 잘못되었습니다.') {
+        loginForm.setError('email', { message: 'wrong email' })
+      }
+      if (errorMessage === '비밀번호가 일치하지 않습니다.') {
+        loginForm.setError('password', { message: 'wrong password' })
+      }
+    },
+  })
 
   const navigate = useNavigate()
   const loginForm = useRegisterForm(LoginSchema)
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
-    mutateLogin(
-      { ...values, keepingLogin: maintain },
-      {
-        onSuccess: () => navigate('/home'),
-        onError: error => {
-          if (error instanceof AxiosError) {
-            const errorMessage = error.response?.data.message ?? 'An error occurred'
-            if (errorMessage === '이메일이 잘못되었습니다.') {
-              loginForm.setError('email', { message: 'wrong email' })
-            }
-            if (errorMessage === '비밀번호가 일치하지 않습니다.') {
-              loginForm.setError('password', { message: 'wrong password' })
-            }
-          }
-        },
-      },
-    )
+    mutateLogin({ ...values, keepingLogin: maintain }, { onSuccess: () => navigate('/home') })
   }
 
   return (

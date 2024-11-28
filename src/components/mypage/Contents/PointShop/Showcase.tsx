@@ -1,11 +1,12 @@
 import { css } from '@styled-system/css'
-import { isAxiosError } from 'axios'
 import { useCallback } from 'react'
+import { toast } from 'sonner'
 
 import { usePatchLevel, usePostPurchaseItem } from '@/api/hooks/user'
 import CharacterTicket from '@/components/mypage/Contents/PointShop/CharacterTicket'
 import CourseReviewTicket from '@/components/mypage/Contents/PointShop/CourseReviewTicket'
 import ReviewKeyExpirationCard from '@/components/mypage/Contents/PointShop/ReviewKeyExpirationCard'
+import Toast from '@/components/ui/toast'
 import { CharacterType } from '@/types/community'
 
 const HeadingStyle = css({
@@ -31,14 +32,7 @@ const Showcase = ({ myLevel, selectedLevel, myCharacterType }: ShowcaseProps) =>
           requiredPoints: cost,
         },
         {
-          onSuccess: () => alert('Your purchase was successful'),
-          onError: error => {
-            if (isAxiosError(error)) {
-              alert(error.response?.data.message)
-            } else {
-              alert('Something is Wrong!')
-            }
-          },
+          onSuccess: () => toast.custom(() => <Toast message={'Your purchase was successful'} type="success" />),
         },
       )
     },
@@ -50,15 +44,8 @@ const Showcase = ({ myLevel, selectedLevel, myCharacterType }: ShowcaseProps) =>
         { itemCategory: type, requiredPoints: cost },
         {
           onSuccess: () => {
-            alert('Your purchase has been successful')
+            toast.custom(() => <Toast message={'Your purchase has been successful'} type="warning" />)
             window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
-          },
-          onError: error => {
-            if (isAxiosError(error)) {
-              alert(error.response?.data.message)
-            } else {
-              alert('Something is Wrong!')
-            }
           },
         },
       )

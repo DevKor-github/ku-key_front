@@ -20,14 +20,16 @@ interface UserInfoFormProps {
 }
 
 const UserInfoForm = ({ form, handleFileChange, handleValidation, valid, fileName }: UserInfoFormProps) => {
-  const { mutate: mutateCheckStudentIdDuplication } = useCheckStudentIdDuplication()
+  const { mutate: mutateCheckStudentIdDuplication } = useCheckStudentIdDuplication({
+    onError: () => form.setError('studentNumber', { message: 'This is a duplicate student number ID' }),
+  })
+
   const handleCheckStudentIdDuplication = () => {
     mutateCheckStudentIdDuplication(form.getValues('studentNumber'), {
       onSuccess: () => {
         form.clearErrors('studentNumber')
         handleValidation('studentId', 'valid')
       },
-      onError: () => form.setError('studentNumber', { message: 'This is a duplicate student number ID' }),
     })
   }
   return (

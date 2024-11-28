@@ -1,5 +1,6 @@
-import { useMutation, useQuery, useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
 
+import { useErrorHandledMutation } from '@/api/hooks/useErrorHandledMutation'
 import {
   ClubProfileProps,
   GetClubRequest,
@@ -63,7 +64,7 @@ const postClubLike = async ({ clubId }: PostClubLikeRequest) => {
 
 export const usePostClubLike = () => {
   const queryClient = useQueryClient()
-  return useMutation({
+  return useErrorHandledMutation({
     mutationFn: postClubLike,
     onSuccess: (response, { queryParams }) => {
       queryClient.setQueryData<GetClubResponse>(

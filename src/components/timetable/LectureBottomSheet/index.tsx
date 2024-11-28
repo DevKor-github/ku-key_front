@@ -1,6 +1,5 @@
 import { css, cx } from '@styled-system/css'
 import { shadow } from '@styled-system/recipes'
-import { isAxiosError } from 'axios'
 import { motion } from 'framer-motion'
 import { useCallback, useState } from 'react'
 import { match } from 'ts-pattern'
@@ -45,14 +44,7 @@ const LectureBottomSheet = ({ timetableId, visible, year, semester }: LectureBot
   )
 
   const addOnMyOwnHandler = (data: AddOnMyOwnForm) => {
-    postSchedule(
-      { timetableId, ...data },
-      {
-        onError: error => {
-          if (isAxiosError(error)) alert(error.response?.data.message)
-        },
-      },
-    )
+    postSchedule({ timetableId, ...data })
   }
 
   return (

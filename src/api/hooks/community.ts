@@ -1,6 +1,5 @@
 import {
   useInfiniteQuery,
-  useMutation,
   useQuery,
   useQueryClient,
   useSuspenseInfiniteQuery,
@@ -8,6 +7,7 @@ import {
 } from '@tanstack/react-query'
 import { useSearchParams } from 'react-router-dom'
 
+import { useErrorHandledMutation } from '@/api/hooks/useErrorHandledMutation'
 import {
   CommentReportRequest,
   GetMyCommentsResponse,
@@ -133,7 +133,7 @@ const postReaction = async ({ postId, reaction }: PostReactionRequest) => {
 
 export const usePostReaction = () => {
   const queryClient = useQueryClient()
-  return useMutation({
+  return useErrorHandledMutation({
     mutationFn: postReaction,
     onSuccess: data => {
       queryClient.setQueryData<PostViewProps>(['postById', parseInt(data.postId)], (oldData): PostViewProps => {
@@ -167,7 +167,7 @@ const postScrap = async (postId: number) => {
 
 export const usePostScrap = () => {
   const queryClient = useQueryClient()
-  return useMutation({
+  return useErrorHandledMutation({
     mutationFn: postScrap,
     onSuccess: data => {
       queryClient.setQueryData<PostViewProps>(['postById', parseInt(data.postId)], (oldData): PostViewProps => {
@@ -197,7 +197,7 @@ const postComment = async ({ postId, parentCommentId, content, isAnonymous }: Po
 
 export const usePostComment = () => {
   const queryClient = useQueryClient()
-  return useMutation({
+  return useErrorHandledMutation({
     mutationFn: postComment,
     onSuccess: data => {
       queryClient.setQueryData<PostViewProps>(['postById', Number(data.postId)], (oldData): PostViewProps => {
@@ -212,7 +212,7 @@ export const usePostComment = () => {
 
 export const usePostCommentReply = () => {
   const queryClient = useQueryClient()
-  return useMutation({
+  return useErrorHandledMutation({
     mutationFn: postComment,
     onSuccess: data => {
       queryClient.setQueryData<PostViewProps>(['postById', Number(data.postId)], (oldData): PostViewProps => {
@@ -239,7 +239,7 @@ const postCommentLike = async ({ postId, commentId, isReply, parentCommentId }: 
 
 export const usePostCommentLike = () => {
   const queryClient = useQueryClient()
-  return useMutation({
+  return useErrorHandledMutation({
     mutationFn: postCommentLike,
     onSuccess: data => {
       queryClient.setQueryData<PostViewProps>(['postById', parseInt(data.postId)], (oldData): PostViewProps => {
@@ -280,7 +280,7 @@ const postCreate = async ({ boardId, title, content, isAnonymous, images }: Post
 }
 
 export const usePostCreate = () => {
-  return useMutation({
+  return useErrorHandledMutation({
     mutationFn: postCreate,
   })
 }
@@ -298,7 +298,7 @@ const patchPost = async ({ postId, title, content, isAnonymous, images, imageUpd
 
 export const usePatchEditPost = () => {
   const queryClient = useQueryClient()
-  return useMutation({
+  return useErrorHandledMutation({
     mutationFn: patchPost,
     onSuccess: data => {
       queryClient.setQueryData<PostViewProps>(['postById', data.id], (oldData): PostViewProps => {
@@ -315,7 +315,7 @@ const deletePost = async (postId: number) => {
 }
 
 export const useDeletePost = () => {
-  return useMutation({ mutationFn: deletePost })
+  return useErrorHandledMutation({ mutationFn: deletePost })
 }
 
 const reportPost = async ({ postId, reason }: PostReportRequest) => {
@@ -324,7 +324,7 @@ const reportPost = async ({ postId, reason }: PostReportRequest) => {
 }
 
 export const useReportPost = () => {
-  return useMutation({ mutationFn: reportPost })
+  return useErrorHandledMutation({ mutationFn: reportPost })
 }
 
 const reportComment = async ({ commentId, reason }: CommentReportRequest) => {
@@ -333,7 +333,7 @@ const reportComment = async ({ commentId, reason }: CommentReportRequest) => {
 }
 
 export const useReportComment = () => {
-  return useMutation({ mutationFn: reportComment })
+  return useErrorHandledMutation({ mutationFn: reportComment })
 }
 
 const getMyPost = async (take: number, cursor?: string) => {
@@ -410,7 +410,7 @@ const deleteComment = async (commentId: number) => {
 export const useDeleteComment = () => {
   const queryClient = useQueryClient()
   const queryKey = useGetPostQueryKey()
-  return useMutation({
+  return useErrorHandledMutation({
     mutationFn: deleteComment,
     onSuccess: () => queryClient.invalidateQueries({ queryKey: queryKey }),
   })

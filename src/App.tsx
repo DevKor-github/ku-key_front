@@ -6,6 +6,7 @@ import routes from '@/lib/router/router'
 import { UserProvider } from '@/providers/UserProvider'
 import AmplitudeProvider from '@/util/AmplitudeProvider'
 import AuthProvider from '@/util/auth/AuthProvider'
+import { useMediaQueryByName } from '@/util/hooks/useMediaQueryByName'
 import ScrollToTop from '@/util/ScrollToTop'
 
 const queryClient = new QueryClient({
@@ -22,7 +23,7 @@ const queryClient = new QueryClient({
 
 function App() {
   const router = useRoutes(routes)
-
+  const isMobile = useMediaQueryByName('smDown')
   if (process.env.NODE_ENV === 'development') {
     window.__REACT_QUERY_STATE__ = queryClient.getQueryCache().findAll()
   }
@@ -30,7 +31,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <AuthProvider />
       <UserProvider>
-        <Toaster position="top-right" />
+        <Toaster position={isMobile ? 'bottom-center' : 'top-right'} />
         {router}
         <ScrollToTop />
         <AmplitudeProvider />

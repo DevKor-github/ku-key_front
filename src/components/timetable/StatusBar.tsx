@@ -1,5 +1,4 @@
 import { css } from '@styled-system/css'
-import { isAxiosError } from 'axios'
 import { useCallback } from 'react'
 
 import { usePostTimetable } from '@/api/hooks/timetable'
@@ -20,18 +19,11 @@ const StatusBar = ({ curSemester, curIndex, setCurIndex }: StatusBarProps) => {
   const curSemesterTimetableLen = curSemester.timetables.length
 
   const handleCreateTimetable = useCallback(() => {
-    createTimetable(
-      {
-        timetableName: `timetable ${curSemesterTimetableLen + 1}`,
-        semester: curSemester.semester,
-        year: curSemester.year,
-      },
-      {
-        onError: error => {
-          if (isAxiosError(error)) alert(error.response?.data.message)
-        },
-      },
-    )
+    createTimetable({
+      timetableName: `timetable ${curSemesterTimetableLen + 1}`,
+      semester: curSemester.semester,
+      year: curSemester.year,
+    })
   }, [curSemester, createTimetable, curSemesterTimetableLen])
 
   return (

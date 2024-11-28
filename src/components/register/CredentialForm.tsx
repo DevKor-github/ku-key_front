@@ -16,15 +16,16 @@ interface CredentialFormProps {
   handleValidation: (target: keyof RegistrationState, value: ValidState) => void
 }
 const CredentialForm = ({ form, valid, handleValidation }: CredentialFormProps) => {
-  const { mutate: mutateCheckUsernameDuplication } = useCheckUsernameDuplication()
+  const { mutate: mutateCheckUsernameDuplication } = useCheckUsernameDuplication({
+    onError: () => {
+      handleValidation('username', 'invalid')
+      form.setError('username', { message: 'This ID is a duplicate ID', type: 'validate' })
+    },
+  })
 
   const handleUsernameDuplicationCheck = () => {
     mutateCheckUsernameDuplication(form.getValues().username, {
       onSuccess: () => handleValidation('username', 'valid'),
-      onError: () => {
-        handleValidation('username', 'invalid')
-        form.setError('username', { message: 'This ID is a duplicate ID', type: 'validate' })
-      },
     })
   }
   return (

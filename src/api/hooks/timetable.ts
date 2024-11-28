@@ -1,5 +1,6 @@
-import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
+import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
 
+import { useErrorHandledMutation } from '@/api/hooks/useErrorHandledMutation'
 import {
   CreateTimetableRequest,
   DeleteTimetableRequest,
@@ -63,7 +64,7 @@ const postTimetable = async ({ timetableName, semester, year }: CreateTimetableR
  */
 export const usePostTimetable = () => {
   const queryClient = useQueryClient()
-  return useMutation({
+  return useErrorHandledMutation({
     mutationFn: postTimetable,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['timetableList'] })
@@ -81,7 +82,7 @@ const deleteTimetable = async ({ timetableId }: DeleteTimetableRequest) => {
  */
 export const useDeleteTimetable = () => {
   const queryClient = useQueryClient()
-  return useMutation({
+  return useErrorHandledMutation({
     mutationFn: deleteTimetable,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['timetableList'] })
@@ -99,7 +100,7 @@ const patchTimetableName = async ({ timetableId, timetableName }: UpdateTimetabl
  */
 export const useUpdateTimetableName = () => {
   const queryClient = useQueryClient()
-  return useMutation({
+  return useErrorHandledMutation({
     mutationFn: patchTimetableName,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['timetableList'] })
@@ -117,7 +118,7 @@ const patchMainTimetable = async ({ semester, year, timetableId }: UpdateMainTim
  */
 export const useUpdateMainTimetable = () => {
   const queryClient = useQueryClient()
-  return useMutation({
+  return useErrorHandledMutation({
     mutationFn: patchMainTimetable,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['timetableList'] })
@@ -137,7 +138,7 @@ const patchColor = async ({ timetableColor, timetableId }: UpdateTimetableColorR
  */
 export const useUpdateTimetableColor = () => {
   const queryClient = useQueryClient()
-  return useMutation({
+  return useErrorHandledMutation({
     mutationFn: patchColor,
     onSuccess: response => {
       queryClient.setQueryData<GetTimetableByTimetableIdResponse>(['timetable', response.id], prevData => {
@@ -161,7 +162,7 @@ const postCourse = async ({ timetableId, courseId }: PostCourseRequest) => {
  */
 export const usePostCourse = () => {
   const queryClient = useQueryClient()
-  return useMutation({
+  return useErrorHandledMutation({
     mutationFn: postCourse,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['timetable'] })
@@ -179,7 +180,7 @@ const deleteCourse = async (params: PostCourseRequest) => {
  */
 export const useDeleteCourse = () => {
   const queryClient = useQueryClient()
-  return useMutation({
+  return useErrorHandledMutation({
     mutationFn: deleteCourse,
     onSuccess: (response, request) => {
       if (response.deleted) {

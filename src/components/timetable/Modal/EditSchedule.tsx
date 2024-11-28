@@ -1,6 +1,5 @@
 import { css, cx } from '@styled-system/css'
 import { shadow } from '@styled-system/recipes'
-import { isAxiosError } from 'axios'
 import { useCallback } from 'react'
 
 import { usePatchSchedule } from '@/api/hooks/schedule'
@@ -18,14 +17,7 @@ const EditSchedule = ({ timetableId, data, closeScheduleModal }: EditSchedulePro
   const handleSubmit = useCallback(
     (formData: AddOnMyOwnForm) => {
       closeScheduleModal()
-      editSchedule(
-        { scheduleId: data.scheduleId, timetableId, ...formData },
-        {
-          onError: error => {
-            if (isAxiosError(error)) alert(error.response?.data.message)
-          },
-        },
-      )
+      editSchedule({ scheduleId: data.scheduleId, timetableId, ...formData })
     },
     [closeScheduleModal, editSchedule, timetableId, data.scheduleId],
   )

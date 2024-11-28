@@ -63,16 +63,16 @@ const PublicProfile = ({
   const { mutate: patchProfile } = usePatchMyProfile()
   const { mutate: addLang } = usePostLanguage()
   const { mutate: deleteLang } = useDeleteLanguage()
-  const { mutate: mutateCheckUsernameDuplication } = useCheckUsernameDuplication()
+  const { mutate: mutateCheckUsernameDuplication } = useCheckUsernameDuplication({
+    onError: () => {
+      setError('username', { message: 'This ID is a duplicate ID' })
+    },
+  })
 
   const handleUsernameValidCheck = () => {
     trigger('username', { shouldFocus: true })
     mutateCheckUsernameDuplication(getValues().username, {
       onSuccess: () => setUsernameValidation(true),
-      onError: () => {
-        setError('username', { message: 'This ID is a duplicate ID' })
-        return
-      },
     })
   }
 

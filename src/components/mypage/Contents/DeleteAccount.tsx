@@ -1,5 +1,4 @@
 import { css } from '@styled-system/css'
-import { isAxiosError } from 'axios'
 import { useCallback } from 'react'
 
 import { useDeleteUser } from '@/api/hooks/user'
@@ -27,19 +26,7 @@ const DeleteAccount = () => {
   const { modalRef, isOpen, handleOpen, handleLayoutClose, handleButtonClose } = useModal()
   const { mutate: deleteUser } = useDeleteUser()
 
-  const handleDelete = useCallback(
-    () =>
-      deleteUser(undefined, {
-        onError: error => {
-          if (isAxiosError(error)) {
-            alert(error.response?.data.message)
-          } else {
-            alert('Something is Wrong!')
-          }
-        },
-      }),
-    [deleteUser],
-  )
+  const handleDelete = useCallback(() => deleteUser(undefined), [deleteUser])
 
   return (
     <div className={css({ display: 'flex', gap: { base: 15, mdDown: 5 }, flexDir: 'column', alignItems: 'center' })}>

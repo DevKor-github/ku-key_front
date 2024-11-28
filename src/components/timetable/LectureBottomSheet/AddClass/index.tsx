@@ -81,14 +81,7 @@ const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
 
   const addCourse = useCallback(
     (courseId: number) => {
-      postCourse(
-        { courseId, timetableId },
-        {
-          onError: error => {
-            if (isAxiosError(error)) alert(error.response?.data.message)
-          },
-        },
-      )
+      postCourse({ courseId, timetableId })
     },
     [postCourse, timetableId],
   )

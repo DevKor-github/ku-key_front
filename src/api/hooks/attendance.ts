@@ -1,5 +1,6 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 
+import { useErrorHandledMutation } from '@/api/hooks/useErrorHandledMutation'
 import { PostAttendanceResponse } from '@/api/types/attendance'
 import { apiInterface } from '@/util/axios/custom-axios'
 
@@ -10,7 +11,7 @@ const postAttendance = async () => {
 
 export const usePostAttendance = () => {
   const queryClient = useQueryClient()
-  return useMutation({
+  return useErrorHandledMutation({
     mutationFn: postAttendance,
     onSuccess: () => {
       queryClient.setQueryData<boolean>(['attendance'], true)
