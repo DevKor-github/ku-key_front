@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
 
 import { useErrorHandledMutation } from '@/api/hooks/useErrorHandledMutation'
 import {
@@ -19,7 +19,7 @@ const getPointHistory = async () => {
 }
 
 export const useGetPointHistory = () => {
-  return useQuery({ queryKey: ['pointHistory'], queryFn: getPointHistory, initialData: [] })
+  return useSuspenseQuery({ queryKey: ['pointHistory'], queryFn: getPointHistory })
 }
 
 const deleteUser = async () => {
@@ -41,22 +41,9 @@ export const getMyProfile = async () => {
 }
 
 export const useGetMyProfile = () => {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ['myProfile'],
     queryFn: getMyProfile,
-    initialData: {
-      username: '',
-      country: '',
-      homeUniversity: '',
-      major: '',
-      startDay: '',
-      endDay: '',
-      point: 0,
-      languages: [],
-      level: 0,
-      type: 'character1',
-      selectedLevel: 0,
-    },
   })
 }
 
@@ -158,10 +145,9 @@ const getKeyExpiration = async () => {
 }
 
 export const useGetKeyExpiration = () => {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ['keyExpiration'],
     queryFn: getKeyExpiration,
     retry: 0,
-    initialData: null,
   })
 }
