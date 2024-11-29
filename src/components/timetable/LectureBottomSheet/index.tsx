@@ -17,8 +17,11 @@ interface LectureBottomSheetProps {
   visible: boolean
 }
 const LectureBottomSheet = ({ timetableId, visible, year, semester }: LectureBottomSheetProps) => {
+  // TODO: useOverlay로 Refactor
   const [isOpen, setIsOpen] = useState(false)
   const [sheetState, setSheetState] = useState<'class' | 'schedule' | null>(null)
+
+  const openHeight = Math.min(window.innerHeight * 0.5, 520)
 
   const { mutate: postSchedule } = usePostSchedule()
 
@@ -73,7 +76,7 @@ const LectureBottomSheet = ({ timetableId, visible, year, semester }: LectureBot
         })}
         animate={isOpen ? 'open' : 'close'}
         initial={{ bottom: 0 }}
-        variants={{ open: { bottom: '400px' }, close: { bottom: 0 } }}
+        variants={{ open: { bottom: `${openHeight + 20}px` }, close: { bottom: 0 } }}
       >
         <Drawer isOpen={isOpen} sheetState={sheetState} handleDrawer={handleDrawer} visible={visible} />
         <div
@@ -81,7 +84,6 @@ const LectureBottomSheet = ({ timetableId, visible, year, semester }: LectureBot
             css({
               bgColor: '#FFFFFF80',
               w: '1200px',
-              h: '380px',
               backdropFilter: 'blur(25px)',
               rounded: 50,
               px: 26,
@@ -90,6 +92,7 @@ const LectureBottomSheet = ({ timetableId, visible, year, semester }: LectureBot
             }),
             shadow(),
           )}
+          style={{ height: openHeight }}
         >
           {sheetState === 'schedule' ? (
             <AddOnMyOwn submitHandler={addOnMyOwnHandler} />
