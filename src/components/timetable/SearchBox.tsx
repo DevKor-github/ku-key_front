@@ -51,6 +51,7 @@ const SearchBox = ({ initialKeyword, placeholder, onSubmit, cssProps = {} }: Sea
           fontSize: 18,
           fontWeight: 500,
           flexGrow: 1,
+          lineHeight: 1.2,
           color: 'black.2',
           _placeholder: {
             color: 'lightGray.1',
