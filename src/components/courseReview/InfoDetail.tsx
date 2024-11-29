@@ -43,11 +43,11 @@ const InfoDetail = ({ attendance, classLevel, teamProject, amountLearned, teachi
         css({
           display: 'flex',
           flexDir: 'column',
-          gap: 5,
+          gap: { base: 5, smDown: 10 },
           rounded: 10,
           px: 5,
           pt: 5,
-          pb: 11,
+          pb: { base: 11, smDown: 5 },
         }),
         shadow(),
       )}
@@ -57,7 +57,7 @@ const InfoDetail = ({ attendance, classLevel, teamProject, amountLearned, teachi
         <span className={StateStyle}>{attendanceArray[attendance]}</span>
       </div>
       <div className={css({ display: 'flex', flexDir: 'column', gap: 10 })}>
-        <div className={css({ display: 'flex' })}>
+        <div className={css({ display: 'flex', flexDir: { base: 'row', smDown: 'column' }, smDown: { gap: 10 } })}>
           <div className={ScoreBoxStyle}>
             <div className={LabelStyle}>Class Level</div>
             <div className={css({ display: 'flex', gap: 2.5, alignItems: 'center' })}>
@@ -73,7 +73,7 @@ const InfoDetail = ({ attendance, classLevel, teamProject, amountLearned, teachi
             </div>
           </div>
         </div>
-        <div className={css({ display: 'flex' })}>
+        <div className={css({ display: 'flex', flexDir: { base: 'row', smDown: 'column' }, smDown: { gap: 10 } })}>
           <div className={ScoreBoxStyle}>
             <div className={LabelStyle}>Amount Learned</div>
             <div className={css({ display: 'flex', gap: 2.5, alignItems: 'center' })}>

@@ -22,13 +22,21 @@ const TotalRate = ({ totalRate, reviewCount, courseCode, prof }: TotalRateProps)
           rounded: 10,
           px: 5,
           pt: 5,
-          pb: 10,
+          pb: { base: 10, smDown: 5 },
         }),
         shadow(),
       )}
     >
       <div className={css({ fontWeight: 700, color: 'lightGray.1', fontSize: 14 })}>Course Review Total Rate</div>
-      <div className={css({ display: 'flex', alignItems: 'center', justifyContent: 'space-between' })}>
+      <div
+        className={css({
+          display: 'flex',
+          flexDir: { base: 'row', smDown: 'column' },
+          alignItems: { base: 'center', smDown: 'flex-start' },
+          justifyContent: { base: 'space-between', smDown: 'flex-start' },
+          smDown: { gap: 5 },
+        })}
+      >
         <div className={css({ display: 'flex', gap: 2.5, color: 'darkGray.2', alignItems: 'center' })}>
           <span className={css({ fontSize: 18 })}>{totalRate.toFixed(1)}</span>
           <CookiesRate rate={totalRate} size={18} gap={4} />

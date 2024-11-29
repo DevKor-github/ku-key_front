@@ -78,7 +78,7 @@ const ReviewChoiceChips = ({ title, category, options }: ReviewChoiceChipsProps)
                 <button
                   type="button"
                   className={cva({
-                    base: { fontSize: 18, cursor: 'pointer' },
+                    base: { fontSize: { base: 18, mdDown: 16, smDown: 14, xsDown: 12 }, cursor: 'pointer' },
                     variants: { selected: { true: { color: 'black.2' } } },
                   })({ selected: watch(category) === index })}
                   onClick={() => setValue<string>(category, index)}

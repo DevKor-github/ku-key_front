@@ -82,7 +82,7 @@ const WriteReviewPage = () => {
             flexGrow: 1,
             minW: 0,
             rounded: 10,
-            p: 5,
+            p: { base: 5, smDown: 3.5, xsDown: 2 },
             pb: 10,
             display: 'flex',
             flexDir: 'column',
@@ -92,12 +92,18 @@ const WriteReviewPage = () => {
         )}
         onSubmit={methods.handleSubmit(onSubmit)}
       >
-        <div className={css({ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 3 })}>
+        <div
+          className={css({
+            display: 'flex',
+            flexDir: 'column',
+            gap: 3,
+          })}
+        >
           <div
             className={css({
               display: 'flex',
-              gap: 5,
-              alignItems: 'center',
+              flexDir: 'column',
+              gap: 1,
               textOverflow: 'ellipsis',
               whiteSpace: 'nowrap',
               overflow: 'hidden',
@@ -106,7 +112,7 @@ const WriteReviewPage = () => {
             <span
               className={css({
                 fontWeight: 600,
-                fontSize: 26,
+                fontSize: { base: 26, mdDown: 20, smDown: 16 },
                 color: 'black.2',
                 textOverflow: 'ellipsis',
                 whiteSpace: 'nowrap',
@@ -117,16 +123,14 @@ const WriteReviewPage = () => {
             </span>
             <span
               className={css({
-                fontSize: 18,
+                fontSize: { base: 18, mdDown: 16, smDown: 14 },
                 color: 'darkGray.2',
               })}
             >
               {prof}
             </span>
           </div>
-          <div className={css({ flexBasis: 68, flexShrink: 0 })}>
-            <Dropdown dropdownList={semesterList} curIndex={curSemester} setCurIndex={setCurSemester} />
-          </div>
+          <Dropdown dropdownList={semesterList} curIndex={curSemester} setCurIndex={setCurSemester} />
         </div>
         <div className={css({ display: 'flex', flexDir: 'column', gap: 5, alignItems: 'flex-start' })}>
           <ReviewTotalRate />

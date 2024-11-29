@@ -27,9 +27,18 @@ const CourseReviewPage = () => {
   return (
     <div>
       <ReviewBanner title={curPathRoot === 'info' ? 'Course Information' : 'Course Review'} />
-      <div className={css({ px: 64, py: 12, display: 'flex', gap: 5, alignItems: 'flex-start' })}>
+      <div
+        className={css({
+          px: { base: 60, lgDown: 26, mdDown: 5 },
+          py: { base: 12, smDown: 5 },
+          display: 'flex',
+          gap: 5,
+          alignItems: { base: 'flex-start', mdDown: 'stretch' },
+          flexDir: { base: 'row', mdDown: 'column' },
+        })}
+      >
         <button
-          className={cx(FriendPageBtnStyle({ prev: true }), css({ flexShrink: 0 }))}
+          className={cx(FriendPageBtnStyle({ prev: true }), css({ flexShrink: 0, mdDown: { w: 47 } }))}
           onClick={() => {
             if (curPathRoot === 'info') {
               navigate('/timetable')
