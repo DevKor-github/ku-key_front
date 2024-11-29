@@ -50,7 +50,6 @@ export const useGetTimetable = ({ timetableId }: GetTimetableByTimetableIdReques
   return useSuspenseQuery({
     queryKey: ['timetable', timetableId],
     queryFn: () => getTimetableByID({ timetableId }),
-    initialData: INITIAL_TIMETABLE,
   })
 }
 

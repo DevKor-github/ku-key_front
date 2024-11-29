@@ -29,7 +29,6 @@ export const useGetFriendList = ({ keyword }: GetFriendListRequest) => {
   return useSuspenseQuery({
     queryKey: ['friendList', keyword],
     queryFn: () => getFriendList({ keyword }),
-    initialData: [],
   })
 }
 
@@ -80,10 +79,9 @@ const getReceivedList = async () => {
  * 나에게 친구 요청을 보낸 유저 목록을 조회합니다.
  */
 export const useGetReceivedList = () => {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ['receivedFriends'],
     queryFn: getReceivedList,
-    initialData: [],
   })
 }
 
@@ -156,15 +154,9 @@ const getFriendTimetable = async (props: GetFriendTimetableRequest) => {
  * 친구 ID, 연도, 학기를 입력받아 해당 학기에 친구의 대표 시간표를 조회합니다.
  */
 export const useGetFriendTimetable = (props: Omit<GetFriendTimetableRequest, 'authHeader'>) => {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ['friendTimetable', props],
     queryFn: () => getFriendTimetable(props),
-    initialData: {
-      courses: [],
-      schedules: [],
-      color: 'Red',
-      timetableName: '',
-    },
     retry: false,
   })
 }
@@ -197,9 +189,8 @@ const getRequestedList = async () => {
  * 나에게 친구 요청을 보낸 유저 목록을 조회합니다.
  */
 export const useGetRequestedList = () => {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ['requestedFriends'],
     queryFn: getRequestedList,
-    initialData: [],
   })
 }

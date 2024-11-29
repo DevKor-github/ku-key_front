@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQuery, useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
 
 import { useErrorHandledMutation } from '@/api/hooks/useErrorHandledMutation'
 import {
@@ -20,19 +20,9 @@ const getReviewSummary = async (props: GetReviewSummaryRequest) => {
  * 해당 교수의 해당 강의에 대한 강의평들을 종합한 강의평 요약을 조회합니다.
  */
 export const useGetReviewSummary = (props: GetReviewSummaryRequest) => {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ['summary', props],
     queryFn: () => getReviewSummary(props),
-    initialData: (): GetReviewSummaryResponse => ({
-      totalRate: 0,
-      reviewCount: 0,
-      classLevel: 0,
-      teamProject: 0,
-      amountLearned: 0,
-      teachingSkills: 0,
-      attendance: 0,
-      courseName: '',
-    }),
   })
 }
 
@@ -45,10 +35,9 @@ const getReviews = async (props: GetReviewsRequest) => {
  * 해당 교수의 해당 강의에 대해 강의평을 조회합니다. 열람권이 없으면 열람할 수 없습니다.
  */
 export const useGetReviews = (props: GetReviewsRequest) => {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ['reviewList', props],
     queryFn: () => getReviews(props),
-    initialData: () => ({ totalRate: 0, reviewCount: 0, reviews: [] }),
     retry: false,
   })
 }
@@ -74,10 +63,9 @@ const getMyReview = async () => {
 }
 
 export const useGetMyReview = () => {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ['myReview'],
     queryFn: getMyReview,
-    initialData: [],
   })
 }
 
@@ -90,6 +78,6 @@ export const useGetCheckSubmission = (props: GetReviewSummaryRequest) => {
   return useQuery({
     queryKey: ['reviewSubmission', props],
     queryFn: () => getCheckSubmission(props),
-    initialData: false,
+    placeholderData: false,
   })
 }
