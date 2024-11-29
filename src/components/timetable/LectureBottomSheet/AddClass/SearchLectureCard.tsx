@@ -1,5 +1,5 @@
 import { css } from '@styled-system/css'
-import { ChevronRight, Dot } from 'lucide-react'
+import { ChevronRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 import CookiesRate from '@/components/courseReview/CookiesRate'
@@ -12,7 +12,16 @@ interface SearchLectureCardProps {
 
 const SearchLectureCard = ({ data, addCourse }: SearchLectureCardProps) => {
   return (
-    <div className={css({ display: 'flex', justifyContent: 'space-between', alignItems: 'center', pr: 4, gap: 10 })}>
+    <div
+      className={css({
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        pr: 4,
+        gap: 10,
+        lineHeight: 1.2,
+      })}
+    >
       <div className={css({ display: 'flex', flexDir: 'column', gap: 2.5 })}>
         <div className={css({ display: 'flex', gap: 4, alignItems: 'center' })}>
           <span className={css({ fontSize: 16, fontWeight: 600, color: 'black.2', maxW: '430px', lineClamp: 2 })}>
@@ -33,11 +42,11 @@ const SearchLectureCard = ({ data, addCourse }: SearchLectureCardProps) => {
             Course plan <ChevronRight size={14} />
           </Link>
         </div>
-        <div className={css({ display: 'flex', alignItems: 'center', fontSize: 14, color: 'darkGray.1' })}>
+        <div className={css({ display: 'flex', alignItems: 'center', fontSize: 14, color: 'darkGray.1', gap: 2.5 })}>
           <span>{data.professorName}</span>
-          <Dot />
+          {'•'}
           <span>{data.details && data.details[0]?.classroom}</span>
-          <Dot />
+          {'•'}
           <span>{data.courseCode}</span>
         </div>
         <div
