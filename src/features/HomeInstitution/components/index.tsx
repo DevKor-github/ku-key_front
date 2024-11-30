@@ -4,8 +4,8 @@ import * as s from './style.css'
 
 import BroadcastProfile from '@/assets/BroadcastProfile.png'
 import ETCProfile from '@/assets/ETCProfile.png'
-import InstituteProfile from '@/components/home/Announcement/InsituteProfile'
 import SectionTitle from '@/components/home/Announcement/SectionTitle'
+import InstituteProfile from '@/features/HomeInstitution/components/InstitueProfile'
 import { BROADCASTS } from '@/lib/school-institute/broadcasts'
 import { ETC } from '@/lib/school-institute/etc'
 
