@@ -1,3 +1,5 @@
+import { CategoryType } from '@/components/club/constants'
+
 export interface ClubProfileProps {
   img: string
   name: string
@@ -16,4 +18,11 @@ export interface ClubInterface {
   isLiked: boolean
   instagramLink: string | null
   youtubeLink: string | null
+}
+
+export interface ClubSearchParams {
+  category?: CategoryType
+  keyword?: string
+  sortBy?: 'like'
+  filter?: 'like'
 }

@@ -9,7 +9,13 @@ interface CategorySelectorProps {
 }
 const CategorySelector = ({ curCategory, setCategory }: CategorySelectorProps) => {
   return (
-    <div className={css({ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' })}>
+    <div
+      className={css({
+        display: { base: 'flex', smDown: 'none' },
+        alignItems: 'flex-start',
+        justifyContent: 'space-between',
+      })}
+    >
       {CATEGORY_LIST.map((category, ind) => (
         <CategoryButton
           key={ind}

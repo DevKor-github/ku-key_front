@@ -3,7 +3,14 @@ interface Props {
 }
 const PerformingArtsIcon = ({ color }: Props) => {
   return (
-    <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="100%"
+      height="100%"
+      viewBox="0 0 50 50"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      style={{ display: 'block' }}
+    >
       <path
         d="M21.5416 27.5267C25.5924 27.5267 28.8763 24.2428 28.8763 20.192C28.8763 16.1412 25.5924 12.8574 21.5416 12.8574C17.4909 12.8574 14.207 16.1412 14.207 20.192C14.207 24.2428 17.4909 27.5267 21.5416 27.5267Z"
         fill={color}

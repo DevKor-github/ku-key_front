@@ -7,7 +7,8 @@ import {
   GetClubResponse,
   PostClubLikeRequest,
   PostClubLikeResponse,
-} from '@/api/types/institution'
+} from '@/api/types/club'
+import { ClubSearchParams } from '@/types/club'
 import { useAuth } from '@/util/auth/useAuth'
 import { apiInterface } from '@/util/axios/custom-axios'
 
@@ -45,16 +46,35 @@ const getClub = async (params: GetClubRequest) => {
   return response.data
 }
 
-export const useGetClubSearch = (params: GetClubRequest) => {
+const createClubSearchQuery = (params: GetClubRequest) => {
   const query: GetClubRequest = {
     ...params,
     keyword: params.keyword || null,
   }
-  return useQuery({
+  return {
     queryKey: ['clubSearchResult', query],
     queryFn: () => getClub(query),
+  }
+}
+
+export const useGetClubSearch = (params: GetClubRequest) => {
+  return useQuery({
+    ...createClubSearchQuery(params),
     retry: false,
   })
+}
+
+export const useGetCachedClubSearchResult = (params: ClubSearchParams) => {
+  const queryClient = useQueryClient()
+  const isLogin = useAuth().authState ?? false
+  const query = createClubSearchQuery({ ...params, isLogin })
+
+  const getCachedClubSearchResult = async () => {
+    const response = await queryClient.ensureQueryData<GetClubResponse>(query)
+    return response
+  }
+
+  return getCachedClubSearchResult
 }
 
 const postClubLike = async ({ clubId }: PostClubLikeRequest) => {

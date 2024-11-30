@@ -1,6 +1,6 @@
 import { css } from '@styled-system/css'
 
-import { useGetHotClub } from '@/api/hooks/institution'
+import { useGetHotClub } from '@/api/hooks/club'
 import ClubProfile from '@/components/home/Club/ClubProfile'
 import ClubSectionTitle from '@/components/home/Club/ClubSectionTitle'
 const HotClub = () => {

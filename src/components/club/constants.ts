@@ -9,7 +9,6 @@ import ReligiousIcon from '@/assets/icon/ReligiousIcon'
 import SocialIcon from '@/assets/icon/SocialIcon'
 import SportsIcon from '@/assets/icon/SportsIcon'
 
-// TODO: 사진 등록
 export const CATEGORY_LIST = [
   { text: 'ALL', icon: AllIcon, type: null },
   { text: 'Instrumental Arts', icon: InstrumentalArtsIcon, type: 'Instrumental Arts' },

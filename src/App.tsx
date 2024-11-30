@@ -6,6 +6,7 @@ import routes from '@/lib/router/router'
 import { UserProvider } from '@/providers/UserProvider'
 import AmplitudeProvider from '@/util/AmplitudeProvider'
 import AuthProvider from '@/util/auth/AuthProvider'
+import { DrawerProvider } from '@/util/DrawerProvider'
 import { useMediaQueryByName } from '@/util/hooks/useMediaQueryByName'
 import ScrollToTop from '@/util/ScrollToTop'
 
@@ -31,10 +32,12 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <AuthProvider />
       <UserProvider>
-        <Toaster position={isMobile ? 'bottom-center' : 'top-right'} />
-        {router}
-        <ScrollToTop />
-        <AmplitudeProvider />
+        <DrawerProvider>
+          <Toaster position={isMobile ? 'bottom-center' : 'top-right'} />
+          {router}
+          <ScrollToTop />
+          <AmplitudeProvider />
+        </DrawerProvider>
       </UserProvider>
     </QueryClientProvider>
   )
