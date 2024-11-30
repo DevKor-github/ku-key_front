@@ -1,15 +1,16 @@
-import { css } from '@styled-system/css'
+import * as s from './style.css'
 
 import { useGetClubRecommended } from '@/api/hooks/club'
 import ClubProfile from '@/components/home/Club/ClubProfile'
 import ClubSectionTitle from '@/components/home/Club/ClubSectionTitle'
+import { HorizontalSpacing } from '@/components/ui/Spacing'
 
-const RecommendClub = () => {
+const HomeRecommendClub = () => {
   const { data: recommendedClubs } = useGetClubRecommended()
   return (
-    <section className={css({ display: 'flex', flexDir: 'column', mt: 15, smDown: { w: 'full' } })}>
+    <section className={s.ClubWrapper}>
       <ClubSectionTitle title="Recommend Club" icon="like" description="Check the Recommended Club for you" />
-      <div className={css({ display: 'flex', gap: 5, alignItems: 'flex-start', justifyContent: 'center', mb: 20 })}>
+      <div className={s.ClubProfileWrapper}>
         {recommendedClubs.map((club, index) => (
           <ClubProfile
             index={index}
@@ -22,8 +23,9 @@ const RecommendClub = () => {
           />
         ))}
       </div>
+      <HorizontalSpacing size={80} />
     </section>
   )
 }
 
-export default RecommendClub
+export default HomeRecommendClub

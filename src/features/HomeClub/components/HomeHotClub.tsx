@@ -1,4 +1,4 @@
-import { css } from '@styled-system/css'
+import * as s from './style.css'
 
 import ClubProfile from '@/components/home/Club/ClubProfile'
 import ClubSectionTitle from '@/components/home/Club/ClubSectionTitle'
@@ -7,16 +7,9 @@ import { useReadHotClubs } from '@/features/HomeClub/hooks/useReadHotClubs'
 const HomeHotClub = () => {
   const { data: hotClubs } = useReadHotClubs()
   return (
-    <section className={css({ display: 'flex', flexDir: 'column', smDown: { w: 'full' } })}>
+    <section className={s.ClubWrapper}>
       <ClubSectionTitle title="HOT Club" icon="flame" description="Check the most popular clubs in the past week" />
-      <div
-        className={css({
-          display: 'flex',
-          gap: 5,
-          alignItems: 'flex-start',
-          justifyContent: 'center',
-        })}
-      >
+      <div className={s.ClubProfileWrapper}>
         {hotClubs.map((club, index) => (
           <ClubProfile
             index={index}

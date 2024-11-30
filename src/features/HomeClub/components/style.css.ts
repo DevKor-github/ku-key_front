@@ -9,3 +9,12 @@ export const Wrapper = css({
   w: 'full',
   maxW: 1026,
 })
+
+export const ClubWrapper = css({ display: 'flex', flexDir: 'column', smDown: { w: 'full' } })
+
+export const ClubProfileWrapper = css({
+  display: 'flex',
+  gap: 5,
+  alignItems: 'flex-start',
+  justifyContent: 'center',
+})
