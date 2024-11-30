@@ -12,15 +12,6 @@ import { ClubSearchParams } from '@/types/club'
 import { useAuth } from '@/util/auth/useAuth'
 import { apiInterface } from '@/util/axios/custom-axios'
 
-const getHotClub = async () => {
-  const response = await apiInterface.get<ClubProfileProps[]>('/club/hot')
-  return response.data
-}
-
-export const useGetHotClub = () => {
-  return useSuspenseQuery({ queryKey: ['hotClub'], queryFn: getHotClub })
-}
-
 const getClubRecommended = async (isLogin: boolean) => {
   const response = await apiInterface.get<ClubProfileProps[]>('/club/recommend', { params: { isLogin } })
   return response.data

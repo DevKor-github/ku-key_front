@@ -1,10 +1,11 @@
 import { css } from '@styled-system/css'
 
-import { useGetHotClub } from '@/api/hooks/club'
 import ClubProfile from '@/components/home/Club/ClubProfile'
 import ClubSectionTitle from '@/components/home/Club/ClubSectionTitle'
-const HotClub = () => {
-  const { data: hotClubs } = useGetHotClub()
+import { useReadHotClubs } from '@/features/HomeClub/hooks/useReadHotClubs'
+
+const HomeHotClub = () => {
+  const { data: hotClubs } = useReadHotClubs()
   return (
     <section className={css({ display: 'flex', flexDir: 'column', smDown: { w: 'full' } })}>
       <ClubSectionTitle title="HOT Club" icon="flame" description="Check the most popular clubs in the past week" />
@@ -32,4 +33,4 @@ const HotClub = () => {
   )
 }
 
-export default HotClub
+export default HomeHotClub
