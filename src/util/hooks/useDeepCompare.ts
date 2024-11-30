@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { DependencyList, EffectCallback, useCallback, useEffect, useLayoutEffect, useMemo, useRef } from 'react'
 
@@ -54,7 +55,7 @@ export const useDeepCompareLayoutEffect = (effectFunction: EffectCallback, depen
   return useLayoutEffect(effectFunction, useDependenciesDeepCompareMemoize(dependencies))
 }
 
-export const useDeepCompareCallback = <T extends (...args: unknown[]) => ReturnType<T>>(
+export const useDeepCompareCallback = <T extends (...args: any[]) => ReturnType<T>>(
   callback: T,
   dependencies: DependencyList,
 ) => {

@@ -1,6 +1,7 @@
 import { css, cva } from '@styled-system/css'
 import { ChevronDown } from 'lucide-react'
 import { useCallback, useState } from 'react'
+import { toast } from 'sonner'
 
 import { useGetClubSearch, usePostClubLike } from '@/api/hooks/club'
 import CategoryDrawer from '@/components/club/CategoryDrawer'
@@ -11,6 +12,7 @@ import SearchArea from '@/components/club/SearchArea'
 import MetaTag from '@/components/MetaTag'
 import { Checkbox } from '@/components/ui/checkbox'
 import ClubModal from '@/components/ui/modal/ClubModal'
+import Toast from '@/components/ui/toast'
 import { ClubInterface, ClubSearchParams } from '@/types/club'
 import { useAuth } from '@/util/auth/useAuth'
 import { useDeepCompareCallback } from '@/util/hooks/useDeepCompare'
@@ -22,43 +24,43 @@ const ClubPage = () => {
   const isLogin = useAuth().authState ?? false
   const isMobile = useMediaQueryByName('smDown')
 
+  // query string으로 관리되는 query
   const [query, setQuery] = useQueryParams<ClubSearchParams>()
+  // api request를 보낼 때 사용되는 query
+  const requestQuery = {
+    category: query.category,
+    keyword: query.keyword,
+    sortBy: query.sortBy,
+    wishList: query.filter === 'like',
+    isLogin,
+  }
 
-  const { data } = useGetClubSearch({ ...query, isLogin })
+  const { data } = useGetClubSearch(requestQuery)
   const { mutate: likeClub } = usePostClubLike()
 
   const setCategory = useDeepCompareCallback(
-    (target: CategoryType) => {
-      setQuery({ ...query, category: target ?? undefined })
-    },
+    (target: CategoryType) => setQuery({ ...query, category: target ?? undefined }),
     [query],
   )
 
   const handleSubmit = useDeepCompareCallback(
-    (inputKeyword: string) => {
-      if (inputKeyword === '') setQuery({ ...query, keyword: '' })
-      else setQuery({ ...query, keyword: inputKeyword.length ? inputKeyword : undefined })
-    },
+    (inputKeyword: string) => setQuery({ ...query, keyword: inputKeyword.length ? inputKeyword : undefined }),
     [query],
   )
 
-  const clearKeyword = useDeepCompareCallback(() => {
-    setQuery({ ...query, keyword: undefined })
-  }, [query])
+  const clearKeyword = useDeepCompareCallback(() => setQuery({ ...query, keyword: undefined }), [query])
 
   const handleLikeClick = useDeepCompareCallback(
     (clubId: number) => {
-      if (isLogin) likeClub({ clubId, queryParams: { ...query, isLogin } })
-      else alert('Please sign in to use!')
+      if (isLogin) likeClub({ clubId, queryParams: requestQuery })
+      else toast.custom(() => <Toast message="Please sign in to use!" type="error" />)
     },
     [likeClub, query, isLogin],
   )
 
   const handleWishList = useDeepCompareCallback(() => {
-    // console.log(query.wishList)
-    // query.wishList는 boolean | undefined가 아닌 string | undefined로 동작함!
-    if (isLogin) setQuery({ ...query, wishList: query.wishList === undefined ? true : false })
-    else alert('Please sign in to use!')
+    if (isLogin) setQuery({ ...query, filter: query.filter === 'like' ? undefined : 'like' })
+    else toast.custom(() => <Toast message="Please sign in to use!" type="error" />)
   }, [query, isLogin])
 
   const [selectedClub, setSelectedClub] = useState<ClubInterface | null>(null)
@@ -161,7 +163,7 @@ const ClubPage = () => {
                       px: 2.5,
                     })}
                   >
-                    <Checkbox checked={query.wishList} onCheckedChange={handleWishList} />
+                    <Checkbox checked={query.filter === 'like'} onCheckedChange={handleWishList} />
                     <p className={css({ textStyle: 'heading4_M', color: 'darkGray.2' })}>View only I like</p>
                   </div>
                 </div>
