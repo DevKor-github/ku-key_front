@@ -1,7 +1,6 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 
 import { GetCalendarYearlyRequest, GetCalendarYearlyResponse } from '@/api/types/calendar'
-import { getInitialAcademicCalendar } from '@/util/academicCalendar'
 import { apiInterface } from '@/util/axios/custom-axios'
 
 const getAcademicCalendar = async (params: GetCalendarYearlyRequest) => {
