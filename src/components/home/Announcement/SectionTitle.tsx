@@ -20,7 +20,7 @@ const SectionTitle = ({ title, description, link }: SectionTitleProps) => {
         w: 'full',
         maxW: 1026,
         alignSelf: 'stretch',
-        smDown: { px: '1.25rem', gap: 0 },
+        smDown: { px: '1rem', gap: 0 },
       })}
     >
       <h1
@@ -46,7 +46,7 @@ const SectionTitle = ({ title, description, link }: SectionTitleProps) => {
           className={css({
             display: link ? 'flex' : 'none',
             alignItems: 'center',
-            textStyle: { base: 'heading1_L', smDown: 'heading4_M' },
+            textStyle: { base: 'heading1_L', smDown: 'body2_M' },
             color: 'red.1',
             cursor: 'pointer',
             pl: 2.5,
@@ -55,7 +55,7 @@ const SectionTitle = ({ title, description, link }: SectionTitleProps) => {
           })}
           onClick={() => link && navigate(link)}
         >
-          more <ChevronRight className={css({ smDown: { w: '1.125rem' } })} />
+          more <ChevronRight className={css({ smDown: { w: '0.875rem' } })} />
         </button>
       </div>
     </div>
