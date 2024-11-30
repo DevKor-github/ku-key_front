@@ -1,7 +1,6 @@
 import { css, cva } from '@styled-system/css'
 import { ChevronDown } from 'lucide-react'
 import { useCallback, useState } from 'react'
-import { useDeepCompareCallback } from 'use-deep-compare'
 
 import { useGetClubSearch, usePostClubLike } from '@/api/hooks/club'
 import CategoryDrawer from '@/components/club/CategoryDrawer'
@@ -14,6 +13,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import ClubModal from '@/components/ui/modal/ClubModal'
 import { ClubInterface, ClubSearchParams } from '@/types/club'
 import { useAuth } from '@/util/auth/useAuth'
+import { useDeepCompareCallback } from '@/util/hooks/useDeepCompare'
 import useDrawer from '@/util/hooks/useDrawer'
 import { useMediaQueryByName } from '@/util/hooks/useMediaQueryByName'
 import { useQueryParams } from '@/util/hooks/useQueryParams'
@@ -55,7 +55,9 @@ const ClubPage = () => {
   )
 
   const handleWishList = useDeepCompareCallback(() => {
-    if (isLogin) setQuery({ ...query, wishList: !query.wishList })
+    // console.log(query.wishList)
+    // query.wishList는 boolean | undefined가 아닌 string | undefined로 동작함!
+    if (isLogin) setQuery({ ...query, wishList: query.wishList === undefined ? true : false })
     else alert('Please sign in to use!')
   }, [query, isLogin])
 
