@@ -28,30 +28,3 @@ export const WeekWrapper = css({
   gap: 2,
   smDown: { display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '0.25rem', textAlign: 'center' },
 })
-
-// export const Wrapper = css({
-//   display: 'flex',
-//   w: 'full',
-//   flexDir: 'column',
-//   pt: '13px',
-//   justifyContent: 'center',
-//   alignItems: 'center',
-//   gap: 5,
-// })
-
-// export const MonthWrapper = css({
-//   display: 'flex',
-//   flexDir: 'column',
-//   alignItems: 'flex-start',
-//   alignSelf: 'stretch',
-// })
-
-// export const WeekWrapper = css({
-//   display: 'flex',
-//   w: 'full',
-//   maxW: 410,
-//   alignSelf: 'stretch',
-//   justifyContent: 'center',
-//   alignItems: 'center',
-//   gap: 2,
-// })

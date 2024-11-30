@@ -10,8 +10,8 @@ import NoticeModal from '@/components/ui/modal/NoticeModal'
 import { POST_MESSAGES } from '@/lib/messages/community'
 import { postAtom } from '@/lib/store/post'
 import { getCommentUsername } from '@/util/getCommentUsername'
-import { isAuthorMatchingPostAnonymity } from '@/util/isAuthorMatchingPostAnonymity'
 import { useModal } from '@/util/hooks/useModal'
+import { isAuthorMatchingPostAnonymity } from '@/util/isAuthorMatchingPostAnonymity'
 
 interface CommentProps {
   isOpen: boolean

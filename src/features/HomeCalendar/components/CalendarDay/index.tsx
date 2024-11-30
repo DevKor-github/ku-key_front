@@ -2,6 +2,8 @@ import { css, cx } from '@styled-system/css'
 import { isEqual } from 'date-fns'
 import { memo } from 'react'
 
+import * as s from './style.css'
+
 import { DayProps } from '@/types/calendar'
 
 interface CalendarDayProps {
@@ -18,66 +20,23 @@ const CalendarDay = memo(({ isToday, day, selectedDate, eventCount }: CalendarDa
     return 'black.2'
   }
   return (
-    <div
-      className={css({
-        display: 'flex',
-        w: '50px',
-        h: '65px',
-        pb: '5px',
-        flexDir: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        smDown: { w: 'full', h: 'auto' },
-      })}
-    >
-      <div
-        className={css({
-          display: 'flex',
-          pb: 2.5,
-          flexDir: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          gap: -1.5,
-        })}
-      >
+    <div className={s.Wrapper}>
+      <div className={s.Box}>
         <div
           className={cx(
+            s.Day,
             css({
-              display: 'flex',
-              w: '3.125rem',
-              aspectRatio: '1/1',
-              justifyContent: 'center',
-              alignItems: 'center',
-              textStyle: 'heading3_L',
-              rounded: 'full',
-              gap: 2.5,
               border: isEqual(selectedDate, day.date) ? '1px solid red' : '1px solid transparent',
               color: getColor(),
               bgColor: isToday ? 'red.2' : 'transparent',
-              transition: 'all 0.25s ease',
-              smDown: {
-                w: '2rem',
-                aspectRatio: '1/1',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '0.75rem',
-              },
             }),
           )}
         >
           {day.date.getDate()}
         </div>
         <div
-          className={css({
-            display: 'flex',
-            w: '5px',
-            h: '5px',
-            bgColor:
-              eventCount > 0 && day.status === 'THIS_MONTH' && !isToday && !isEqual(selectedDate, day.date)
-                ? 'red.2'
-                : 'transparent',
-            rounded: 'full',
+          className={s.Dot({
+            hasEvent: eventCount > 0 && day.status === 'THIS_MONTH' && !isToday && !isEqual(selectedDate, day.date),
           })}
         />
       </div>

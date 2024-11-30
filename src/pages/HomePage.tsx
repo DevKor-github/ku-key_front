@@ -13,8 +13,8 @@ const HomePage = () => {
       <main className={css({ display: 'flex', flexDir: 'column', alignItems: 'center', bgColor: 'bg.gray' })}>
         <HomeCarousel />
         <HomeCalendar />
-        {/* <SchoolInstitutionSection />
-        <Club /> */}
+        <SchoolInstitutionSection />
+        <Club />
       </main>
     </Suspense>
   )
