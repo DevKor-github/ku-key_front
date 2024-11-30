@@ -17,6 +17,7 @@ const ClubSectionTitle = ({ title, icon, description }: ClubSectionTitleProps) =
         flexDir: 'column',
         justifyContent: 'center',
         alignItems: 'flex-start',
+        smDown: { px: 4 },
       })}
     >
       <div
@@ -28,12 +29,19 @@ const ClubSectionTitle = ({ title, icon, description }: ClubSectionTitleProps) =
           justifyContent: 'center',
           alignItems: 'center',
           gap: 2.5,
+          smDown: { p: 0 },
         })}
       >
-        {icon === 'flame' ? <Flame size={24} /> : <ThumbsUp size={24} />}
-        <h1 className={css({ fontSize: 30, fontWeight: 700 })}>{title}</h1>
+        {icon === 'flame' ? (
+          <Flame size={24} className={css({ smDown: { w: 4 } })} />
+        ) : (
+          <ThumbsUp size={24} className={css({ smDown: { w: 4 } })} />
+        )}
+        <h1 className={css({ textStyle: { base: 'display3', smDown: 'body2_L' } })}>{title}</h1>
       </div>
-      <p className={css({ textStyle: 'heading4_M', color: 'darkGray.1' })}>{description}</p>
+      <p className={css({ textStyle: { base: 'heading4_M', smDown: 'body3_M' }, color: 'darkGray.1' })}>
+        {description}
+      </p>
     </div>
   )
 }

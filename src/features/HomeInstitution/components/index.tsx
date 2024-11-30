@@ -37,7 +37,7 @@ const HomeInstitution = () => {
             <img src={ETCProfile} alt="ETC" className={s.InstituteIcon} />
             <div className={s.Title}>
               <h1 className={css({ textStyle: { base: 'heading1_L', smDown: 'body1_L' }, color: 'black.2' })}>ETC</h1>
-              <p className={css({ textStyle: { base: 'body1_M', smDown: 'body2_S' }, color: 'darkGray.1' })}>
+              <p className={css({ textStyle: { base: 'body1_M', smDown: 'body3_M' }, color: 'darkGray.1' })}>
                 Check out the other pages of KU
               </p>
             </div>

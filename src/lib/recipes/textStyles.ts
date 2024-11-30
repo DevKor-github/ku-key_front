@@ -15,6 +15,13 @@ export const textStyles = defineTextStyles({
       fontWeight: 700,
     },
   },
+  display3: {
+    description: 'Display 3',
+    value: {
+      fontSize: '2rem',
+      fontWeight: 700,
+    },
+  },
   heading1_L: {
     description: 'Heading 1 Large',
     value: {
@@ -89,7 +96,7 @@ export const textStyles = defineTextStyles({
   body2_L: {
     description: 'Body 2 Large',
     value: {
-      fontSize: 14,
+      fontSize: '0.875rem',
       fontWeight: 700,
     },
   },

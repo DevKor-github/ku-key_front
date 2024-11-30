@@ -6,7 +6,7 @@ import ClubSectionTitle from '@/components/home/Club/ClubSectionTitle'
 const HotClub = () => {
   const { data: hotClubs } = useGetHotClub()
   return (
-    <section className={css({ display: 'flex', flexDir: 'column' })}>
+    <section className={css({ display: 'flex', flexDir: 'column', smDown: { w: 'full' } })}>
       <ClubSectionTitle title="HOT Club" icon="flame" description="Check the most popular clubs in the past week" />
       <div
         className={css({

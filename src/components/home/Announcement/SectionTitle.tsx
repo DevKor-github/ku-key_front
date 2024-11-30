@@ -39,7 +39,7 @@ const SectionTitle = ({ title, description, link }: SectionTitleProps) => {
           justifyContent: 'space-between',
         })}
       >
-        <p className={css({ textStyle: { base: 'heading4_M', smDown: 'body2_S' }, color: 'darkGray.1' })}>
+        <p className={css({ textStyle: { base: 'heading4_M', smDown: 'body3_M' }, color: 'darkGray.1' })}>
           {description}
         </p>
         <button
