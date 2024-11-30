@@ -1,8 +1,8 @@
 import * as s from './style.css'
 
-import ClubProfile from '@/components/home/Club/ClubProfile'
 import ClubSectionTitle from '@/components/home/Club/ClubSectionTitle'
 import { HorizontalSpacing } from '@/components/ui/Spacing'
+import ClubProfile from '@/features/HomeClub/components/ClubProfile.tsx'
 import { useReadRecommendedClubs } from '@/features/HomeClub/hooks/useReadRecommendedClubs'
 
 const HomeRecommendClub = () => {

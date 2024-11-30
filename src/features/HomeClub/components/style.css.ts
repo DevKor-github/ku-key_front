@@ -17,4 +17,5 @@ export const ClubProfileWrapper = css({
   gap: 5,
   alignItems: 'flex-start',
   justifyContent: 'center',
+  smDown: { gap: 1.5, w: 'full', justifyContent: 'space-between', px: 4 },
 })
