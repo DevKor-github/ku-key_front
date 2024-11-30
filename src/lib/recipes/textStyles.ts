@@ -106,6 +106,13 @@ export const textStyles = defineTextStyles({
       fontWeight: 400,
     },
   },
+  body4_S: {
+    description: 'Body 4 Small',
+    value: {
+      fontSize: '0.625rem',
+      fontWeight: 400,
+    },
+  },
   body2_L: {
     description: 'Body 2 Large',
     value: {

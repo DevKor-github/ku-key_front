@@ -1,7 +1,7 @@
 import * as s from './style.css'
 
-import ClubSectionTitle from '@/components/home/Club/ClubSectionTitle'
 import ClubProfile from '@/features/HomeClub/components/ClubProfile.tsx'
+import ClubSectionTitle from '@/features/HomeClub/components/ClubSectionTitle.tsx'
 import { useReadHotClubs } from '@/features/HomeClub/hooks/useReadHotClubs'
 
 const HomeHotClub = () => {
