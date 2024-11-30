@@ -36,3 +36,13 @@ export interface GetByProfInGeneralRequest extends GetCourseRequestWithSemester 
 export interface GetInAcademicFoundationRequest extends GetCourseRequestWithSemester {
   college: string
 }
+
+export interface GetByKeywordRequest extends GetCourseRequestWithSemester {
+  keyword: string
+}
+export interface GetByKeywordInMajorRequest extends GetByKeywordRequest {
+  major: string
+}
+export interface GetByKeywordInAcademicFoundationRequest extends GetByKeywordRequest {
+  college: string
+}
