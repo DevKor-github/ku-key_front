@@ -1,29 +1,10 @@
-import { useQuery, useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 
 import { useErrorHandledMutation } from '@/api/hooks/useErrorHandledMutation'
-import {
-  ClubProfileProps,
-  GetClubRequest,
-  GetClubResponse,
-  PostClubLikeRequest,
-  PostClubLikeResponse,
-} from '@/api/types/club'
+import { GetClubRequest, GetClubResponse, PostClubLikeRequest, PostClubLikeResponse } from '@/api/types/club'
 import { ClubSearchParams } from '@/types/club'
 import { useAuth } from '@/util/auth/useAuth'
 import { apiInterface } from '@/util/axios/custom-axios'
-
-const getClubRecommended = async (isLogin: boolean) => {
-  const response = await apiInterface.get<ClubProfileProps[]>('/club/recommend', { params: { isLogin } })
-  return response.data
-}
-
-export const useGetClubRecommended = () => {
-  const isLogin = useAuth().authState ?? false
-  return useSuspenseQuery({
-    queryKey: ['clubRecommended', isLogin],
-    queryFn: () => getClubRecommended(isLogin),
-  })
-}
 
 const getClub = async (params: GetClubRequest) => {
   const response = await apiInterface.get<GetClubResponse>('/club', {
