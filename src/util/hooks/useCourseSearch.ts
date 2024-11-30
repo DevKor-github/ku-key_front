@@ -94,7 +94,7 @@ export interface CourseSearchPropsV2 {
 }
 export const useCourseSearchV2 = ({ category, queryKeyword, semester, year, classification }: CourseSearchPropsV2) => {
   return useInfiniteQuery({
-    queryKey: ['courseSearchResult', queryKeyword, category, year, semester],
+    queryKey: ['courseSearchResult', queryKeyword, category, year, semester, classification],
     queryFn: ({ pageParam: cursorId }) => {
       if (queryKeyword === '') {
         if (category === 'General Studies') {

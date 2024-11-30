@@ -105,28 +105,15 @@ const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
   const handleMajorBtn = useCallback(
     (classification: string) => {
       setIsModalOpen(false)
+      setIsSearchAvailable(true)
       setCurClassification(classification)
-      if (curCategory === 3) {
-        // Academic Foundation의 경우 검색이 존재하지 않음
-        // todo: filter state 어떻게 할지
-        setIsSearchAvailable(false)
-        setQuery({
-          queryKeyword: '',
-          category: 'Academic Foundations',
-          classification,
-          year,
-          semester,
-        })
-      } else {
-        setQuery({
-          queryKeyword: '',
-          category: 'Major',
-          classification,
-          year,
-          semester,
-        })
-        setIsSearchAvailable(true)
-      }
+      setQuery({
+        queryKeyword: '',
+        category: categoryList[curCategory],
+        classification,
+        year,
+        semester,
+      })
     },
     [curCategory, year, semester],
   )
