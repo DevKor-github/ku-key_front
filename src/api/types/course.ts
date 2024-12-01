@@ -1,43 +1,27 @@
 import { SearchedCourse } from '@/types/course'
 import { SemesterType } from '@/types/timetable'
 
-interface GetCourseRequestWithSemester {
-  cursorId?: number
-  year: string
-  semester: SemesterType
-}
-
 export interface GetCourseResponse {
   hasNextPage: boolean
   nextCursorId: number | null
   data: SearchedCourse[]
 }
 
-export interface GetByCourseCodeRequest extends GetCourseRequestWithSemester {
-  courseCode: string
+export interface GetCourseRequest {
+  cursorId?: number
+  year: string
+  semester: SemesterType
 }
 
-export interface GetByCourseNameInMajorRequest extends GetCourseRequestWithSemester {
+export interface GetMajorRequest extends GetCourseRequest {
   major: string
-  courseName: string
 }
 
-export interface GetByCourseNameInGeneralRequest extends GetCourseRequestWithSemester {
-  courseName: string
-}
-
-export interface GetByProfInMajorRequest extends GetCourseRequestWithSemester {
-  major: string
-  professorName: string
-}
-export interface GetByProfInGeneralRequest extends GetCourseRequestWithSemester {
-  professorName: string
-}
-export interface GetInAcademicFoundationRequest extends GetCourseRequestWithSemester {
+export interface GetAcademicFoundationRequest extends GetCourseRequest {
   college: string
 }
 
-export interface GetByKeywordRequest extends GetCourseRequestWithSemester {
+export interface GetByKeywordRequest extends GetCourseRequest {
   keyword: string
 }
 export interface GetByKeywordInMajorRequest extends GetByKeywordRequest {

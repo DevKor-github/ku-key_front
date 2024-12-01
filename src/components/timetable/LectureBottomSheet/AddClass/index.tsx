@@ -9,7 +9,7 @@ import ClassSelectModal from '@/components/timetable/LectureBottomSheet/AddClass
 import SearchLectureCard from '@/components/timetable/LectureBottomSheet/AddClass/SearchLectureCard'
 import SearchBox from '@/components/timetable/SearchBox'
 import { SemesterType } from '@/types/timetable'
-import { CourseSearchPropsV2, useCourseSearchV2 } from '@/util/hooks/useCourseSearch'
+import { CourseSearchProps, useCourseSearch } from '@/util/hooks/useCourseSearch'
 import useIntersect from '@/util/hooks/useIntersect'
 
 const categoryList = ['All Class', 'Major', 'General Studies', 'Academic Foundations'] as const
@@ -30,7 +30,7 @@ interface AddClassProps {
 }
 const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
   const scrollSectionRef = useRef<HTMLDivElement>(null)
-  const initialQuery: CourseSearchPropsV2 = useMemo(
+  const initialQuery: CourseSearchProps = useMemo(
     () => ({
       category: 'All Class',
       queryKeyword: '',
@@ -50,9 +50,9 @@ const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
   // 세부 카테고리 지정 모달의 열림 여부
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const [query, setQuery] = useState<CourseSearchPropsV2>(initialQuery)
+  const [query, setQuery] = useState<CourseSearchProps>(initialQuery)
 
-  const { data: searchData, error, fetchNextPage, hasNextPage, isFetching } = useCourseSearchV2(query)
+  const { data: searchData, error, fetchNextPage, hasNextPage, isFetching } = useCourseSearch(query)
   const { mutate: postCourse } = usePostCourse()
 
   const fetchNextRef = useIntersect(async (entry, observer) => {
