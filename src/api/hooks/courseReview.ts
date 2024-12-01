@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
+import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
 
 import { useErrorHandledMutation } from '@/api/hooks/useErrorHandledMutation'
 import {
@@ -36,7 +36,7 @@ const getReviews = async (props: GetReviewsRequest) => {
  * 해당 교수의 해당 강의에 대해 강의평을 조회합니다. 열람권이 없으면 열람할 수 없습니다.
  */
 export const useGetReviews = (props: GetReviewsRequest) => {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ['reviewList', props],
     queryFn: () => getReviews(props),
     retry: false,
