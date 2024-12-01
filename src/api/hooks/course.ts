@@ -9,6 +9,15 @@ import {
 } from '@/api/types/course'
 import { apiInterface } from '@/util/axios/custom-axios'
 
+export const getAllCourse = async () => {
+  // TODO: All Class에서도 기본 보기 내려주기
+  return {
+    hasNextPage: false,
+    nextCursorId: null,
+    data: [],
+  }
+}
+
 export const getAcademicFoundation = async (params: GetAcademicFoundationRequest) => {
   const response = await apiInterface.get<GetCourseResponse>('/course/academic-foundation', { params })
   return response.data

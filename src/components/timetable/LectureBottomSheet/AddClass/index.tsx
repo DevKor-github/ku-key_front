@@ -143,8 +143,6 @@ const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
         </div>
         {isAxiosError(error) ? (
           <div className={SearchMessageStyle}>{error.response?.data.message}</div>
-        ) : searchData === undefined ? (
-          <div className={SearchMessageStyle}></div>
         ) : searchData.length ? (
           <div
             ref={scrollSectionRef}

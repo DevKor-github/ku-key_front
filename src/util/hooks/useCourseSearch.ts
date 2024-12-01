@@ -1,9 +1,10 @@
-import { useInfiniteQuery } from '@tanstack/react-query'
+import { useSuspenseInfiniteQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { match } from 'ts-pattern'
 
 import {
   getAcademicFoundation,
+  getAllCourse,
   getByKeyword,
   getByKeywordInAcademicFoundation,
   getByKeywordInGeneral,
@@ -11,7 +12,6 @@ import {
   getGeneral,
   getMajor,
 } from '@/api/hooks/course'
-import { GetCourseResponse } from '@/api/types/course'
 import { SemesterType } from '@/types/timetable'
 
 interface CourseQueryInterface {
@@ -37,7 +37,7 @@ export const useCourseSearch = ({ year, semester }: CourseSearchProps) => {
     setSearchQuery(prev => queryFn(prev))
   }
 
-  const { data, fetchNextPage, hasNextPage, isFetching, error } = useInfiniteQuery({
+  const { data, fetchNextPage, hasNextPage, isFetching, error } = useSuspenseInfiniteQuery({
     queryKey: ['courseSearchResult', year, semester, category, classification, keyword],
     queryFn: ({ pageParam: cursorId }) => {
       if (keyword.length) {
@@ -62,14 +62,7 @@ export const useCourseSearch = ({ year, semester }: CourseSearchProps) => {
         .with('Academic Foundations', () =>
           getAcademicFoundation({ college: classification!, cursorId, year, semester }),
         )
-        .otherwise(
-          () =>
-            new Promise<GetCourseResponse>(() => ({
-              hasNextPage: false,
-              nextCursorId: null,
-              data: [],
-            })),
-        )
+        .otherwise(() => getAllCourse())
     },
     getNextPageParam: lastPage => {
       return lastPage?.nextCursorId === null ? undefined : lastPage?.nextCursorId

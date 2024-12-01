@@ -1,13 +1,14 @@
 import { css, cx } from '@styled-system/css'
 import { shadow } from '@styled-system/recipes'
 import { motion } from 'framer-motion'
-import { useCallback, useState } from 'react'
+import { Suspense, useCallback, useState } from 'react'
 import { match } from 'ts-pattern'
 
 import { usePostSchedule } from '@/api/hooks/schedule'
 import AddClass from '@/components/timetable/LectureBottomSheet/AddClass'
 import AddOnMyOwn, { AddOnMyOwnForm } from '@/components/timetable/LectureBottomSheet/AddOnMyOwn'
 import Drawer from '@/components/timetable/LectureBottomSheet/Drawer'
+import LoadingSpinner from '@/components/ui/spinner/inde'
 import { SemesterType } from '@/types/timetable'
 
 interface LectureBottomSheetProps {
@@ -97,7 +98,9 @@ const LectureBottomSheet = ({ timetableId, visible, year, semester }: LectureBot
           {sheetState === 'schedule' ? (
             <AddOnMyOwn submitHandler={addOnMyOwnHandler} />
           ) : (
-            <AddClass timetableId={timetableId} year={year} semester={semester} />
+            <Suspense fallback={<LoadingSpinner />}>
+              <AddClass timetableId={timetableId} year={year} semester={semester} />
+            </Suspense>
           )}
         </div>
       </motion.div>
