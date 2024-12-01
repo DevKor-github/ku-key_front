@@ -70,12 +70,12 @@ const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
       }
       if (toIndex === 0) {
         // All
-        search(() => ({ keyword: '', category: 'All Class', classification: null }))
+        search(prev => ({ ...prev, category: 'All Class', classification: null }))
         return
       }
       if (toIndex === 2) {
         // General
-        search(() => ({ keyword: '', category: 'General Studies', classification: null }))
+        search(prev => ({ ...prev, category: 'General Studies', classification: null }))
         return
       }
     },
@@ -85,7 +85,7 @@ const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
   const handleMajorBtn = useCallback(
     (classification: string) => {
       setIsModalOpen(false)
-      search(() => ({ keyword: '', category: categoryList[curCategory], classification }))
+      search(prev => ({ ...prev, category: categoryList[curCategory], classification }))
     },
     [curCategory, search],
   )
@@ -131,7 +131,7 @@ const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
                     textOverflow: 'ellipsis',
                     overflow: 'hidden',
                     whiteSpace: 'nowrap',
-                    maxW: '150px',
+                    maxW: '600px',
                   })}
                 >
                   {searchQuery.classification}
