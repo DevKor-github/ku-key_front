@@ -15,7 +15,13 @@ const SheetPortal = SheetPrimitive.Portal
 const SheetOverlay = forwardRef<
   React.ElementRef<typeof SheetPrimitive.Overlay>,
   React.ComponentPropsWithoutRef<typeof SheetPrimitive.Overlay>
->(({ className, ...props }, ref) => <SheetPrimitive.Overlay className={cx(css({}), className)} {...props} ref={ref} />)
+>(({ className, ...props }, ref) => (
+  <SheetPrimitive.Overlay
+    className={cx(css({ pos: 'fixed', inset: 0, bgColor: 'rgba(0,0,0,0.4)' }), className)}
+    {...props}
+    ref={ref}
+  />
+))
 SheetOverlay.displayName = SheetPrimitive.Overlay.displayName
 
 type SheetContentProps = React.ComponentPropsWithoutRef<typeof SheetPrimitive.Content> &
