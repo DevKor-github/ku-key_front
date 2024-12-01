@@ -8,8 +8,6 @@ export type ColorType = 'Red' | 'Blue' | 'Green' | 'Purple' | 'Gray'
 
 export type GlobalModalStateType = 'color' | 'name' | 'delete' | null
 
-export type FilterType = 'course' | 'professor' | 'code'
-
 export const timePattern = /^([01]\d|2[0-3]):[0-5]\d:[0-5]\d$/
 
 export interface TimetableInfo {

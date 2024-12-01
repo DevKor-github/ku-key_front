@@ -1,11 +1,49 @@
-import { css, cx } from '@styled-system/css'
+import { css, cva, cx } from '@styled-system/css'
 import { ReactNode, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { SelectFilterBtnStyle } from '@/components/timetable/LectureBottomSheet/AddClass/FilterSelector'
 import TimeSelector from '@/components/timetable/LectureBottomSheet/AddOnMyOwn/TimeSelector'
 import { DayArray, DayType, timePattern } from '@/types/timetable'
 import { getDuration } from '@/util/timetableUtil'
+
+const SelectBtnStyle = cva({
+  base: {
+    color: 'lightGray.1',
+    fontSize: 18,
+    lineHeight: 1,
+    fontWeight: 500,
+    border: '1px solid {colors.lightGray.1}',
+    px: 2.5,
+    py: 1.5,
+    rounded: 'full',
+    bgColor: 'bg.gray',
+    cursor: 'pointer',
+    transition: 'background 0.256s, color 0.256s, border 0.256s',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  variants: {
+    state: {
+      active: {
+        bgColor: 'bg.red.1',
+        color: 'red.1',
+        borderColor: 'red.1',
+      },
+      default: {
+        _hover: {
+          borderColor: 'darkGray.2',
+          color: 'darkGray.2',
+        },
+      },
+    },
+    isDayBtn: {
+      true: {
+        width: '57px',
+      },
+    },
+  },
+})
 
 const FormLayoutStyle = css({ display: 'flex', flexDir: 'row', gap: 10 })
 
@@ -119,7 +157,7 @@ const AddOnMyOwn = ({ submitHandler, prevValue = { title: '', day: 'Mon', locati
                   <button
                     key={day}
                     type="button"
-                    className={SelectFilterBtnStyle({
+                    className={SelectBtnStyle({
                       isDayBtn: true,
                       state: watch('day') === day ? 'active' : 'default',
                     })}

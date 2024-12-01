@@ -1,19 +1,16 @@
 import { css } from '@styled-system/css'
 import { isAxiosError } from 'axios'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { match } from 'ts-pattern'
 
 import { usePostCourse } from '@/api/hooks/timetable'
 import Dropdown from '@/components/timetable/Dropdown'
 import ClassSelectModal from '@/components/timetable/LectureBottomSheet/AddClass/ClassSelectModal'
-import FilterSelector from '@/components/timetable/LectureBottomSheet/AddClass/FilterSelector'
 import SearchLectureCard from '@/components/timetable/LectureBottomSheet/AddClass/SearchLectureCard'
 import SearchBox from '@/components/timetable/SearchBox'
-import { FilterType, SemesterType } from '@/types/timetable'
-import { useCourseSearch, useCourseSearchProps } from '@/util/hooks/useCourseSearch'
+import { SemesterType } from '@/types/timetable'
+import { useCourseSearch } from '@/util/hooks/useCourseSearch'
 import useIntersect from '@/util/hooks/useIntersect'
-import { filterTypeMap } from '@/util/timetableUtil'
 
 const categoryList = ['All Class', 'Major', 'General Studies', 'Academic Foundations'] as const
 
@@ -33,31 +30,21 @@ interface AddClassProps {
 }
 const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
   const scrollSectionRef = useRef<HTMLDivElement>(null)
-  const initialQuery: useCourseSearchProps = useMemo(
-    () => ({
-      category: 'All Class',
-      filter: 'code',
-      queryKeyword: '',
-      classification: null,
-      year,
-      semester,
-    }),
-    [year, semester],
-  )
 
-  const [isSearchAvailable, setIsSearchAvailable] = useState(true)
-  // 검색 Filter
-  const [curFilter, setCurFilter] = useState<'course' | 'professor' | 'code'>('code')
   // 포괄 카테고리 (0:All, 1:Major, 2:General, 3:Academic)
   const [curCategory, setCurCategory] = useState(0)
-  // 세부 카테고리 (포괄 카테고리가 1 / 3 일때만 존재, 그 이외에는 null)
-  const [curClassification, setCurClassification] = useState<string | null>(null)
   // 세부 카테고리 지정 모달의 열림 여부
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const [query, setQuery] = useState<useCourseSearchProps>(initialQuery)
-
-  const { data: searchData, error, fetchNextPage, hasNextPage, isFetching } = useCourseSearch(query)
+  const {
+    data: searchData,
+    searchQuery,
+    search,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    error,
+  } = useCourseSearch({ year, semester })
   const { mutate: postCourse } = usePostCourse()
 
   const fetchNextRef = useIntersect(async (entry, observer) => {
@@ -66,25 +53,12 @@ const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
   })
 
   useEffect(() => {
-    setQuery(prevQuery => ({
-      ...prevQuery,
-      year,
-      semester,
-    }))
-  }, [year, semester])
-
-  useEffect(() => {
     setTimeout(() => {
       scrollSectionRef.current && scrollSectionRef.current.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
     }, 100)
-  }, [query])
+  }, [searchQuery])
 
-  const addCourse = useCallback(
-    (courseId: number) => {
-      postCourse({ courseId, timetableId })
-    },
-    [postCourse, timetableId],
-  )
+  const addCourse = useCallback((courseId: number) => postCourse({ courseId, timetableId }), [postCourse, timetableId])
 
   const handleDropdown = useCallback(
     (toIndex: number) => {
@@ -92,104 +66,39 @@ const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
       if (toIndex === 1 || toIndex === 3) {
         // Major or Academic Foundation
         setIsModalOpen(true)
-      } else {
-        setCurClassification(null)
-        setIsSearchAvailable(true)
-        if (toIndex === 0) {
-          // All
-          setQuery(initialQuery)
-          setCurFilter('code')
-        } else if (toIndex === 2) {
-          // General
-          setQuery({ ...initialQuery, category: 'General Studies' })
-          setCurFilter('course')
-        }
+        return
+      }
+      if (toIndex === 0) {
+        // All
+        search(prev => ({ ...prev, category: 'All Class', classification: null }))
+        return
+      }
+      if (toIndex === 2) {
+        // General
+        search(prev => ({ ...prev, category: 'General Studies', classification: null }))
+        return
       }
     },
-    [setCurCategory, setCurClassification, setIsModalOpen, initialQuery],
+    [setCurCategory, setIsModalOpen, search],
   )
 
   const handleMajorBtn = useCallback(
     (classification: string) => {
       setIsModalOpen(false)
-      setCurClassification(classification)
-      if (curCategory === 3) {
-        // Academic Foundation의 경우 검색이 존재하지 않음
-        // todo: filter state 어떻게 할지
-        setIsSearchAvailable(false)
-        setQuery({
-          queryKeyword: '',
-          filter: 'course',
-          category: 'Academic Foundations',
-          classification,
-          year,
-          semester,
-        })
-      } else {
-        setQuery({
-          queryKeyword: '',
-          filter: 'course',
-          category: 'Major',
-          classification,
-          year,
-          semester,
-        })
-        setIsSearchAvailable(true)
-        setCurFilter('course')
-      }
+      search(prev => ({ ...prev, category: categoryList[curCategory], classification }))
     },
-    [curCategory, year, semester],
-  )
-
-  const handleFilterSelector = useCallback(
-    (filter: FilterType) => {
-      match(filter)
-        .with('code', () => {
-          setCurFilter('code')
-          setCurCategory(0)
-          setCurClassification(null)
-          setQuery(initialQuery)
-        })
-        .otherwise(targetFilter => {
-          setCurFilter(targetFilter)
-          if (curCategory === 0) {
-            setCurCategory(2)
-            setQuery({ ...initialQuery, filter: targetFilter, category: 'General Studies' })
-          } else {
-            setQuery({
-              queryKeyword: '',
-              filter: targetFilter,
-              category: categoryList[curCategory],
-              classification: curClassification,
-              year,
-              semester,
-            })
-          }
-        })
-    },
-    [curCategory, curClassification, year, semester, initialQuery],
+    [curCategory, search],
   )
 
   const handleSearchBoxOnSubmit = useCallback(
-    (queryKeyword: string) => {
-      setQuery({
-        queryKeyword,
-        filter: curFilter,
-        category: categoryList[curCategory],
-        classification: curClassification,
-        year,
-        semester,
-      })
-    },
-    [curFilter, curCategory, curClassification, year, semester],
+    (queryKeyword: string) => search(prev => ({ ...prev, keyword: queryKeyword })),
+    [search],
   )
 
   const handleQuitModal = useCallback(() => {
     setIsModalOpen(false)
-    if (curCategory !== 0 && curClassification === null) {
-      setCurCategory(0)
-    }
-  }, [curCategory, curClassification])
+    if (curCategory !== 0) setCurCategory(0)
+  }, [curCategory])
 
   return (
     <>
@@ -209,7 +118,7 @@ const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
                 setCurIndex={handleDropdown}
                 canReselect={true}
               />
-              {curClassification && (
+              {searchQuery.classification && (
                 <div
                   className={css({
                     rounded: 'full',
@@ -222,25 +131,18 @@ const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
                     textOverflow: 'ellipsis',
                     overflow: 'hidden',
                     whiteSpace: 'nowrap',
-                    maxW: '150px',
+                    maxW: '600px',
                   })}
                 >
-                  {curClassification}
+                  {searchQuery.classification}
                 </div>
               )}
             </div>
-            <FilterSelector
-              curFilter={curFilter}
-              curCategory={curCategory}
-              handleFilterSelector={handleFilterSelector}
-            />
           </div>
-          {isSearchAvailable && <SearchBox placeholder={filterTypeMap[curFilter]} onSubmit={handleSearchBoxOnSubmit} />}
+          <SearchBox onSubmit={handleSearchBoxOnSubmit} />
         </div>
         {isAxiosError(error) ? (
           <div className={SearchMessageStyle}>{error.response?.data.message}</div>
-        ) : searchData === undefined ? (
-          <div className={SearchMessageStyle}></div>
         ) : searchData.length ? (
           <div
             ref={scrollSectionRef}
@@ -267,7 +169,7 @@ const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
             category={categoryList[curCategory]}
             handleMajorBtn={handleMajorBtn}
             handleQuitModal={handleQuitModal}
-            curClassification={curClassification}
+            curClassification={searchQuery.classification}
           />,
           document.body,
         )}
