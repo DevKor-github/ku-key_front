@@ -1,6 +1,6 @@
 import { css } from '@styled-system/css'
 import { isAxiosError } from 'axios'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 import { usePostCourse } from '@/api/hooks/timetable'
@@ -9,7 +9,7 @@ import ClassSelectModal from '@/components/timetable/LectureBottomSheet/AddClass
 import SearchLectureCard from '@/components/timetable/LectureBottomSheet/AddClass/SearchLectureCard'
 import SearchBox from '@/components/timetable/SearchBox'
 import { SemesterType } from '@/types/timetable'
-import { CourseSearchProps, useCourseSearch } from '@/util/hooks/useCourseSearch'
+import { useCourseSearch } from '@/util/hooks/useCourseSearch'
 import useIntersect from '@/util/hooks/useIntersect'
 
 const categoryList = ['All Class', 'Major', 'General Studies', 'Academic Foundations'] as const
@@ -30,29 +30,21 @@ interface AddClassProps {
 }
 const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
   const scrollSectionRef = useRef<HTMLDivElement>(null)
-  const initialQuery: CourseSearchProps = useMemo(
-    () => ({
-      category: 'All Class',
-      queryKeyword: '',
-      classification: null,
-      year,
-      semester,
-    }),
-    [year, semester],
-  )
-
-  const [isSearchAvailable, setIsSearchAvailable] = useState(true)
 
   // 포괄 카테고리 (0:All, 1:Major, 2:General, 3:Academic)
   const [curCategory, setCurCategory] = useState(0)
-  // 세부 카테고리 (포괄 카테고리가 1 / 3 일때만 존재, 그 이외에는 null)
-  const [curClassification, setCurClassification] = useState<string | null>(null)
   // 세부 카테고리 지정 모달의 열림 여부
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const [query, setQuery] = useState<CourseSearchProps>(initialQuery)
-
-  const { data: searchData, error, fetchNextPage, hasNextPage, isFetching } = useCourseSearch(query)
+  const {
+    data: searchData,
+    searchQuery,
+    search,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    error,
+  } = useCourseSearch({ year, semester })
   const { mutate: postCourse } = usePostCourse()
 
   const fetchNextRef = useIntersect(async (entry, observer) => {
@@ -61,25 +53,12 @@ const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
   })
 
   useEffect(() => {
-    setQuery(prevQuery => ({
-      ...prevQuery,
-      year,
-      semester,
-    }))
-  }, [year, semester])
-
-  useEffect(() => {
     setTimeout(() => {
       scrollSectionRef.current && scrollSectionRef.current.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
     }, 100)
-  }, [query])
+  }, [searchQuery])
 
-  const addCourse = useCallback(
-    (courseId: number) => {
-      postCourse({ courseId, timetableId })
-    },
-    [postCourse, timetableId],
-  )
+  const addCourse = useCallback((courseId: number) => postCourse({ courseId, timetableId }), [postCourse, timetableId])
 
   const handleDropdown = useCallback(
     (toIndex: number) => {
@@ -87,56 +66,39 @@ const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
       if (toIndex === 1 || toIndex === 3) {
         // Major or Academic Foundation
         setIsModalOpen(true)
-      } else {
-        setCurClassification(null)
-        setIsSearchAvailable(true)
-        if (toIndex === 0) {
-          // All
-          setQuery(initialQuery)
-        } else if (toIndex === 2) {
-          // General
-          setQuery({ ...initialQuery, category: 'General Studies' })
-        }
+        return
+      }
+      if (toIndex === 0) {
+        // All
+        search(() => ({ keyword: '', category: 'All Class', classification: null }))
+        return
+      }
+      if (toIndex === 2) {
+        // General
+        search(() => ({ keyword: '', category: 'General Studies', classification: null }))
+        return
       }
     },
-    [setCurCategory, setCurClassification, setIsModalOpen, initialQuery],
+    [setCurCategory, setIsModalOpen, search],
   )
 
   const handleMajorBtn = useCallback(
     (classification: string) => {
       setIsModalOpen(false)
-      setIsSearchAvailable(true)
-      setCurClassification(classification)
-      setQuery({
-        queryKeyword: '',
-        category: categoryList[curCategory],
-        classification,
-        year,
-        semester,
-      })
+      search(() => ({ keyword: '', category: categoryList[curCategory], classification }))
     },
-    [curCategory, year, semester],
+    [curCategory, search],
   )
 
   const handleSearchBoxOnSubmit = useCallback(
-    (queryKeyword: string) => {
-      setQuery({
-        queryKeyword,
-        category: categoryList[curCategory],
-        classification: curClassification,
-        year,
-        semester,
-      })
-    },
-    [curCategory, curClassification, year, semester],
+    (queryKeyword: string) => search(prev => ({ ...prev, keyword: queryKeyword })),
+    [search],
   )
 
   const handleQuitModal = useCallback(() => {
     setIsModalOpen(false)
-    if (curCategory !== 0 && curClassification === null) {
-      setCurCategory(0)
-    }
-  }, [curCategory, curClassification])
+    if (curCategory !== 0) setCurCategory(0)
+  }, [curCategory])
 
   return (
     <>
@@ -156,7 +118,7 @@ const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
                 setCurIndex={handleDropdown}
                 canReselect={true}
               />
-              {curClassification && (
+              {searchQuery.classification && (
                 <div
                   className={css({
                     rounded: 'full',
@@ -172,12 +134,12 @@ const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
                     maxW: '150px',
                   })}
                 >
-                  {curClassification}
+                  {searchQuery.classification}
                 </div>
               )}
             </div>
           </div>
-          {isSearchAvailable && <SearchBox onSubmit={handleSearchBoxOnSubmit} />}
+          <SearchBox onSubmit={handleSearchBoxOnSubmit} />
         </div>
         {isAxiosError(error) ? (
           <div className={SearchMessageStyle}>{error.response?.data.message}</div>
@@ -209,7 +171,7 @@ const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
             category={categoryList[curCategory]}
             handleMajorBtn={handleMajorBtn}
             handleQuitModal={handleQuitModal}
-            curClassification={curClassification}
+            curClassification={searchQuery.classification}
           />,
           document.body,
         )}

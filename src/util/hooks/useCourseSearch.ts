@@ -1,4 +1,6 @@
 import { useInfiniteQuery } from '@tanstack/react-query'
+import { useState } from 'react'
+import { match } from 'ts-pattern'
 
 import {
   getAcademicFoundation,
@@ -12,50 +14,62 @@ import {
 import { GetCourseResponse } from '@/api/types/course'
 import { SemesterType } from '@/types/timetable'
 
-export interface CourseSearchProps {
-  queryKeyword: string
+interface CourseQueryInterface {
+  keyword: string
   category: 'All Class' | 'Major' | 'General Studies' | 'Academic Foundations'
   classification: string | null
+}
+const initialQuery: CourseQueryInterface = {
+  category: 'All Class',
+  keyword: '',
+  classification: null,
+}
+
+interface CourseSearchProps {
   year: string
   semester: SemesterType
 }
-export const useCourseSearch = ({ category, queryKeyword, semester, year, classification }: CourseSearchProps) => {
-  return useInfiniteQuery({
-    queryKey: ['courseSearchResult', queryKeyword, category, year, semester, classification],
+export const useCourseSearch = ({ year, semester }: CourseSearchProps) => {
+  const [searchQuery, setSearchQuery] = useState(initialQuery)
+  const { keyword, category, classification } = searchQuery
+
+  const search = (queryFn: (prev: CourseQueryInterface) => CourseQueryInterface) => {
+    setSearchQuery(prev => queryFn(prev))
+  }
+
+  const { data, fetchNextPage, hasNextPage, isFetching, error } = useInfiniteQuery({
+    queryKey: ['courseSearchResult', year, semester, category, classification, keyword],
     queryFn: ({ pageParam: cursorId }) => {
-      if (queryKeyword === '') {
-        if (category === 'General Studies') {
-          return getGeneral({ cursorId, year, semester })
-        }
-        if (category === 'Major') {
-          return getMajor({ major: classification!, cursorId, year, semester })
-        }
-        if (category === 'Academic Foundations') {
-          return getAcademicFoundation({ college: classification!, cursorId, year, semester })
-        }
-        return new Promise<GetCourseResponse>(() => ({
-          hasNextPage: false,
-          nextCursorId: null,
-          data: [],
-        }))
+      if (keyword.length) {
+        return match(category)
+          .with('Major', () => getByKeywordInMajor({ keyword, major: classification!, cursorId, year, semester }))
+          .with('General Studies', () => getByKeywordInGeneral({ keyword, cursorId, year, semester }))
+          .with('Academic Foundations', () =>
+            getByKeywordInAcademicFoundation({
+              keyword,
+              college: classification!,
+              cursorId,
+              year,
+              semester,
+            }),
+          )
+          .otherwise(() => getByKeyword({ keyword, cursorId, year, semester }))
       }
 
-      if (category === 'General Studies') {
-        return getByKeywordInGeneral({ keyword: queryKeyword, cursorId, year, semester })
-      }
-      if (category === 'Major') {
-        return getByKeywordInMajor({ keyword: queryKeyword, major: classification!, cursorId, year, semester })
-      }
-      if (category === 'Academic Foundations') {
-        return getByKeywordInAcademicFoundation({
-          keyword: queryKeyword,
-          college: classification!,
-          cursorId,
-          year,
-          semester,
-        })
-      }
-      return getByKeyword({ keyword: queryKeyword, cursorId, year, semester })
+      return match(category)
+        .with('Major', () => getMajor({ major: classification!, cursorId, year, semester }))
+        .with('General Studies', () => getGeneral({ cursorId, year, semester }))
+        .with('Academic Foundations', () =>
+          getAcademicFoundation({ college: classification!, cursorId, year, semester }),
+        )
+        .otherwise(
+          () =>
+            new Promise<GetCourseResponse>(() => ({
+              hasNextPage: false,
+              nextCursorId: null,
+              data: [],
+            })),
+        )
     },
     getNextPageParam: lastPage => {
       return lastPage?.nextCursorId === null ? undefined : lastPage?.nextCursorId
@@ -64,4 +78,6 @@ export const useCourseSearch = ({ category, queryKeyword, semester, year, classi
     select: data => (data.pages ?? []).flatMap(page => page.data),
     retry: false,
   })
+
+  return { searchQuery, data, search, fetchNextPage, hasNextPage, isFetching, error }
 }
