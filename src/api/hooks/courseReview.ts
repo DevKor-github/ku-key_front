@@ -23,6 +23,7 @@ export const useGetReviewSummary = ({ courseCode, professorName }: GetReviewSumm
   return useSuspenseQuery({
     queryKey: ['summary', courseCode, professorName],
     queryFn: () => getReviewSummary({ courseCode, professorName }),
+    refetchOnMount: true,
   })
 }
 
