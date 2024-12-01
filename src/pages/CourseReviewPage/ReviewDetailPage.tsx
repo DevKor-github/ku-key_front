@@ -9,8 +9,8 @@ import { useQueryParams } from '@/util/hooks/useQueryParams'
 
 const ReviewDetailPage = () => {
   const data = useLocation().state as ReviewType
-  const [{ code: courseCode, prof }] = useQueryParams<CourseReviewQueryInterface>()
-  const { data: infoData } = useGetReviewSummary({ courseCode, professorName: prof })
+  const [{ code: courseCode, professorName }] = useQueryParams<CourseReviewQueryInterface>()
+  const { data: infoData } = useGetReviewSummary({ courseCode, professorName })
 
   return (
     <div className={css({ flexGrow: 1, display: 'flex', flexDir: 'column', gap: 12, maxW: '820px' })}>

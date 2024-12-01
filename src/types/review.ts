@@ -22,5 +22,5 @@ export type DirectionType = 'DESC' | 'ASC'
 
 export interface CourseReviewQueryInterface {
   code: string
-  prof: string
+  professorName: string
 }

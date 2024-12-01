@@ -7,10 +7,10 @@ import { useGetCheckSubmission } from '@/api/hooks/courseReview'
 interface ReviewHeaderProps {
   courseCode: string
   courseName: string
-  prof: string
+  professorName: string
 }
-const ReviewHeader = ({ courseCode, courseName, prof }: ReviewHeaderProps) => {
-  const { data: isReviewed } = useGetCheckSubmission({ courseCode, professorName: prof })
+const ReviewHeader = ({ courseCode, courseName, professorName }: ReviewHeaderProps) => {
+  const { data: isReviewed } = useGetCheckSubmission({ courseCode, professorName })
 
   const handleClick = useCallback(
     (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
@@ -61,11 +61,11 @@ const ReviewHeader = ({ courseCode, courseName, prof }: ReviewHeaderProps) => {
             textOverflow: 'ellipsis',
           })}
         >
-          {prof}
+          {professorName}
         </span>
       </div>
       <Link
-        to={`/course-review/write?code=${courseCode}&prof=${prof}`}
+        to={`/course-review/write?code=${courseCode}&professorName=${professorName}`}
         onClick={handleClick}
         className={cva({
           base: {

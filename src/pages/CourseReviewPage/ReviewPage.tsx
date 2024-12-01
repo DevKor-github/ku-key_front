@@ -44,12 +44,12 @@ const ReviewPage = () => {
   const [criteria, setCriteria] = useState<CriteriaType>('createdAt')
   const [direction, setDirection] = useState<DirectionType>('DESC')
 
-  const [{ code: courseCode, prof }] = useQueryParams<CourseReviewQueryInterface>()
-  const { data: totalData } = useGetReviewSummary({ courseCode, professorName: prof })
+  const [{ code: courseCode, professorName }] = useQueryParams<CourseReviewQueryInterface>()
+  const { data: totalData } = useGetReviewSummary({ courseCode, professorName })
 
   const { data: reviewsData } = useGetReviews({
     courseCode,
-    professorName: prof,
+    professorName,
     criteria,
     direction,
   })
@@ -71,7 +71,7 @@ const ReviewPage = () => {
           <CookiesRate rate={totalData.totalRate} size={18} gap={4} />
           <span className={css({ fontSize: 14 })}>({totalData.reviewCount})</span>
         </div>
-        <ReviewHeader courseCode={courseCode} courseName={totalData.courseName} prof={prof} />
+        <ReviewHeader courseCode={courseCode} courseName={totalData.courseName} professorName={professorName} />
       </div>
       <div className={css({ display: 'flex', flexDir: 'column', gap: 5 })}>
         <div className={css({ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 7 })}>

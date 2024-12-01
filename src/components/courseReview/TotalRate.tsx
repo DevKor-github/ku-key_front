@@ -13,9 +13,9 @@ interface TotalRateProps {
   totalRate: number
   reviewCount: number
   courseCode: string
-  prof: string
+  professorName: string
 }
-const TotalRate = ({ totalRate, reviewCount, courseCode, prof }: TotalRateProps) => {
+const TotalRate = ({ totalRate, reviewCount, courseCode, professorName }: TotalRateProps) => {
   const navigate = useNavigate()
   const { data: hasTicket } = useGetKeyExpiration()
   return (
@@ -50,7 +50,7 @@ const TotalRate = ({ totalRate, reviewCount, courseCode, prof }: TotalRateProps)
         </div>
         <button
           onClick={() => {
-            if (hasTicket) navigate(`/course-review/detail?code=${courseCode}&prof=${prof}`)
+            if (hasTicket) navigate(`/course-review/detail?code=${courseCode}&professorName=${professorName}`)
             else
               toast.custom(() => <Toast message={KU_KEY_ERROR_LOG.COURSE_REVIEW_NOT_VIEWABLE.message} type="warning" />)
           }}

@@ -37,10 +37,10 @@ interface WriteReviewForm {
 
 const WriteReviewPage = () => {
   const navigate = useNavigate()
-  const [{ code: courseCode, prof }] = useQueryParams<CourseReviewQueryInterface>()
+  const [{ code: courseCode, professorName }] = useQueryParams<CourseReviewQueryInterface>()
 
   const { mutate: postReview } = usePostReview()
-  const { data: totalData } = useGetReviewSummary({ courseCode, professorName: prof })
+  const { data: totalData } = useGetReviewSummary({ courseCode, professorName })
   const { year, semester } = getCurSemester()
   const methods = useForm<WriteReviewForm>({
     defaultValues: {
@@ -51,7 +51,7 @@ const WriteReviewPage = () => {
       teachingSkills: 0,
       teamProject: 0,
       textReview: '',
-      professorName: prof,
+      professorName,
       courseCode,
       year: `${year}`,
       semester,
@@ -70,7 +70,7 @@ const WriteReviewPage = () => {
 
   const onSubmit = (formData: WriteReviewForm) => {
     postReview(formData, {
-      onSuccess: () => navigate(`/course-review/info?code=${courseCode}&prof=${prof}`),
+      onSuccess: () => navigate(`/course-review/info?code=${courseCode}&professorName=${professorName}`),
     })
   }
 
@@ -127,7 +127,7 @@ const WriteReviewPage = () => {
                 color: 'darkGray.2',
               })}
             >
-              {prof}
+              {professorName}
             </span>
           </div>
           <Dropdown dropdownList={semesterList} curIndex={curSemester} setCurIndex={setCurSemester} />
