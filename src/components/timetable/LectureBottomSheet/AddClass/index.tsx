@@ -70,12 +70,12 @@ const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
       }
       if (toIndex === 0) {
         // All
-        search(prev => ({ ...prev, category: 'All Class', classification: null }))
+        search(() => ({ keyword: '', category: 'All Class', classification: null }))
         return
       }
       if (toIndex === 2) {
         // General
-        search(prev => ({ ...prev, category: 'General Studies', classification: null }))
+        search(() => ({ keyword: '', category: 'General Studies', classification: null }))
         return
       }
     },
@@ -85,7 +85,7 @@ const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
   const handleMajorBtn = useCallback(
     (classification: string) => {
       setIsModalOpen(false)
-      search(prev => ({ ...prev, category: categoryList[curCategory], classification }))
+      search(() => ({ keyword: '', category: categoryList[curCategory], classification }))
     },
     [curCategory, search],
   )
@@ -146,7 +146,10 @@ const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
               )}
             </div>
           </div>
-          <SearchBox onSubmit={handleSearchBoxOnSubmit} />
+          <SearchBox
+            onSubmit={handleSearchBoxOnSubmit}
+            resetKeys={[searchQuery.category, searchQuery.classification]}
+          />
         </div>
         {searchData.length ? (
           <div
@@ -165,7 +168,9 @@ const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
             <div ref={fetchNextRef} className={css({ height: 1 })} />
           </div>
         ) : searchQuery.category === 'All Class' && searchQuery.keyword.length === 0 ? (
-          <div className={SearchMessageStyle}>Enter keywords to search (e.g., course name, professor name, or course number)</div>
+          <div className={SearchMessageStyle}>
+            Enter keywords to search (e.g., course name, professor name, or course number)
+          </div>
         ) : (
           <div className={SearchMessageStyle}>There are no classes available for exchange students.</div>
         )}
