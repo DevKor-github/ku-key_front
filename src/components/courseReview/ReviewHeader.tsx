@@ -65,7 +65,7 @@ const ReviewHeader = ({ courseCode, courseName, prof }: ReviewHeaderProps) => {
         </span>
       </div>
       <Link
-        to={`/course-review/write/${courseCode}/${prof}`}
+        to={`/course-review/write?code=${courseCode}&prof=${prof}`}
         onClick={handleClick}
         className={cva({
           base: {

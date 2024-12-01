@@ -68,7 +68,7 @@ const SearchLectureCard = ({ data, addCourse }: SearchLectureCardProps) => {
           <Link
             className={css({ display: 'flex', gap: 2 })}
             target="_blank"
-            to={`/course-review/info/${data.courseCode.slice(0, 7)}/${data.professorName}`}
+            to={`/course-review/info?code=${data.courseCode.slice(0, 7)}&prof=${data.professorName}`}
           >
             <CookiesRate rate={data.totalRate} size={8} gap={2} />
             <span>

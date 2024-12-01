@@ -1,4 +1,3 @@
-import { GetReviewSummaryResponse } from '@/api/types/courseReview'
 import { SemesterType } from '@/types/timetable'
 
 export interface ReviewType {
@@ -18,10 +17,10 @@ export interface ReviewType {
   attendance: number
 }
 
-export interface CourseSummaryType extends GetReviewSummaryResponse {
-  courseCode: string
-  prof: string
-}
-
 export type CriteriaType = 'createdAt' | 'recommendCount' | 'rate'
 export type DirectionType = 'DESC' | 'ASC'
+
+export interface CourseReviewQueryInterface {
+  code: string
+  prof: string
+}

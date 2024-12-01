@@ -43,7 +43,7 @@ const TotalRate = ({ totalRate, reviewCount, courseCode, prof }: TotalRateProps)
           <span className={css({ fontSize: 14 })}>({reviewCount})</span>
         </div>
         <Link
-          to={`/course-review/detail/${courseCode}/${prof}`}
+          to={`/course-review/detail?code=${courseCode}&prof=${prof}`}
           className={css({
             fontSize: 18,
             color: 'darkGray.2',

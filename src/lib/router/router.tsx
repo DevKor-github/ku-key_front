@@ -57,10 +57,10 @@ const routes: RouteObject[] = [
             path: 'course-review',
             element: <CourseReviewPage />,
             children: [
-              { path: 'info/:courseCode/:prof', element: <CourseInfoPage /> },
-              { path: 'detail/:courseCode/:prof', element: <ReviewPage /> },
-              { path: 'review/:courseCode/:prof/:reviewId', element: <ReviewDetailPage /> },
-              { path: 'write/:courseCode/:prof', element: <WriteReviewPage /> },
+              { path: 'info', element: <CourseInfoPage /> },
+              { path: 'detail', element: <ReviewPage /> },
+              { path: 'review', element: <ReviewDetailPage /> },
+              { path: 'write', element: <WriteReviewPage /> },
             ],
           },
           {
