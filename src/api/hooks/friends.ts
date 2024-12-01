@@ -1,5 +1,4 @@
-import { useQuery, useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
-import { AxiosError } from 'axios'
+import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
 
 import { useErrorHandledMutation } from '@/api/hooks/useErrorHandledMutation'
 import {
@@ -8,7 +7,6 @@ import {
   GetFriendTimetableRequest,
   GetRequestListResponse,
   GetSearchUserRequest,
-  GetSearchUserResponse,
   PatchFriendshipRequestRequest,
   PostFriendshipRequest,
 } from '@/api/types/friends'
@@ -43,10 +41,9 @@ const getSearchUser = async ({ username }: GetSearchUserRequest) => {
  * username(친구 추가용 id)를 query로 받아 해당하는 유저를 검색합니다.
  */
 export const useGetSearchUser = ({ username }: GetSearchUserRequest) => {
-  return useQuery<GetSearchUserResponse, AxiosError>({
+  return useSuspenseQuery({
     queryKey: ['searchResult', username],
-    queryFn: () => getSearchUser({ username }),
-    enabled: !!username,
+    queryFn: () => (username ? getSearchUser({ username }) : null),
     retry: false,
   })
 }

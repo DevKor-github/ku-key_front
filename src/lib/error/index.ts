@@ -11,13 +11,13 @@ export const KU_KEY_ERROR_LOG = {
   },
   INVALID_EMAIL: {
     name: 'INVALID_EMAIL',
-    message: '이메일이 잘못되었습니다.',
+    message: 'Wrong email form.',
     errorCode: 1001,
     statusCode: 400,
   },
   INVALID_PASSWORD: {
     name: 'INVALID_PASSWORD',
-    message: '비밀번호가 일치하지 않습니다.',
+    message: 'Wrong password.',
     errorCode: 1002,
     statusCode: 400,
   },

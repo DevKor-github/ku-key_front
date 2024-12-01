@@ -1,25 +1,22 @@
 import { css, cx } from '@styled-system/css'
 import { shadow } from '@styled-system/recipes'
-import { useCallback, useState } from 'react'
+import { Suspense, useCallback } from 'react'
 
-import { useGetSearchUser } from '@/api/hooks/friends'
 import FriendRequest from '@/components/timetable/Friend/FriendRequest'
 import SearchResult from '@/components/timetable/Friend/SearchResult'
 import SearchBox from '@/components/timetable/SearchBox'
+import { LoadingSpinner } from '@/components/ui/spinner/inde'
+import { useQueryParams } from '@/util/hooks/useQueryParams'
 
+export type SearchFriend = {
+  username?: string
+}
 const FriendsManage = () => {
-  const [query, setQuery] = useState('')
-
-  const { data: searchResultData, error, refetch } = useGetSearchUser({ username: query })
+  const [, setQueryParam] = useQueryParams<SearchFriend>()
 
   const search = useCallback(
-    (queryKeyword: string) => {
-      if (queryKeyword === query) {
-        refetch()
-      }
-      setQuery(queryKeyword)
-    },
-    [query, refetch],
+    (queryKeyword: string) => setQueryParam({ username: queryKeyword === '' ? undefined : queryKeyword }),
+    [setQueryParam],
   )
 
   return (
@@ -45,7 +42,9 @@ const FriendsManage = () => {
         }}
       />
       <FriendRequest />
-      <SearchResult data={searchResultData} error={error} />
+      <Suspense fallback={<LoadingSpinner />}>
+        <SearchResult />
+      </Suspense>
     </div>
   )
 }
