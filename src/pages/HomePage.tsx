@@ -9,7 +9,7 @@ import HomeInstitution from '@/features/HomeInstitution/components'
 
 const HomePage = () => {
   return (
-    <Suspense fallback={<LoadingSpinner />}>
+    <Suspense fallback={<LoadingScreen />}>
       <main className={css({ display: 'flex', flexDir: 'column', alignItems: 'center', bgColor: 'bg.gray' })}>
         <HomeCarousel />
         <HomeCalendar />
