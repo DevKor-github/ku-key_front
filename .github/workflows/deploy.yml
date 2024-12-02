@@ -20,6 +20,7 @@ jobs:
           echo VITE_API_URL=${{ secrets.VITE_API_URL }} >> .env
           echo VITE_API_AWS_S3_BUCKET=${{ secrets.VITE_API_AWS_S3_BUCKET }} >> .env
           echo VITE_API_AMPLITUDE_API_KEY=${{ secrets.VITE_API_AMPLITUDE_API_KEY }} >> .env
+          echo VITE_API_GOOGLE_FORM_URL=${{secrets.VITE_API_GOOGLE_FORM_URL}} >> .env
 
       - name: Build
         run: yarn build
