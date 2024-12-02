@@ -1,17 +1,17 @@
 import { css, cx } from '@styled-system/css'
 import { shadow } from '@styled-system/recipes'
-import { useAtomValue } from 'jotai/react'
 import { useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
-import { usePostReview } from '@/api/hooks/courseReview'
+import { useGetReviewSummary, usePostReview } from '@/api/hooks/courseReview'
 import ReviewChoiceChips from '@/components/courseReview/ReviewChoiceChips'
 import ReviewText from '@/components/courseReview/ReviewText'
 import ReviewTotalRate from '@/components/courseReview/ReviewTotalRate'
 import Dropdown from '@/components/timetable/Dropdown'
-import { courseSummary } from '@/lib/store/review'
+import { CourseReviewQueryInterface } from '@/types/review'
 import { SemesterType } from '@/types/timetable'
+import { useQueryParams } from '@/util/hooks/useQueryParams'
 import {
   attendanceArray,
   classLevelArray,
@@ -36,11 +36,11 @@ interface WriteReviewForm {
 }
 
 const WriteReviewPage = () => {
-  const { courseCode = '', prof = '' } = useParams()
-
   const navigate = useNavigate()
+  const [{ code: courseCode, professorName }] = useQueryParams<CourseReviewQueryInterface>()
+
   const { mutate: postReview } = usePostReview()
-  const totalData = useAtomValue(courseSummary)
+  const { data: totalData } = useGetReviewSummary({ courseCode, professorName })
   const { year, semester } = getCurSemester()
   const methods = useForm<WriteReviewForm>({
     defaultValues: {
@@ -51,7 +51,7 @@ const WriteReviewPage = () => {
       teachingSkills: 0,
       teamProject: 0,
       textReview: '',
-      professorName: prof,
+      professorName,
       courseCode,
       year: `${year}`,
       semester,
@@ -70,7 +70,7 @@ const WriteReviewPage = () => {
 
   const onSubmit = (formData: WriteReviewForm) => {
     postReview(formData, {
-      onSuccess: () => navigate(`/course-review/info/${courseCode}/${prof}`),
+      onSuccess: () => navigate(`/course-review/info?code=${courseCode}&professorName=${professorName}`),
     })
   }
 
@@ -127,7 +127,7 @@ const WriteReviewPage = () => {
                 color: 'darkGray.2',
               })}
             >
-              {prof}
+              {professorName}
             </span>
           </div>
           <Dropdown dropdownList={semesterList} curIndex={curSemester} setCurIndex={setCurSemester} />

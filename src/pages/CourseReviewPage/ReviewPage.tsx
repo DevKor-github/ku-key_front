@@ -1,20 +1,14 @@
 import { css, cva } from '@styled-system/css'
-import { isAxiosError } from 'axios'
 import { motion } from 'framer-motion'
-import { useAtomValue } from 'jotai/react'
 import { ChevronDown } from 'lucide-react'
-import { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
-import { toast } from 'sonner'
+import { useState } from 'react'
 
-import { useGetReviews } from '@/api/hooks/courseReview'
+import { useGetReviews, useGetReviewSummary } from '@/api/hooks/courseReview'
 import CookiesRate from '@/components/courseReview/CookiesRate'
 import ReviewCard from '@/components/courseReview/ReviewCard'
 import ReviewHeader from '@/components/courseReview/ReviewHeader'
-import Toast from '@/components/ui/toast'
-import { KU_KEY_ERROR_LOG } from '@/lib/error'
-import { courseSummary } from '@/lib/store/review'
-import { CriteriaType, DirectionType } from '@/types/review'
+import { CourseReviewQueryInterface, CriteriaType, DirectionType } from '@/types/review'
+import { useQueryParams } from '@/util/hooks/useQueryParams'
 
 const CriteriaBtnStyle = cva({
   base: {
@@ -47,36 +41,18 @@ const CriteriaBtnStyle = cva({
 })
 
 const ReviewPage = () => {
-  const { courseCode = '', prof = '' } = useParams()
-  const navigate = useNavigate()
-
   const [criteria, setCriteria] = useState<CriteriaType>('createdAt')
   const [direction, setDirection] = useState<DirectionType>('DESC')
 
-  const totalData = useAtomValue(courseSummary)
+  const [{ code: courseCode, professorName }] = useQueryParams<CourseReviewQueryInterface>()
+  const { data: totalData } = useGetReviewSummary({ courseCode, professorName })
 
-  const {
-    data: reviewsData,
-    isError,
-    error,
-    isFetching,
-  } = useGetReviews({
+  const { data: reviewsData } = useGetReviews({
     courseCode,
-    professorName: prof,
+    professorName,
     criteria,
     direction,
   })
-
-  useEffect(() => {
-    if (!isFetching && isError) {
-      if (isAxiosError(error)) {
-        if (error.response?.data.name === KU_KEY_ERROR_LOG.COURSE_REVIEW_NOT_VIEWABLE.name) {
-          toast.custom(() => <Toast message={KU_KEY_ERROR_LOG.COURSE_REVIEW_NOT_VIEWABLE.message} type="warning" />)
-          navigate(-1)
-        }
-      }
-    }
-  }, [isError, error, isFetching, navigate])
 
   return (
     <div
@@ -95,7 +71,7 @@ const ReviewPage = () => {
           <CookiesRate rate={totalData.totalRate} size={18} gap={4} />
           <span className={css({ fontSize: 14 })}>({totalData.reviewCount})</span>
         </div>
-        <ReviewHeader courseCode={courseCode} courseName={totalData.courseName} prof={prof} />
+        <ReviewHeader courseCode={courseCode} courseName={totalData.courseName} professorName={professorName} />
       </div>
       <div className={css({ display: 'flex', flexDir: 'column', gap: 5 })}>
         <div className={css({ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 7 })}>
@@ -133,9 +109,22 @@ const ReviewPage = () => {
             </motion.div>
           </button>
         </div>
-        {reviewsData.reviews.map(review => (
-          <ReviewCard key={review.id} data={review} />
-        ))}
+        {reviewsData.reviews.length ? (
+          reviewsData.reviews.map(review => <ReviewCard key={review.id} data={review} />)
+        ) : (
+          <p
+            className={css({
+              display: 'flex',
+              justifyContent: 'center',
+              my: 10,
+              color: 'darkGray.1',
+              fontWeight: 500,
+              fontSize: 16,
+            })}
+          >
+            There are no course reviews. Please leave a review!
+          </p>
+        )}
       </div>
     </div>
   )

@@ -1,19 +1,18 @@
 import { css, cx } from '@styled-system/css'
 import { shadow } from '@styled-system/recipes'
-import { useAtomValue } from 'jotai/react'
 import { ChevronRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 import CookiesRate from '@/components/courseReview/CookiesRate'
-import { courseSummary } from '@/lib/store/review'
-import { ReviewType } from '@/types/review'
+import { CourseReviewQueryInterface, ReviewType } from '@/types/review'
+import { useQueryParams } from '@/util/hooks/useQueryParams'
 import { numberToSemester } from '@/util/timetableUtil'
 
 interface ReviewCardProps {
   data: ReviewType
 }
 const ReviewCard = ({ data }: ReviewCardProps) => {
-  const summary = useAtomValue(courseSummary)
+  const [{ code, professorName }] = useQueryParams<CourseReviewQueryInterface>()
   return (
     <div className={cx(shadow(), css({ display: 'flex', gap: 5, flexDir: 'column', rounded: 10, p: 5 }))}>
       <div className={css({ fontSize: 14, fontWeight: 700, color: 'lightGray.1' })}>
@@ -25,7 +24,7 @@ const ReviewCard = ({ data }: ReviewCardProps) => {
           <CookiesRate rate={data.rate} size={18} gap={4} />
         </div>
         <Link
-          to={`/course-review/review/${summary.courseCode}/${summary.prof}/${data.id}`}
+          to={`/course-review/review/?code=${code}&professorName=${professorName}&id=${data.id}`}
           state={data}
           className={css({
             fontSize: 18,

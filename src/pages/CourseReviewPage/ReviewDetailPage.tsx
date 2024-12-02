@@ -1,15 +1,17 @@
 import { css } from '@styled-system/css'
-import { useAtomValue } from 'jotai/react'
 import { useLocation } from 'react-router-dom'
 
+import { useGetReviewSummary } from '@/api/hooks/courseReview'
 import InfoDetail from '@/components/courseReview/InfoDetail'
 import Review from '@/components/courseReview/Review'
-import { courseSummary } from '@/lib/store/review'
-import { ReviewType } from '@/types/review'
+import { CourseReviewQueryInterface, ReviewType } from '@/types/review'
+import { useQueryParams } from '@/util/hooks/useQueryParams'
 
 const ReviewDetailPage = () => {
   const data = useLocation().state as ReviewType
-  const infoData = useAtomValue(courseSummary)
+  const [{ code: courseCode, professorName }] = useQueryParams<CourseReviewQueryInterface>()
+  const { data: infoData } = useGetReviewSummary({ courseCode, professorName })
+
   return (
     <div className={css({ flexGrow: 1, display: 'flex', flexDir: 'column', gap: 12, maxW: '820px' })}>
       <Review

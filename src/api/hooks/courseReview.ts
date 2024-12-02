@@ -19,10 +19,11 @@ const getReviewSummary = async (props: GetReviewSummaryRequest) => {
 /**
  * 해당 교수의 해당 강의에 대한 강의평들을 종합한 강의평 요약을 조회합니다.
  */
-export const useGetReviewSummary = (props: GetReviewSummaryRequest) => {
+export const useGetReviewSummary = ({ courseCode, professorName }: GetReviewSummaryRequest) => {
   return useSuspenseQuery({
-    queryKey: ['summary', props],
-    queryFn: () => getReviewSummary(props),
+    queryKey: ['summary', courseCode, professorName],
+    queryFn: () => getReviewSummary({ courseCode, professorName }),
+    refetchOnMount: true,
   })
 }
 

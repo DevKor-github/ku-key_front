@@ -1,22 +1,24 @@
 import { css } from '@styled-system/css'
-import { useAtomValue } from 'jotai/react'
 
+import { useGetReviewSummary } from '@/api/hooks/courseReview'
 import InfoDetail from '@/components/courseReview/InfoDetail'
 import ReviewHeader from '@/components/courseReview/ReviewHeader'
 import TotalRate from '@/components/courseReview/TotalRate'
-import { courseSummary } from '@/lib/store/review'
+import { CourseReviewQueryInterface } from '@/types/review'
+import { useQueryParams } from '@/util/hooks/useQueryParams'
 
 const CourseInfoPage = () => {
-  const data = useAtomValue(courseSummary)
+  const [{ code: courseCode, professorName }] = useQueryParams<CourseReviewQueryInterface>()
+  const { data } = useGetReviewSummary({ courseCode, professorName })
 
   return (
     <div className={css({ flexGrow: 1, display: 'flex', flexDir: 'column', gap: 10, maxW: '820px', minW: 0 })}>
-      <ReviewHeader courseCode={data.courseCode} courseName={data.courseName} prof={data.prof} />
+      <ReviewHeader courseCode={courseCode} courseName={data.courseName} professorName={professorName} />
       <TotalRate
         totalRate={data.totalRate}
         reviewCount={data.reviewCount}
-        courseCode={data.courseCode}
-        prof={data.prof}
+        courseCode={courseCode}
+        professorName={professorName}
       />
       <InfoDetail
         attendance={data.attendance}

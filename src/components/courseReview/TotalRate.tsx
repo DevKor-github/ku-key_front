@@ -1,17 +1,23 @@
 import { css, cx } from '@styled-system/css'
 import { shadow } from '@styled-system/recipes'
 import { ChevronRight } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'sonner'
 
+import { useGetKeyExpiration } from '@/api/hooks/user'
 import CookiesRate from '@/components/courseReview/CookiesRate'
+import Toast from '@/components/ui/toast'
+import { KU_KEY_ERROR_LOG } from '@/lib/error'
 
 interface TotalRateProps {
   totalRate: number
   reviewCount: number
   courseCode: string
-  prof: string
+  professorName: string
 }
-const TotalRate = ({ totalRate, reviewCount, courseCode, prof }: TotalRateProps) => {
+const TotalRate = ({ totalRate, reviewCount, courseCode, professorName }: TotalRateProps) => {
+  const navigate = useNavigate()
+  const { data: hasTicket } = useGetKeyExpiration()
   return (
     <div
       className={cx(
@@ -42,8 +48,14 @@ const TotalRate = ({ totalRate, reviewCount, courseCode, prof }: TotalRateProps)
           <CookiesRate rate={totalRate} size={18} gap={4} />
           <span className={css({ fontSize: 14 })}>({reviewCount})</span>
         </div>
-        <Link
-          to={`/course-review/detail/${courseCode}/${prof}`}
+        <button
+          onClick={() => {
+            if (!hasTicket)
+              return toast.custom(() => (
+                <Toast message={KU_KEY_ERROR_LOG.COURSE_REVIEW_NOT_VIEWABLE.message} type="warning" />
+              ))
+            navigate(`/course-review/detail?code=${courseCode}&professorName=${professorName}`)
+          }}
           className={css({
             fontSize: 18,
             color: 'darkGray.2',
@@ -52,7 +64,7 @@ const TotalRate = ({ totalRate, reviewCount, courseCode, prof }: TotalRateProps)
           })}
         >
           Course Review <ChevronRight size={18} />
-        </Link>
+        </button>
       </div>
     </div>
   )

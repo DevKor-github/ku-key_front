@@ -64,7 +64,7 @@ const LectureSticker = ({ timetableId, data, bgColor, isMine }: LectureStickerPr
   const handleReviewClick = useCallback(() => {
     setIsModalOpen(false)
     setIsSheetOpened(true)
-    navigate(`/course-review/info/${data.courseCode?.slice(0, 7)}/${data.professorName}`)
+    navigate(`/course-review/info?code=${data.courseCode?.slice(0, 7)}&professorName=${data.professorName}`)
   }, [navigate, setIsSheetOpened, data.courseCode, data.professorName])
 
   const handleCourseDelete = useCallback(() => {
