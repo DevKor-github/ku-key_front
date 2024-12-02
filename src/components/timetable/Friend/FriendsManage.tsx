@@ -5,7 +5,7 @@ import { Suspense, useCallback } from 'react'
 import FriendRequest from '@/components/timetable/Friend/FriendRequest'
 import SearchResult from '@/components/timetable/Friend/SearchResult'
 import SearchBox from '@/components/timetable/SearchBox'
-import { LoadingSpinner } from '@/components/ui/spinner/inde'
+import { LoadingSpinner } from '@/components/ui/spinner'
 import { useQueryParams } from '@/util/hooks/useQueryParams'
 
 export type SearchFriend = {

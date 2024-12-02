@@ -1,6 +1,6 @@
 import { ComponentType, lazy, Suspense } from 'react'
 
-import LoadingScreen from '@/components/ui/spinner/inde'
+import LoadingScreen from '@/components/ui/spinner'
 
 const withSuspense = (LazyComponent: ComponentType) => {
   return () => (

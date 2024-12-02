@@ -4,7 +4,7 @@ import { Suspense } from 'react'
 import Announcement from '@/components/home/Announcement'
 import HomeCarousel from '@/components/home/Carousel'
 import Club from '@/components/home/Club'
-import LoadingScreen from '@/components/ui/spinner/inde'
+import LoadingScreen from '@/components/ui/spinner'
 
 const HomePage = () => {
   return (
