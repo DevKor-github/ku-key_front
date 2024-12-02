@@ -4,10 +4,12 @@ import { useCallback, useEffect } from 'react'
 
 import { calendarAtom, selectedDateAtom, todayAtom } from '@/lib/store/calendar'
 import { DayProps } from '@/types/calendar'
+import { useMediaQueryByName } from '@/util/hooks/useMediaQueryByName'
 
 const DAY_NUMBER = 7
-const WEEK_NUMBER = 6
 export const useCalendar = () => {
+  const isMobile = useMediaQueryByName('smDown')
+  const WEEK_NUMBER = isMobile ? 5 : 6
   const [today, setToday] = useAtom(todayAtom) //오늘 날짜
   const [selectedDate, setSelectedDate] = useAtom(selectedDateAtom) //선택한 날짜
   const [calendar, setCalendar] = useAtom(calendarAtom)

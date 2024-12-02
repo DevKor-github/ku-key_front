@@ -27,7 +27,7 @@ const FormStyle = cva({
 
 interface SearchBoxProps {
   initialKeyword?: string
-  placeholder: string
+  placeholder?: string
   onSubmit: (queryKeyword: string) => void
   cssProps?: CSSProperties
 }
