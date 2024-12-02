@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 // import instagramIcon from '@/assets/instagram.svg'
 import KUkeyLogo from '@/assets/KU-keyLogo.svg'
 import mailIcon from '@/assets/mail.svg'
+import SurveyLink from '@/components/SurveyLink'
 import NoticeModal from '@/components/ui/modal/NoticeModal'
 import { HEADER_MESSAGE } from '@/lib/messages/header'
 import { footerRouteConfig } from '@/lib/router/footer-route'
@@ -109,11 +110,15 @@ const Footer = () => {
         <div
           className={css({
             color: 'darkGray.1',
-            fontSize: '14.112px',
-            fontWeight: '500',
+            fontSize: 14,
+            fontWeight: 500,
+            display: 'flex',
+            flexDir: 'column',
+            gap: 2,
           })}
         >
-          Copyright ⓒ 2024 KU-key RUN. All Rights Reserved.
+          <SurveyLink />
+          <p>Copyright ⓒ 2024 KU-key RUN. All Rights Reserved.</p>
         </div>
       </div>
       <div

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 
 import SideTabLogInLink from '@/components/header/SideTabLogInLink'
 import SideTabProfile from '@/components/header/SideTabProfile'
+import SurveyLink from '@/components/SurveyLink'
 import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import { headerRouteConfig } from '@/lib/router/header-route'
 
@@ -94,6 +95,7 @@ const HeaderMenu = ({ handleNavClick, curPath, handleUserButton, isAuthenticated
           >
             {isAuthenticated ? 'Log Out' : 'Log In'}
           </button>
+          <SurveyLink />
         </nav>
       </SheetContent>
     </Sheet>
