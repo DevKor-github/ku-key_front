@@ -76,12 +76,14 @@ const Footer = () => {
             display: 'flex',
             alignItems: 'center',
             flexShrink: 0,
+            mb: 2,
           })}
         >
           <Link to="/">
             <img src={KUkeyLogo} alt="KU-key" />
           </Link>
         </nav>
+        <SurveyLink />
         <div
           className={css({
             color: 'black.1',
@@ -112,13 +114,9 @@ const Footer = () => {
             color: 'darkGray.1',
             fontSize: 14,
             fontWeight: 500,
-            display: 'flex',
-            flexDir: 'column',
-            gap: 2,
           })}
         >
-          <SurveyLink />
-          <p>Copyright ⓒ 2024 KU-key RUN. All Rights Reserved.</p>
+          Copyright ⓒ 2024 KU-key RUN. All Rights Reserved.
         </div>
       </div>
       <div
