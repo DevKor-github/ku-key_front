@@ -9,7 +9,7 @@ import ChangeForm from '@/components/mypage/Contents/ChangeForm'
 import Button from '@/components/ui/button'
 import { PasswordSchema } from '@/lib/zod/register-schema'
 import getKeys from '@/util/getKeys'
-import { useMediaQueryByName } from '@/util/useMediaQueryByName'
+import { useMediaQueryByName } from '@/util/hooks/useMediaQueryByName'
 
 export interface ChangePasswordForm {
   curPassword: string

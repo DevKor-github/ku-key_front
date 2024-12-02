@@ -12,7 +12,7 @@ import LanguageDropdown from '@/components/ui/dropdown/LanguageDropdown'
 import NationDropdown from '@/components/ui/dropdown/NationDropdown'
 import { Input } from '@/components/ui/input'
 import { Language } from '@/lib/constants/language'
-import { useMediaQueryByName } from '@/util/useMediaQueryByName'
+import { useMediaQueryByName } from '@/util/hooks/useMediaQueryByName'
 
 export const ProfileFormWrapper = css({
   display: 'flex',

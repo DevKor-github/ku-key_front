@@ -8,33 +8,34 @@ import MyPageContents from '@/components/mypage/MyPageContents'
 import MypageWrapper from '@/components/mypage/MypageWrapper'
 import UserInfo from '@/components/mypage/UserInfo'
 import { characterConfig } from '@/components/ui/profile/CharacterConfig'
-import { PageType } from '@/types/myPage'
-import { useMediaQueryByName } from '@/util/useMediaQueryByName'
-import { useSearch } from '@/util/useSearch'
+import { MyPageParams, PageType } from '@/types/myPage'
+import { useMediaQueryByName } from '@/util/hooks/useMediaQueryByName'
+import { useQueryParams } from '@/util/hooks/useQueryParams'
 
 const MyPage = () => {
   const navigate = useNavigate()
-  const { searchParam, handleSetParam, deleteParam } = useSearch()
-  const curPage = searchParam.get('page') as PageType
+  const [queryParam, setQueryParam] = useQueryParams<MyPageParams>()
+  const { page: curPage } = queryParam
+
   const { data: myProfileData } = useGetMyProfile()
-  const isSmDown = useMediaQueryByName('smDown')
+  const isMobile = useMediaQueryByName('smDown')
 
   const headerVisibility =
-    !isSmDown ||
+    !isMobile ||
     !(curPage === 'community' || curPage === 'course-review' || curPage === 'delete-account' || curPage === 'password')
 
   useEffect(() => {
-    if (curPage === null && !isSmDown) {
+    if (curPage === null && !isMobile) {
       navigate(`${location.pathname}?page=my-point`, { replace: true })
     }
-  }, [curPage, navigate, isSmDown])
+  }, [curPage, navigate, isMobile])
 
   const setPage = useCallback(
     (target: PageType) => {
-      if (target) handleSetParam('page', target)
-      else deleteParam('page')
+      if (target) return setQueryParam({ page: target })
+      setQueryParam({ page: undefined })
     },
-    [handleSetParam, deleteParam],
+    [setQueryParam],
   )
 
   return (

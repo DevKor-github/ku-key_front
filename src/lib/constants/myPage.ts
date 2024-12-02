@@ -64,7 +64,7 @@ export const PAGE_LIST: { title: string; children: { title: string; handler: Pag
   },
 ]
 
-export const PAGE_TITLE: { [key in Exclude<PageType, null>]: string } = {
+export const PAGE_TITLE: { [key in Exclude<PageType, undefined>]: string } = {
   community: 'Community',
   'my-point': 'My point',
   'point-history': 'Point history',

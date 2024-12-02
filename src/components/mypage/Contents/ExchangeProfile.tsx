@@ -12,7 +12,7 @@ import Button from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import Toast from '@/components/ui/toast'
 import dateFormatter from '@/util/dateFormatter'
-import { useMediaQueryByName } from '@/util/useMediaQueryByName'
+import { useMediaQueryByName } from '@/util/hooks/useMediaQueryByName'
 
 const FormWrapper = css({
   display: 'flex',

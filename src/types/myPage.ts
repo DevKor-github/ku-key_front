@@ -7,4 +7,8 @@ export type PageType =
   | 'exchange-profile'
   | 'password'
   | 'delete-account'
-  | null
+  | undefined
+
+export interface MyPageParams {
+  page: PageType
+}

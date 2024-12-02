@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { useGetKeyExpiration } from '@/api/hooks/user'
 import PASS_IMG from '@/assets/pass.png'
 import dateFormatter from '@/util/dateFormatter'
-import { useMediaQueryByName } from '@/util/useMediaQueryByName'
+import { useMediaQueryByName } from '@/util/hooks/useMediaQueryByName'
 
 const ReviewKeyExpirationCard = () => {
   const { data } = useGetKeyExpiration()

@@ -14,7 +14,7 @@ import MobileContentHeader from '@/components/mypage/MobileContentHeader'
 import MobileMyPageSelector from '@/components/mypage/MobileMyPageSelector'
 import { PAGE_LIST, PAGE_TITLE } from '@/lib/constants/myPage'
 import { PageType } from '@/types/myPage'
-import { useMediaQueryByName } from '@/util/useMediaQueryByName'
+import { useMediaQueryByName } from '@/util/hooks/useMediaQueryByName'
 
 interface MyPageContentsProps {
   myProfileData: GetMyProfileResponse
@@ -111,7 +111,7 @@ const MyPageContents = ({ myProfileData, setPage, curPage }: MyPageContentsProps
           </nav>
         </div>
       )}
-      {isMobile && curPage !== null && <MobileContentHeader title={PAGE_TITLE[curPage]} />}
+      {isMobile && curPage !== undefined && <MobileContentHeader title={PAGE_TITLE[curPage]} />}
       <div
         className={cva({
           base: { flexGrow: 1, smDown: { overflowY: 'auto' } },
