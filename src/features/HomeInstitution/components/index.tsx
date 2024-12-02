@@ -5,7 +5,7 @@ import * as s from './style.css'
 import BroadcastProfile from '@/assets/BroadcastProfile.png'
 import ETCProfile from '@/assets/ETCProfile.png'
 import SectionTitle from '@/components/home/Announcement/SectionTitle'
-import InstituteProfile from '@/features/HomeInstitution/components/InstitueProfile'
+import InstituteProfile from '@/features/HomeInstitution/components/InstituteProfile'
 import { BROADCASTS } from '@/lib/school-institute/broadcasts'
 import { ETC } from '@/lib/school-institute/etc'
 
