@@ -2,6 +2,8 @@ import { css, cva } from '@styled-system/css'
 import { Search } from 'lucide-react'
 import { CSSProperties, useState } from 'react'
 
+import { useDeepCompareEffect } from '@/util/hooks/useDeepCompare'
+
 const FormStyle = cva({
   base: {
     display: 'flex',
@@ -30,11 +32,20 @@ interface SearchBoxProps {
   placeholder?: string
   onSubmit: (queryKeyword: string) => void
   cssProps?: CSSProperties
+  // 배열 안에 담긴 값이 바뀌면 검색어를 초기화합니다
+  // @default []
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  resetKeys?: any[]
 }
 
-const SearchBox = ({ initialKeyword, placeholder, onSubmit, cssProps = {} }: SearchBoxProps) => {
+const SearchBox = ({ initialKeyword, placeholder, onSubmit, cssProps = {}, resetKeys = [] }: SearchBoxProps) => {
   const [inputKeyword, setInputKeyword] = useState(initialKeyword ?? '')
   const [isFocus, setIsFocus] = useState(false)
+
+  useDeepCompareEffect(() => {
+    setInputKeyword('')
+  }, resetKeys)
+
   return (
     <form
       className={FormStyle({ isFocus })}

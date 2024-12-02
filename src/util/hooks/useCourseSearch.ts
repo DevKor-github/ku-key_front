@@ -37,7 +37,7 @@ export const useCourseSearch = ({ year, semester }: CourseSearchProps) => {
     setSearchQuery(prev => queryFn(prev))
   }
 
-  const { data, fetchNextPage, hasNextPage, isFetching, error } = useSuspenseInfiniteQuery({
+  const { data, fetchNextPage, hasNextPage, isFetching } = useSuspenseInfiniteQuery({
     queryKey: ['courseSearchResult', year, semester, category, classification, keyword],
     queryFn: ({ pageParam: cursorId }) => {
       if (keyword.length) {
@@ -72,5 +72,5 @@ export const useCourseSearch = ({ year, semester }: CourseSearchProps) => {
     retry: false,
   })
 
-  return { searchQuery, data, search, fetchNextPage, hasNextPage, isFetching, error }
+  return { searchQuery, data, search, fetchNextPage, hasNextPage, isFetching }
 }

@@ -1,13 +1,14 @@
 import { css } from '@styled-system/css'
-import { isAxiosError } from 'axios'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { toast } from 'sonner'
 
 import { usePostCourse } from '@/api/hooks/timetable'
 import Dropdown from '@/components/timetable/Dropdown'
 import ClassSelectModal from '@/components/timetable/LectureBottomSheet/AddClass/ClassSelectModal'
 import SearchLectureCard from '@/components/timetable/LectureBottomSheet/AddClass/SearchLectureCard'
 import SearchBox from '@/components/timetable/SearchBox'
+import Toast from '@/components/ui/toast'
 import { SemesterType } from '@/types/timetable'
 import { useCourseSearch } from '@/util/hooks/useCourseSearch'
 import useIntersect from '@/util/hooks/useIntersect'
@@ -43,7 +44,6 @@ const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
     fetchNextPage,
     hasNextPage,
     isFetching,
-    error,
   } = useCourseSearch({ year, semester })
   const { mutate: postCourse } = usePostCourse()
 
@@ -70,12 +70,12 @@ const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
       }
       if (toIndex === 0) {
         // All
-        search(prev => ({ ...prev, category: 'All Class', classification: null }))
+        search(() => ({ keyword: '', category: 'All Class', classification: null }))
         return
       }
       if (toIndex === 2) {
         // General
-        search(prev => ({ ...prev, category: 'General Studies', classification: null }))
+        search(() => ({ keyword: '', category: 'General Studies', classification: null }))
         return
       }
     },
@@ -85,14 +85,21 @@ const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
   const handleMajorBtn = useCallback(
     (classification: string) => {
       setIsModalOpen(false)
-      search(prev => ({ ...prev, category: categoryList[curCategory], classification }))
+      search(() => ({ keyword: '', category: categoryList[curCategory], classification }))
     },
     [curCategory, search],
   )
 
   const handleSearchBoxOnSubmit = useCallback(
-    (queryKeyword: string) => search(prev => ({ ...prev, keyword: queryKeyword })),
-    [search],
+    (queryKeyword: string) => {
+      if ((queryKeyword.length === 0 && searchQuery.category !== 'All Class') || queryKeyword.length > 2)
+        // All Class가 아닌 Category에서 빈 글자 입력
+        // 또는 2글자 이상 검색
+        search(prev => ({ ...prev, keyword: queryKeyword }))
+      else
+        toast.custom(() => <Toast message="Please enter at least two letters for your search term." type="default" />)
+    },
+    [search, searchQuery.category],
   )
 
   const handleQuitModal = useCallback(() => {
@@ -139,11 +146,12 @@ const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
               )}
             </div>
           </div>
-          <SearchBox onSubmit={handleSearchBoxOnSubmit} />
+          <SearchBox
+            onSubmit={handleSearchBoxOnSubmit}
+            resetKeys={[searchQuery.category, searchQuery.classification]}
+          />
         </div>
-        {isAxiosError(error) ? (
-          <div className={SearchMessageStyle}>{error.response?.data.message}</div>
-        ) : searchData.length ? (
+        {searchData.length ? (
           <div
             ref={scrollSectionRef}
             className={css({
@@ -158,6 +166,10 @@ const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
               <SearchLectureCard key={index} data={data} addCourse={addCourse} />
             ))}
             <div ref={fetchNextRef} className={css({ height: 1 })} />
+          </div>
+        ) : searchQuery.category === 'All Class' && searchQuery.keyword.length === 0 ? (
+          <div className={SearchMessageStyle}>
+            Enter keywords to search (e.g., course name, professor name, or course number)
           </div>
         ) : (
           <div className={SearchMessageStyle}>There are no classes available for exchange students.</div>
