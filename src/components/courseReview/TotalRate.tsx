@@ -50,9 +50,11 @@ const TotalRate = ({ totalRate, reviewCount, courseCode, professorName }: TotalR
         </div>
         <button
           onClick={() => {
-            if (hasTicket) navigate(`/course-review/detail?code=${courseCode}&professorName=${professorName}`)
-            else
-              toast.custom(() => <Toast message={KU_KEY_ERROR_LOG.COURSE_REVIEW_NOT_VIEWABLE.message} type="warning" />)
+            if (!hasTicket)
+              return toast.custom(() => (
+                <Toast message={KU_KEY_ERROR_LOG.COURSE_REVIEW_NOT_VIEWABLE.message} type="warning" />
+              ))
+            navigate(`/course-review/detail?code=${courseCode}&professorName=${professorName}`)
           }}
           className={css({
             fontSize: 18,
