@@ -19,25 +19,34 @@ const HomeTitle = ({ title, navLink }: HomeTitleProps) => {
         bgColor: 'bg.gray',
         w: 'full',
         maxW: 1026,
-        // px: 'calc((100vw - 1026px)/2)',
+        px: 1.5,
+        gap: 1.5,
+        alignSelf: 'stretch',
+        smDown: { px: '1rem', gap: 0 },
       })}
     >
-      <h1 className={css({ fontSize: 36, fontWeight: 700 })}>{title}</h1>
+      <h1
+        className={css({
+          textStyle: { base: 'display2', smDown: 'body1_L' },
+          color: 'black',
+        })}
+      >
+        {title}
+      </h1>
       <button
         className={css({
           display: 'flex',
           alignItems: 'center',
-          fontSize: 28,
-          fontWeight: 600,
+          textStyle: { base: 'heading1_L', smDown: 'body2_M' },
           color: 'red.1',
           cursor: 'pointer',
-          px: 2.5,
-          gap: 3.5,
+          pl: 2.5,
+          pr: 1,
+          gap: { base: 3.5, smDown: 1 },
         })}
         onClick={() => navigate(navLink)}
       >
-        more
-        <ChevronRight size={24} />
+        more <ChevronRight className={css({ smDown: { w: '0.875rem' } })} />
       </button>
     </div>
   )

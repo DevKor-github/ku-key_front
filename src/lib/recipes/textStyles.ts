@@ -15,6 +15,13 @@ export const textStyles = defineTextStyles({
       fontWeight: 700,
     },
   },
+  display3: {
+    description: 'Display 3',
+    value: {
+      fontSize: '2rem',
+      fontWeight: 700,
+    },
+  },
   heading1_L: {
     description: 'Heading 1 Large',
     value: {
@@ -54,15 +61,21 @@ export const textStyles = defineTextStyles({
     description: 'Body 1 Large',
     value: {
       fontSize: '1rem',
-      fontWeight: 600,
+      fontWeight: 700,
     },
   },
-
   body1_M: {
     description: 'Body 1 Medium',
     value: {
       fontSize: '1rem',
       fontWeight: 500,
+    },
+  },
+  body1_S: {
+    description: 'Body 1 Small',
+    value: {
+      fontSize: '1rem',
+      fontWeight: 400,
     },
   },
   body2_M: {
@@ -86,10 +99,24 @@ export const textStyles = defineTextStyles({
       fontWeight: 500,
     },
   },
+  body3_S: {
+    description: 'Body 3 Small',
+    value: {
+      fontSize: '0.75rem',
+      fontWeight: 400,
+    },
+  },
+  body4_S: {
+    description: 'Body 4 Small',
+    value: {
+      fontSize: '0.625rem',
+      fontWeight: 400,
+    },
+  },
   body2_L: {
     description: 'Body 2 Large',
     value: {
-      fontSize: 14,
+      fontSize: '0.875rem',
       fontWeight: 700,
     },
   },
@@ -98,6 +125,13 @@ export const textStyles = defineTextStyles({
     value: {
       fontSize: 12,
       fontWeight: 700,
+    },
+  },
+  body4_M: {
+    description: 'Body 4 Medium',
+    value: {
+      fontSize: '0.625rem',
+      fontWeight: 500,
     },
   },
   title3: {

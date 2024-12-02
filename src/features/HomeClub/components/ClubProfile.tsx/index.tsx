@@ -1,5 +1,7 @@
-import { css } from '@styled-system/css'
+import { css, cx } from '@styled-system/css'
 import { clubTag } from '@styled-system/recipes'
+
+import * as s from './style.css'
 
 import Book from '@/assets/Book.svg'
 import Heart from '@/assets/Heart.svg'
@@ -31,38 +33,15 @@ const RecommendedClubConfig: Record<number, { img: string }> = {
 }
 const ClubProfile = ({ img, description, name, clubDivision, index, type }: ClubPreviewProps) => {
   return (
-    <div
-      className={css({
-        display: 'flex',
-        pos: 'relative',
-        w: 238,
-        // h: 341,
-        justifyContent: 'flex-end',
-      })}
-    >
+    <div className={s.Wrapper}>
       <img
         src={type === 'hot' ? HotClubConfig[index].img : RecommendedClubConfig[index].img}
         alt="club"
-        className={css({ pos: 'absolute', left: 0, top: type === 'hot' ? 120 : 140, zIndex: 1, w: 23 })}
+        className={s.ClubIcon({ type })}
       />
-      <div
-        className={css({
-          display: 'inline-flex',
-          flexDir: 'column',
-          justifyContent: 'center',
-          alignItems: 'flex-start',
-          gap: 1.5,
-        })}
-      >
+      <div className={s.ClubProfileWrapper}>
         <div
-          className={css({
-            w: 45,
-            h: 60,
-            rounded: 10,
-            opacity: 0.8,
-            border: '1px solid {colors.lightGray.1}',
-            boxShadow: '0 0 4px 0 rgba(0, 0, 0, 0.25)',
-          })}
+          className={s.ImageWrapper}
           style={{
             background: `linear-gradient(180deg, rgba(0, 0, 0, 0.00) 50%, #000 100%), url(${img})`,
             backgroundSize: '180px 240px',
@@ -70,19 +49,11 @@ const ClubProfile = ({ img, description, name, clubDivision, index, type }: Club
             backgroundRepeat: 'no-repeat',
           }}
         />
-        <div
-          className={css({
-            display: 'flex',
-            flexDir: 'column',
-            alignItems: 'flex-start',
-            alignSelf: 'stretch',
-            gap: 4,
-          })}
-        >
-          <div className={css({ display: 'flex', px: 1, flexDir: 'column', alignItems: 'flex-start', gap: 1.5 })}>
+        <div className={s.Description}>
+          <div className={s.Title}>
             <h1
               className={css({
-                textStyle: 'heading1_L',
+                textStyle: { base: 'heading1_L', smDown: 'body3_L' },
                 color: 'black.2',
                 lineHeight: '110%',
                 letterSpacing: '-0.48px',
@@ -91,14 +62,21 @@ const ClubProfile = ({ img, description, name, clubDivision, index, type }: Club
             >
               {name}
             </h1>
-            <h1 className={css({ maxW: 170, fontSize: 16, fontWeight: 400, color: 'darkGray.1', lineHeight: '110%' })}>
+            <h1
+              className={css({
+                maxW: 170,
+                textStyle: { base: 'body1_S', smDown: 'body4_S' },
+                color: 'darkGray.1',
+                lineHeight: '110%',
+              })}
+            >
               {description}
             </h1>
           </div>
-          <div className={clubTag()}>
+          <div className={cx(clubTag(), css({ display: { smDown: 'none' } }))}>
             <p
               className={css({
-                textStyle: 'body3_M',
+                textStyle: { base: 'body3_M', smDown: 'body4_M' },
                 maxH: '14px',
                 textAlign: 'center',
                 display: 'flex',

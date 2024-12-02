@@ -11,7 +11,7 @@ const CalendarHeader = () => {
 
   return (
     <div className={s.Wrapper}>
-      <p className={css({ textStyle: { base: 'display1', smDown: 'heading3_L' } })}>
+      <p className={css({ textStyle: { base: 'display2', smDown: 'heading3_L' } })}>
         {today.toLocaleString('en-US', { month: 'numeric', day: 'numeric' }).replace(/\//g, '.')}
       </p>
       {!isMobile && (

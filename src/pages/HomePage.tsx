@@ -2,9 +2,9 @@ import { css } from '@styled-system/css'
 import { Suspense } from 'react'
 
 import HomeCarousel from '@/components/home/Carousel'
-import Club from '@/components/home/Club'
 import LoadingScreen from '@/components/ui/spinner'
 import HomeCalendar from '@/features/HomeCalendar/components'
+import HomeClub from '@/features/HomeClub/components'
 import HomeInstitution from '@/features/HomeInstitution/components'
 
 const HomePage = () => {
@@ -14,7 +14,7 @@ const HomePage = () => {
         <HomeCarousel />
         <HomeCalendar />
         <HomeInstitution />
-        <Club />
+        <HomeClub />
       </main>
     </Suspense>
   )
