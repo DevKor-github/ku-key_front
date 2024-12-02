@@ -8,12 +8,6 @@ export const numberToSemester: string[] = ['_', 'Spring', 'Summer', 'Fall', 'Win
 
 export const ColorTypeArr: ColorType[] = ['Red', 'Blue', 'Green', 'Gray', 'Purple']
 
-export const filterTypeMap = {
-  course: 'Course Name',
-  professor: 'Professor Name',
-  code: 'Course Code',
-}
-
 /**
  * HH:MM:SS 형태의 문자열을 두개 받아, 차이를 분으로 반환
  */
