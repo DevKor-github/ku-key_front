@@ -1,6 +1,6 @@
 import { css } from '@styled-system/css'
 
-const LoadingSpinner = () => {
+const LoadingScreen = () => {
   return (
     <div
       className={css({
@@ -25,4 +25,21 @@ const LoadingSpinner = () => {
   )
 }
 
-export default LoadingSpinner
+export default LoadingScreen
+
+export const LoadingSpinner = () => {
+  return (
+    <div
+      className={css({
+        display: 'flex',
+        alignSelf: 'center',
+        width: '40px',
+        height: '40px',
+        border: '4px solid #f3f3f3',
+        borderTop: '4px solid {colors.red.2}',
+        borderRadius: '50%',
+        animation: 'spin 0.5s linear infinite',
+      })}
+    />
+  )
+}

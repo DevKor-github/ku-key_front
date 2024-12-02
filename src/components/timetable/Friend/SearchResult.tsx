@@ -1,17 +1,21 @@
 import { css } from '@styled-system/css'
-import { isAxiosError } from 'axios'
-import { memo } from 'react'
+import { memo, useMemo } from 'react'
 
-import { GetSearchUserResponse } from '@/api/types/friends'
+import { useGetSearchUser } from '@/api/hooks/friends'
 import FriendCard from '@/components/timetable/Friend/FriendCard'
-import { KU_KEY_ERROR_LOG } from '@/lib/error'
+import { SearchFriend } from '@/components/timetable/Friend/FriendsManage'
+import { useQueryParams } from '@/util/hooks/useQueryParams'
 
-interface SearchResultProps {
-  data: GetSearchUserResponse | undefined
-  error: Error | null
-}
+const SearchResult = memo(() => {
+  const [queryParam] = useQueryParams<SearchFriend>()
 
-const SearchResult = memo(({ data, error }: SearchResultProps) => {
+  const { data: searchResultData } = useGetSearchUser({ username: queryParam?.username ?? '' })
+
+  const resultText = useMemo(() => {
+    if (queryParam.username === undefined) return `Enter your friend's username to search`
+    else if (searchResultData === '') return 'No search results'
+  }, [queryParam.username, searchResultData])
+
   return (
     <div
       className={css({
@@ -23,21 +27,19 @@ const SearchResult = memo(({ data, error }: SearchResultProps) => {
       })}
     >
       <h2 className={css({ fontWeight: 700, fontSize: 20, color: 'darkGray.1' })}>Search results</h2>
-      {isAxiosError(error) && error.response?.data.name === KU_KEY_ERROR_LOG.USER_NOT_FOUND.name && (
-        <div
-          className={css({
-            fontWeight: 600,
-            fontSize: 16,
-            color: 'lightGray.1',
-            display: 'flex',
-            justifyContent: 'center',
-            pt: 5,
-          })}
-        >
-          No search results
-        </div>
-      )}
-      {data && <FriendCard type="search" data={data} />}
+      <div
+        className={css({
+          fontWeight: 600,
+          fontSize: 16,
+          color: 'lightGray.1',
+          display: 'flex',
+          justifyContent: 'center',
+          pt: 5,
+        })}
+      >
+        {resultText}
+      </div>
+      {searchResultData && <FriendCard type="search" data={searchResultData} />}
     </div>
   )
 })

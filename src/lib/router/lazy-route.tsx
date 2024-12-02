@@ -1,10 +1,10 @@
 import { ComponentType, lazy, Suspense } from 'react'
 
-import LoadingSpinner from '@/components/ui/spinner/inde'
+import LoadingScreen from '@/components/ui/spinner'
 
 const withSuspense = (LazyComponent: ComponentType) => {
   return () => (
-    <Suspense fallback={<LoadingSpinner />}>
+    <Suspense fallback={<LoadingScreen />}>
       <LazyComponent />
     </Suspense>
   )

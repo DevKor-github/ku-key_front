@@ -10,6 +10,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { KU_KEY_ERROR_LOG } from '@/lib/error'
 import AuthNavigate from '@/lib/router/AuthNavigate'
 import { LoginSchema } from '@/lib/zod/login-schema'
 import { handleAxiosError } from '@/util/handleAxiosError'
@@ -20,12 +21,12 @@ const Login = () => {
   const { mutate: mutateLogin } = useLogIn({
     onError: error => {
       const { data: errorData } = handleAxiosError(error)
-      const errorMessage = errorData?.message ?? 'An error occurred'
-      if (errorMessage === '이메일이 잘못되었습니다.') {
-        loginForm.setError('email', { message: 'wrong email' })
+      const errorName = errorData?.name ?? 'An error occurred'
+      if (errorName === KU_KEY_ERROR_LOG.INVALID_EMAIL.name) {
+        loginForm.setError('email', { message: KU_KEY_ERROR_LOG.INVALID_EMAIL.message })
       }
-      if (errorMessage === '비밀번호가 일치하지 않습니다.') {
-        loginForm.setError('password', { message: 'wrong password' })
+      if (errorName === KU_KEY_ERROR_LOG.INVALID_PASSWORD.name) {
+        loginForm.setError('password', { message: KU_KEY_ERROR_LOG.INVALID_PASSWORD.message })
       }
     },
   })
@@ -48,7 +49,6 @@ const Login = () => {
           justifyContent: 'center',
           alignItems: 'center',
           bgColor: 'lightGray.2',
-          // pt: 40,
           py: 5,
         })}
       >
@@ -61,11 +61,6 @@ const Login = () => {
             backgroundPosition: 'start',
           }}
         />
-        {/* <img
-          src={LoginPageBg}
-          alt="background"
-          className={css({ pos: 'absolute', w: 'full', h: '500px', top: 0, zIndex: 1, objectFit: 'cover' })}
-        /> */}
         <Form {...loginForm}>
           <form
             onSubmit={loginForm.handleSubmit(onSubmit)}

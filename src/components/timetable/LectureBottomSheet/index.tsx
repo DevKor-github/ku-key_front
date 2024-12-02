@@ -8,7 +8,7 @@ import { usePostSchedule } from '@/api/hooks/schedule'
 import AddClass from '@/components/timetable/LectureBottomSheet/AddClass'
 import AddOnMyOwn, { AddOnMyOwnForm } from '@/components/timetable/LectureBottomSheet/AddOnMyOwn'
 import Drawer from '@/components/timetable/LectureBottomSheet/Drawer'
-import LoadingSpinner from '@/components/ui/spinner/inde'
+import LoadingSpinner from '@/components/ui/spinner'
 import { SemesterType } from '@/types/timetable'
 
 interface LectureBottomSheetProps {

@@ -9,7 +9,7 @@ import ShareBtn from '@/components/timetable/Button/ShareBtn'
 import Dropdown from '@/components/timetable/Dropdown'
 import LectureBottomSheet from '@/components/timetable/LectureBottomSheet'
 import StatusBar from '@/components/timetable/StatusBar'
-import LoadingSpinner from '@/components/ui/spinner/inde'
+import LoadingScreen from '@/components/ui/spinner'
 import { isBottomSheetVisible } from '@/lib/store/bottomSheet'
 import { convertHtmlToImage, makeSemesterDropdownList, timetablePreprocess } from '@/util/timetableUtil'
 
@@ -85,7 +85,7 @@ const MyTimetablePage = () => {
       </div>
       <StatusBar curSemester={semesterList[curSemester]} curIndex={curIndex} setCurIndex={setTimetableIndex} />
       {isEmptyTimetable ? (
-        <LoadingSpinner />
+        <LoadingScreen />
       ) : (
         <>
           <Timetable

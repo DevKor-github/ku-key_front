@@ -3,13 +3,13 @@ import { Suspense } from 'react'
 
 import HomeCarousel from '@/components/home/Carousel'
 import Club from '@/components/home/Club'
-import LoadingSpinner from '@/components/ui/spinner/inde'
+import LoadingScreen from '@/components/ui/spinner'
 import HomeCalendar from '@/features/HomeCalendar/components'
 import HomeInstitution from '@/features/HomeInstitution/components'
 
 const HomePage = () => {
   return (
-    <Suspense fallback={<LoadingSpinner />}>
+    <Suspense fallback={<LoadingScreen />}>
       <main className={css({ display: 'flex', flexDir: 'column', alignItems: 'center', bgColor: 'bg.gray' })}>
         <HomeCarousel />
         <HomeCalendar />
