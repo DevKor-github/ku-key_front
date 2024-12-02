@@ -35,10 +35,11 @@ const HeaderMenu = ({ handleNavClick, curPath, handleUserButton, isAuthenticated
           <Menu />
         </button>
       </SheetTrigger>
-      <SheetContent className={css({ display: 'flex', flexDir: 'column', py: 15, gap: 10 })} closeButton={false}>
+      <SheetContent className={css({ display: 'flex', flexDir: 'column', py: 15, gap: 5 })} closeButton={false}>
         {isAuthenticated ? <SideTabProfile /> : <SideTabLogInLink handleSheetNavClick={handleSheetNavClick} />}
         <SheetTitle className={css({ srOnly: true })}>Navigation SideTab</SheetTitle>
         <SheetDescription className={css({ srOnly: true })}>For Mobile or medium size screen</SheetDescription>
+        <SurveyLink />
         <nav
           className={css({
             display: { base: 'flex' },
@@ -95,7 +96,6 @@ const HeaderMenu = ({ handleNavClick, curPath, handleUserButton, isAuthenticated
           >
             {isAuthenticated ? 'Log Out' : 'Log In'}
           </button>
-          <SurveyLink />
         </nav>
       </SheetContent>
     </Sheet>
