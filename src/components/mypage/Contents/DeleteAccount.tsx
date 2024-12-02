@@ -1,5 +1,4 @@
 import { css, cva } from '@styled-system/css'
-import { isAxiosError } from 'axios'
 import { useCallback } from 'react'
 import { Link } from 'react-router-dom'
 

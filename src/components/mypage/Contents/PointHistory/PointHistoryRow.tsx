@@ -2,7 +2,7 @@ import { css } from '@styled-system/css'
 
 import TypeChip from '@/components/mypage/Contents/PointHistory/TypeChip'
 import dateFormatter from '@/util/dateFormatter'
-import { useMediaQueryByName } from '@/util/useMediaQueryByName'
+import { useMediaQueryByName } from '@/util/hooks/useMediaQueryByName'
 
 interface PointHistoryRowProps {
   historyData: {

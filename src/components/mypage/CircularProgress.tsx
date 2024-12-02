@@ -2,7 +2,7 @@
 
 import { css } from '@styled-system/css'
 
-import { useMediaQueryByName } from '@/util/useMediaQueryByName'
+import { useMediaQueryByName } from '@/util/hooks/useMediaQueryByName'
 
 interface CircularProgressProps {
   progress: number
