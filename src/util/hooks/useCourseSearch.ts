@@ -1,4 +1,4 @@
-import { useSuspenseInfiniteQuery } from '@tanstack/react-query'
+import { useInfiniteQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { match } from 'ts-pattern'
 
@@ -12,11 +12,12 @@ import {
   getGeneral,
   getMajor,
 } from '@/api/hooks/course'
+import { CourseCategoryType } from '@/components/timetable/LectureBottomSheet/AddClass/constants'
 import { SemesterType } from '@/types/timetable'
 
-interface CourseQueryInterface {
+export interface CourseQueryInterface {
   keyword: string
-  category: 'All Class' | 'Major' | 'General Studies' | 'Academic Foundations'
+  category: CourseCategoryType
   classification: string | null
 }
 const initialQuery: CourseQueryInterface = {
@@ -37,7 +38,7 @@ export const useCourseSearch = ({ year, semester }: CourseSearchProps) => {
     setSearchQuery(prev => queryFn(prev))
   }
 
-  const { data, fetchNextPage, hasNextPage, isFetching } = useSuspenseInfiniteQuery({
+  const { data, fetchNextPage, hasNextPage, isFetching } = useInfiniteQuery({
     queryKey: ['courseSearchResult', year, semester, category, classification, keyword],
     queryFn: ({ pageParam: cursorId }) => {
       if (keyword.length) {
@@ -72,5 +73,5 @@ export const useCourseSearch = ({ year, semester }: CourseSearchProps) => {
     retry: false,
   })
 
-  return { searchQuery, data, search, fetchNextPage, hasNextPage, isFetching }
+  return { searchQuery, data: data ?? [], search, fetchNextPage, hasNextPage, isFetching }
 }
