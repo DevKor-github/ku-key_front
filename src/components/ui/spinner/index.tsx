@@ -1,6 +1,6 @@
 import { css } from '@styled-system/css'
 
-const LoadingScreen = () => {
+export const LoadingScreen = () => {
   return (
     <div
       className={css({
@@ -24,8 +24,6 @@ const LoadingScreen = () => {
     </div>
   )
 }
-
-export default LoadingScreen
 
 export const LoadingSpinner = () => {
   return (
