@@ -1,5 +1,5 @@
 import { css } from '@styled-system/css'
-import { FetchNextPageOptions, InfiniteQueryObserverResult } from '@tanstack/react-query'
+import { FetchNextPageOptions } from '@tanstack/react-query'
 import { forwardRef, useCallback } from 'react'
 
 import { usePostCourse } from '@/api/hooks/timetable'
@@ -18,7 +18,7 @@ const SearchMessageStyle = css({
 
 interface Props {
   searchData: SearchedCourse[]
-  fetchNextPage: (options?: FetchNextPageOptions) => Promise<InfiniteQueryObserverResult<SearchedCourse[], Error>>
+  fetchNextPage: (options?: FetchNextPageOptions) => void
   hasNextPage: boolean
   isFetching: boolean
   timetableId: number
