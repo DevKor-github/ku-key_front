@@ -1,5 +1,5 @@
 import { css } from '@styled-system/css'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { toast } from 'sonner'
 
@@ -10,7 +10,7 @@ import SearchArea from '@/components/timetable/LectureBottomSheet/AddClass/Searc
 import { LoadingSpinner } from '@/components/ui/spinner'
 import Toast from '@/components/ui/toast'
 import { SemesterType } from '@/types/timetable'
-import { useCourseSearch } from '@/util/hooks/useCourseSearch'
+import { useCourseSearchQuery } from '@/util/hooks/courseSearch/useCourseSearchQuery'
 
 interface AddClassProps {
   timetableId: number
@@ -25,14 +25,7 @@ const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
   // 세부 카테고리 지정 모달의 열림 여부
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const {
-    data: searchData,
-    searchQuery,
-    search,
-    fetchNextPage,
-    hasNextPage,
-    isFetching,
-  } = useCourseSearch({ year, semester })
+  const { searchQuery, search } = useCourseSearchQuery()
 
   useEffect(() => {
     setTimeout(() => {
@@ -96,20 +89,21 @@ const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
           handleDropdown={handleDropdown}
           handleSearch={handleSearchBoxOnSubmit}
         />
-        {isFetching ? (
-          <div className={css({ h: 'full', display: 'flex', justifyContent: 'center', alignItems: 'center' })}>
-            <LoadingSpinner />
-          </div>
-        ) : (
+        <Suspense
+          fallback={
+            <div className={css({ h: 'full', display: 'flex', justifyContent: 'center', alignItems: 'center' })}>
+              <LoadingSpinner />
+            </div>
+          }
+        >
           <CourseSearchDataList
-            fetchNextPage={fetchNextPage}
-            hasNextPage={hasNextPage}
-            isFetching={isFetching}
-            searchData={searchData}
+            year={year}
+            semester={semester}
+            searchQuery={searchQuery}
             timetableId={timetableId}
             isInitial={searchQuery.category === 'All Class' && searchQuery.keyword.length === 0}
           />
-        )}
+        </Suspense>
       </div>
       {isModalOpen &&
         createPortal(

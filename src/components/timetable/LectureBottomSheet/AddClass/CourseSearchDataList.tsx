@@ -1,10 +1,11 @@
 import { css } from '@styled-system/css'
-import { FetchNextPageOptions } from '@tanstack/react-query'
 import { forwardRef, useCallback } from 'react'
 
 import { usePostCourse } from '@/api/hooks/timetable'
 import SearchLectureCard from '@/components/timetable/LectureBottomSheet/AddClass/SearchLectureCard'
-import { SearchedCourse } from '@/types/course'
+import { SemesterType } from '@/types/timetable'
+import { useCourseSearch } from '@/util/hooks/courseSearch/useCourseSearch'
+import { CourseQueryInterface } from '@/util/hooks/courseSearch/useCourseSearchQuery'
 import useIntersect from '@/util/hooks/useIntersect'
 
 const SearchMessageStyle = css({
@@ -17,20 +18,31 @@ const SearchMessageStyle = css({
 })
 
 interface Props {
-  searchData: SearchedCourse[]
-  fetchNextPage: (options?: FetchNextPageOptions) => void
-  hasNextPage: boolean
-  isFetching: boolean
+  year: string
+  semester: SemesterType
+  searchQuery: CourseQueryInterface
   timetableId: number
   isInitial: boolean
 }
 const CourseSearchDataList = forwardRef<HTMLDivElement, Props>(
-  ({ searchData, fetchNextPage, hasNextPage, isFetching, timetableId, isInitial }, ref) => {
+  ({ year, semester, searchQuery, timetableId, isInitial }, ref) => {
     const { mutate: postCourse } = usePostCourse()
     const addCourse = useCallback(
       (courseId: number) => postCourse({ courseId, timetableId }),
       [postCourse, timetableId],
     )
+    const {
+      data: searchData,
+      fetchNextPage,
+      hasNextPage,
+      isFetching,
+    } = useCourseSearch({
+      year,
+      semester,
+      category: searchQuery.category,
+      classification: searchQuery.classification,
+      keyword: searchQuery.keyword,
+    })
 
     const fetchNextRef = useIntersect(async (entry, observer) => {
       observer.unobserve(entry.target)

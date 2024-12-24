@@ -3,7 +3,7 @@ import { css } from '@styled-system/css'
 import Dropdown from '@/components/timetable/Dropdown'
 import { COURSE_CATEGORY_LIST } from '@/components/timetable/LectureBottomSheet/AddClass/constants'
 import SearchBox from '@/components/timetable/SearchBox'
-import { CourseQueryInterface } from '@/util/hooks/useCourseSearch'
+import { CourseQueryInterface } from '@/util/hooks/courseSearch/useCourseSearchQuery'
 
 interface Props {
   curCategory: number
