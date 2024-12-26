@@ -4,13 +4,16 @@ import { createPortal } from 'react-dom'
 import { toast } from 'sonner'
 
 import ClassSelectModal from '@/components/timetable/LectureBottomSheet/AddClass/ClassSelectModal'
-import { COURSE_CATEGORY_LIST } from '@/components/timetable/LectureBottomSheet/AddClass/constants'
+import {
+  COURSE_CATEGORY_LIST,
+  CourseQueryInterface,
+} from '@/components/timetable/LectureBottomSheet/AddClass/constants'
 import CourseSearchDataList from '@/components/timetable/LectureBottomSheet/AddClass/CourseSearchDataList'
 import SearchArea from '@/components/timetable/LectureBottomSheet/AddClass/SearchArea'
 import { LoadingSpinner } from '@/components/ui/spinner'
 import Toast from '@/components/ui/toast'
 import { SemesterType } from '@/types/timetable'
-import { useCourseSearchQuery } from '@/util/hooks/courseSearch/useCourseSearchQuery'
+import { useQueryParams } from '@/util/hooks/useQueryParams'
 
 interface AddClassProps {
   timetableId: number
@@ -25,7 +28,7 @@ const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
   // 세부 카테고리 지정 모달의 열림 여부
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const { searchQuery, search } = useCourseSearchQuery()
+  const [searchQuery, search] = useQueryParams<CourseQueryInterface>()
 
   useEffect(() => {
     setTimeout(() => {
@@ -43,12 +46,12 @@ const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
       }
       if (toIndex === 0) {
         // All
-        search(() => ({ keyword: '', category: 'All Class', classification: null }))
+        search({ keyword: '', category: 'All Class', classification: undefined })
         return
       }
       if (toIndex === 2) {
         // General
-        search(() => ({ keyword: '', category: 'General Studies', classification: null }))
+        search({ keyword: '', category: 'General Studies', classification: undefined })
         return
       }
     },
@@ -58,21 +61,24 @@ const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
   const handleMajorBtn = useCallback(
     (classification: string) => {
       setIsModalOpen(false)
-      search(() => ({ keyword: '', category: COURSE_CATEGORY_LIST[curCategory], classification }))
+      search({ keyword: '', category: COURSE_CATEGORY_LIST[curCategory], classification })
     },
     [curCategory, search],
   )
 
   const handleSearchBoxOnSubmit = useCallback(
     (queryKeyword: string) => {
-      if ((queryKeyword.length === 0 && searchQuery.category !== 'All Class') || queryKeyword.length > 2)
+      if (
+        (queryKeyword.length === 0 && searchQuery.category !== undefined && searchQuery.category !== 'All Class') ||
+        queryKeyword.length > 2
+      ) {
         // All Class가 아닌 Category에서 빈 글자 입력
         // 또는 2글자 이상 검색
-        search(prev => ({ ...prev, keyword: queryKeyword }))
-      else
+        search({ ...searchQuery, keyword: queryKeyword })
+      } else
         toast.custom(() => <Toast message="Please enter at least two letters for your search term." type="default" />)
     },
-    [search, searchQuery.category],
+    [search, searchQuery],
   )
 
   const handleQuitModal = useCallback(() => {
@@ -96,13 +102,7 @@ const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
             </div>
           }
         >
-          <CourseSearchDataList
-            year={year}
-            semester={semester}
-            searchQuery={searchQuery}
-            timetableId={timetableId}
-            isInitial={searchQuery.category === 'All Class' && searchQuery.keyword.length === 0}
-          />
+          <CourseSearchDataList ref={scrollSectionRef} year={year} semester={semester} timetableId={timetableId} />
         </Suspense>
       </div>
       {isModalOpen &&

@@ -53,7 +53,7 @@ interface MajorListProps {
   majors: string[]
   handleMajorBtn: (classification: string) => void
   isAcademicFoundation: boolean
-  curClassification: string | null
+  curClassification: string | undefined
 }
 
 const MajorList = ({ college, majors, handleMajorBtn, isAcademicFoundation, curClassification }: MajorListProps) => {

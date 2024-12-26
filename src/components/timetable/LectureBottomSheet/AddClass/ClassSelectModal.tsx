@@ -9,7 +9,7 @@ interface ClassSelectModalProps {
   category: CourseCategoryType
   handleMajorBtn: (classification: string) => void
   handleQuitModal: () => void
-  curClassification: string | null
+  curClassification: string | undefined
 }
 const ClassSelectModal = ({ category, handleMajorBtn, handleQuitModal, curClassification }: ClassSelectModalProps) => {
   return (

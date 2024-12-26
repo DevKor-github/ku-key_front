@@ -19,7 +19,7 @@ interface Props {
   semester: SemesterType
   keyword: string
   category: CourseCategoryType
-  classification: string | null
+  classification: string | undefined
 }
 export const useCourseSearch = ({ year, semester, keyword, category, classification }: Props) => {
   const { data, fetchNextPage, hasNextPage, isFetching } = useSuspenseInfiniteQuery({
