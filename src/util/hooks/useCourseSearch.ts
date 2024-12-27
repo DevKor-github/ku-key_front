@@ -25,7 +25,7 @@ export const useCourseSearch = ({ year, semester, keyword, category, classificat
   const { data, fetchNextPage, hasNextPage, isFetching } = useSuspenseInfiniteQuery({
     queryKey: ['courseSearchResult', year, semester, category, classification, keyword],
     queryFn: ({ pageParam: cursorId }) => {
-      if (keyword && keyword.length) {
+      if (keyword) {
         return match(category)
           .with('Major', () => getByKeywordInMajor({ keyword, major: classification!, cursorId, year, semester }))
           .with('General Studies', () => getByKeywordInGeneral({ keyword, cursorId, year, semester }))
