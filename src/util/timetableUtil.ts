@@ -1,6 +1,15 @@
 import html2canvas from 'html2canvas'
 
-import { ColorType, CourseType, DayType, GridType, ScheduleType, Semester, TimetableInfo } from '@/types/timetable'
+import {
+  ColorType,
+  CourseType,
+  DayType,
+  GridType,
+  ScheduleType,
+  Semester,
+  TimetableContentsType,
+  TimetableInfo,
+} from '@/types/timetable'
 
 const dayToNumber: { [key in DayType]: number } = { Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6, Sun: 7 }
 
@@ -140,23 +149,32 @@ export const lectureDataPreprocess = (
   for (let i = 0; i < cellCnt; i++) {
     lecGrid[i] = []
   }
+  const noScheduled: TimetableContentsType[] = []
 
   // 강의 데이터 Cell에 임베딩
   courseData.map(lecture => {
-    const index = weekCnt * getStartCell(lecture.startTime) + dayToNumber[lecture.day]
-    lecGrid[index - 1].push({
+    const timetableContents: TimetableContentsType = {
       scheduleType: 'Course',
       scheduleId: lecture.courseId,
       title: lecture.courseName,
       location: lecture.classroom,
-      day: lecture.day,
-      startTime: lecture.startTime,
-      endTime: lecture.endTime,
       courseCode: lecture.courseCode,
       professorName: lecture.professorName,
       syllabus: lecture.syllabus,
-    })
+    }
+    if (lecture.day !== null && lecture.startTime && lecture.endTime) {
+      const index = weekCnt * getStartCell(lecture.startTime) + dayToNumber[lecture.day]
+      lecGrid[index - 1].push({
+        ...timetableContents,
+        day: lecture.day,
+        startTime: lecture.startTime,
+        endTime: lecture.endTime,
+      })
+    } else {
+      noScheduled.push(timetableContents)
+    }
   })
+
   scheduleData.map(schedule => {
     const index = weekCnt * getStartCell(schedule.scheduleStartTime) + dayToNumber[schedule.scheduleDay]
     lecGrid[index - 1].push({
@@ -170,7 +188,7 @@ export const lectureDataPreprocess = (
     })
   })
 
-  return lecGrid
+  return { lectureGrid: lecGrid, noScheduled }
 }
 
 /**
@@ -182,9 +200,11 @@ export const getWeeknTimeList = (courseData: CourseType[], scheduleData: Schedul
   let lastDay = 5
 
   courseData.map(lec => {
-    lastTime = Math.max(lastTime, Number(lec.endTime.slice(0, 2)))
-    if (dayToNumber[lec.day] > lastDay) {
-      lastDay = dayToNumber[lec.day]
+    if (lec.day && lec.endTime) {
+      lastTime = Math.max(lastTime, Number(lec.endTime.slice(0, 2)))
+      if (dayToNumber[lec.day] > lastDay) {
+        lastDay = dayToNumber[lec.day]
+      }
     }
   })
   scheduleData.map(schedule => {

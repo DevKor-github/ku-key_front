@@ -15,13 +15,13 @@ interface LectureGridProps {
 }
 
 const LectureGrid = ({ timetableId, timetableData, weekCnt, timeCnt, isMine = false }: LectureGridProps) => {
-  const lecGrid = lectureDataPreprocess(timetableData.courses, timetableData.schedules, weekCnt, timeCnt)
+  const { lectureGrid } = lectureDataPreprocess(timetableData.courses, timetableData.schedules, weekCnt, timeCnt)
   const colorTheme = timetableData.color
   let lecCnt = 0
 
   return (
     <div className={css({ display: 'grid' })} style={{ gridTemplateColumns: `repeat(${weekCnt}, 1fr)` }}>
-      {lecGrid.map((lectures, gridInd) => {
+      {lectureGrid.map((lectures, gridInd) => {
         return (
           <div
             key={gridInd}
