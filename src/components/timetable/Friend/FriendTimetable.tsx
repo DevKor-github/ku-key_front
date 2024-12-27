@@ -3,9 +3,8 @@ import { forwardRef } from 'react'
 
 import { useGetFriendTimetable } from '@/api/hooks/friends'
 import LectureGrid from '@/components/timetable/Grid/LectureGrid'
-import { TimeCell } from '@/components/timetable/Grid/TimetableLayout'
 import { SemesterType } from '@/types/timetable'
-import { getWeeknTimeList, numberToSemester } from '@/util/timetableUtil'
+import { numberToSemester } from '@/util/timetableUtil'
 
 interface TimetableProps {
   user: string
@@ -15,7 +14,6 @@ interface TimetableProps {
 
 const FriendTimetable = forwardRef<HTMLDivElement, TimetableProps>(({ user, year, semester }, ref) => {
   const { data } = useGetFriendTimetable({ username: user, year, semester })
-  const { time, week } = getWeeknTimeList(data.courses, data.schedules)
 
   return (
     <div className={css({ w: '100%' })} ref={ref}>
@@ -43,7 +41,6 @@ const FriendTimetable = forwardRef<HTMLDivElement, TimetableProps>(({ user, year
               border: 'none',
               color: 'lightGray.1',
               fontWeight: 500,
-              fontSize: 18,
               outline: 'none',
               w: '70%',
               overflow: 'hidden',
@@ -55,44 +52,7 @@ const FriendTimetable = forwardRef<HTMLDivElement, TimetableProps>(({ user, year
           </div>
         </div>
       </div>
-      <div
-        className={css({
-          display: 'flex',
-          flexDir: 'row',
-          borderLeft: '1px solid {colors.lightGray.1}',
-          roundedBottom: 10,
-          bgColor: 'white',
-        })}
-      >
-        <div className={css({ display: 'flex', flexDir: 'column' })}>
-          {time.map((val, index) => {
-            return (
-              <div
-                key={index}
-                className={TimeCell({
-                  sidebar: true,
-                  header: index === 0,
-                  end: index === time.length - 1 ? 'leftEnd' : undefined,
-                })}
-              >
-                {val}
-              </div>
-            )
-          })}
-        </div>
-        <div className={css({ display: 'flex', flexDir: 'column', flex: 1 })}>
-          <div className={css({ display: 'flex', flexDir: 'row' })}>
-            {week.map((days, index) => {
-              return (
-                <div key={index} className={css({ flex: 1 }, TimeCell.raw({ header: true }))}>
-                  {days}
-                </div>
-              )
-            })}
-          </div>
-          <LectureGrid timetableData={data} weekCnt={week.length} timeCnt={time.length - 1} />
-        </div>
-      </div>
+      <LectureGrid timetableData={data} />
     </div>
   )
 })
