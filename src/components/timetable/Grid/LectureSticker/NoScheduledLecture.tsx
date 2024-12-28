@@ -4,11 +4,27 @@ import { TimetableContentsType } from '@/types/timetable'
 
 interface Props {
   data: TimetableContentsType
+  onClick: () => void
+  isMine: boolean
 }
-const NoScheduledLectureBlock = ({ data }: Props) => {
+const NoScheduledLecture = ({ data, onClick, isMine }: Props) => {
   const { title, professorName, location } = data
   return (
-    <button className={css({ mx: 4, my: 2.5, display: 'flex', gap: 2.5, alignItems: 'center' })}>
+    <button
+      className={css({
+        mx: 4,
+        my: 2.5,
+        display: 'flex',
+        gap: 2.5,
+        alignItems: 'center',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+      })}
+      style={{
+        cursor: isMine ? 'pointer' : 'auto',
+      }}
+      onClick={onClick}
+    >
       <span className={css({ fontSize: 18, fontWeight: 500, color: 'black.2' })}>{title}</span>
       <span className={css({ fontSize: 14, fontWeight: 400, color: 'darkGray.1' })}>{professorName}</span>
       <span className={css({ fontSize: 14, fontWeight: 400, color: 'darkGray.1' })}>{location}</span>
@@ -16,4 +32,4 @@ const NoScheduledLectureBlock = ({ data }: Props) => {
   )
 }
 
-export default NoScheduledLectureBlock
+export default NoScheduledLecture

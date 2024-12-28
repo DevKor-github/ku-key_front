@@ -2,7 +2,6 @@ import { css } from '@styled-system/css'
 
 import { GetTimetableByTimetableIdResponse } from '@/api/types/timetable'
 import LectureSticker from '@/components/timetable/Grid/LectureSticker'
-import NoScheduledLectureBlock from '@/components/timetable/Grid/NoScheduledLectureBlock'
 import { TimeCell } from '@/components/timetable/Grid/TimetableLayout'
 import { COLOR_INFO } from '@/lib/constants/timetableColors'
 import { getWeeknTimeList, lectureDataPreprocess } from '@/util/timetableUtil'
@@ -102,7 +101,7 @@ const LectureGrid = ({ timetableId, timetableData, isMine = false }: LectureGrid
         })}
       >
         {noScheduled.map((lecture, index) => (
-          <NoScheduledLectureBlock key={`non-scheduled-${index}`} data={lecture} />
+          <LectureSticker key={`non-scheduled-${index}`} timetableId={timetableId} data={lecture} isMine={isMine} />
         ))}
       </div>
     </div>

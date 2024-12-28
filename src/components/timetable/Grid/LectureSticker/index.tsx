@@ -1,47 +1,37 @@
 import { css } from '@styled-system/css'
 import { useSetAtom } from 'jotai/react'
-import { CircleUser, MapPin } from 'lucide-react'
 import { useCallback, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useNavigate } from 'react-router-dom'
 
 import { useDeleteSchedule } from '@/api/hooks/schedule'
 import { useDeleteCourse } from '@/api/hooks/timetable'
+import NoScheduledLecture from '@/components/timetable/Grid/LectureSticker/NoScheduledLecture'
+import ScheduledLecture from '@/components/timetable/Grid/LectureSticker/ScheduledLecture'
 import EditSchedule from '@/components/timetable/Modal/EditSchedule'
 import OptionModal from '@/components/timetable/Modal/OptionModal'
 import { isBottomSheetVisible } from '@/lib/store/bottomSheet'
-import { GridType } from '@/types/timetable'
-import { getDuration, getStartTime } from '@/util/timetableUtil'
+import { GridType, TimetableContentsType } from '@/types/timetable'
 
-const LectureDetail = css({
-  fontSize: { base: 14, mdDown: 10 },
-  fontWeight: 400,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'flex-end',
-  gap: 0.5,
-  width: '100%',
-})
-
-const EllipsisText = css({
-  textOverflow: 'ellipsis',
-  overflow: 'hidden',
-  whiteSpace: 'nowrap',
-})
+const isGridType = (val: TimetableContentsType | GridType): val is GridType => {
+  return (
+    (val as GridType).startTime !== undefined &&
+    (val as GridType).endTime !== undefined &&
+    (val as GridType).day !== undefined
+  )
+}
 
 interface LectureStickerProps {
   timetableId?: number
-  data: GridType
-  bgColor: string
+  data: TimetableContentsType | GridType
   isMine: boolean
+  bgColor?: string
 }
 
-const LectureSticker = ({ timetableId, data, bgColor, isMine }: LectureStickerProps) => {
+const LectureSticker = ({ timetableId, data, isMine, bgColor }: LectureStickerProps) => {
   const navigate = useNavigate()
 
-  const { title, startTime: start, endTime: end, professorName, location, scheduleType, scheduleId, syllabus } = data
-  const startTime = getStartTime(start)
-  const runningTime = getDuration(end, start)
+  const { title, scheduleType, scheduleId, syllabus } = data
 
   const [isModalOpened, setIsModalOpen] = useState(false)
   const [isScheduleEditOpened, setIsScheduleEditOpened] = useState(false)
@@ -109,62 +99,52 @@ const LectureSticker = ({ timetableId, data, bgColor, isMine }: LectureStickerPr
     },
   ]
 
+  const handleLectureClick = () => {
+    if (isMine) {
+      setIsModalOpen(true)
+      setIsSheetOpened(false)
+    }
+  }
+
   return (
     <>
-      <div
-        className={css({
-          color: 'white',
-          position: 'absolute',
-          w: 'calc(100% + 1px)',
-          p: '0.75rem 0.625rem',
-          rounded: { base: 10, mdDown: 5 },
-          zIndex: 10,
-          display: 'flex',
-          flexDir: 'column',
-          justifyContent: 'space-between',
-          overflow: 'hidden',
-        })}
-        role="presentation"
-        style={{
-          top: `${(startTime / 60) * 100}%`,
-          height: `calc(${(runningTime / 60) * 100}% + ${runningTime / 60}px)`, // 시간표 사이 선 보간
-          backgroundColor: bgColor,
-          cursor: isMine ? 'pointer' : 'auto',
-        }}
-        onClick={() => {
-          if (isMine) {
-            setIsModalOpen(true)
-            setIsSheetOpened(false)
-          }
-        }}
-      >
-        <div
-          className={css({
-            fontSize: { base: 18, mdDown: 12 },
-            fontWeight: '500',
-            wordWrap: 'break-word',
-            overflow: 'hidden',
-            lineClamp: { base: 2, mdDown: 3 },
-            textOverflow: 'ellipsis',
-          })}
-        >
-          {title}
-        </div>
-        <div className={css({ display: 'flex', flexDir: 'column', alignItems: 'flex-end' })}>
-          {professorName && (
-            <div className={LectureDetail}>
-              <CircleUser size={12} />
-              <span className={EllipsisText}>{professorName}</span>
-            </div>
-          )}
-          {location && (
-            <div className={LectureDetail}>
-              <MapPin size={12} />
-              <span className={EllipsisText}>{location}</span>
-            </div>
-          )}
-        </div>
-      </div>
+      {isGridType(data) ? (
+        <>
+          <ScheduledLecture data={data} onClick={handleLectureClick} isMine={isMine} bgColor={bgColor} />
+          {isScheduleEditOpened &&
+            createPortal(
+              <div
+                className={css({
+                  position: 'fixed',
+                  top: 0,
+                  left: 0,
+                  w: '100vw',
+                  h: '100vh',
+                  bgColor: 'rgba(0, 0, 0, 0.40)',
+                  zIndex: 100,
+                  display: 'flex',
+                  flexDir: 'column',
+                  justifyContent: 'flex-end',
+                  alignItems: 'center',
+                  paddingBottom: '50px',
+                })}
+                role="presentation"
+                onClick={event => {
+                  // 모달 안쪽을 눌렀을 때도 모달 state가 null 되는 것을 방지
+                  if (event.target === event.currentTarget) {
+                    setIsScheduleEditOpened(false)
+                    setIsSheetOpened(true)
+                  }
+                }}
+              >
+                <EditSchedule timetableId={timetableId!} data={data} closeScheduleModal={closeScheduleModal} />
+              </div>,
+              document.body,
+            )}
+        </>
+      ) : (
+        <NoScheduledLecture data={data} onClick={handleLectureClick} isMine={isMine} />
+      )}
       {isModalOpened &&
         createPortal(
           <div
@@ -194,36 +174,6 @@ const LectureSticker = ({ timetableId, data, bgColor, isMine }: LectureStickerPr
               modalTitle={title}
               p10
             />
-          </div>,
-          document.body,
-        )}
-      {isScheduleEditOpened &&
-        createPortal(
-          <div
-            className={css({
-              position: 'fixed',
-              top: 0,
-              left: 0,
-              w: '100vw',
-              h: '100vh',
-              bgColor: 'rgba(0, 0, 0, 0.40)',
-              zIndex: 100,
-              display: 'flex',
-              flexDir: 'column',
-              justifyContent: 'flex-end',
-              alignItems: 'center',
-              paddingBottom: '50px',
-            })}
-            role="presentation"
-            onClick={event => {
-              // 모달 안쪽을 눌렀을 때도 모달 state가 null 되는 것을 방지
-              if (event.target === event.currentTarget) {
-                setIsScheduleEditOpened(false)
-                setIsSheetOpened(true)
-              }
-            }}
-          >
-            <EditSchedule timetableId={timetableId!} data={data} closeScheduleModal={closeScheduleModal} />
           </div>,
           document.body,
         )}
