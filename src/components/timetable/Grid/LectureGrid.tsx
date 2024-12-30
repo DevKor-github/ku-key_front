@@ -27,7 +27,7 @@ const LectureGrid = ({ timetableId, timetableData, isMine = false }: LectureGrid
   let lecCnt = 0
 
   return (
-    <div className={css({ display: 'flex', flexDir: 'column', gap: 2.5 })}>
+    <div className={css({ display: 'flex', flexDir: 'column', gap: { base: 2.5, smDown: 1 } })}>
       <div
         className={css({
           display: 'flex',

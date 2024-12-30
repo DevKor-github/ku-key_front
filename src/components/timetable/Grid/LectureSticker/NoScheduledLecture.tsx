@@ -12,22 +12,27 @@ const NoScheduledLecture = ({ data, onClick, isMine }: Props) => {
   return (
     <button
       className={css({
-        mx: 4,
-        my: 2.5,
+        mx: { base: 4, smDown: 2 },
+        my: { base: 2.5, smDown: 1 },
         display: 'flex',
-        gap: 2.5,
+        gap: { base: 2.5, smDown: 1 },
         alignItems: 'center',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
       })}
       style={{
         cursor: isMine ? 'pointer' : 'auto',
       }}
       onClick={onClick}
     >
-      <span className={css({ fontSize: 18, fontWeight: 500, color: 'black.2' })}>{title}</span>
-      <span className={css({ fontSize: 14, fontWeight: 400, color: 'darkGray.1' })}>{professorName}</span>
-      <span className={css({ fontSize: 14, fontWeight: 400, color: 'darkGray.1' })}>{location}</span>
+      <span className={css({ fontSize: { base: 18, smDown: 12 }, fontWeight: 500, color: 'black.2' })}>{title}</span>
+      <span className={css({ fontSize: { base: 14, smDown: 11 }, fontWeight: 400, color: 'darkGray.1' })}>
+        {professorName}
+      </span>
+      <span className={css({ fontSize: { base: 14, smDown: 11 }, fontWeight: 400, color: 'darkGray.1' })}>
+        {location}
+      </span>
     </button>
   )
 }
