@@ -9,8 +9,8 @@ interface CircularProgressProps {
 }
 
 const CircularProgress = ({ progress }: CircularProgressProps) => {
-  const matchesSmDown = useMediaQueryByName('smDown')
-  const size = matchesSmDown ? 60 : 120
+  const isMobile = useMediaQueryByName('smDown')
+  const size = isMobile ? 60 : 120
   const center = size / 2
   const radius = center - 15 / 2
   const circumference = 2 * Math.PI * radius

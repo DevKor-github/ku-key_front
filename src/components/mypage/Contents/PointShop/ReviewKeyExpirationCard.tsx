@@ -10,7 +10,7 @@ import { useMediaQueryByName } from '@/util/hooks/useMediaQueryByName'
 const ReviewKeyExpirationCard = () => {
   const { data } = useGetKeyExpiration()
   const [today, setToday] = useState(new Date())
-  const isSmDown = useMediaQueryByName('smDown')
+  const isMobile = useMediaQueryByName('smDown')
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -95,7 +95,7 @@ const ReviewKeyExpirationCard = () => {
           color: 'red.1',
         })}
       >
-        <History size={isSmDown ? 12 : 24} />
+        <History size={isMobile ? 12 : 24} />
         <div
           className={css({
             fontSize: { base: 24, mdDown: 14, smDown: 10.23 },

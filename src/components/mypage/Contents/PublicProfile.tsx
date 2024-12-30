@@ -2,6 +2,7 @@ import { css } from '@styled-system/css'
 import { CheckCircle2, ShieldAlert } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 
 import { useCheckUsernameDuplication } from '@/api/hooks/register'
 import { useDeleteLanguage, usePatchMyProfile, usePostLanguage } from '@/api/hooks/user'
@@ -11,6 +12,7 @@ import Button from '@/components/ui/button'
 import LanguageDropdown from '@/components/ui/dropdown/LanguageDropdown'
 import NationDropdown from '@/components/ui/dropdown/NationDropdown'
 import { Input } from '@/components/ui/input'
+import Toast from '@/components/ui/toast'
 import { Language } from '@/lib/constants/language'
 import { useMediaQueryByName } from '@/util/hooks/useMediaQueryByName'
 
@@ -48,22 +50,21 @@ export interface PublicProfileForm {
   major: string
   languages: Language[]
 }
+
 interface PublicProfileProps {
   myProfileData: GetMyProfileResponse
 }
 const PublicProfile = ({
   myProfileData: { username, country, homeUniversity, major, languages },
 }: PublicProfileProps) => {
-  const { register, handleSubmit, setValue, watch, getValues, setError, formState, trigger, clearErrors } =
+  const { register, handleSubmit, setValue, watch, getValues, setError, formState, trigger, clearErrors, reset } =
     useForm<PublicProfileForm>()
 
   useEffect(() => {
-    setValue('username', username)
-    setValue('country', country)
-    setValue('homeUniversity', homeUniversity)
-    setValue('major', major)
-    setValue('languages', languages)
-  }, [username, country, homeUniversity, major, languages, setValue])
+    // Prop으로 init
+    reset({ username, country, homeUniversity, languages, major })
+  }, [username, country, homeUniversity, major, languages, reset])
+
   const [usernameValidation, setUsernameValidation] = useState(false)
 
   const { mutate: patchProfile } = usePatchMyProfile()
@@ -91,7 +92,7 @@ const PublicProfile = ({
     }
     patchProfile(data, {
       onSuccess: () => {
-        alert('Changed successfully!')
+        toast.custom(() => <Toast message="Changed successfully!" type="success" />)
         setUsernameValidation(false)
       },
     })

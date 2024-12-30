@@ -131,6 +131,7 @@ const DeleteAccount = () => {
           </section>
         </div>
         <div
+          // 모바일에서만 표시
           className={css({
             w: 'full',
             display: { base: 'none', smDown: 'flex' },
