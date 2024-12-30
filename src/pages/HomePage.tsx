@@ -2,7 +2,7 @@ import { css } from '@styled-system/css'
 import { Suspense } from 'react'
 
 import HomeCarousel from '@/components/home/Carousel'
-import LoadingScreen from '@/components/ui/spinner'
+import { LoadingScreen } from '@/components/ui/spinner'
 import HomeCalendar from '@/features/HomeCalendar/components'
 import HomeClub from '@/features/HomeClub/components'
 import HomeInstitution from '@/features/HomeInstitution/components'

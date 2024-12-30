@@ -9,7 +9,7 @@ import ShareBtn from '@/components/timetable/Button/ShareBtn'
 import Dropdown from '@/components/timetable/Dropdown'
 import LectureBottomSheet from '@/components/timetable/LectureBottomSheet'
 import StatusBar from '@/components/timetable/StatusBar'
-import LoadingScreen from '@/components/ui/spinner'
+import { LoadingScreen } from '@/components/ui/spinner'
 import { isBottomSheetVisible } from '@/lib/store/bottomSheet'
 import { convertHtmlToImage, makeSemesterDropdownList, timetablePreprocess } from '@/util/timetableUtil'
 
