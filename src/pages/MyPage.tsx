@@ -3,14 +3,14 @@ import { css } from '@styled-system/css'
 import { useGetMyProfile } from '@/api/hooks/user'
 import DueDateCard from '@/components/mypage/DueDateCard'
 import MyPageContents from '@/components/mypage/MyPageContents'
-import MypageWrapper from '@/components/mypage/MypageWrapper'
+import MyPageWrapper from '@/components/mypage/MyPageWrapper'
 import UserInfo from '@/components/mypage/UserInfo'
 import { characterConfig } from '@/components/ui/profile/CharacterConfig'
 
 const MyPage = () => {
   const { data: myProfileData } = useGetMyProfile()
   return (
-    <MypageWrapper>
+    <MyPageWrapper>
       <div
         className={css({
           display: 'flex',
@@ -60,7 +60,7 @@ const MyPage = () => {
         <DueDateCard startDay={myProfileData.startDay} endDay={myProfileData.endDay} />
       </div>
       <MyPageContents myProfileData={myProfileData} />
-    </MypageWrapper>
+    </MyPageWrapper>
   )
 }
 
