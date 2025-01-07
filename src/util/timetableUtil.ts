@@ -68,7 +68,15 @@ const calcSemester = (): Semester[] => {
   const month = KSTtoday.getMonth() + 1
   const ret: Semester[] = []
 
-  if (1 < month && month <= 6) {
+  if (month === 1) {
+    // 겨울학기
+    for (let semester = 2; semester <= 4; semester++) {
+      ret.push({ year: `${year - 1}`, semester, timetables: [] })
+    }
+    for (let semester = 1; semester <= 3; semester++) {
+      ret.push({ year: `${year}`, semester, timetables: [] })
+    }
+  } else if (1 < month && month <= 6) {
     // 1학기
     for (let semester = 3; semester <= 4; semester++) {
       ret.push({ year: `${year - 1}`, semester, timetables: [] })
@@ -83,20 +91,12 @@ const calcSemester = (): Semester[] => {
       ret.push({ year: `${year}`, semester, timetables: [] })
     }
     ret.push({ year: `${year + 1}`, semester: 1, timetables: [] })
-  } else if (7 < month && month <= 12) {
+  } else {
     // 2학기
     for (let semester = 1; semester <= 4; semester++) {
       ret.push({ year: `${year}`, semester, timetables: [] })
     }
     for (let semester = 1; semester <= 2; semester++) {
-      ret.push({ year: `${year + 1}`, semester, timetables: [] })
-    }
-  } else {
-    // 겨울학기
-    for (let semester = 2; semester <= 4; semester++) {
-      ret.push({ year: `${year}`, semester, timetables: [] })
-    }
-    for (let semester = 1; semester <= 3; semester++) {
       ret.push({ year: `${year + 1}`, semester, timetables: [] })
     }
   }
