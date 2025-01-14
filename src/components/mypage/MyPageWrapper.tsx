@@ -1,7 +1,7 @@
 import { css } from '@styled-system/css'
 import { ReactNode } from 'react'
 
-const MypageWrapper = ({ children }: { children: ReactNode }) => {
+const MyPageWrapper = ({ children }: { children: ReactNode }) => {
   return (
     <div
       className={css({
@@ -18,4 +18,4 @@ const MypageWrapper = ({ children }: { children: ReactNode }) => {
   )
 }
 
-export default MypageWrapper
+export default MyPageWrapper
