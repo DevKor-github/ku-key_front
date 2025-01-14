@@ -30,10 +30,10 @@ export interface CourseType {
   courseName: string
   courseCode: string
   syllabus: string
-  startTime: string
-  endTime: string
-  classroom: string
-  day: DayType
+  startTime: string | null
+  endTime: string | null
+  classroom: string | null
+  day: DayType | null
 }
 
 export interface ScheduleType {
@@ -45,15 +45,18 @@ export interface ScheduleType {
   scheduleDay: DayType
 }
 
-export interface GridType {
+export interface TimetableContentsType {
   scheduleType: 'Course' | 'Schedule'
   scheduleId: number
   title: string
-  startTime: string
-  endTime: string
-  location: string
-  day: DayType
+  location: string | null
   professorName?: string
   courseCode?: string
   syllabus?: string
+}
+
+export interface GridType extends TimetableContentsType {
+  startTime: string
+  endTime: string
+  day: DayType
 }

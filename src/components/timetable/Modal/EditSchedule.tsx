@@ -40,7 +40,7 @@ const EditSchedule = ({ timetableId, data, closeScheduleModal }: EditSchedulePro
     >
       <AddOnMyOwn
         submitHandler={handleSubmit}
-        prevValue={{ title: data.title, day: data.day, location: data.location }}
+        prevValue={{ title: data.title, day: data.day, location: data.location ?? undefined }}
       />
     </div>
   )

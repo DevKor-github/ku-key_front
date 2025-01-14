@@ -6,7 +6,6 @@ import { useGetTimetable } from '@/api/hooks/timetable'
 import LectureGrid from '@/components/timetable/Grid/LectureGrid'
 import TimetableModal from '@/components/timetable/Modal/TimetableModal'
 import { GlobalModalStateType } from '@/types/timetable'
-import { getWeeknTimeList } from '@/util/timetableUtil'
 
 export const TimeCell = cva({
   base: {
@@ -72,52 +71,9 @@ const TimetableLayout = memo(
   }: TimetableLayoutProps) => {
     const { data } = useGetTimetable({ timetableId })
 
-    const { time, week } = getWeeknTimeList(data.courses, data.schedules)
-
     return (
-      <div
-        className={css({
-          display: 'flex',
-          flexDir: 'row',
-          borderLeft: '1px solid {colors.lightGray.1}',
-          roundedBottom: 10,
-          bgColor: 'white',
-        })}
-      >
-        <div className={css({ display: 'flex', flexDir: 'column' })}>
-          {time.map((val, index) => {
-            return (
-              <div
-                key={index}
-                className={TimeCell({
-                  sidebar: true,
-                  header: index === 0,
-                  end: index === time.length - 1 ? 'leftEnd' : undefined,
-                })}
-              >
-                {val}
-              </div>
-            )
-          })}
-        </div>
-        <div className={css({ display: 'flex', flexDir: 'column', flex: 1 })}>
-          <div className={css({ display: 'flex', flexDir: 'row' })}>
-            {week.map((days, index) => {
-              return (
-                <div key={index} className={css({ flex: 1 }, TimeCell.raw({ header: true }))}>
-                  {days}
-                </div>
-              )
-            })}
-          </div>
-          <LectureGrid
-            timetableId={timetableId}
-            timetableData={data}
-            weekCnt={week.length}
-            timeCnt={time.length - 1}
-            isMine={true}
-          />
-        </div>
+      <>
+        <LectureGrid timetableId={timetableId} timetableData={data} isMine={true} />
         {globalModalState &&
           createPortal(
             <div
@@ -152,7 +108,7 @@ const TimetableLayout = memo(
             </div>,
             document.body,
           )}
-      </div>
+      </>
     )
   },
 )

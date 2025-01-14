@@ -1,14 +1,15 @@
 import { css, cx } from '@styled-system/css'
 import { shadow } from '@styled-system/recipes'
 
+import { CourseCategoryType } from '@/components/timetable/LectureBottomSheet/AddClass/constants'
 import MajorList from '@/components/timetable/LectureBottomSheet/AddClass/MajorList'
 import { categoryObject } from '@/lib/constants/category'
 
 interface ClassSelectModalProps {
-  category: 'All Class' | 'Major' | 'General Studies' | 'Academic Foundations'
+  category: CourseCategoryType
   handleMajorBtn: (classification: string) => void
   handleQuitModal: () => void
-  curClassification: string | null
+  curClassification: string | undefined
 }
 const ClassSelectModal = ({ category, handleMajorBtn, handleQuitModal, curClassification }: ClassSelectModalProps) => {
   return (
