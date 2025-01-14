@@ -90,20 +90,34 @@ const LectureGrid = ({ timetableId, timetableData, isMine = false }: LectureGrid
           </div>
         </div>
       </div>
-      <div
-        className={css({
-          display: 'flex',
-          flexDir: 'column',
-          gap: 0.5,
-          border: '1px solid {colors.lightGray.1}',
-          rounded: 10,
-          bgColor: 'white',
-        })}
-      >
-        {noScheduled.map((lecture, index) => (
-          <LectureSticker key={`non-scheduled-${index}`} timetableId={timetableId} data={lecture} isMine={isMine} />
-        ))}
-      </div>
+      {noScheduled.length !== 0 && (
+        <div
+          className={css({
+            display: 'flex',
+            flexDir: 'column',
+            gap: 0.5,
+            border: '1px solid {colors.lightGray.1}',
+            rounded: 10,
+            bgColor: 'white',
+          })}
+        >
+          {noScheduled.map((lecture, index) => {
+            return (
+              <>
+                {index !== 0 && (
+                  <div className={css({ h: 0.25, bgColor: 'lightGray.1', mx: { base: 4, smDown: 2 } })} />
+                )}
+                <LectureSticker
+                  key={`non-scheduled-${index}`}
+                  timetableId={timetableId}
+                  data={lecture}
+                  isMine={isMine}
+                />
+              </>
+            )
+          })}
+        </div>
+      )}
     </div>
   )
 }
