@@ -84,12 +84,13 @@ const Header = () => {
     <header
       className={css({
         display: 'flex',
-        h: { base: 20, smDown: 10 },
-        minH: { base: 20, smDown: 10 },
+        h: { base: 20, smDown: '{spacing.mobileHeader}' },
+        minH: { base: 20, smDown: '{spacing.mobileHeader}' },
         bg: 'white',
         justifyContent: 'space-between',
         alignItems: 'center',
         px: { base: '150px', lgDown: '100px', mdDown: '60px', smDown: '20px' },
+        smDown: { position: 'fixed', zIndex: 'mobileHeader', w: '100vw' },
       })}
     >
       <nav

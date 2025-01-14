@@ -85,8 +85,11 @@ export default defineConfig({
             4: { value: '#FFC2AF' },
           },
         },
-        spacing: tokenToRem,
+        spacing: { ...tokenToRem, mobileHeader: { value: '40px' } },
         sizes: tokenToRem,
+        zIndex: {
+          mobileHeader: { value: 10, description: '모바일 헤더의 z-index' },
+        },
       },
       textStyles,
       keyframes: {

@@ -18,7 +18,7 @@ const MainLayout = () => {
     <div className={css({ display: 'flex', flexDir: 'column', h: '100vh' })}>
       <MetaTag title="KU-key" />
       <Header />
-      <div className={css({ flex: 1 })}>
+      <div className={css({ flex: 1, smDown: { mt: 'mobileHeader' } })}>
         <Outlet />
       </div>
       <Footer />
