@@ -84,8 +84,8 @@ const Header = () => {
     <header
       className={css({
         display: 'flex',
-        h: 20,
-        minH: 20,
+        h: { base: 20, smDown: 10 },
+        minH: { base: 20, smDown: 10 },
         bg: 'white',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -100,7 +100,7 @@ const Header = () => {
         })}
       >
         <Link to="/">
-          <img src={KUkeyLogo} alt="KU-key" />
+          <img className={css({ smDown: { h: '18px' } })} src={KUkeyLogo} alt="KU-key" />
         </Link>
       </nav>
       <nav
