@@ -18,7 +18,17 @@ jobs:
           format: YYYY-MM-DDTHH-mm-ss
           utcOffset: '+09:00'
 
+      - name: Check existing PR
+        id: check-pr
+        run: |
+          existing_pr=$(gh pr list --base main --head dev --json number --jq length)
+          echo "pr_exists=$existing_pr" >> $GITHUB_OUTPUT
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+
       - name: Create Pull Request
-        run: gh pr create -B main -H dev --title 'Deploy Dev ${{steps.current-time.outputs.formattedTime}}' --body 'Github action에 의해 생성됨'
+        if: steps.check-pr.outputs.pr_exists == '0'
+        run: |
+          gh pr create -B main -H dev --title "Deploy: 배포" --body "${{steps.current-time.outputs.readableTime}}에 생성됨"
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
