@@ -11,7 +11,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Get current time
+        uses: josStorer/get-current-time@v2.0.2
+        id: current-time
+        with:
+          format: YYYY-MM-DDTHH-mm-ss
+          utcOffset: '+09:00'
+
       - name: Create Pull Request
-        run: gh pr create -B dev -H test-auto-deploy --title 'Deploy test-auto-deploy' --body 'Created by Github action'
+        run: gh pr create -B main -H dev --title 'Deploy Dev ${{steps.current-time.outputs.formattedTime}}' --body 'Github action에 의해 생성됨'
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
