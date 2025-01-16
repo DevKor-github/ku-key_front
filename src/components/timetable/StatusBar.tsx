@@ -50,7 +50,7 @@ const StatusBar = ({ curSemester, curIndex, setCurIndex }: StatusBarProps) => {
               />
             )
           })}
-          <CreateTimetableBtn handleCreate={handleCreateTimetable} />
+          <CreateTimetableBtn handleCreate={handleCreateTimetable} hide={curSemesterTimetableLen >= 3} />
         </div>
       </div>
       <MainPinBtn

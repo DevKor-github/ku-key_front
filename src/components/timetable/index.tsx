@@ -88,7 +88,7 @@ const Timetable = forwardRef<HTMLDivElement, TimetableProps>(
         <div
           className={css({
             w: '100%',
-            h: 16,
+            h: { base: 16, lgDown: 20 },
             display: 'flex',
             flexDir: 'row',
             justifyContent: 'space-between',
@@ -104,10 +104,18 @@ const Timetable = forwardRef<HTMLDivElement, TimetableProps>(
             <OptionModal
               ref={modalRef}
               optionHandler={optionHandler}
-              customStyle={{ position: 'absolute', top: '68px', right: 0, zIndex: 50 }}
+              className={css({ position: 'absolute', top: { base: '68px', lgDown: '84px' }, right: 0, zIndex: 50 })}
             />
           )}
-          <div className={css({ display: 'flex', flexDir: 'row', gap: 2.5, alignItems: 'center' })}>
+          <div
+            className={css({
+              display: 'flex',
+              flexDir: { base: 'row', lgDown: 'column' },
+              gap: { base: 2.5, lgDown: 1 },
+              alignItems: { base: 'center', lgDown: 'flex-start' },
+              maxW: '90%',
+            })}
+          >
             <div className={css({ color: 'darkGray.1', fontSize: 20, fontWeight: 700, whiteSpace: 'nowrap' })}>
               {`${year} ${numberToSemester[semester]} semester`}
             </div>
@@ -118,7 +126,7 @@ const Timetable = forwardRef<HTMLDivElement, TimetableProps>(
                 fontWeight: 500,
                 fontSize: 18,
                 outline: 'none',
-                w: '70%',
+                w: 'full',
                 overflow: 'hidden',
                 whiteSpace: 'nowrap',
                 textOverflow: 'ellipsis',
@@ -129,7 +137,7 @@ const Timetable = forwardRef<HTMLDivElement, TimetableProps>(
           </div>
           <div
             className={css({
-              display: { base: 'flex', mdDown: 'none' },
+              display: 'flex',
               flexDir: 'row',
               gap: 4,
               alignItems: 'center',
