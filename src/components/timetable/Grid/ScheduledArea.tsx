@@ -58,6 +58,8 @@ const ScheduledArea = ({ data, colorTheme, timetableId, isMine, time, week }: Pr
   const weekCnt = week.length
   const timeCnt = time.length - 1
 
+  let lecCnt = 0
+
   return (
     <div
       className={css({
@@ -110,7 +112,7 @@ const ScheduledArea = ({ data, colorTheme, timetableId, isMine, time, week }: Pr
                       key={lecInd}
                       timetableId={timetableId}
                       data={lecture}
-                      bgColor={COLOR_INFO[colorTheme]['rand'][lecInd % COLOR_INFO[colorTheme]['rand'].length]}
+                      bgColor={COLOR_INFO[colorTheme]['rand'][lecCnt++ % COLOR_INFO[colorTheme]['rand'].length]}
                       isMine={isMine}
                     />
                   )

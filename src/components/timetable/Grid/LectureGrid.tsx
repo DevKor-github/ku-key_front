@@ -36,7 +36,7 @@ const LectureGrid = ({ timetableId, timetableData, isMine = false }: LectureGrid
         time={time}
         week={week}
       />
-      <NoScheduledArea data={noScheduled} timetableId={timetableId} isMine={isMine} />
+      {noScheduled.length !== 0 && <NoScheduledArea data={noScheduled} timetableId={timetableId} isMine={isMine} />}
     </div>
   )
 }
