@@ -8,7 +8,6 @@ import { useDeleteSchedule } from '@/api/hooks/schedule'
 import { useDeleteCourse } from '@/api/hooks/timetable'
 import NoScheduledLecture from '@/components/timetable/Grid/LectureSticker/NoScheduledLecture'
 import ScheduledLecture from '@/components/timetable/Grid/LectureSticker/ScheduledLecture'
-import EditSchedule from '@/components/timetable/Modal/EditSchedule'
 import OptionModal from '@/components/timetable/Modal/OptionModal'
 import { isBottomSheetVisible } from '@/lib/store/bottomSheet'
 import { GridType, TimetableContentsType } from '@/types/timetable'
@@ -36,11 +35,6 @@ const LectureSticker = ({ timetableId, data, isMine, bgColor }: LectureStickerPr
   const [isModalOpened, setIsModalOpen] = useState(false)
   const [isScheduleEditOpened, setIsScheduleEditOpened] = useState(false)
   const setIsSheetOpened = useSetAtom(isBottomSheetVisible)
-
-  const closeScheduleModal = useCallback(() => {
-    setIsScheduleEditOpened(false)
-    setIsSheetOpened(true)
-  }, [setIsScheduleEditOpened, setIsSheetOpened])
 
   const { mutate: deleteCourse } = useDeleteCourse()
   const { mutate: deleteSchedule } = useDeleteSchedule()
@@ -109,39 +103,15 @@ const LectureSticker = ({ timetableId, data, isMine, bgColor }: LectureStickerPr
   return (
     <>
       {isGridType(data) ? (
-        <>
-          <ScheduledLecture data={data} onClick={handleLectureClick} isMine={isMine} bgColor={bgColor} />
-          {isScheduleEditOpened &&
-            createPortal(
-              <div
-                className={css({
-                  position: 'fixed',
-                  top: 0,
-                  left: 0,
-                  w: '100vw',
-                  h: '100vh',
-                  bgColor: 'rgba(0, 0, 0, 0.40)',
-                  zIndex: 100,
-                  display: 'flex',
-                  flexDir: 'column',
-                  justifyContent: 'flex-end',
-                  alignItems: 'center',
-                  paddingBottom: '50px',
-                })}
-                role="presentation"
-                onClick={event => {
-                  // 모달 안쪽을 눌렀을 때도 모달 state가 null 되는 것을 방지
-                  if (event.target === event.currentTarget) {
-                    setIsScheduleEditOpened(false)
-                    setIsSheetOpened(true)
-                  }
-                }}
-              >
-                <EditSchedule timetableId={timetableId!} data={data} closeScheduleModal={closeScheduleModal} />
-              </div>,
-              document.body,
-            )}
-        </>
+        <ScheduledLecture
+          timetableId={timetableId}
+          data={data}
+          onClick={handleLectureClick}
+          isMine={isMine}
+          bgColor={bgColor}
+          isScheduleEditOpened={isScheduleEditOpened}
+          setIsScheduleEditOpened={setIsScheduleEditOpened}
+        />
       ) : (
         <NoScheduledLecture data={data} onClick={handleLectureClick} isMine={isMine} />
       )}

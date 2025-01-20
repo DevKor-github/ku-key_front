@@ -2,6 +2,7 @@ import { css, cva, cx } from '@styled-system/css'
 import { shadow } from '@styled-system/recipes'
 import { CaseSensitive, CircleAlert, Palette } from 'lucide-react'
 import { useCallback, useState } from 'react'
+import { createPortal } from 'react-dom'
 
 import { useUpdateTimetableName } from '@/api/hooks/timetable'
 import ColorSelector from '@/components/timetable/Button/ColorSelector'
@@ -153,7 +154,7 @@ const DeleteModal = ({
 }
 
 interface TimetableModalProps {
-  modalType: Omit<GlobalModalStateType, 'null'>
+  modalType: GlobalModalStateType
   closeModal: () => void
   deleteTimetableHandler: (timetableId: number) => void
   timetableId: number
@@ -170,36 +171,64 @@ const TimetableModal = ({
   curColor,
 }: TimetableModalProps) => {
   return (
-    <ModalCard
-      className={cx(
-        css({
-          bgColor: 'white',
-          border: 'none',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          flexDir: 'column',
-          gap: 5,
-          px: 10,
-          py: 8,
-        }),
-        shadow(),
-      )}
-    >
-      {modalType === 'name' && (
-        <NameChangeModal closeModal={closeModal} timetableId={timetableId} curTimetableName={timetableName} />
-      )}
-      {modalType === 'color' && (
-        <ColorChangeModal closeModal={closeModal} timetableId={timetableId} curColor={curColor} />
-      )}
-      {modalType === 'delete' && (
-        <DeleteModal
-          closeModal={closeModal}
-          deleteTimetableHandler={deleteTimetableHandler}
-          timetableId={timetableId}
-        />
-      )}
-    </ModalCard>
+    <>
+      {modalType &&
+        createPortal(
+          <div
+            className={css({
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              w: '100vw',
+              h: '100vh',
+              bgColor: 'rgba(0, 0, 0, 0.40)',
+              zIndex: 100,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            })}
+            role="presentation"
+            onClick={event => {
+              // 모달 안쪽을 눌렀을 때도 모달 state가 null 되는 것을 방지
+              if (event.target === event.currentTarget) {
+                closeModal()
+              }
+            }}
+          >
+            <ModalCard
+              className={cx(
+                css({
+                  bgColor: 'white',
+                  border: 'none',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flexDir: 'column',
+                  gap: 5,
+                  px: 10,
+                  py: 8,
+                }),
+                shadow(),
+              )}
+            >
+              {modalType === 'name' && (
+                <NameChangeModal closeModal={closeModal} timetableId={timetableId} curTimetableName={timetableName} />
+              )}
+              {modalType === 'color' && (
+                <ColorChangeModal closeModal={closeModal} timetableId={timetableId} curColor={curColor} />
+              )}
+              {modalType === 'delete' && (
+                <DeleteModal
+                  closeModal={closeModal}
+                  deleteTimetableHandler={deleteTimetableHandler}
+                  timetableId={timetableId}
+                />
+              )}
+            </ModalCard>
+          </div>,
+          document.body,
+        )}
+    </>
   )
 }
 
