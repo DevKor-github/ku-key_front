@@ -36,26 +36,25 @@ export const getStartTime = (time: string) => {
 }
 
 export const getCurSemester = () => {
-  const KSTtoday = new Date()
-  const year = KSTtoday.getFullYear()
-  const month = KSTtoday.getMonth() + 1
+  const todayKST = new Date()
+  const year = todayKST.getFullYear()
+  const month = todayKST.getMonth() + 1
 
-  let semester = 0
-
+  if (month === 1) {
+    // 겨울학기
+    return { year: year - 1, semester: 4 }
+  }
   if (1 < month && month <= 6) {
     // 1학기
-    semester = 1
-  } else if (6 < month && month <= 7) {
-    // 여름학기
-    semester = 2
-  } else if (7 < month && month <= 12) {
-    // 2학기
-    semester = 3
-  } else {
-    // 겨울학기
-    semester = 4
+    return { year, semester: 1 }
   }
-  return { year, semester }
+  if (6 < month && month <= 7) {
+    // 여름학기
+    return { year, semester: 2 }
+  }
+
+  // 2학기
+  return { year, semester: 3 }
 }
 
 /**
