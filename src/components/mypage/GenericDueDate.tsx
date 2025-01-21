@@ -9,16 +9,40 @@ const GenericDueDate = ({ type, due, date }: GenericDueDateProps) => {
   const dueDate = type === 'start' ? `D + ${due}` : `D - ${due}`
   const dueTitle = type === 'start' ? 'Start' : 'End'
   return (
-    <div className={css({ display: 'flex', flexDir: 'column', gap: 3 })}>
-      <p className={css({ fontSize: { base: 26, mdDown: 11 }, fontWeight: 'semibold' })}>{dueTitle}</p>
-      <div className={css({ w: 'full', border: '0.6px solid black' })} />
+    <div
+      className={css({
+        display: 'flex',
+        flexDir: 'column',
+        gap: { base: 3, smDown: '6.85px' },
+        w: { base: '210px', mdDown: '165px', smDown: '100px' },
+        smDown: { mr: 4 },
+      })}
+    >
+      <p className={css({ fontSize: { base: 26, mdDown: 20, smDown: 16 }, fontWeight: 'semibold', lineHeight: 1.2 })}>
+        {dueTitle}
+      </p>
+      <div className={css({ w: 'full', border: 'solid black', borderWidth: { base: '0.6px', smDown: '0.281px' } })} />
       <p
         className={css({
-          fontSize: { base: 26, mdDown: 11 },
-          fontWeight: 'semibold',
+          display: 'flex',
+          alignItems: 'center',
+          gap: { base: 2, smDown: 0.5 },
+          fontSize: { base: 26, mdDown: 20, smDown: 12 },
+          lineHeight: 1.2,
+          fontWeight: 700,
+          justifyContent: 'space-between',
         })}
       >
-        {dueDate} <span className={css({ fontWeight: 'medium', fontSize: { base: 18, mdDown: 8 } })}>{date}</span>
+        {dueDate}
+        <span
+          className={css({
+            fontWeight: { base: 'medium', smDown: 400 },
+            fontSize: { base: 18, mdDown: 14, smDown: 9 },
+            lineHeight: 1.2,
+          })}
+        >
+          {date}
+        </span>
       </p>
     </div>
   )

@@ -11,7 +11,7 @@ const MyComments = () => {
     <section
       className={css({
         display: 'flex',
-        w: { base: 800, mdDown: 320 },
+        w: { base: 800, mdDown: 320, smDown: 'full' },
         flexDir: 'column',
         pb: 200,
         alignItems: 'stretch',

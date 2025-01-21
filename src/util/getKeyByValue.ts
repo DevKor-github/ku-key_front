@@ -1,6 +1,7 @@
-const getKeyByValue = (obj: { [key in string]: string }, value: string) => {
-  const keyArr = Object.keys(obj) as Array<keyof typeof obj>
-  return keyArr.find(key => obj[key] === value)
+import getKeys from '@/util/getKeys'
+
+const getKeyByValue = <T extends object>(obj: T, value: (typeof obj)[keyof typeof obj]) => {
+  return getKeys(obj).find(key => obj[key] === value)
 }
 
 export default getKeyByValue
