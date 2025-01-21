@@ -30,7 +30,7 @@ export const useAcademicSemester = () => {
   const month = KSTtoday.getMonth() + 1
   const academicSemester: Semester[] = []
 
-  if (1 < month && month <= 7) {
+  if (1 <= month && month <= 7) {
     // 1학기
     academicSemester.push({ year: `${year - 2}`, semester: 3, timetables: [] })
     for (let i = 1; i <= 4; i += 2) {

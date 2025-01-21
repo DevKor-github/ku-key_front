@@ -36,26 +36,25 @@ export const getStartTime = (time: string) => {
 }
 
 export const getCurSemester = () => {
-  const KSTtoday = new Date()
-  const year = KSTtoday.getFullYear()
-  const month = KSTtoday.getMonth() + 1
+  const todayKST = new Date()
+  const year = todayKST.getFullYear()
+  const month = todayKST.getMonth() + 1
 
-  let semester = 0
-
+  if (month === 1) {
+    // 겨울학기
+    return { year: year - 1, semester: 4 }
+  }
   if (1 < month && month <= 6) {
     // 1학기
-    semester = 1
-  } else if (6 < month && month <= 7) {
-    // 여름학기
-    semester = 2
-  } else if (7 < month && month <= 12) {
-    // 2학기
-    semester = 3
-  } else {
-    // 겨울학기
-    semester = 4
+    return { year, semester: 1 }
   }
-  return { year, semester }
+  if (6 < month && month <= 7) {
+    // 여름학기
+    return { year, semester: 2 }
+  }
+
+  // 2학기
+  return { year, semester: 3 }
 }
 
 /**
@@ -68,7 +67,15 @@ const calcSemester = (): Semester[] => {
   const month = KSTtoday.getMonth() + 1
   const ret: Semester[] = []
 
-  if (1 < month && month <= 6) {
+  if (month === 1) {
+    // 겨울학기
+    for (let semester = 2; semester <= 4; semester++) {
+      ret.push({ year: `${year - 1}`, semester, timetables: [] })
+    }
+    for (let semester = 1; semester <= 3; semester++) {
+      ret.push({ year: `${year}`, semester, timetables: [] })
+    }
+  } else if (1 < month && month <= 6) {
     // 1학기
     for (let semester = 3; semester <= 4; semester++) {
       ret.push({ year: `${year - 1}`, semester, timetables: [] })
@@ -83,20 +90,12 @@ const calcSemester = (): Semester[] => {
       ret.push({ year: `${year}`, semester, timetables: [] })
     }
     ret.push({ year: `${year + 1}`, semester: 1, timetables: [] })
-  } else if (7 < month && month <= 12) {
+  } else {
     // 2학기
     for (let semester = 1; semester <= 4; semester++) {
       ret.push({ year: `${year}`, semester, timetables: [] })
     }
     for (let semester = 1; semester <= 2; semester++) {
-      ret.push({ year: `${year + 1}`, semester, timetables: [] })
-    }
-  } else {
-    // 겨울학기
-    for (let semester = 2; semester <= 4; semester++) {
-      ret.push({ year: `${year}`, semester, timetables: [] })
-    }
-    for (let semester = 1; semester <= 3; semester++) {
       ret.push({ year: `${year + 1}`, semester, timetables: [] })
     }
   }
