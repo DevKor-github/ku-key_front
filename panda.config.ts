@@ -17,7 +17,9 @@ import {
   textStyles,
   sheetRecipe,
   toastRecipe,
+  keyframes,
 } from './src/lib/recipes/index'
+import { semanticTokens } from './src/lib/semanticTokens'
 import { tokenToRem } from './src/lib/constants/tokenToRem'
 
 export default defineConfig({
@@ -86,57 +88,10 @@ export default defineConfig({
             5: { value: '#FF0000' },
           },
         },
-        spacing: { ...tokenToRem, mobileHeader: { value: '40px' } },
         sizes: tokenToRem,
         zIndex: {
+          // semanticTokens로 옮기기
           mobileHeader: { value: 10, description: '모바일 헤더의 z-index' },
-        },
-      },
-      textStyles,
-      keyframes: {
-        animateIn: {
-          from: { transform: 'scale(0.95)', opacity: 0 },
-          to: { transform: 'scale(1)', opacity: 1 },
-        },
-        animateOut: {
-          from: { transform: 'scale(1)', opacity: 1 },
-          to: { transform: 'scale(0.95)', opacity: 0 },
-        },
-        slideInFromTop: {
-          from: { transform: 'translateY(-100%)' },
-          to: { transform: 'translateY(0)' },
-        },
-        slideOutToTop: {
-          from: { transform: 'translateY(0)' },
-          to: { transform: 'translateY(-100%)' },
-        },
-        slideInFromBottom: {
-          from: { transform: 'translateY(100%)' },
-          to: { transform: 'translateY(0)' },
-        },
-        slideOutToBottom: {
-          from: { transform: 'translateY(0)' },
-          to: { transform: 'translateY(100%)' },
-        },
-        slideInFromLeft: {
-          from: { transform: 'translateX(-100%)' },
-          to: { transform: 'translateX(0)' },
-        },
-        slideOutToLeft: {
-          from: { transform: 'translateX(0)' },
-          to: { transform: 'translateX(-100%)' },
-        },
-        slideInFromRight: {
-          from: { transform: 'translateX(100%)' },
-          to: { transform: 'translateX(0)' },
-        },
-        slideOutToRight: {
-          from: { transform: 'translateX(0)' },
-          to: { transform: 'translateX(100%)' },
-        },
-        spin: {
-          from: { transform: 'rotate(0deg)' },
-          to: { transform: 'rotate(360deg)' },
         },
       },
       breakpoints: {
@@ -145,6 +100,9 @@ export default defineConfig({
         md: '900px',
         lg: '1200px',
       },
+      textStyles,
+      keyframes,
+      semanticTokens,
     },
   },
   jsxFramework: 'react',
