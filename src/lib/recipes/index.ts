@@ -3,6 +3,7 @@ import { carouselButtonRecipe } from '@/lib/recipes/carousel-button'
 import { clubTagRecipe } from '@/lib/recipes/club-tag'
 import { globalLayoutRecipe } from '@/lib/recipes/globalLayout'
 import { inputRecipe } from '@/lib/recipes/input'
+import { keyframes } from '@/lib/recipes/keyframes'
 import { labelRecipe } from '@/lib/recipes/label'
 import { menubar } from '@/lib/recipes/menubar'
 import { modalCardRecipe } from '@/lib/recipes/modal-card'
@@ -31,4 +32,5 @@ export {
   clubTagRecipe,
   sheetRecipe,
   toastRecipe,
+  keyframes,
 }
