@@ -83,6 +83,7 @@ export default defineConfig({
             2: { value: '#E70000' },
             3: { value: '#F37979' },
             4: { value: '#FFC2AF' },
+            5: { value: '#FF0000' },
           },
         },
         spacing: { ...tokenToRem, mobileHeader: { value: '40px' } },

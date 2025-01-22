@@ -1,65 +1,45 @@
-import { css } from '@styled-system/css'
+import { useCallback, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { useGetMyProfile } from '@/api/hooks/user'
-import DueDateCard from '@/components/mypage/DueDateCard'
 import MyPageContents from '@/components/mypage/MyPageContents'
+import MyPageHeader from '@/components/mypage/MyPageHeader'
 import MyPageWrapper from '@/components/mypage/MyPageWrapper'
-import UserInfo from '@/components/mypage/UserInfo'
-import { characterConfig } from '@/components/ui/profile/CharacterConfig'
+import { MyPageParams, PageType } from '@/types/myPage'
+import { useMediaQueryByName } from '@/util/hooks/useMediaQueryByName'
+import { useQueryParams } from '@/util/hooks/useQueryParams'
 
 const MyPage = () => {
+  const navigate = useNavigate()
+
+  const [queryParam, setQueryParam] = useQueryParams<MyPageParams>()
+  const { page: curPage } = queryParam
+
   const { data: myProfileData } = useGetMyProfile()
+  const isMobile = useMediaQueryByName('smDown')
+
+  const isHeaderVisible =
+    !isMobile ||
+    !(curPage === 'community' || curPage === 'course-review' || curPage === 'delete-account' || curPage === 'password')
+
+  useEffect(() => {
+    if (curPage === null && !isMobile) {
+      navigate(`${location.pathname}?page=my-point`, { replace: true })
+    }
+  }, [curPage, navigate, isMobile])
+
+  const setPage = useCallback(
+    (target: PageType) => {
+      if (target) return setQueryParam({ page: target })
+      setQueryParam({ page: undefined })
+    },
+    [setQueryParam],
+  )
+
   return (
     <MyPageWrapper>
-      <div
-        className={css({
-          display: 'flex',
-          flexDir: 'column',
-          w: 'full',
-          alignItems: 'flex-start',
-          color: 'white',
-          bgColor: 'bg.gray',
-        })}
-      >
-        <div
-          className={css({
-            display: 'flex',
-            px: { base: 56, mdDown: 5 },
-            h: { base: 500, mdDown: 250 },
-            w: 'full',
-            alignItems: 'center',
-            zIndex: 0,
-            bgSize: 'cover',
-            bgPosition: 'center',
-            position: 'relative',
-          })}
-          style={{
-            backgroundImage: `url(${import.meta.env.VITE_API_AWS_S3_BUCKET}/fe/myPageBanner.webp)`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        >
-          <UserInfo
-            name={myProfileData.username}
-            country={myProfileData.country}
-            point={myProfileData.point}
-            languages={myProfileData.languages}
-            homeUniversity={myProfileData.homeUniversity}
-          />
-          <img
-            src={characterConfig[myProfileData.type][myProfileData.selectedLevel]}
-            alt="My Character"
-            className={css({
-              w: { base: '450px', mdDown: '250px' },
-              position: 'absolute',
-              right: { base: '150px', mdDown: 0 },
-              top: { base: '20px', mdDown: 0 },
-            })}
-          />
-        </div>
-        <DueDateCard startDay={myProfileData.startDay} endDay={myProfileData.endDay} />
-      </div>
-      <MyPageContents myProfileData={myProfileData} />
+      {isHeaderVisible && <MyPageHeader myProfileData={myProfileData} />}
+      <MyPageContents myProfileData={myProfileData} curPage={curPage} setPage={setPage} />
     </MyPageWrapper>
   )
 }

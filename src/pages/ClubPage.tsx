@@ -13,6 +13,8 @@ import MetaTag from '@/components/MetaTag'
 import { Checkbox } from '@/components/ui/checkbox'
 import ClubModal from '@/components/ui/modal/ClubModal'
 import Toast from '@/components/ui/toast'
+import { CLUB_SEARCH_MESSAGE } from '@/lib/messages/club'
+import { USER_AUTH_MESSAGE } from '@/lib/messages/common'
 import { ClubInterface, ClubSearchParams } from '@/types/club'
 import { useAuth } from '@/util/auth/useAuth'
 import { useDeepCompareCallback } from '@/util/hooks/useDeepCompare'
@@ -44,7 +46,13 @@ const ClubPage = () => {
   )
 
   const handleSubmit = useDeepCompareCallback(
-    (inputKeyword: string) => setQuery({ ...query, keyword: inputKeyword.length ? inputKeyword : undefined }),
+    (inputKeyword: string) => {
+      if (inputKeyword.length < 2) {
+        toast.custom(() => <Toast message={CLUB_SEARCH_MESSAGE.REQUIRED_LENGTH} type="warning" />)
+        return
+      }
+      setQuery({ ...query, keyword: inputKeyword.length ? inputKeyword : undefined })
+    },
     [query],
   )
 
@@ -53,14 +61,14 @@ const ClubPage = () => {
   const handleLikeClick = useDeepCompareCallback(
     (clubId: number) => {
       if (isLogin) likeClub({ clubId, queryParams: requestQuery })
-      else toast.custom(() => <Toast message="Please sign in to use!" type="error" />)
+      else toast.custom(() => <Toast message={USER_AUTH_MESSAGE.REQUIRE_LOGIN} type="error" />)
     },
     [likeClub, query, isLogin],
   )
 
   const handleWishList = useDeepCompareCallback(() => {
     if (isLogin) setQuery({ ...query, filter: query.filter === 'like' ? undefined : 'like' })
-    else toast.custom(() => <Toast message="Please sign in to use!" type="error" />)
+    else toast.custom(() => <Toast message={USER_AUTH_MESSAGE.REQUIRE_LOGIN} type="error" />)
   }, [query, isLogin])
 
   const [selectedClub, setSelectedClub] = useState<ClubInterface | null>(null)

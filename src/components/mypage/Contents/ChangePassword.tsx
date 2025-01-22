@@ -8,6 +8,8 @@ import { usePatchPassword } from '@/api/hooks/register'
 import ChangeForm from '@/components/mypage/Contents/ChangeForm'
 import Button from '@/components/ui/button'
 import { PasswordSchema } from '@/lib/zod/register-schema'
+import getKeys from '@/util/getKeys'
+import { useMediaQueryByName } from '@/util/hooks/useMediaQueryByName'
 
 export interface ChangePasswordForm {
   curPassword: string
@@ -19,9 +21,21 @@ const ChangePassword = () => {
   const { mutate: patchPassword } = usePatchPassword()
   const { mutate: checkPassword } = useCheckPassword()
 
-  const { register, handleSubmit, setError, formState, reset } = useForm<ChangePasswordForm>()
+  const { register, handleSubmit, setError, formState, reset, getValues } = useForm<ChangePasswordForm>()
+
+  const isMobile = useMediaQueryByName('smDown')
 
   const onSubmit = (data: ChangePasswordForm) => {
+    let isFormValidate = true
+    const formValues = getValues()
+    getKeys(formValues).forEach(formKey => {
+      if (!formValues[formKey]) {
+        setError(formKey, { message: 'Please fill in this field!' })
+        isFormValidate = false
+      }
+    })
+    if (!isFormValidate) return
+
     checkPassword(data.curPassword, {
       onSuccess: check => {
         if (check) {
@@ -76,17 +90,35 @@ const ChangePassword = () => {
         alignItems: 'center',
         flexDir: 'column',
         maxW: 818,
+        smDown: {
+          pt: 23,
+          w: 'full',
+          px: 5,
+        },
       })}
     >
-      <h1 className={css({ px: 1, py: 2.5, fontSize: { base: 30, mdDown: 15 }, fontWeight: 700 })}>Change Password</h1>
-      <form className={css({ display: 'flex', flexDir: 'column', gap: 10 })} onSubmit={handleSubmit(onSubmit)}>
+      <h1
+        className={css({
+          px: 1,
+          py: 2.5,
+          fontSize: { base: 30, mdDown: 15 },
+          fontWeight: 700,
+          smDown: { display: 'none' },
+        })}
+      >
+        Change Password
+      </h1>
+      <form
+        className={css({ display: 'flex', flexDir: 'column', gap: 10, smDown: { w: 'full' } })}
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <ChangeForm type="curPassword" register={register} formState={formState} />
-        <section>
+        <section className={css({ display: 'flex', flexDir: 'column', gap: 2.5 })}>
           <ChangeForm type="newPassword" register={register} formState={formState} />
           <ChangeForm type="confirmPassword" register={register} formState={formState} />
         </section>
         <div className={css({ display: 'flex', justifyContent: 'center', mt: 5 })}>
-          <Button variant={'loginColored'} type="submit">
+          <Button variant={isMobile ? 'mobile' : 'loginColored'} type="submit">
             SAVE
           </Button>
         </div>

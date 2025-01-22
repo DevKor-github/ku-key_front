@@ -80,12 +80,23 @@ const CharacterTicket = ({
 
   return (
     <>
-      <div className={css({ display: 'flex', flexDir: 'column', gap: 2, alignItems: 'center' })}>
+      <div
+        className={css({
+          display: 'flex',
+          flexDir: 'column',
+          gap: 2,
+          alignItems: 'center',
+          smDown: {
+            w: '33%',
+            minW: 29,
+          },
+        })}
+      >
         <div
           className={cx(
             css({
-              w: { base: '189px', mdDown: '120px' },
-              h: { base: '189px', mdDown: '120px' },
+              w: { base: '189px', mdDown: '120px', smDown: 27 },
+              h: { base: '189px', mdDown: '120px', smDown: 27 },
               bgColor: 'white',
               rounded: 10,
               position: 'relative',

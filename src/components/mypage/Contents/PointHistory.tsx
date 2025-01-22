@@ -20,16 +20,40 @@ const PointHistory = () => {
   const { data } = useGetPointHistory()
 
   return (
-    <div className={css({ display: 'flex', flexDir: 'column', gap: 10, maxW: { base: '818px', mdDown: '400px' } })}>
-      <div className={css({ display: 'flex', alignItems: 'center', gap: 2.5 })}>
+    <div
+      className={css({
+        display: 'flex',
+        flexDir: 'column',
+        gap: 10,
+        maxW: { base: '818px', mdDown: '400px', smDown: 'full' },
+        smDown: { w: 'full', bgColor: 'lightGray.2' },
+      })}
+    >
+      <div className={css({ display: { base: 'flex', smDown: 'none' }, alignItems: 'center', gap: 2.5 })}>
         <h1 className={css({ fontSize: { base: 30, mdDown: 15 }, fontWeight: 700 })}>Point history</h1>
         <button className={css({ cursor: 'pointer' })} onClick={handleOpen}>
           <CircleAlert className={css({ mdDown: { w: '15px', h: '15px' } })} />
         </button>
       </div>
-      <div className={css({ display: 'flex', flexDir: 'column' })}>
+      <div
+        className={css({
+          display: 'flex',
+          flexDir: 'column',
+          smDown: {
+            px: 5,
+            py: 4,
+            alignItems: 'stretch',
+            gap: '14px',
+          },
+        })}
+      >
         <div
-          className={css({ display: 'flex', alignItems: 'center', bgColor: 'lightGray.2', py: { base: 5, mdDown: 1 } })}
+          className={css({
+            display: { base: 'flex', smDown: 'none' },
+            alignItems: 'center',
+            bgColor: 'lightGray.2',
+            py: { base: 5, mdDown: 1 },
+          })}
         >
           <span className={cx(CellHeaderStyle, css({ w: { base: 30, mdDown: 15 } }))}>Category</span>
           <span className={cx(CellHeaderStyle, css({ flexGrow: 1, mdDown: { display: 'none' } }))}>Item</span>

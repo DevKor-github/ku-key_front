@@ -23,15 +23,20 @@ const UserInfo = ({ name, country, point, languages, homeUniversity }: UserInfoP
         flex: 1,
         display: 'flex',
         flexDir: 'column',
-        gap: { base: 3, mdDown: 1 },
+        gap: { base: 3, lgDown: 1, smDown: 0 },
+        smDown: {
+          pos: 'absolute',
+          top: '33px',
+          left: 7,
+        },
       })}
     >
       <div
         className={css({
           display: 'flex',
-          gap: { base: 6, mdDown: 1 },
-          fontWeight: 'bold',
-          fontSize: { base: 48, mdDown: 20 },
+          gap: { base: 6, lgDown: 3, smDown: 2 },
+          fontWeight: 600,
+          fontSize: { base: 48, lgDown: 32, smDown: 20 },
           alignItems: 'flex-end',
         })}
       >
@@ -40,18 +45,24 @@ const UserInfo = ({ name, country, point, languages, homeUniversity }: UserInfoP
       </div>
       <div
         className={css({
-          display: 'flex',
+          display: { base: 'flex', smDown: 'none' },
           alignItems: 'center',
-          fontSize: { base: 30, mdDown: 18 },
+          fontSize: { base: 30, lgDown: 22 },
           fontWeight: 'bold',
           color: 'white',
-          gap: 2.5,
+          gap: { base: 2.5, lgDown: 1 },
         })}
       >
-        <img src={Sugar} alt="sugar" className={css({ w: { base: 10, mdDown: 5 } })} />
+        <img src={Sugar} alt="sugar" className={css({ w: { base: 10, lgDown: 6 } })} />
         <p>{point}</p>
       </div>
-      <div className={css({ display: 'flex', gap: 2, mt: 5 })}>
+      <div
+        className={css({
+          display: 'flex',
+          gap: { base: 2, lgDown: 1, smDown: '0.2rem' },
+          mt: { base: 5, lgDown: 2, smDown: '0.53rem' },
+        })}
+      >
         {languages.map((lan, ind) => (
           <Chip variant={variantsArray[ind % variantsArray.length]} key={lan}>
             {lan.toUpperCase()}
@@ -62,14 +73,26 @@ const UserInfo = ({ name, country, point, languages, homeUniversity }: UserInfoP
         className={css({
           display: 'flex',
           flexDir: 'column',
-          gap: { base: 2, mdDown: 1 },
-          mt: { base: 12, mdDown: 4 },
+          gap: { base: 2, lgDown: 1, smDown: '1.7px' },
+          mt: { base: 12, lgDown: 6, smDown: '1.06rem' },
         })}
       >
-        <p className={css({ fontSize: { base: 20, mdDown: 11 }, fontWeight: 600, lineHeight: 'normal' })}>
+        <p
+          className={css({
+            fontSize: { base: 20, lgDown: 16, smDown: 12 },
+            fontWeight: { base: 600, smDown: 400 },
+            lineHeight: 1.2,
+          })}
+        >
           {findByAlpha2(country)?.name}
         </p>
-        <p className={css({ fontSize: { base: 24, mdDown: 13 }, fontWeight: 700, lineHeight: 'normal' })}>
+        <p
+          className={css({
+            fontSize: { base: 24, lgDown: 18, smDown: 14 },
+            fontWeight: { base: 700, smDown: 500 },
+            lineHeight: 1.2,
+          })}
+        >
           {homeUniversity}
         </p>
       </div>
