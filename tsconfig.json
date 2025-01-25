@@ -23,7 +23,8 @@
     /* Paths */
     "paths": {
       "@/*": ["./src/*"],
-      "@styled-system/*": ["./styled-system/*"]
+      "@styled-system/*": ["./styled-system/*"],
+      "@/packages/*": ["./packages/*"]
     }
   },
   "include": ["src"],
