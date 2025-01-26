@@ -15,8 +15,7 @@ export const [themeClass, vars] = createTheme({
     red4: '#FFCDCD',
     red5: '#FFF4F4',
     bgGray: '#F9F9F9',
-    bgRed1: '#FFF4F4',
-    bgRed2: '#FFFDFD',
+    bgRed1: '#FFFDFD',
     green: '#0BDB45',
   },
   gradient: {
@@ -24,6 +23,13 @@ export const [themeClass, vars] = createTheme({
     red2: 'linear-gradient(96deg, #FF5A5A 3.8%, #FF3939 94.63%)',
     red3: 'linear-gradient(105deg, #FF3A3A 7.08%, #FF6D6D 100%)',
     line: 'linear-gradient(180deg, #979797 0%, #C9C9C9 100%)',
+  },
+  shadow: {
+    p3: '0px 2px 4px 2px rgba(0, 0, 0, 0.03)',
+    p25: '0px 0px 4px 0px rgba(0, 0, 0, 0.25)',
+    p25White: '0px 0px 4px 0px rgba(255, 255, 255, 0.25)',
+    p50: '0px 0px 6px 0px rgba(0, 0, 0, 0.50)',
+    p50Red: '0px 0px 10px 0px rgba(255, 0, 0, 0.50)',
   },
   typography: {
     desktop: {

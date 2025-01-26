@@ -62,6 +62,52 @@ export const gap5 = style({ gap: '1.25rem' }) // 20px
 export const gap6 = style({ gap: '1.5rem' }) // 24px
 export const gap8 = style({ gap: '2rem' }) // 32px
 
+export const background = {
+  ...Object.entries(vars.color).reduce(
+    (acc, [key, value]) => {
+      acc[key as keyof typeof vars.color] = style({ background: value })
+      return acc
+    },
+    {} as { [key in keyof typeof vars.color]: string },
+  ),
+  ...Object.entries(vars.gradient).reduce(
+    (acc, [key, value]) => {
+      acc[key as keyof typeof vars.gradient] = style({ background: value })
+      return acc
+    },
+    {} as { [key in keyof typeof vars.gradient]: string },
+  ),
+}
+
+export const staticColor = Object.entries(vars.color).reduce(
+  (acc, [key, value]) => {
+    acc[key as keyof typeof vars.color] = style({ color: value })
+    return acc
+  },
+  {} as { [key in keyof typeof vars.color]: string },
+)
+
+export const gradientColor = Object.entries(vars.gradient).reduce(
+  (acc, [key, value]) => {
+    acc[key as keyof typeof vars.gradient] = style({ color: value })
+    return acc
+  },
+  {} as { [key in keyof typeof vars.gradient]: string },
+)
+
+export const color = {
+  static: staticColor,
+  gradient: gradientColor,
+}
+
+export const shadow = Object.entries(vars.shadow).reduce(
+  (acc, [key, value]) => {
+    acc[key as keyof typeof vars.shadow] = style({ boxShadow: value })
+    return acc
+  },
+  {} as { [key in keyof typeof vars.shadow]: string },
+)
+
 export const typographyD = Object.entries(vars.typography.desktop).reduce(
   (acc, [key, value]) => {
     acc[key as keyof typeof vars.typography.desktop] = style({
@@ -87,3 +133,19 @@ export const typographyM = Object.entries(vars.typography.mobile).reduce(
 )
 
 export const typography = { mobile: typographyM, desktop: typographyD }
+
+export const cursorPointer = style({ cursor: 'pointer' })
+
+export const cursorDefault = style({ cursor: 'default' })
+
+export const cursorNotAllowed = style({ cursor: 'not-allowed' })
+
+export const pAbsolute = style({ position: 'absolute' })
+
+export const pFixed = style({ position: 'fixed' })
+
+export const pRelative = style({ position: 'relative' })
+
+export const pStatic = style({ position: 'static' })
+
+export const pSticky = style({ position: 'sticky' })
