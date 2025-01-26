@@ -23,7 +23,7 @@ export const useQueryGetCalendar = ({ year, month }: Props) => {
   }
 }
 
-export const useReadCalendar = (year: number, month: number) => {
+export const useReadCalendar = ({ year, month }: Props) => {
   const query = useQueryGetCalendar({ year, month })
   return useSuspenseQuery({ ...query })
 }
