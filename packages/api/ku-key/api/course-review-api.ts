@@ -599,30 +599,3 @@ export const courseReviewSummaryGet = ({
     )
   }
 }
-
-export const getcourseReviewCheckSubmissionGetPath = (professorName: string, courseCode: string) => {
-  return `/course-review/check-submission`
-}
-export const getcourseReviewGetPath = (
-  professorName: string,
-  courseCode: string,
-  criteria: string,
-  direction: string,
-) => {
-  return `/course-review`
-}
-export const getcourseReviewMyCourseReviewsGetPath = () => {
-  return `/course-review/my-course-reviews`
-}
-export const getcourseReviewPostPath = (createCourseReviewRequestDto: CreateCourseReviewRequestDto) => {
-  return `/course-review`
-}
-export const getcourseReviewRecommendCourseReviewIdPostPath = (courseReviewId: number) => {
-  return `/course-review/recommend/{courseReviewId}`.replace(
-    `{${'courseReviewId'}}`,
-    encodeURIComponent(String(courseReviewId)),
-  )
-}
-export const getcourseReviewSummaryGetPath = (professorName: string, courseCode: string) => {
-  return `/course-review/summary`
-}

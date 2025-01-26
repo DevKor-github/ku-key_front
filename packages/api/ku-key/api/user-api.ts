@@ -825,34 +825,3 @@ export const userPurchaseItemPost = ({
     )
   }
 }
-
-export const getuserCharacterLevelPatchPath = (selectCharacterLevelRequestDto: SelectCharacterLevelRequestDto) => {
-  return `/user/character-level`
-}
-export const getuserCourseReviewReadingTicketGetPath = () => {
-  return `/user/course-review-reading-ticket`
-}
-export const getuserDeletePath = () => {
-  return `/user`
-}
-export const getuserExchangeDayPatchPath = (setExchangeDayReqeustDto: SetExchangeDayReqeustDto) => {
-  return `/user/exchange-day`
-}
-export const getuserLanguageDeletePath = (languageRequestDto: LanguageRequestDto) => {
-  return `/user/language`
-}
-export const getuserLanguagePostPath = (languageRequestDto: LanguageRequestDto) => {
-  return `/user/language`
-}
-export const getuserPointHistoryGetPath = () => {
-  return `/user/point-history`
-}
-export const getuserProfileGetPath = () => {
-  return `/user/profile`
-}
-export const getuserProfilePatchPath = (setProfileRequestDto: SetProfileRequestDto) => {
-  return `/user/profile`
-}
-export const getuserPurchaseItemPostPath = (purchaseItemRequestDto: PurchaseItemRequestDto) => {
-  return `/user/purchase-item`
-}

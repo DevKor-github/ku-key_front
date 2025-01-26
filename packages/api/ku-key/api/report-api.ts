@@ -193,10 +193,3 @@ export const reportReportIdPost = ({
     )
   }
 }
-
-export const getreportGetPath = () => {
-  return `/report`
-}
-export const getreportReportIdPostPath = (reportId: number) => {
-  return `/report/{reportId}`.replace(`{${'reportId'}}`, encodeURIComponent(String(reportId)))
-}

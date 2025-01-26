@@ -115,7 +115,3 @@ export const boardGet = ({
     return boardGetFp(params?.options, configuration).then(request => request(axios, basePath))
   }
 }
-
-export const getboardGetPath = () => {
-  return `/board`
-}

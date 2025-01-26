@@ -596,29 +596,3 @@ export const commentPost = ({
     ).then(request => request(axios, basePath))
   }
 }
-
-export const getcommentCommentIdDeletePath = (commentId: number) => {
-  return `/comment/{commentId}`.replace(`{${'commentId'}}`, encodeURIComponent(String(commentId)))
-}
-export const getcommentCommentIdLikePostPath = (commentId: number) => {
-  return `/comment/{commentId}/like`.replace(`{${'commentId'}}`, encodeURIComponent(String(commentId)))
-}
-export const getcommentCommentIdPatchPath = (commentId: number, updateCommentRequestDto: UpdateCommentRequestDto) => {
-  return `/comment/{commentId}`.replace(`{${'commentId'}}`, encodeURIComponent(String(commentId)))
-}
-export const getcommentCommentIdReportPostPath = (
-  commentId: number,
-  createReportRequestDto: CreateReportRequestDto,
-) => {
-  return `/comment/{commentId}/report`.replace(`{${'commentId'}}`, encodeURIComponent(String(commentId)))
-}
-export const getcommentMyGetPath = (take?: number, cursor?: string) => {
-  return `/comment/my`
-}
-export const getcommentPostPath = (
-  postId: number,
-  createCommentRequestDto: CreateCommentRequestDto,
-  parentCommentId?: number,
-) => {
-  return `/comment`
-}

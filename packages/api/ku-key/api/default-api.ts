@@ -110,7 +110,3 @@ export const rootGet = ({
     return rootGetFp(params?.options, configuration).then(request => request(axios, basePath))
   }
 }
-
-export const getrootGetPath = () => {
-  return `/`
-}

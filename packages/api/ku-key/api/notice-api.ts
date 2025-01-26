@@ -278,13 +278,3 @@ export const noticeSseUserIdGet = ({
     return noticeSseUserIdGetFp(params.userId, params.options, configuration).then(request => request(axios, basePath))
   }
 }
-
-export const getnoticeGetPath = (take?: number, cursor?: string) => {
-  return `/notice`
-}
-export const getnoticeSseGetPath = () => {
-  return `/notice/sse`
-}
-export const getnoticeSseUserIdGetPath = (userId: number) => {
-  return `/notice/sse/{userId}`.replace(`{${'userId'}}`, encodeURIComponent(String(userId)))
-}

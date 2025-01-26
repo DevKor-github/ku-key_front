@@ -303,16 +303,3 @@ export const scheduleScheduleIdPatch = ({
     ).then(request => request(axios, basePath))
   }
 }
-
-export const getschedulePostPath = (createScheduleRequestDto: CreateScheduleRequestDto) => {
-  return `/schedule`
-}
-export const getscheduleScheduleIdDeletePath = (scheduleId: number) => {
-  return `/schedule/{scheduleId}`.replace(`{${'scheduleId'}}`, encodeURIComponent(String(scheduleId)))
-}
-export const getscheduleScheduleIdPatchPath = (
-  scheduleId: number,
-  updateScheduleRequestDto: UpdateScheduleRequestDto,
-) => {
-  return `/schedule/{scheduleId}`.replace(`{${'scheduleId'}}`, encodeURIComponent(String(scheduleId)))
-}

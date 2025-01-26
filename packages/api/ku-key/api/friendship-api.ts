@@ -869,34 +869,3 @@ export const friendshipSentGet = ({
     return friendshipSentGetFp(params?.options, configuration).then(request => request(axios, basePath))
   }
 }
-
-export const getfriendshipFriendTimetableGetPath = (username: string, year: string, semester: string) => {
-  return `/friendship/friend-timetable`
-}
-export const getfriendshipFriendshipIdDeletePath = (friendshipId: number) => {
-  return `/friendship/{friendshipId}`.replace(`{${'friendshipId'}}`, encodeURIComponent(String(friendshipId)))
-}
-export const getfriendshipGetPath = (keyword?: string) => {
-  return `/friendship`
-}
-export const getfriendshipPostPath = (sendFriendshipRequestDto: SendFriendshipRequestDto) => {
-  return `/friendship`
-}
-export const getfriendshipReceivedFriendshipIdDeletePath = (friendshipId: number) => {
-  return `/friendship/received/{friendshipId}`.replace(`{${'friendshipId'}}`, encodeURIComponent(String(friendshipId)))
-}
-export const getfriendshipReceivedFriendshipIdPatchPath = (friendshipId: number) => {
-  return `/friendship/received/{friendshipId}`.replace(`{${'friendshipId'}}`, encodeURIComponent(String(friendshipId)))
-}
-export const getfriendshipReceivedGetPath = () => {
-  return `/friendship/received`
-}
-export const getfriendshipSearchUserGetPath = (username: any) => {
-  return `/friendship/search-user`
-}
-export const getfriendshipSentFriendshipIdDeletePath = (friendshipId: number) => {
-  return `/friendship/sent/{friendshipId}`.replace(`{${'friendshipId'}}`, encodeURIComponent(String(friendshipId)))
-}
-export const getfriendshipSentGetPath = () => {
-  return `/friendship/sent`
-}

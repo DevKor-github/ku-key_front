@@ -555,25 +555,3 @@ export const calendarPost = ({
     )
   }
 }
-
-export const getcalendarAcademicGetPath = (year: number, semester: number) => {
-  return `/calendar/academic`
-}
-export const getcalendarBannerImageUrlsGetPath = () => {
-  return `/calendar/banner-image-urls`
-}
-export const getcalendarCalendarIdDeletePath = (calendarId: number) => {
-  return `/calendar/{calendarId}`.replace(`{${'calendarId'}}`, encodeURIComponent(String(calendarId)))
-}
-export const getcalendarCalendarIdPatchPath = (
-  calendarId: number,
-  updateCalendarDataRequestDto: UpdateCalendarDataRequestDto,
-) => {
-  return `/calendar/{calendarId}`.replace(`{${'calendarId'}}`, encodeURIComponent(String(calendarId)))
-}
-export const getcalendarGetPath = (year: number, month: number) => {
-  return `/calendar`
-}
-export const getcalendarPostPath = (createCalendarDataRequestDto: CreateCalendarDataRequestDto) => {
-  return `/calendar`
-}

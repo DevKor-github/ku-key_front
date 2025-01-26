@@ -183,10 +183,3 @@ export const attendanceCheckPost = ({
     return attendanceCheckPostFp(params?.options, configuration).then(request => request(axios, basePath))
   }
 }
-
-export const getattendanceCheckGetPath = () => {
-  return `/attendance-check`
-}
-export const getattendanceCheckPostPath = () => {
-  return `/attendance-check`
-}

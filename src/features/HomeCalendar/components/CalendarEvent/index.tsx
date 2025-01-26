@@ -5,11 +5,11 @@ import { useEffect, useRef } from 'react'
 
 import * as s from './style.css'
 
-import { CalendarResponse } from '@/api/types/calendar'
 import CalendarEventItem from '@/features/HomeCalendar/components/CalendarEventItem'
 import { selectedDateAtom } from '@/lib/store/calendar'
+import { GetDailyCalendarDataResponseDto } from '@/packages/api/ku-key/models'
 interface CalendarEventProps {
-  calendarEvent: CalendarResponse[]
+  calendarEvent: GetDailyCalendarDataResponseDto[]
 }
 const CalendarEvent = ({ calendarEvent }: CalendarEventProps) => {
   const selectedDate = useAtomValue(selectedDateAtom)
