@@ -6,12 +6,27 @@ import { toast } from 'sonner'
 
 import { usePatchExchangeDay } from '@/api/hooks/user'
 import { GetMyProfileResponse } from '@/api/types/user'
-import { ProfileFormTitle, ProfileFormWrapper } from '@/components/mypage/Contents/PublicProfile'
+import { ProfileFormTitle } from '@/components/mypage/Contents/PublicProfile'
 import ProfileChangeHeader from '@/components/mypage/ProfileChangeHeader'
 import Button from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import Toast from '@/components/ui/toast'
 import dateFormatter from '@/util/dateFormatter'
+import { useMediaQueryByName } from '@/util/hooks/useMediaQueryByName'
+
+const FormWrapper = css({
+  display: 'flex',
+  flexDir: { mdDown: 'column' },
+  gap: { base: 5, mdDown: 2.5 },
+  alignItems: 'stretch',
+  w: 'full',
+})
+
+const DateInputStyle = css({
+  w: { base: 'fit-content', smDown: 'full' },
+  display: 'flex',
+  justifyContent: 'center',
+})
 
 interface ExchangeDayForm {
   startDay: string
@@ -35,6 +50,7 @@ const ExchangeProfile = ({ myProfileData }: ExchangeProfileProps) => {
   }, [formState])
 
   const { mutate: patchDate } = usePatchExchangeDay()
+  const isMobile = useMediaQueryByName('smDown')
 
   const onSubmit: SubmitHandler<ExchangeDayForm> = data => {
     if (data.startDay <= data.endDay) {
@@ -52,17 +68,27 @@ const ExchangeProfile = ({ myProfileData }: ExchangeProfileProps) => {
   }
 
   return (
-    <div className={css({ display: 'flex', flexDir: 'column', gap: { base: 20, mdDown: 5 } })}>
+    <div
+      className={css({
+        display: 'flex',
+        flexDir: 'column',
+        gap: { base: 20, mdDown: 5 },
+        smDown: {
+          py: 4,
+          px: 5,
+        },
+      })}
+    >
       <ProfileChangeHeader type="exchange" />
       <form className={css({ display: 'flex', flexDir: 'column', gap: 25 })} onSubmit={handleSubmit(onSubmit)}>
         <section className={css({ display: 'flex', flexDir: 'column', gap: 2.5 })}>
-          <div className={ProfileFormWrapper}>
+          <div className={FormWrapper}>
             <span className={ProfileFormTitle}>Start Date</span>
-            <Input type="date" {...register('startDay')} style={{ width: 'fit-content' }} />
+            <Input type="date" {...register('startDay')} className={DateInputStyle} />
           </div>
-          <div className={ProfileFormWrapper}>
+          <div className={FormWrapper}>
             <span className={ProfileFormTitle}>End Date</span>
-            <Input type="date" {...register('endDay')} style={{ width: 'fit-content' }} />
+            <Input type="date" {...register('endDay')} className={DateInputStyle} />
           </div>
           {formState.errors.endDay && (
             <div className={css({ display: 'flex', px: 1.5, py: 1, gap: 1, alignItems: 'center' })}>
@@ -74,7 +100,7 @@ const ExchangeProfile = ({ myProfileData }: ExchangeProfileProps) => {
           )}
         </section>
         <div className={css({ display: 'flex', justifyContent: 'center' })}>
-          <Button variant={'loginColored'} type="submit">
+          <Button variant={isMobile ? 'mobile' : 'loginColored'} type="submit">
             SAVE
           </Button>
         </div>

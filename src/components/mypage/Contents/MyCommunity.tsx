@@ -59,10 +59,28 @@ const MyCommunity = () => {
   const ViewComment = useMemo(() => currentViewConfig[curView], [curView])
 
   return (
-    <div className={css({ display: 'flex', flexDir: 'column', gap: { base: 12, mdDown: 6 } })}>
-      <h1 className={css({ fontSize: { base: 30, mdDown: 15 }, fontWeight: 700 })}>Community Storage</h1>
-      <div className={css({ display: 'flex', flexDir: 'column', gap: { base: '70px', mdDown: '35px' } })}>
-        <div className={css({ display: 'flex', alignItems: 'center', gap: 3.5, flexWrap: 'wrap' })}>
+    <div
+      className={css({
+        display: 'flex',
+        flexDir: 'column',
+        gap: { base: 12, mdDown: 6 },
+        smDown: { bgColor: 'white', p: 5 },
+      })}
+    >
+      <h1 className={css({ fontSize: { base: 30, mdDown: 15 }, fontWeight: 700, smDown: { display: 'none' } })}>
+        Community Storage
+      </h1>
+      <div
+        className={css({ display: 'flex', flexDir: 'column', gap: { base: '70px', mdDown: '35px', smDown: '30px' } })}
+      >
+        <div
+          className={css({
+            display: 'flex',
+            alignItems: 'center',
+            gap: { base: 3.5, smDown: '6px' },
+            flexWrap: 'wrap',
+          })}
+        >
           <button className={ButtonStyle({ selected: curView === 'myPost' })} onClick={() => setCurView('myPost')}>
             My post
           </button>

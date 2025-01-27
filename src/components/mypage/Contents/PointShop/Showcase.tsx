@@ -10,7 +10,7 @@ import Toast from '@/components/ui/toast'
 import { CharacterType } from '@/types/community'
 
 const HeadingStyle = css({
-  fontSize: { base: 26, mdDown: 18 },
+  fontSize: { base: 26, mdDown: 18, smDown: 16 },
   fontWeight: 600,
 })
 
@@ -23,6 +23,7 @@ const Showcase = ({ myLevel, selectedLevel, myCharacterType }: ShowcaseProps) =>
   const { mutate: purchase } = usePostPurchaseItem()
   const { mutate: selectLevel } = usePatchLevel()
 
+  // TODO: 모바일용 모달 제작
   const handlePurchaseReviewTicket = useCallback(
     (days: number, cost: number) => {
       purchase(
@@ -56,7 +57,6 @@ const Showcase = ({ myLevel, selectedLevel, myCharacterType }: ShowcaseProps) =>
     (target: number) => {
       if (selectedLevel !== target) {
         selectLevel(target)
-        // TODO: 스크롤 애니메이션 컨펌 받기
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
       }
     },
@@ -64,16 +64,19 @@ const Showcase = ({ myLevel, selectedLevel, myCharacterType }: ShowcaseProps) =>
   )
 
   return (
-    <div className={css({ display: 'flex', flexDir: 'column', gap: 10 })}>
-      <div className={css({ display: 'flex', flexDir: 'column', gap: 5 })}>
+    <div className={css({ display: 'flex', flexDir: 'column', gap: { base: 10, smDown: '1.875rem' } })}>
+      <div className={css({ display: 'flex', flexDir: 'column', gap: { base: 5, smDown: 3.5 } })}>
         <h2 className={HeadingStyle}>Decorating Characters</h2>
         <div
           className={css({
             display: 'flex',
             alignItems: 'center',
             flexWrap: 'wrap',
-            columnGap: { base: 5, mdDown: 1 },
-            rowGap: { base: 10, mdDown: 1 },
+            columnGap: { base: 5, mdDown: 1, smDown: 0 },
+            rowGap: { base: 10, mdDown: 1, smDown: 5 },
+            smDown: {
+              justifyContent: 'space-between',
+            },
           })}
         >
           {Array(6)
@@ -103,7 +106,7 @@ const Showcase = ({ myLevel, selectedLevel, myCharacterType }: ShowcaseProps) =>
         <div
           className={css({
             display: 'flex',
-            flexDir: { mdDown: 'column' },
+            flexDir: { mdDown: 'column', smDown: 'row' },
             justifyContent: 'space-between',
             alignItems: { base: 'center', mdDown: 'flex-start' },
             gap: 2.5,
