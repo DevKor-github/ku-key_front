@@ -4,6 +4,7 @@ import { Toaster } from 'sonner'
 
 import routes from '@/lib/router/router'
 import { UserProvider } from '@/providers/UserProvider'
+import { themeClass } from '@/theme/theme.css'
 import AmplitudeProvider from '@/util/AmplitudeProvider'
 import AuthProvider from '@/util/auth/AuthProvider'
 import { DrawerProvider } from '@/util/DrawerProvider'
@@ -30,15 +31,17 @@ function App() {
   }
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider />
-      <UserProvider>
-        <DrawerProvider>
-          <Toaster position={isMobile ? 'bottom-center' : 'top-right'} />
-          {router}
-          <ScrollToTop />
-          <AmplitudeProvider />
-        </DrawerProvider>
-      </UserProvider>
+      <div className={themeClass}>
+        <AuthProvider />
+        <UserProvider>
+          <DrawerProvider>
+            <Toaster position={isMobile ? 'bottom-center' : 'top-right'} />
+            {router}
+            <ScrollToTop />
+            <AmplitudeProvider />
+          </DrawerProvider>
+        </UserProvider>
+      </div>
     </QueryClientProvider>
   )
 }
