@@ -34,5 +34,7 @@ styled-system-studio
 ## yarn
 .yarn
 
-## scrips
-scripts
+## scripts
+# scripts
+scripts/__generated__
+scripts/oas-templates
