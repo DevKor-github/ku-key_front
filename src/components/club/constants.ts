@@ -10,7 +10,7 @@ import SocialIcon from '@/assets/icon/SocialIcon'
 import SportsIcon from '@/assets/icon/SportsIcon'
 
 export const CATEGORY_LIST = [
-  { text: 'ALL', icon: AllIcon, type: null },
+  { text: 'ALL', icon: AllIcon, type: undefined },
   { text: 'Instrumental Arts', icon: InstrumentalArtsIcon, type: 'Instrumental Arts' },
   { text: 'Social', icon: SocialIcon, type: 'Social' },
   { text: 'Life & Culture', icon: LifeCultureIcon, type: 'Living Culture' },
