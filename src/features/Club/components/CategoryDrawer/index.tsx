@@ -2,30 +2,31 @@ import { css } from '@styled-system/css'
 import { RotateCw } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
-import { useGetCachedClubSearchResult } from '@/api/hooks/club'
 import { CATEGORY_LIST, CategoryType } from '@/components/club/constants'
 import MobileCategoryChip from '@/components/club/MobileCategoryChip'
+import { useGetCachedClubSearchResult } from '@/features/Club/hooks/useGetClubSearch'
 import { ClubSearchParams } from '@/types/club'
 import { useQueryParams } from '@/util/hooks/useQueryParams'
 
 interface CategoryDrawerProps {
   close: () => void
-  setCategory: (target: CategoryType) => void
 }
 
-const CategoryDrawer = ({ setCategory, close }: CategoryDrawerProps) => {
-  const [searchParam] = useQueryParams<ClubSearchParams>()
+const CategoryDrawer = ({ close }: CategoryDrawerProps) => {
+  const [param, setParam] = useQueryParams<ClubSearchParams>()
 
-  const getClubSearchResult = useGetCachedClubSearchResult(searchParam)
-  const selectedCategory = searchParam.category
+  const getClubSearchResult = useGetCachedClubSearchResult(param)
+  const selectedCategory = param.category
   const [resultCount, setResultCount] = useState(0)
+
+  const setCategory = (target: CategoryType) => setParam({ category: target })
 
   useEffect(() => {
     ;(async () => {
       const searchResult = await getClubSearchResult()
       setResultCount(searchResult.length || 0)
     })()
-  }, [getClubSearchResult, searchParam])
+  }, [getClubSearchResult, param])
 
   return (
     <div className={css({ pt: '15px', position: 'relative', h: '390px', px: '20px' })}>
@@ -67,7 +68,7 @@ const CategoryDrawer = ({ setCategory, close }: CategoryDrawerProps) => {
             alignItems: 'center',
             gap: '5px',
           })}
-          onClick={() => setCategory(null)}
+          onClick={() => setCategory(undefined)}
         >
           <RotateCw size={14} />
           <span>Reset</span>

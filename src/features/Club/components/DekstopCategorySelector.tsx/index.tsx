@@ -1,21 +1,18 @@
-import { css } from '@styled-system/css'
+import * as s from './style.css'
 
 import CategoryButton from '@/components/club/CategoryButton'
 import { CATEGORY_LIST, CategoryType } from '@/components/club/constants'
+import { ClubSearchParams } from '@/types/club'
+import { useQueryParams } from '@/util/hooks/useQueryParams'
 
-interface CategorySelectorProps {
-  curCategory: CategoryType
-  setCategory: (target: CategoryType) => void
-}
-const CategorySelector = ({ curCategory, setCategory }: CategorySelectorProps) => {
+const DesktopCategorySelector = () => {
+  const [param, setParam] = useQueryParams<ClubSearchParams>()
+  const curCategory = param.category
+
+  const setCategory = (target: CategoryType) => setParam({ category: target })
+
   return (
-    <div
-      className={css({
-        display: { base: 'flex', smDown: 'none' },
-        alignItems: 'flex-start',
-        justifyContent: 'space-between',
-      })}
-    >
+    <div className={s.Wrapper}>
       {CATEGORY_LIST.map((category, ind) => (
         <CategoryButton
           key={ind}
@@ -28,5 +25,4 @@ const CategorySelector = ({ curCategory, setCategory }: CategorySelectorProps) =
     </div>
   )
 }
-
-export default CategorySelector
+export default DesktopCategorySelector
