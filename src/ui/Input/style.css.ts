@@ -2,7 +2,6 @@ import { style } from '@vanilla-extract/css'
 import { recipe, RecipeVariants } from '@vanilla-extract/recipes'
 
 import { f } from '@/style'
-import { b } from '@/style/breakpoints'
 import { vars } from '@/theme/theme.css'
 
 const INPUT_BORDER_TRANSITION_S = 0.3
@@ -33,22 +32,22 @@ export const Input = recipe({
   },
   variants: {
     color: {
-      lightGray: {
-        borderColor: vars.color.lightGray1,
-        backgroundColor: vars.color.white,
-        ':focus': {
-          borderColor: vars.color.black,
-        },
-        '@media': {
-          [b.smDown]: {
-            borderColor: vars.color.lightGray2,
-            backgroundColor: vars.color.bgGray,
-            ':focus': {
-              borderColor: vars.color.lightGray2,
-            },
+      lightGray: [
+        {
+          borderColor: vars.color.lightGray1,
+          backgroundColor: vars.color.white,
+          ':focus': {
+            borderColor: vars.color.black,
           },
         },
-      },
+        f.smDown({
+          borderColor: vars.color.lightGray2,
+          backgroundColor: vars.color.bgGray,
+          ':focus': {
+            borderColor: vars.color.lightGray2,
+          },
+        }),
+      ],
     },
   },
 })

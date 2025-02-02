@@ -1,7 +1,6 @@
 import { style } from '@vanilla-extract/css'
 
 import { f } from '@/style'
-import { b } from '@/style/breakpoints'
 import { vars } from '@/theme/theme.css'
 
 export const Banner = style([
@@ -16,24 +15,22 @@ export const Banner = style([
     fontWeight: 700,
     color: vars.color.white,
     padding: '0 230px',
-    '@media': {
-      [b.lgDown]: {
-        height: 300,
-        fontSize: 48,
-        padding: '0 80px',
-      },
-      [b.mdDown]: {
-        height: 200,
-        fontSize: 32,
-        padding: '0 50px',
-      },
-      [b.smDown]: {
-        height: 150,
-        fontSize: 24,
-        padding: '0 30px',
-      },
-    },
   },
+  f.lgDown({
+    height: 300,
+    fontSize: 48,
+    padding: '0 80px',
+  }),
+  f.mdDown({
+    height: 200,
+    fontSize: 32,
+    padding: '0 50px',
+  }),
+  f.smDown({
+    height: 150,
+    fontSize: 24,
+    padding: '0 30px',
+  }),
 ])
 
 export const ContentsWrapper = style([
@@ -44,13 +41,11 @@ export const ContentsWrapper = style([
   {
     padding: '120px 0',
     backgroundColor: vars.color.bgGray,
-    '@media': {
-      [b.smDown]: {
-        padding: '15px 20px',
-        backgroundColor: vars.color.white,
-      },
-    },
   },
+  f.smDown({
+    padding: '15px 20px',
+    backgroundColor: vars.color.white,
+  }),
 ])
 
 export const Contents = style([
@@ -60,10 +55,8 @@ export const Contents = style([
   {
     maxWidth: 1100,
     gap: 85,
-    '@media': {
-      [b.smDown]: {
-        gap: 30,
-      },
-    },
   },
+  f.smDown({
+    gap: 30,
+  }),
 ])
