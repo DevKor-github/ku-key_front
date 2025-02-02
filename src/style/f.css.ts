@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css'
+import { style, StyleRule } from '@vanilla-extract/css'
 
 import { vars } from '@/theme/theme.css'
 
@@ -149,3 +149,19 @@ export const pRelative = style({ position: 'relative' })
 export const pStatic = style({ position: 'static' })
 
 export const pSticky = style({ position: 'sticky' })
+
+export const xsUp = (styles: StyleRule) => style({ '@media': { [`screen and (min-width: 390px)`]: styles } })
+
+export const smUp = (styles: StyleRule) => style({ '@media': { [`screen and (min-width: 580px)`]: styles } })
+
+export const mdUp = (styles: StyleRule) => style({ '@media': { [`screen and (min-width: 900px)`]: styles } })
+
+export const lgUp = (styles: StyleRule) => style({ '@media': { [`screen and (min-width: 1200px)`]: styles } })
+
+export const xsDown = (styles: StyleRule) => style({ '@media': { [`screen and (max-width: 390px)`]: styles } })
+
+export const smDown = (styles: StyleRule) => style({ '@media': { [`screen and (max-width: 580px)`]: styles } })
+
+export const mdDown = (styles: StyleRule) => style({ '@media': { [`screen and (max-width: 900px)`]: styles } })
+
+export const lgDown = (styles: StyleRule) => style({ '@media': { [`screen and (max-width: 1200px)`]: styles } })
