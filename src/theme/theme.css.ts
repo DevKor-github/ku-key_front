@@ -31,6 +31,12 @@ export const vars = createGlobalTheme(':root', {
     p50: '0px 0px 6px 0px rgba(0, 0, 0, 0.50)',
     p50Red: '0px 0px 10px 0px rgba(255, 0, 0, 0.50)',
   },
+  breakpoints: {
+    xs: '390',
+    sm: '580',
+    md: '900',
+    lg: '1200',
+  },
   typography: {
     desktop: {
       display1B: {
