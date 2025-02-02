@@ -1,10 +1,16 @@
 import { useState } from 'react'
 
-import { MEDIA_QUERY_MAP } from '@/style/breakpoints'
 import { useIsomorphicLayoutEffect } from '@/util/hooks/useIsomorphicLayoutEffect'
 import { UseMediaQueryOptions } from '@/util/hooks/useMediaQuery'
 
 const IS_SERVER = typeof window === 'undefined'
+
+const MEDIA_QUERY_MAP = {
+  xsDown: '(max-width: 390px)',
+  smDown: '(max-width: 580px)',
+  mdDown: '(max-width: 900px)',
+  lgDown: '(max-width: 1200px)',
+} as const
 
 export const useMediaQueryByName = (
   queryName: keyof typeof MEDIA_QUERY_MAP,
