@@ -5,6 +5,7 @@ import { CATEGORY_LIST, CategoryType } from '@/components/club/constants'
 import { ClubSearchParams } from '@/types/club'
 import { useQueryParams } from '@/util/hooks/useQueryParams'
 
+// TODO: 바뀐 디자인 적용
 const DesktopCategorySelector = () => {
   const [param, setParam] = useQueryParams<ClubSearchParams>()
   const curCategory = param.category

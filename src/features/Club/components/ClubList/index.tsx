@@ -10,10 +10,12 @@ import { USER_AUTH_MESSAGE } from '@/lib/messages/common'
 import { ClubInterface, ClubSearchParams } from '@/types/club'
 import { useAuth } from '@/util/auth/useAuth'
 import { useDeepCompareCallback } from '@/util/hooks/useDeepCompare'
+import { useMediaQueryByName } from '@/util/hooks/useMediaQueryByName'
 import { useQueryParams } from '@/util/hooks/useQueryParams'
 
 const ClubList = () => {
   const isLogin = useAuth().authState ?? false
+  const isDesktop = !useMediaQueryByName('smDown')
 
   const [query] = useQueryParams<ClubSearchParams>()
   // api request를 보낼 때 사용되는 query
@@ -42,19 +44,22 @@ const ClubList = () => {
   }
 
   return (
-    <div className={s.ClubCardWrapper}>
-      {data?.length ? (
-        data.map(club => (
-          <ClubCard
-            key={`clubId-${club.clubId}`}
-            clubData={club}
-            handleLikeClick={handleLikeClick}
-            handleClubClick={handleClubClick}
-          />
-        ))
-      ) : (
-        <div className={s.NoSearchResult}>No search results</div>
-      )}
+    <div className={s.SearchResultWrapper}>
+      {isDesktop && query.keyword && <div className={s.KeywordForDesktop}>{`'${query.keyword}' Search Results`}</div>}
+      <div className={s.ClubCardWrapper}>
+        {data?.length ? (
+          data.map(club => (
+            <ClubCard
+              key={`clubId-${club.clubId}`}
+              clubData={club}
+              handleLikeClick={handleLikeClick}
+              handleClubClick={handleClubClick}
+            />
+          ))
+        ) : (
+          <div className={s.NoSearchResult}>No search results</div>
+        )}
+      </div>
     </div>
   )
 }

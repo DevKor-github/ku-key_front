@@ -58,7 +58,7 @@ export const Contents = style([
   f.flexColumn,
   f.wFull,
   {
-    maxWidth: 1300,
+    maxWidth: 1100,
     gap: 85,
     '@media': {
       [b.smDown]: {
