@@ -4,6 +4,8 @@ import { f } from '@/style'
 import { b } from '@/style/breakpoints'
 import { vars } from '@/theme/theme.css'
 
+export const SearchResultWrapper = style([f.flex, f.flexColumn, { gap: 10 }])
+
 export const ClubCardWrapper = style([
   f.flex,
   f.flexColumn,
@@ -17,6 +19,15 @@ export const ClubCardWrapper = style([
         gap: 14,
       },
     },
+  },
+])
+
+export const KeywordForDesktop = style([
+  {
+    margin: '30px 0',
+    fontSize: 30,
+    fontWeight: 700,
+    color: vars.color.darkGray1,
   },
 ])
 
