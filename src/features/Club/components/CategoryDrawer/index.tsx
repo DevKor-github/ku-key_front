@@ -37,7 +37,7 @@ const CategoryDrawer = ({ close }: CategoryDrawerProps) => {
             category.type && (
               <MobileCategoryChip
                 key={category.type}
-                icon={category.icon}
+                Icon={category.Icon}
                 text={category.text}
                 selected={category.type === selectedCategory}
                 onClick={() => setCategory(category.type)}
