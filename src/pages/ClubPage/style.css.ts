@@ -39,7 +39,7 @@ export const ContentsWrapper = style([
   f.alignCenter,
   f.wFull,
   {
-    padding: '120px 0',
+    padding: '120px 10px',
     backgroundColor: vars.color.bgGray,
   },
   f.smDown({

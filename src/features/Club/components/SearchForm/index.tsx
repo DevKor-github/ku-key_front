@@ -43,14 +43,19 @@ const SearchForm = () => {
     else toast.custom(() => <Toast message={USER_AUTH_MESSAGE.REQUIRE_LOGIN} type="error" />)
   }
 
+  const clearSearchInput = () => {
+    setInput('')
+    setParam({ keyword: undefined })
+  }
+
   return (
     <form className={s.FormWrapper} onSubmit={onSubmit}>
       <Input
-        variant="search"
-        recipeVariant={{ color: 'lightGray' }}
+        variant={'search'}
         placeholder="Search For a Club"
         value={input}
         onChange={onChange}
+        clearInput={isMobile ? undefined : clearSearchInput}
       />
       {isMobile ? (
         <MobileCategorySelector curCategory={param.category} />
