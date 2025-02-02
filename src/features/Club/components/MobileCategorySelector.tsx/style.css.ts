@@ -9,7 +9,7 @@ export const OptionButton = recipe({
     f.justifyCenter,
     f.alignCenter,
     {
-      borderRadius: '100%',
+      borderRadius: '50vh',
       backgroundColor: vars.color.lightGray3,
       width: 40,
       height: 40,

@@ -1,7 +1,7 @@
 import * as s from './style.css'
 
-import CategoryButton from '@/components/club/CategoryButton'
 import { CATEGORY_LIST, CategoryType } from '@/components/club/constants'
+import CategoryChip from '@/features/Club/components/CategoryChip'
 import { ClubSearchParams } from '@/types/club'
 import { useQueryParams } from '@/util/hooks/useQueryParams'
 
@@ -14,9 +14,9 @@ const DesktopCategorySelector = () => {
 
   return (
     <div className={s.Wrapper}>
-      {CATEGORY_LIST.map((category, ind) => (
-        <CategoryButton
-          key={ind}
+      {CATEGORY_LIST.map((category, index) => (
+        <CategoryChip
+          key={index}
           text={category.text}
           Icon={category.Icon}
           onClick={() => setCategory(category.type)}
