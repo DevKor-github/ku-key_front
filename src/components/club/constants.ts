@@ -10,16 +10,16 @@ import SocialIcon from '@/assets/icon/SocialIcon'
 import SportsIcon from '@/assets/icon/SportsIcon'
 
 export const CATEGORY_LIST = [
-  { text: 'ALL', icon: AllIcon, type: undefined },
-  { text: 'Instrumental Arts', icon: InstrumentalArtsIcon, type: 'Instrumental Arts' },
-  { text: 'Social', icon: SocialIcon, type: 'Social' },
-  { text: 'Life & Culture', icon: LifeCultureIcon, type: 'Living Culture' },
-  { text: 'Performing Arts', icon: PerformingArtsIcon, type: 'Performing Arts' },
-  { text: 'Humanities', icon: HumanitiesIcon, type: 'Humanities' },
-  { text: 'Exhibition & Creative Writing', icon: ExhibitionIcon, type: 'Exhibition & Creative Writing' },
-  { text: 'Religious', icon: ReligiousIcon, type: 'Religious' },
-  { text: 'Sports', icon: SportsIcon, type: 'Sports' },
-  { text: 'Academic Research', icon: AcademicResearchIcon, type: 'Academic Research' },
+  { text: 'ALL', Icon: AllIcon, type: undefined },
+  { text: 'Instrumental Arts', Icon: InstrumentalArtsIcon, type: 'Instrumental Arts' },
+  { text: 'Social', Icon: SocialIcon, type: 'Social' },
+  { text: 'Life & Culture', Icon: LifeCultureIcon, type: 'Living Culture' },
+  { text: 'Performing Arts', Icon: PerformingArtsIcon, type: 'Performing Arts' },
+  { text: 'Humanities', Icon: HumanitiesIcon, type: 'Humanities' },
+  { text: 'Exhibition & Creative Writing', Icon: ExhibitionIcon, type: 'Exhibition & Creative Writing' },
+  { text: 'Religious', Icon: ReligiousIcon, type: 'Religious' },
+  { text: 'Sports', Icon: SportsIcon, type: 'Sports' },
+  { text: 'Academic Research', Icon: AcademicResearchIcon, type: 'Academic Research' },
 ] as const
 
 export type CategoryType = (typeof CATEGORY_LIST)[number]['type']

@@ -18,7 +18,7 @@ const DesktopCategorySelector = () => {
         <CategoryButton
           key={ind}
           text={category.text}
-          icon={category.icon}
+          Icon={category.Icon}
           onClick={() => setCategory(category.type)}
           selected={curCategory === category.type}
         />

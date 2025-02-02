@@ -6,10 +6,10 @@ import ClubIconBG from '@/assets/ClubIconBG'
 interface CategoryButtonProps {
   text: string
   onClick: () => void
-  icon: ({ color }: { color: string }) => JSX.Element
+  Icon: ({ color }: { color: string }) => JSX.Element
   selected: boolean
 }
-const CategoryButton = ({ text, onClick, icon, selected }: CategoryButtonProps) => (
+const CategoryButton = ({ text, onClick, Icon, selected }: CategoryButtonProps) => (
   <button
     onClick={onClick}
     className={css({
@@ -46,7 +46,7 @@ const CategoryButton = ({ text, onClick, icon, selected }: CategoryButtonProps) 
           },
         })}
       >
-        {icon({ color: selected ? 'white' : '#E9E9E9' })}
+        <Icon color={selected ? 'white' : '#E9E9E9'} />
       </div>
       <div
         className={cva({

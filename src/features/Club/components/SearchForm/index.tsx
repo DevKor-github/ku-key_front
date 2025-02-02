@@ -3,16 +3,14 @@ import { toast } from 'sonner'
 
 import * as s from './style.css'
 
-import OptionIcon from '@/assets/icon/OptionIcon'
 import { Checkbox } from '@/components/ui/checkbox'
 import Toast from '@/components/ui/toast'
-import CategoryDrawer from '@/features/Club/components/CategoryDrawer'
+import MobileCategorySelector from '@/features/Club/components/MobileCategorySelector.tsx'
 import { CLUB_SEARCH_MESSAGE } from '@/lib/messages/club'
 import { USER_AUTH_MESSAGE } from '@/lib/messages/common'
 import { ClubSearchParams } from '@/types/club'
 import Input from '@/ui/Input'
 import { useAuth } from '@/util/auth/useAuth'
-import useDrawer from '@/util/hooks/useDrawer'
 import { useMediaQueryByName } from '@/util/hooks/useMediaQueryByName'
 import { useQueryParams } from '@/util/hooks/useQueryParams'
 
@@ -21,7 +19,6 @@ const SearchForm = () => {
   const isLogin = useAuth().authState
 
   const [param, setParam] = useQueryParams<ClubSearchParams>()
-  const { open: openDrawer, close: closeDrawer } = useDrawer()
 
   const [input, setInput] = useState(param.keyword || '')
 
@@ -41,10 +38,6 @@ const SearchForm = () => {
     setParam({ keyword: input })
   }
 
-  const onOptionButtonClick = () => {
-    openDrawer({ element: <CategoryDrawer close={closeDrawer} /> })
-  }
-
   const handleWishList = () => {
     if (isLogin) setParam({ filter: param.filter === 'like' ? undefined : 'like' })
     else toast.custom(() => <Toast message={USER_AUTH_MESSAGE.REQUIRE_LOGIN} type="error" />)
@@ -60,9 +53,7 @@ const SearchForm = () => {
         onChange={onChange}
       />
       {isMobile ? (
-        <button className={s.OptionButton({ selected: param.category != undefined })} onClick={onOptionButtonClick}>
-          <OptionIcon />
-        </button>
+        <MobileCategorySelector curCategory={param.category} />
       ) : (
         <div className={s.FilterWrapper}>
           <Checkbox checked={param.filter === 'like'} onCheckedChange={handleWishList} />
