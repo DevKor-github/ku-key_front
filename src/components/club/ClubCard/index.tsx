@@ -2,9 +2,7 @@ import { css, cva } from '@styled-system/css'
 import { Heart } from 'lucide-react'
 import { memo } from 'react'
 
-import DesktopClubCardContents from '@/components/club/ClubCard/DesktopClubCardContents'
 import MobileClubCardContents from '@/components/club/ClubCard/MobileClubCardContents'
-import Responsive from '@/components/ui/responsive'
 import { ClubInterface } from '@/types/club'
 import { useMediaQueryByName } from '@/util/hooks/useMediaQueryByName'
 
@@ -47,10 +45,7 @@ const ClubCard = memo(({ clubData, handleLikeClick, handleClubClick }: ClubCardP
           src={clubData.imageUrl}
           alt={clubData.name}
         />
-        <Responsive
-          mobile={<MobileClubCardContents clubData={clubData} />}
-          desktop={<DesktopClubCardContents clubData={clubData} />}
-        />
+        <MobileClubCardContents clubData={clubData} />
       </button>
       <button
         className={cva({
