@@ -40,11 +40,10 @@ export const ContentsWrapper = style([
   f.wFull,
   {
     padding: '120px 10px',
-    backgroundColor: vars.color.bgGray,
+    backgroundColor: vars.color.white,
   },
   f.smDown({
     padding: '15px 20px',
-    backgroundColor: vars.color.white,
   }),
 ])
 
@@ -53,7 +52,7 @@ export const Contents = style([
   f.flexColumn,
   f.wFull,
   {
-    maxWidth: 1100,
+    maxWidth: 1000,
     gap: 85,
   },
   f.smDown({

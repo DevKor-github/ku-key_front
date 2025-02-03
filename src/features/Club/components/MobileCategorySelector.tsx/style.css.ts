@@ -16,6 +16,7 @@ export const OptionButton = recipe({
       flexShrink: 0,
       border: '1px solid',
       borderColor: vars.color.lightGray3,
+      color: '#BDBDBD',
     },
   ],
   variants: {
@@ -24,6 +25,7 @@ export const OptionButton = recipe({
         borderColor: vars.color.red3,
         backgroundColor: vars.color.red4,
         padding: 5,
+        color: vars.color.red3,
       },
     },
   },

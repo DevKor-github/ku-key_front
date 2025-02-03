@@ -17,7 +17,7 @@ const MobileCategorySelector = ({ curCategory }: Props) => {
   return (
     <button className={s.OptionButton({ selected: curCategory != undefined })} onClick={onClick}>
       {CATEGORY_LIST.map(({ type, Icon }) => {
-        if (type !== undefined && type === curCategory) return <Icon color="#FF5858" />
+        if (type !== undefined && type === curCategory) return <Icon />
       })}
       {curCategory === undefined && <OptionIcon />}
     </button>

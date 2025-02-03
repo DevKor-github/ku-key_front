@@ -1,7 +1,7 @@
 import * as s from './style.css'
 
 interface Props {
-  Icon: ({ color }: { color: string }) => JSX.Element
+  Icon: () => JSX.Element
   text: string
   onClick: () => void
   selected: boolean
@@ -10,7 +10,7 @@ const CategoryChip = ({ Icon, text, onClick, selected }: Props) => {
   return (
     <button type="button" onClick={onClick} className={s.Wrapper({ selected })}>
       <span className={s.IconWrapper}>
-        <Icon color={selected ? 'white' : '#6B6B6B'} />
+        <Icon />
       </span>
       <p className={s.Text}>{text}</p>
     </button>
