@@ -1,7 +1,7 @@
 import * as s from './style.css'
 
-import { CATEGORY_LIST, CategoryType } from '@/components/club/constants'
 import CategoryChip from '@/features/Club/components/CategoryChip'
+import { CATEGORY_LIST, CategoryType } from '@/features/Club/constants'
 import { ClubSearchParams } from '@/types/club'
 import { useQueryParams } from '@/util/hooks/useQueryParams'
 

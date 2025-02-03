@@ -9,6 +9,7 @@ export const Wrapper = recipe({
     f.flex,
     f.alignCenter,
     f.background.white,
+    f.cursorPointer,
     {
       gap: 2,
       borderRadius: '50vh',
