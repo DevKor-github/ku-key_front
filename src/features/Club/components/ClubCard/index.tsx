@@ -1,9 +1,11 @@
 import * as s from './style.css'
 
+import Checkmark from '@/assets/icon/Checkmark'
+import Handshake from '@/assets/icon/Handshake'
 import HeartIcon from '@/assets/icon/HeartIcon'
+import { Responsive } from '@/common/Responsive'
 import ContactButton from '@/features/Club/components/ClubCard/ContactButton'
 import { ClubInterface } from '@/types/club'
-import { useMediaQueryByName } from '@/util/hooks/useMediaQueryByName'
 import upperCaseHighlight from '@/util/upperCaseHighlight'
 
 interface Props {
@@ -11,8 +13,6 @@ interface Props {
   handleLikeClick: (clubId: number) => void
 }
 const ClubCard = ({ clubData, handleLikeClick }: Props) => {
-  const isDesktop = !useMediaQueryByName('smDown')
-
   return (
     <div className={s.Wrapper}>
       <button className={s.ContentsWrapper}>
@@ -24,18 +24,42 @@ const ClubCard = ({ clubData, handleLikeClick }: Props) => {
               <h2 className={s.Title}>{clubData.name}</h2>
             </div>
             <div className={s.ScheduleWrapper}>
-              <p>Regular Meeting | {upperCaseHighlight(clubData.regularMeeting)}</p>
-              <p>Recruitment Period | {upperCaseHighlight(clubData.recruitmentPeriod)}</p>
+              <Responsive
+                desktop={
+                  <>
+                    <p>Regular Meeting | {upperCaseHighlight(clubData.regularMeeting)}</p>
+                    <p>Recruitment Period | {upperCaseHighlight(clubData.recruitmentPeriod)}</p>
+                  </>
+                }
+                mobile={
+                  <>
+                    <div className={s.MobileSchedule}>
+                      <span className={s.MobileScheduleIcon}>
+                        <Checkmark />
+                      </span>
+                      <p className={s.MobileScheduleText}>{clubData.recruitmentPeriod}</p>
+                    </div>
+                    <div className={s.MobileSchedule}>
+                      <span className={s.MobileScheduleIcon}>
+                        <Handshake />
+                      </span>
+                      <p className={s.MobileScheduleText}>{clubData.regularMeeting}</p>
+                    </div>
+                  </>
+                }
+              />
             </div>
           </div>
           <div className={s.Footer}>
             <div className={s.Description}>{clubData.description}</div>
-            {isDesktop && (
-              <div>
-                {clubData.instagramLink && <ContactButton type="instagram" url={clubData.instagramLink} />}
-                {clubData.youtubeLink && <ContactButton type="youtube" url={clubData.youtubeLink} />}
-              </div>
-            )}
+            <Responsive
+              desktop={
+                <div>
+                  {clubData.instagramLink && <ContactButton type="instagram" url={clubData.instagramLink} />}
+                  {clubData.youtubeLink && <ContactButton type="youtube" url={clubData.youtubeLink} />}
+                </div>
+              }
+            />
           </div>
         </div>
       </button>
