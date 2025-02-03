@@ -12,28 +12,45 @@ export const Wrapper = recipe({
     {
       gap: 2,
       borderRadius: '50vh',
+      width: 'fit-content',
+      flexShrink: 0,
+      transition: 'all 0.2s ease-in-out',
+
+      color: vars.color.darkGray2,
+      backgroundColor: vars.color.lightGray3,
+      padding: '4px 0',
+      paddingLeft: 6,
+      paddingRight: 10,
+    },
+    f.smDown({
       border: '0.5px solid',
+      color: vars.color.darkGray1,
       borderColor: vars.color.lightGray1,
       padding: '2px 0',
       paddingLeft: 6,
       paddingRight: 10,
-      width: 'fit-content',
-      flexShrink: 0,
-      color: vars.color.darkGray1,
-      transition: 'all 0.2s ease-in-out',
-    },
+    }),
   ],
   variants: {
     selected: {
-      true: { backgroundColor: vars.color.red2, color: vars.color.white },
+      true: [
+        { background: vars.gradient.red2, color: vars.color.white },
+        f.smDown({ backgroundColor: vars.color.red2, color: vars.color.white }),
+      ],
     },
   },
 })
 
-export const IconWrapper = style({
-  width: 24,
-  height: 24,
-})
+export const IconWrapper = style([
+  {
+    width: 30,
+    height: 30,
+  },
+  f.smDown({
+    width: 24,
+    height: 24,
+  }),
+])
 
 export const Text = style({
   fontSize: 14,
