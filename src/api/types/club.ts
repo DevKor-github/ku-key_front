@@ -13,7 +13,7 @@ export interface GetClubRequest {
   sortBy?: 'like' | null
   wishList?: boolean
   category?: CategoryType
-  keyword?: string | null
+  keyword?: string
   isLogin: boolean
 }
 
