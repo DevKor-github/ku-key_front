@@ -7,6 +7,7 @@ export const Button = style([
   f.flex,
   f.flexRow,
   f.alignCenter,
+  f.justifyCenter,
   {
     width: 'fit-content',
     gap: 6,
@@ -18,4 +19,12 @@ export const Button = style([
     border: '1px solid',
     borderColor: vars.color.lightGray1,
   },
+  f.smDown({
+    width: 46,
+    height: 46,
+    backgroundColor: vars.color.red5,
+    padding: 0,
+    borderRadius: 10,
+    border: 'none',
+  }),
 ])
