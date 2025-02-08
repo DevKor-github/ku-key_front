@@ -16,8 +16,8 @@ export const CATEGORY_LIST = [
   { text: 'Life & Culture', Icon: LifeCultureIcon, type: 'Living Culture' },
   { text: 'Performing Arts', Icon: PerformingArtsIcon, type: 'Performing Arts' },
   { text: 'Humanities', Icon: HumanitiesIcon, type: 'Humanities' },
-  { text: 'Exhibition & Creative Writing', Icon: ExhibitionIcon, type: 'Exhibition & Creative Writing' },
   { text: 'Religious', Icon: ReligiousIcon, type: 'Religious' },
+  { text: 'Exhibition & Creative Writing', Icon: ExhibitionIcon, type: 'Exhibition & Creative Writing' },
   { text: 'Sports', Icon: SportsIcon, type: 'Sports' },
   { text: 'Academic Research', Icon: AcademicResearchIcon, type: 'Academic Research' },
 ] as const
