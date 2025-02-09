@@ -15,7 +15,7 @@ export const ContentsWrapper = style([
     flexGrow: 1,
   },
   f.smDown({
-    gap: '0.625rem',
+    gap: '0.62rem',
   }),
 ])
 
@@ -70,9 +70,6 @@ export const DesktopLikeButton = recipe({
           backgroundColor: 'rgba(255, 205, 205, 0.8)',
           color: vars.color.red2,
         },
-        f.smDown({
-          color: vars.color.red3,
-        }),
       ],
     },
   },
@@ -86,14 +83,12 @@ export const MobileLikeButton = recipe({
     f.cursorPointer,
     {
       color: vars.color.darkGray1,
-      fontSize: '0.625rem',
-      fontWeight: 400,
-      lineHeight: 1.2,
       transition: 'color 0.25s ease',
       gap: '0.25rem',
       width: '2.5rem',
       flexShrink: 0,
     },
+    vars.typography.mobile.miniTag2,
   ],
   variants: {
     myLikes: {
@@ -101,9 +96,6 @@ export const MobileLikeButton = recipe({
         {
           color: vars.color.red3,
         },
-        f.smDown({
-          color: vars.color.red3,
-        }),
       ],
     },
   },
@@ -151,20 +143,8 @@ export const DescriptionWrapper = style([
 ])
 
 export const TitleWrapper = style([f.flex, f.flexColumn, { gap: '0.25rem' }, f.smDown({ gap: 0 })])
-export const Summary = style([
-  vars.typography.desktop.body1R,
-  f.smDown({
-    fontSize: '0.75rem',
-    fontWeight: 400,
-  }),
-])
-export const Title = style([
-  vars.typography.desktop.heading2SB,
-  f.smDown({
-    fontSize: '1rem',
-    fontWeight: 500,
-  }),
-])
+export const Summary = style([vars.typography.desktop.body1R, f.smDown(vars.typography.mobile.miniTag1R)])
+export const Title = style([vars.typography.desktop.heading2SB, f.smDown(vars.typography.mobile.headingM)])
 
 export const Description = style([
   vars.typography.desktop.body2R,
@@ -177,8 +157,7 @@ export const Description = style([
     overflow: 'hidden',
   },
   f.smDown({
-    fontSize: '0.625rem',
-    lineHeight: 1.3,
     WebkitLineClamp: 2,
+    ...vars.typography.mobile.miniTag2,
   }),
 ])
