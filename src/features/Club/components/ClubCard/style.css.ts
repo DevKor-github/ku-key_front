@@ -157,21 +157,6 @@ export const ScheduleWrapper = style([
   }),
 ])
 
-export const MobileSchedule = style([f.flex, f.alignCenter, f.gap])
-export const MobileScheduleIcon = style({
-  flexShrink: 0,
-  color: vars.color.red3,
-})
-export const MobileScheduleText = style([
-  {
-    WebkitLineClamp: 1,
-    WebkitBoxOrient: 'vertical',
-    display: '-webkit-box',
-    textOverflow: 'ellipsis',
-    overflow: 'hidden',
-  },
-])
-
 export const Footer = style([f.flex, f.flexColumn, { gap: 12 }])
 export const Description = style([
   {
