@@ -13,7 +13,7 @@ export const Input = style([
   {
     borderRadius: 10,
     border: '1px solid',
-    padding: '0.5rem 0.625rem',
+    padding: '0.5rem 1rem',
     outline: 'none',
 
     color: vars.color.black,
