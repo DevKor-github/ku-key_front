@@ -14,7 +14,7 @@ const ClubDetail = () => {
   const { clubData } = useLocation().state as { clubData: ClubInterface }
 
   return (
-    <>
+    <div className={s.Wrapper}>
       <img className={s.Image} src={clubData.imageUrl} alt={clubData.name} />
       <div className={s.ContentsWrapper}>
         <div className={s.ContentsHeader}>
@@ -43,7 +43,7 @@ const ClubDetail = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 export default ClubDetail
