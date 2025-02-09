@@ -6,6 +6,6 @@ export const Wrapper = style([
   f.flex,
   {
     flexWrap: 'wrap',
-    gap: 14,
+    gap: '0.875rem',
   },
 ])

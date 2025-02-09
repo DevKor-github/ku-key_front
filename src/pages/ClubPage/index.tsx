@@ -5,7 +5,7 @@ import * as s from './style.css'
 import MetaTag from '@/components/MetaTag'
 import { LoadingSpinner } from '@/components/ui/spinner'
 import ClubList from '@/features/Club/components/ClubList'
-import DesktopCategorySelector from '@/features/Club/components/DekstopCategorySelector.tsx'
+import DesktopCategorySelector from '@/features/Club/components/DesktopCategorySelector.tsx'
 import SearchForm from '@/features/Club/components/SearchForm'
 import { useMediaQueryByName } from '@/util/hooks/useMediaQueryByName'
 

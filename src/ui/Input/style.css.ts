@@ -13,15 +13,15 @@ export const Input = style([
   {
     borderRadius: 10,
     border: '1px solid',
-    padding: '8px 10px',
+    padding: '0.5rem 0.625rem',
     outline: 'none',
 
     color: vars.color.black,
     backgroundColor: vars.color.white,
-    fontSize: 18,
+    fontSize: '1.125rem',
     fontWeight: 500,
     lineHeight: 1.4,
-    height: 50,
+    height: '3.125rem',
 
     '::placeholder': {
       color: vars.color.lightGray1,
@@ -36,9 +36,9 @@ export const Input = style([
     },
   },
   f.smDown({
-    fontSize: 14,
+    fontSize: '0.875rem',
     fontWeight: 400,
-    height: 40,
+    height: '2.5rem',
     backgroundColor: vars.color.bgGray,
 
     borderColor: vars.color.lightGray2,
@@ -56,7 +56,7 @@ export const Icon = recipe({
     f.alignCenter,
     f.cursorPointer,
     {
-      right: 10,
+      right: '0.625rem',
       color: vars.color.lightGray1,
       top: '50%',
       transform: 'translate3d(0, -50%, 0)',

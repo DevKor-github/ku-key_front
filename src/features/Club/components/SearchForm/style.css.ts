@@ -8,10 +8,10 @@ export const FormWrapper = style([
   f.flex,
   f.alignCenter,
   {
-    gap: 30,
+    gap: '1.875rem',
   },
   f.smDown({
-    gap: 10,
+    gap: '0.625rem',
   }),
 ])
 
@@ -19,8 +19,8 @@ export const FilterWrapper = style([
   f.flex,
   f.alignCenter,
   {
-    gap: 10,
-    padding: 10,
+    gap: '0.625rem',
+    padding: '0.625rem',
     flexShrink: 0,
   },
 ])

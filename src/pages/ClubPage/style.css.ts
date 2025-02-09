@@ -7,29 +7,29 @@ export const Banner = style([
   f.flex,
   f.alignCenter,
   {
-    height: 400,
+    height: '25rem',
     backgroundPosition: 'center',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
-    fontSize: 64,
+    fontSize: '4rem',
     fontWeight: 700,
     color: vars.color.white,
-    padding: '0 230px',
+    padding: '0 14.375rem',
   },
   f.lgDown({
-    height: 300,
-    fontSize: 48,
-    padding: '0 80px',
+    height: '18.75rem',
+    fontSize: '3rem',
+    padding: '0 5rem',
   }),
   f.mdDown({
-    height: 200,
-    fontSize: 32,
-    padding: '0 50px',
+    height: '12.5rem',
+    fontSize: '2rem',
+    padding: '0 3.125rem',
   }),
   f.smDown({
-    height: 150,
-    fontSize: 24,
-    padding: '0 30px',
+    height: '9.375rem',
+    fontSize: '1.5rem',
+    padding: '0 1.875rem',
   }),
 ])
 
@@ -39,11 +39,11 @@ export const ContentsWrapper = style([
   f.alignCenter,
   f.wFull,
   {
-    padding: '120px 10px',
+    padding: '7.5rem 0.625rem',
     backgroundColor: vars.color.white,
   },
   f.smDown({
-    padding: '15px 20px',
+    padding: '1rem 1.25rem',
   }),
 ])
 
@@ -52,10 +52,10 @@ export const Contents = style([
   f.flexColumn,
   f.wFull,
   {
-    maxWidth: 1000,
-    gap: 85,
+    maxWidth: '62.5rem',
+    gap: '5.3rem',
   },
   f.smDown({
-    gap: 30,
+    gap: '1.875rem',
   }),
 ])

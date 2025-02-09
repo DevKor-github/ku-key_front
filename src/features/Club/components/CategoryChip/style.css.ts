@@ -11,7 +11,7 @@ export const Wrapper = recipe({
     f.background.white,
     f.cursorPointer,
     {
-      gap: 2,
+      gap: '0.125rem',
       borderRadius: '50vh',
       width: 'fit-content',
       flexShrink: 0,
@@ -19,17 +19,12 @@ export const Wrapper = recipe({
 
       color: vars.color.darkGray2,
       backgroundColor: vars.color.lightGray3,
-      padding: '4px 0',
-      paddingLeft: 6,
-      paddingRight: 10,
+      padding: '0.25rem 0.62rem',
     },
     f.smDown({
       border: '0.5px solid',
       color: vars.color.darkGray1,
       borderColor: vars.color.lightGray1,
-      padding: '2px 0',
-      paddingLeft: 6,
-      paddingRight: 10,
     }),
   ],
   variants: {
@@ -44,12 +39,12 @@ export const Wrapper = recipe({
 
 export const IconWrapper = style([
   {
-    width: 30,
-    height: 30,
+    width: '1.875rem',
+    height: '1.875rem',
   },
   f.smDown({
-    width: 24,
-    height: 24,
+    width: '1.5rem',
+    height: '1.5rem',
   }),
 ])
 

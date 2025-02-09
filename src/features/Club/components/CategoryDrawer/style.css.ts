@@ -6,16 +6,16 @@ import { vars } from '@/theme/theme.css'
 export const Wrapper = style([
   f.pRelative,
   {
-    padding: '0 20px',
-    paddingTop: 15,
-    height: 390,
+    padding: '0 1.25rem',
+    paddingTop: '1rem',
+    height: '24.375rem',
   },
 ])
 
 export const Instruction = style([
   vars.typography.mobile.headingSB,
   {
-    marginBottom: 14,
+    marginBottom: '0.875rem',
   },
 ])
 
@@ -23,8 +23,8 @@ export const CategoryWrapper = style([
   f.flex,
   f.wrap,
   {
-    rowGap: 8,
-    columnGap: 4,
+    rowGap: '0.5rem',
+    columnGap: '0.25rem',
   },
 ])
 
@@ -34,13 +34,13 @@ export const BottomSection = style([
   f.alignCenter,
   f.justifyBetween,
   {
-    top: 280,
+    top: '17.5rem',
     left: 0,
     right: 0,
     borderTop: '0.5px solid',
     borderColor: vars.color.lightGray2,
-    padding: '0 20px',
-    paddingTop: 10,
+    padding: '0 1.25rem',
+    paddingTop: '0.625rem',
   },
 ])
 
@@ -50,7 +50,7 @@ export const ResetButton = style([
   vars.typography.mobile.bodyM,
   {
     color: vars.color.darkGray1,
-    gap: 5,
+    gap: '0.3125rem',
   },
 ])
 
@@ -60,8 +60,8 @@ export const CloseButton = style([
   f.alignCenter,
   vars.typography.mobile.headingR,
   {
-    width: 180,
-    padding: 10,
+    width: '11.25rem',
+    padding: '0.625rem',
     flexShrink: 0,
     color: vars.color.white,
     backgroundColor: vars.color.black,

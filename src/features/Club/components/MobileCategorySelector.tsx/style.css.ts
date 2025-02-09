@@ -11,8 +11,8 @@ export const OptionButton = recipe({
     {
       borderRadius: '50vh',
       backgroundColor: vars.color.lightGray3,
-      width: 40,
-      height: 40,
+      width: '2.5rem',
+      height: '2.5rem',
       flexShrink: 0,
       border: '1px solid',
       borderColor: vars.color.lightGray3,
@@ -24,7 +24,7 @@ export const OptionButton = recipe({
       true: {
         borderColor: 'rgba(255, 88, 88, 0.5)',
         backgroundColor: vars.color.red4,
-        padding: 5,
+        padding: '0.3125rem',
         color: vars.color.red3,
       },
     },

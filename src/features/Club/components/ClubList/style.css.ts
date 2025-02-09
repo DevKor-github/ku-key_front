@@ -9,20 +9,20 @@ export const ClubCardWrapper = style([
   f.flex,
   f.flexColumn,
   {
-    gap: 60,
+    gap: '3.7rem',
   },
   f.mdDown({
-    gap: 40,
+    gap: '2.5rem',
   }),
   f.smDown({
-    gap: 14,
+    gap: '0.875rem',
   }),
 ])
 
 export const KeywordForDesktop = style([
   vars.typography.desktop.titleSB,
   {
-    margin: '30px 0',
+    margin: '1.875rem 0',
     color: vars.color.darkGray1,
   },
 ])
