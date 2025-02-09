@@ -53,7 +53,7 @@ export const Contents = style([
   f.wFull,
   {
     maxWidth: '62.5rem',
-    gap: '5.3rem',
+    gap: '5rem',
   },
   f.smDown({
     gap: '1.875rem',

@@ -1,8 +1,8 @@
-import { HeartIcon } from '@heroicons/react/24/solid'
 import { Link } from 'react-router-dom'
 
 import * as s from './style.css'
 
+import HeartIcon from '@/assets/icon/HeartIcon'
 import { Responsive } from '@/common/Responsive'
 import ClubSchedule from '@/features/Club/components/ClubSchedule'
 import { ClubInterface } from '@/types/club'
@@ -24,7 +24,9 @@ const ClubCard = ({ clubData, handleLikeClick }: Props) => {
                 className={s.DesktopLikeButton({ myLikes: clubData.isLiked })}
                 onClick={() => handleLikeClick(clubData.clubId)}
               >
-                <HeartIcon className={s.HeartIcon({ myLikes: clubData.isLiked })} />
+                <div className={s.HeartIcon({ myLikes: clubData.isLiked })}>
+                  <HeartIcon />
+                </div>
                 {clubData.likeCount}
               </button>
             }
