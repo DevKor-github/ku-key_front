@@ -5,7 +5,7 @@ import { UseMediaQueryOptions } from '@/util/hooks/useMediaQuery'
 
 const IS_SERVER = typeof window === 'undefined'
 
-const QUERY_MAP = {
+const MEDIA_QUERY_MAP = {
   xsDown: '(max-width: 390px)',
   smDown: '(max-width: 580px)',
   mdDown: '(max-width: 900px)',
@@ -13,10 +13,10 @@ const QUERY_MAP = {
 } as const
 
 export const useMediaQueryByName = (
-  queryName: keyof typeof QUERY_MAP,
+  queryName: keyof typeof MEDIA_QUERY_MAP,
   { defaultValue = false, initializeWithValue = true }: UseMediaQueryOptions = {},
 ) => {
-  const query = QUERY_MAP[queryName]
+  const query = MEDIA_QUERY_MAP[queryName]
   const getMatches = (query: string): boolean => {
     if (IS_SERVER) {
       return defaultValue
