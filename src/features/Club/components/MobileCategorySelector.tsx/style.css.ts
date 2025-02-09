@@ -22,7 +22,7 @@ export const OptionButton = recipe({
   variants: {
     selected: {
       true: {
-        borderColor: vars.color.red3,
+        borderColor: 'rgba(255, 88, 88, 0.5)',
         backgroundColor: vars.color.red4,
         padding: 5,
         color: vars.color.red3,

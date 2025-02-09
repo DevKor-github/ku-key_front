@@ -20,20 +20,17 @@ export const ClubCardWrapper = style([
 ])
 
 export const KeywordForDesktop = style([
+  vars.typography.desktop.titleSB,
   {
     margin: '30px 0',
-    fontSize: 30,
-    fontWeight: 700,
     color: vars.color.darkGray1,
   },
 ])
 
 export const NoSearchResult = style([
+  vars.typography.desktop.heading2R,
   {
     color: vars.color.darkGray1,
-    fontSize: 20,
   },
-  f.mdDown({
-    fontSize: 16,
-  }),
+  f.mdDown(vars.typography.mobile.headingR),
 ])

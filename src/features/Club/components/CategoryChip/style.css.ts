@@ -53,8 +53,4 @@ export const IconWrapper = style([
   }),
 ])
 
-export const Text = style({
-  fontSize: 14,
-  fontWeight: 400,
-  lineHeight: 1.2,
-})
+export const Text = style(vars.typography.mobile.bodyR)
