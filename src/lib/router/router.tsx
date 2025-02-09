@@ -21,7 +21,7 @@ import {
   WriteReviewPage,
 } from '@/lib/router/lazy-route'
 import ProtectedRoutes from '@/lib/router/ProtectedRoutes'
-import HomePage from '@/pages/HomePage'
+import HomePage from '@/pages/Home'
 import LandingPage from '@/pages/LandingPage'
 import Login from '@/pages/LoginPage'
 import PasswordResetPage from '@/pages/PasswordResetPage'

@@ -9,6 +9,7 @@ export const RelativeWrapper = style([
   f.flex,
   f.pAbsolute,
   f.wFull,
+  f.hFull,
   f.alignCenter,
   f.justifyCenter,
   { padding: '3.125rem 0', top: 0, left: 0 },
@@ -53,7 +54,9 @@ export const ButtonWrapper = style([f.flex, f.wFull, f.alignCenter, { gap: '0.93
 
 export const CarouselButton = style([
   f.flexCenter,
+  f.pAbsolute,
   {
+    bottom: '2.5rem',
     padding: '0.625rem 1.5rem',
     gap: '1.25rem',
     alignSelf: 'center',

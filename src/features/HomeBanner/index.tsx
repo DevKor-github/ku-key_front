@@ -41,7 +41,7 @@ const HomeBanner = () => {
         <div className={s.EmblaContainer}>
           {banners?.map(({ imageUrl }, index) => (
             <div key={`banner-img-${index}`} className={s.EmblaSlide}>
-              <img src={imageUrl} alt={`banner-img-${index}`} style={{ width: '40%' }} />
+              <img src={imageUrl} alt={`banner-img-${index}`} style={{ width: '80%' }} />
             </div>
           ))}
         </div>
