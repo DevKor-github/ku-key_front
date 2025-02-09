@@ -3,6 +3,8 @@ import { style } from '@vanilla-extract/css'
 import { f } from '@/style'
 import { vars } from '@/theme/theme.css'
 
+export const Wrapper = style([f.flex, f.flexRow, f.smDown({ flexDirection: 'column' })])
+
 export const Image = style({})
 
 export const ContentsWrapper = style([

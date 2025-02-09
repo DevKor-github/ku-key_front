@@ -1,7 +1,8 @@
+import { UserGroupIcon } from '@heroicons/react/24/solid'
+
 import * as s from './style.css'
 
 import Checkmark from '@/assets/icon/Checkmark'
-import Handshake from '@/assets/icon/Handshake'
 interface Props {
   recruitmentPeriod: string
   regularMeeting: string
@@ -16,9 +17,7 @@ const ClubSchedule = ({ recruitmentPeriod, regularMeeting }: Props) => {
         <p className={s.ScheduleText}>{recruitmentPeriod}</p>
       </div>
       <div className={s.Schedule}>
-        <span className={s.ScheduleIcon}>
-          <Handshake />
-        </span>
+        <UserGroupIcon className={s.ScheduleIcon} />
         <p className={s.ScheduleText}>{regularMeeting}</p>
       </div>
     </div>

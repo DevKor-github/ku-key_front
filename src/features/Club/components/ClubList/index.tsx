@@ -12,6 +12,8 @@ import { useAuth } from '@/util/auth/useAuth'
 import { useDeepCompareCallback } from '@/util/hooks/useDeepCompare'
 import { useMediaQueryByName } from '@/util/hooks/useMediaQueryByName'
 import { useQueryParams } from '@/util/hooks/useQueryParams'
+import { Fragment } from 'react/jsx-runtime'
+import { Responsive } from '@/common/Responsive'
 
 const ClubList = () => {
   const isLogin = useAuth().authState ?? false
@@ -43,7 +45,12 @@ const ClubList = () => {
       {isDesktop && query.keyword && <div className={s.KeywordForDesktop}>{`'${query.keyword}' Search Results`}</div>}
       <div className={s.ClubCardWrapper}>
         {data?.length ? (
-          data.map((club, index) => <ClubCard key={index} clubData={club} handleLikeClick={handleLikeClick} />)
+          data.map((club, index) => (
+            <Fragment key={index}>
+              {index !== 0 && <Responsive mobile={<div className={s.ClubLine} />} />}
+              <ClubCard clubData={club} handleLikeClick={handleLikeClick} />
+            </Fragment>
+          ))
         ) : (
           <div className={s.NoSearchResult}>No search results</div>
         )}

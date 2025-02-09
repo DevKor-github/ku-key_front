@@ -9,6 +9,7 @@ export const ClubCardWrapper = style([
   { display: 'grid', gridTemplateColumns: '1fr 1fr', rowGap: '3.12rem', columnGap: '2.5rem' },
   f.mdDown({
     gridTemplateColumns: '1fr',
+    gap: '0.88rem',
   }),
 ])
 
@@ -25,4 +26,12 @@ export const NoSearchResult = style([
     color: vars.color.darkGray1,
   },
   f.mdDown(vars.typography.mobile.headingR),
+])
+
+export const ClubLine = style([
+  f.wFull,
+  {
+    height: 1,
+    backgroundColor: vars.color.lightGray2,
+  },
 ])

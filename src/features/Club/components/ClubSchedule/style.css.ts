@@ -10,20 +10,30 @@ export const ScheduleWrapper = style([
     gap: '0.38rem',
   },
   f.smDown({
-    gap: '0.125rem',
-    fontSize: '0.75rem',
-    fontWeight: 400,
+    gap: '0.12rem',
   }),
 ])
 
-export const Schedule = style([f.flex, f.alignCenter, vars.typography.desktop.body1R, { gap: '0.25rem' }])
+export const Schedule = style([
+  f.flex,
+  f.alignCenter,
+  vars.typography.desktop.body1R,
+  { gap: '0.38rem' },
+  f.smDown(vars.typography.mobile.miniTag1R),
+])
 
-export const ScheduleIcon = style({
-  flexShrink: 0,
-  color: vars.color.red3,
-  height: '1.5rem',
-  width: '1.5rem',
-})
+export const ScheduleIcon = style([
+  {
+    flexShrink: 0,
+    color: vars.color.darkGray2,
+    height: '1.5rem',
+    width: '1.5rem',
+  },
+  f.smDown({
+    width: '1rem',
+    height: '1rem',
+  }),
+])
 
 export const ScheduleText = style([
   {
