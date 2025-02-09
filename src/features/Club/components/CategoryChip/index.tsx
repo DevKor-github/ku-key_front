@@ -7,12 +7,14 @@ interface Props {
   selected: boolean
 }
 const CategoryChip = ({ Icon, text, onClick, selected }: Props) => {
+  const isAll = text === 'ALL'
+
   return (
-    <button type="button" onClick={onClick} className={s.Wrapper({ selected })}>
+    <button type="button" onClick={onClick} className={s.Wrapper({ selected, isAll })}>
       <span className={s.IconWrapper}>
         <Icon />
       </span>
-      <p className={s.Text}>{text}</p>
+      {!isAll && <p className={s.Text}>{text}</p>}
     </button>
   )
 }
