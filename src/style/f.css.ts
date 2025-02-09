@@ -53,6 +53,9 @@ export const hFull = style({ height: '100%' })
 
 export const hScreen = style({ height: '100vh' })
 
+export const overflowHidden = style({ overflow: 'hidden' })
+
+export const overflowVisible = style({ overflow: 'visible' })
 // Gap
 export const gap = style({ gap: '0.25rem' }) // 4px
 export const gap2 = style({ gap: '0.5rem' }) // 8px
