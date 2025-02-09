@@ -2,12 +2,12 @@ import { toast } from 'sonner'
 
 import * as s from './style.css'
 
-import ClubCard from '@/components/club/ClubCard'
 import Toast from '@/components/ui/toast'
+import ClubCard from '@/features/Club/components/ClubCard'
 import { useGetClubSearch } from '@/features/Club/hooks/useGetClubSearch'
 import { usePostClubLike } from '@/features/Club/hooks/usePostClubLike'
 import { USER_AUTH_MESSAGE } from '@/lib/messages/common'
-import { ClubInterface, ClubSearchParams } from '@/types/club'
+import { ClubSearchParams } from '@/types/club'
 import { useAuth } from '@/util/auth/useAuth'
 import { useDeepCompareCallback } from '@/util/hooks/useDeepCompare'
 import { useMediaQueryByName } from '@/util/hooks/useMediaQueryByName'
@@ -38,24 +38,12 @@ const ClubList = () => {
     [likeClub, query, isLogin],
   )
 
-  const handleClubClick = (club: ClubInterface) => {
-    // TODO: 클럽 상세 페이지
-    console.log(club)
-  }
-
   return (
     <div className={s.SearchResultWrapper}>
       {isDesktop && query.keyword && <div className={s.KeywordForDesktop}>{`'${query.keyword}' Search Results`}</div>}
       <div className={s.ClubCardWrapper}>
         {data?.length ? (
-          data.map(club => (
-            <ClubCard
-              key={`clubId-${club.clubId}`}
-              clubData={club}
-              handleLikeClick={handleLikeClick}
-              handleClubClick={handleClubClick}
-            />
-          ))
+          data.map((club, index) => <ClubCard key={index} clubData={club} handleLikeClick={handleLikeClick} />)
         ) : (
           <div className={s.NoSearchResult}>No search results</div>
         )}

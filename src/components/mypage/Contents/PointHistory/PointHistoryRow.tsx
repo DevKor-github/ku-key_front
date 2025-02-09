@@ -1,7 +1,7 @@
 import { css } from '@styled-system/css'
 
+import { Responsive } from '@/common/Responsive'
 import TypeChip from '@/components/mypage/Contents/PointHistory/TypeChip'
-import Responsive from '@/components/ui/responsive'
 import dateFormatter from '@/util/dateFormatter'
 
 interface PointHistoryRowProps {

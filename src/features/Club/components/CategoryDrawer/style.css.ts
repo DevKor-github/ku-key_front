@@ -12,11 +12,12 @@ export const Wrapper = style([
   },
 ])
 
-export const Instruction = style({
-  fontWeight: 600,
-  fontSize: 16,
-  marginBottom: 14,
-})
+export const Instruction = style([
+  vars.typography.mobile.headingSB,
+  {
+    marginBottom: 14,
+  },
+])
 
 export const CategoryWrapper = style([
   f.flex,
@@ -46,9 +47,8 @@ export const BottomSection = style([
 export const ResetButton = style([
   f.flex,
   f.alignCenter,
+  vars.typography.mobile.bodyM,
   {
-    fontSize: 14,
-    fontWeight: 500,
     color: vars.color.darkGray1,
     gap: 5,
   },
@@ -58,13 +58,11 @@ export const CloseButton = style([
   f.flex,
   f.justifyCenter,
   f.alignCenter,
+  vars.typography.mobile.headingR,
   {
     width: 180,
     padding: 10,
     flexShrink: 0,
-    fontSize: 16,
-    fontWeight: 400,
-    lineHeight: 1.2,
     color: vars.color.white,
     backgroundColor: vars.color.black,
     borderRadius: '50vh',

@@ -1,4 +1,4 @@
-import { CategoryType } from '@/components/club/constants'
+import { CategoryType } from '@/features/Club/constants'
 import { ClubInterface } from '@/types/club'
 
 export interface ClubProfileProps {

@@ -28,7 +28,7 @@ export const FilterWrapper = style([
 export const FilterText = style([
   {
     color: vars.color.darkGray1,
-    fontSize: 20,
+    fontSize: '1.25rem',
     fontWeight: 700,
   },
 ])
