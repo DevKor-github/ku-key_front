@@ -4,6 +4,7 @@
 api.ts
 api/attendance-check-api.ts
 api/auth-api.ts
+api/banner-api.ts
 api/board-api.ts
 api/calendar-api.ts
 api/club-api.ts
@@ -24,6 +25,7 @@ configuration.ts
 git_push.sh
 index.ts
 models/academic-schedule.ts
+models/banner-dto.ts
 models/board-info.ts
 models/change-password-request-dto.ts
 models/change-password-response-dto.ts
@@ -74,6 +76,7 @@ models/get-post-list-response-dto.ts
 models/get-post-list-with-board-response-dto.ts
 models/get-post-response-dto.ts
 models/get-profile-response-dto.ts
+models/get-received-friendship-request-count-dto.ts
 models/get-recommend-club-response-dto.ts
 models/get-report-list-response-dto.ts
 models/get-report-response-dto.ts

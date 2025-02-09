@@ -14,6 +14,7 @@
 
 export * as AttendanceCheckApi from './api/attendance-check-api'
 export * as AuthApi from './api/auth-api'
+export * as BannerApi from './api/banner-api'
 export * as BoardApi from './api/board-api'
 export * as CalendarApi from './api/calendar-api'
 export * as ClubApi from './api/club-api'

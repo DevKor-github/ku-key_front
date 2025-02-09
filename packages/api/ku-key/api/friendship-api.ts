@@ -16,18 +16,7 @@ import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'ax
 import { Configuration } from '../configuration'
 // Some imports not used depending on template conditions
 // @ts-ignore
-import {
-  DUMMY_BASE_URL,
-  assertParamExists,
-  setApiKeyToObject,
-  setBasicAuthToObject,
-  setBearerAuthToObject,
-  setOAuthToObject,
-  setSearchParams,
-  serializeDataIfNeeded,
-  toPathString,
-  createRequestFunction,
-} from '../common'
+import { DUMMY_BASE_URL, assertParamExists, setSearchParams, toPathString, createRequestFunction } from '../common'
 // @ts-ignore
 import { COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base'
 
@@ -35,6 +24,8 @@ import { COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base
 import { DeleteFriendshipResponseDto } from '../models'
 // @ts-ignore
 import { GetFriendResponseDto } from '../models'
+// @ts-ignore
+import { GetReceivedFriendshipRequestCountDto } from '../models'
 // @ts-ignore
 import { GetTimetableByTimetableIdDto } from '../models'
 // @ts-ignore
@@ -201,6 +192,37 @@ const friendshipPostAxiosParamCreator = async (
   let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {}
   localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers }
   localVarRequestOptions.data = sendFriendshipRequestDto || undefined
+
+  return {
+    url: toPathString(localVarUrlObj),
+    options: localVarRequestOptions,
+  }
+}
+/**
+ * 나에게 온 친구 요청 전체 개수 / 아직 확인하지 않은 개수를 조회합니다.
+ * @summary 나에게 온 친구 요청 개수 조회
+ * @param {*} [options] Override http request option.
+ * @throws {RequiredError}
+ */
+const friendshipReceivedCountGetAxiosParamCreator = async (
+  options: AxiosRequestConfig = {},
+  configuration?: Configuration,
+): Promise<RequestArgs> => {
+  const localVarPath = `/friendship/received/count`
+  // use dummy base URL string because the URL constructor only accepts absolute URLs.
+  const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL)
+  let baseOptions
+  if (configuration) {
+    baseOptions = configuration.baseOptions
+  }
+
+  const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options }
+  const localVarHeaderParameter = {} as any
+  const localVarQueryParameter = {} as any
+
+  setSearchParams(localVarUrlObj, localVarQueryParameter)
+  let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {}
+  localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers }
 
   return {
     url: toPathString(localVarUrlObj),
@@ -489,6 +511,19 @@ const friendshipPostFp = async (
   return createRequestFunction(localVarAxiosArgs, globalAxios, configuration)
 }
 /**
+ * 나에게 온 친구 요청 전체 개수 / 아직 확인하지 않은 개수를 조회합니다.
+ * @summary 나에게 온 친구 요청 개수 조회
+ * @param {*} [options] Override http request option.
+ * @throws {RequiredError}
+ */
+const friendshipReceivedCountGetFp = async (
+  options?: AxiosRequestConfig,
+  configuration?: Configuration,
+): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetReceivedFriendshipRequestCountDto>> => {
+  const localVarAxiosArgs = await friendshipReceivedCountGetAxiosParamCreator(options, configuration)
+  return createRequestFunction(localVarAxiosArgs, globalAxios, configuration)
+}
+/**
  * friendshipId를 받아 해당 friendship 레코드를 삭제합니다.
  * @summary 받은 친구 요청 거절하기
  * @param {number} friendshipId 해당 친구 요청에 대한 friendship id
@@ -707,6 +742,30 @@ export const friendshipPost = ({
     return friendshipPostFp(params.sendFriendshipRequestDto, params.options, configuration).then(request =>
       request(axios, basePath),
     )
+  }
+}
+
+export type FriendshipReceivedCountGetRequestParams = {
+  options?: any
+}
+
+/**
+ * 나에게 온 친구 요청 전체 개수 / 아직 확인하지 않은 개수를 조회합니다.
+ * @summary 나에게 온 친구 요청 개수 조회
+ * @param {*} [options] Override http request option.
+ * @throws {RequiredError}
+ */
+export const friendshipReceivedCountGet = ({
+  configuration,
+  basePath,
+  axios,
+}: {
+  configuration?: Configuration
+  basePath?: string
+  axios?: AxiosInstance
+}) => {
+  return (params?: { options?: any }): AxiosPromise<GetReceivedFriendshipRequestCountDto> => {
+    return friendshipReceivedCountGetFp(params?.options, configuration).then(request => request(axios, basePath))
   }
 }
 

@@ -21,64 +21,22 @@ import { DUMMY_BASE_URL, assertParamExists, setSearchParams, toPathString, creat
 import { COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base'
 
 // @ts-ignore
-import { GetNoticeResponseDto } from '../models'
+import { BannerDto } from '../models'
 /**
- * NoticeApi - axios parameter creator
+ * BannerApi - axios parameter creator
  * @export
  */
 /**
- * 받았던 알림들을 조회합니다. 커뮤니티 관련 알림일 경우 해당 게시글의 Id를 함께 반환합니다.
- * @summary 알림 조회
- * @param {number} [take] 한 페이지에 담을 데이터 수, default &#x3D; 10
- * @param {string} [cursor] 커서 값, 14자리 숫자로 이루어진 문자열, 없으면 첫페이지
+ * 배너 이미지 목록을 조회합니다.(최신순)
+ * @summary 배너 이미지 목록 조회
  * @param {*} [options] Override http request option.
  * @throws {RequiredError}
  */
-const noticeGetAxiosParamCreator = async (
-  take?: number,
-  cursor?: string,
+const bannerGetAxiosParamCreator = async (
   options: AxiosRequestConfig = {},
   configuration?: Configuration,
 ): Promise<RequestArgs> => {
-  const localVarPath = `/notice`
-  // use dummy base URL string because the URL constructor only accepts absolute URLs.
-  const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL)
-  let baseOptions
-  if (configuration) {
-    baseOptions = configuration.baseOptions
-  }
-
-  const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options }
-  const localVarHeaderParameter = {} as any
-  const localVarQueryParameter = {} as any
-  if (take !== undefined) {
-    localVarQueryParameter['take'] = take
-  }
-
-  if (cursor !== undefined) {
-    localVarQueryParameter['cursor'] = cursor
-  }
-
-  setSearchParams(localVarUrlObj, localVarQueryParameter)
-  let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {}
-  localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers }
-
-  return {
-    url: toPathString(localVarUrlObj),
-    options: localVarRequestOptions,
-  }
-}
-/**
- * SSE를 통해 서버에서 넘겨주는 알림을 연결합니다.
- * @summary 알림 연결
- * @param {*} [options] Override http request option.
- * @throws {RequiredError}
- */
-const noticeSseGetAxiosParamCreator = async (
-  options: AxiosRequestConfig = {},
-  configuration?: Configuration,
-): Promise<RequestArgs> => {
-  const localVarPath = `/notice/sse`
+  const localVarPath = `/banner`
   // use dummy base URL string because the URL constructor only accepts absolute URLs.
   const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL)
   let baseOptions
@@ -100,18 +58,18 @@ const noticeSseGetAxiosParamCreator = async (
   }
 }
 /**
- * SSE를 통해 서버에서 넘겨주는 알림을 연결합니다. (access토큰 만료됨에 따라 연결이 끊길 경우 사용)
- * @summary 알림 연결
- * @param {number} userId
+ * 배너 이미지를 삭제합니다.
+ * @summary 배너 이미지 삭제
+ * @param {number} id 배너 이미지 id
  * @param {*} [options] Override http request option.
  * @throws {RequiredError}
  */
-const noticeSseUserIdGetAxiosParamCreator = async (
-  userId: number,
+const bannerIdDeleteAxiosParamCreator = async (
+  id: number,
   options: AxiosRequestConfig = {},
   configuration?: Configuration,
 ): Promise<RequestArgs> => {
-  const localVarPath = `/notice/sse/{userId}`.replace(`{${'userId'}}`, encodeURIComponent(String(userId)))
+  const localVarPath = `/banner/{id}`.replace(`{${'id'}}`, encodeURIComponent(String(id)))
   // use dummy base URL string because the URL constructor only accepts absolute URLs.
   const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL)
   let baseOptions
@@ -119,7 +77,7 @@ const noticeSseUserIdGetAxiosParamCreator = async (
     baseOptions = configuration.baseOptions
   }
 
-  const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options }
+  const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options }
   const localVarHeaderParameter = {} as any
   const localVarQueryParameter = {} as any
 
@@ -132,77 +90,120 @@ const noticeSseUserIdGetAxiosParamCreator = async (
     options: localVarRequestOptions,
   }
 }
+/**
+ * 배너 이미지를 생성합니다.
+ * @summary 배너 이미지 생성
+ * @param {any} image 배너 이미지 파일
+ * @param {string} title 배너 제목
+ * @param {*} [options] Override http request option.
+ * @throws {RequiredError}
+ */
+const bannerPostAxiosParamCreator = async (
+  image: any,
+  title: string,
+  options: AxiosRequestConfig = {},
+  configuration?: Configuration,
+): Promise<RequestArgs> => {
+  const localVarPath = `/banner`
+  // use dummy base URL string because the URL constructor only accepts absolute URLs.
+  const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL)
+  let baseOptions
+  if (configuration) {
+    baseOptions = configuration.baseOptions
+  }
+
+  const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options }
+  const localVarHeaderParameter = {} as any
+  const localVarQueryParameter = {} as any
+  const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)()
+
+  if (image !== undefined) {
+    localVarFormParams.append('image', image as any)
+  }
+
+  if (title !== undefined) {
+    localVarFormParams.append('title', title as any)
+  }
+
+  localVarHeaderParameter['Content-Type'] = 'multipart/form-data'
+
+  setSearchParams(localVarUrlObj, localVarQueryParameter)
+  let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {}
+  localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers }
+  localVarRequestOptions.data = localVarFormParams
+
+  return {
+    url: toPathString(localVarUrlObj),
+    options: localVarRequestOptions,
+  }
+}
 
 /**
- * NoticeApi - functional programming interface
+ * BannerApi - functional programming interface
  * @export
  */
 /**
- * 받았던 알림들을 조회합니다. 커뮤니티 관련 알림일 경우 해당 게시글의 Id를 함께 반환합니다.
- * @summary 알림 조회
- * @param {number} [take] 한 페이지에 담을 데이터 수, default &#x3D; 10
- * @param {string} [cursor] 커서 값, 14자리 숫자로 이루어진 문자열, 없으면 첫페이지
+ * 배너 이미지 목록을 조회합니다.(최신순)
+ * @summary 배너 이미지 목록 조회
  * @param {*} [options] Override http request option.
  * @throws {RequiredError}
  */
-const noticeGetFp = async (
-  take?: number,
-  cursor?: string,
+const bannerGetFp = async (
   options?: AxiosRequestConfig,
   configuration?: Configuration,
-): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetNoticeResponseDto>> => {
-  const localVarAxiosArgs = await noticeGetAxiosParamCreator(take, cursor, options, configuration)
+): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BannerDto>>> => {
+  const localVarAxiosArgs = await bannerGetAxiosParamCreator(options, configuration)
   return createRequestFunction(localVarAxiosArgs, globalAxios, configuration)
 }
 /**
- * SSE를 통해 서버에서 넘겨주는 알림을 연결합니다.
- * @summary 알림 연결
+ * 배너 이미지를 삭제합니다.
+ * @summary 배너 이미지 삭제
+ * @param {number} id 배너 이미지 id
  * @param {*} [options] Override http request option.
  * @throws {RequiredError}
  */
-const noticeSseGetFp = async (
-  options?: AxiosRequestConfig,
-  configuration?: Configuration,
-): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> => {
-  const localVarAxiosArgs = await noticeSseGetAxiosParamCreator(options, configuration)
-  return createRequestFunction(localVarAxiosArgs, globalAxios, configuration)
-}
-/**
- * SSE를 통해 서버에서 넘겨주는 알림을 연결합니다. (access토큰 만료됨에 따라 연결이 끊길 경우 사용)
- * @summary 알림 연결
- * @param {number} userId
- * @param {*} [options] Override http request option.
- * @throws {RequiredError}
- */
-const noticeSseUserIdGetFp = async (
-  userId: number,
+const bannerIdDeleteFp = async (
+  id: number,
   options?: AxiosRequestConfig,
   configuration?: Configuration,
 ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> => {
-  const localVarAxiosArgs = await noticeSseUserIdGetAxiosParamCreator(userId, options, configuration)
+  const localVarAxiosArgs = await bannerIdDeleteAxiosParamCreator(id, options, configuration)
+  return createRequestFunction(localVarAxiosArgs, globalAxios, configuration)
+}
+/**
+ * 배너 이미지를 생성합니다.
+ * @summary 배너 이미지 생성
+ * @param {any} image 배너 이미지 파일
+ * @param {string} title 배너 제목
+ * @param {*} [options] Override http request option.
+ * @throws {RequiredError}
+ */
+const bannerPostFp = async (
+  image: any,
+  title: string,
+  options?: AxiosRequestConfig,
+  configuration?: Configuration,
+): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BannerDto>> => {
+  const localVarAxiosArgs = await bannerPostAxiosParamCreator(image, title, options, configuration)
   return createRequestFunction(localVarAxiosArgs, globalAxios, configuration)
 }
 
 /**
- * NoticeApi - factory interface
+ * BannerApi - factory interface
  * @export
  */
 
-export type NoticeGetRequestParams = {
-  take?: number
-  cursor?: string
+export type BannerGetRequestParams = {
   options?: any
 }
 
 /**
- * 받았던 알림들을 조회합니다. 커뮤니티 관련 알림일 경우 해당 게시글의 Id를 함께 반환합니다.
- * @summary 알림 조회
- * @param {number} [take] 한 페이지에 담을 데이터 수, default &#x3D; 10
- * @param {string} [cursor] 커서 값, 14자리 숫자로 이루어진 문자열, 없으면 첫페이지
+ * 배너 이미지 목록을 조회합니다.(최신순)
+ * @summary 배너 이미지 목록 조회
  * @param {*} [options] Override http request option.
  * @throws {RequiredError}
  */
-export const noticeGet = ({
+export const bannerGet = ({
   configuration,
   basePath,
   axios,
@@ -211,59 +212,63 @@ export const noticeGet = ({
   basePath?: string
   axios?: AxiosInstance
 }) => {
-  return (params: NoticeGetRequestParams): AxiosPromise<GetNoticeResponseDto> => {
-    return noticeGetFp(params.take, params.cursor, params.options, configuration).then(request =>
+  return (params?: { options?: any }): AxiosPromise<Array<BannerDto>> => {
+    return bannerGetFp(params?.options, configuration).then(request => request(axios, basePath))
+  }
+}
+
+export type BannerIdDeleteRequestParams = {
+  id: number
+  options?: any
+}
+
+/**
+ * 배너 이미지를 삭제합니다.
+ * @summary 배너 이미지 삭제
+ * @param {number} id 배너 이미지 id
+ * @param {*} [options] Override http request option.
+ * @throws {RequiredError}
+ */
+export const bannerIdDelete = ({
+  configuration,
+  basePath,
+  axios,
+}: {
+  configuration?: Configuration
+  basePath?: string
+  axios?: AxiosInstance
+}) => {
+  return (params: BannerIdDeleteRequestParams): AxiosPromise<void> => {
+    return bannerIdDeleteFp(params.id, params.options, configuration).then(request => request(axios, basePath))
+  }
+}
+
+export type BannerPostRequestParams = {
+  image: any
+  title: string
+  options?: any
+}
+
+/**
+ * 배너 이미지를 생성합니다.
+ * @summary 배너 이미지 생성
+ * @param {any} image 배너 이미지 파일
+ * @param {string} title 배너 제목
+ * @param {*} [options] Override http request option.
+ * @throws {RequiredError}
+ */
+export const bannerPost = ({
+  configuration,
+  basePath,
+  axios,
+}: {
+  configuration?: Configuration
+  basePath?: string
+  axios?: AxiosInstance
+}) => {
+  return (params: BannerPostRequestParams): AxiosPromise<BannerDto> => {
+    return bannerPostFp(params.image, params.title, params.options, configuration).then(request =>
       request(axios, basePath),
     )
-  }
-}
-
-export type NoticeSseGetRequestParams = {
-  options?: any
-}
-
-/**
- * SSE를 통해 서버에서 넘겨주는 알림을 연결합니다.
- * @summary 알림 연결
- * @param {*} [options] Override http request option.
- * @throws {RequiredError}
- */
-export const noticeSseGet = ({
-  configuration,
-  basePath,
-  axios,
-}: {
-  configuration?: Configuration
-  basePath?: string
-  axios?: AxiosInstance
-}) => {
-  return (params?: { options?: any }): AxiosPromise<void> => {
-    return noticeSseGetFp(params?.options, configuration).then(request => request(axios, basePath))
-  }
-}
-
-export type NoticeSseUserIdGetRequestParams = {
-  userId: number
-  options?: any
-}
-
-/**
- * SSE를 통해 서버에서 넘겨주는 알림을 연결합니다. (access토큰 만료됨에 따라 연결이 끊길 경우 사용)
- * @summary 알림 연결
- * @param {number} userId
- * @param {*} [options] Override http request option.
- * @throws {RequiredError}
- */
-export const noticeSseUserIdGet = ({
-  configuration,
-  basePath,
-  axios,
-}: {
-  configuration?: Configuration
-  basePath?: string
-  axios?: AxiosInstance
-}) => {
-  return (params: NoticeSseUserIdGetRequestParams): AxiosPromise<void> => {
-    return noticeSseUserIdGetFp(params.userId, params.options, configuration).then(request => request(axios, basePath))
   }
 }
