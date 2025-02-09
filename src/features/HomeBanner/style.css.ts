@@ -3,7 +3,13 @@ import { style } from '@vanilla-extract/css'
 import { f } from '@/style'
 import { vars } from '@/theme/theme.css'
 
-export const Wrapper = style([f.flex, f.wFull, f.hFull, f.pRelative])
+export const Wrapper = style([
+  f.flex,
+  f.wFull,
+  f.hFull,
+  f.pRelative,
+  { borderBottom: `1.5px solid ${vars.color.lightGray2}` },
+])
 
 export const RelativeWrapper = style([
   f.flex,
