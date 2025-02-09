@@ -3,6 +3,7 @@ import { toast } from 'sonner'
 
 import * as s from './style.css'
 
+import { Responsive } from '@/common/Responsive'
 import { Checkbox } from '@/components/ui/checkbox'
 import Toast from '@/components/ui/toast'
 import MobileCategorySelector from '@/features/Club/components/MobileCategorySelector.tsx'
@@ -57,14 +58,15 @@ const SearchForm = () => {
         onChange={onChange}
         clearInput={isMobile ? undefined : clearSearchInput}
       />
-      {isMobile ? (
-        <MobileCategorySelector curCategory={param.category} />
-      ) : (
-        <div className={s.FilterWrapper}>
-          <Checkbox checked={param.filter === 'like'} onCheckedChange={handleWishList} />
-          <p className={s.FilterText}>View only I like</p>
-        </div>
-      )}
+      <Responsive
+        mobile={<MobileCategorySelector curCategory={param.category} />}
+        desktop={
+          <div className={s.FilterWrapper}>
+            <Checkbox checked={param.filter === 'like'} onCheckedChange={handleWishList} />
+            <p className={s.FilterText}>View only I like</p>
+          </div>
+        }
+      />
     </form>
   )
 }

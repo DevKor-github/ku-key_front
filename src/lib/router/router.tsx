@@ -3,6 +3,7 @@ import { RouteObject } from 'react-router-dom'
 import MainLayout from '@/components/MainLayout'
 import {
   BoardPage,
+  ClubDetailPage,
   ClubPage,
   CourseInfoPage,
   CourseReviewPage,
@@ -90,7 +91,19 @@ const routes: RouteObject[] = [
       { path: 'login', element: <Login /> },
       { path: 'register', element: <RegisterPage /> },
       { path: 'password-reset', element: <PasswordResetPage /> },
-      { path: 'club', element: <ClubPage /> },
+      {
+        path: 'club',
+        children: [
+          {
+            path: '',
+            element: <ClubPage />,
+          },
+          {
+            path: 'detail/:clubId',
+            element: <ClubDetailPage />,
+          },
+        ],
+      },
     ],
   },
 ]

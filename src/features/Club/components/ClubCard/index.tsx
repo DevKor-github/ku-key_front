@@ -1,10 +1,11 @@
+import { Link } from 'react-router-dom'
+
 import * as s from './style.css'
 
-import Checkmark from '@/assets/icon/Checkmark'
-import Handshake from '@/assets/icon/Handshake'
 import HeartIcon from '@/assets/icon/HeartIcon'
 import { Responsive } from '@/common/Responsive'
 import ContactButton from '@/features/Club/components/ClubCard/ContactButton'
+import MobileClubSchedule from '@/features/Club/components/MobileClubSchedule'
 import { ClubInterface } from '@/types/club'
 import upperCaseHighlight from '@/util/upperCaseHighlight'
 
@@ -15,7 +16,8 @@ interface Props {
 const ClubCard = ({ clubData, handleLikeClick }: Props) => {
   return (
     <div className={s.Wrapper}>
-      <button className={s.ContentsWrapper}>
+      {/* TODO: 안티패턴!!!!!! state 말고 해당 페이지 내에서 데이터 패칭하기 */}
+      <Link to={`detail/${clubData.clubId}`} className={s.ContentsWrapper} state={{ clubData }}>
         <img className={s.Image} src={clubData.imageUrl} alt={clubData.name} />
         <div className={s.DescriptionWrapper}>
           <div className={s.Header}>
@@ -32,20 +34,10 @@ const ClubCard = ({ clubData, handleLikeClick }: Props) => {
                   </>
                 }
                 mobile={
-                  <>
-                    <div className={s.MobileSchedule}>
-                      <span className={s.MobileScheduleIcon}>
-                        <Checkmark />
-                      </span>
-                      <p className={s.MobileScheduleText}>{clubData.recruitmentPeriod}</p>
-                    </div>
-                    <div className={s.MobileSchedule}>
-                      <span className={s.MobileScheduleIcon}>
-                        <Handshake />
-                      </span>
-                      <p className={s.MobileScheduleText}>{clubData.regularMeeting}</p>
-                    </div>
-                  </>
+                  <MobileClubSchedule
+                    recruitmentPeriod={clubData.recruitmentPeriod}
+                    regularMeeting={clubData.regularMeeting}
+                  />
                 }
               />
             </div>
@@ -62,7 +54,7 @@ const ClubCard = ({ clubData, handleLikeClick }: Props) => {
             />
           </div>
         </div>
-      </button>
+      </Link>
       <button className={s.LikeButton({ myLikes: clubData.isLiked })} onClick={() => handleLikeClick(clubData.clubId)}>
         <div className={s.HeartIcon({ myLikes: clubData.isLiked })}>
           <HeartIcon />
