@@ -5,7 +5,7 @@ import * as s from './style.css'
 
 import HeartIcon from '@/assets/icon/HeartIcon'
 import ContactButton from '@/features/Club/components/ClubCard/ContactButton'
-import MobileClubSchedule from '@/features/Club/components/MobileClubSchedule'
+import ClubSchedule from '@/features/Club/components/ClubSchedule'
 import { ClubInterface } from '@/types/club'
 
 const ClubDetail = () => {
@@ -28,10 +28,7 @@ const ClubDetail = () => {
         </div>
         <div className={s.Contents}>
           <div className={s.ScheduleWrapper}>
-            <MobileClubSchedule
-              recruitmentPeriod={clubData.recruitmentPeriod}
-              regularMeeting={clubData.regularMeeting}
-            />
+            <ClubSchedule recruitmentPeriod={clubData.recruitmentPeriod} regularMeeting={clubData.regularMeeting} />
           </div>
           <div className={s.Description}>{clubData.description}</div>
         </div>

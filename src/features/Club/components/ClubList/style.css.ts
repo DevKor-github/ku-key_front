@@ -6,16 +6,9 @@ import { vars } from '@/theme/theme.css'
 export const SearchResultWrapper = style([f.flex, f.flexColumn, { gap: 10 }])
 
 export const ClubCardWrapper = style([
-  f.flex,
-  f.flexColumn,
-  {
-    gap: '3.7rem',
-  },
+  { display: 'grid', gridTemplateColumns: '1fr 1fr', rowGap: '3.12rem', columnGap: '2.5rem' },
   f.mdDown({
-    gap: '2.5rem',
-  }),
-  f.smDown({
-    gap: '0.875rem',
+    gridTemplateColumns: '1fr',
   }),
 ])
 
