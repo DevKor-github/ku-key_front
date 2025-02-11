@@ -10,9 +10,11 @@ import { useGetBannerImages } from '@/api/hooks/calendar'
 import KUkeyLogo from '@/assets/Ku-key_Big.png'
 import { Button } from '@/ui/Button'
 import { Typography } from '@/ui/Typography'
+import { useAuth } from '@/util/auth/useAuth'
 import { usePrevNextButtons } from '@/util/carousel-button'
 
 const HomeBanner = () => {
+  const { authState } = useAuth()
   const navigate = useNavigate()
   const { data: banners } = useGetBannerImages()
 
@@ -48,22 +50,24 @@ const HomeBanner = () => {
       </div>
       <div className={s.RelativeWrapper}>
         <div className={s.LoginWrapper}>
-          <div className={s.LoginBox}>
-            <div className={s.LoginTitle}>
-              <img src={KUkeyLogo} alt="KUkeyLogo" style={{ maxWidth: '17.5rem' }} />
-              <Typography variant="desktop" typography="heading1SB" color="darkGray1">
-                For KU Exchange Students
-              </Typography>
+          {!authState && (
+            <div className={s.LoginBox}>
+              <div className={s.LoginTitle}>
+                <img src={KUkeyLogo} alt="KUkeyLogo" style={{ maxWidth: '17.5rem' }} />
+                <Typography variant="desktop" typography="heading1SB" color="darkGray1">
+                  For KU Exchange Students
+                </Typography>
+              </div>
+              <div className={s.ButtonWrapper}>
+                <Button variant="gray" style={{ width: '100%' }} onClick={() => navigate('/register')}>
+                  Sign Up
+                </Button>
+                <Button variant="red" style={{ width: '100%' }} onClick={() => navigate('/login')}>
+                  Login
+                </Button>
+              </div>
             </div>
-            <div className={s.ButtonWrapper}>
-              <Button variant="gray" style={{ width: '100%' }} onClick={() => navigate('/register')}>
-                Sign Up
-              </Button>
-              <Button variant="red" style={{ width: '100%' }} onClick={() => navigate('/login')}>
-                Login
-              </Button>
-            </div>
-          </div>
+          )}
           <div className={s.CarouselButton}>
             <ChevronLeftIcon className={s.Icon} onClick={() => onButtonAutoplayClick(onPrevButtonClick)} />
             <Typography variant="desktop" typography="body1M" color="white">
