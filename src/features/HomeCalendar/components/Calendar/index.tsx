@@ -1,14 +1,14 @@
 import { css } from '@styled-system/css'
 import { isEqual } from 'date-fns'
 
-import { CalendarResponse } from '@/api/types/calendar'
 import { useCalendar } from '@/domain/HomeCalendar/utils/useCalendar'
 import * as s from '@/features/HomeCalendar/components/Calendar/style.css'
 import CalendarDay from '@/features/HomeCalendar/components/CalendarDay'
 import WeekHeader from '@/features/HomeCalendar/components/WeekHeader'
+import { GetDailyCalendarDataResponseDto } from '@/packages/api/ku-key/models'
 
 type Props = {
-  calendarEvent: CalendarResponse[]
+  calendarEvent: GetDailyCalendarDataResponseDto[]
 }
 
 const DesktopCalendar = ({ calendarEvent }: Props) => {

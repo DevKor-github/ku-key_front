@@ -1,17 +1,29 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 
-import { CalendarResponse } from '@/api/types/calendar'
+import { useAsyncRead } from '@/common/hooks/useAsyncRead'
 import { CALENDAR_QUERY_KEY } from '@/features/HomeCalendar/queries'
-import { apiInterface } from '@/util/axios/custom-axios'
+import { kuKeyClient } from '@/packages/api'
 
-const getCalendar = async (year: number, month: number) => {
-  const response = await apiInterface.get<CalendarResponse[]>(`/calendar?year=${year}&month=${month}`)
-  return response.data
+/**AS-IS */
+// const getCalendar = async (year: number, month: number) => {
+//   const response = await apiInterface.get<CalendarResponse[]>(`/calendar?year=${year}&month=${month}`)
+//   return response.data
+// }
+
+/**TO-BE */
+type Props = {
+  year: number
+  month: number
+}
+export const useQueryGetCalendar = ({ year, month }: Props) => {
+  const read = useAsyncRead(kuKeyClient.api.CalendarApi.calendarGet)
+  return {
+    queryKey: CALENDAR_QUERY_KEY.base(year, month),
+    queryFn: () => read({ year, month }),
+  }
 }
 
-export const useReadCalendar = (year: number, month: number) => {
-  return useSuspenseQuery({
-    queryKey: CALENDAR_QUERY_KEY.base(year, month),
-    queryFn: () => getCalendar(year, month),
-  })
+export const useReadCalendar = ({ year, month }: Props) => {
+  const query = useQueryGetCalendar({ year, month })
+  return useSuspenseQuery({ ...query })
 }

@@ -1,4 +1,4 @@
-import { CategoryType } from '@/components/club/constants'
+import { CategoryType } from '@/features/Club/constants'
 import { ClubInterface } from '@/types/club'
 
 export interface ClubProfileProps {
@@ -13,7 +13,7 @@ export interface GetClubRequest {
   sortBy?: 'like' | null
   wishList?: boolean
   category?: CategoryType
-  keyword?: string | null
+  keyword?: string
   isLogin: boolean
 }
 
