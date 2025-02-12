@@ -16,7 +16,7 @@ const HomeInstitution = () => {
   const items = useMemo(() => (selectedChip === 'Broadcast' ? BROADCASTS : ETC), [selectedChip])
   return (
     <section className={s.Wrapper}>
-      <Typography variant="desktop" typography="display2SB" color="black">
+      <Typography variant="desktop" typography="titleSB" color="black">
         Introducing KU's Official Website
       </Typography>
       <div className={s.Box}>
@@ -39,7 +39,7 @@ const HomeInstitution = () => {
               transition={{ duration: 0.2, ease: 'easeInOut' }}
             >
               {items.map(item => (
-                <button className={s.ItemBox} onClick={() => window.open(item.url, '_blank')}>
+                <button key={item.name} className={s.ItemBox} onClick={() => window.open(item.url, '_blank')}>
                   <img className={s.ItemImage} src={item.img} alt={item.name} />
                   <Typography variant="desktop" typography="heading2M" style={{ color: 'rgba(33, 33, 36, 0.70)' }}>
                     {item.name}
