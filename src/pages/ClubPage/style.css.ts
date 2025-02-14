@@ -59,3 +59,5 @@ export const Contents = style([
     gap: '1.875rem',
   }),
 ])
+
+export const ListContainer = style([f.flex, f.flexColumn, f.wFull, { gap: '2.5rem' }])

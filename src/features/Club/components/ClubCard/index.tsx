@@ -32,15 +32,13 @@ const ClubCard = ({ clubData, handleLikeClick }: Props) => {
             }
           />
         </div>
-        <Link to={`detail/${clubData.clubId}`} state={{ clubData }}>
-          <div className={s.DescriptionWrapper}>
-            <div className={s.TitleWrapper}>
-              <p className={s.Summary}>{clubData.summary}</p>
-              <h2 className={s.Title}>{clubData.name}</h2>
-            </div>
-            <ClubSchedule recruitmentPeriod={clubData.recruitmentPeriod} regularMeeting={clubData.regularMeeting} />
-            <div className={s.Description}>{clubData.description}</div>
+        <Link className={s.DescriptionWrapper} to={`detail/${clubData.clubId}`} state={{ clubData }}>
+          <div className={s.TitleWrapper}>
+            <p className={s.Summary}>{clubData.summary}</p>
+            <h2 className={s.Title}>{clubData.name}</h2>
           </div>
+          <ClubSchedule recruitmentPeriod={clubData.recruitmentPeriod} regularMeeting={clubData.regularMeeting} />
+          <div className={s.Description}>{clubData.description}</div>
         </Link>
       </div>
       <Responsive

@@ -6,6 +6,7 @@ import MetaTag from '@/components/MetaTag'
 import { LoadingSpinner } from '@/components/ui/spinner'
 import ClubList from '@/features/Club/components/ClubList'
 import DesktopCategorySelector from '@/features/Club/components/DesktopCategorySelector.tsx'
+import IconInstruction from '@/features/Club/components/IconInstruction'
 import SearchForm from '@/features/Club/components/SearchForm'
 import { useMediaQueryByName } from '@/util/hooks/useMediaQueryByName'
 
@@ -29,9 +30,12 @@ const ClubPage = () => {
         <div className={s.Contents}>
           <SearchForm />
           {isDesktop && <DesktopCategorySelector />}
-          <Suspense fallback={<LoadingSpinner />}>
-            <ClubList />
-          </Suspense>
+          <div className={s.ListContainer}>
+            <IconInstruction />
+            <Suspense fallback={<LoadingSpinner />}>
+              <ClubList />
+            </Suspense>
+          </div>
         </div>
       </div>
     </>

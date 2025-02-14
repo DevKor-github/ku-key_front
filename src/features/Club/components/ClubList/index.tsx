@@ -1,7 +1,9 @@
+import { Fragment } from 'react/jsx-runtime'
 import { toast } from 'sonner'
 
 import * as s from './style.css'
 
+import { Responsive } from '@/common/Responsive'
 import Toast from '@/components/ui/toast'
 import ClubCard from '@/features/Club/components/ClubCard'
 import { useGetClubSearch } from '@/features/Club/hooks/useGetClubSearch'
@@ -12,8 +14,6 @@ import { useAuth } from '@/util/auth/useAuth'
 import { useDeepCompareCallback } from '@/util/hooks/useDeepCompare'
 import { useMediaQueryByName } from '@/util/hooks/useMediaQueryByName'
 import { useQueryParams } from '@/util/hooks/useQueryParams'
-import { Fragment } from 'react/jsx-runtime'
-import { Responsive } from '@/common/Responsive'
 
 const ClubList = () => {
   const isLogin = useAuth().authState ?? false
