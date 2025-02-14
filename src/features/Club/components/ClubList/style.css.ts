@@ -11,6 +11,9 @@ export const ClubCardWrapper = style([
     gridTemplateColumns: '1fr',
     gap: '0.88rem',
   }),
+  f.smDown({
+    padding: '0 1.25rem',
+  }),
 ])
 
 export const KeywordForDesktop = style([
