@@ -14,6 +14,13 @@ export const Wrapper = style([
     borderBottom: '1px solid',
     borderBottomColor: vars.color.lightGray2,
   },
+  f.smDown({
+    width: '100%',
+    gap: '1.25rem',
+    padding: '0.625rem 1.25rem 0.625rem 0rem',
+    border: 'none',
+    backgroundColor: vars.color.lightGray3,
+  }),
 ])
 
 export const Instruction = style([
@@ -24,6 +31,10 @@ export const Instruction = style([
     color: vars.color.black,
   },
   vars.typography.desktop.body2R,
+  f.smDown({
+    gap: '0.25rem',
+    ...vars.typography.mobile.miniTag1R,
+  }),
 ])
 
 export const Icon = style([
@@ -32,4 +43,8 @@ export const Icon = style([
     height: '1.25rem',
     color: vars.color.darkGray2,
   },
+  f.smDown({
+    width: '0.75rem',
+    height: '0.75rem',
+  }),
 ])
