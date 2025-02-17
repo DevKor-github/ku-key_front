@@ -4,7 +4,7 @@ import * as s from './style.css'
 
 import HeartIcon from '@/assets/icon/HeartIcon'
 import { Responsive } from '@/common/Responsive'
-import ClubSchedule from '@/features/Club/components/ClubSchedule'
+import ClubSchedule from '@/features/ClubSchedule'
 import { ClubInterface } from '@/types/club'
 
 interface Props {
