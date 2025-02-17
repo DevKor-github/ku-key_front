@@ -1,5 +1,6 @@
 import MetaTag from '@/components/MetaTag'
-import ClubDetail from '@/features/Club/components/ClubDetail'
+import ClubDetail from '@/features/ClubDetail'
+
 const ClubDetailPage = () => {
   return (
     <>
