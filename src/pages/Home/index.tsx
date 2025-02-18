@@ -4,6 +4,7 @@ import * as s from './style.css'
 
 import { LoadingScreen, LoadingSpinner } from '@/components/ui/spinner'
 import HomeBanner from '@/features/HomeBanner'
+import HomeClubs from '@/features/HomeClubs/components/Clubs'
 import HomeInstitution from '@/features/HomeInstitution'
 
 const HomePage = () => {
@@ -14,9 +15,9 @@ const HomePage = () => {
           <HomeBanner />
         </Suspense>
         <HomeInstitution />
-        <section>
-          <h1>Home ETC, BROADCAST</h1>
-        </section>
+        <Suspense fallback={<LoadingSpinner />}>
+          <HomeClubs />
+        </Suspense>
         <section>
           <h1>Home Club</h1>
         </section>
