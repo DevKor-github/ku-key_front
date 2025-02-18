@@ -11,7 +11,7 @@ import { useMediaQueryByName } from '@/util/hooks/useMediaQueryByName'
 
 const HomeCalendar = () => {
   const today = useAtomValue(todayAtom)
-  const { data: calendarEvent } = useReadCalendar(today.getFullYear(), today.getMonth() + 1)
+  const { data: calendarEvent } = useReadCalendar({ year: today.getFullYear(), month: today.getMonth() + 1 })
   const isMobile = useMediaQueryByName('smDown')
   return (
     <section className={s.Wrapper}>

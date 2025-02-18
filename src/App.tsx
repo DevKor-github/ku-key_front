@@ -33,7 +33,7 @@ function App() {
       <AuthProvider />
       <UserProvider>
         <DrawerProvider>
-          <Toaster position={isMobile ? 'bottom-center' : 'top-right'} />
+          <Toaster position={isMobile ? 'bottom-center' : 'bottom-right'} />
           {router}
           <ScrollToTop />
           <AmplitudeProvider />
