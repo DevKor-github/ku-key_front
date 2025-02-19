@@ -1,3 +1,5 @@
+import { UserPlusIcon } from '@heroicons/react/24/solid'
+
 import * as s from './style.css'
 
 import FriendList from '@/features/Friend/components/FriendList'
@@ -8,7 +10,12 @@ const MobileFriendPage = () => {
   return (
     <div className={s.Wrapper}>
       <div className={s.Header}>
-        <Input variant="search" placeholder="Search your friend’s username" />
+        <div className={s.Search}>
+          <Input variant="search" placeholder="Search your friend’s username" />
+          <button className={s.UserPlusButton}>
+            <UserPlusIcon />
+          </button>
+        </div>
         <FriendRequestStatus />
       </div>
       <FriendList />
