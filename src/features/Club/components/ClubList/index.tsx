@@ -1,7 +1,9 @@
+import { Fragment } from 'react/jsx-runtime'
 import { toast } from 'sonner'
 
 import * as s from './style.css'
 
+import { Responsive } from '@/common/Responsive'
 import Toast from '@/components/ui/toast'
 import ClubCard from '@/features/Club/components/ClubCard'
 import { useGetClubSearch } from '@/features/Club/hooks/useGetClubSearch'
@@ -43,7 +45,12 @@ const ClubList = () => {
       {isDesktop && query.keyword && <div className={s.KeywordForDesktop}>{`'${query.keyword}' Search Results`}</div>}
       <div className={s.ClubCardWrapper}>
         {data?.length ? (
-          data.map((club, index) => <ClubCard key={index} clubData={club} handleLikeClick={handleLikeClick} />)
+          data.map((club, index) => (
+            <Fragment key={index}>
+              {index !== 0 && <Responsive mobile={<div className={s.ClubLine} />} />}
+              <ClubCard clubData={club} handleLikeClick={handleLikeClick} />
+            </Fragment>
+          ))
         ) : (
           <div className={s.NoSearchResult}>No search results</div>
         )}

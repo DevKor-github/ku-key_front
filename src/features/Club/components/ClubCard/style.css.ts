@@ -11,21 +11,27 @@ export const ContentsWrapper = style([
   {
     alignItems: 'stretch',
     textAlign: 'left',
-    gap: '1.25rem',
+    gap: '1rem',
     flexGrow: 1,
   },
   f.smDown({
-    gap: '0.625rem',
+    gap: '0.62rem',
   }),
+])
+
+export const ImageContainer = style([
+  f.pRelative,
+  {
+    flexShrink: 0,
+  },
 ])
 
 export const Image = style([
   {
-    width: '18.375rem',
-    height: '15.625rem',
+    width: '11.625rem',
+    height: '11.625rem',
     objectFit: 'cover',
     borderRadius: 10,
-    flexShrink: 0,
   },
   f.smDown({
     width: '6.875rem',
@@ -35,30 +41,54 @@ export const Image = style([
     borderColor: vars.color.lightGray1,
   }),
 ])
+export const DesktopLikeButton = recipe({
+  base: [
+    f.pAbsolute,
+    f.flex,
+    vars.typography.desktop.body2R,
+    f.alignCenter,
+    f.justifyBetween,
+    f.cursorPointer,
+    {
+      top: '0.56rem',
+      right: '0.56rem',
+      zIndex: 100,
+      gap: '0.19rem',
+      padding: '0.19rem 0.25rem',
+      backgroundColor: 'rgba(255, 255, 255, 0.80)',
+      borderRadius: 6,
+      color: vars.color.black,
+      transition: 'all 0.25s ease',
+      width: '4rem',
+      height: '2rem',
+    },
+  ],
+  variants: {
+    myLikes: {
+      true: [
+        {
+          backgroundColor: 'rgba(255, 205, 205, 0.8)',
+          color: vars.color.red2,
+        },
+      ],
+    },
+  },
+})
 
-export const LikeButton = recipe({
+export const MobileLikeButton = recipe({
   base: [
     f.flex,
     f.flexColumn,
     f.alignCenter,
     f.cursorPointer,
     {
-      color: vars.color.darkGray2,
-      fontSize: '0.875rem',
-      fontWeight: 500,
-      lineHeight: 1.2,
-      transition: 'color 0.25s ease',
-      gap: '0.5rem',
-      width: '4.3rem',
-      flexShrink: 0,
-    },
-    f.smDown({
       color: vars.color.darkGray1,
-      fontSize: '0.625rem',
-      fontWeight: 400,
+      transition: 'color 0.25s ease',
       gap: '0.25rem',
       width: '2.5rem',
-    }),
+      flexShrink: 0,
+    },
+    vars.typography.mobile.miniTag2,
   ],
   variants: {
     myLikes: {
@@ -66,9 +96,6 @@ export const LikeButton = recipe({
         {
           color: vars.color.red3,
         },
-        f.smDown({
-          color: vars.color.red3,
-        }),
       ],
     },
   },
@@ -77,9 +104,10 @@ export const LikeButton = recipe({
 export const HeartIcon = recipe({
   base: [
     {
-      width: '1.875rem',
-      color: vars.color.lightGray1,
+      width: '1.18rem',
+      color: vars.color.black,
       transition: 'color 0.25s ease',
+      marginLeft: '0.22rem',
     },
     f.smDown({
       width: '1.03rem',
@@ -106,7 +134,7 @@ export const DescriptionWrapper = style([
   f.justifyBetween,
   {
     flexGrow: 1,
-    gap: '0.75rem',
+    gap: '0.25rem',
   },
   f.smDown({
     gap: '0.375rem',
@@ -114,80 +142,22 @@ export const DescriptionWrapper = style([
   }),
 ])
 
-export const Header = style([
-  f.flex,
-  f.flexColumn,
-  { gap: '0.75rem', color: vars.color.black },
-  f.smDown({ gap: '0.375rem' }),
-])
+export const TitleWrapper = style([f.flex, f.flexColumn, { gap: '0.25rem' }, f.smDown({ gap: 0 })])
+export const Summary = style([vars.typography.desktop.body1R, f.smDown(vars.typography.mobile.miniTag1R)])
+export const Title = style([vars.typography.desktop.heading2SB, f.smDown(vars.typography.mobile.headingM)])
 
-export const TitleWrapper = style([f.flex, f.flexColumn, { gap: '0.375rem' }, f.smDown({ gap: 0 })])
-export const Summary = style([
-  {
-    fontSize: '1.125rem',
-    fontWeight: 500,
-    lineHeight: 1.2,
-  },
-  f.smDown({
-    fontSize: '0.75rem',
-    fontWeight: 400,
-  }),
-])
-export const Title = style([
-  vars.typography.desktop.titleSB,
-  f.smDown({
-    fontSize: '1rem',
-    fontWeight: 500,
-  }),
-])
-
-export const ScheduleWrapper = style([
-  f.flex,
-  f.flexColumn,
-  {
-    gap: '0.375rem',
-    fontSize: '1rem',
-    fontWeight: 600,
-    lineHeight: 1.2,
-  },
-  f.smDown({
-    gap: '0.125rem',
-    fontSize: '0.75rem',
-    fontWeight: 400,
-  }),
-])
-
-export const MobileSchedule = style([f.flex, f.alignCenter, f.gap])
-export const MobileScheduleIcon = style({
-  flexShrink: 0,
-  color: vars.color.red3,
-})
-export const MobileScheduleText = style([
-  {
-    WebkitLineClamp: 1,
-    WebkitBoxOrient: 'vertical',
-    display: '-webkit-box',
-    textOverflow: 'ellipsis',
-    overflow: 'hidden',
-  },
-])
-
-export const Footer = style([f.flex, f.flexColumn, { gap: 12 }])
 export const Description = style([
+  vars.typography.desktop.body2R,
   {
-    fontWeight: 400,
     color: vars.color.darkGray1,
-    fontSize: '0.875rem',
-    lineHeight: 1.4,
-    WebkitLineClamp: 3,
+    WebkitLineClamp: 2,
     WebkitBoxOrient: 'vertical',
     display: '-webkit-box',
     textOverflow: 'ellipsis',
     overflow: 'hidden',
   },
   f.smDown({
-    fontSize: '0.625rem',
-    lineHeight: 1.3,
     WebkitLineClamp: 2,
+    ...vars.typography.mobile.miniTag2,
   }),
 ])

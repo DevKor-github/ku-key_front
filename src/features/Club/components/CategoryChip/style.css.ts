@@ -34,6 +34,9 @@ export const Wrapper = recipe({
         f.smDown({ backgroundColor: vars.color.red2, color: vars.color.white }),
       ],
     },
+    isAll: {
+      true: { padding: '0.25rem 1.25rem' },
+    },
   },
 })
 

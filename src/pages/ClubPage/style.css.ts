@@ -43,7 +43,7 @@ export const ContentsWrapper = style([
     backgroundColor: vars.color.white,
   },
   f.smDown({
-    padding: '1rem 1.25rem',
+    padding: '1rem 0',
   }),
 ])
 
@@ -53,9 +53,19 @@ export const Contents = style([
   f.wFull,
   {
     maxWidth: '62.5rem',
-    gap: '5.3rem',
+    gap: '5rem',
   },
   f.smDown({
-    gap: '1.875rem',
+    gap: '0.8rem',
+  }),
+])
+
+export const ListContainer = style([
+  f.flex,
+  f.flexColumn,
+  f.wFull,
+  { gap: '2.5rem' },
+  f.smDown({
+    gap: '0.87rem',
   }),
 ])
