@@ -1,3 +1,5 @@
+import { format } from 'date-fns'
+
 import * as s from './style.css'
 
 import FakeTimetable from '@/features/HomeContents/components/FakeTimetable'
@@ -9,11 +11,17 @@ import { useAuth } from '@/util/auth/useAuth'
 const HomeContentsBase = () => {
   const { authState } = useAuth()
   const showSchedule = authState
+  const today = new Date()
   return (
     <section className={s.Wrapper}>
-      <Typography variant="desktop" typography="titleSB" color="black">
-        Create Your Timetable
-      </Typography>
+      <div className={s.Title}>
+        <Typography typography="titleSB" color="black">
+          {showSchedule ? "Today's class" : 'Create Your Timetable'}
+        </Typography>
+        <Typography typography="body1M" color="darkGray1">
+          {showSchedule ? format(today, 'yyyy.MM.dd') : ''}
+        </Typography>
+      </div>
       <div className={s.ContentBox}>
         {showSchedule ? <HomeContentsSchedule /> : <FakeTimetable />}
         <RecommendedLecture />
