@@ -1,7 +1,7 @@
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
 import Autoplay from 'embla-carousel-autoplay'
 import useEmblaCarousel, { UseEmblaCarouselType } from 'embla-carousel-react'
 import { useCallback, useEffect, useState } from 'react'
+import { HiChevronLeft, HiChevronRight } from 'react-icons/hi'
 import { useNavigate } from 'react-router-dom'
 
 import * as s from './style.css'
@@ -69,11 +69,11 @@ const HomeBanner = () => {
             </div>
           )}
           <div className={s.CarouselButton}>
-            <ChevronLeftIcon className={s.Icon} onClick={() => onButtonAutoplayClick(onPrevButtonClick)} />
+            <HiChevronLeft className={s.Icon} onClick={() => onButtonAutoplayClick(onPrevButtonClick)} />
             <Typography variant="desktop" typography="body1M" color="white">
               {currentSlide + 1}/<span style={{ color: 'rgba(255, 255, 255, 0.60)' }}>{banners?.length}</span>
             </Typography>
-            <ChevronRightIcon className={s.Icon} onClick={() => onButtonAutoplayClick(onNextButtonClick)} />
+            <HiChevronRight className={s.Icon} onClick={() => onButtonAutoplayClick(onNextButtonClick)} />
           </div>
         </div>
       </div>
