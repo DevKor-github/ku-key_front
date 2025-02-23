@@ -10,7 +10,7 @@ type Props = {
 const RateTag = ({ rate }: Props) => {
   return (
     <div className={s.Wrapper} style={{ backgroundColor: getCourseRateBackgroundColor(rate) }}>
-      <Typography variant="desktop" typography="heading1SB" style={{ color: getCourseRateTextColor(rate) }}>
+      <Typography typography="heading1SB" mobileTypography="bodySB" style={{ color: getCourseRateTextColor(rate) }}>
         {rate}
       </Typography>
     </div>

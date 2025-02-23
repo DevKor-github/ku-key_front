@@ -9,7 +9,7 @@ type Props = {
 const SemesterTag = ({ semester }: Props) => {
   return (
     <div className={s.Wrapper}>
-      <Typography variant="desktop" typography="body1M" color="darkGray1">
+      <Typography typography="body1M" color="darkGray1" mobileTypography="miniTag2">
         {semester}
       </Typography>
     </div>
