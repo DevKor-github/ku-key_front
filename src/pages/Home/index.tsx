@@ -15,7 +15,7 @@ const HomePage = () => {
         <Suspense fallback={<LoadingSpinner />}>
           <HomeBanner />
         </Suspense>
-        <section>
+        <section className={s.Section}>
           <HomeContentsBase />
         </section>
         <HomeInstitution />

@@ -18,7 +18,7 @@ const HomeContentsBase = () => {
         <Typography typography="titleSB" color="black">
           {showSchedule ? "Today's class" : 'Create Your Timetable'}
         </Typography>
-        <Typography typography="body1M" color="darkGray1">
+        <Typography typography="body1M" color="darkGray1" className={s.TitleText}>
           {showSchedule ? format(today, 'yyyy.MM.dd') : ''}
         </Typography>
       </div>
