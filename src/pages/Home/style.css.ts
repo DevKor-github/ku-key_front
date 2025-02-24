@@ -8,7 +8,7 @@ export const Wrapper = style([
   f.alignCenter,
   f.background.white,
   { gap: '7.5rem' },
-  f.smDown({ gap: '3.75rem' }),
+  f.smDown({ gap: '3.75rem', paddingBottom: '7.5rem' }),
 ])
 
 export const Section = style([f.smDown({ width: '100%' })])
