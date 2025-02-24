@@ -7,6 +7,7 @@ import { Typography } from '@/ui/Typography'
 
 const HotClubs = () => {
   const { data: hotClubs } = useReadHotClubs()
+
   return (
     <motion.div
       key={'HOT'}
@@ -20,8 +21,17 @@ const HotClubs = () => {
         <button key={item.name} className={s.ItemBox}>
           <img className={s.ItemImage} src={item.imageUrl} alt={item.name} />
           <div className={s.Description}>
-            <Typography variant="desktop" typography="heading2M" style={{ color: 'rgba(33, 33, 36, 0.70)' }}>
-              {item.name}
+            <div className={s.DescriptionText}>
+              <Typography
+                typography="heading2M"
+                mobileTypography="bodyM"
+                style={{ overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}
+              >
+                {item.name}
+              </Typography>
+            </div>
+            <Typography typography="body1R" mobileTypography="miniTag2">
+              {item.summary}
             </Typography>
           </div>
         </button>
