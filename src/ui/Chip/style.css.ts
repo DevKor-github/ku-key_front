@@ -35,4 +35,5 @@ export const Chip = style([
       },
     },
   },
+  f.smDown({ height: '1.75rem', padding: '0.5rem 0.625rem', gap: '0.375rem', ...vars.typography.mobile.bodyM }),
 ])
