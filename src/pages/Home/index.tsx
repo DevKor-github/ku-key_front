@@ -12,19 +12,19 @@ const HomePage = () => {
   return (
     <Suspense fallback={<LoadingScreen />}>
       <main className={s.Wrapper}>
-        {/* <Suspense fallback={<LoadingSpinner />}>
+        <Suspense fallback={<LoadingSpinner />}>
           <HomeBanner />
-        </Suspense> */}
+        </Suspense>
         <section className={s.Section}>
           <HomeContentsBase />
         </section>
         <HomeInstitution />
-        {/* <Suspense fallback={<LoadingSpinner />}>
+        <Suspense fallback={<LoadingSpinner />}>
           <HomeClubs />
         </Suspense>
         <section>
           <h1>Home Community</h1>
-        </section> */}
+        </section>
       </main>
     </Suspense>
   )
