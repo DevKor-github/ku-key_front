@@ -46,6 +46,7 @@ export const LoginBox = style([
     background: 'rgba(255, 255, 255, 0.80)',
     backdropFilter: 'blur(2px)',
   },
+  f.smDown({ display: 'none' }),
 ])
 
 export const LoginTitle = style([
