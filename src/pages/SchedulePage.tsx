@@ -1,12 +1,11 @@
 import { css } from '@styled-system/css'
 import { useCallback, useState } from 'react'
 
+import { useGetAcademicCalendar } from '@/api/hooks/calendar'
 import koreaUniv from '@/assets/koreaUniv.png'
-import ErrorBoundarySuspense from '@/common/components/ErrorBoundarySuspense'
 import AcademicCalendar from '@/components/calendar/AcademicCalendar'
 import MetaTag from '@/components/MetaTag'
 import Dropdown from '@/components/timetable/Dropdown'
-import { LoadingSpinner } from '@/components/ui/spinner'
 import { useAcademicSemester } from '@/util/academicCalendar'
 import { makeSemesterDropdownList } from '@/util/timetableUtil'
 
@@ -15,6 +14,10 @@ const SchedulePage = () => {
 
   const academicSemester = useAcademicSemester()
   const curSemester = academicSemester[dropdownIndex]
+  const { data } = useGetAcademicCalendar({
+    year: Number(curSemester.year),
+    semester: curSemester.semester === 1 ? 1 : 2,
+  })
 
   const setSemesterIndex = useCallback(
     (toIndex: number) => {
@@ -99,9 +102,7 @@ const SchedulePage = () => {
               setCurIndex={setSemesterIndex}
             />
           </div>
-          <ErrorBoundarySuspense fallback={<LoadingSpinner />}>
-            <AcademicCalendar curSemester={curSemester} />
-          </ErrorBoundarySuspense>
+          <AcademicCalendar semester={curSemester.semester} data={data} />
         </div>
       </div>
     </>

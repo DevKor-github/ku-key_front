@@ -1,19 +1,15 @@
 import { css, cva } from '@styled-system/css'
 
-import { useGetAcademicCalendar } from '@/api/hooks/calendar'
+import { GetCalendarYearlyResponse } from '@/api/types/calendar'
 import EventRow from '@/components/calendar/EventRow'
-import { Semester } from '@/types/timetable'
+import { SemesterType } from '@/types/timetable'
 import { numberToMonthAbb } from '@/util/academicCalendar'
 
 interface AcademicCalendarProps {
-  curSemester: Semester
+  semester: SemesterType
+  data: GetCalendarYearlyResponse
 }
-const AcademicCalendar = ({ curSemester }: AcademicCalendarProps) => {
-  const { data } = useGetAcademicCalendar({
-    year: Number(curSemester.year),
-    semester: curSemester.semester === 1 ? 1 : 2,
-  })
-
+const AcademicCalendar = ({ data, semester }: AcademicCalendarProps) => {
   return (
     <section className={css({ display: 'flex', flexDir: 'column' })}>
       {data.map(({ month, schedules }) => (
@@ -22,7 +18,7 @@ const AcademicCalendar = ({ curSemester }: AcademicCalendarProps) => {
           className={cva({
             base: { display: 'flex', borderBottom: '2px solid {colors.darkGray.2}' },
             variants: { isStart: { true: { borderTop: '2px solid {colors.darkGray.2}' } } },
-          })({ isStart: (curSemester.semester === 1 && month === 2) || (curSemester.semester === 3 && month === 8) })}
+          })({ isStart: (semester === 1 && month === 2) || (semester === 3 && month === 8) })}
         >
           <div
             className={css({
