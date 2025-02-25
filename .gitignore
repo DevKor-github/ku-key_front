@@ -29,3 +29,12 @@ styled-system-studio
 
 ## .env
 .env*
+
+
+## yarn
+.yarn
+
+## scripts
+# scripts
+scripts/__generated__
+scripts/oas-templates

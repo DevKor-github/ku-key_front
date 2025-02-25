@@ -3,6 +3,7 @@ import { RouteObject } from 'react-router-dom'
 import MainLayout from '@/components/MainLayout'
 import {
   BoardPage,
+  ClubDetailPage,
   ClubPage,
   CourseInfoPage,
   CourseReviewPage,
@@ -21,7 +22,7 @@ import {
   WriteReviewPage,
 } from '@/lib/router/lazy-route'
 import ProtectedRoutes from '@/lib/router/ProtectedRoutes'
-import HomePage from '@/pages/HomePage'
+import HomePage from '@/pages/Home'
 import LandingPage from '@/pages/LandingPage'
 import Login from '@/pages/LoginPage'
 import PasswordResetPage from '@/pages/PasswordResetPage'
@@ -90,7 +91,19 @@ const routes: RouteObject[] = [
       { path: 'login', element: <Login /> },
       { path: 'register', element: <RegisterPage /> },
       { path: 'password-reset', element: <PasswordResetPage /> },
-      { path: 'club', element: <ClubPage /> },
+      {
+        path: 'club',
+        children: [
+          {
+            path: '',
+            element: <ClubPage />,
+          },
+          {
+            path: 'detail/:clubId',
+            element: <ClubDetailPage />,
+          },
+        ],
+      },
     ],
   },
 ]
