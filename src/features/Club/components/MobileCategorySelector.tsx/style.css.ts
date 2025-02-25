@@ -10,13 +10,13 @@ export const OptionButton = recipe({
     f.alignCenter,
     {
       borderRadius: '50vh',
-      backgroundColor: vars.color.lightGray3,
+      backgroundColor: vars.color.lightGray2,
       width: '2.5rem',
       height: '2.5rem',
       flexShrink: 0,
       border: '1px solid',
-      borderColor: vars.color.lightGray3,
-      color: '#BDBDBD',
+      borderColor: vars.color.lightGray2,
+      color: vars.color.darkGray2,
     },
   ],
   variants: {

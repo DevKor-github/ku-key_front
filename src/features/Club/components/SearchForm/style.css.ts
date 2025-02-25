@@ -12,6 +12,7 @@ export const FormWrapper = style([
   },
   f.smDown({
     gap: '0.625rem',
+    padding: '0 1.25rem',
   }),
 ])
 
