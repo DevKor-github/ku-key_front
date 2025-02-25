@@ -4,8 +4,8 @@ import { forwardRef, useCallback } from 'react'
 import { usePostCourse } from '@/api/hooks/timetable'
 import { CourseQueryInterface } from '@/components/timetable/LectureBottomSheet/AddClass/constants'
 import SearchLectureCard from '@/components/timetable/LectureBottomSheet/AddClass/SearchLectureCard'
+import { useSearchCourse } from '@/domain/Timetable/hooks/useSearchCourse'
 import { SemesterType } from '@/types/timetable'
-import { useCourseSearch } from '@/util/hooks/useCourseSearch'
 import useIntersect from '@/util/hooks/useIntersect'
 import { useQueryParams } from '@/util/hooks/useQueryParams'
 
@@ -33,7 +33,7 @@ const CourseSearchDataList = forwardRef<HTMLDivElement, Props>(({ year, semester
     fetchNextPage,
     hasNextPage,
     isFetching,
-  } = useCourseSearch({
+  } = useSearchCourse({
     year,
     semester,
     category: searchQuery.category ?? 'All Class',
