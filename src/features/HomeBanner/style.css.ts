@@ -19,6 +19,7 @@ export const RelativeWrapper = style([
   f.alignCenter,
   f.justifyCenter,
   { padding: '3.125rem 0', top: 0, left: 0 },
+  f.smDown({ justifyContent: 'flex-end', padding: '0' }),
 ])
 
 export const EmblaViewport = style([f.overflowHidden])
@@ -32,7 +33,13 @@ export const EmblaSlide = style({
   width: '100%',
 })
 
-export const LoginWrapper = style([f.flex, f.directionColumn, f.alignEnd, { width: '64.125rem', gap: '4.25rem' }])
+export const LoginWrapper = style([
+  f.flex,
+  f.directionColumn,
+  f.alignEnd,
+  { width: '64.125rem', gap: '4.25rem' },
+  f.smDown({ height: '100%', justifyContent: 'flex-end', padding: '0.875rem 1.25rem' }),
+])
 
 export const LoginBox = style([
   f.flex,
@@ -70,10 +77,22 @@ export const CarouselButton = style([
     borderRadius: '99px',
     backgroundColor: 'rgba(0, 0, 0, 0.30)',
   },
+  f.smDown({ display: 'none' }),
 ])
 
 export const Icon = style([
   f.color.static.lightGray3,
   f.cursorPointer,
   { width: '1.25rem', aspectRatio: '1/1', strokeWidth: '2px' },
+])
+
+export const MobileCarouselButton = style([
+  f.flexCenter,
+  f.smDown({ display: 'flex', alignItems: 'flex-end' }),
+  {
+    display: 'none',
+    padding: '0.1875rem 0.5rem',
+    borderRadius: '99px',
+    background: 'rgba(0, 0, 0, 0.30)',
+  },
 ])
