@@ -30,7 +30,17 @@ const HotClubs = () => {
                 {item.name}
               </Typography>
             </div>
-            <Typography typography="body1R" mobileTypography="miniTag2">
+            <Typography
+              typography="body1R"
+              mobileTypography="miniTag2"
+              style={{
+                overflow: 'hidden',
+                whiteSpace: 'nowrap',
+                textOverflow: 'ellipsis',
+                width: '100%',
+                textAlign: 'start',
+              }}
+            >
               {item.summary}
             </Typography>
           </div>
