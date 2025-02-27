@@ -22,9 +22,9 @@ const HomePage = () => {
         <Suspense fallback={<LoadingSpinner />}>
           <HomeClubs />
         </Suspense>
-        <section>
+        {/* <section>
           <h1>Home Community</h1>
-        </section>
+        </section> */}
       </main>
     </Suspense>
   )

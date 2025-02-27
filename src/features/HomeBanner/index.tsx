@@ -75,6 +75,14 @@ const HomeBanner = () => {
             </Typography>
             <HiChevronRight className={s.Icon} onClick={() => onButtonAutoplayClick(onNextButtonClick)} />
           </div>
+          <div className={s.MobileCarouselButton}>
+            <Typography mobileTypography="miniTag1M" color="white">
+              {currentSlide + 1}/
+            </Typography>
+            <Typography mobileTypography="miniTag1M" color="lightGray1">
+              {banners?.length}
+            </Typography>
+          </div>
         </div>
       </div>
     </section>

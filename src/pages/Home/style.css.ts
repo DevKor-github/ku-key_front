@@ -7,7 +7,7 @@ export const Wrapper = style([
   f.directionColumn,
   f.alignCenter,
   f.background.white,
-  { gap: '7.5rem' },
+  { gap: '7.5rem', paddingBottom: '7.5rem' },
   f.smDown({ gap: '3.75rem' }),
 ])
 
