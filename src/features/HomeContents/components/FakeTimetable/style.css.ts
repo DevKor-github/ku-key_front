@@ -8,6 +8,7 @@ export const Wrapper = style([
   f.wFull,
   f.justifyCenter,
   { paddingBottom: '3.94rem', maxWidth: '44.5rem', height: '37.3125rem' },
+  f.smDown({ height: '20.3125rem' }),
 ])
 
 export const Button = style([
@@ -16,4 +17,5 @@ export const Button = style([
   f.background.white,
   f.cursorPointer,
   { padding: '0.75rem 1rem', gap: '0.625rem', borderRadius: '30px', boxShadow: '0px 0px 4px 0px rgba(0, 0, 0, 0.25)' },
+  f.smDown({ padding: '0.5rem 0.75rem' }),
 ])

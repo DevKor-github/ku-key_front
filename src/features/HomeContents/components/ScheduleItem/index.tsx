@@ -27,7 +27,7 @@ const ScheduleItem = ({ title, professor, location, startTime, endTime }: Props)
   return (
     <div className={s.ItemWrapper}>
       <div className={s.CheckWrapper}>
-        <HiCheckCircle size={24} color={percentage === 0 ? vars.color.lightGray1 : vars.color.red3} />
+        <HiCheckCircle className={s.IndicatorIcon} color={percentage === 0 ? vars.color.lightGray1 : vars.color.red3} />
         <div className={s.Line}>
           <div
             className={s.LineInner}
@@ -41,35 +41,35 @@ const ScheduleItem = ({ title, professor, location, startTime, endTime }: Props)
       </div>
       <div className={s.Wrapper}>
         <div className={s.Header}>
-          <Typography variant="desktop" typography="heading1M">
+          <Typography typography="heading1M" mobileTypography="bodyM">
             {title}
           </Typography>
           <div className={s.Professor}>
-            <Typography variant="desktop" typography="heading2M" color="darkGray1">
+            <Typography typography="heading2M" color="darkGray1" mobileTypography="miniTag1R">
               Prof.
             </Typography>
-            <Typography variant="desktop" typography="heading2M" color="black">
+            <Typography typography="heading2M" color="black" mobileTypography="miniTag1R">
               {professor}
             </Typography>
           </div>
         </div>
         <div className={s.Description}>
           <div className={s.Location}>
-            <HiLocationMarker color={vars.color.red3} size={24} />
-            <Typography variant="desktop" typography="heading2R" color="darkGray1">
+            <HiLocationMarker className={s.Icon} color={vars.color.red3} />
+            <Typography typography="heading2R" color="darkGray1" mobileTypography="miniTag1R">
               {location}
             </Typography>
           </div>
           <div className={s.Location}>
-            <HiClock color={vars.color.red3} size={24} />
+            <HiClock className={s.Icon} color={vars.color.red3} />
             <div className={s.Location}>
-              <Typography variant="desktop" typography="heading2R" color="darkGray1">
+              <Typography typography="heading2R" color="darkGray1" mobileTypography="miniTag1R">
                 {startTimeText}
               </Typography>
-              <Typography variant="desktop" typography="heading2R" color="darkGray1">
+              <Typography typography="heading2R" color="darkGray1" mobileTypography="miniTag1R">
                 -
               </Typography>
-              <Typography variant="desktop" typography="heading2R" color="darkGray1">
+              <Typography typography="heading2R" color="darkGray1" mobileTypography="miniTag1R">
                 {endTimeText}
               </Typography>
             </div>

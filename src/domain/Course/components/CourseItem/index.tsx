@@ -24,17 +24,17 @@ const CourseItem = ({ title, professor, courseRate, semester }: Props) => {
       </div>
       <div className={s.Body}>
         <Typography
-          variant="desktop"
           typography="heading2SB"
+          mobileTypography="miniTag1M"
           style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', width: '100%' }}
         >
           {title}
         </Typography>
         <div className={s.Professor}>
-          <Typography variant="desktop" typography="body2R" color="darkGray1">
+          <Typography typography="body2R" mobileTypography="miniTag2" color="darkGray1">
             Prof.
           </Typography>
-          <Typography variant="desktop" typography="body1M">
+          <Typography typography="body1M" mobileTypography="miniTag2">
             {professor}
           </Typography>
         </div>

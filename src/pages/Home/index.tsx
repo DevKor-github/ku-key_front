@@ -15,16 +15,16 @@ const HomePage = () => {
         <Suspense fallback={<LoadingSpinner />}>
           <HomeBanner />
         </Suspense>
-        <section>
+        <section className={s.Section}>
           <HomeContentsBase />
         </section>
         <HomeInstitution />
         <Suspense fallback={<LoadingSpinner />}>
           <HomeClubs />
         </Suspense>
-        <section>
+        {/* <section>
           <h1>Home Community</h1>
-        </section>
+        </section> */}
       </main>
     </Suspense>
   )
