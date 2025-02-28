@@ -12,7 +12,6 @@ import {
   HotBoardPage,
   MainCommunityPage,
   MyPage,
-  MyTimetablePage,
   PostViewPage,
   ReviewDetailPage,
   ReviewPage,
@@ -46,14 +45,14 @@ const routes: RouteObject[] = [
           {
             path: 'timetable',
             element: <TimetablePage />,
-            children: [
-              { path: '', element: <MyTimetablePage /> },
-              {
-                path: 'friend',
-                element: <FriendPage />,
-              },
-              { path: 'friend/:userHandler', element: <FriendTimetablePage /> },
-            ],
+          },
+          {
+            path: 'friend',
+            element: <FriendPage />,
+          },
+          {
+            path: 'friend/:userHandler',
+            element: <FriendTimetablePage />,
           },
           {
             path: 'course-review',
