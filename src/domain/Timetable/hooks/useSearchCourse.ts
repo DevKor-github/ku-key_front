@@ -1,10 +1,10 @@
 import { useSuspenseInfiniteQuery } from '@tanstack/react-query'
 
-import { useAsyncRead } from '@/common/hooks/useAsyncRead'
+import { GetCourseRequest, GetCourseResponse } from '@/api/types/course'
 import { CourseCategoryType } from '@/components/timetable/LectureBottomSheet/AddClass/constants'
 import { TIMETABLE_QUERY_KEY } from '@/domain/Timetable/queries'
-import { kuKeyClient } from '@/packages/api'
 import { SemesterType } from '@/types/timetable'
+import { apiInterface } from '@/util/axios/custom-axios'
 
 export interface CourseSearchProps {
   year: string
@@ -14,16 +14,21 @@ export interface CourseSearchProps {
   classification: string | undefined
 }
 
-export const useSearchCourse = ({ year, semester, keyword, category, classification }: CourseSearchProps) => {
-  const search = useAsyncRead(kuKeyClient.api.CourseApi.courseGet)
+const searchCourse = async (params: GetCourseRequest) => {
+  const response = await apiInterface.get<GetCourseResponse>('/course', {
+    params,
+  })
+  return response.data
+}
 
+export const useSearchCourse = ({ year, semester, keyword, category, classification }: CourseSearchProps) => {
   const { data, fetchNextPage, hasNextPage, isFetching } = useSuspenseInfiniteQuery({
     queryKey: TIMETABLE_QUERY_KEY.search({ year, semester, keyword, category, classification }),
     queryFn: ({ pageParam: cursorId }) =>
-      search({
+      searchCourse({
         cursorId,
         year,
-        semester: semester.toString(),
+        semester,
         keyword,
         category: category === 'All Class' ? undefined : category,
         classification,
