@@ -11,7 +11,7 @@ import { useAcademicSemester } from '@/util/academicCalendar'
 import { makeSemesterDropdownList } from '@/util/timetableUtil'
 
 const SchedulePage = () => {
-  const [dropdownIndex, setDropdownIndex] = useState(3)
+  const [dropdownIndex, setDropdownIndex] = useState(2)
 
   const academicSemester = useAcademicSemester()
   const curSemester = academicSemester[dropdownIndex]

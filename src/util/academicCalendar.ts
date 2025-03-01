@@ -32,16 +32,13 @@ export const useAcademicSemester = () => {
 
   if (1 <= month && month <= 7) {
     // 1학기
-    academicSemester.push({ year: `${year - 2}`, semester: 3, timetables: [] })
     for (let i = 1; i <= 4; i += 2) {
       academicSemester.push({ year: `${year - 1}`, semester: i, timetables: [] })
     }
     academicSemester.push({ year: `${year}`, semester: 1, timetables: [] })
   } else {
     // 2학기
-    for (let i = 1; i <= 4; i += 2) {
-      academicSemester.push({ year: `${year - 1}`, semester: i, timetables: [] })
-    }
+    academicSemester.push({ year: `${year - 1}`, semester: 3, timetables: [] })
     for (let i = 1; i <= 4; i += 2) {
       academicSemester.push({ year: `${year}`, semester: i, timetables: [] })
     }
