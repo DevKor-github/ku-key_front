@@ -22,6 +22,7 @@ import {
   WriteReviewPage,
 } from '@/lib/router/lazy-route'
 import ProtectedRoutes from '@/lib/router/ProtectedRoutes'
+import CommunityAllPage from '@/pages/Community/All'
 import HomePage from '@/pages/Home'
 import LandingPage from '@/pages/LandingPage'
 import Login from '@/pages/LoginPage'
@@ -67,6 +68,10 @@ const routes: RouteObject[] = [
           {
             path: 'community',
             element: <MainCommunityPage />,
+          },
+          {
+            path: 'community/all',
+            element: <CommunityAllPage />,
           },
           {
             path: 'community/action/:type/post/:boardName',

@@ -10,14 +10,15 @@ type Props = {
   asChild?: boolean
   style?: React.CSSProperties
   variant?: s.ButtonVariants
+  isActive?: boolean
 } & React.ButtonHTMLAttributes<HTMLButtonElement>
 
 export const Button = forwardRef<HTMLButtonElement, Props>(
-  ({ suffixIcon, prefixIcon, children, asChild, onClick, variant = 'default', ...props }, ref) => {
+  ({ suffixIcon, prefixIcon, children, asChild, onClick, variant = 'default', isActive, ...props }, ref) => {
     const Component = asChild ? Slot : 'button'
 
     return (
-      <Component ref={ref} onClick={onClick} {...props} className={s.Button[variant]}>
+      <Component ref={ref} onClick={onClick} {...props} className={s.Button[variant]} data-active={isActive}>
         <div data-part="content">
           {prefixIcon && <span data-part="prefix">{prefixIcon}</span>}
           <span data-part="text">{children}</span>

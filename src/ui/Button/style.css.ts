@@ -22,7 +22,7 @@ export const Button = styleVariants({
   default: [
     Base,
     {
-      ':hover': {
+      '&:not([data-active="true"]):hover': {
         background: vars.color.lightGray1,
         color: vars.color.white,
       },
@@ -32,6 +32,10 @@ export const Button = styleVariants({
       },
       ':focus': {
         boxShadow: vars.shadow.p25,
+      },
+      '&[data-active="true"]': {
+        background: vars.color.red2,
+        color: vars.color.white,
       },
     },
   ],
