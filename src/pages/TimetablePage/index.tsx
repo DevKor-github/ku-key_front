@@ -1,22 +1,25 @@
 import { css } from '@styled-system/css'
 import { useAtomValue } from 'jotai'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
-import { useDeleteTimetable, useGetUserTimetableList, usePostTimetable } from '@/api/hooks/timetable'
+import { useDeleteTimetable, useGetUserTimetableList } from '@/api/hooks/timetable'
 import Timetable from '@/components/timetable'
 import ShareBtn from '@/components/timetable/Button/ShareBtn'
 import Dropdown from '@/components/timetable/Dropdown'
 import LectureBottomSheet from '@/components/timetable/LectureBottomSheet'
 import StatusBar from '@/components/timetable/StatusBar'
 import { LoadingScreen } from '@/components/ui/spinner'
+import { useCreateDefaultTimetable } from '@/domain/Timetable/hooks/useCreateDefaultTimetable'
 import { isBottomSheetVisible } from '@/lib/store/bottomSheet'
 import { convertHtmlToImage, makeSemesterDropdownList, timetablePreprocess } from '@/util/timetableUtil'
 
 const TimetablePage = () => {
+  // 개요
+  // semester를 쿼리스트링으로 관리
+
   const { data: timetableList } = useGetUserTimetableList()
   const { mutate: deleteTimetable } = useDeleteTimetable()
-  const { mutate: createTimetable } = usePostTimetable()
 
   const imgRef = useRef<HTMLDivElement>(null)
   const [curSemester, setCurSemester] = useState(2)
@@ -26,7 +29,6 @@ const TimetablePage = () => {
 
   const semesterList = timetablePreprocess(timetableList)
 
-  const isCreating = useRef(false) // 시간표가 비어 있어 생성 중인 경우
   const isEmptyTimetable = semesterList[curSemester].timetables.length === 0 // 현재 선택한 학기의 시간표가 없는 경우
 
   const setSemesterIndex = useCallback(
@@ -52,19 +54,7 @@ const TimetablePage = () => {
     [setCurIndex, deleteTimetable, curIndex],
   )
 
-  useEffect(() => {
-    if (isEmptyTimetable && !isCreating.current) {
-      isCreating.current = true
-      createTimetable({
-        timetableName: 'timetable 1',
-        semester: semesterList[curSemester].semester,
-        year: semesterList[curSemester].year,
-      })
-    }
-    if (!isEmptyTimetable) {
-      isCreating.current = false
-    }
-  }, [createTimetable, semesterList, curSemester, isEmptyTimetable])
+  useCreateDefaultTimetable(isEmptyTimetable, semesterList[curSemester])
 
   return (
     <div
