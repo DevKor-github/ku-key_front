@@ -10,20 +10,20 @@ import { useAuth } from '@/util/auth/useAuth'
 
 const HomeContentsBase = () => {
   const { authState } = useAuth()
-  const showSchedule = authState
+  const isLogin = authState
   const today = new Date()
   return (
     <section className={s.Wrapper}>
       <div className={s.Title}>
         <Typography typography="titleSB" color="black">
-          {showSchedule ? "Today's class" : 'Create Your Timetable'}
+          {isLogin ? "Today's class" : 'Create Your Timetable'}
         </Typography>
         <Typography typography="body1M" color="darkGray1" className={s.TitleText}>
-          {showSchedule ? format(today, 'yyyy.MM.dd') : ''}
+          {isLogin ? format(today, 'yyyy.MM.dd') : ''}
         </Typography>
       </div>
       <div className={s.ContentBox}>
-        {showSchedule ? <HomeContentsSchedule /> : <FakeTimetable />}
+        {isLogin ? <HomeContentsSchedule /> : <FakeTimetable />}
         <RecommendedLecture />
       </div>
     </section>
