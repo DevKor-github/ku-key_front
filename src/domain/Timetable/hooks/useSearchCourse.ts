@@ -29,7 +29,7 @@ export const useSearchCourse = ({ year, semester, keyword, category, classificat
         cursorId,
         year,
         semester,
-        keyword,
+        keyword: keyword ? keyword : undefined,
         category: category === 'All Class' ? undefined : category,
         classification,
       }),
