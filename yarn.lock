@@ -1045,15 +1045,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@heroicons/react@npm:^2.2.0":
-  version: 2.2.0
-  resolution: "@heroicons/react@npm:2.2.0"
-  peerDependencies:
-    react: ">= 16 || ^19.0.0-rc"
-  checksum: 10c0/f8d3cf689b56716339c91df3542f3948115042d1e70e6bc940a3f3e347c0bc78b56aa563917fbd7ce097fe2f38ebb21bffb0db39be914cbc545a754bddae9ab4
-  languageName: node
-  linkType: hard
-
 "@hookform/resolvers@npm:^3.3.4":
   version: 3.10.0
   resolution: "@hookform/resolvers@npm:3.10.0"
@@ -6021,7 +6012,6 @@ __metadata:
   resolution: "ku-key_front@workspace:."
   dependencies:
     "@amplitude/analytics-browser": "npm:^2.11.6"
-    "@heroicons/react": "npm:^2.2.0"
     "@hookform/resolvers": "npm:^3.3.4"
     "@openapitools/openapi-generator-cli": "npm:^2.16.3"
     "@pandacss/dev": "npm:^0.37.2"
@@ -6070,6 +6060,7 @@ __metadata:
     react-dom: "npm:^18.2.0"
     react-helmet-async: "npm:^2.0.4"
     react-hook-form: "npm:^7.51.4"
+    react-icons: "npm:^5.5.0"
     react-image-file-resizer: "npm:^0.4.8"
     react-router-dom: "npm:^6.22.3"
     react-select: "npm:^5.8.0"
@@ -7398,6 +7389,15 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17 || ^18 || ^19
   checksum: 10c0/6eebead2900e3d369a989e7a20429f390dc75b3897142aa3107f1f6dabb9ae64fed201ea98cdcd8676e40466c97748aeb0c0d83264f5bd3a84dbc0b8e4863415
+  languageName: node
+  linkType: hard
+
+"react-icons@npm:^5.5.0":
+  version: 5.5.0
+  resolution: "react-icons@npm:5.5.0"
+  peerDependencies:
+    react: "*"
+  checksum: 10c0/a24309bfc993c19cbcbfc928157e53a137851822779977b9588f6dd41ffc4d11ebc98b447f4039b0d309a858f0a42980f6bfb4477fb19f9f2d1bc2e190fcf79c
   languageName: node
   linkType: hard
 

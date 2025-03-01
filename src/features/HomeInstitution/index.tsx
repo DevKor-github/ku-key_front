@@ -1,10 +1,14 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { useMemo, useState } from 'react'
+import { HiLink } from 'react-icons/hi'
 
 import * as s from './style.css'
 
+import { Responsive } from '@/common/Responsive'
 import { BROADCASTS } from '@/lib/school-institute/broadcasts'
 import { ETC } from '@/lib/school-institute/etc'
+import { vars } from '@/theme/theme.css'
+import { InstituteProfileProps } from '@/types/school-institute'
 import { Chip } from '@/ui/Chip'
 import { Typography } from '@/ui/Typography'
 
@@ -16,7 +20,7 @@ const HomeInstitution = () => {
   const items = useMemo(() => (selectedChip === 'Broadcast' ? BROADCASTS : ETC), [selectedChip])
   return (
     <section className={s.Wrapper}>
-      <Typography variant="desktop" typography="display2SB" color="black">
+      <Typography variant="desktop" typography="titleSB" color="black">
         Introducing KU's Official Website
       </Typography>
       <div className={s.Box}>
@@ -39,12 +43,11 @@ const HomeInstitution = () => {
               transition={{ duration: 0.2, ease: 'easeInOut' }}
             >
               {items.map(item => (
-                <button className={s.ItemBox} onClick={() => window.open(item.url, '_blank')}>
-                  <img className={s.ItemImage} src={item.img} alt={item.name} />
-                  <Typography variant="desktop" typography="heading2M" style={{ color: 'rgba(33, 33, 36, 0.70)' }}>
-                    {item.name}
-                  </Typography>
-                </button>
+                <Responsive
+                  key={item.name}
+                  desktop={<DesktopInstitutionItem key={item.name} {...item} />}
+                  mobile={<MobileInstitutionItem key={item.name} {...item} />}
+                />
               ))}
             </motion.div>
           </AnimatePresence>
@@ -55,3 +58,28 @@ const HomeInstitution = () => {
 }
 
 export default HomeInstitution
+
+const DesktopInstitutionItem = (item: InstituteProfileProps) => {
+  return (
+    <button key={item.name} className={s.ItemBox} onClick={() => window.open(item.url, '_blank')}>
+      <img className={s.ItemImage} src={item.img} alt={item.name} />
+      <Typography variant="desktop" typography="heading2M" style={{ color: 'rgba(33, 33, 36, 0.70)' }}>
+        {item.name}
+      </Typography>
+    </button>
+  )
+}
+
+const MobileInstitutionItem = (item: InstituteProfileProps) => {
+  return (
+    <button key={item.name} className={s.MobileItemBox} onClick={() => window.open(item.url, '_blank')}>
+      <div className={s.MobileItemImage}>
+        <img className={s.ItemImage} src={item.img} alt={item.name} />
+        <Typography mobileTypography="miniTag1R" style={{ textAlign: 'start' }}>
+          {item.name}
+        </Typography>
+      </div>
+      <HiLink color={vars.color.darkGray1} />
+    </button>
+  )
+}
