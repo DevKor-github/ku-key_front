@@ -17,12 +17,7 @@ const CommunityOutlet = () => {
           </div>
           <Button variant="red">Create post</Button>
         </div>
-        <SearchBox
-          initialKeyword={''}
-          placeholder={'Search posts from entire board'}
-          onSubmit={() => {}}
-          cssProps={{ width: 'full', alignSelf: 'stretch' }}
-        />
+        <SearchBox initialKeyword={''} placeholder={'Search posts from entire board'} onSubmit={() => {}} />
       </div>
     </div>
   )
