@@ -16,6 +16,12 @@ export const Wrapper = style([
     border: `1px solid ${vars.color.lightGray2}`,
     borderRadius: '16px',
   },
+  f.smDown({
+    width: 'calc((100vw - 3.125rem)/2)',
+    height: '5.375rem',
+    padding: '0.75rem 0.75rem',
+    borderRadius: '10px',
+  }),
 ])
 
 export const Header = style([f.flex, f.justifyBetween, f.alignCenter, f.wFull])

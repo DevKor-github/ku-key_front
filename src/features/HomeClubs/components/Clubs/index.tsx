@@ -16,7 +16,7 @@ const HomeClubs = () => {
 
   return (
     <section className={s.Wrapper}>
-      <Typography variant="desktop" typography="titleSB" color="black">
+      <Typography typography="titleSB" color="black">
         Introducing Club of the Week
       </Typography>
       <div className={s.Box}>

@@ -1,6 +1,7 @@
 import { forwardRef } from 'react'
 
 import { vars } from '@/theme/theme.css'
+import { useMediaQueryByName } from '@/util/hooks/useMediaQueryByName'
 
 type Props = {
   children: React.ReactNode
@@ -8,20 +9,26 @@ type Props = {
   color?: ColorValue
   variant?: keyof typeof vars.typography
   typography?: keyof typeof vars.typography.desktop | keyof typeof vars.typography.mobile
-}
+  mobileTypography?: keyof typeof vars.typography.mobile
+} & React.HTMLAttributes<HTMLParagraphElement>
 
 export type ColorValue = keyof typeof vars.color
 
 export const Typography = forwardRef<HTMLParagraphElement, Props>(
-  ({ children, color = 'black', variant = 'desktop', typography = 'display1B', style, ...rest }, ref) => {
+  ({ children, color = 'black', typography = 'display1B', style, mobileTypography, ...rest }, ref) => {
+    const isMobile = useMediaQueryByName('smDown')
     const getColor = (color: ColorValue) => {
       return vars.color[color]
     }
-
-    const typographyStyle =
-      variant === 'desktop'
-        ? vars.typography.desktop[typography as keyof typeof vars.typography.desktop]
-        : vars.typography.mobile[typography as keyof typeof vars.typography.mobile]
+    const getTypography = (typography: keyof typeof vars.typography.desktop | keyof typeof vars.typography.mobile) => {
+      if (isMobile) {
+        if (mobileTypography) {
+          return vars.typography.mobile[mobileTypography]
+        }
+        return vars.typography.mobile[typography as keyof typeof vars.typography.mobile]
+      }
+      return vars.typography.desktop[typography as keyof typeof vars.typography.desktop]
+    }
 
     return (
       <p
@@ -29,7 +36,7 @@ export const Typography = forwardRef<HTMLParagraphElement, Props>(
         style={{
           color: getColor(color),
           ...style,
-          ...typographyStyle,
+          ...getTypography(typography),
           display: 'inline-block',
         }}
         {...rest}

@@ -7,7 +7,7 @@ const RecommendedLecture = () => {
   return (
     <div className={s.Wrapper}>
       <div className={s.Title}>
-        <Typography variant="desktop" typography="heading1M" color="black">
+        <Typography typography="heading1M" color="black" mobileTypography="titleSB">
           Lecture
         </Typography>
       </div>

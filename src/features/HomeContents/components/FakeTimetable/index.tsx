@@ -8,9 +8,12 @@ import { Typography } from '@/ui/Typography'
 const FakeTimetable = () => {
   const navigate = useNavigate()
   return (
-    <div className={s.Wrapper} style={{ backgroundImage: `url(${fakeTimetable})`, backgroundSize: 'cover' }}>
+    <div
+      className={s.Wrapper}
+      style={{ backgroundImage: `url(${fakeTimetable})`, backgroundSize: 'contain', backgroundRepeat: 'no-repeat' }}
+    >
       <button className={s.Button} onClick={() => navigate('/login')}>
-        <Typography variant="desktop" typography="heading2SB" color="red2">
+        <Typography typography="heading2SB" color="red2" mobileTypography="miniTag2">
           로그인하고 내 시간표 만들기!
         </Typography>
       </button>
