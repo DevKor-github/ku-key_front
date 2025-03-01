@@ -1,4 +1,5 @@
-import { MegaphoneIcon, UserGroupIcon } from '@heroicons/react/24/solid'
+import { HiUserGroup } from 'react-icons/hi'
+import { HiMegaphone } from 'react-icons/hi2'
 
 import * as s from './style.css'
 
@@ -6,11 +7,11 @@ const IconInstruction = () => {
   return (
     <div className={s.Wrapper}>
       <div className={s.Instruction}>
-        <MegaphoneIcon className={s.Icon} />
+        <HiMegaphone className={s.Icon} />
         <p>Recruitment period</p>
       </div>
       <div className={s.Instruction}>
-        <UserGroupIcon className={s.Icon} />
+        <HiUserGroup className={s.Icon} />
         <p>Regular meeting</p>
       </div>
     </div>
