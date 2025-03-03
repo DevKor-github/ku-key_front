@@ -3,9 +3,25 @@ import * as s from './style.css'
 import PostPreview from '@/components/community/PostPreview'
 import { useReadCommunityPostsAll } from '@/domain/Post/useReadCommunityPostsAll'
 import Pagination from '@/ui/Pagination'
+import { useQueryParams } from '@/util/hooks/useQueryParams'
+
+type SearchParams = {
+  keyword?: string
+}
 
 const CommunityPostAll = () => {
-  const { data: posts, hasNextPage, isFetchingNextPage, fetchNextPage } = useReadCommunityPostsAll({})
+  const [queryParams] = useQueryParams<SearchParams>()
+  const {
+    data: posts,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+  } = useReadCommunityPostsAll({
+    keyword: queryParams.keyword,
+  })
+
+  if (!posts.length) return <div>No Search Result</div>
+
   return (
     <Pagination
       items={posts}

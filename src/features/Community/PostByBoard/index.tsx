@@ -21,6 +21,9 @@ const CommunityPostByBoard = () => {
     boardId: queryParam.boardId,
     keyword: queryParam.keyword,
   })
+
+  if (!posts.length) return <div>No Search Result</div>
+
   return (
     <Pagination
       items={posts}
