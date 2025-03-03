@@ -26,8 +26,8 @@ const boardConfig = [
   },
 ] as const
 
-type BoardType = (typeof boardConfig)[number]['board']
-type BoardQueryParam = {
+export type BoardType = (typeof boardConfig)[number]['board']
+export type BoardQueryParam = {
   board: BoardType
   boardId: number
 }
