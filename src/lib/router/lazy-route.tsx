@@ -12,6 +12,7 @@ const withSuspense = (LazyComponent: ComponentType) => {
 
 export const ClubPage = withSuspense(lazy(() => import('@/pages/ClubPage')))
 export const MainCommunityPage = withSuspense(lazy(() => import('@/pages/CommunityPage')))
+export const CommunityAllPage = withSuspense(lazy(() => import('@/pages/Community/All')))
 export const BoardPage = withSuspense(lazy(() => import('@/pages/CommunityPage/BoardPage')))
 export const HotBoardPage = withSuspense(lazy(() => import('@/pages/CommunityPage/HotBoardPage')))
 export const PostViewPage = withSuspense(lazy(() => import('@/pages/CommunityPage/PostViewPage')))
