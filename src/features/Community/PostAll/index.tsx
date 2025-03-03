@@ -1,7 +1,7 @@
 import * as s from './style.css'
 
 import PostPreview from '@/components/community/PostPreview'
-import { useReadCommunityPostsAll } from '@/domain/Post/useReadCommunityPostsAll'
+import { useReadCommunityPostsAll } from '@/domain/Post/hooks/useReadCommunityPostsAll'
 import Pagination from '@/ui/Pagination'
 import { useQueryParams } from '@/util/hooks/useQueryParams'
 
