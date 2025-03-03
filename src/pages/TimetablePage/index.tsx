@@ -1,6 +1,6 @@
 import { css } from '@styled-system/css'
 import { useAtomValue } from 'jotai'
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useRef } from 'react'
 import { createPortal } from 'react-dom'
 
 import { useDeleteTimetable, useGetUserTimetableList } from '@/api/hooks/timetable'
@@ -12,32 +12,38 @@ import StatusBar from '@/components/timetable/StatusBar'
 import { LoadingScreen } from '@/components/ui/spinner'
 import { useCreateDefaultTimetable } from '@/domain/Timetable/hooks/useCreateDefaultTimetable'
 import { isBottomSheetVisible } from '@/lib/store/bottomSheet'
+import { DEFAULT_SEMESTER_INDEX, DEFAULT_TIMETABLE_INDEX, TimetableParams } from '@/pages/TimetablePage/constants'
+import { useQueryParams } from '@/util/hooks/useQueryParams'
 import { convertHtmlToImage, makeSemesterDropdownList, timetablePreprocess } from '@/util/timetableUtil'
 
 const TimetablePage = () => {
-  // 개요
-  // semester를 쿼리스트링으로 관리
+  const [queryParam, setQueryParam] = useQueryParams<TimetableParams>()
+  const curSemester = queryParam.semester ? Number(queryParam.semester) : DEFAULT_SEMESTER_INDEX
+  const curIndex = queryParam.index ? Number(queryParam.index) : DEFAULT_TIMETABLE_INDEX
+  const setCurSemester = useCallback(
+    (target: number) => {
+      setQueryParam({ semester: target.toString(), index: undefined })
+    },
+    [setQueryParam],
+  )
+  const setCurIndex = useCallback(
+    (target: number) => {
+      setQueryParam({ index: target.toString() })
+    },
+    [setQueryParam],
+  )
 
   const { data: timetableList } = useGetUserTimetableList()
   const { mutate: deleteTimetable } = useDeleteTimetable()
 
   const imgRef = useRef<HTMLDivElement>(null)
-  const [curSemester, setCurSemester] = useState(2)
-  const [curIndex, setCurIndex] = useState(0)
 
   const isSheetVisible = useAtomValue(isBottomSheetVisible)
 
   const semesterList = timetablePreprocess(timetableList)
 
-  const isEmptyTimetable = semesterList[curSemester].timetables.length === 0 // 현재 선택한 학기의 시간표가 없는 경우
+  const isEmptyTimetable = semesterList[curSemester].timetables.length === 0
 
-  const setSemesterIndex = useCallback(
-    (toIndex: number) => {
-      setCurSemester(toIndex)
-      setCurIndex(0)
-    },
-    [setCurSemester, setCurIndex],
-  )
   const setTimetableIndex = useCallback(
     (toIndex: number) => {
       setCurIndex(toIndex)
@@ -47,14 +53,14 @@ const TimetablePage = () => {
   const deleteTimetableHandler = useCallback(
     (timetableId: number) => {
       if (curIndex !== 0) {
-        setCurIndex(prev => prev - 1)
+        setCurIndex(curIndex - 1)
       }
       deleteTimetable({ timetableId })
     },
     [setCurIndex, deleteTimetable, curIndex],
   )
 
-  useCreateDefaultTimetable(isEmptyTimetable, semesterList[curSemester])
+  useCreateDefaultTimetable(semesterList[curSemester])
 
   return (
     <div
@@ -75,7 +81,7 @@ const TimetablePage = () => {
             <Dropdown
               dropdownList={makeSemesterDropdownList(semesterList)}
               curIndex={curSemester}
-              setCurIndex={setSemesterIndex}
+              setCurIndex={setCurSemester}
             />
           </div>
           <div className={css({ display: { base: 'flex', mdDown: 'none' }, flexDir: 'row', gap: 2.5 })}>
