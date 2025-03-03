@@ -9,11 +9,11 @@ export interface SearchedCourse {
   courseCode: string
   credit: number
   major: string
-  hasExchangeSeat: true
+  hasExchangeSeat: boolean
   year: string
   semester: SemesterType
   syllabus: string
-  totalRate: 0
+  totalRate: number
   details?: courseDetail[]
 }
 
