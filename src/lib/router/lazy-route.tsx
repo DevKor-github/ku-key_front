@@ -1,12 +1,13 @@
-import { ComponentType, lazy, Suspense } from 'react'
+import { ComponentType, lazy } from 'react'
 
+import ErrorBoundarySuspense from '@/common/components/ErrorBoundarySuspense'
 import { LoadingScreen } from '@/components/ui/spinner'
 
 const withSuspense = (LazyComponent: ComponentType) => {
   return () => (
-    <Suspense fallback={<LoadingScreen />}>
+    <ErrorBoundarySuspense fallback={<LoadingScreen />}>
       <LazyComponent />
-    </Suspense>
+    </ErrorBoundarySuspense>
   )
 }
 
