@@ -1,7 +1,7 @@
 import * as s from './style.css'
 
-import HotBoardPreview from '@/components/community/HotBoard/HotBoardPreview'
 import CommunityPostDetail from '@/features/Community/CommunityPostDetail'
+import CommunityHotPostPreview from '@/features/Community/HotPostPreview'
 import CommunityPostSearch from '@/features/Community/PostSearch'
 
 const CommunityOutlet = () => {
@@ -11,7 +11,7 @@ const CommunityOutlet = () => {
         <CommunityPostSearch />
         <CommunityPostDetail />
       </div>
-      <HotBoardPreview />
+      <CommunityHotPostPreview />
     </div>
   )
 }
