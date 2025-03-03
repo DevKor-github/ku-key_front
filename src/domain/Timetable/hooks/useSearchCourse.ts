@@ -14,7 +14,7 @@ export interface CourseSearchProps {
   classification: string | undefined
 }
 
-const searchCourse = async (params: GetCourseRequest) => {
+const readCourse = async (params: GetCourseRequest) => {
   const response = await apiInterface.get<GetCourseResponse>('/course', {
     params,
   })
@@ -25,7 +25,7 @@ export const useSearchCourse = ({ year, semester, keyword, category, classificat
   const { data, fetchNextPage, hasNextPage, isFetching } = useSuspenseInfiniteQuery({
     queryKey: TIMETABLE_QUERY_KEY.search({ year, semester, keyword, category, classification }),
     queryFn: ({ pageParam: cursorId }) =>
-      searchCourse({
+      readCourse({
         cursorId,
         year,
         semester,
