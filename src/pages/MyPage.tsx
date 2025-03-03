@@ -23,7 +23,7 @@ const MyPage = () => {
     !(curPage === 'community' || curPage === 'course-review' || curPage === 'delete-account' || curPage === 'password')
 
   useEffect(() => {
-    if (curPage === null && !isMobile) {
+    if (curPage === undefined && !isMobile) {
       navigate(`${location.pathname}?page=my-point`, { replace: true })
     }
   }, [curPage, navigate, isMobile])
