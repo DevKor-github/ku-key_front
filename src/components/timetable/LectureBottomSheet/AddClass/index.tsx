@@ -1,8 +1,9 @@
 import { css } from '@styled-system/css'
-import { Suspense, useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { toast } from 'sonner'
 
+import ErrorBoundarySuspense from '@/common/components/ErrorBoundarySuspense'
 import ClassSelectModal from '@/components/timetable/LectureBottomSheet/AddClass/ClassSelectModal'
 import {
   COURSE_CATEGORY_LIST,
@@ -95,7 +96,7 @@ const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
           handleDropdown={handleDropdown}
           handleSearch={handleSearchBoxOnSubmit}
         />
-        <Suspense
+        <ErrorBoundarySuspense
           fallback={
             <div className={css({ h: 'full', display: 'flex', justifyContent: 'center', alignItems: 'center' })}>
               <LoadingSpinner />
@@ -103,7 +104,7 @@ const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
           }
         >
           <CourseSearchDataList ref={scrollSectionRef} year={year} semester={semester} timetableId={timetableId} />
-        </Suspense>
+        </ErrorBoundarySuspense>
       </div>
       {isModalOpen &&
         createPortal(

@@ -11,22 +11,7 @@ export interface GetCourseRequest {
   cursorId?: number
   year: string
   semester: SemesterType
-}
-
-export interface GetMajorRequest extends GetCourseRequest {
-  major: string
-}
-
-export interface GetAcademicFoundationRequest extends GetCourseRequest {
-  college: string
-}
-
-export interface GetByKeywordRequest extends GetCourseRequest {
-  keyword: string
-}
-export interface GetByKeywordInMajorRequest extends GetByKeywordRequest {
-  major: string
-}
-export interface GetByKeywordInAcademicFoundationRequest extends GetByKeywordRequest {
-  college: string
+  keyword?: string
+  category?: 'Major' | 'General Studies' | 'Academic Foundations'
+  classification?: string
 }
