@@ -1,6 +1,8 @@
+import { match } from 'ts-pattern'
+
 import * as s from './style.css'
 
-import BoardPostPreview from '@/components/community/Boards/BoardPostPreview'
+import FeedItem from '@/domain/Post/components/FeedItem'
 import { useReadCommunityPosts } from '@/domain/Post/hooks/useReadCommunityPostsByBoard'
 import { BoardQueryParam } from '@/features/Community/CommunitySelectTab'
 import Pagination from '@/ui/Pagination'
@@ -22,29 +24,19 @@ const CommunityPostByBoard = () => {
     keyword: queryParam.keyword,
   })
 
+  const boardName = match(queryParam.board)
+    .with('CommunityBoard', () => 'community')
+    .with('QuestionBoard', () => 'question')
+    .with('InformationBoard', () => 'information')
+    .otherwise(() => 'community')
+
   if (!posts.length) return <div>No Search Result</div>
 
   return (
     <Pagination
       items={posts}
       className={s.Wrapper}
-      render={post => (
-        <BoardPostPreview
-          key={post.id}
-          id={post.id}
-          title={post.title}
-          content={post.content}
-          createdAt={new Date(post.createdAt)}
-          user={post.user}
-          reactionCount={post.reactionCount}
-          views={post.views}
-          myScrap={post.myScrap}
-          commentCount={post.commentCount}
-          scrapCount={post.scrapCount}
-          thumbnailDir={post.thumbnailDir}
-          boardName={'community'}
-        />
-      )}
+      render={post => <FeedItem {...post} boardName={boardName} />}
       hasNextPage={hasNextPage}
       isFetchingNextPage={isFetchingNextPage}
       fetchNextPage={fetchNextPage}
