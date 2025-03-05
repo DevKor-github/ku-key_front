@@ -29,7 +29,7 @@ type Props = Pick<
   | 'thumbnailDir'
   | 'boardName'
 > & {
-  isAllCategory?: boolean
+  showCommunityBadge?: boolean
 }
 
 const FeedItem = ({
@@ -45,7 +45,7 @@ const FeedItem = ({
   myScrap,
   thumbnailDir,
   boardName,
-  isAllCategory,
+  showCommunityBadge,
 }: Props) => {
   const timeDistance = formatDistanceToNow(createdAt)
   const navigate = useNavigate()
@@ -59,7 +59,7 @@ const FeedItem = ({
       <div className={s.ContentsWrapper}>
         <div className={s.Header}>
           <div className={s.LeftWrapper}>
-            {isAllCategory && <PostCategoryBadge boardName={boardName} />}
+            {showCommunityBadge && <PostCategoryBadge boardName={boardName} />}
             <Typography typography="headingSB" color="darkGray2">
               {timeDistance}
             </Typography>
