@@ -7,24 +7,24 @@ import * as s from './style.css'
 import { Typography } from '@/ui/Typography'
 
 type Props = {
-  boarName: string
+  boardName: string
 }
 
-const PostCategoryBadge = ({ boarName }: Props) => {
+const PostCategoryBadge = ({ boardName }: Props) => {
   const svg = useMemo(
     () =>
-      match(boarName)
+      match(boardName)
         .with('Community Board', () => <LuUsers />)
         .with('Question Board', () => <LuMessageCircleQuestion />)
         .with('Information Board', () => <LuBookText />)
         .otherwise(() => <LuBookText />),
-    [boarName],
+    [boardName],
   )
   return (
     <div className={s.Wrapper}>
       {svg}
       <Typography mobileTypography="miniTag1M" color="darkGray1">
-        {boarName}
+        {boardName}
       </Typography>
     </div>
   )

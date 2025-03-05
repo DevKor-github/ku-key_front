@@ -37,10 +37,10 @@ export const Typography = forwardRef<HTMLParagraphElement, Props>(
       <p
         ref={ref}
         style={{
+          display: 'inline-block',
           color: getColor(color),
           ...style,
           ...getTypography(),
-          display: 'inline-block',
         }}
         {...rest}
       >

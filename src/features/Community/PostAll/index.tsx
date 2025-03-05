@@ -1,6 +1,6 @@
 import * as s from './style.css'
 
-import PostPreview from '@/components/community/PostPreview'
+import FeedItem from '@/domain/Post/components/FeedItem'
 import { useReadCommunityPostsAll } from '@/domain/Post/hooks/useReadCommunityPostsAll'
 import Pagination from '@/ui/Pagination'
 import { useQueryParams } from '@/util/hooks/useQueryParams'
@@ -26,17 +26,7 @@ const CommunityPostAll = () => {
     <Pagination
       items={posts}
       className={s.Wrapper}
-      render={post => (
-        <PostPreview
-          id={post.id}
-          title={post.title}
-          boardName={post.boardName}
-          user={post.user}
-          createdAt={new Date(post.createdAt)}
-          content={post.content}
-          thumbnailDir={post.thumbnailDir}
-        />
-      )}
+      render={post => <FeedItem {...post} isAllCategory />}
       hasNextPage={hasNextPage}
       isFetchingNextPage={isFetchingNextPage}
       fetchNextPage={fetchNextPage}
