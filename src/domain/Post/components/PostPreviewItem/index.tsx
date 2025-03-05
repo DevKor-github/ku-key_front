@@ -9,7 +9,7 @@ type Props = PostPreviewWithBoardName
 const PostPreviewItem = ({ user, createdAt, title, boardName }: Props) => {
   return (
     <div className={s.Wrapper}>
-      <PostCategoryBadge boarName={boardName} />
+      <PostCategoryBadge boardName={boardName} />
       <CommunityPostPreviewCard user={user} createdAt={createdAt} title={title} />
     </div>
   )
