@@ -26,7 +26,7 @@ const CommunityPostAll = () => {
     <Pagination
       items={posts}
       className={s.Wrapper}
-      render={post => <FeedItem {...post} isAllCategory />}
+      render={post => <FeedItem {...post} showCommunityBadge />}
       hasNextPage={hasNextPage}
       isFetchingNextPage={isFetchingNextPage}
       fetchNextPage={fetchNextPage}
