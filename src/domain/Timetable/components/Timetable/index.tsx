@@ -1,29 +1,16 @@
-import { css, cva } from '@styled-system/css'
 import { useSetAtom } from 'jotai/react'
 import { Ellipsis } from 'lucide-react'
 import { forwardRef, useCallback, useEffect, useRef, useState } from 'react'
 
-import TimetableLayout from '@/components/timetable/Grid/TimetableLayout'
+import * as s from './style.css'
+
+import { useGetTimetable } from '@/api/hooks/timetable'
+import LectureGrid from '@/components/timetable/Grid/LectureGrid'
 import OptionModal from '@/components/timetable/Modal/OptionModal'
+import TimetableModal from '@/components/timetable/Modal/TimetableModal'
 import { isBottomSheetVisible } from '@/lib/store/bottomSheet'
 import { GlobalModalStateType, TimetableInfo } from '@/types/timetable'
 import { numberToSemester } from '@/util/timetableUtil'
-
-const optBtn = cva({
-  base: {
-    cursor: 'pointer',
-    transition: 'background 0.256s',
-    rounded: 'full',
-    h: '30px',
-    w: '30px',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    _hover: {
-      bgColor: 'lightGray.1',
-    },
-  },
-})
 
 interface TimetableProps {
   timetable: TimetableInfo
@@ -36,6 +23,8 @@ interface TimetableProps {
  */
 const Timetable = forwardRef<HTMLDivElement, TimetableProps>(
   ({ timetable: { timetableId, timetableName, year, semester }, deleteTimetableHandler }, ref) => {
+    const { data } = useGetTimetable({ timetableId })
+
     const [isModalOpen, setIsModalOpen] = useState(false)
     const setIsSheetVisible = useSetAtom(isBottomSheetVisible)
     const [globalModalState, setGlobalModalState] = useState<GlobalModalStateType>(null)
@@ -84,22 +73,8 @@ const Timetable = forwardRef<HTMLDivElement, TimetableProps>(
     }, [isModalOpen, setIsSheetVisible])
 
     return (
-      <div className={css({ w: '100%' })} ref={ref}>
-        <div
-          className={css({
-            w: '100%',
-            h: 16,
-            display: 'flex',
-            flexDir: 'row',
-            justifyContent: 'space-between',
-            bgColor: 'bg.gray',
-            roundedTop: 10,
-            border: '1px {colors.lightGray.1} solid',
-            px: 8,
-            alignItems: 'center',
-            position: 'relative',
-          })}
-        >
+      <div className={s.Wrapper} ref={ref}>
+        <div className={s.Header}>
           {isModalOpen && (
             <OptionModal
               ref={modalRef}
@@ -107,52 +82,28 @@ const Timetable = forwardRef<HTMLDivElement, TimetableProps>(
               customStyle={{ position: 'absolute', top: '68px', right: 0, zIndex: 50 }}
             />
           )}
-          <div className={css({ display: 'flex', flexDir: 'row', gap: 2.5, alignItems: 'center' })}>
-            <div className={css({ color: 'darkGray.1', fontSize: 20, fontWeight: 700, whiteSpace: 'nowrap' })}>
-              {`${year} ${numberToSemester[semester]} semester`}
-            </div>
-            <div
-              className={css({
-                border: 'none',
-                color: 'lightGray.1',
-                fontWeight: 500,
-                fontSize: 18,
-                outline: 'none',
-                w: '70%',
-                overflow: 'hidden',
-                whiteSpace: 'nowrap',
-                textOverflow: 'ellipsis',
-              })}
-            >
-              {timetableName}
-            </div>
+          <div className={s.Info}>
+            <div className={s.Semester}>{`${year} ${numberToSemester[semester]} semester`}</div>
+            <div className={s.Title}>{timetableName}</div>
           </div>
-          <div
-            className={css({
-              display: { base: 'flex', mdDown: 'none' },
-              flexDir: 'row',
-              gap: 4,
-              alignItems: 'center',
-              color: 'darkGray.1',
-            })}
+          <button
+            className={s.OptionButton}
+            onClick={() => {
+              setIsModalOpen(true)
+              setIsSheetVisible(false)
+            }}
           >
-            <button
-              className={optBtn()}
-              onClick={() => {
-                setIsModalOpen(true)
-                setIsSheetVisible(false)
-              }}
-            >
-              <Ellipsis size={20} />
-            </button>
-          </div>
+            <Ellipsis size={20} />
+          </button>
         </div>
-        <TimetableLayout
-          timetableId={timetableId}
-          globalModalState={globalModalState}
-          closeTimetableModal={closeTimetableModal}
+        <LectureGrid timetableId={timetableId} timetableData={data} isMine={true} />
+        <TimetableModal
+          modalType={globalModalState}
+          closeModal={closeTimetableModal}
           deleteTimetableHandler={deleteTimetableHandler}
+          timetableId={timetableId}
           timetableName={timetableName}
+          curColor={data.color}
         />
       </div>
     )
