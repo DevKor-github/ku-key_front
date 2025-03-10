@@ -1,6 +1,7 @@
 import * as s from './style.css'
 
 import { Button } from '@/ui/Button'
+import { useMediaQueryByName } from '@/util/hooks/useMediaQueryByName'
 import { useQueryParams } from '@/util/hooks/useQueryParams'
 
 const boardConfig = [
@@ -34,12 +35,14 @@ export type BoardQueryParam = {
 
 const CommunitySelectTab = () => {
   const [queryParam, setQueryParam] = useQueryParams<BoardQueryParam>()
-
+  const isMobile = useMediaQueryByName('smDown')
   return (
     <div className={s.Wrapper}>
       {boardConfig.map(board => (
         <Button
+          key={board.boardId}
           variant="default"
+          size={isMobile ? 'sm' : 'default'}
           isActive={queryParam.board === board.board}
           onClick={() => setQueryParam({ board: board.board, boardId: board.boardId })}
         >
