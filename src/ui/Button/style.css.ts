@@ -10,15 +10,13 @@ export const Base = style([
   f.color.static.darkGray2,
   f.background.lightGray2,
   {
-    height: '2.875rem',
-    padding: '0rem 1.875rem',
     borderRadius: '6px',
     transition: 'all 0.2s ease-in-out',
     outline: 'none',
   },
 ])
 
-export const Button = styleVariants({
+export const ButtonStyle = styleVariants({
   default: [
     Base,
     {
@@ -66,4 +64,10 @@ export const Button = styleVariants({
   gray: [Base, { ':hover': { boxShadow: vars.shadow.p25 }, ':focus': { boxShadow: vars.shadow.p25 } }],
 })
 
-export type ButtonVariants = keyof typeof Button
+export const ButtonSize = styleVariants({
+  default: [{ height: '2.875rem', padding: '0rem 1.875rem', ...vars.typography.desktop.body1M }],
+  sm: [{ height: '1.75rem', padding: '0.5rem 0.625rem', ...vars.typography.mobile.bodyM, flex: '1 0 0' }],
+})
+
+export type ButtonStyleVariants = keyof typeof ButtonStyle
+export type ButtonSizeVariants = keyof typeof ButtonSize
