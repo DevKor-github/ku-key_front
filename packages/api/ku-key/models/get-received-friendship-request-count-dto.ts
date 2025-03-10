@@ -30,4 +30,10 @@ export interface GetReceivedFriendshipRequestCountDto {
    * @memberof GetReceivedFriendshipRequestCountDto
    */
   unreadCount: number
+  /**
+   * 가장 최근에 요청을 보낸 친구의 캐릭터 (최대 2개)
+   * @type {Array<string>}
+   * @memberof GetReceivedFriendshipRequestCountDto
+   */
+  friendCharacters: Array<string>
 }

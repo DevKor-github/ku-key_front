@@ -23,10 +23,6 @@ import { COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base
 // @ts-ignore
 import { CreateCommentRequestDto } from '../models'
 // @ts-ignore
-import { CreateReportRequestDto } from '../models'
-// @ts-ignore
-import { CreateReportResponseDto } from '../models'
-// @ts-ignore
 import { DeleteCommentResponseDto } from '../models'
 // @ts-ignore
 import { GetCommentResponseDto } from '../models'
@@ -138,44 +134,6 @@ const commentCommentIdPatchAxiosParamCreator = async (
   let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {}
   localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers }
   localVarRequestOptions.data = updateCommentRequestDto || undefined
-
-  return {
-    url: toPathString(localVarUrlObj),
-    options: localVarRequestOptions,
-  }
-}
-/**
- * 댓글을 신고합니다
- * @summary 댓글 신고
- * @param {number} commentId 댓글의 고유 ID
- * @param {CreateReportRequestDto} createReportRequestDto
- * @param {*} [options] Override http request option.
- * @throws {RequiredError}
- */
-const commentCommentIdReportPostAxiosParamCreator = async (
-  commentId: number,
-  createReportRequestDto: CreateReportRequestDto,
-  options: AxiosRequestConfig = {},
-  configuration?: Configuration,
-): Promise<RequestArgs> => {
-  const localVarPath = `/comment/{commentId}/report`.replace(`{${'commentId'}}`, encodeURIComponent(String(commentId)))
-  // use dummy base URL string because the URL constructor only accepts absolute URLs.
-  const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL)
-  let baseOptions
-  if (configuration) {
-    baseOptions = configuration.baseOptions
-  }
-
-  const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options }
-  const localVarHeaderParameter = {} as any
-  const localVarQueryParameter = {} as any
-
-  localVarHeaderParameter['Content-Type'] = 'application/json'
-
-  setSearchParams(localVarUrlObj, localVarQueryParameter)
-  let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {}
-  localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers }
-  localVarRequestOptions.data = createReportRequestDto || undefined
 
   return {
     url: toPathString(localVarUrlObj),
@@ -329,28 +287,6 @@ const commentCommentIdPatchFp = async (
   return createRequestFunction(localVarAxiosArgs, globalAxios, configuration)
 }
 /**
- * 댓글을 신고합니다
- * @summary 댓글 신고
- * @param {number} commentId 댓글의 고유 ID
- * @param {CreateReportRequestDto} createReportRequestDto
- * @param {*} [options] Override http request option.
- * @throws {RequiredError}
- */
-const commentCommentIdReportPostFp = async (
-  commentId: number,
-  createReportRequestDto: CreateReportRequestDto,
-  options?: AxiosRequestConfig,
-  configuration?: Configuration,
-): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateReportResponseDto>> => {
-  const localVarAxiosArgs = await commentCommentIdReportPostAxiosParamCreator(
-    commentId,
-    createReportRequestDto,
-    options,
-    configuration,
-  )
-  return createRequestFunction(localVarAxiosArgs, globalAxios, configuration)
-}
-/**
  * 내가 쓴 댓글 목록을 조회합니다.
  * @summary 내가 쓴 댓글 목록 조회
  * @param {number} [take] 한 페이지에 담을 데이터 수, default &#x3D; 10
@@ -481,39 +417,6 @@ export const commentCommentIdPatch = ({
     return commentCommentIdPatchFp(
       params.commentId,
       params.updateCommentRequestDto,
-      params.options,
-      configuration,
-    ).then(request => request(axios, basePath))
-  }
-}
-
-export type CommentCommentIdReportPostRequestParams = {
-  commentId: number
-  createReportRequestDto: CreateReportRequestDto
-  options?: any
-}
-
-/**
- * 댓글을 신고합니다
- * @summary 댓글 신고
- * @param {number} commentId 댓글의 고유 ID
- * @param {CreateReportRequestDto} createReportRequestDto
- * @param {*} [options] Override http request option.
- * @throws {RequiredError}
- */
-export const commentCommentIdReportPost = ({
-  configuration,
-  basePath,
-  axios,
-}: {
-  configuration?: Configuration
-  basePath?: string
-  axios?: AxiosInstance
-}) => {
-  return (params: CommentCommentIdReportPostRequestParams): AxiosPromise<CreateReportResponseDto> => {
-    return commentCommentIdReportPostFp(
-      params.commentId,
-      params.createReportRequestDto,
       params.options,
       configuration,
     ).then(request => request(axios, basePath))

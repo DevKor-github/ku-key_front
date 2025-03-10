@@ -19,6 +19,12 @@
  */
 export interface GetRecommendClubResponseDto {
   /**
+   * club table의 PK
+   * @type {number}
+   * @memberof GetRecommendClubResponseDto
+   */
+  clubId: number
+  /**
    * 동아리명
    * @type {string}
    * @memberof GetRecommendClubResponseDto

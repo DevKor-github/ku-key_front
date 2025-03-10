@@ -28,6 +28,10 @@ import { CreateCourseReviewRequestDto } from '../models'
 import { GetCourseReviewSummaryResponseDto } from '../models'
 // @ts-ignore
 import { GetCourseReviewsResponseDto } from '../models'
+// @ts-ignore
+import { GetCoursesWithCourseReviewsResponseDto } from '../models'
+// @ts-ignore
+import { PaginatedCourseReviewsDto } from '../models'
 /**
  * CourseReviewApi - axios parameter creator
  * @export
@@ -63,6 +67,48 @@ const courseReviewCheckSubmissionGetAxiosParamCreator = async (
 
   if (courseCode !== undefined) {
     localVarQueryParameter['courseCode'] = courseCode
+  }
+
+  setSearchParams(localVarUrlObj, localVarQueryParameter)
+  let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {}
+  localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers }
+
+  return {
+    url: toPathString(localVarUrlObj),
+    options: localVarRequestOptions,
+  }
+}
+/**
+ * 최근 강의평이 등록되었거나, 강의력이 좋은 강의를 조회합니다.
+ * @summary 강의평과 관련된 강의 조회
+ * @param {number} limit 반환 개수
+ * @param {'RECENT' | 'TEACHING'} criteria 반환 기준
+ * @param {*} [options] Override http request option.
+ * @throws {RequiredError}
+ */
+const courseReviewCourseGetAxiosParamCreator = async (
+  limit: number,
+  criteria: 'RECENT' | 'TEACHING',
+  options: AxiosRequestConfig = {},
+  configuration?: Configuration,
+): Promise<RequestArgs> => {
+  const localVarPath = `/course-review/course`
+  // use dummy base URL string because the URL constructor only accepts absolute URLs.
+  const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL)
+  let baseOptions
+  if (configuration) {
+    baseOptions = configuration.baseOptions
+  }
+
+  const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options }
+  const localVarHeaderParameter = {} as any
+  const localVarQueryParameter = {} as any
+  if (limit !== undefined) {
+    localVarQueryParameter['limit'] = limit
+  }
+
+  if (criteria !== undefined) {
+    localVarQueryParameter['criteria'] = criteria
   }
 
   setSearchParams(localVarUrlObj, localVarQueryParameter)
@@ -232,6 +278,48 @@ const courseReviewRecommendCourseReviewIdPostAxiosParamCreator = async (
   }
 }
 /**
+ * 키워드로 강의평을 검색합니다.
+ * @summary 강의평 검색
+ * @param {string} keyword 검색 키워드 (교수명, 강의명, 학수번호 중 하나)
+ * @param {number} [cursorId] cursor id, 값이 존재하지 않으면 첫 페이지
+ * @param {*} [options] Override http request option.
+ * @throws {RequiredError}
+ */
+const courseReviewSearchGetAxiosParamCreator = async (
+  keyword: string,
+  cursorId?: number,
+  options: AxiosRequestConfig = {},
+  configuration?: Configuration,
+): Promise<RequestArgs> => {
+  const localVarPath = `/course-review/search`
+  // use dummy base URL string because the URL constructor only accepts absolute URLs.
+  const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL)
+  let baseOptions
+  if (configuration) {
+    baseOptions = configuration.baseOptions
+  }
+
+  const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options }
+  const localVarHeaderParameter = {} as any
+  const localVarQueryParameter = {} as any
+  if (keyword !== undefined) {
+    localVarQueryParameter['keyword'] = keyword
+  }
+
+  if (cursorId !== undefined) {
+    localVarQueryParameter['cursorId'] = cursorId
+  }
+
+  setSearchParams(localVarUrlObj, localVarQueryParameter)
+  let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {}
+  localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers }
+
+  return {
+    url: toPathString(localVarUrlObj),
+    options: localVarRequestOptions,
+  }
+}
+/**
  * 해당 교수의 해당 강의에 대한 강의평들을 종합한 강의평 요약을 조회합니다.
  * @summary 강의평 요약 조회
  * @param {string} professorName 교수님 성함
@@ -298,6 +386,23 @@ const courseReviewCheckSubmissionGetFp = async (
     options,
     configuration,
   )
+  return createRequestFunction(localVarAxiosArgs, globalAxios, configuration)
+}
+/**
+ * 최근 강의평이 등록되었거나, 강의력이 좋은 강의를 조회합니다.
+ * @summary 강의평과 관련된 강의 조회
+ * @param {number} limit 반환 개수
+ * @param {'RECENT' | 'TEACHING'} criteria 반환 기준
+ * @param {*} [options] Override http request option.
+ * @throws {RequiredError}
+ */
+const courseReviewCourseGetFp = async (
+  limit: number,
+  criteria: 'RECENT' | 'TEACHING',
+  options?: AxiosRequestConfig,
+  configuration?: Configuration,
+): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetCoursesWithCourseReviewsResponseDto>> => {
+  const localVarAxiosArgs = await courseReviewCourseGetAxiosParamCreator(limit, criteria, options, configuration)
   return createRequestFunction(localVarAxiosArgs, globalAxios, configuration)
 }
 /**
@@ -380,6 +485,23 @@ const courseReviewRecommendCourseReviewIdPostFp = async (
   return createRequestFunction(localVarAxiosArgs, globalAxios, configuration)
 }
 /**
+ * 키워드로 강의평을 검색합니다.
+ * @summary 강의평 검색
+ * @param {string} keyword 검색 키워드 (교수명, 강의명, 학수번호 중 하나)
+ * @param {number} [cursorId] cursor id, 값이 존재하지 않으면 첫 페이지
+ * @param {*} [options] Override http request option.
+ * @throws {RequiredError}
+ */
+const courseReviewSearchGetFp = async (
+  keyword: string,
+  cursorId?: number,
+  options?: AxiosRequestConfig,
+  configuration?: Configuration,
+): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginatedCourseReviewsDto>> => {
+  const localVarAxiosArgs = await courseReviewSearchGetAxiosParamCreator(keyword, cursorId, options, configuration)
+  return createRequestFunction(localVarAxiosArgs, globalAxios, configuration)
+}
+/**
  * 해당 교수의 해당 강의에 대한 강의평들을 종합한 강의평 요약을 조회합니다.
  * @summary 강의평 요약 조회
  * @param {string} professorName 교수님 성함
@@ -437,6 +559,36 @@ export const courseReviewCheckSubmissionGet = ({
       params.options,
       configuration,
     ).then(request => request(axios, basePath))
+  }
+}
+
+export type CourseReviewCourseGetRequestParams = {
+  limit: number
+  criteria: 'RECENT' | 'TEACHING'
+  options?: any
+}
+
+/**
+ * 최근 강의평이 등록되었거나, 강의력이 좋은 강의를 조회합니다.
+ * @summary 강의평과 관련된 강의 조회
+ * @param {number} limit 반환 개수
+ * @param {'RECENT' | 'TEACHING'} criteria 반환 기준
+ * @param {*} [options] Override http request option.
+ * @throws {RequiredError}
+ */
+export const courseReviewCourseGet = ({
+  configuration,
+  basePath,
+  axios,
+}: {
+  configuration?: Configuration
+  basePath?: string
+  axios?: AxiosInstance
+}) => {
+  return (params: CourseReviewCourseGetRequestParams): AxiosPromise<GetCoursesWithCourseReviewsResponseDto> => {
+    return courseReviewCourseGetFp(params.limit, params.criteria, params.options, configuration).then(request =>
+      request(axios, basePath),
+    )
   }
 }
 
@@ -555,6 +707,36 @@ export const courseReviewRecommendCourseReviewIdPost = ({
   return (params: CourseReviewRecommendCourseReviewIdPostRequestParams): AxiosPromise<CourseReviewResponseDto> => {
     return courseReviewRecommendCourseReviewIdPostFp(params.courseReviewId, params.options, configuration).then(
       request => request(axios, basePath),
+    )
+  }
+}
+
+export type CourseReviewSearchGetRequestParams = {
+  keyword: string
+  cursorId?: number
+  options?: any
+}
+
+/**
+ * 키워드로 강의평을 검색합니다.
+ * @summary 강의평 검색
+ * @param {string} keyword 검색 키워드 (교수명, 강의명, 학수번호 중 하나)
+ * @param {number} [cursorId] cursor id, 값이 존재하지 않으면 첫 페이지
+ * @param {*} [options] Override http request option.
+ * @throws {RequiredError}
+ */
+export const courseReviewSearchGet = ({
+  configuration,
+  basePath,
+  axios,
+}: {
+  configuration?: Configuration
+  basePath?: string
+  axios?: AxiosInstance
+}) => {
+  return (params: CourseReviewSearchGetRequestParams): AxiosPromise<PaginatedCourseReviewsDto> => {
+    return courseReviewSearchGetFp(params.keyword, params.cursorId, params.options, configuration).then(request =>
+      request(axios, basePath),
     )
   }
 }

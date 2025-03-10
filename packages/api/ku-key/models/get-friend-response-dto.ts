@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { Character } from './character'
+import { FriendCharacterDto } from './friend-character-dto'
 
 /**
  *
@@ -64,8 +64,8 @@ export interface GetFriendResponseDto {
   country: string
   /**
    * 유저 캐릭터
-   * @type {Character}
+   * @type {FriendCharacterDto}
    * @memberof GetFriendResponseDto
    */
-  character: Character
+  character: FriendCharacterDto
 }

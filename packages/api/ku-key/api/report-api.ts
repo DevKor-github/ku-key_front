@@ -21,6 +21,12 @@ import { DUMMY_BASE_URL, assertParamExists, setSearchParams, toPathString, creat
 import { COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base'
 
 // @ts-ignore
+import { AcceptReportRequestDto } from '../models'
+// @ts-ignore
+import { CreateReportRequestDto } from '../models'
+// @ts-ignore
+import { CreateReportResponseDto } from '../models'
+// @ts-ignore
 import { GetReportListResponseDto } from '../models'
 // @ts-ignore
 import { GetReportResponseDto } from '../models'
@@ -60,18 +66,125 @@ const reportGetAxiosParamCreator = async (
   }
 }
 /**
+ * 신고를 생성합니다.
+ * @summary 신고 생성
+ * @param {CreateReportRequestDto} createReportRequestDto
+ * @param {*} [options] Override http request option.
+ * @throws {RequiredError}
+ */
+const reportPostAxiosParamCreator = async (
+  createReportRequestDto: CreateReportRequestDto,
+  options: AxiosRequestConfig = {},
+  configuration?: Configuration,
+): Promise<RequestArgs> => {
+  const localVarPath = `/report`
+  // use dummy base URL string because the URL constructor only accepts absolute URLs.
+  const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL)
+  let baseOptions
+  if (configuration) {
+    baseOptions = configuration.baseOptions
+  }
+
+  const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options }
+  const localVarHeaderParameter = {} as any
+  const localVarQueryParameter = {} as any
+
+  localVarHeaderParameter['Content-Type'] = 'application/json'
+
+  setSearchParams(localVarUrlObj, localVarQueryParameter)
+  let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {}
+  localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers }
+  localVarRequestOptions.data = createReportRequestDto || undefined
+
+  return {
+    url: toPathString(localVarUrlObj),
+    options: localVarRequestOptions,
+  }
+}
+/**
+ * 신고를 승인합니다.
+ * @summary 신고 승인
+ * @param {number} reportId 신고 고유 ID
+ * @param {AcceptReportRequestDto} acceptReportRequestDto
+ * @param {*} [options] Override http request option.
+ * @throws {RequiredError}
+ */
+const reportReportIdAcceptPostAxiosParamCreator = async (
+  reportId: number,
+  acceptReportRequestDto: AcceptReportRequestDto,
+  options: AxiosRequestConfig = {},
+  configuration?: Configuration,
+): Promise<RequestArgs> => {
+  const localVarPath = `/report/{reportId}/accept`.replace(`{${'reportId'}}`, encodeURIComponent(String(reportId)))
+  // use dummy base URL string because the URL constructor only accepts absolute URLs.
+  const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL)
+  let baseOptions
+  if (configuration) {
+    baseOptions = configuration.baseOptions
+  }
+
+  const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options }
+  const localVarHeaderParameter = {} as any
+  const localVarQueryParameter = {} as any
+
+  localVarHeaderParameter['Content-Type'] = 'application/json'
+
+  setSearchParams(localVarUrlObj, localVarQueryParameter)
+  let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {}
+  localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers }
+  localVarRequestOptions.data = acceptReportRequestDto || undefined
+
+  return {
+    url: toPathString(localVarUrlObj),
+    options: localVarRequestOptions,
+  }
+}
+/**
  * 신고 세부내용을 조회합니다.
  * @summary 신고 세부내용 조회
  * @param {number} reportId 신고 고유 ID
  * @param {*} [options] Override http request option.
  * @throws {RequiredError}
  */
-const reportReportIdPostAxiosParamCreator = async (
+const reportReportIdGetAxiosParamCreator = async (
   reportId: number,
   options: AxiosRequestConfig = {},
   configuration?: Configuration,
 ): Promise<RequestArgs> => {
   const localVarPath = `/report/{reportId}`.replace(`{${'reportId'}}`, encodeURIComponent(String(reportId)))
+  // use dummy base URL string because the URL constructor only accepts absolute URLs.
+  const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL)
+  let baseOptions
+  if (configuration) {
+    baseOptions = configuration.baseOptions
+  }
+
+  const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options }
+  const localVarHeaderParameter = {} as any
+  const localVarQueryParameter = {} as any
+
+  setSearchParams(localVarUrlObj, localVarQueryParameter)
+  let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {}
+  localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers }
+
+  return {
+    url: toPathString(localVarUrlObj),
+    options: localVarRequestOptions,
+  }
+}
+/**
+ * 신고를 거부합니다.
+ * @summary 신고 거부
+ * @param {number} reportId 신고 고유 ID
+ * @param {*} [options] Override http request option.
+ * @throws {RequiredError}
+ */
+const reportReportIdRejectPostAxiosParamCreator = async (
+  reportId: number,
+  options: AxiosRequestConfig = {},
+  configuration?: Configuration,
+): Promise<RequestArgs> => {
+  const localVarPath = `/report/{reportId}/reject`.replace(`{${'reportId'}}`, encodeURIComponent(String(reportId)))
   // use dummy base URL string because the URL constructor only accepts absolute URLs.
   const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL)
   let baseOptions
@@ -111,18 +224,70 @@ const reportGetFp = async (
   return createRequestFunction(localVarAxiosArgs, globalAxios, configuration)
 }
 /**
+ * 신고를 생성합니다.
+ * @summary 신고 생성
+ * @param {CreateReportRequestDto} createReportRequestDto
+ * @param {*} [options] Override http request option.
+ * @throws {RequiredError}
+ */
+const reportPostFp = async (
+  createReportRequestDto: CreateReportRequestDto,
+  options?: AxiosRequestConfig,
+  configuration?: Configuration,
+): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateReportResponseDto>> => {
+  const localVarAxiosArgs = await reportPostAxiosParamCreator(createReportRequestDto, options, configuration)
+  return createRequestFunction(localVarAxiosArgs, globalAxios, configuration)
+}
+/**
+ * 신고를 승인합니다.
+ * @summary 신고 승인
+ * @param {number} reportId 신고 고유 ID
+ * @param {AcceptReportRequestDto} acceptReportRequestDto
+ * @param {*} [options] Override http request option.
+ * @throws {RequiredError}
+ */
+const reportReportIdAcceptPostFp = async (
+  reportId: number,
+  acceptReportRequestDto: AcceptReportRequestDto,
+  options?: AxiosRequestConfig,
+  configuration?: Configuration,
+): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> => {
+  const localVarAxiosArgs = await reportReportIdAcceptPostAxiosParamCreator(
+    reportId,
+    acceptReportRequestDto,
+    options,
+    configuration,
+  )
+  return createRequestFunction(localVarAxiosArgs, globalAxios, configuration)
+}
+/**
  * 신고 세부내용을 조회합니다.
  * @summary 신고 세부내용 조회
  * @param {number} reportId 신고 고유 ID
  * @param {*} [options] Override http request option.
  * @throws {RequiredError}
  */
-const reportReportIdPostFp = async (
+const reportReportIdGetFp = async (
   reportId: number,
   options?: AxiosRequestConfig,
   configuration?: Configuration,
 ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetReportResponseDto>> => {
-  const localVarAxiosArgs = await reportReportIdPostAxiosParamCreator(reportId, options, configuration)
+  const localVarAxiosArgs = await reportReportIdGetAxiosParamCreator(reportId, options, configuration)
+  return createRequestFunction(localVarAxiosArgs, globalAxios, configuration)
+}
+/**
+ * 신고를 거부합니다.
+ * @summary 신고 거부
+ * @param {number} reportId 신고 고유 ID
+ * @param {*} [options] Override http request option.
+ * @throws {RequiredError}
+ */
+const reportReportIdRejectPostFp = async (
+  reportId: number,
+  options?: AxiosRequestConfig,
+  configuration?: Configuration,
+): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> => {
+  const localVarAxiosArgs = await reportReportIdRejectPostAxiosParamCreator(reportId, options, configuration)
   return createRequestFunction(localVarAxiosArgs, globalAxios, configuration)
 }
 
@@ -155,7 +320,68 @@ export const reportGet = ({
   }
 }
 
-export type ReportReportIdPostRequestParams = {
+export type ReportPostRequestParams = {
+  createReportRequestDto: CreateReportRequestDto
+  options?: any
+}
+
+/**
+ * 신고를 생성합니다.
+ * @summary 신고 생성
+ * @param {CreateReportRequestDto} createReportRequestDto
+ * @param {*} [options] Override http request option.
+ * @throws {RequiredError}
+ */
+export const reportPost = ({
+  configuration,
+  basePath,
+  axios,
+}: {
+  configuration?: Configuration
+  basePath?: string
+  axios?: AxiosInstance
+}) => {
+  return (params: ReportPostRequestParams): AxiosPromise<CreateReportResponseDto> => {
+    return reportPostFp(params.createReportRequestDto, params.options, configuration).then(request =>
+      request(axios, basePath),
+    )
+  }
+}
+
+export type ReportReportIdAcceptPostRequestParams = {
+  reportId: number
+  acceptReportRequestDto: AcceptReportRequestDto
+  options?: any
+}
+
+/**
+ * 신고를 승인합니다.
+ * @summary 신고 승인
+ * @param {number} reportId 신고 고유 ID
+ * @param {AcceptReportRequestDto} acceptReportRequestDto
+ * @param {*} [options] Override http request option.
+ * @throws {RequiredError}
+ */
+export const reportReportIdAcceptPost = ({
+  configuration,
+  basePath,
+  axios,
+}: {
+  configuration?: Configuration
+  basePath?: string
+  axios?: AxiosInstance
+}) => {
+  return (params: ReportReportIdAcceptPostRequestParams): AxiosPromise<void> => {
+    return reportReportIdAcceptPostFp(
+      params.reportId,
+      params.acceptReportRequestDto,
+      params.options,
+      configuration,
+    ).then(request => request(axios, basePath))
+  }
+}
+
+export type ReportReportIdGetRequestParams = {
   reportId: number
   options?: any
 }
@@ -167,7 +393,7 @@ export type ReportReportIdPostRequestParams = {
  * @param {*} [options] Override http request option.
  * @throws {RequiredError}
  */
-export const reportReportIdPost = ({
+export const reportReportIdGet = ({
   configuration,
   basePath,
   axios,
@@ -176,8 +402,34 @@ export const reportReportIdPost = ({
   basePath?: string
   axios?: AxiosInstance
 }) => {
-  return (params: ReportReportIdPostRequestParams): AxiosPromise<GetReportResponseDto> => {
-    return reportReportIdPostFp(params.reportId, params.options, configuration).then(request =>
+  return (params: ReportReportIdGetRequestParams): AxiosPromise<GetReportResponseDto> => {
+    return reportReportIdGetFp(params.reportId, params.options, configuration).then(request => request(axios, basePath))
+  }
+}
+
+export type ReportReportIdRejectPostRequestParams = {
+  reportId: number
+  options?: any
+}
+
+/**
+ * 신고를 거부합니다.
+ * @summary 신고 거부
+ * @param {number} reportId 신고 고유 ID
+ * @param {*} [options] Override http request option.
+ * @throws {RequiredError}
+ */
+export const reportReportIdRejectPost = ({
+  configuration,
+  basePath,
+  axios,
+}: {
+  configuration?: Configuration
+  basePath?: string
+  axios?: AxiosInstance
+}) => {
+  return (params: ReportReportIdRejectPostRequestParams): AxiosPromise<void> => {
+    return reportReportIdRejectPostFp(params.reportId, params.options, configuration).then(request =>
       request(axios, basePath),
     )
   }

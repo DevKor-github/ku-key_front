@@ -25,6 +25,8 @@ import { CreateClubResponseDto } from '../models'
 // @ts-ignore
 import { DeleteClubResponseDto } from '../models'
 // @ts-ignore
+import { GetClubDetailResponseDto } from '../models'
+// @ts-ignore
 import { GetClubResponseDto } from '../models'
 // @ts-ignore
 import { GetHotClubResponseDto } from '../models'
@@ -59,6 +61,44 @@ const clubClubIdDeleteAxiosParamCreator = async (
   const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options }
   const localVarHeaderParameter = {} as any
   const localVarQueryParameter = {} as any
+
+  setSearchParams(localVarUrlObj, localVarQueryParameter)
+  let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {}
+  localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers }
+
+  return {
+    url: toPathString(localVarUrlObj),
+    options: localVarRequestOptions,
+  }
+}
+/**
+ * 동아리 상세 정보를 조회합니다.
+ * @summary 동아리 상세 조회
+ * @param {number} clubId club id
+ * @param {boolean} isLogin 로그인 여부
+ * @param {*} [options] Override http request option.
+ * @throws {RequiredError}
+ */
+const clubClubIdGetAxiosParamCreator = async (
+  clubId: number,
+  isLogin: boolean,
+  options: AxiosRequestConfig = {},
+  configuration?: Configuration,
+): Promise<RequestArgs> => {
+  const localVarPath = `/club/{clubId}`.replace(`{${'clubId'}}`, encodeURIComponent(String(clubId)))
+  // use dummy base URL string because the URL constructor only accepts absolute URLs.
+  const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL)
+  let baseOptions
+  if (configuration) {
+    baseOptions = configuration.baseOptions
+  }
+
+  const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options }
+  const localVarHeaderParameter = {} as any
+  const localVarQueryParameter = {} as any
+  if (isLogin !== undefined) {
+    localVarQueryParameter['isLogin'] = isLogin
+  }
 
   setSearchParams(localVarUrlObj, localVarQueryParameter)
   let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {}
@@ -230,7 +270,7 @@ const clubGetAxiosParamCreator = async (
   }
 }
 /**
- * 최근 일주일 동안 좋아요 개수가 가장 많은 동아리 4개를 반환합니다.
+ * 최근 일주일 동안 좋아요 개수가 가장 많은 동아리 5개를 반환합니다.
  * @summary Hot Club 목록 조회
  * @param {*} [options] Override http request option.
  * @throws {RequiredError}
@@ -439,6 +479,23 @@ const clubClubIdDeleteFp = async (
   return createRequestFunction(localVarAxiosArgs, globalAxios, configuration)
 }
 /**
+ * 동아리 상세 정보를 조회합니다.
+ * @summary 동아리 상세 조회
+ * @param {number} clubId club id
+ * @param {boolean} isLogin 로그인 여부
+ * @param {*} [options] Override http request option.
+ * @throws {RequiredError}
+ */
+const clubClubIdGetFp = async (
+  clubId: number,
+  isLogin: boolean,
+  options?: AxiosRequestConfig,
+  configuration?: Configuration,
+): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetClubDetailResponseDto>> => {
+  const localVarAxiosArgs = await clubClubIdGetAxiosParamCreator(clubId, isLogin, options, configuration)
+  return createRequestFunction(localVarAxiosArgs, globalAxios, configuration)
+}
+/**
  * 동아리 id를 받아 admin page에서 동아리 정보를 수정합니다.
  * @summary 동아리 정보 수정
  * @param {number} clubId 동아리 id
@@ -525,7 +582,7 @@ const clubGetFp = async (
   return createRequestFunction(localVarAxiosArgs, globalAxios, configuration)
 }
 /**
- * 최근 일주일 동안 좋아요 개수가 가장 많은 동아리 4개를 반환합니다.
+ * 최근 일주일 동안 좋아요 개수가 가장 많은 동아리 5개를 반환합니다.
  * @summary Hot Club 목록 조회
  * @param {*} [options] Override http request option.
  * @throws {RequiredError}
@@ -642,6 +699,36 @@ export const clubClubIdDelete = ({
   }
 }
 
+export type ClubClubIdGetRequestParams = {
+  clubId: number
+  isLogin: boolean
+  options?: any
+}
+
+/**
+ * 동아리 상세 정보를 조회합니다.
+ * @summary 동아리 상세 조회
+ * @param {number} clubId club id
+ * @param {boolean} isLogin 로그인 여부
+ * @param {*} [options] Override http request option.
+ * @throws {RequiredError}
+ */
+export const clubClubIdGet = ({
+  configuration,
+  basePath,
+  axios,
+}: {
+  configuration?: Configuration
+  basePath?: string
+  axios?: AxiosInstance
+}) => {
+  return (params: ClubClubIdGetRequestParams): AxiosPromise<GetClubDetailResponseDto> => {
+    return clubClubIdGetFp(params.clubId, params.isLogin, params.options, configuration).then(request =>
+      request(axios, basePath),
+    )
+  }
+}
+
 export type ClubClubIdPatchRequestParams = {
   clubId: number
   name?: string
@@ -755,7 +842,7 @@ export type ClubHotGetRequestParams = {
 }
 
 /**
- * 최근 일주일 동안 좋아요 개수가 가장 많은 동아리 4개를 반환합니다.
+ * 최근 일주일 동안 좋아요 개수가 가장 많은 동아리 5개를 반환합니다.
  * @summary Hot Club 목록 조회
  * @param {*} [options] Override http request option.
  * @throws {RequiredError}

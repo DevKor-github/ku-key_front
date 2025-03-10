@@ -19,6 +19,18 @@
  */
 export interface CreateReportRequestDto {
   /**
+   * 게시글 ID
+   * @type {number}
+   * @memberof CreateReportRequestDto
+   */
+  postId: number
+  /**
+   * 댓글 ID (댓글 신고일 경우 존재, 게시글 신고일 경우 null
+   * @type {number}
+   * @memberof CreateReportRequestDto
+   */
+  commentId?: number
+  /**
    * 신고 사유
    * @type {string}
    * @memberof CreateReportRequestDto
