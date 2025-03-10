@@ -33,6 +33,8 @@ import { GetTimetableByTimetableIdDto } from '../models'
 // @ts-ignore
 import { GetTimetableByUserIdResponseDto } from '../models'
 // @ts-ignore
+import { GetTodayTimetableResponse } from '../models'
+// @ts-ignore
 import { TimetableDto } from '../models'
 // @ts-ignore
 import { UpdateTimetableColorDto } from '../models'
@@ -391,6 +393,48 @@ const timetableTimetableIdPatchAxiosParamCreator = async (
   }
 }
 /**
+ * 오늘의 시간표를 조회합니다.
+ * @summary 오늘의 시간표 조회
+ * @param {string} semester 학기
+ * @param {string} year 연도
+ * @param {*} [options] Override http request option.
+ * @throws {RequiredError}
+ */
+const timetableTodayGetAxiosParamCreator = async (
+  semester: string,
+  year: string,
+  options: AxiosRequestConfig = {},
+  configuration?: Configuration,
+): Promise<RequestArgs> => {
+  const localVarPath = `/timetable/today`
+  // use dummy base URL string because the URL constructor only accepts absolute URLs.
+  const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL)
+  let baseOptions
+  if (configuration) {
+    baseOptions = configuration.baseOptions
+  }
+
+  const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options }
+  const localVarHeaderParameter = {} as any
+  const localVarQueryParameter = {} as any
+  if (semester !== undefined) {
+    localVarQueryParameter['semester'] = semester
+  }
+
+  if (year !== undefined) {
+    localVarQueryParameter['year'] = year
+  }
+
+  setSearchParams(localVarUrlObj, localVarQueryParameter)
+  let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {}
+  localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers }
+
+  return {
+    url: toPathString(localVarUrlObj),
+    options: localVarRequestOptions,
+  }
+}
+/**
  * 해당 유저가 가지고 있는 시간표의 ID 리스트, 각각의 학기, 대표 시간표 여부, 시간표 이름을 반환합니다.
  * @summary 유저의 ID로 시간표 관련 정보 조회
  * @param {*} [options] Override http request option.
@@ -586,6 +630,23 @@ const timetableTimetableIdPatchFp = async (
     options,
     configuration,
   )
+  return createRequestFunction(localVarAxiosArgs, globalAxios, configuration)
+}
+/**
+ * 오늘의 시간표를 조회합니다.
+ * @summary 오늘의 시간표 조회
+ * @param {string} semester 학기
+ * @param {string} year 연도
+ * @param {*} [options] Override http request option.
+ * @throws {RequiredError}
+ */
+const timetableTodayGetFp = async (
+  semester: string,
+  year: string,
+  options?: AxiosRequestConfig,
+  configuration?: Configuration,
+): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetTodayTimetableResponse>> => {
+  const localVarAxiosArgs = await timetableTodayGetAxiosParamCreator(semester, year, options, configuration)
   return createRequestFunction(localVarAxiosArgs, globalAxios, configuration)
 }
 /**
@@ -873,6 +934,36 @@ export const timetableTimetableIdPatch = ({
   return (params: TimetableTimetableIdPatchRequestParams): AxiosPromise<CommonTimetableResponseDto> => {
     return timetableTimetableIdPatchFp(params.timetableId, params.timetableDto, params.options, configuration).then(
       request => request(axios, basePath),
+    )
+  }
+}
+
+export type TimetableTodayGetRequestParams = {
+  semester: string
+  year: string
+  options?: any
+}
+
+/**
+ * 오늘의 시간표를 조회합니다.
+ * @summary 오늘의 시간표 조회
+ * @param {string} semester 학기
+ * @param {string} year 연도
+ * @param {*} [options] Override http request option.
+ * @throws {RequiredError}
+ */
+export const timetableTodayGet = ({
+  configuration,
+  basePath,
+  axios,
+}: {
+  configuration?: Configuration
+  basePath?: string
+  axios?: AxiosInstance
+}) => {
+  return (params: TimetableTodayGetRequestParams): AxiosPromise<GetTodayTimetableResponse> => {
+    return timetableTodayGetFp(params.semester, params.year, params.options, configuration).then(request =>
+      request(axios, basePath),
     )
   }
 }

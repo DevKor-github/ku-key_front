@@ -21,10 +21,6 @@ import { DUMMY_BASE_URL, assertParamExists, setSearchParams, toPathString, creat
 import { COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base'
 
 // @ts-ignore
-import { CreateReportRequestDto } from '../models'
-// @ts-ignore
-import { CreateReportResponseDto } from '../models'
-// @ts-ignore
 import { DeletePostResponseDto } from '../models'
 // @ts-ignore
 import { GetPostListResponseDto } from '../models'
@@ -466,44 +462,6 @@ const postPostIdReactionPostAxiosParamCreator = async (
   }
 }
 /**
- * 게시글을 신고합니다
- * @summary 게시글 신고
- * @param {number} postId 게시글의 고유 ID
- * @param {CreateReportRequestDto} createReportRequestDto
- * @param {*} [options] Override http request option.
- * @throws {RequiredError}
- */
-const postPostIdReportPostAxiosParamCreator = async (
-  postId: number,
-  createReportRequestDto: CreateReportRequestDto,
-  options: AxiosRequestConfig = {},
-  configuration?: Configuration,
-): Promise<RequestArgs> => {
-  const localVarPath = `/post/{postId}/report`.replace(`{${'postId'}}`, encodeURIComponent(String(postId)))
-  // use dummy base URL string because the URL constructor only accepts absolute URLs.
-  const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL)
-  let baseOptions
-  if (configuration) {
-    baseOptions = configuration.baseOptions
-  }
-
-  const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options }
-  const localVarHeaderParameter = {} as any
-  const localVarQueryParameter = {} as any
-
-  localVarHeaderParameter['Content-Type'] = 'application/json'
-
-  setSearchParams(localVarUrlObj, localVarQueryParameter)
-  let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {}
-  localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers }
-  localVarRequestOptions.data = createReportRequestDto || undefined
-
-  return {
-    url: toPathString(localVarUrlObj),
-    options: localVarRequestOptions,
-  }
-}
-/**
  * 게시글을 스크랩합니다. 만일 이미 스크랩한 게시글이라면 스크랩을 취소합니다.
  * @summary 게시글 스크랩
  * @param {number} postId 게시글의 고유 ID
@@ -811,28 +769,6 @@ const postPostIdReactionPostFp = async (
   const localVarAxiosArgs = await postPostIdReactionPostAxiosParamCreator(
     postId,
     reactPostRequestDto,
-    options,
-    configuration,
-  )
-  return createRequestFunction(localVarAxiosArgs, globalAxios, configuration)
-}
-/**
- * 게시글을 신고합니다
- * @summary 게시글 신고
- * @param {number} postId 게시글의 고유 ID
- * @param {CreateReportRequestDto} createReportRequestDto
- * @param {*} [options] Override http request option.
- * @throws {RequiredError}
- */
-const postPostIdReportPostFp = async (
-  postId: number,
-  createReportRequestDto: CreateReportRequestDto,
-  options?: AxiosRequestConfig,
-  configuration?: Configuration,
-): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateReportResponseDto>> => {
-  const localVarAxiosArgs = await postPostIdReportPostAxiosParamCreator(
-    postId,
-    createReportRequestDto,
     options,
     configuration,
   )
@@ -1183,36 +1119,6 @@ export const postPostIdReactionPost = ({
 }) => {
   return (params: PostPostIdReactionPostRequestParams): AxiosPromise<ReactPostResponseDto> => {
     return postPostIdReactionPostFp(params.postId, params.reactPostRequestDto, params.options, configuration).then(
-      request => request(axios, basePath),
-    )
-  }
-}
-
-export type PostPostIdReportPostRequestParams = {
-  postId: number
-  createReportRequestDto: CreateReportRequestDto
-  options?: any
-}
-
-/**
- * 게시글을 신고합니다
- * @summary 게시글 신고
- * @param {number} postId 게시글의 고유 ID
- * @param {CreateReportRequestDto} createReportRequestDto
- * @param {*} [options] Override http request option.
- * @throws {RequiredError}
- */
-export const postPostIdReportPost = ({
-  configuration,
-  basePath,
-  axios,
-}: {
-  configuration?: Configuration
-  basePath?: string
-  axios?: AxiosInstance
-}) => {
-  return (params: PostPostIdReportPostRequestParams): AxiosPromise<CreateReportResponseDto> => {
-    return postPostIdReportPostFp(params.postId, params.createReportRequestDto, params.options, configuration).then(
       request => request(axios, basePath),
     )
   }

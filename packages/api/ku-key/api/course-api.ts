@@ -21,6 +21,8 @@ import { DUMMY_BASE_URL, assertParamExists, setSearchParams, toPathString, creat
 import { COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base'
 
 // @ts-ignore
+import { CommonCourseResponseDto } from '../models'
+// @ts-ignore
 import { PaginatedCoursesDto } from '../models'
 /**
  * CourseApi - axios parameter creator
@@ -92,6 +94,42 @@ const courseGetAxiosParamCreator = async (
     options: localVarRequestOptions,
   }
 }
+/**
+ * 추천 강의를 조회합니다.
+ * @summary 추천 강의 조회
+ * @param {number} limit 반환 개수
+ * @param {*} [options] Override http request option.
+ * @throws {RequiredError}
+ */
+const courseRecommendationGetAxiosParamCreator = async (
+  limit: number,
+  options: AxiosRequestConfig = {},
+  configuration?: Configuration,
+): Promise<RequestArgs> => {
+  const localVarPath = `/course/recommendation`
+  // use dummy base URL string because the URL constructor only accepts absolute URLs.
+  const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL)
+  let baseOptions
+  if (configuration) {
+    baseOptions = configuration.baseOptions
+  }
+
+  const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options }
+  const localVarHeaderParameter = {} as any
+  const localVarQueryParameter = {} as any
+  if (limit !== undefined) {
+    localVarQueryParameter['limit'] = limit
+  }
+
+  setSearchParams(localVarUrlObj, localVarQueryParameter)
+  let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {}
+  localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers }
+
+  return {
+    url: toPathString(localVarUrlObj),
+    options: localVarRequestOptions,
+  }
+}
 
 /**
  * CourseApi - functional programming interface
@@ -129,6 +167,21 @@ const courseGetFp = async (
     options,
     configuration,
   )
+  return createRequestFunction(localVarAxiosArgs, globalAxios, configuration)
+}
+/**
+ * 추천 강의를 조회합니다.
+ * @summary 추천 강의 조회
+ * @param {number} limit 반환 개수
+ * @param {*} [options] Override http request option.
+ * @throws {RequiredError}
+ */
+const courseRecommendationGetFp = async (
+  limit: number,
+  options?: AxiosRequestConfig,
+  configuration?: Configuration,
+): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<CommonCourseResponseDto>>> => {
+  const localVarAxiosArgs = await courseRecommendationGetAxiosParamCreator(limit, options, configuration)
   return createRequestFunction(localVarAxiosArgs, globalAxios, configuration)
 }
 
@@ -179,5 +232,33 @@ export const courseGet = ({
       params.options,
       configuration,
     ).then(request => request(axios, basePath))
+  }
+}
+
+export type CourseRecommendationGetRequestParams = {
+  limit: number
+  options?: any
+}
+
+/**
+ * 추천 강의를 조회합니다.
+ * @summary 추천 강의 조회
+ * @param {number} limit 반환 개수
+ * @param {*} [options] Override http request option.
+ * @throws {RequiredError}
+ */
+export const courseRecommendationGet = ({
+  configuration,
+  basePath,
+  axios,
+}: {
+  configuration?: Configuration
+  basePath?: string
+  axios?: AxiosInstance
+}) => {
+  return (params: CourseRecommendationGetRequestParams): AxiosPromise<Array<CommonCourseResponseDto>> => {
+    return courseRecommendationGetFp(params.limit, params.options, configuration).then(request =>
+      request(axios, basePath),
+    )
   }
 }

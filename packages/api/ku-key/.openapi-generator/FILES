@@ -25,6 +25,7 @@ configuration.ts
 git_push.sh
 index.ts
 models/academic-schedule.ts
+models/accept-report-request-dto.ts
 models/banner-dto.ts
 models/board-info.ts
 models/change-password-request-dto.ts
@@ -33,6 +34,7 @@ models/character.ts
 models/check-course-review-reading-ticket-response-dto.ts
 models/check-possible-response-dto.ts
 models/comment.ts
+models/common-course-response-dto-details.ts
 models/common-course-response-dto.ts
 models/common-delete-response-dto.ts
 models/common-timetable-response-dto.ts
@@ -58,14 +60,17 @@ models/delete-post-response-dto.ts
 models/delete-schedule-response-dto.ts
 models/delete-user-response-dto.ts
 models/event.ts
+models/friend-character-dto.ts
 models/get-academic-schedule-data-response-dto.ts
 models/get-banner-image-url-response-dto.ts
 models/get-board-response-dto.ts
+models/get-club-detail-response-dto.ts
 models/get-club-response-dto.ts
 models/get-comment-response-dto.ts
 models/get-course-info-by-timetable-id-response-dto.ts
 models/get-course-review-summary-response-dto.ts
 models/get-course-reviews-response-dto.ts
+models/get-courses-with-course-reviews-response-dto.ts
 models/get-daily-calendar-data-response-dto.ts
 models/get-friend-response-dto.ts
 models/get-hot-club-response-dto.ts
@@ -84,6 +89,7 @@ models/get-schedule-info-by-timetable-id-response-dto.ts
 models/get-screenshot-verifications-response-dto.ts
 models/get-timetable-by-timetable-id-dto.ts
 models/get-timetable-by-user-id-response-dto.ts
+models/get-today-timetable-response.ts
 models/get-waiting-friend-response-dto.ts
 models/image.ts
 models/index.ts
@@ -97,6 +103,7 @@ models/logout-request-dto.ts
 models/logout-response-dto.ts
 models/my-comment.ts
 models/notice-dto.ts
+models/paginated-course-reviews-dto.ts
 models/paginated-courses-dto.ts
 models/password-dto.ts
 models/post-preview-with-board-name.ts
@@ -111,6 +118,7 @@ models/reported-post.ts
 models/reported-user.ts
 models/review-dto.ts
 models/scrap-post-response-dto.ts
+models/search-course-reviews-with-keyword-response.ts
 models/search-user-response-dto.ts
 models/select-character-level-request-dto.ts
 models/select-character-level-response-dto.ts
@@ -124,6 +132,8 @@ models/set-response-dto.ts
 models/sign-up-response-dto.ts
 models/take-attendance-response-dto.ts
 models/timetable-dto.ts
+models/today-course-dto.ts
+models/today-schedule-dto.ts
 models/update-calendar-data-request-dto.ts
 models/update-calendar-data-response-dto.ts
 models/update-club-response-dto.ts

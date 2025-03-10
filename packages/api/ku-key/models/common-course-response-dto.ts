@@ -12,6 +12,8 @@
  * Do not edit the class manually.
  */
 
+import { CommonCourseResponseDtoDetails } from './common-course-response-dto-details'
+
 /**
  *
  * @export
@@ -98,8 +100,8 @@ export interface CommonCourseResponseDto {
   totalRate: number
   /**
    * 강의 세부사항
-   * @type {Array<string>}
+   * @type {Array<CommonCourseResponseDtoDetails>}
    * @memberof CommonCourseResponseDto
    */
-  details: Array<string>
+  details: Array<CommonCourseResponseDtoDetails>
 }
