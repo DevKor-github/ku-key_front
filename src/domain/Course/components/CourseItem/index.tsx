@@ -2,24 +2,19 @@ import * as s from './style.css'
 
 import RateTag from '@/domain/Course/components/RateTag'
 import SemesterTag from '@/domain/Course/components/SemesterTag'
+import { CommonCourseResponseDto } from '@/packages/api/ku-key/models'
 import { Typography } from '@/ui/Typography'
 
-type Props = {
-  title: string
-  professor: string
-  courseRate: string
-  semester: string
-  //TODO: 추천 강의 id 받아야 함.
-}
+type Props = Pick<CommonCourseResponseDto, 'courseName' | 'professorName' | 'totalRate' | 'semester' | 'year'>
 
-const CourseItem = ({ title, professor, courseRate, semester }: Props) => {
+const CourseItem = ({ courseName, professorName, totalRate, semester, year }: Props) => {
   return (
     <div className={s.Wrapper}>
       <div className={s.Header}>
-        <SemesterTag semester={semester} />
+        <SemesterTag semester={semester} year={year} />
         <div className={s.Rate}>
           🍪
-          <RateTag rate={Number(courseRate)} />
+          <RateTag rate={Number(totalRate)} />
         </div>
       </div>
       <div className={s.Body}>
@@ -28,14 +23,14 @@ const CourseItem = ({ title, professor, courseRate, semester }: Props) => {
           mobileTypography="miniTag1M"
           style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', width: '100%' }}
         >
-          {title}
+          {courseName}
         </Typography>
         <div className={s.Professor}>
           <Typography typography="body2R" mobileTypography="miniTag2" color="darkGray1">
             Prof.
           </Typography>
           <Typography typography="body1M" mobileTypography="miniTag2">
-            {professor}
+            {professorName}
           </Typography>
         </div>
       </div>

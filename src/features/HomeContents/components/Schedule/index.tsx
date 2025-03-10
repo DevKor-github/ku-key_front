@@ -1,8 +1,15 @@
 import * as s from './style.css'
 
+import { useReadTodayTimetable } from '@/domain/Timetable/hooks/useReadTodayTimetable'
 import ScheduleItem from '@/features/HomeContents/components/ScheduleItem'
 
 const HomeContentsSchedule = () => {
+  const { data: todayTimetable } = useReadTodayTimetable({
+    semester: 'spring',
+    year: '2025',
+  })
+
+  console.log(todayTimetable)
   return (
     <div className={s.Wrapper}>
       <div className={s.InnerWrapper}>
