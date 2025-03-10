@@ -1,7 +1,8 @@
 import { css, cva } from '@styled-system/css'
-import { Search } from 'lucide-react'
 import { CSSProperties, useState } from 'react'
+import { HiOutlineSearch } from 'react-icons/hi'
 
+import { vars } from '@/theme/theme.css'
 import { useDeepCompareEffect } from '@/util/hooks/useDeepCompare'
 
 const FormStyle = cva({
@@ -9,13 +10,14 @@ const FormStyle = cva({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    bgColor: 'bg.gray',
-    rounded: 10,
+    bgColor: 'white',
+    rounded: '6px',
     border: '1px {colors.lightGray.1} solid',
     px: 5,
-    py: 3,
+    py: '0.8125rem',
     color: 'lightGray.1',
     transition: 'all 0.256s',
+    h: '2.8125rem',
   },
   variants: {
     isFocus: {
@@ -59,11 +61,9 @@ const SearchBox = ({ initialKeyword, placeholder, onSubmit, cssProps = {}, reset
         className={css({
           border: 'none',
           outline: 'none',
-          fontSize: 18,
-          fontWeight: 500,
           flexGrow: 1,
-          lineHeight: 1.2,
           color: 'black.2',
+          ...vars.typography.desktop.body1M,
           _placeholder: {
             color: 'lightGray.1',
           },
@@ -75,7 +75,7 @@ const SearchBox = ({ initialKeyword, placeholder, onSubmit, cssProps = {}, reset
         placeholder={placeholder}
       />
       <button type="submit" className={css({ cursor: 'pointer' })}>
-        <Search />
+        <HiOutlineSearch size={20} />
       </button>
     </form>
   )
