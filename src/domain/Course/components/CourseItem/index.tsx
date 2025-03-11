@@ -4,16 +4,17 @@ import RateTag from '@/domain/Course/components/RateTag'
 import SemesterTag from '@/domain/Course/components/SemesterTag'
 import { CommonCourseResponseDto } from '@/packages/api/ku-key/models'
 import { Typography } from '@/ui/Typography'
+import { numberToSemester } from '@/util/timetableUtil'
 
 type Props = Pick<CommonCourseResponseDto, 'courseName' | 'professorName' | 'totalRate' | 'semester' | 'year'>
 
 const CourseItem = ({ courseName, professorName, totalRate, semester, year }: Props) => {
+  const semesterText = numberToSemester[Number(semester)]
   return (
     <div className={s.Wrapper}>
       <div className={s.Header}>
-        <SemesterTag semester={semester} year={year} />
+        <SemesterTag semester={semesterText} year={year} />
         <div className={s.Rate}>
-          🍪
           <RateTag rate={Number(totalRate)} />
         </div>
       </div>
