@@ -13,8 +13,9 @@ interface Props {
   searchQuery: CourseQueryInterface
   handleDropdown: (toIndex: number) => void
   handleSearch: (queryKeyword: string) => void
+  closeModal: () => void
 }
-const SearchArea = ({ curCategory, searchQuery, handleDropdown, handleSearch }: Props) => {
+const SearchArea = ({ curCategory, searchQuery, handleDropdown, handleSearch, closeModal }: Props) => {
   const [inputKeyword, setInputKeyword] = useState('')
 
   useDeepCompareEffect(() => {
@@ -47,7 +48,7 @@ const SearchArea = ({ curCategory, searchQuery, handleDropdown, handleSearch }: 
             variant="search"
           />
         </form>
-        <button className={s.CloseButton}>
+        <button className={s.CloseButton} onClick={closeModal}>
           <HiX />
         </button>
       </div>

@@ -65,7 +65,7 @@ const LectureBottomSheet = ({ timetableId, visible, year, semester }: LectureBot
           {sheetState === 'schedule' ? (
             <AddOnMyOwn submitHandler={addOnMyOwnHandler} />
           ) : (
-            <AddClass timetableId={timetableId} year={year} semester={semester} />
+            <AddClass timetableId={timetableId} year={year} semester={semester} closeModal={() => setIsOpen(false)} />
           )}
         </div>
       </motion.div>

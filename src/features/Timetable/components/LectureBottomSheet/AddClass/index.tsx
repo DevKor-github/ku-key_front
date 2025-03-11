@@ -14,12 +14,13 @@ import SearchResult from '@/features/Timetable/components/LectureBottomSheet/Add
 import { SemesterType } from '@/types/timetable'
 import { useQueryParams } from '@/util/hooks/useQueryParams'
 
-interface AddClassProps {
+interface Props {
   timetableId: number
   year: string
   semester: SemesterType
+  closeModal: () => void
 }
-const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
+const AddClass = ({ timetableId, year, semester, closeModal }: Props) => {
   const scrollSectionRef = useRef<HTMLDivElement>(null)
 
   // 포괄 카테고리 (0:All, 1:Major, 2:General, 3:Academic)
@@ -93,6 +94,7 @@ const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
           searchQuery={searchQuery}
           handleDropdown={handleDropdown}
           handleSearch={handleSearchBoxOnSubmit}
+          closeModal={closeModal}
         />
         <ErrorBoundarySuspense
           fallback={
