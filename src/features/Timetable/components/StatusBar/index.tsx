@@ -1,5 +1,6 @@
-import { css } from '@styled-system/css'
 import { useCallback } from 'react'
+
+import * as s from './style.css'
 
 import { usePostTimetable } from '@/api/hooks/timetable'
 import CreateTimetableBtn from '@/components/timetable/Button/CreateTimetableBtn'
@@ -7,13 +8,13 @@ import MainPinBtn from '@/components/timetable/Button/MainPinBtn'
 import SelectTimetableBtn from '@/components/timetable/Button/SelectTimetableBtn'
 import { Semester } from '@/types/timetable'
 
-interface StatusBarProps {
+interface Props {
   curSemester: Semester
   curIndex: number
   setCurIndex: (toIndex: number) => void
 }
 
-const StatusBar = ({ curSemester, curIndex, setCurIndex }: StatusBarProps) => {
+const StatusBar = ({ curSemester, curIndex, setCurIndex }: Props) => {
   const { mutate: createTimetable } = usePostTimetable()
 
   const curSemesterTimetableLen = curSemester.timetables.length
@@ -27,18 +28,9 @@ const StatusBar = ({ curSemester, curIndex, setCurIndex }: StatusBarProps) => {
   }, [curSemester, createTimetable, curSemesterTimetableLen])
 
   return (
-    <div
-      className={css({
-        display: 'flex',
-        flexDir: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        mb: 5,
-        h: 11,
-      })}
-    >
-      <div className={css({ display: 'flex', flexDir: 'row', gap: 5, alignItems: 'center' })}>
-        <div className={css({ display: 'flex', flexDir: 'row', gap: 2.5, alignItems: 'center' })}>
+    <div className={s.Wrapper}>
+      <div className={s.Contents}>
+        <div className={s.TimetableControl}>
           {curSemester.timetables.map((timetable, index) => {
             return (
               <SelectTimetableBtn
@@ -52,12 +44,12 @@ const StatusBar = ({ curSemester, curIndex, setCurIndex }: StatusBarProps) => {
           })}
           <CreateTimetableBtn handleCreate={handleCreateTimetable} />
         </div>
+        <MainPinBtn
+          hasTimetable={curSemesterTimetableLen !== 0}
+          curTimetable={curSemester.timetables[curIndex]}
+          setCurIndexZero={() => setCurIndex(0)}
+        />
       </div>
-      <MainPinBtn
-        hasTimetable={curSemesterTimetableLen !== 0}
-        curTimetable={curSemester.timetables[curIndex]}
-        setCurIndexZero={() => setCurIndex(0)}
-      />
     </div>
   )
 }
