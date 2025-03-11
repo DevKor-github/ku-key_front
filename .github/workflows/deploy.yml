@@ -20,6 +20,9 @@ jobs:
       - name: Install Dependencies
         run: yarn
 
+      - name: Panda Code Gen
+        run: yarn prepare
+
       - name: 'Create env file'
         run: |
           touch .env
