@@ -10,7 +10,9 @@ const CommunityAllPage = () => {
   return (
     <Suspense fallback={<LoadingScreen />}>
       <main className={s.Wrapper}>
-        <CommunitySelectTab />
+        <div className={s.SelectTabWrapper}>
+          <CommunitySelectTab />
+        </div>
         <Suspense fallback={<LoadingSpinner />}>
           <CommunityOutlet />
         </Suspense>
