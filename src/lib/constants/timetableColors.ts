@@ -19,6 +19,6 @@ export const COLOR_INFO: { [key in ColorType]: { symbol: string; rand: string[] 
   },
   Red: {
     symbol: '#F17272',
-    rand: ['#E8B1ADCC', '#EC8A8ACC', '#F15151CC', '#C91717CC', '#711517CC'],
+    rand: ['#FF3535CC', '#F11E2DCC', '#C30010CC', '#F06B70CC', '#FFA4AECC'],
   },
 }

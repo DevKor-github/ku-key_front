@@ -27,3 +27,4 @@ export const TimetablePage = withSuspense(lazy(() => import('@/pages/TimetablePa
 export const FriendPage = withSuspense(lazy(() => import('@/pages/TimetablePage/FriendPage')))
 export const FriendTimetablePage = withSuspense(lazy(() => import('@/pages/TimetablePage/FriendTimetablePage')))
 export const MyTimetablePage = withSuspense(lazy(() => import('@/pages/TimetablePage/MyTimetablePage')))
+export const ClubDetailPage = withSuspense(lazy(() => import('@/pages/ClubPage/ClubDetailPage')))

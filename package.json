@@ -10,7 +10,9 @@
     "production": "vite --mode production",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "codegen": "node ./scripts/generate-oas.js",
+    "re:gen:api": "node ./scripts/re-create-api-json.js"
   },
   "dependencies": {
     "@amplitude/analytics-browser": "^2.11.6",
@@ -21,9 +23,11 @@
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-menubar": "^1.1.1",
     "@radix-ui/react-popover": "^1.1.1",
-    "@radix-ui/react-slot": "^1.0.2",
-    "@tanstack/react-query": "^5.29.0",
+    "@radix-ui/react-slot": "^1.1.1",
+    "@tanstack/react-query": "^5.64.2",
     "@tanstack/react-query-devtools": "^5.51.23",
+    "@vanilla-extract/css": "^1.17.0",
+    "@vanilla-extract/recipes": "^0.5.5",
     "axios": "^1.6.8",
     "country-flag-icons": "^1.5.13",
     "date-fns": "^3.6.0",
@@ -40,8 +44,10 @@
     "react": "^18.2.0",
     "react-day-picker": "^8.10.1",
     "react-dom": "^18.2.0",
+    "react-error-boundary": "^5.0.0",
     "react-helmet-async": "^2.0.4",
     "react-hook-form": "^7.51.4",
+    "react-icons": "^5.5.0",
     "react-image-file-resizer": "^0.4.8",
     "react-router-dom": "^6.22.3",
     "react-select": "^5.8.0",
@@ -51,6 +57,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.16.3",
     "@pandacss/dev": "^0.37.2",
     "@tanstack/eslint-plugin-query": "^5.51.15",
     "@types/qs": "^6.9.16",
@@ -58,6 +65,7 @@
     "@types/react-dom": "^18.2.22",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
+    "@vanilla-extract/vite-plugin": "^4.0.19",
     "@vitejs/plugin-react-swc": "^3.5.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
@@ -70,5 +78,6 @@
     "typescript": "^5.2.2",
     "vite": "^5.2.0",
     "vite-tsconfig-paths": "^4.3.2"
-  }
+  },
+  "packageManager": "yarn@4.6.0"
 }
