@@ -103,7 +103,7 @@ export const vars = createGlobalTheme(':root', {
         fontSize: '0.875rem',
         fontStyle: 'normal',
         fontWeight: '500',
-        lineHeight: 'normal',
+        lineHeight: '140%',
       },
       body2R: {
         fontSize: '0.875rem',
