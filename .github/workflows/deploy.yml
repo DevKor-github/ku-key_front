@@ -11,6 +11,12 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@v4
 
+      - name: Corepack 최신 버전 설치
+        run: npm install -g corepack@latest
+
+      - name: Corepack 활성화
+        run: corepack enable
+
       - name: Install Dependencies
         run: yarn
 
