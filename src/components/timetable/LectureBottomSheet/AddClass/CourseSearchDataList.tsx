@@ -46,14 +46,7 @@ const CourseSearchDataList = forwardRef<HTMLDivElement, Props>(({ year, semester
     if (hasNextPage && !isFetching) fetchNextPage()
   })
 
-  if ((searchQuery.category === undefined || searchQuery.category === 'All Class') && !searchQuery.keyword)
-    // is initial state
-    return (
-      <div className={SearchMessageStyle}>
-        Enter keywords to search (e.g., course name, professor name, or course number)
-      </div>
-    )
-
+  // TODO: Vanilla-extract & Pagination 컴포넌트 사용 로직으로 변경
   if (searchData.length)
     return (
       <div
@@ -69,7 +62,7 @@ const CourseSearchDataList = forwardRef<HTMLDivElement, Props>(({ year, semester
         {searchData.map((data, index) => (
           <SearchLectureCard key={index} data={data} addCourse={addCourse} />
         ))}
-        <div ref={fetchNextRef} className={css({ height: 1 })} />
+        <div ref={fetchNextRef} className={css({ height: '0.25rem', flexShrink: 0 })} />
       </div>
     )
 
