@@ -44,6 +44,7 @@ export const EmblaSlide = style([
 export const CarouselButton = style([
   f.flexCenter,
   {
+    display: 'none',
     padding: '0.625rem 1.5rem',
     gap: '1.25rem',
     borderRadius: '99px',
