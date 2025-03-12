@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useMemo, useRef } from 'react'
 
 import * as s from './style.css'
 
@@ -55,13 +55,18 @@ const HomeContentsSchedule = () => {
 
   useScrollToCurrentSchedule({ scrollRef, currentScheduleIndex })
 
+  const renderSchedule = useMemo(() => {
+    if (!todaySchedules.length) return <div>No Schedule for today!</div>
+    return todaySchedules.map((schedule, index) => (
+      <ScheduleItem key={schedule.courseName} {...schedule} isLast={index === todaySchedules.length - 1} />
+    ))
+  }, [todaySchedules])
+
   return (
     <div className={s.Wrapper}>
       <div className={s.InnerWrapper}>
         <div className={s.ScrollWrapper} ref={scrollRef}>
-          {todaySchedules.map((schedule, index) => (
-            <ScheduleItem key={schedule.courseName} {...schedule} isLast={index === todaySchedules.length - 1} />
-          ))}
+          {renderSchedule}
         </div>
       </div>
     </div>
