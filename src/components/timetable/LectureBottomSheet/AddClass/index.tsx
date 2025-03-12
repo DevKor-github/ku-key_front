@@ -69,12 +69,8 @@ const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
 
   const handleSearchBoxOnSubmit = useCallback(
     (queryKeyword: string) => {
-      if (
-        (queryKeyword.length === 0 && searchQuery.category !== undefined && searchQuery.category !== 'All Class') ||
-        queryKeyword.length > 2
-      ) {
-        // All Class가 아닌 Category에서 빈 글자 입력
-        // 또는 2글자 이상 검색
+      if (queryKeyword.length !== 1) {
+        // 글자수 충족 시
         search({ ...searchQuery, keyword: queryKeyword })
       } else
         toast.custom(() => <Toast message="Please enter at least two letters for your search term." type="default" />)
