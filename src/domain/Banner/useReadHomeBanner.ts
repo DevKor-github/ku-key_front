@@ -1,13 +1,13 @@
 import { queryOptions, useSuspenseQuery } from '@tanstack/react-query'
 
 import { useAsyncRead } from '@/common/hooks/useAsyncRead'
-import { HOME_CALENDAR_QUERY_KEY } from '@/domain/HomeCalendar/queries'
+import { BANNER_QUERY_KEY } from '@/domain/Banner/queries'
 import { kuKeyClient } from '@/packages/api'
 
 export const useQueryHomeBanner = () => {
-  const read = useAsyncRead(kuKeyClient.api.CalendarApi.calendarBannerImageUrlsGet)
+  const read = useAsyncRead(kuKeyClient.api.BannerApi.bannerGet)
   return queryOptions({
-    queryKey: HOME_CALENDAR_QUERY_KEY.banner(),
+    queryKey: BANNER_QUERY_KEY.banner(),
     queryFn: () => read(),
   })
 }

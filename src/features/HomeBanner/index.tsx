@@ -5,17 +5,18 @@ import { HiChevronLeft, HiChevronRight } from 'react-icons/hi'
 
 import * as s from './style.css'
 
-import { useReadHomeBanner } from '@/domain/HomeCalendar/hooks/useReadHomeBanner'
+import { useReadHomeBanner } from '@/domain/Banner/useReadHomeBanner'
 import { Typography } from '@/ui/Typography'
 import { usePrevNextButtons } from '@/util/carousel-button'
+import { useMediaQueryByName } from '@/util/hooks/useMediaQueryByName'
 
 const HomeBanner = () => {
   const { data: banners } = useReadHomeBanner()
 
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: 'center' }, [Autoplay()])
+  const isMobile = useMediaQueryByName('smDown')
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: 'center' }, isMobile ? [Autoplay()] : [])
 
   const [currentSlide, setCurrentSlide] = useState(0)
-
   const logSlidesInView = useCallback((emblaApi: UseEmblaCarouselType[1]) => {
     if (emblaApi) {
       const currentSlideIndex = emblaApi.internalEngine().index.get()
@@ -26,7 +27,8 @@ const HomeBanner = () => {
   const { onPrevButtonClick, onNextButtonClick, onButtonAutoplayClick } = usePrevNextButtons(emblaApi)
 
   useEffect(() => {
-    if (emblaApi) emblaApi.on('select', logSlidesInView)
+    if (!emblaApi) return
+    emblaApi.on('select', logSlidesInView)
   }, [emblaApi, logSlidesInView])
 
   return (
@@ -35,11 +37,12 @@ const HomeBanner = () => {
       <div ref={emblaRef} className={s.EmblaViewport}>
         {/* embla__container */}
         <div className={s.EmblaContainer}>
-          {banners?.map(({ imageUrl }, index) => (
-            <img src={imageUrl} alt={`banner-img-${index}`} className={s.EmblaSlide} />
+          {banners?.map(({ imageUrl, id }, index) => (
+            <img key={id} src={imageUrl} alt={`banner-img-${index}`} className={s.EmblaSlide} />
           ))}
         </div>
       </div>
+
       <div className={s.CarouselButton}>
         <HiChevronLeft className={s.Icon} onClick={() => onButtonAutoplayClick(onPrevButtonClick)} />
         <Typography variant="desktop" typography="body1M" color="white">

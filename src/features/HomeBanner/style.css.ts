@@ -10,6 +10,7 @@ export const Wrapper = style([
   f.directionColumn,
   f.alignCenter,
   { gap: '2.5rem' },
+  f.smDown({ gap: '0' }),
 ])
 
 export const RelativeWrapper = style([
@@ -39,7 +40,6 @@ export const EmblaSlide = style([
     borderRadius: '20px',
   },
 ])
-// base: { w: '608px', ml: 5, flex: '0 0 auto', display: 'block', rounded: { base: 20, smDown: 0 } },
 
 export const CarouselButton = style([
   f.flexCenter,
@@ -60,7 +60,7 @@ export const Icon = style([
 
 export const MobileCarouselButton = style([
   f.flexCenter,
-  f.smDown({ display: 'flex', alignItems: 'flex-end' }),
+  f.smDown({ display: 'none', alignItems: 'flex-end' }),
   {
     display: 'none',
     padding: '0.1875rem 0.5rem',
