@@ -14,7 +14,7 @@ const FakeTimetable = () => {
     >
       <button className={s.Button} onClick={() => navigate('/login')}>
         <Typography typography="heading2SB" color="red2" mobileTypography="miniTag2">
-          로그인하고 내 시간표 만들기!
+          Login and Create Your Timetable!
         </Typography>
       </button>
     </div>
