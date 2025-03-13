@@ -107,8 +107,10 @@ export const HeartIcon = recipe({
       width: '1.18rem',
       color: vars.color.black,
       transition: 'color 0.25s ease',
-      marginLeft: '0.22rem',
     },
+    f.smUp({
+      marginLeft: '0.22rem',
+    }),
     f.smDown({
       width: '1.03rem',
       color: vars.color.darkGray2,
