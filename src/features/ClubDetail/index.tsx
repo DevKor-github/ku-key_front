@@ -21,8 +21,6 @@ const ClubDetail = () => {
   const { data: clubData } = useReadClubDetail(Number(clubId))
   const { mutate: likeClub } = usePostClubLike()
 
-  console.log(clubData)
-
   const handleLikeClick = useDeepCompareCallback(() => {
     if (isLogin) likeClub({ clubId: Number(clubId) })
     else toast.custom(() => <Toast message={USER_AUTH_MESSAGE.REQUIRE_LOGIN} type="error" />)
