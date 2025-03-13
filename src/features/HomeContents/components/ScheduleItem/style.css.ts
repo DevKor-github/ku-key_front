@@ -5,7 +5,7 @@ import { vars } from '@/theme/theme.css'
 
 export const ItemWrapper = style([f.flex, f.alignStart, f.wFull, { gap: '1.25rem' }, f.smDown({ gap: '0.625rem' })])
 
-export const CheckWrapper = style([f.flex, f.alignCenter, f.directionColumn, f.hFull])
+export const CheckWrapper = style([f.flex, f.alignCenter, f.justifyStart, f.directionColumn, f.hFull])
 
 export const Wrapper = style([
   f.flex,
@@ -26,7 +26,7 @@ export const Location = style([f.flex, f.directionRow, f.alignCenter, { gap: '0.
 
 export const IndicatorIcon = style([
   f.smDown({ width: '1.125rem', height: '1.125rem' }),
-  { width: '2.25rem', height: '2.25rem', flex: 1 },
+  { width: '2.25rem', height: '2.25rem' },
 ])
 
 export const Icon = style([

@@ -11,7 +11,7 @@ const RateTag = ({ rate }: Props) => {
   return (
     <div className={s.Wrapper} style={{ backgroundColor: getCourseRateBackgroundColor(rate) }}>
       <Typography typography="heading1SB" mobileTypography="bodySB" style={{ color: getCourseRateTextColor(rate) }}>
-        {rate}
+        {rate.toFixed(1)}
       </Typography>
     </div>
   )

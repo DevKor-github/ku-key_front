@@ -1,9 +1,11 @@
 import * as s from './style.css'
 
 import CourseItem from '@/domain/Course/components/CourseItem'
+import { useReadCourseRecommendation } from '@/domain/Course/hooks/useReadCourseRecommendation'
 import { Typography } from '@/ui/Typography'
 
 const RecommendedLecture = () => {
+  const { data: courseRecommendation } = useReadCourseRecommendation({ limit: 4 })
   return (
     <div className={s.Wrapper}>
       <div className={s.Title}>
@@ -12,15 +14,9 @@ const RecommendedLecture = () => {
         </Typography>
       </div>
       <div className={s.CourseList}>
-        <CourseItem
-          title="how to get rich how to get rich how to get rich"
-          professor="John Doe"
-          courseRate="4.5"
-          semester="2025-Spring"
-        />
-        <CourseItem title="how to get rich" professor="John Doe" courseRate="2.5" semester="2025-Spring" />
-        <CourseItem title="how to get rich" professor="John Doe" courseRate="1.5" semester="2025-Spring" />
-        <CourseItem title="how to get rich" professor="John Doe" courseRate="4.5" semester="2025-Spring" />
+        {courseRecommendation.map(course => (
+          <CourseItem key={course.id} {...course} />
+        ))}
       </div>
     </div>
   )
