@@ -2,7 +2,7 @@ import * as s from './style.css'
 
 import OptionIcon from '@/assets/icon/OptionIcon'
 import CategoryDrawer from '@/features/Club/components/CategoryDrawer'
-import { CATEGORY_LIST, CategoryType } from '@/features/Club/constants'
+import { CATEGORY_LIST, CategoryType } from '@/domain/Club/constants'
 import useDrawer from '@/util/hooks/useDrawer'
 
 interface Props {

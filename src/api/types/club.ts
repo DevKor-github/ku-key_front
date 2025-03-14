@@ -1,4 +1,4 @@
-import { CategoryType } from '@/features/Club/constants'
+import { CategoryType } from '@/domain/Club/constants'
 import { ClubInterface } from '@/types/club'
 
 export interface ClubProfileProps {
@@ -20,7 +20,6 @@ export interface GetClubRequest {
 export type GetClubResponse = ClubInterface[]
 
 export interface PostClubLikeRequest {
-  queryParams: GetClubRequest
   clubId: number
 }
 

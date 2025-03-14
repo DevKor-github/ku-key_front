@@ -1,4 +1,4 @@
-import { CategoryType } from '@/features/Club/constants'
+import { CategoryType } from '@/domain/Club/constants'
 
 export interface ClubProfileProps {
   img: string

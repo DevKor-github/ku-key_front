@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react'
 
 import * as s from './style.css'
 
+import { CATEGORY_LIST, CategoryType } from '@/domain/Club/constants'
+import { useGetCachedClubSearchResult } from '@/domain/Club/hooks/useGetClubSearch'
 import CategoryChip from '@/features/Club/components/CategoryChip'
-import { CATEGORY_LIST, CategoryType } from '@/features/Club/constants'
-import { useGetCachedClubSearchResult } from '@/features/Club/hooks/useGetClubSearch'
 import { ClubSearchParams } from '@/types/club'
 import { useQueryParams } from '@/util/hooks/useQueryParams'
 

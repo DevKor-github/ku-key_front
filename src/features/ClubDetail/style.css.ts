@@ -1,4 +1,5 @@
 import { style } from '@vanilla-extract/css'
+import { recipe } from '@vanilla-extract/recipes'
 
 import { f } from '@/style'
 import { vars } from '@/theme/theme.css'
@@ -74,16 +75,25 @@ export const Title = style([
   f.smDown(vars.typography.mobile.display2SB),
 ])
 
-export const LikeButton = style([
-  f.cursorPointer,
-  { width: '2.4rem', color: vars.color.lightGray1 },
-  f.smUp({
-    marginRight: '1.42rem',
-  }),
-  f.smDown({
-    width: '1.66rem',
-  }),
-])
+export const LikeButton = recipe({
+  base: [
+    f.cursorPointer,
+    { width: '2.4rem', color: vars.color.lightGray1, transition: 'color 0.256s' },
+    f.smUp({
+      marginRight: '1.42rem',
+    }),
+    f.smDown({
+      width: '1.66rem',
+    }),
+  ],
+  variants: {
+    clicked: {
+      true: {
+        color: vars.color.red3,
+      },
+    },
+  },
+})
 
 export const Contents = style([
   f.flex,
