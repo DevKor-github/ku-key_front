@@ -2,11 +2,11 @@ import { css } from '@styled-system/css'
 import { boardTag } from '@styled-system/recipes'
 import { User, UserPen } from 'lucide-react'
 import { useCallback, useState } from 'react'
-import { useLocation } from 'react-router-dom'
 
-import { useDeleteComment, useReportComment } from '@/api/hooks/community'
+import { useDeleteComment } from '@/api/hooks/community'
 import UtilButton from '@/components/community/post/UtilButton'
 import AlertModal from '@/components/ui/modal/AlertModal'
+import { usePostReport } from '@/domain/Report/hooks/usePostReport'
 import { getFormattedTimeString } from '@/util/getFormattedTimeString'
 import { useModal } from '@/util/hooks/useModal'
 
@@ -17,6 +17,8 @@ interface CommentHeaderProps {
   commentId: number
   isAuthorMatchingPostAnonymity?: boolean
   isDeleted: boolean
+  postId: number
+  boardName: string
 }
 const CommentHeader = ({
   isMyComment,
@@ -25,12 +27,13 @@ const CommentHeader = ({
   commentId,
   isAuthorMatchingPostAnonymity,
   isDeleted,
+  postId,
+  boardName,
 }: CommentHeaderProps) => {
   const [target, setTarget] = useState<'report' | 'delete'>()
   const { modalRef, isOpen, handleOpen, handleLayoutClose, handleButtonClose } = useModal()
-  const { mutate: mutateReportComment } = useReportComment()
+  const { mutate: mutateReportComment } = usePostReport({})
   const { mutate: mutateDeleteComment } = useDeleteComment()
-  const boardName = useLocation().pathname.split('/')[2]
   const handleTargetAndOpen = useCallback(
     (target: 'report' | 'delete') => {
       setTarget(target)
@@ -40,12 +43,10 @@ const CommentHeader = ({
   )
   const handleReportConfirm = useCallback(() => {
     mutateReportComment(
-      { commentId, reason: 'Inappropriate' },
-      {
-        onSettled: () => handleButtonClose(),
-      },
+      { createReportRequestDto: { postId, commentId, reason: 'Inappropriate' } },
+      { onSettled: handleButtonClose },
     )
-  }, [commentId, handleButtonClose, mutateReportComment])
+  }, [commentId, handleButtonClose, mutateReportComment, postId])
   const handleDelete = useCallback(
     () => mutateDeleteComment(commentId, { onSuccess: handleButtonClose }),
     [commentId, handleButtonClose, mutateDeleteComment],

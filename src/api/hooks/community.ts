@@ -9,7 +9,6 @@ import { useSearchParams } from 'react-router-dom'
 
 import { useErrorHandledMutation } from '@/api/hooks/useErrorHandledMutation'
 import {
-  CommentReportRequest,
   GetMyCommentsResponse,
   PostByBoardResponse,
   PostCommentLikeRequest,
@@ -20,7 +19,6 @@ import {
   PostPreviewResponse,
   PostReactionRequest,
   PostReactionResponse,
-  PostReportRequest,
   PostScrapResponse,
 } from '@/api/types/community'
 import { CommentProps, PostPreviewByBoardMeta, PostPreviewProps, PostViewProps, ReactionType } from '@/types/community'
@@ -316,24 +314,6 @@ const deletePost = async (postId: number) => {
 
 export const useDeletePost = () => {
   return useErrorHandledMutation({ mutationFn: deletePost })
-}
-
-const reportPost = async ({ postId, reason }: PostReportRequest) => {
-  const response = await apiInterface.post(`/post/${postId}/report`, { reason })
-  return response.data
-}
-
-export const useReportPost = () => {
-  return useErrorHandledMutation({ mutationFn: reportPost })
-}
-
-const reportComment = async ({ commentId, reason }: CommentReportRequest) => {
-  const response = await apiInterface.post(`/comment/${commentId}/report`, { reason })
-  return response.data
-}
-
-export const useReportComment = () => {
-  return useErrorHandledMutation({ mutationFn: reportComment })
 }
 
 const getMyPost = async (take: number, cursor?: string) => {
