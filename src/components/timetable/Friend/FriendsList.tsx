@@ -135,7 +135,7 @@ const FriendsList = () => {
               <Link
                 key={friend.userId}
                 className={FriendBlock({ isEditMode })}
-                to={`/timetable/friend/${friend.username}`}
+                to={`/friend/${friend.username}`}
                 onClick={event => handleClick(event, friend)}
               >
                 <span>{friend.username}</span>
