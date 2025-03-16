@@ -57,24 +57,12 @@ const routes: RouteObject[] = [
               },
             ],
           },
-          {
-            ...routeConfig.MainCommunityPage,
-          },
-          {
-            ...routeConfig.CommunityAllPage,
-          },
-          {
-            ...routeConfig.WritePostPage,
-          },
-          {
-            ...routeConfig.BoardPage,
-          },
-          {
-            ...routeConfig.HotBoardPage,
-          },
-          {
-            ...routeConfig.PostViewPage,
-          },
+          { ...routeConfig.MainCommunityPage },
+          { ...routeConfig.CommunityAllPage },
+          { ...routeConfig.WritePostPage },
+          { ...routeConfig.BoardPage },
+          { ...routeConfig.HotBoardPage },
+          { ...routeConfig.PostViewPage },
         ],
       },
       { ...routeConfig.HomePage },
