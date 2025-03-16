@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { useNavigate } from 'react-router-dom'
 
 import * as s from '../Clubs/style.css'
 
@@ -7,6 +8,10 @@ import { Typography } from '@/ui/Typography'
 
 const RecommendedClubs = () => {
   const { data: recommendedClubs } = useReadRecommendedClubs()
+
+  const navigate = useNavigate()
+  const handleClick = (id: number) => navigate(`/club/detail/${id}`)
+
   return (
     <motion.div
       key={'HOT'}
@@ -17,7 +22,7 @@ const RecommendedClubs = () => {
       transition={{ duration: 0.2, ease: 'easeInOut' }}
     >
       {recommendedClubs.map(item => (
-        <button key={item.name} className={s.ItemBox}>
+        <button key={item.name} className={s.ItemBox} onClick={() => handleClick(item.clubId)}>
           <img className={s.ItemImage} src={item.imageUrl} alt={item.name} />
           <div className={s.Description}>
             <div className={s.DescriptionText}>
