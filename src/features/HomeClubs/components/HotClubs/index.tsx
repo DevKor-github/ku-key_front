@@ -1,14 +1,14 @@
 import { motion } from 'framer-motion'
-import { useNavigate } from 'react-router-dom'
 
 import * as s from '../Clubs/style.css'
 
 import { useReadHotClubs } from '@/features/HomeClubs/hooks/useReadHotClubs'
 import { Typography } from '@/ui/Typography'
+import { useNavigateRouter } from '@/util/hooks/useNavigateRouter'
+
 const HotClubs = () => {
   const { data: hotClubs } = useReadHotClubs()
-  const navigate = useNavigate()
-  const handleClick = (id: number) => navigate(`/club/detail/${id}`)
+  const navigateTo = useNavigateRouter()
 
   return (
     <motion.div
@@ -20,7 +20,11 @@ const HotClubs = () => {
       transition={{ duration: 0.2, ease: 'easeInOut' }}
     >
       {hotClubs.map(item => (
-        <button key={item.name} className={s.ItemBox} onClick={() => handleClick(item.clubId)}>
+        <button
+          key={item.name}
+          className={s.ItemBox}
+          onClick={() => navigateTo('ClubDetailPage', { clubId: String(item.clubId) })}
+        >
           <img className={s.ItemImage} src={item.imageUrl} alt={item.name} />
           <div className={s.Description}>
             <div className={s.DescriptionText}>
