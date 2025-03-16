@@ -6,7 +6,6 @@ import { routeConfig, RouteKey, RouteParamsObject } from '@/lib/router/routeConf
 export const useNavigateRouter = () => {
   const navigate = useNavigate()
 
-  // 컴포넌트 이름과 파라미터로 네비게이션하는 함수
   const navigateTo = useCallback(
     <T extends RouteKey>(routeName: T, params?: RouteParamsObject<T>, options?: NavigateOptions) => {
       const route = routeConfig[routeName]
@@ -16,7 +15,6 @@ export const useNavigateRouter = () => {
         navigate(path, options)
       } catch (error) {
         console.error(`Failed to generate path for "${routeName}":`, error)
-        console.error('Provided params:', params)
       }
     },
     [navigate],
