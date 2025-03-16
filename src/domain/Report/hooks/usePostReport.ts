@@ -8,7 +8,8 @@ type Props = UseErrorHandledMutationOption
 export const usePostReport = (props: Props) => {
   const fetch = useAsyncRead(kuKeyClient.api.ReportApi.reportPost)
 
-  const mutation = ({ createReportRequestDto }: ReportPostRequestParams) => fetch({ createReportRequestDto })
+  const mutation = (params: ReportPostRequestParams['createReportRequestDto']) =>
+    fetch({ createReportRequestDto: params })
 
   return useErrorHandledMutation({ ...props, mutationFn: mutation })
 }

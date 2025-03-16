@@ -41,12 +41,11 @@ const CommentHeader = ({
     },
     [handleOpen],
   )
+
   const handleReportConfirm = useCallback(() => {
-    mutateReportComment(
-      { createReportRequestDto: { postId, commentId, reason: 'Inappropriate' } },
-      { onSettled: handleButtonClose },
-    )
+    mutateReportComment({ postId, commentId, reason: 'Inappropriate' }, { onSettled: handleButtonClose })
   }, [commentId, handleButtonClose, mutateReportComment, postId])
+
   const handleDelete = useCallback(
     () => mutateDeleteComment(commentId, { onSuccess: handleButtonClose }),
     [commentId, handleButtonClose, mutateDeleteComment],

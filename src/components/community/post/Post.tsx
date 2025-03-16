@@ -43,12 +43,7 @@ const Post = memo(() => {
   }, [handleButtonClose, mutateDeletePost, navigate, postAtomData.id])
 
   const handleReportConfirm = useCallback(() => {
-    mutateReportPost(
-      { createReportRequestDto: { postId: postAtomData.id, reason: 'Inappropriate' } },
-      {
-        onSettled: () => handleButtonClose(),
-      },
-    )
+    mutateReportPost({ postId: postAtomData.id, reason: 'Inappropriate' }, { onSettled: () => handleButtonClose() })
   }, [handleButtonClose, mutateReportPost, postAtomData.id])
 
   const isPostEditable = useMemo(() => {
