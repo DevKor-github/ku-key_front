@@ -4,8 +4,10 @@ import SearchBox from '@/components/timetable/SearchBox'
 import CommunityPostDetail from '@/features/Community/CommunityPostDetail'
 import { Button } from '@/ui/Button'
 import { Typography } from '@/ui/Typography'
+import { useNavigateRouter } from '@/util/hooks/useNavigateRouter'
 
 const CommunityOutlet = () => {
+  const navigateTo = useNavigateRouter()
   return (
     <div className={s.Wrapper}>
       <div className={s.LeftWrapper}>
@@ -17,7 +19,9 @@ const CommunityOutlet = () => {
                 Check out our recent posts
               </Typography>
             </div>
-            <Button variant="red">Create post</Button>
+            <Button variant="red" onClick={() => navigateTo('WritePostPage', { type: 'write', boardName: 'all' })}>
+              Create post
+            </Button>
           </div>
           <SearchBox initialKeyword={''} placeholder={'Search posts from entire board'} onSubmit={() => {}} />
         </div>

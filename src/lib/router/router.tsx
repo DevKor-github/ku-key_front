@@ -1,33 +1,9 @@
 import { RouteObject } from 'react-router-dom'
 
 import MainLayout from '@/components/MainLayout'
-import {
-  BoardPage,
-  ClubDetailPage,
-  ClubPage,
-  CourseInfoPage,
-  CourseReviewPage,
-  FriendPage,
-  FriendTimetablePage,
-  HotBoardPage,
-  MainCommunityPage,
-  MyPage,
-  MyTimetablePage,
-  PostViewPage,
-  ReviewDetailPage,
-  ReviewPage,
-  SchedulePage,
-  TimetablePage,
-  WritePostPage,
-  WriteReviewPage,
-} from '@/lib/router/lazy-route'
 import ProtectedRoutes from '@/lib/router/ProtectedRoutes'
-import CommunityAllPage from '@/pages/Community/All'
-import HomePage from '@/pages/Home'
+import { routeConfig } from '@/lib/router/routeConfig'
 import LandingPage from '@/pages/LandingPage'
-import Login from '@/pages/LoginPage'
-import PasswordResetPage from '@/pages/PasswordResetPage'
-import RegisterPage from '@/pages/RegisterPage'
 
 const routes: RouteObject[] = [
   {
@@ -42,70 +18,80 @@ const routes: RouteObject[] = [
         path: '',
         element: <ProtectedRoutes />,
         children: [
-          { path: 'mypage', element: <MyPage /> },
+          { ...routeConfig.MyPage },
           {
-            path: 'timetable',
-            element: <TimetablePage />,
+            ...routeConfig.TimetablePage,
             children: [
-              { path: '', element: <MyTimetablePage /> },
               {
-                path: 'friend',
-                element: <FriendPage />,
+                ...routeConfig.MyTimetablePage,
+                path: routeConfig.MyTimetablePage.path.replace('/timetable', ''),
               },
-              { path: 'friend/:userHandler', element: <FriendTimetablePage /> },
+              {
+                ...routeConfig.FriendPage,
+                path: routeConfig.FriendPage.path.replace('/timetable/', ''),
+              },
+              {
+                ...routeConfig.FriendTimetablePage,
+                path: routeConfig.FriendTimetablePage.path.replace('/timetable/', ''),
+              },
             ],
           },
           {
-            path: 'course-review',
-            element: <CourseReviewPage />,
+            ...routeConfig.CourseReviewPage,
             children: [
-              { path: 'info', element: <CourseInfoPage /> },
-              { path: 'detail', element: <ReviewPage /> },
-              { path: 'review', element: <ReviewDetailPage /> },
-              { path: 'write', element: <WriteReviewPage /> },
+              {
+                ...routeConfig.CourseInfoPage,
+                path: routeConfig.CourseInfoPage.path.replace('/course-review/', ''),
+              },
+              {
+                ...routeConfig.ReviewPage,
+                path: routeConfig.ReviewPage.path.replace('/course-review/', ''),
+              },
+              {
+                ...routeConfig.ReviewDetailPage,
+                path: routeConfig.ReviewDetailPage.path.replace('/course-review/', ''),
+              },
+              {
+                ...routeConfig.WriteReviewPage,
+                path: routeConfig.WriteReviewPage.path.replace('/course-review/', ''),
+              },
             ],
           },
           {
-            path: 'community',
-            element: <MainCommunityPage />,
+            ...routeConfig.MainCommunityPage,
           },
           {
-            path: 'community/all',
-            element: <CommunityAllPage />,
+            ...routeConfig.CommunityAllPage,
           },
           {
-            path: 'community/action/:type/post/:boardName',
-            element: <WritePostPage />,
+            ...routeConfig.WritePostPage,
           },
           {
-            path: 'community/board/:boardName',
-            element: <BoardPage />,
+            ...routeConfig.BoardPage,
           },
           {
-            path: 'community/board/hotboard',
-            element: <HotBoardPage />,
+            ...routeConfig.HotBoardPage,
           },
           {
-            path: 'community/:boardName/post/:postId',
-            element: <PostViewPage />,
+            ...routeConfig.PostViewPage,
           },
         ],
       },
-      { path: 'home', element: <HomePage /> },
-      { path: 'calendar', element: <SchedulePage /> },
-      { path: 'login', element: <Login /> },
-      { path: 'register', element: <RegisterPage /> },
-      { path: 'password-reset', element: <PasswordResetPage /> },
+      { ...routeConfig.HomePage },
+      { ...routeConfig.SchedulePage },
+      { ...routeConfig.Login },
+      { ...routeConfig.RegisterPage },
+      { ...routeConfig.PasswordResetPage },
       {
         path: 'club',
         children: [
           {
-            path: '',
-            element: <ClubPage />,
+            ...routeConfig.ClubPage,
+            path: routeConfig.ClubPage.path.replace('/club', ''),
           },
           {
-            path: 'detail/:clubId',
-            element: <ClubDetailPage />,
+            ...routeConfig.ClubDetailPage,
+            path: routeConfig.ClubDetailPage.path.replace('/club/', ''),
           },
         ],
       },
