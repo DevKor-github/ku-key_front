@@ -7,14 +7,13 @@ import CookiesRate from '@/components/courseReview/CookiesRate'
 import { SearchedCourse } from '@/types/course'
 
 interface SearchLectureCardProps {
-  isFirst: boolean
   data: SearchedCourse
   addCourse: (courseId: number) => void
 }
 
-const SearchLectureCard = ({ data, isFirst }: SearchLectureCardProps) => {
+const SearchLectureCard = ({ data }: SearchLectureCardProps) => {
   return (
-    <div className={s.Wrapper({ isFirst })}>
+    <div className={s.Wrapper}>
       <div className={s.Contents}>
         <div className={s.Header}>
           <div className={s.CourseOutline}>

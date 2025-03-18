@@ -1,28 +1,21 @@
 import { style } from '@vanilla-extract/css'
-import { recipe } from '@vanilla-extract/recipes'
 
 import { BOTTOM_SHEET_CONTENTS_MAX_WIDTH } from '@/features/Timetable/components/LectureBottomSheet/constants'
 import { f } from '@/style'
 import { vars } from '@/theme/theme.css'
 
-export const Wrapper = recipe({
-  base: [
-    f.flex,
-    f.justifyCenter,
-    f.alignCenter,
-    f.wFull,
-    {
-      borderTop: `1px solid ${vars.color.lightGray2}`,
-    },
-  ],
-  variants: {
-    isFirst: {
-      true: {
-        borderTop: 'none',
-      },
+export const Wrapper = style([
+  f.flex,
+  f.justifyCenter,
+  f.alignCenter,
+  f.wFull,
+  {
+    borderTop: `1px solid ${vars.color.lightGray2}`,
+    ':first-child': {
+      borderTop: 'none',
     },
   },
-})
+])
 
 export const Contents = style([
   f.flexColumn,

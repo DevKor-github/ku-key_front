@@ -60,7 +60,7 @@ const SearchResult = forwardRef<HTMLDivElement, Props>(({ year, semester, timeta
     return (
       <div ref={ref} className={s.Wrapper}>
         {searchData.map((data, index) => (
-          <SearchLectureCard key={index} data={data} addCourse={addCourse} isFirst={index === 0} />
+          <SearchLectureCard key={index} data={data} addCourse={addCourse} />
         ))}
         <div ref={fetchNextRef} className={css({ height: 1 })} />
       </div>
