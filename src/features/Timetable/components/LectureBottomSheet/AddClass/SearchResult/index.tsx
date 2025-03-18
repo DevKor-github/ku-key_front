@@ -1,10 +1,12 @@
 import { css } from '@styled-system/css'
 import { forwardRef, useCallback } from 'react'
 
+import * as s from './style.css'
+
 import { usePostCourse } from '@/api/hooks/timetable'
-import { CourseQueryInterface } from '@/components/timetable/LectureBottomSheet/AddClass/constants'
-import SearchLectureCard from '@/components/timetable/LectureBottomSheet/AddClass/SearchLectureCard'
+import { CourseQueryInterface } from '@/domain/Timetable/constants'
 import { useSearchCourse } from '@/domain/Timetable/hooks/useSearchCourse'
+import SearchLectureCard from '@/features/Timetable/components/LectureBottomSheet/AddClass/SerchLectureCard'
 import { SemesterType } from '@/types/timetable'
 import useIntersect from '@/util/hooks/useIntersect'
 import { useQueryParams } from '@/util/hooks/useQueryParams'
@@ -23,7 +25,7 @@ interface Props {
   semester: SemesterType
   timetableId: number
 }
-const CourseSearchDataList = forwardRef<HTMLDivElement, Props>(({ year, semester, timetableId }, ref) => {
+const SearchResult = forwardRef<HTMLDivElement, Props>(({ year, semester, timetableId }, ref) => {
   const { mutate: postCourse } = usePostCourse()
   const addCourse = useCallback((courseId: number) => postCourse({ courseId, timetableId }), [postCourse, timetableId])
 
@@ -49,16 +51,7 @@ const CourseSearchDataList = forwardRef<HTMLDivElement, Props>(({ year, semester
   // TODO: Vanilla-extract & Pagination 컴포넌트 사용 로직으로 변경
   if (searchData.length)
     return (
-      <div
-        ref={ref}
-        className={css({
-          overflowY: 'auto',
-          display: 'flex',
-          flexDir: 'column',
-          gap: 5,
-          overscrollBehavior: 'contain',
-        })}
-      >
+      <div ref={ref} className={s.Wrapper}>
         {searchData.map((data, index) => (
           <SearchLectureCard key={index} data={data} addCourse={addCourse} />
         ))}
@@ -69,4 +62,4 @@ const CourseSearchDataList = forwardRef<HTMLDivElement, Props>(({ year, semester
   return <div className={SearchMessageStyle}>There are no classes available for exchange students.</div>
 })
 
-export default CourseSearchDataList
+export default SearchResult
