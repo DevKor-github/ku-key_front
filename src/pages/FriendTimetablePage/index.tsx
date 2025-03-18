@@ -11,7 +11,7 @@ import { convertHtmlToImage, makeSemesterDropdownList, timetablePreprocess } fro
 
 const FriendTimetablePage = () => {
   const params = useParams()
-  const user = params.userHandler
+  const user = params.username
 
   const imgRef = useRef(null)
   const [curSemester, setCurSemester] = useState(2)

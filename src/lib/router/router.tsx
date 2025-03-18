@@ -51,7 +51,7 @@ const routes: RouteObject[] = [
             element: <FriendPage />,
           },
           {
-            path: 'friend/:userHandler',
+            path: 'friend/:username',
             element: <FriendTimetablePage />,
           },
           {
