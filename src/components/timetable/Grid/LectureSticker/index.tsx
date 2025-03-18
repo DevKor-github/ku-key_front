@@ -9,7 +9,7 @@ import { useDeleteCourse } from '@/api/hooks/timetable'
 import NoScheduledLecture from '@/components/timetable/Grid/LectureSticker/NoScheduledLecture'
 import ScheduledLecture from '@/components/timetable/Grid/LectureSticker/ScheduledLecture'
 import OptionModal from '@/components/timetable/Modal/OptionModal'
-import { isBottomSheetVisible } from '@/lib/store/bottomSheet'
+import { isBottomSheetVisible } from '@/domain/Timetable/store/bottomSheetVisibility'
 import { GridType, TimetableContentsType } from '@/types/timetable'
 
 const isGridType = (val: TimetableContentsType | GridType): val is GridType => {
