@@ -1,7 +1,7 @@
 import { useSuspenseInfiniteQuery } from '@tanstack/react-query'
 
 import { GetCourseRequest, GetCourseResponse } from '@/api/types/course'
-import { CourseCategoryType } from '@/components/timetable/LectureBottomSheet/AddClass/constants'
+import { CourseCategoryType } from '@/domain/Timetable/constants'
 import { TIMETABLE_QUERY_KEY } from '@/domain/Timetable/queries'
 import { SemesterType } from '@/types/timetable'
 import { apiInterface } from '@/util/axios/custom-axios'

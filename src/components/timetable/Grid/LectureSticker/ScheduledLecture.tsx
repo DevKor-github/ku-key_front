@@ -5,7 +5,7 @@ import { MouseEvent } from 'react'
 import { createPortal } from 'react-dom'
 
 import EditSchedule from '@/components/timetable/Modal/EditSchedule'
-import { isBottomSheetVisible } from '@/lib/store/bottomSheet'
+import { isBottomSheetVisible } from '@/domain/Timetable/store/bottomSheetVisibility'
 import { GridType } from '@/types/timetable'
 import { getDuration, getStartTime } from '@/util/timetableUtil'
 

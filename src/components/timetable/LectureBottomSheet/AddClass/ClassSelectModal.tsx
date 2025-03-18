@@ -1,8 +1,8 @@
 import { css, cx } from '@styled-system/css'
 import { shadow } from '@styled-system/recipes'
 
-import { CourseCategoryType } from '@/components/timetable/LectureBottomSheet/AddClass/constants'
 import MajorList from '@/components/timetable/LectureBottomSheet/AddClass/MajorList'
+import { CourseCategoryType } from '@/domain/Timetable/constants'
 import { categoryObject } from '@/lib/constants/category'
 
 interface ClassSelectModalProps {

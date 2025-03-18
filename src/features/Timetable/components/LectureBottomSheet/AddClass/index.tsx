@@ -1,27 +1,26 @@
-import { css } from '@styled-system/css'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { toast } from 'sonner'
 
+import * as s from './style.css'
+
 import ErrorBoundarySuspense from '@/common/components/ErrorBoundarySuspense'
 import ClassSelectModal from '@/components/timetable/LectureBottomSheet/AddClass/ClassSelectModal'
-import {
-  COURSE_CATEGORY_LIST,
-  CourseQueryInterface,
-} from '@/components/timetable/LectureBottomSheet/AddClass/constants'
-import CourseSearchDataList from '@/components/timetable/LectureBottomSheet/AddClass/CourseSearchDataList'
-import SearchArea from '@/components/timetable/LectureBottomSheet/AddClass/SearchArea'
 import { LoadingSpinner } from '@/components/ui/spinner'
 import Toast from '@/components/ui/toast'
+import { COURSE_CATEGORY_LIST, CourseQueryInterface } from '@/domain/Timetable/constants'
+import SearchArea from '@/features/Timetable/components/LectureBottomSheet/AddClass/SearchArea'
+import SearchResult from '@/features/Timetable/components/LectureBottomSheet/AddClass/SearchResult'
 import { SemesterType } from '@/types/timetable'
 import { useQueryParams } from '@/util/hooks/useQueryParams'
 
-interface AddClassProps {
+interface Props {
   timetableId: number
   year: string
   semester: SemesterType
+  closeModal: () => void
 }
-const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
+const AddClass = ({ timetableId, year, semester, closeModal }: Props) => {
   const scrollSectionRef = useRef<HTMLDivElement>(null)
 
   // 포괄 카테고리 (0:All, 1:Major, 2:General, 3:Academic)
@@ -85,21 +84,22 @@ const AddClass = ({ timetableId, year, semester }: AddClassProps) => {
 
   return (
     <>
-      <div className={css({ display: 'flex', flexDir: 'column', h: '100%', gap: 2.5 })}>
+      <div className={s.Wrapper}>
         <SearchArea
           curCategory={curCategory}
           searchQuery={searchQuery}
           handleDropdown={handleDropdown}
           handleSearch={handleSearchBoxOnSubmit}
+          closeModal={closeModal}
         />
         <ErrorBoundarySuspense
           fallback={
-            <div className={css({ h: 'full', display: 'flex', justifyContent: 'center', alignItems: 'center' })}>
+            <div className={s.ErrorFallback}>
               <LoadingSpinner />
             </div>
           }
         >
-          <CourseSearchDataList ref={scrollSectionRef} year={year} semester={semester} timetableId={timetableId} />
+          <SearchResult ref={scrollSectionRef} year={year} semester={semester} timetableId={timetableId} />
         </ErrorBoundarySuspense>
       </div>
       {isModalOpen &&
