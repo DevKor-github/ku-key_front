@@ -13,9 +13,8 @@ interface Props {
 }
 const ClubCard = ({ clubData, handleLikeClick }: Props) => {
   return (
-    <Link className={s.Wrapper} to={`detail/${clubData.clubId}`} state={{ clubData }}>
-      {/* TODO: 안티패턴!!!!!! state 말고 해당 페이지 내에서 데이터 패칭하기 */}
-      <div className={s.ContentsWrapper}>
+    <div className={s.Wrapper}>
+      <Link className={s.ContentsWrapper} to={`detail/${clubData.clubId}`}>
         <div className={s.ImageContainer}>
           <img className={s.Image} src={clubData.imageUrl} alt={clubData.name} />
           <Responsive
@@ -43,12 +42,15 @@ const ClubCard = ({ clubData, handleLikeClick }: Props) => {
           <ClubSchedule recruitmentPeriod={clubData.recruitmentPeriod} regularMeeting={clubData.regularMeeting} />
           <div className={s.Description}>{clubData.description}</div>
         </div>
-      </div>
+      </Link>
       <Responsive
         mobile={
           <button
             className={s.MobileLikeButton({ myLikes: clubData.isLiked })}
-            onClick={() => handleLikeClick(clubData.clubId)}
+            onClick={event => {
+              event.stopPropagation()
+              handleLikeClick(clubData.clubId)
+            }}
           >
             <div className={s.HeartIcon({ myLikes: clubData.isLiked })}>
               <HeartIcon />
@@ -57,7 +59,7 @@ const ClubCard = ({ clubData, handleLikeClick }: Props) => {
           </button>
         }
       />
-    </Link>
+    </div>
   )
 }
 export default ClubCard

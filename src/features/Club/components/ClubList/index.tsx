@@ -5,9 +5,9 @@ import * as s from './style.css'
 
 import { Responsive } from '@/common/Responsive'
 import Toast from '@/components/ui/toast'
+import { useGetClubSearch } from '@/domain/Club/hooks/useGetClubSearch'
+import { usePostClubLike } from '@/domain/Club/hooks/usePostClubLike'
 import ClubCard from '@/features/Club/components/ClubCard'
-import { useGetClubSearch } from '@/features/Club/hooks/useGetClubSearch'
-import { usePostClubLike } from '@/features/Club/hooks/usePostClubLike'
 import { USER_AUTH_MESSAGE } from '@/lib/messages/common'
 import { ClubSearchParams } from '@/types/club'
 import { useAuth } from '@/util/auth/useAuth'
@@ -34,10 +34,10 @@ const ClubList = () => {
 
   const handleLikeClick = useDeepCompareCallback(
     (clubId: number) => {
-      if (isLogin) likeClub({ clubId, queryParams: requestQuery })
+      if (isLogin) likeClub({ clubId })
       else toast.custom(() => <Toast message={USER_AUTH_MESSAGE.REQUIRE_LOGIN} type="error" />)
     },
-    [likeClub, query, isLogin],
+    [likeClub, isLogin],
   )
 
   return (

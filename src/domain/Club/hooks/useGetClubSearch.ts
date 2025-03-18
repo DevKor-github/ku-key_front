@@ -1,7 +1,7 @@
 import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
 
 import { GetClubRequest, GetClubResponse } from '@/api/types/club'
-import { CLUB_QUERY_KEY } from '@/features/Club/queries'
+import { CLUB_QUERY_KEY } from '@/domain/Club/queries'
 import { ClubSearchParams } from '@/types/club'
 import { useAuth } from '@/util/auth/useAuth'
 import { apiInterface } from '@/util/axios/custom-axios'
