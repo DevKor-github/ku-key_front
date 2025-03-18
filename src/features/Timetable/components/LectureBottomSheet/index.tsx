@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { useAtomValue } from 'jotai'
 import { useCallback, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { match } from 'ts-pattern'
@@ -7,20 +8,21 @@ import * as s from './style.css'
 
 import { usePostSchedule } from '@/api/hooks/schedule'
 import AddOnMyOwn, { AddOnMyOwnForm } from '@/components/timetable/LectureBottomSheet/AddOnMyOwn'
-import Drawer from '@/components/timetable/LectureBottomSheet/Drawer'
+import { isBottomSheetVisible } from '@/domain/Timetable/store/bottomSheetVisibility'
 import AddClass from '@/features/Timetable/components/LectureBottomSheet/AddClass'
 import { BOTTOM_SHEET_DEFAULT_OPEN_HEIGHT } from '@/features/Timetable/components/LectureBottomSheet/constants'
+import DrawerHandle from '@/features/Timetable/components/LectureBottomSheet/DrawerHandle'
 import { SemesterType } from '@/types/timetable'
 
 interface LectureBottomSheetProps {
   timetableId: number
   year: string
   semester: SemesterType
-  visible: boolean
 }
-const LectureBottomSheet = ({ timetableId, visible, year, semester }: LectureBottomSheetProps) => {
+const LectureBottomSheet = ({ timetableId, year, semester }: LectureBottomSheetProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const [sheetState, setSheetState] = useState<'class' | 'schedule' | null>(null)
+  const isVisible = useAtomValue(isBottomSheetVisible)
 
   const openHeight = Math.min(window.innerHeight * 0.5, BOTTOM_SHEET_DEFAULT_OPEN_HEIGHT)
 
@@ -60,7 +62,7 @@ const LectureBottomSheet = ({ timetableId, visible, year, semester }: LectureBot
         initial={{ bottom: 0 }}
         variants={{ open: { bottom: `${openHeight}px` }, close: { bottom: 0 } }}
       >
-        {!isOpen && <Drawer isOpen={isOpen} sheetState={sheetState} handleDrawer={handleDrawer} visible={visible} />}
+        <DrawerHandle isVisible={!isOpen && isVisible} handleDrawer={handleDrawer} />
         <div className={s.Contents} style={{ height: openHeight }}>
           {sheetState === 'schedule' ? (
             <AddOnMyOwn submitHandler={addOnMyOwnHandler} />
