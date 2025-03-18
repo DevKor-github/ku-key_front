@@ -1,16 +1,14 @@
-import { useAtomValue } from 'jotai'
 import { useCallback, useRef } from 'react'
 
 import * as s from './style.css'
 
 import { useDeleteTimetable, useGetUserTimetableList } from '@/api/hooks/timetable'
-import LectureBottomSheet from '@/components/timetable/LectureBottomSheet'
 import { LoadingScreen } from '@/components/ui/spinner'
 import Timetable from '@/domain/Timetable/components/Timetable'
 import { useCreateDefaultTimetable } from '@/domain/Timetable/hooks/useCreateDefaultTimetable'
 import Header from '@/features/Timetable/components/Header'
+import LectureBottomSheet from '@/features/Timetable/components/LectureBottomSheet'
 import StatusBar from '@/features/Timetable/components/StatusBar'
-import { isBottomSheetVisible } from '@/lib/store/bottomSheet'
 import { DEFAULT_SEMESTER_INDEX, DEFAULT_TIMETABLE_INDEX, TimetableParams } from '@/pages/TimetablePage/constants'
 import { useQueryParams } from '@/util/hooks/useQueryParams'
 import { timetablePreprocess } from '@/util/timetableUtil'
@@ -38,8 +36,6 @@ const TimetablePage = () => {
   const { mutate: deleteTimetable } = useDeleteTimetable()
 
   const imgRef = useRef<HTMLDivElement>(null)
-
-  const isSheetVisible = useAtomValue(isBottomSheetVisible)
 
   const semesterList = timetablePreprocess(timetableList)
 
@@ -80,7 +76,6 @@ const TimetablePage = () => {
             timetableId={semesterList[curSemester].timetables[curIndex].timetableId}
             year={semesterList[curSemester].year}
             semester={semesterList[curSemester].semester}
-            visible={isSheetVisible}
           />
         </div>
       )}

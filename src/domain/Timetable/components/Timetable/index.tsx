@@ -8,7 +8,7 @@ import { useGetTimetable } from '@/api/hooks/timetable'
 import LectureGrid from '@/components/timetable/Grid/LectureGrid'
 import OptionModal from '@/components/timetable/Modal/OptionModal'
 import TimetableModal from '@/components/timetable/Modal/TimetableModal'
-import { isBottomSheetVisible } from '@/lib/store/bottomSheet'
+import { isBottomSheetVisible } from '@/domain/Timetable/store/bottomSheetVisibility'
 import { GlobalModalStateType, TimetableInfo } from '@/types/timetable'
 import { numberToSemester } from '@/util/timetableUtil'
 
