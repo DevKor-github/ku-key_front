@@ -11,14 +11,15 @@ import { POST_MESSAGES } from '@/lib/messages/community'
 import { postAtom } from '@/lib/store/post'
 import { CommentProps } from '@/types/community'
 import { getCommentUsername } from '@/util/getCommentUsername'
-import { isAuthorMatchingPostAnonymity } from '@/util/isAuthorMatchingPostAnonymity'
 import { useModal } from '@/util/hooks/useModal'
+import { isAuthorMatchingPostAnonymity } from '@/util/isAuthorMatchingPostAnonymity'
 
 interface CommentReplyProps {
   reply: Omit<CommentProps, 'reply'>
   parentId: number
+  boardName: string
 }
-const CommentReply = ({ reply, parentId }: CommentReplyProps) => {
+const CommentReply = ({ reply, parentId, boardName }: CommentReplyProps) => {
   const post = useAtomValue(postAtom)
   const isPostAuthorAnonymous = post.user.isAnonymous
   const { mutate: mutateLike } = usePostCommentLike()
@@ -50,6 +51,8 @@ const CommentReply = ({ reply, parentId }: CommentReplyProps) => {
           date={reply.createdAt}
           isMyComment={reply.isMyComment}
           commentId={reply.id}
+          postId={post.id}
+          boardName={boardName}
           isAuthorMatchingPostAnonymity={isAuthorMatchingPostAnonymity({
             isAuthor: reply.isAuthor,
             isPostAuthorAnonymous,

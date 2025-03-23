@@ -17,8 +17,9 @@ interface CommentProps {
   isOpen: boolean
   currentIndex: number
   handleClick: () => void
+  boardName: string
 }
-const Comment = memo(({ isOpen, currentIndex, handleClick }: CommentProps) => {
+const Comment = memo(({ isOpen, currentIndex, handleClick, boardName }: CommentProps) => {
   const post = useAtomValue(postAtom)
   const isPostAuthorAnonymous = post.user.isAnonymous
   const comment = post.comments[currentIndex]
@@ -34,6 +35,7 @@ const Comment = memo(({ isOpen, currentIndex, handleClick }: CommentProps) => {
     () => getCommentUsername({ comment, isPostAuthorAnonymous }),
     [comment, isPostAuthorAnonymous],
   )
+
   return (
     <div
       className={css({
@@ -49,6 +51,8 @@ const Comment = memo(({ isOpen, currentIndex, handleClick }: CommentProps) => {
         date={comment.createdAt}
         isMyComment={comment.isMyComment}
         commentId={comment.id}
+        postId={post.id}
+        boardName={boardName}
         isAuthorMatchingPostAnonymity={isAuthorMatchingPostAnonymity({
           isAuthor: comment.isAuthor,
           isPostAuthorAnonymous,
