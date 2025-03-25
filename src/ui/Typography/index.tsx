@@ -1,4 +1,5 @@
 import { forwardRef } from 'react'
+import { match, P } from 'ts-pattern'
 
 import { vars } from '@/theme/theme.css'
 import { useMediaQueryByName } from '@/util/hooks/useMediaQueryByName'
@@ -20,17 +21,29 @@ export const Typography = forwardRef<HTMLParagraphElement, Props>(
     const getColor = (color: ColorValue) => {
       return vars.color[color]
     }
+
+    const baseTypography = isMobile ? vars.typography.mobile.bodyM : vars.typography.desktop.body1M
     const getTypography = () => {
-      if (isMobile) {
-        if (mobileTypography) {
-          return vars.typography.mobile[mobileTypography]
-        }
-        return vars.typography.mobile[typography as keyof typeof vars.typography.mobile]
-      }
-      if (typography === undefined && mobileTypography) {
-        return vars.typography.mobile[mobileTypography as keyof typeof vars.typography.mobile]
-      }
-      return vars.typography.desktop[typography as keyof typeof vars.typography.desktop]
+      return match({ isMobile, typography, mobileTypography })
+        .with(
+          { isMobile: true, mobileTypography: P.not(undefined) },
+          ({ mobileTypography }) => vars.typography.mobile[mobileTypography],
+        )
+        .with(
+          { isMobile: true, typography: P.not(undefined) },
+          ({ typography }) => vars.typography.mobile[typography as keyof typeof vars.typography.mobile],
+        )
+        .with({ isMobile: true }, () => baseTypography)
+        .with(
+          { typography: undefined, mobileTypography: P.not(undefined) },
+          ({ mobileTypography }) => vars.typography.mobile[mobileTypography],
+        )
+        .with(
+          { typography: P.not(undefined) },
+          ({ typography }) => vars.typography.desktop[typography as keyof typeof vars.typography.desktop],
+        )
+        .with({ typography: undefined }, () => baseTypography)
+        .exhaustive()
     }
 
     return (
