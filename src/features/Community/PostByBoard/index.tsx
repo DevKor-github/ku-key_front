@@ -1,7 +1,7 @@
 import * as s from './style.css'
 
 import BoardPostPreview from '@/components/community/Boards/BoardPostPreview'
-import { useReadCommunityPosts } from '@/domain/Post/useReadCommunityPostsByBoard'
+import { useReadCommunityPosts } from '@/domain/Post/hooks/useReadCommunityPostsByBoard'
 import { BoardQueryParam } from '@/features/Community/CommunitySelectTab'
 import Pagination from '@/ui/Pagination'
 import { useQueryParams } from '@/util/hooks/useQueryParams'

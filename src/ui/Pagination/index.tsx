@@ -35,7 +35,7 @@ const Pagination = <T,>({ items, render, hasNextPage, isFetchingNextPage, fetchN
 
   return (
     <>
-      <ul {...props}>{items.map((item, index) => render(item, index))}</ul>
+      <ul {...props}>{items.map(render)}</ul>
       <Loader />
     </>
   )
