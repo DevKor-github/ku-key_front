@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css'
 
-import { BOTTOM_SHEET_CONTENTS_MAX_WIDTH } from '@/features/Timetable/components/LectureBottomSheet/constants'
+import { BOTTOM_SHEET_CONTENTS_MAX_WIDTH } from '@/domain/Timetable/components/LectureBottomSheet/constants'
 import { f } from '@/style'
 import { vars } from '@/theme/theme.css'
 
@@ -33,15 +33,3 @@ export const CategoryChip = style([
 ])
 
 export const Input = style([{ width: '39.625rem' }])
-
-export const CloseButton = style([
-  f.flexCenter,
-  {
-    width: '1.875rem',
-    height: '1.875rem',
-    color: vars.color.white,
-    backgroundColor: vars.color.red3,
-    borderRadius: '100%',
-    cursor: 'pointer',
-  },
-])

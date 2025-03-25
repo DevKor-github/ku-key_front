@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { HiX } from 'react-icons/hi'
 
 import * as s from './style.css'
 
 import Dropdown from '@/components/timetable/Dropdown'
+import CloseButton from '@/domain/Timetable/components/LectureBottomSheet/CloseButton'
 import { COURSE_CATEGORY_LIST, CourseQueryInterface } from '@/domain/Timetable/constants'
 import Input from '@/ui/Input'
 import { useDeepCompareEffect } from '@/util/hooks/useDeepCompare'
@@ -48,9 +48,7 @@ const SearchArea = ({ curCategory, searchQuery, handleDropdown, handleSearch, cl
             variant="search"
           />
         </form>
-        <button className={s.CloseButton} onClick={closeModal}>
-          <HiX />
-        </button>
+        <CloseButton onClick={closeModal} />
       </div>
     </div>
   )

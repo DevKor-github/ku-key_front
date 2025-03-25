@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css'
 
-import { BOTTOM_SHEET_CONTENTS_MAX_WIDTH } from '@/features/Timetable/components/LectureBottomSheet/constants'
+import { BOTTOM_SHEET_CONTENTS_MAX_WIDTH } from '@/domain/Timetable/components/LectureBottomSheet/constants'
 import { f } from '@/style'
 import { vars } from '@/theme/theme.css'
 

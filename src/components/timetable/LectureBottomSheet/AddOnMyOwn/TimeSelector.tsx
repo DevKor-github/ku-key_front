@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { UseFormSetValue } from 'react-hook-form'
 
 import Dropdown from '@/components/timetable/Dropdown'
-import { AddOnMyOwnForm } from '@/components/timetable/LectureBottomSheet/AddOnMyOwn'
+import { AddOnMyOwnForm } from '@/domain/Timetable/components/LectureBottomSheet/AddOnMyOwn/types'
 import { hSelectors, mSelectors } from '@/lib/constants/timeSelectors'
 
 interface TimeSelector {
