@@ -16,7 +16,7 @@ const CommunityPostSearch = () => {
   const [queryParams, setQueryParams] = useQueryParams<SearchParams>()
   const { isOpen, handleOpen } = useModal(true)
   const onSubmit = (searchParam: string) => {
-    if (searchParam.length < 2 && searchParam.length > 0) return handleOpen()
+    if (searchParam.length === 1) return handleOpen()
     setQueryParams({ keyword: searchParam.length ? searchParam : undefined })
   }
 
