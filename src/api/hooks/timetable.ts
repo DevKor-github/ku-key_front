@@ -189,10 +189,12 @@ export const useDeleteCourse = () => {
         queryClient.setQueryData<GetTimetableByTimetableIdResponse>(['timetable', request.timetableId], prevData => {
           if (prevData !== undefined && prevData.timetable !== null) {
             return {
-              ...prevData,
-              courses: prevData.timetable.courses.filter(course => {
-                return course.courseId !== request.courseId
-              }),
+              timetable: {
+                ...prevData.timetable,
+                courses: prevData.timetable.courses.filter(course => {
+                  return course.courseId !== request.courseId
+                }),
+              },
             }
           }
         })
