@@ -60,3 +60,10 @@ export interface GridType extends TimetableContentsType {
   endTime: string
   day: DayType
 }
+
+export interface TimetableInterface {
+  timetableName: string
+  courses: CourseType[]
+  schedules: ScheduleType[]
+  color: ColorType
+}

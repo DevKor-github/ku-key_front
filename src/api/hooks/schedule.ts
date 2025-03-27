@@ -30,10 +30,10 @@ export const usePostSchedule = () => {
       queryClient.setQueryData<GetTimetableByTimetableIdResponse>(
         ['timetable', String(response.timetableId)],
         prevData => {
-          if (prevData !== undefined) {
+          if (prevData !== undefined && prevData.timetable !== null) {
             return {
               ...prevData,
-              schedules: prevData.schedules.concat([
+              schedules: prevData.timetable.schedules.concat([
                 {
                   location: response.location,
                   scheduleDay: response.day,
@@ -100,10 +100,10 @@ export const usePatchSchedule = () => {
       queryClient.setQueryData<GetTimetableByTimetableIdResponse>(
         ['timetable', String(response.timetableId)],
         prevData => {
-          if (prevData !== undefined) {
+          if (prevData !== undefined && prevData.timetable !== null) {
             return {
               ...prevData,
-              schedules: prevData.schedules.map(schedule => {
+              schedules: prevData.timetable.schedules.map(schedule => {
                 if (schedule.scheduleId === response.id) {
                   return {
                     location: response.location,

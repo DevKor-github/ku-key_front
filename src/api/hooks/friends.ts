@@ -10,7 +10,7 @@ import {
   PatchFriendshipRequestRequest,
   PostFriendshipRequest,
 } from '@/api/types/friends'
-import { GetFriendTimetableResponse } from '@/api/types/timetable'
+import { GetTimetableByTimetableIdResponse } from '@/api/types/timetable'
 import { apiInterface } from '@/util/axios/custom-axios'
 
 const getFriendList = async ({ keyword }: GetFriendListRequest) => {
@@ -141,7 +141,7 @@ export const useDeleteFriendship = () => {
 }
 
 const getFriendTimetable = async (props: GetFriendTimetableRequest) => {
-  const response = await apiInterface.get<GetFriendTimetableResponse>(`/friendship/friend-timetable`, {
+  const response = await apiInterface.get<GetTimetableByTimetableIdResponse>(`/friendship/friend-timetable`, {
     params: props,
   })
   return response.data
