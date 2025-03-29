@@ -35,7 +35,6 @@ export interface PostPreviewByBoardMeta {
 }
 export type BoardPostPreviewProps = Omit<PostPreviewProps, 'reaction'>
 export type BoardType = 'Community Board' | 'Information Board' | 'Question Board'
-
 export interface CommentProps {
   id: number
   isDeleted: boolean

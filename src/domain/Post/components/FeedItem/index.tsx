@@ -8,6 +8,7 @@ import * as s from './style.css'
 
 import Profile from '@/components/ui/profile'
 import PostCategoryBadge from '@/domain/Post/components/PostCategoryBadge'
+import { parseBoardName } from '@/domain/Post/util/parseBoardName'
 import { PostPreviewWithBoardName } from '@/packages/api/ku-key/models'
 import { vars } from '@/theme/theme.css'
 import { Typography } from '@/ui/Typography'
@@ -49,9 +50,11 @@ const FeedItem = ({
 }: Props) => {
   const timeDistance = formatDistanceToNow(createdAt)
   const navigate = useNavigate()
+  const parsedBoardName = parseBoardName(boardName)
+
   const handleNavigate = useCallback(
-    () => navigate(`/community/${boardName.split(' ')[0].toLowerCase()}/post/${id}`),
-    [navigate, boardName, id],
+    () => navigate(`/community/${parsedBoardName}/post/${id}`),
+    [navigate, parsedBoardName, id],
   )
 
   return (
