@@ -3,6 +3,7 @@ import { forwardRef } from 'react'
 
 import { useGetFriendTimetable } from '@/api/hooks/friends'
 import LectureGrid from '@/components/timetable/Grid/LectureGrid'
+import NullTable from '@/components/timetable/Grid/NullTable'
 import { SemesterType } from '@/types/timetable'
 import { numberToSemester } from '@/util/timetableUtil'
 
@@ -13,7 +14,11 @@ interface TimetableProps {
 }
 
 const FriendTimetable = forwardRef<HTMLDivElement, TimetableProps>(({ user, year, semester }, ref) => {
-  const { data } = useGetFriendTimetable({ username: user, year, semester })
+  const {
+    data: { timetable: timetableData },
+  } = useGetFriendTimetable({ username: user, year, semester })
+
+  if (timetableData === null) return <NullTable />
 
   return (
     <div className={css({ w: '100%' })} ref={ref}>
@@ -48,11 +53,11 @@ const FriendTimetable = forwardRef<HTMLDivElement, TimetableProps>(({ user, year
               textOverflow: 'ellipsis',
             })}
           >
-            {data.timetableName}
+            {timetableData.timetableName}
           </div>
         </div>
       </div>
-      <LectureGrid timetableData={data} />
+      <LectureGrid timetableData={timetableData} />
     </div>
   )
 })
