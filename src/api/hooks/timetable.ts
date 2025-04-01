@@ -31,9 +31,12 @@ export const useGetUserTimetableList = () => {
 }
 
 const INITIAL_TIMETABLE: GetTimetableByTimetableIdResponse = {
-  courses: [],
-  schedules: [],
-  color: 'Red',
+  timetable: {
+    timetableName: '',
+    courses: [],
+    schedules: [],
+    color: 'Red',
+  },
 }
 
 const getTimetableByID = async ({ timetableId }: GetTimetableByTimetableIdRequest) => {
@@ -184,12 +187,14 @@ export const useDeleteCourse = () => {
     onSuccess: (response, request) => {
       if (response.deleted) {
         queryClient.setQueryData<GetTimetableByTimetableIdResponse>(['timetable', request.timetableId], prevData => {
-          if (prevData !== undefined) {
+          if (prevData !== undefined && prevData.timetable) {
             return {
-              ...prevData,
-              courses: prevData.courses.filter(course => {
-                return course.courseId !== request.courseId
-              }),
+              timetable: {
+                ...prevData.timetable,
+                courses: prevData.timetable.courses.filter(course => {
+                  return course.courseId !== request.courseId
+                }),
+              },
             }
           }
         })

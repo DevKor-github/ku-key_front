@@ -1,14 +1,14 @@
 import { css } from '@styled-system/css'
 import { useMemo } from 'react'
 
-import { GetTimetableByTimetableIdResponse } from '@/api/types/timetable'
 import NoScheduledArea from '@/components/timetable/Grid/NoScheduledArea'
 import ScheduledArea from '@/components/timetable/Grid/ScheduledArea'
+import { TimetableInterface } from '@/types/timetable'
 import { getWeeknTimeList, lectureDataPreprocess } from '@/util/timetableUtil'
 
 interface LectureGridProps {
   timetableId?: number // 친구 시간표의 경우 undefined
-  timetableData: GetTimetableByTimetableIdResponse
+  timetableData: TimetableInterface
   isMine?: boolean
 }
 

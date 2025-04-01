@@ -8,6 +8,7 @@ import { useGetTimetable } from '@/api/hooks/timetable'
 import LectureGrid from '@/components/timetable/Grid/LectureGrid'
 import OptionModal from '@/components/timetable/Modal/OptionModal'
 import TimetableModal from '@/components/timetable/Modal/TimetableModal'
+import NullTable from '@/domain/Timetable/components/NullTable'
 import { isBottomSheetVisible } from '@/domain/Timetable/store/bottomSheetVisibility'
 import { GlobalModalStateType, TimetableInfo } from '@/types/timetable'
 import { numberToSemester } from '@/util/timetableUtil'
@@ -23,7 +24,9 @@ interface TimetableProps {
  */
 const Timetable = forwardRef<HTMLDivElement, TimetableProps>(
   ({ timetable: { timetableId, timetableName, year, semester }, deleteTimetableHandler }, ref) => {
-    const { data } = useGetTimetable({ timetableId })
+    const {
+      data: { timetable: timetableData },
+    } = useGetTimetable({ timetableId })
 
     const [isModalOpen, setIsModalOpen] = useState(false)
     const setIsSheetVisible = useSetAtom(isBottomSheetVisible)
@@ -96,15 +99,21 @@ const Timetable = forwardRef<HTMLDivElement, TimetableProps>(
             <Ellipsis size={20} />
           </button>
         </div>
-        <LectureGrid timetableId={timetableId} timetableData={data} isMine={true} />
-        <TimetableModal
-          modalType={globalModalState}
-          closeModal={closeTimetableModal}
-          deleteTimetableHandler={deleteTimetableHandler}
-          timetableId={timetableId}
-          timetableName={timetableName}
-          curColor={data.color}
-        />
+        {timetableData === null ? (
+          <NullTable />
+        ) : (
+          <>
+            <LectureGrid timetableId={timetableId} timetableData={timetableData} isMine={true} />
+            <TimetableModal
+              modalType={globalModalState}
+              closeModal={closeTimetableModal}
+              deleteTimetableHandler={deleteTimetableHandler}
+              timetableId={timetableId}
+              timetableName={timetableName}
+              curColor={timetableData.color}
+            />
+          </>
+        )}
       </div>
     )
   },
