@@ -152,7 +152,6 @@ const Timetable = forwardRef<HTMLDivElement, TimetableProps>(
           globalModalState={globalModalState}
           closeTimetableModal={closeTimetableModal}
           deleteTimetableHandler={deleteTimetableHandler}
-          timetableName={timetableName}
         />
       </div>
     )

@@ -1,26 +1,32 @@
 import * as s from './style.css'
 
-import PostPreview from '@/components/community/PostPreview'
-import { useReadCommunityPostsAll } from '@/domain/Post/useReadCommunityPostsAll'
+import FeedItem from '@/domain/Post/components/FeedItem'
+import { useReadCommunityPostsAll } from '@/domain/Post/hooks/useReadCommunityPostsAll'
 import Pagination from '@/ui/Pagination'
+import { useQueryParams } from '@/util/hooks/useQueryParams'
+
+type SearchParams = {
+  keyword?: string
+}
 
 const CommunityPostAll = () => {
-  const { data: posts, hasNextPage, isFetchingNextPage, fetchNextPage } = useReadCommunityPostsAll({})
+  const [queryParams] = useQueryParams<SearchParams>()
+  const {
+    data: posts,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+  } = useReadCommunityPostsAll({
+    keyword: queryParams.keyword,
+  })
+
+  if (!posts.length) return <div>No Search Result</div>
+
   return (
     <Pagination
       items={posts}
       className={s.Wrapper}
-      render={post => (
-        <PostPreview
-          id={post.id}
-          title={post.title}
-          boardName={post.boardName}
-          user={post.user}
-          createdAt={new Date(post.createdAt)}
-          content={post.content}
-          thumbnailDir={post.thumbnailDir}
-        />
-      )}
+      render={post => <FeedItem {...post} showCommunityBadge />}
       hasNextPage={hasNextPage}
       isFetchingNextPage={isFetchingNextPage}
       fetchNextPage={fetchNextPage}

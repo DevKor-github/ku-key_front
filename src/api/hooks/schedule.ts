@@ -30,19 +30,21 @@ export const usePostSchedule = () => {
       queryClient.setQueryData<GetTimetableByTimetableIdResponse>(
         ['timetable', String(response.timetableId)],
         prevData => {
-          if (prevData !== undefined) {
+          if (prevData !== undefined && prevData.timetable !== null) {
             return {
-              ...prevData,
-              schedules: prevData.schedules.concat([
-                {
-                  location: response.location,
-                  scheduleDay: response.day,
-                  scheduleEndTime: response.endTime,
-                  scheduleId: response.id,
-                  scheduleStartTime: response.startTime,
-                  scheduleTitle: response.title,
-                },
-              ]),
+              timetable: {
+                ...prevData.timetable,
+                schedules: prevData.timetable.schedules.concat([
+                  {
+                    location: response.location,
+                    scheduleDay: response.day,
+                    scheduleEndTime: response.endTime,
+                    scheduleId: response.id,
+                    scheduleStartTime: response.startTime,
+                    scheduleTitle: response.title,
+                  },
+                ]),
+              },
             }
           }
         },
@@ -100,22 +102,24 @@ export const usePatchSchedule = () => {
       queryClient.setQueryData<GetTimetableByTimetableIdResponse>(
         ['timetable', String(response.timetableId)],
         prevData => {
-          if (prevData !== undefined) {
+          if (prevData !== undefined && prevData.timetable !== null) {
             return {
-              ...prevData,
-              schedules: prevData.schedules.map(schedule => {
-                if (schedule.scheduleId === response.id) {
-                  return {
-                    location: response.location,
-                    scheduleDay: response.day,
-                    scheduleEndTime: response.endTime,
-                    scheduleId: response.id,
-                    scheduleStartTime: response.startTime,
-                    scheduleTitle: response.title,
+              timetable: {
+                ...prevData.timetable,
+                schedules: prevData.timetable.schedules.map(schedule => {
+                  if (schedule.scheduleId === response.id) {
+                    return {
+                      location: response.location,
+                      scheduleDay: response.day,
+                      scheduleEndTime: response.endTime,
+                      scheduleId: response.id,
+                      scheduleStartTime: response.startTime,
+                      scheduleTitle: response.title,
+                    }
                   }
-                }
-                return schedule
-              }),
+                  return schedule
+                }),
+              },
             }
           }
         },
