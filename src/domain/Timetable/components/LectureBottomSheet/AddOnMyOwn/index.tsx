@@ -4,7 +4,7 @@ import { toast } from 'sonner'
 import * as s from './style.css'
 
 import { usePatchSchedule, usePostSchedule } from '@/api/hooks/schedule'
-import TimeSelector from '@/components/timetable/LectureBottomSheet/AddOnMyOwn/TimeSelector'
+import TimeSelector from '@/common/components/TimeSelector'
 import Toast from '@/components/ui/toast'
 import { AddOnMyOwnForm } from '@/domain/Timetable/components/LectureBottomSheet/AddOnMyOwn/types'
 import CloseButton from '@/domain/Timetable/components/LectureBottomSheet/CloseButton'
