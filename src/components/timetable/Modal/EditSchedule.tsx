@@ -1,9 +1,7 @@
 import { css, cx } from '@styled-system/css'
 import { shadow } from '@styled-system/recipes'
-import { useCallback } from 'react'
 
-import { usePatchSchedule } from '@/api/hooks/schedule'
-import AddOnMyOwn, { AddOnMyOwnForm } from '@/components/timetable/LectureBottomSheet/AddOnMyOwn'
+import AddOnMyOwn from '@/domain/Timetable/components/LectureBottomSheet/AddOnMyOwn'
 import { GridType } from '@/types/timetable'
 
 interface EditScheduleProps {
@@ -12,16 +10,6 @@ interface EditScheduleProps {
   closeScheduleModal: () => void
 }
 const EditSchedule = ({ timetableId, data, closeScheduleModal }: EditScheduleProps) => {
-  const { mutate: editSchedule } = usePatchSchedule()
-
-  const handleSubmit = useCallback(
-    (formData: AddOnMyOwnForm) => {
-      closeScheduleModal()
-      editSchedule({ scheduleId: data.scheduleId, timetableId, ...formData })
-    },
-    [closeScheduleModal, editSchedule, timetableId, data.scheduleId],
-  )
-
   return (
     <div
       className={cx(
@@ -39,8 +27,16 @@ const EditSchedule = ({ timetableId, data, closeScheduleModal }: EditSchedulePro
       )}
     >
       <AddOnMyOwn
-        submitHandler={handleSubmit}
-        prevValue={{ title: data.title, day: data.day, location: data.location ?? undefined }}
+        timetableId={timetableId}
+        closeModal={closeScheduleModal}
+        prevValues={{
+          title: data.title,
+          day: data.day,
+          location: data.location ?? undefined,
+          startTime: data.startTime,
+          endTime: data.endTime,
+          scheduleId: data.scheduleId,
+        }}
       />
     </div>
   )

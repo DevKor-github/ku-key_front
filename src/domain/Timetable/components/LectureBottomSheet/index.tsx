@@ -9,7 +9,6 @@ import * as s from './style.css'
 import AddClass from '@/domain/Timetable/components/LectureBottomSheet/AddClass'
 import AddOnMyOwn from '@/domain/Timetable/components/LectureBottomSheet/AddOnMyOwn'
 import { BOTTOM_SHEET_DEFAULT_OPEN_HEIGHT } from '@/domain/Timetable/components/LectureBottomSheet/constants'
-import { LectureBottomSheetContext } from '@/domain/Timetable/components/LectureBottomSheet/context'
 import DrawerHandle from '@/domain/Timetable/components/LectureBottomSheet/DrawerHandle'
 import { isBottomSheetVisible } from '@/domain/Timetable/store/bottomSheetVisibility'
 import { SemesterType } from '@/types/timetable'
@@ -49,7 +48,7 @@ const LectureBottomSheet = ({ timetableId, year, semester }: LectureBottomSheetP
   const closeDrawer = () => setIsOpen(false)
 
   return createPortal(
-    <LectureBottomSheetContext.Provider value={{ timetableId }}>
+    <>
       {isOpen && <button className={s.CloseArea} onClick={closeDrawer} />}
       <motion.div
         className={s.Wrapper}
@@ -60,13 +59,13 @@ const LectureBottomSheet = ({ timetableId, year, semester }: LectureBottomSheetP
         <DrawerHandle isVisible={!isOpen && isVisible} handleDrawer={handleDrawer} />
         <div className={s.Contents} style={{ height: openHeight }}>
           {sheetState === 'schedule' ? (
-            <AddOnMyOwn closeModal={closeDrawer} />
+            <AddOnMyOwn timetableId={timetableId} closeModal={closeDrawer} />
           ) : (
             <AddClass timetableId={timetableId} year={year} semester={semester} closeModal={closeDrawer} />
           )}
         </div>
       </motion.div>
-    </LectureBottomSheetContext.Provider>,
+    </>,
     document.body,
   )
 }
