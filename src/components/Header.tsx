@@ -46,11 +46,6 @@ const Header = () => {
 
   const handleNavClick = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, navName: string) => {
-      if (navName === '1:1 Matching') {
-        e.preventDefault()
-        setModalContent(HEADER_MESSAGE.NOT_READY)
-        handleModalOpen()
-      }
       if (!isAuthenticated) return
 
       if (navName === 'mypage' && !authState) {
