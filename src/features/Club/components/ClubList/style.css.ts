@@ -24,11 +24,24 @@ export const KeywordForDesktop = style([
 ])
 
 export const NoSearchResult = style([
+  f.flexColumn,
+  f.alignCenter,
   vars.typography.desktop.heading2R,
   {
     color: vars.color.darkGray1,
+    gap: '1rem',
   },
   f.mdDown(vars.typography.mobile.headingR),
+])
+
+export const NoSearchResultImage = style([
+  {
+    width: '7rem',
+    opacity: 0.7,
+  },
+  f.mdDown({
+    width: '4rem',
+  }),
 ])
 
 export const ClubLine = style([
