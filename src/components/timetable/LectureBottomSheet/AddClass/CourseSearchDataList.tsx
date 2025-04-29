@@ -2,21 +2,13 @@ import { css } from '@styled-system/css'
 import { forwardRef, useCallback } from 'react'
 
 import { usePostCourse } from '@/api/hooks/timetable'
+import NoSearchResult from '@/assets/no-search-result.png'
 import { CourseQueryInterface } from '@/components/timetable/LectureBottomSheet/AddClass/constants'
 import SearchLectureCard from '@/components/timetable/LectureBottomSheet/AddClass/SearchLectureCard'
 import { useSearchCourse } from '@/domain/Timetable/hooks/useSearchCourse'
 import { SemesterType } from '@/types/timetable'
 import useIntersect from '@/util/hooks/useIntersect'
 import { useQueryParams } from '@/util/hooks/useQueryParams'
-
-const SearchMessageStyle = css({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  color: 'darkGray.2',
-  fontSize: 16,
-  fontWeight: 600,
-})
 
 interface Props {
   year: string
@@ -66,7 +58,27 @@ const CourseSearchDataList = forwardRef<HTMLDivElement, Props>(({ year, semester
       </div>
     )
 
-  return <div className={SearchMessageStyle}>There are no classes available for exchange students.</div>
+  return (
+    <div
+      className={css({
+        display: 'flex',
+        flexDir: 'column',
+        gap: 2,
+        justifyContent: 'center',
+        alignItems: 'center',
+        color: 'darkGray.2',
+        fontSize: 16,
+        fontWeight: 600,
+      })}
+    >
+      <img
+        src={NoSearchResult}
+        className={css({ height: '5rem', opacity: 0.7 })}
+        alt="There are no classes available for exchange students"
+      />
+      <p>There are no classes available for exchange students.</p>
+    </div>
+  )
 })
 
 export default CourseSearchDataList

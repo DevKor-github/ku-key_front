@@ -3,6 +3,7 @@ import { toast } from 'sonner'
 
 import * as s from './style.css'
 
+import NoSearchResult from '@/assets/no-search-result.png'
 import { Responsive } from '@/common/Responsive'
 import Toast from '@/components/ui/toast'
 import { useGetClubSearch } from '@/domain/Club/hooks/useGetClubSearch'
@@ -43,18 +44,21 @@ const ClubList = () => {
   return (
     <div className={s.SearchResultWrapper}>
       {isDesktop && query.keyword && <div className={s.KeywordForDesktop}>{`'${query.keyword}' Search Results`}</div>}
-      <div className={s.ClubCardWrapper}>
-        {data?.length ? (
-          data.map((club, index) => (
+      {data?.length ? (
+        <div className={s.ClubCardWrapper}>
+          {data.map((club, index) => (
             <Fragment key={index}>
               {index !== 0 && <Responsive mobile={<div className={s.ClubLine} />} />}
               <ClubCard clubData={club} handleLikeClick={handleLikeClick} />
             </Fragment>
-          ))
-        ) : (
-          <div className={s.NoSearchResult}>No search results</div>
-        )}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <div className={s.NoSearchResult}>
+          <img src={NoSearchResult} alt="No club search result" className={s.NoSearchResultImage} />
+          <p>No search results</p>
+        </div>
+      )}
     </div>
   )
 }
