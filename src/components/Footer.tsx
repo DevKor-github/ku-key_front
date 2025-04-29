@@ -38,13 +38,7 @@ const Footer = () => {
   const [modalContent, setModalContent] = useState(HEADER_MESSAGE.NOT_VERIFIED_USER)
 
   const handleNavClick = useCallback(
-    (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, route: string) => {
-      if (route === 'matching') {
-        e.preventDefault()
-        setModalContent(HEADER_MESSAGE.NOT_READY)
-        handleModalOpen()
-        return
-      }
+    (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
       if (!isAuthenticated) return // 미로그인 유저
       if (!authState) {
         // 인증 안 된 유저
@@ -129,7 +123,7 @@ const Footer = () => {
         })}
       >
         {footerRouteConfig.map(nav => (
-          <Link key={nav.route} to={`/${nav.route}`} className={tabs} onClick={e => handleNavClick(e, nav.route)}>
+          <Link key={nav.route} to={`/${nav.route}`} className={tabs} onClick={handleNavClick}>
             {nav.navName}
           </Link>
         ))}
