@@ -13,8 +13,8 @@ const DaySelector = ({ value, setValue, registerReturn }: Props) => {
   return (
     <>
       <div className={css({ display: 'flex', alignItems: 'center', gap: 1 })}>
-        {DayArray.map((day, index) => (
-          <Button key={index} type="button" variant={value === day ? 'red' : 'default'} onClick={() => setValue(day)}>
+        {DayArray.map(day => (
+          <Button key={day} type="button" variant="mainPin" isActive={value === day} onClick={() => setValue(day)}>
             {day}
           </Button>
         ))}
