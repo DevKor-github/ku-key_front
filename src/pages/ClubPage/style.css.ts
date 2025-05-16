@@ -7,24 +7,15 @@ export const Banner = style([
   f.flex,
   f.alignCenter,
   {
-    height: '12.5rem',
     backgroundPosition: 'center',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
-    fontSize: '3rem',
     fontWeight: 700,
     color: vars.color.white,
-    padding: '0 14.375rem',
-  },
-  f.mdDown({
-    fontSize: '2rem',
-    padding: '0 3.125rem',
-  }),
-  f.smDown({
     height: '9.375rem',
     fontSize: '1.5rem',
     padding: '0 1.875rem',
-  }),
+  },
 ])
 
 export const ContentsWrapper = style([
@@ -33,7 +24,7 @@ export const ContentsWrapper = style([
   f.alignCenter,
   f.wFull,
   {
-    padding: '5rem 0.625rem',
+    padding: '3rem 0.625rem',
     backgroundColor: vars.color.white,
   },
   f.smDown({

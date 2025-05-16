@@ -20,12 +20,14 @@ const ClubPage = () => {
         description="Meet the various clubs at Korea University! Find out what clubs there are and what each club's characteristics are."
         keywords="club, clubs"
       />
-      <div
-        className={s.Banner}
-        style={{ backgroundImage: `url(${import.meta.env.VITE_API_AWS_S3_BUCKET}/fe/home/clubBanner.webp)` }}
-      >
-        Club
-      </div>
+      {!isDesktop && (
+        <div
+          className={s.Banner}
+          style={{ backgroundImage: `url(${import.meta.env.VITE_API_AWS_S3_BUCKET}/fe/home/clubBanner.webp)` }}
+        >
+          Club
+        </div>
+      )}
       <div className={s.ContentsWrapper}>
         <div className={s.Contents}>
           <SearchForm />
