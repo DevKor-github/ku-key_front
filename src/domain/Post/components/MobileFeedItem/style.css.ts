@@ -11,7 +11,7 @@ export const Wrapper = style([
   {
     gap: '0.625rem',
     paddingBottom: '1rem',
-    borderBottom: `1px solid ${vars.color.lightGray1}`,
+    borderBottom: `1px solid ${vars.color.lightGray2}`,
     selectors: {
       '&:last-child': {
         borderBottom: 'none',
@@ -40,7 +40,7 @@ export const Text = style([
   f.justifyBetween,
   f.alignStart,
   f.wFull,
-  { height: '5.625rem', padding: '0.125rem 0', flexShrink: 0 },
+  { height: '5.625rem', padding: '0.125rem 0' },
 ])
 
 export const Tag = style([f.flex, f.alignCenter, { gap: '0.25rem' }])

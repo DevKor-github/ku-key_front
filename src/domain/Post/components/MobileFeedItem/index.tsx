@@ -5,6 +5,7 @@ import { match } from 'ts-pattern'
 
 import * as s from './style.css'
 
+import Profile from '@/components/ui/profile'
 import { PostPreviewWithBoardName } from '@/packages/api/ku-key/models'
 import { vars } from '@/theme/theme.css'
 import { Typography } from '@/ui/Typography'
@@ -14,9 +15,7 @@ type Props = Pick<
   | 'id'
   | 'title'
   | 'content'
-  | 'createdAt'
   | 'user'
-  | 'views'
   | 'reactionCount'
   | 'commentCount'
   | 'scrapCount'
@@ -32,9 +31,7 @@ const MobileFeedItem = ({
   id,
   title,
   content,
-  createdAt,
   user,
-  views,
   reactionCount,
   commentCount,
   scrapCount,
@@ -58,7 +55,7 @@ const MobileFeedItem = ({
     [boardName],
   )
   return (
-    <div className={s.Wrapper} onClick={handleNavigate}>
+    <div className={s.Wrapper} onClick={handleNavigate} role="button" tabIndex={0} onKeyDown={handleNavigate}>
       <div className={s.BodyWrapper}>
         {thumbnailDir && (
           <div
@@ -85,7 +82,12 @@ const MobileFeedItem = ({
               style={{
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
+                whiteSpace: 'pre-wrap',
+                display: '-webkit-box',
+                wordBreak: 'break-all',
+                width: '100%',
+                WebkitLineClamp: 1,
+                WebkitBoxOrient: 'vertical',
               }}
             >
               {title}
@@ -98,10 +100,12 @@ const MobileFeedItem = ({
               style={{
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
+                whiteSpace: 'pre-wrap',
+                display: '-webkit-box',
                 wordBreak: 'break-all',
                 width: '100%',
-                // wordWrap: 'break-word',
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: 'vertical',
               }}
             >
               {content}
@@ -110,7 +114,12 @@ const MobileFeedItem = ({
         </div>
       </div>
       <div className={s.FeedbackWrapper}>
-        <div className={s.Profile}></div>
+        <div className={s.Profile}>
+          <Profile onlyTitle={false} size={5} {...user} />
+          <Typography mobileTypography="miniTag1M" color="darkGray1">
+            {user.isAnonymous ? 'Anonymous' : user.username}
+          </Typography>
+        </div>
         <div className={s.FeedBack}>
           <div className={s.FeedBackIcon}>
             <LuCookie size={16} />

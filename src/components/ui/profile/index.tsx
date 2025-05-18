@@ -16,16 +16,19 @@ const bgConfig: Record<CharacterType, string> = {
 interface ProfileProps extends Pick<User, 'isAnonymous' | 'isDeleted' | 'character'> {
   onlyTitle: boolean
   bgWhite?: boolean
+  size?: number
 }
 
-const Profile = ({ isAnonymous, isDeleted, character, onlyTitle, bgWhite }: ProfileProps) => {
+const Profile = ({ isAnonymous, isDeleted, character, onlyTitle, bgWhite, size = 20 }: ProfileProps) => {
   const profileImg = characterConfig[character.type][character.level ?? 1]
   const bgColor = bgConfig[character.type]
+
+  const w = size ?? (onlyTitle ? 15 : 20)
   return (
     <img
       src={isDeleted ? Characters.CharacterDeleted : isAnonymous ? Characters.CharacterDefault : profileImg}
       alt="Profile"
-      className={css({ w: onlyTitle ? 15 : 20, h: onlyTitle ? 15 : 20, rounded: 'full' })}
+      className={css({ w, h: w, rounded: 'full' })}
       style={{ backgroundColor: bgWhite ? 'white' : bgColor }}
     />
   )

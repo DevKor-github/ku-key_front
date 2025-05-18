@@ -37,5 +37,5 @@ async function removeOperationId(filePath) {
 }
 
 // 스크립트 실행
-await removeOperationId('https://15.164.27.130.nip.io/api-json')
+await removeOperationId('https://dev.api.ku-key.devkor.club/api-json')
 await execShellCommand(`yarn prettier --w "scripts/__generated__/ku-key-api.json"`)
