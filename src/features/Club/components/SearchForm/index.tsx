@@ -12,11 +12,9 @@ import { USER_AUTH_MESSAGE } from '@/lib/messages/common'
 import { ClubSearchParams } from '@/types/club'
 import Input from '@/ui/Input'
 import { useAuth } from '@/util/auth/useAuth'
-import { useMediaQueryByName } from '@/util/hooks/useMediaQueryByName'
 import { useQueryParams } from '@/util/hooks/useQueryParams'
 
 const SearchForm = () => {
-  const isMobile = useMediaQueryByName('smDown')
   const isLogin = useAuth().authState
 
   const [param, setParam] = useQueryParams<ClubSearchParams>()
@@ -44,20 +42,9 @@ const SearchForm = () => {
     else toast.custom(() => <Toast message={USER_AUTH_MESSAGE.REQUIRE_LOGIN} type="error" />)
   }
 
-  const clearSearchInput = () => {
-    setInput('')
-    setParam({ keyword: undefined })
-  }
-
   return (
     <form className={s.FormWrapper} onSubmit={onSubmit}>
-      <Input
-        variant={'search'}
-        placeholder="Search For a Club"
-        value={input}
-        onChange={onChange}
-        clearInput={isMobile ? undefined : clearSearchInput}
-      />
+      <Input variant={'search'} placeholder="Search For a Club" value={input} onChange={onChange} />
       <Responsive
         mobile={<MobileCategorySelector curCategory={param.category} />}
         desktop={
