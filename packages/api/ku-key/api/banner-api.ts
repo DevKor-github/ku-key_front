@@ -95,12 +95,14 @@ const bannerIdDeleteAxiosParamCreator = async (
  * @summary 배너 이미지 생성
  * @param {any} image 배너 이미지 파일
  * @param {string} title 배너 제목
+ * @param {string} [link] 링크
  * @param {*} [options] Override http request option.
  * @throws {RequiredError}
  */
 const bannerPostAxiosParamCreator = async (
   image: any,
   title: string,
+  link?: string,
   options: AxiosRequestConfig = {},
   configuration?: Configuration,
 ): Promise<RequestArgs> => {
@@ -123,6 +125,10 @@ const bannerPostAxiosParamCreator = async (
 
   if (title !== undefined) {
     localVarFormParams.append('title', title as any)
+  }
+
+  if (link !== undefined) {
+    localVarFormParams.append('link', link as any)
   }
 
   localVarHeaderParameter['Content-Type'] = 'multipart/form-data'
@@ -175,16 +181,18 @@ const bannerIdDeleteFp = async (
  * @summary 배너 이미지 생성
  * @param {any} image 배너 이미지 파일
  * @param {string} title 배너 제목
+ * @param {string} [link] 링크
  * @param {*} [options] Override http request option.
  * @throws {RequiredError}
  */
 const bannerPostFp = async (
   image: any,
   title: string,
+  link?: string,
   options?: AxiosRequestConfig,
   configuration?: Configuration,
 ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BannerDto>> => {
-  const localVarAxiosArgs = await bannerPostAxiosParamCreator(image, title, options, configuration)
+  const localVarAxiosArgs = await bannerPostAxiosParamCreator(image, title, link, options, configuration)
   return createRequestFunction(localVarAxiosArgs, globalAxios, configuration)
 }
 
@@ -246,6 +254,7 @@ export const bannerIdDelete = ({
 export type BannerPostRequestParams = {
   image: any
   title: string
+  link?: string
   options?: any
 }
 
@@ -254,6 +263,7 @@ export type BannerPostRequestParams = {
  * @summary 배너 이미지 생성
  * @param {any} image 배너 이미지 파일
  * @param {string} title 배너 제목
+ * @param {string} [link] 링크
  * @param {*} [options] Override http request option.
  * @throws {RequiredError}
  */
@@ -267,7 +277,7 @@ export const bannerPost = ({
   axios?: AxiosInstance
 }) => {
   return (params: BannerPostRequestParams): AxiosPromise<BannerDto> => {
-    return bannerPostFp(params.image, params.title, params.options, configuration).then(request =>
+    return bannerPostFp(params.image, params.title, params.link, params.options, configuration).then(request =>
       request(axios, basePath),
     )
   }

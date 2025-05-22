@@ -25,9 +25,9 @@ import { DeleteFriendshipResponseDto } from '../models'
 // @ts-ignore
 import { GetFriendResponseDto } from '../models'
 // @ts-ignore
-import { GetReceivedFriendshipRequestCountDto } from '../models'
+import { GetNullableTimetableResponseDto } from '../models'
 // @ts-ignore
-import { GetTimetableByTimetableIdDto } from '../models'
+import { GetReceivedFriendshipRequestCountDto } from '../models'
 // @ts-ignore
 import { GetWaitingFriendResponseDto } from '../models'
 // @ts-ignore
@@ -455,7 +455,7 @@ const friendshipFriendTimetableGetFp = async (
   semester: string,
   options?: AxiosRequestConfig,
   configuration?: Configuration,
-): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<GetTimetableByTimetableIdDto>>> => {
+): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetNullableTimetableResponseDto>> => {
   const localVarAxiosArgs = await friendshipFriendTimetableGetAxiosParamCreator(
     username,
     year,
@@ -652,7 +652,7 @@ export const friendshipFriendTimetableGet = ({
   basePath?: string
   axios?: AxiosInstance
 }) => {
-  return (params: FriendshipFriendTimetableGetRequestParams): AxiosPromise<Array<GetTimetableByTimetableIdDto>> => {
+  return (params: FriendshipFriendTimetableGetRequestParams): AxiosPromise<GetNullableTimetableResponseDto> => {
     return friendshipFriendTimetableGetFp(
       params.username,
       params.year,

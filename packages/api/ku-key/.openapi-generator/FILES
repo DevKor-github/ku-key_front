@@ -76,6 +76,7 @@ models/get-friend-response-dto.ts
 models/get-hot-club-response-dto.ts
 models/get-my-comment-list-response-dto.ts
 models/get-notice-response-dto.ts
+models/get-nullable-timetable-response-dto.ts
 models/get-point-history-response-dto.ts
 models/get-post-list-response-dto.ts
 models/get-post-list-with-board-response-dto.ts
