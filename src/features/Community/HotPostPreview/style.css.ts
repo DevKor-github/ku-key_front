@@ -2,7 +2,13 @@ import { style } from '@vanilla-extract/css'
 
 import { f } from '@/style'
 
-export const Wrapper = style([f.flex, f.directionColumn, f.alignStart, { width: '22.4375rem', gap: '3rem' }])
+export const Wrapper = style([
+  f.flex,
+  f.directionColumn,
+  f.alignStart,
+  { width: '22.4375rem', gap: '3rem' },
+  f.smDown({ display: 'none' }),
+])
 
 export const TitleWrapper = style([f.flex, f.justifyBetween, f.wFull, f.alignEnd])
 
