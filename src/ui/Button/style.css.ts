@@ -64,6 +64,28 @@ export const Button = styleVariants({
     },
   ],
   gray: [Base, { ':hover': { boxShadow: vars.shadow.p25 }, ':focus': { boxShadow: vars.shadow.p25 } }],
+  mainPin: [
+    f.cursorPointer,
+    f.flexRow,
+    f.alignCenter,
+    {
+      backgroundColor: vars.color.bgGray,
+      borderRadius: '30px',
+      border: `solid 1px ${vars.color.lightGray1}`,
+      color: vars.color.lightGray1,
+      transition: 'all 0.2s ease-in-out',
+      height: '2.25rem',
+      padding: '0.5rem 0.625rem',
+      gap: '0.25rem',
+      ':hover': { borderColor: vars.color.darkGray2, color: vars.color.darkGray2 },
+      '&[data-active="true"]': {
+        color: vars.color.red1,
+        borderColor: vars.color.red1,
+        backgroundColor: vars.color.bgRed1,
+      },
+      ':disabled': { cursor: 'default' },
+    },
+  ],
 })
 
 export type ButtonVariants = keyof typeof Button

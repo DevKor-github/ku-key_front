@@ -1,10 +1,9 @@
 import { css } from '@styled-system/css'
+import { AnimatePresence } from 'framer-motion'
 import { useSetAtom } from 'jotai'
 import { CircleUser, MapPin } from 'lucide-react'
-import { MouseEvent } from 'react'
-import { createPortal } from 'react-dom'
 
-import EditSchedule from '@/components/timetable/Modal/EditSchedule'
+import EditSchedule from '@/domain/Timetable/components/LectureBottomSheet/EditSchedule'
 import { isBottomSheetVisible } from '@/domain/Timetable/store/bottomSheetVisibility'
 import { GridType } from '@/types/timetable'
 import { getDuration, getStartTime } from '@/util/timetableUtil'
@@ -52,14 +51,6 @@ const ScheduledLecture = ({
   const closeScheduleModal = () => {
     setIsScheduleEditOpened(false)
     setIsSheetOpened(true)
-  }
-
-  const handleModalOutsideClick = (event: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => {
-    // 모달 안쪽을 눌렀을 때도 모달 state가 null 되는 것을 방지
-    if (event.target === event.currentTarget) {
-      setIsScheduleEditOpened(false)
-      setIsSheetOpened(true)
-    }
   }
 
   return (
@@ -113,30 +104,11 @@ const ScheduledLecture = ({
           )}
         </div>
       </div>
-      {isScheduleEditOpened &&
-        createPortal(
-          <div
-            className={css({
-              position: 'fixed',
-              top: 0,
-              left: 0,
-              w: '100vw',
-              h: '100vh',
-              bgColor: 'rgba(0, 0, 0, 0.40)',
-              zIndex: 100,
-              display: 'flex',
-              flexDir: 'column',
-              justifyContent: 'flex-end',
-              alignItems: 'center',
-              paddingBottom: '50px',
-            })}
-            role="presentation"
-            onClick={handleModalOutsideClick}
-          >
-            <EditSchedule timetableId={timetableId!} data={data} closeScheduleModal={closeScheduleModal} />
-          </div>,
-          document.body,
+      <AnimatePresence>
+        {isScheduleEditOpened && (
+          <EditSchedule timetableId={timetableId!} data={data} closeEditSheet={closeScheduleModal} />
         )}
+      </AnimatePresence>
     </>
   )
 }
