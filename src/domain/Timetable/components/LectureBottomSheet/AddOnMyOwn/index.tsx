@@ -34,8 +34,6 @@ const AddOnMyOwn = ({ timetableId, closeModal, prevValues }: Props) => {
   })
 
   const onSubmit = (data: AddOnMyOwnForm) => {
-    if (timetableId === undefined) return
-
     isEditPage
       ? editSchedule({ ...data, timetableId, scheduleId: prevValues.scheduleId })
       : postSchedule({ ...data, timetableId })
