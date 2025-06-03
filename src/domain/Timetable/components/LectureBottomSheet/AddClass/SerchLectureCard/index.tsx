@@ -3,15 +3,23 @@ import { Link } from 'react-router-dom'
 
 import * as s from './style.css'
 
+import { usePostCourse } from '@/api/hooks/timetable'
 import CookiesRate from '@/components/courseReview/CookiesRate'
 import { SearchedCourse } from '@/types/course'
 
 interface SearchLectureCardProps {
   data: SearchedCourse
+  timetableId: number
   addCourse: (courseId: number) => void
 }
 
-const SearchLectureCard = ({ data }: SearchLectureCardProps) => {
+const SearchLectureCard = ({ data, timetableId }: SearchLectureCardProps) => {
+  const { mutate: addCourse } = usePostCourse()
+
+  const handleAddCourse = () => {
+    addCourse({ courseId: data.id, timetableId })
+  }
+
   return (
     <div className={s.Wrapper}>
       <div className={s.Contents}>
@@ -37,30 +45,17 @@ const SearchLectureCard = ({ data }: SearchLectureCardProps) => {
           </div>
         </div>
         <div className={s.Footer}>
-          <span>{data.professorName}</span>
-          {'•'}
-          <span>{data.details && data.details[0]?.classroom}</span>
-          {'•'}
-          <span>{data.courseCode}</span>
+          <div className={s.LeftFooter}>
+            <span>{data.professorName}</span>
+            {'•'}
+            <span>{data.details && data.details[0]?.classroom}</span>
+            {'•'}
+            <span>{data.courseCode}</span>
+          </div>
+          <button className={s.AddButton} onClick={handleAddCourse}>
+            Add class
+          </button>
         </div>
-        {/* <button
-          className={css({
-            rounded: 'full',
-            bgColor: 'red.3',
-            cursor: 'pointer',
-            transition: 'background 0.256s',
-            py: 1,
-            px: 2.5,
-            fontSize: 12,
-            fontWeight: 700,
-            color: 'white',
-            _hover: { bgColor: 'red.2' },
-            flexShrink: 0,
-          })}
-          onClick={() => addCourse(data.id)}
-        >
-          Add class
-        </button> */}
       </div>
     </div>
   )
