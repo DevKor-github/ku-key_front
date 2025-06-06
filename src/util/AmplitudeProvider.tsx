@@ -5,8 +5,9 @@ import { useEffectOnce } from '@/util/hooks/useEffectOnce'
 const AmplitudeProvider = () => {
   const user = useUserData()
   useEffectOnce(() => {
-    if (!user) return
-    initAmplitude(user.id, () => setInitialUserProperties(user))
+    initAmplitude(user?.id, () => {
+      if (user) setInitialUserProperties(user)
+    })
   })
 
   return null
