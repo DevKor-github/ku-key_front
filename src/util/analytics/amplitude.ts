@@ -2,7 +2,7 @@ import { identify, Identify, init, setUserId } from '@amplitude/analytics-browse
 
 import { UserInfo } from '@/providers/UserProvider'
 
-export const initAmplitude = async (userId: string, callback?: () => void) => {
+export const initAmplitude = async (userId?: string, callback?: () => void) => {
   init(import.meta.env.VITE_API_AMPLITUDE_API_KEY, {
     userId,
     defaultTracking: true,

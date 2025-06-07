@@ -29,7 +29,7 @@ import { CreateTimetableCourseResponseDto } from '../models'
 // @ts-ignore
 import { CreateTimetableDto } from '../models'
 // @ts-ignore
-import { GetTimetableByTimetableIdDto } from '../models'
+import { GetNullableTimetableResponseDto } from '../models'
 // @ts-ignore
 import { GetTimetableByUserIdResponseDto } from '../models'
 // @ts-ignore
@@ -606,7 +606,7 @@ const timetableTimetableIdGetFp = async (
   timetableId: number,
   options?: AxiosRequestConfig,
   configuration?: Configuration,
-): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetTimetableByTimetableIdDto>> => {
+): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetNullableTimetableResponseDto>> => {
   const localVarAxiosArgs = await timetableTimetableIdGetAxiosParamCreator(timetableId, options, configuration)
   return createRequestFunction(localVarAxiosArgs, globalAxios, configuration)
 }
@@ -901,7 +901,7 @@ export const timetableTimetableIdGet = ({
   basePath?: string
   axios?: AxiosInstance
 }) => {
-  return (params: TimetableTimetableIdGetRequestParams): AxiosPromise<GetTimetableByTimetableIdDto> => {
+  return (params: TimetableTimetableIdGetRequestParams): AxiosPromise<GetNullableTimetableResponseDto> => {
     return timetableTimetableIdGetFp(params.timetableId, params.options, configuration).then(request =>
       request(axios, basePath),
     )

@@ -36,4 +36,10 @@ export interface BannerDto {
    * @memberof BannerDto
    */
   title: string
+  /**
+   * 배너 링크
+   * @type {string}
+   * @memberof BannerDto
+   */
+  link: string | null
 }

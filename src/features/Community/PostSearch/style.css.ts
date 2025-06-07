@@ -2,7 +2,13 @@ import { style } from '@vanilla-extract/css'
 
 import { f } from '@/style'
 
-export const SearchWrapper = style([f.flex, f.directionColumn, f.wFull, { gap: '1.875rem' }])
+export const SearchWrapper = style([
+  f.flex,
+  f.directionColumn,
+  f.wFull,
+  { gap: '1.875rem' },
+  f.smDown({ display: 'none' }),
+])
 
 export const Header = style([f.flex, f.alignCenter, f.justifyBetween, f.wFull])
 
